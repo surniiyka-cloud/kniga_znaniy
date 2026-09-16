@@ -181,16 +181,11 @@ window.addEventListener('unhandledrejection',function(e){var r=e.reason;show('О
 <script>
 (function(){
 'use strict';
-/* ================= НАСТРОЙКИ ================= */
 var SHEET_ID='1eGt77EFduFVxYnvLzS3c_bVljDBKVULB';
 var RIGHTS_ID='1hRsk0lrLjUA6bcikzfSd38PC1bI4WZ70val46khFnPU';
 var RIGHTS_TAB='Правки';
 var APPS_URL='https://script.google.com/macros/s/AKfycbyD-X50gxUmQjjKhx5pUJ1HMDWfuR53gVImre2ASRW1XojvbVsDupQHhWkoVfIL2DGqyw/exec';
 var PASS='134679852';
-
-/* [ лист, название, группа, режим, параметры ]
-   items — текст, cols — позиции в столбцах, zones — несколько зон на листе,
-   row — товары в строках, kv — паспорт «подпись-значение», bio — БиоТФ, single — одна карточка */
 var SHEETS=[
 ['термины и определения','Термины, определения, документы','Основы','items'],
 ['тесты 4гр','Тесты 4 группы','Экспресс-тесты и контроль сырья','cols',{labelCols:[0]}],
@@ -239,7 +234,6 @@ var CACHE='kb_cache_v12',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
-/* ============================================ */
 var $=function(id){return document.getElementById(id)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
 var BOOKS={title:'Книга знаний',updated:'',sections:[]},REPORT=[],ADMIN=false,EDIT=false,OV={},PENDING={};
@@ -247,8 +241,6 @@ try{ADMIN=sessionStorage.getItem('kb_admin')==='1'}catch(e){}
 try{PENDING=JSON.parse(localStorage.getItem(PCACHE))||{}}catch(e){PENDING={}}
 try{OV=JSON.parse(localStorage.getItem(OCACHE))||{}}catch(e){OV={}}
 function rep(s){REPORT.push(s)} function setStatus(s){var e=$('status');if(e)e.textContent=s}
-
-/* ---------- маркеры и утилиты ---------- */
 var RE_NAME=/наименован|назван|модел|ассортимент|позиц/i;
 var RE_SIG=/показ|тип|принцип|веществ|решен|фото|характер|применен|состав|ссыл|производ|докумен|описан|свойств|выгод|артикул|размер|упаковк|плотн|материал|област|канал|стоим|цена|дополн|срок|услови|преимущ|примечан|количест|ширин|вид |вид$|концентрац|расход|фасовк|параметр|назначен|вес|масса|объем|объём|габарит|гарант|сертифик|эксплуатац|обслуживан|комплектац|индикац|чувствит|сфера|категори|норма|значен|производител|питание|программ|лунок|таймер|температур|источник|код/i;
 var RE_GRP=/анализатор|линейка|группа|семейство|серия/i;
@@ -278,8 +270,6 @@ if(!String(r[0]||'').trim()){out.push({t:c[0],d:c.slice(1).join('\n')});return}
 var first=cleanName(r[0]),rest=c.slice(1);
 if(/^\d{1,2}[.)]?$/.test(first)&&rest.length)out.push({t:rest[0],d:rest.slice(1).join('\n')});
 else out.push({t:first,d:rest.join('\n')})});return out}
-
-/* ---------- каналы ---------- */
 function jsonp(url,ms){return new Promise(function(res,rej){var cb='__kb'+Math.random().toString(36).slice(2),s=document.createElement('script');
 var t=setTimeout(function(){done();rej(new Error('нет ответа за '+Math.round(ms/1000)+' сек'))},ms);
 function done(){clearTimeout(t);try{delete window[cb]}catch(e){window[cb]=undefined}if(s.parentNode)s.parentNode.removeChild(s)}
@@ -297,8 +287,6 @@ async function pickChannel(){for(var i=0;i<CHANNELS.length;i++){setStatus('Пр�
 try{await CHANNELS[i].f(BASE+'tqx=out:json&headers=0&sheet='+enc('EXSTENSO'));WORKING=i;rep('ОК: канал «'+CHANNELS[i].n+'»');return true}catch(e){rep('НЕ ПРОШЁЛ: «'+CHANNELS[i].n+'» — '+e.message)}}return false}
 async function fetchUrl(url){try{return await CHANNELS[WORKING].f(url)}catch(e1){for(var k=0;k<CHANNELS.length;k++){if(k===WORKING)continue;try{return await CHANNELS[k].f(url)}catch(e2){}}throw new Error(e1.message)}}
 function fetchSheet(sh){return fetchUrl(BASE+'tqx=out:json&headers=0&sheet='+enc(sh))}
-
-/* ---------- общие помощники разбора ---------- */
 function fillRight(rows){rows.forEach(function(row){var last='';
 for(var c=0;c<row.length;c++){var v=String(row[c]==null?'':row[c]).trim();
 if(v!==''){last=v}else if(last!==''){row[c]=last}}})}
@@ -310,8 +298,6 @@ for(var r=minR;r<maxR;r++){var v=V(rows,r,c);if(!v)continue;if(RE_GRP.test(v)&&v
 return {name:cleanName(v),row:r}}
 return null}
 function findGroup(rows,c,maxR){for(var r=0;r<maxR;r++){var v=V(rows,r,c);if(v&&RE_GRP.test(v)&&v.length<90)return cleanName(v)}return ''}
-
-/* ---------- cols: позиции в столбцах ---------- */
 function parseCols(rows,opts){opts=opts||{};var labelCols=opts.labelCols||[0],hMax=opts.hMax||4;
 if(opts.fillRight)fillRight(rows);
 var n=maxLen(rows),dataStart=rows.length;
@@ -330,8 +316,6 @@ for(var c3=0;c3<n;c3++){var cd=byCol[c3];if(!cd)continue;
 var val=V(rows,r3,c3);if(!val)continue;
 cd.fields.push({label:lab,v:val,r:r3,c:c3})}}
 return {blocks:[{title:'',cards:cards}]}}
-
-/* ---------- zones: несколько зон на одном листе ---------- */
 function parseZones(rows,opts){var blocks=[];
 (opts.zones||[]).forEach(function(z){
 var title=z.title||'';
@@ -356,8 +340,6 @@ if(z.nameCol!=null){
 }
 if(cards.length)blocks.push({title:title,cards:cards})});
 return blocks.length?{blocks:blocks}:null}
-
-/* ---------- row: товары в строках ---------- */
 function parseRow(rows,opts){opts=opts||{};var nc=opts.nc!=null?opts.nc:1,gc=opts.gc!=null?opts.gc:0;
 var n=maxLen(rows),first=-1;
 if(opts.hr!=null)first=Math.min(opts.hr,rows.length-1);
@@ -391,7 +373,6 @@ var cd={name:cleanName(nm),nameR:r3,nameC:nc,fields:[],idx:cards.length};
 if(!cards.length&&card.fields.length){card.fields.forEach(function(f){cd.fields.push(f)})}
 cards.push(cd);last=cd;
 cells3.forEach(function(x){if(x.c===nc)return;cd.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c})})}
-/* наследование вниз длинных объединённых значений */
 for(var c4=0;c4<n;c4++){if(c4===nc)continue;
 var vals=[];cards.forEach(function(o){var f=o.fields.filter(function(x){return x.c===c4})[0];if(f)vals.push({r:o.nameR,v:f.v})});
 if(!vals.length||vals.length>cards.length*0.8)continue;
@@ -401,8 +382,6 @@ cards.forEach(function(o){if(o.fields.some(function(x){return x.c===c4}))return;
 var prev=null;vals.forEach(function(x){if(x.r<o.nameR)prev=x});
 if(prev)o.fields.push({label:heads[c4]||'',v:prev.v,r:prev.r,c:c4})})}
 return {blocks:[{title:'',cards:cards,groups:groups}]}}
-
-/* ---------- kv: паспорт «подпись-значение» ---------- */
 function parseKV(rows,opts){var lc=opts.lc||0,vc=opts.vc!=null?opts.vc:1;
 var card={name:opts.name||'',nameR:-1,nameC:-1,fields:[]};
 for(var r=0;r<rows.length;r++){var lv=V(rows,r,lc),vv=V(rows,r,vc);
@@ -411,15 +390,11 @@ all.forEach(function(x){card.fields.push({label:'',v:x.v,r:r,c:x.c})});continue}
 if(!lv&&!vv)continue;
 card.fields.push({label:(vv&&lv&&lv!==vv)?normLab(lv):'',v:vv||lv,r:r,c:vc})}
 return {blocks:[{title:'',cards:[card]}]}}
-
-/* ---------- single: одна карточка, абзацы ---------- */
 function parseSingle(rows,opts){var card={name:(opts.name||''),nameR:-1,nameC:-1,fields:[]};
 var n=maxLen(rows);
 for(var r=0;r<rows.length;r++){for(var c=0;c<n;c++){var v=V(rows,r,c);if(!v)continue;
 card.fields.push({label:'',v:v,r:r,c:c});break}}
 return {blocks:[{title:'',cards:[card]}]}}
-
-/* ---------- bio: БиоТФ ---------- */
 function parseBio(rows){var n=maxLen(rows),sets=[],mainFields=[],start=-1;
 for(var r=0;r<rows.length;r++){var c0=V(rows,r,0),c1=V(rows,r,1),c2=V(rows,r,2);
 if(c0&&(c1||c2)&&c2.length>50&&c0.length<120&&!/перечень|тест-\s*набор/i.test(c0)){
@@ -433,8 +408,6 @@ var blocks=[];
 if(sets.length)blocks.push({title:'Тест-наборы и назначение',cards:sets});
 if(mainFields.length)blocks.push({title:'',cards:[{name:'Турбидофлуориметр БиоТФ',nameR:-1,nameC:-1,fields:mainFields}]});
 return blocks.length?{blocks:blocks}:null}
-
-/* ---------- разбор листа ---------- */
 function parseSheet(tb,cfg){var rows=matrix(tb);
 if(!rows.length)return {kind:'items',items:[]};
 var mode=cfg[3],opts=cfg[4]||{};
@@ -474,8 +447,6 @@ var sections=SHEETS.filter(function(c){return found[c[0]]}).map(function(c){var 
 return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},items:p.items||[],rows:p.rows||[],__plan:p.__plan||null}});
 rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length);
 return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections}}
-
-/* ---------- рендер ---------- */
 function itemHTML(it,i,j){if(it.g)return '<div class="sub" data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t)+'</div>';
 var imgs=(it.img&&it.img.length)?'<div class="imgs">'+it.img.map(function(u){return '<img src="'+esc(u)+'" loading="lazy" alt="">'}).join('')+'</div>':'';
 return '<div class="item" id="p'+i+'-'+j+'"><h3 data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t||'')+'</h3>'
@@ -539,8 +510,6 @@ if(m){var i=+m[1],jl=m[2],j=null;if(jl!=null)j=(jl.charAt(0)==='c')?jl.slice(1):
 if(i>=0&&i<BOOKS.sections.length){renderSection(i,j);applyEdit();return}}
 renderHome();buildRail(null);applyEdit()}
 window.addEventListener('hashchange',route);
-
-/* ---------- правки ---------- */
 function save(){try{localStorage.setItem(CACHE,JSON.stringify(BOOKS))}catch(e){}
 try{localStorage.setItem(PCACHE,JSON.stringify(PENDING))}catch(e){}
 try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}}
@@ -580,8 +549,6 @@ allCards(s).forEach(function(cd){parts.push('','— '+(cd.name||''));cd.fields.f
 copyText(parts.join('\n'));return}
 var out=[(i+1)+'. '+s.title,''];s.items.forEach(function(it){if(it.g)out.push('',it.t.toUpperCase());else out.push('• '+(it.t||'')+(it.d?': '+it.d:''))});
 copyText(out.join('\n'))};
-
-/* ---------- поиск ---------- */
 function runSearch(q){q=q.toLowerCase();var res=[];
 BOOKS.sections.forEach(function(s,i){if(s.title.toLowerCase().indexOf(q)>=0)res.push({i:i,j:-1,t:s.title,c:'раздел',sn:'Раздел целиком'});
 if(s.kind==='cards'){allCards(s).forEach(function(cd){
@@ -599,8 +566,6 @@ Array.prototype.forEach.call($('resList').querySelectorAll('.res'),function(el){
 var i=el.dataset.i,j=el.dataset.j;location.hash=(j==='-1')?('#/r/'+i):('#/r/'+i+'/'+j)}})}
 var tmr=null;$('q').addEventListener('input',function(){var v=$('q').value.replace(/^\s+|\s+$/g,'');clearTimeout(tmr);if(v.length<2)return;
 tmr=setTimeout(function(){showSearch(v)},220)});
-
-/* ---------- импорт и файлы ---------- */
 function parseDelim(text,delim){var rows=[],row=[],cell='',qq=false;
 for(var i=0;i<text.length;i++){var c=text.charAt(i);
 if(qq){if(c==='"'){if(text.charAt(i+1)==='"'){cell+='"';i++}else qq=false}else cell+=c}
@@ -652,7 +617,6 @@ s.__stale=1;return}
 for(var key2 in all){if(key2.indexOf(s.sheet+'|')!==0)continue;var q=key2.split('|'),idx=parseInt(q[1],10),f=q[2],val=all[key2];
 if(idx<0){if(f==='t')s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');continue}
 var it=s.items[idx];if(!it)continue;if(f==='d')it.d=val;else if(f==='t')it.t=val}})}
-/* ---------- админ ---------- */
 function applyAdmin(){document.body.classList.toggle('admin',ADMIN);$('adminBtn').textContent=ADMIN?'🔓 Выйти':'⚙ Вход';if(!ADMIN)EDIT=false;applyEdit()}
 $('adminBtn').onclick=function(){if(ADMIN){ADMIN=false;EDIT=false;try{sessionStorage.removeItem('kb_admin')}catch(e){}applyAdmin();route();return}
 $('passErr').textContent='';$('passIn').value='';$('login').classList.add('on');$('passIn').focus()};
@@ -698,7 +662,6 @@ setStatus('Правки отправлены ('+items.length+').');alert('Отп
 function rightsCsv(){var head='sheet,idx,field,value,когда,кто\n';
 return head+pendingItems().map(function(x){return '"'+x.sheet+'",'+x.i+','+x.k+',"'+String(x.v).replace(/"/g,'""').replace(/\n/g,' ')+'","'+new Date().toLocaleString('ru-RU')+'","редактор"'}).join('\n')}
 function publishCsv(){dl(rightsCsv(),'pravki.csv','text/csv');$('pubWarn').classList.remove('on')}
-/* ---------- старт ---------- */
 (function start(){applyAdmin();
 try{var c=localStorage.getItem(CACHE);if(c){BOOKS=JSON.parse(c);applyOverlay(BOOKS.sections);route();setStatus('Показана сохранённая копия. Запрашиваю свежие данные…')}}catch(e){}
 if(!BOOKS.sections.length)setStatus('Загружаю данные из Google Таблиц…');
