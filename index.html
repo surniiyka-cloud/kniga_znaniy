@@ -5,38 +5,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Книга знаний — рабочее пособие</title>
 <style>
-:root{
-  --bg:#f7f7f4;--paper:#fff;--fg:#1b1c1e;--mut:#6b7280;--line:#e4e4df;
-  --acc:#2b6b4d;--accbg:#eef4f0;--rail:#f1f2ee;--railw:296px;
-  --serif:Georgia,'PT Serif','Times New Roman',serif;
-  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
-}
-html[data-theme=dark]{--bg:#14161a;--paper:#1b1e23;--fg:#e9eaec;--mut:#9aa1ad;
-  --line:#2b3037;--acc:#63c993;--accbg:#1f2a24;--rail:#181b20}
+:root{--bg:#f7f7f4;--paper:#fff;--fg:#1b1c1e;--mut:#6b7280;--line:#e4e4df;--acc:#2b6b4d;--accbg:#eef4f0;--rail:#f1f2ee;--railw:296px;--serif:Georgia,'PT Serif','Times New Roman',serif;--sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif}
+html[data-theme=dark]{--bg:#14161a;--paper:#1b1e23;--fg:#e9eaec;--mut:#9aa1ad;--line:#2b3037;--acc:#63c993;--accbg:#1f2a24;--rail:#181b20}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--sans)}
 a{color:var(--acc)}
-#topbar{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;
-  min-height:58px;padding:8px 14px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap}
+#topbar{position:sticky;top:0;z-index:40;display:flex;gap:8px;align-items:center;min-height:58px;padding:8px 14px;background:var(--paper);border-bottom:1px solid var(--line);flex-wrap:wrap}
 #topbar .brand{font:600 17px var(--serif);white-space:nowrap}
 #q{flex:1 1 200px;max-width:520px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
 #q:focus{outline:2px solid var(--accbg);border-color:var(--acc)}
-button{font:14px var(--sans);padding:8px 11px;border:1px solid var(--line);border-radius:10px;
-  background:var(--paper);color:var(--fg);cursor:pointer}
+button{font:14px var(--sans);padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--fg);cursor:pointer}
 button:hover{border-color:var(--acc);color:var(--acc)}
 .adm{display:none}
 body.admin .adm{display:inline-flex}
 #burger{display:none}
-#rail{position:fixed;left:0;top:0;bottom:0;width:var(--railw);overflow:auto;
-  background:var(--rail);border-right:1px solid var(--line);padding:70px 12px 46px;z-index:30}
-#rail .rgroup{font:600 11.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;
-  color:var(--mut);margin:16px 8px 6px}
-#rail a{display:block;padding:7px 10px;border-radius:9px;color:var(--fg);text-decoration:none;
-  font:14px/1.35 var(--sans)}
+#rail{position:fixed;left:0;top:0;bottom:0;width:var(--railw);overflow:auto;background:var(--rail);border-right:1px solid var(--line);padding:70px 12px 46px;z-index:30}
+#rail .rgroup{font:600 11.5px var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:16px 8px 6px}
+#rail a{display:block;padding:7px 10px;border-radius:9px;color:var(--fg);text-decoration:none;font:14px/1.35 var(--sans)}
 #rail a .num{color:var(--mut);margin-right:6px;font-variant-numeric:tabular-nums}
 #rail a:hover{background:var(--paper)}
 #rail a.on{background:var(--accbg);color:var(--acc);font-weight:600}
-.tocbox{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px;margin:4px 0 14px}
+.tocbox{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:10px;margin:4px 0 14px;max-height:340px;overflow:auto}
 .tocbox h4{margin:0 0 8px;font:600 12px var(--sans);color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
 .tocbox a{font-size:13.5px;padding:5px 8px}
 main{margin-left:var(--railw);padding:26px 44px 90px}
@@ -47,12 +36,10 @@ h1{font:600 31px/1.25 var(--serif);margin:4px 0 6px}
 .lead{color:var(--mut);font:15px/1.55 var(--sans);margin:0 0 24px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
 .items{counter-reset:it}
-.item{background:var(--paper);border:1px solid var(--line);border-radius:12px;
-  padding:16px 20px;margin:0 0 14px;break-inside:avoid}
+.item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:0 0 14px;break-inside:avoid}
 .item h3{font:600 18px/1.35 var(--serif);margin:0 0 8px;counter-increment:it}
 .item h3::before{content:counter(it) ". ";color:var(--acc)}
-.sub{font:600 16px/1.4 var(--serif);color:var(--acc);margin:24px 0 10px;
-  border-bottom:1px solid var(--line);padding-bottom:5px}
+.sub{font:600 16px/1.4 var(--serif);color:var(--acc);margin:24px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px}
 .d p{margin:0 0 9px;font:16.5px/1.66 var(--serif);text-align:justify;hyphens:auto}
 .d ul{margin:6px 0 10px;padding:0;list-style:none}
 .d li{position:relative;padding-left:20px;margin:0 0 6px;font:16.5px/1.62 var(--serif)}
@@ -66,18 +53,14 @@ body.edit [data-k]{outline:1px dashed var(--line);outline-offset:3px;border-radi
 .hero h1{margin:0 0 8px;font-size:34px}
 .hero p{margin:0;color:var(--mut);font-size:15.5px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:6px 0 34px}
-.tile{display:block;background:var(--paper);border:1px solid var(--line);border-radius:14px;
-  padding:16px 18px;text-decoration:none;color:var(--fg)}
+.tile{display:block;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;text-decoration:none;color:var(--fg)}
 .tile:hover{border-color:var(--acc);box-shadow:0 2px 10px rgba(0,0,0,.05)}
 .tile b{display:block;font:600 17px/1.35 var(--serif);margin-bottom:6px}
 .tile span{color:var(--mut);font:13.5px var(--sans)}
 .flash{animation:fl 1.6s ease}
 @keyframes fl{0%{background:var(--accbg)}100%{background:var(--paper)}}
 .cat{display:grid;gap:12px}
-.catgroup{font:600 14px var(--sans);color:var(--mut);margin:16px 0 -4px;
-  text-transform:uppercase;letter-spacing:.05em}
-.common{background:var(--accbg);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:0 0 14px}
-.common h4{margin:0 0 10px;font:600 16px var(--serif);color:var(--acc)}
+.catgroup{font:600 14px var(--sans);color:var(--mut);margin:16px 0 -4px;text-transform:uppercase;letter-spacing:.05em}
 .prod{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .prod summary{cursor:pointer;padding:13px 18px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;list-style:none}
 .prod summary::-webkit-details-marker{display:none}
@@ -86,33 +69,27 @@ body.edit [data-k]{outline:1px dashed var(--line);outline-offset:3px;border-radi
 .prod summary .pt{font:600 17.5px/1.35 var(--serif)}
 .prod summary .ps{color:var(--mut);font:13px/1.5 var(--sans)}
 .prod .plate{padding:4px 18px 16px;border-top:1px dashed var(--line)}
-.prod dl{display:grid;grid-template-columns:minmax(170px,240px) 1fr;gap:6px 16px;margin:10px 0 0}
+.prod dl{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:6px 16px;margin:10px 0 0}
 .prod dt{color:var(--mut);font:14px/1.5 var(--sans)}
 .prod dd{margin:0;font:15.5px/1.6 var(--serif)}
 .prod dd p{margin:0 0 6px}
 .prod dd ul{padding-left:0;margin:4px 0 6px}
 .prod dd li{font:15.5px/1.6 var(--serif);margin-left:16px;list-style:disc}
-.common dl{display:grid;grid-template-columns:minmax(170px,240px) 1fr;gap:6px 16px;margin:0}
-.common dt{color:var(--mut);font:14px/1.5 var(--sans)}
-.common dd{margin:0;font:15.5px/1.6 var(--serif)}
 @media(max-width:760px){
-  .prod dl,.common dl{grid-template-columns:1fr;gap:0}
-  .prod dt,.common dt{margin-top:9px;font-weight:600;color:var(--fg)}
+ .prod dl{grid-template-columns:1fr;gap:0}
+ .prod dt{margin-top:9px;font-weight:600;color:var(--fg)}
 }
 .modal,.lb{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px}
 .modal{background:rgba(0,0,0,.45);z-index:60}
 .lb{background:rgba(0,0,0,.86);z-index:70}
 .modal.on,.lb.on{display:flex}
 .lb img{max-width:100%;max-height:100%;border-radius:8px}
-.box{background:var(--paper);border-radius:14px;padding:18px 20px;max-width:760px;width:100%;
-  max-height:88vh;overflow:auto}
+.box{background:var(--paper);border-radius:14px;padding:18px 20px;max-width:760px;width:100%;max-height:88vh;overflow:auto}
 .box.small{max-width:420px}
 .box h3{margin:0 0 10px;font:600 20px var(--serif)}
 .hint{color:var(--mut);font-size:14px}
-textarea{width:100%;min-height:150px;padding:10px;border:1px solid var(--line);border-radius:10px;
-  background:var(--bg);color:var(--fg);font:12.5px/1.45 ui-monospace,Consolas,monospace}
-input[type=password],input[type=text],select{padding:9px 11px;border:1px solid var(--line);
-  border-radius:10px;background:var(--bg);color:var(--fg);font:14px var(--sans)}
+textarea{width:100%;min-height:150px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);font:12.5px/1.45 ui-monospace,Consolas,monospace}
+input[type=password],input[type=text],select{padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);font:14px var(--sans)}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
 .err{color:#b00020;font-size:13.5px;min-height:18px;margin-top:8px}
 html[data-theme=dark] .err{color:#ff9c9c}
@@ -121,29 +98,25 @@ html[data-theme=dark] .err{color:#ff9c9c}
 .res b{font:600 15px var(--serif);display:block}
 .res i{font-style:normal;color:var(--mut);font-size:12.5px}
 .res span{display:block;color:var(--fg);font:14px/1.5 var(--serif);margin-top:3px}
-#up{position:fixed;right:22px;bottom:22px;z-index:35;display:none;border-radius:50%;
-  width:44px;height:44px;font-size:18px;box-shadow:0 3px 12px rgba(0,0,0,.16)}
+#up{position:fixed;right:22px;bottom:22px;z-index:35;display:none;border-radius:50%;width:44px;height:44px;font-size:18px;box-shadow:0 3px 12px rgba(0,0,0,.16)}
 #up.on{display:block}
-#dbg{display:none;margin:10px 14px 0;padding:12px 14px;border:1px solid #d9534f;
-  background:#fdf0ef;color:#7a1c1c;border-radius:10px;white-space:pre-wrap;
-  font:13px/1.5 ui-monospace,Consolas,monospace}
+#dbg{display:none;margin:10px 14px 0;padding:12px 14px;border:1px solid #d9534f;background:#fdf0ef;color:#7a1c1c;border-radius:10px;white-space:pre-wrap;font:13px/1.5 ui-monospace,Consolas,monospace}
 html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
 #status{color:var(--mut);font-size:13px;padding:8px 16px 0;white-space:pre-wrap}
 @media(max-width:900px){
-  #burger{display:inline-block}
-  #rail{transform:translateX(-102%);transition:.2s;padding-top:20px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
-  #rail.on{transform:none}
-  main{margin-left:0;padding:16px 16px 80px}
-  .hero{padding:20px}
-  .hero h1{font-size:26px}
-  h1{font-size:25px}
+ #burger{display:inline-block}
+ #rail{transform:translateX(-102%);transition:.2s;padding-top:20px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
+ #rail.on{transform:none}
+ main{margin-left:0;padding:16px 16px 80px}
+ .hero{padding:20px}
+ .hero h1{font-size:26px}
+ h1{font-size:25px}
 }
 @media print{
-  #topbar,#rail,.actions,.crumbs,.tools,#up,#status{display:none!important}
-  main{margin:0;padding:0}
-  .prod,.common{break-inside:avoid;border-color:#ccc}
-  .item{border:0;padding:0 0 10px;margin-bottom:10px}
-  .d p,.d li,.prod dd,.prod dt,.common dd,.common dt{font-size:11.5pt}
+ #topbar,#rail,.actions,.crumbs,.tools,#up,#status{display:none!important}
+ main{margin:0;padding:0}
+ .prod{break-inside:avoid;border-color:#ccc}
+ .d p,.d li,.prod dd,.prod dt{font-size:11.5pt}
 }
 </style>
 </head>
@@ -170,7 +143,7 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
 
 <div id="login" class="modal"><div class="box small">
   <h3>Режим редактора</h3>
-  <p class="hint">Пароль открывает правку, публикацию изменений, обновление из таблицы, импорт, бэкап и отчёт.</p>
+  <p class="hint">Пароль открывает правку, публикацию, обновление из таблицы, импорт, бэкап и отчёт.</p>
   <div class="row"><input id="passIn" type="password" placeholder="Пароль" autocomplete="off">
     <button id="passOk">Войти</button><button id="passCancel">Отмена</button></div>
   <div id="passErr" class="err"></div>
@@ -184,13 +157,13 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
 
 <div id="pubWarn" class="modal"><div class="box small">
   <h3>Публикация правок</h3>
-  <p class="hint">Не удалось отправить правки на сервер. Проверьте интернет и адрес публикации. Правки сохранены локально — их можно выгрузить файлом.</p>
+  <p class="hint">Не удалось отправить правки на сервер. Правки сохранены локально — их можно выгрузить файлом.</p>
   <div class="row"><button id="pubCsv">📄 Скачать правки файлом</button><button id="pubClose">Закрыть</button></div>
 </div></div>
 
 <div id="io" class="modal"><div class="box">
   <h3>Импорт и файлы</h3>
-  <p class="hint">Скопируйте нужный лист из Google Таблиц (Ctrl+A, Ctrl+C) и вставьте ниже — раздел добавится в книгу.</p>
+  <p class="hint">Скопируйте нужный лист из Google Таблиц (Ctrl+A, Ctrl+C) и вставьте ниже.</p>
   <textarea id="impText" placeholder="Вставьте данные из таблицы…"></textarea>
   <div class="row">
     <input id="impName" type="text" placeholder="Название нового раздела">
@@ -202,40 +175,28 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
     <button id="jsonBtn">💾 Скачать копию JSON</button>
     <button id="resetBtn">♻️ Сбросить кэш и перечитать таблицу</button>
   </div>
-  <p class="hint">Картинки: файлы кладите в папку <code>img/</code> рядом с этим файлом и указывайте путь вида <code>img/foto1.jpg</code>. Кнопка «+ картинка» появляется в режиме «Правка».</p>
+  <p class="hint">Картинки: файлы кладите в папку <code>img/</code> и указывайте путь вида <code>img/foto1.jpg</code>.</p>
   <div class="row"><button id="closeIo">Закрыть</button></div>
 </div></div>
 
 <div id="rep" class="modal"><div class="box">
   <h3>Отчёт о загрузке</h3>
-  <p class="hint">Скопируйте текст и пришлите в чат — по нему видно, что мешает загрузке.</p>
   <textarea id="repText" readonly style="min-height:240px"></textarea>
-  <div class="row">
-    <button id="repCopy">Скопировать</button>
-    <button id="repAgain">Попробовать снова</button>
-    <button id="repClose">Закрыть</button>
-  </div>
+  <div class="row"><button id="repCopy">Скопировать</button><button id="repAgain">Попробовать снова</button><button id="repClose">Закрыть</button></div>
 </div></div>
 
 <script>
 (function(){
 'use strict';
-function show(msg){
-  var b=document.getElementById('dbg'); if(!b) return;
-  b.style.display='block';
-  b.textContent += (b.textContent?'\n':'') + msg;
-}
-window.addEventListener('error',function(e){ show('ОШИБКА: '+(e.message||'')+(e.lineno?' (строка '+e.lineno+')':'')); });
-window.addEventListener('unhandledrejection',function(e){
-  var r=e.reason; show('ОШИБКА: '+((r&&r.message)?r.message:r));
-});
+function show(msg){var b=document.getElementById('dbg');if(!b)return;b.style.display='block';b.textContent+=(b.textContent?'\n':'')+msg;}
+window.addEventListener('error',function(e){show('ОШИБКА: '+(e.message||'')+(e.lineno?' (строка '+e.lineno+')':''))});
+window.addEventListener('unhandledrejection',function(e){var r=e.reason;show('ОШИБКА: '+((r&&r.message)?r.message:r))});
 })();
 </script>
 
 <script>
 (function(){
 'use strict';
-
 /* ================= НАСТРОЙКИ ================= */
 var SHEET_ID='1eGt77EFduFVxYnvLzS3c_bVljDBKVULB';
 var RIGHTS_ID='1hRsk0lrLjUA6bcikzfSd38PC1bI4WZ70val46khFnPU';
@@ -243,999 +204,432 @@ var RIGHTS_TAB='Правки';
 var APPS_URL='https://script.google.com/macros/s/AKfycbyD-X50gxUmQjjKhx5pUJ1HMDWfuR53gVImre2ASRW1XojvbVsDupQHhWkoVfIL2DGqyw/exec';
 var PASS='134679852';
 
-/* листы, где товары стоят в СТОЛБЦАХ (модели приборов, тесты) */
-var COLS=['Сравнение чув-ти тестов','тесты 4гр','тесты_допгруппы','анализаторы качества','анализаторы соматики'];
-/* листы, которые всегда показываем простым списком */
-var ITEMS=['термины и определения','Оглавление'];
-/* слова-признаки ПОДПИСЕЙ (первый столбец, шапка полей) */
-var SIG=['показ','назван','наимен','тип','принцип','веществ','решен','фото','характер','применен',
- 'состав','ссыл','производ','докумен','что опред','описан','свойств','выгод','артикул','размер',
- 'упаковк','плотн','материал','област','канал','стоим','цена','дополн','срок','услови','преимущ',
- 'примечан','количест','ширин','вид','концентрац','расход','фасовк','параметр','назначен',
- 'вес','масса','объем','объём','габарит','гарант','сертифик','эксплуатац','обслуживан','комплектац',
- 'индикац','чувствит','мер','место установ','сфера'];
-/* слова-признаки ГРУПП (заголовки линеек) */
-var GROUPWORDS=['анализатор','линейка','группа','сравнен','методы','семейство'];
-
+/* [ лист, название, группа, режим, ручная колонка имени ] */
 var SHEETS=[
-['термины и определения','Термины, определения, документы','Основы'],
-['Оглавление','Оглавление книги','Основы'],
-['тесты 4гр','Тесты 4 группы','Экспресс-тесты и контроль сырья'],
-['тесты_допгруппы','Тесты дополнительных групп','Экспресс-тесты и контроль сырья'],
-['Сравнение чув-ти тестов','Сравнение чувствительности тестов','Экспресс-тесты и контроль сырья'],
-['EXSTENSO','Система EXTENSO','Экспресс-тесты и контроль сырья'],
-['Тест-пластины Кенгуру','Тест-пластины KangarooSci','Экспресс-тесты и контроль сырья'],
-['Био ТФ','Турбидофлуориметр БиоТФ','Лаборатория и приборы'],
-['анализаторы качества','Анализаторы качества молока','Лаборатория и приборы'],
-['анализаторы соматики','Анализаторы соматики','Лаборатория и приборы'],
-['Люминометр','Люминометр НМ-ATP','Лаборатория и приборы'],
-['Среды Углич','Питательные среды (Углич)','Лаборатория и приборы'],
-['ИНКУБАТОР_сч.устр-во','Инкубаторы и считывающие устройства','Лаборатория и приборы'],
-['гигиена и уход за выменем','Средства для вымени','Доение и гигиена'],
-['Вспомогательные товары для доен','Вспомогательные товары для доения','Доение и гигиена'],
-['бумага_салфетки','Бумага, полотенца, салфетки','Доение и гигиена'],
-['фильтр_сопутствующие товары','Фильтры и сопутствующие товары','Доение и гигиена'],
-['моющие средства','Моющие и дезинфицирующие средства','Мойка и дезинфекция'],
-['дезинфекция_сопутсвтующие','Дезинфекция: генераторы тумана','Мойка и дезинфекция'],
-['рабочий_уборочный','Рабочий и уборочный инвентарь','Мойка и дезинфекция'],
-['спецодежда','Спецодежда и средства защиты','Спецодежда'],
-['Анализ Пишеворения КРС','Анализ пищеварения КРС (Пенсильванское сито)','Животноводство'],
-['Лист17','Диагностика обмена веществ КРС','Диагностика и здоровье'],
-['Усмерение','Фиксация и усмирение животных','Животноводство'],
-['для копыт','Уход за копытами','Животноводство'],
-['Уход за шкурой и удаление рогов','Уход за шкурой и удаление рогов','Животноводство'],
-['Выпойка и содержание молодняка','Выпойка и содержание молодняка','Животноводство'],
-['Кормушки поилки','Кормушки и поилки','Животноводство'],
-['маркировка_идентификация','Маркировка и идентификация','Животноводство'],
-['электропастух','Электропастух','Животноводство'],
-['влагомер','Влагомер','Животноводство'],
-['ветеринные препараты','Ветеринарные препараты','Ветеринария'],
-['Ветеринарные препараты РубиконВ','Препараты «РубиконВ»','Ветеринария'],
-['Препараты Экохимтех','Препараты «Экохимтех»','Ветеринария'],
-['ветеринные тесты КРС','Ветеринарные тесты: КРС','Ветеринария'],
-['ветеринные тесты МДЖ','Ветеринарные тесты: молоко','Ветеринария'],
-['МРС','Мелкий рогатый скот','Ветеринария'],
-['Искусственное осеменение','Искусственное осеменение','Ветеринария'],
-['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария']
+['термины и определения','Термины, определения, документы','Основы','items'],
+['тесты 4гр','Тесты 4 группы','Экспресс-тесты и контроль сырья','col'],
+['тесты_допгруппы','Тесты дополнительных групп','Экспресс-тесты и контроль сырья','row'],
+['Сравнение чув-ти тестов','Сравнение чувствительности тестов','Экспресс-тесты и контроль сырья','col'],
+['EXSTENSO','Система EXTENSO','Экспресс-тесты и контроль сырья','col'],
+['Тест-пластины Кенгуру','Тест-пластины KangarooSci','Экспресс-тесты и контроль сырья','items'],
+['Био ТФ','Турбидофлуориметр БиоТФ','Лаборатория и приборы','row'],
+['анализаторы качества','Анализаторы качества молока','Лаборатория и приборы','col'],
+['анализаторы соматики','Анализаторы соматики','Лаборатория и приборы','col'],
+['Люминометр','Люминометр НМ-ATP','Лаборатория и приборы','single'],
+['Среды Углич','Питательные среды (Углич)','Лаборатория и приборы','row'],
+['ИНКУБАТОР_сч.устр-во','Инкубаторы и считывающие устройства','Лаборатория и приборы','col'],
+['гигиена и уход за выменем','Средства для вымени','Доение и гигиена','row'],
+['Вспомогательные товары для доен','Вспомогательные товары для доения','Доение и гигиена','row'],
+['бумага_салфетки','Бумага, полотенца, салфетки','Доение и гигиена','row'],
+['фильтр_сопутствующие товары','Фильтры и сопутствующие товары','Доение и гигиена','row'],
+['моющие средства','Моющие и дезинфицирующие средства','Мойка и дезинфекция','row',2],
+['дезинфекция_сопутсвтующие','Дезинфекция: генераторы тумана','Мойка и дезинфекция','row',1],
+['рабочий_уборочный','Рабочий и уборочный инвентарь','Мойка и дезинфекция','row',3],
+['спецодежда','Спецодежда и средства защиты','Спецодежда','row'],
+['Анализ Пишеворения КРС','Анализ пищеварения КРС (Пенсильванское сито)','Животноводство','items'],
+['Лист17','Диагностика обмена веществ КРС','Диагностика и здоровье','row'],
+['Усмерение','Фиксация и усмирение животных','Животноводство','row'],
+['для копыт','Уход за копытами','Животноводство','row'],
+['Уход за шкурой и удаление рогов','Уход за шкурой и удаление рогов','Животноводство','row'],
+['Выпойка и содержание молодняка','Выпойка и содержание молодняка','Животноводство','row'],
+['Кормушки поилки','Кормушки и поилки','Животноводство','row',1],
+['маркировка_идентификация','Маркировка и идентификация','Животноводство','row'],
+['электропастух','Электропастух','Животноводство','row'],
+['влагомер','Влагомер','Животноводство','auto'],
+['ветеринные препараты','Ветеринарные препараты','Ветеринария','row'],
+['Ветеринарные препараты РубиконВ','Препараты «РубиконВ»','Ветеринария','row'],
+['Препараты Экохимтех','Препараты «Экохимтех»','Ветеринария','row'],
+['ветеринарные тесты КРС','Ветеринарные тесты: КРС','Ветеринария','items'],
+['ветеринарные тесты МДЖ','Ветеринарные тесты: молоко','Ветеринария','items'],
+['МРС','Мелкий рогатый скот','Ветеринария','row'],
+['Искусственное осеменение','Искусственное осеменение','Ветеринария','row'],
+['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row']
 ];
-var CACHE='kb_cache_v9';
-var PCACHE='kb_pending_v1';
-var OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v10',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
 /* ============================================ */
-
-var $=function(id){return document.getElementById(id);};
-var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
-  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
-
-var BOOKS={title:'Книга знаний',updated:'',sections:[]};
-var REPORT=[];
-var ADMIN=false, EDIT=false;
-var OV={};
-var PENDING={};
-try{ ADMIN = sessionStorage.getItem('kb_admin')==='1'; }catch(e){}
-try{ PENDING = JSON.parse(localStorage.getItem(PCACHE))||{}; }catch(e){ PENDING={}; }
-try{ OV = JSON.parse(localStorage.getItem(OCACHE))||{}; }catch(e){ OV={}; }
-
-function rep(s){ REPORT.push(s); }
-function setStatus(s){ var e=$('status'); if(e) e.textContent=s; }
-
-/* ---------- единый вид текста ---------- */
-function cleanText(v){
-  if(v==null) return '';
-  var t=String(v).replace(/\r\n?/g,'\n');
-  var lines=t.split('\n').map(function(l){
-    return l.replace(/[\t\u00a0 ]+/g,' ').replace(/^[ ]+|[ ]+$/g,'');
-  });
-  while(lines.length && !lines[0]) lines.shift();
-  while(lines.length && !lines[lines.length-1]) lines.pop();
-  var out=[];
-  lines.forEach(function(l){ if(!l && out.length && out[out.length-1]==='') return; out.push(l); });
-  t=out.join('\n');
-  t=t.replace(/\.{3,}/g,'…');
-  var needOpen=true;
-  t=t.replace(/"/g,function(){ var c=needOpen?'«':'»'; needOpen=!needOpen; return c; });
-  t=t.replace(/\s+([,.;:!?])/g,'$1');
-  t=t.replace(/([^\s]) - /g,'$1 — ');
-  t=t.replace(/--/g,'—');
-  return t;
-}
-function linkify(html){
-  return html.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>');
-}
-function renderText(d){
-  if(!d) return '';
-  var lines=String(d).split('\n'), html='', list=[];
-  function flush(){
-    if(list.length){
-      html+='<ul>'+list.map(function(x){ return '<li>'+linkify(esc(x))+'</li>'; }).join('')+'</ul>';
-      list=[];
-    }
-  }
-  lines.forEach(function(l){
-    var m=l.match(/^[•·▪*]\s*(.+)$/) || l.match(/^[-–—]\s+(.+)$/) || l.match(/^(\d+[.)]\s+.+)$/);
-    if(m && m[1] && !/^[•·▪*]\s*$/.test(l)){ list.push(m[1]); return; }
-    if(!l){ flush(); return; }
-    flush();
-    html+='<p>'+linkify(esc(l))+'</p>';
-  });
-  flush();
-  return html;
-}
-
-/* ---------- каналы загрузки ---------- */
-function jsonp(url,ms){
-  return new Promise(function(resolve,reject){
-    var cb='__kb'+Math.random().toString(36).slice(2);
-    var s=document.createElement('script');
-    var t=setTimeout(function(){ done(); reject(new Error('нет ответа за '+Math.round(ms/1000)+' сек')); },ms);
-    function done(){
-      clearTimeout(t);
-      try{ delete window[cb]; }catch(e){ window[cb]=undefined; }
-      if(s.parentNode) s.parentNode.removeChild(s);
-    }
-    window[cb]=function(d){ done(); resolve(d); };
-    s.onerror=function(){ done(); reject(new Error('запрос заблокирован браузером или сетью')); };
-    s.src=url.replace('tqx=out:json','tqx=out:json;responseHandler:'+cb);
-    document.head.appendChild(s);
-  });
-}
-function parseGviz(txt){
-  if(!txt) throw new Error('пустой ответ');
-  var a=txt.indexOf('{'), b=txt.lastIndexOf('}');
-  if(a<0||b<0) throw new Error('в ответе нет данных');
-  var j=JSON.parse(txt.slice(a,b+1));
-  if(!j.table) throw new Error('в ответе нет таблицы');
-  return j.table;
-}
+var $=function(id){return document.getElementById(id)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var BOOKS={title:'Книга знаний',updated:'',sections:[]},REPORT=[],ADMIN=false,EDIT=false,OV={},PENDING={};
+try{ADMIN=sessionStorage.getItem('kb_admin')==='1'}catch(e){}
+try{PENDING=JSON.parse(localStorage.getItem(PCACHE))||{}}catch(e){PENDING={}}
+try{OV=JSON.parse(localStorage.getItem(OCACHE))||{}}catch(e){OV={}}
+function rep(s){REPORT.push(s)} function setStatus(s){var e=$('status');if(e)e.textContent=s}
+var NAME_MARK=/наименован|название|препарат|модель|ассортимент|позици|продукт/i;
+var GROUPWORD=/анализатор|линейка|группа|сравнен|методы|семейство|ассортимент/i;
+var SIG=/показ|тип|принцип|веществ|решен|фото|характер|применен|состав|ссыл|производ|докумен|что опред|описан|свойств|выгод|артикул|размер|упаковк|плотн|материал|област|канал|стоим|цена|дополн|срок|услови|преимущ|примечан|количест|ширин|вид|концентрац|расход|фасовк|параметр|назначен|вес|масса|объем|объём|габарит|гарант|сертифик|эксплуатац|обслуживан|комплектац|индикац|чувствит|место установ|сфера|код/i;
+function cleanText(v){if(v==null)return '';var t=String(v).replace(/\r\n?/g,'\n');var lines=t.split('\n').map(function(l){return l.replace(/[\t\u00a0 ]+/g,' ').replace(/^[ ]+|[ ]+$/g,'')});
+while(lines.length&&!lines[0])lines.shift();while(lines.length&&!lines[lines.length-1])lines.pop();
+var out=[];lines.forEach(function(l){if(!l&&out.length&&out[out.length-1]==='')return;out.push(l)});t=out.join('\n');
+t=t.replace(/\.{3,}/g,'…');var needOpen=true;t=t.replace(/"/g,function(){var c=needOpen?'«':'»';needOpen=!needOpen;return c});
+t=t.replace(/\s+([,.;:!?])/g,'$1');t=t.replace(/([^\s]) - /g,'$1 — ');t=t.replace(/--/g,'—');return t}
+function linkify(h){return h.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')}
+function renderText(d){if(!d)return '';var lines=String(d).split('\n'),html='',list=[];
+function flush(){if(list.length){html+='<ul>'+list.map(function(x){return '<li>'+linkify(esc(x))+'</li>'}).join('')+'</ul>';list=[]}}
+lines.forEach(function(l){var m=l.match(/^[•·▪*]\s*(.+)$/)||l.match(/^[-–—]\s+(.+)$/)||l.match(/^(\d+[.)]\s+.+)$/);
+if(m&&m[1]&&!/^[•·▪*]\s*$/.test(l)){list.push(m[1]);return} if(!l){flush();return} flush();html+='<p>'+linkify(esc(l))+'</p>'});
+flush();return html}
+function jsonp(url,ms){return new Promise(function(resolve,reject){var cb='__kb'+Math.random().toString(36).slice(2);var s=document.createElement('script');
+var t=setTimeout(function(){done();reject(new Error('нет ответа за '+Math.round(ms/1000)+' сек'))},ms);
+function done(){clearTimeout(t);try{delete window[cb]}catch(e){window[cb]=undefined}if(s.parentNode)s.parentNode.removeChild(s)}
+window[cb]=function(d){done();resolve(d)};s.onerror=function(){done();reject(new Error('запрос заблокирован браузером или сетью'))};
+s.src=url.replace('tqx=out:json','tqx=out:json;responseHandler:'+cb);document.head.appendChild(s)})}
+function parseGviz(txt){if(!txt)throw new Error('пустой ответ');var a=txt.indexOf('{'),b=txt.lastIndexOf('}');if(a<0||b<0)throw new Error('в ответе нет данных');
+var j=JSON.parse(txt.slice(a,b+1));if(!j.table)throw new Error('в ответе нет таблицы');return j.table}
 var CHANNELS=[
- {n:'прямой запрос к Google', f:async function(url){
-   var d=await jsonp(url,9000);
-   if(d&&d.table) return d.table; throw new Error('ответ без таблицы');}},
- {n:'обходной сервер 1', f:async function(url){
-   var r=await fetch('https://api.allorigins.win/raw?url='+enc(url),{cache:'no-store'});
-   if(!r.ok) throw new Error('HTTP '+r.status); return parseGviz(await r.text());}},
- {n:'обходной сервер 2', f:async function(url){
-   var r=await fetch('https://corsproxy.io/?url='+enc(url),{cache:'no-store'});
-   if(!r.ok) throw new Error('HTTP '+r.status); return parseGviz(await r.text());}},
- {n:'обходной сервер 3', f:async function(url){
-   var r=await fetch('https://api.codetabs.com/v1/proxy?quest='+enc(url),{cache:'no-store'});
-   if(!r.ok) throw new Error('HTTP '+r.status); return parseGviz(await r.text());}}
+ {n:'прямой запрос к Google',f:async function(url){var d=await jsonp(url,9000);if(d&&d.table)return d.table;throw new Error('ответ без таблицы')}},
+ {n:'обходной сервер 1',f:async function(url){var r=await fetch('https://api.allorigins.win/raw?url='+enc(url),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return parseGviz(await r.text())}},
+ {n:'обходной сервер 2',f:async function(url){var r=await fetch('https://corsproxy.io/?url='+enc(url),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return parseGviz(await r.text())}},
+ {n:'обходной сервер 3',f:async function(url){var r=await fetch('https://api.codetabs.com/v1/proxy?quest='+enc(url),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return parseGviz(await r.text())}}
 ];
 var WORKING=0;
-
-async function pickChannel(){
-  for(var i=0;i<CHANNELS.length;i++){
-    setStatus('Проверяю канал связи '+(i+1)+' из '+CHANNELS.length+' («'+CHANNELS[i].n+'»)…');
-    try{
-      var tb=await CHANNELS[i].f(BASE+'tqx=out:json&headers=0&sheet='+enc(SHEETS[5][0]));
-      WORKING=i;
-      rep('ОК: канал «'+CHANNELS[i].n+'» работает, строк в пробном листе: '+(tb.rows?tb.rows.length:0));
-      return true;
-    }catch(e){ rep('НЕ ПРОШЁЛ: канал «'+CHANNELS[i].n+'» — '+e.message); }
-  }
-  return false;
-}
-async function fetchUrl(url){
-  try{ return await CHANNELS[WORKING].f(url); }
-  catch(e1){
-    for(var k=0;k<CHANNELS.length;k++){
-      if(k===WORKING) continue;
-      try{ return await CHANNELS[k].f(url); }catch(e2){}
-    }
-    throw new Error(e1.message);
-  }
-}
-function fetchSheet(sheet){
-  return fetchUrl(BASE+'tqx=out:json&headers=0&sheet='+enc(sheet));
-}
-
-/* ---------- общие правки ---------- */
-function parseRightsRows(tb){
-  var fresh={};
-  (tb.rows||[]).forEach(function(row){
-    var c=(row.c||[]).map(function(x){ return x&&x.v!=null?String(x.v):''; });
-    if(!c[0]||!c[2]||c[0]==='sheet') return;
-    fresh[c[0]+'|'+parseInt(c[1],10)+'|'+c[2]]=c[3];
-  });
-  return fresh;
-}
-async function loadRights(){
-  if(!RIGHTS_ID) return;
-  var tries=[
-    RBASE+'tqx=out:json&headers=0&gid=0',
-    RBASE+'tqx=out:json&headers=0&sheet='+enc(RIGHTS_TAB)
-  ];
-  for(var t=0;t<tries.length;t++){
-    try{
-      var tb=await fetchUrl(tries[t]);
-      if(tb&&tb.rows&&tb.rows.length){
-        OV=parseRightsRows(tb);
-        try{ localStorage.setItem(OCACHE,JSON.stringify(OV)); }catch(e){}
-        rep('Общие правки прочитаны: '+Object.keys(OV).length);
-        return;
-      }
-    }catch(e){ rep('Правки: '+e.message); }
-  }
-  rep('Правки: свежих данных нет, показываю сохранённые ('+Object.keys(OV).length+').');
-}
-function applyOverlay(sections){
-  var all={},k;
-  for(k in OV) all[k]=OV[k];
-  for(k in PENDING) all[k]=PENDING[k];
-  sections.forEach(function(s){
-    if(s.kind==='cards'){
-      for(var key in all){
-        if(key.indexOf(s.sheet+'|')!==0) continue;
-        var p=key.split('|'), ri=parseInt(p[1],10), ci=parseInt(p[2],10);
-        if(isNaN(ri)||isNaN(ci)) continue;
-        if(!s.rows[ri]) s.rows[ri]=[];
-        s.rows[ri][ci]=all[key];
-      }
-      return;
-    }
-    for(var key2 in all){
-      if(key2.indexOf(s.sheet+'|')!==0) continue;
-      var q=key2.split('|'), idx=parseInt(q[1],10), field=q[2], val=all[key2];
-      if(idx<0){
-        if(field==='t') s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');
-        continue;
-      }
-      var it=s.items[idx]; if(!it) continue;
-      if(field==='d') it.d=val; else if(field==='t') it.t=val;
-    }
-  });
-}
-
-/* ---------- разбор листа ---------- */
-function toItems(tb){
-  var out=[];
-  (tb.rows||[]).forEach(function(row){
-    var cells=(row.c||[]).map(function(c){
-      if(!c) return '';
-      var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');
-      return cleanText(v);
-    });
-    var filled=cells.filter(function(x){ return x!==''; });
-    if(!filled.length) return;
-    if(filled.length===1){ out.push({g:1,t:filled[0]}); return; }
-    if(cells[0]===''){ out.push({t:filled[0],d:filled.slice(1).join('\n')}); return; }
-    var first=cells[0];
-    var rest=cells.slice(1).filter(function(x){ return x!==''; });
-    if(/^\d{1,2}[.)]?$/.test(first) && rest.length) out.push({t:rest[0],d:rest.slice(1).join('\n')});
-    else out.push({t:first,d:rest.join('\n')});
-  });
-  return out;
-}
-function matrix(tb){
-  return (tb.rows||[]).map(function(row){
-    return (row.c||[]).map(function(c){
-      if(!c) return '';
-      var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');
-      return cleanText(v);
-    });
-  }).filter(function(r){ return r.some(function(x){ return x!==''; }); });
-}
-function looksSig(v){
-  var t=String(v||'').trim();
-  if(!t) return true;
-  if(/^https?:/i.test(t)) return true;
-  if(/^[\d\s.,;:()\/+–—-]+$/.test(t)) return true;
-  if(t.length<=2) return true;
-  var low=t.toLowerCase();
-  for(var i=0;i<SIG.length;i++) if(low.indexOf(SIG[i])>=0) return true;
-  return false;
-}
-function looksGroup(v){
-  var low=String(v||'').trim().toLowerCase();
-  if(!low) return false;
-  for(var i=0;i<GROUPWORDS.length;i++) if(low.indexOf(GROUPWORDS[i])>=0) return true;
-  return false;
-}
-function normLabel(v){
-  var t=String(v||'').trim();
-  return t.split('\n')[0].replace(/^[\d]{1,2}[.)]\s*/,'').trim();
-}
-function labelFrom(row,K){
-  var parts=[];
-  for(var c=0;c<K && c<row.length;c++){
-    var v=(row[c]||'').trim();
-    if(!v) continue;
-    if(/^\d{1,2}[.)]?$/.test(v)) continue;
-    if(/^https?:/i.test(v)) continue;
-    var s=normLabel(v);
-    if(s && parts.indexOf(s)<0) parts.push(s);
-    if(parts.length>=2) break;
-  }
-  return parts.join(' · ');
-}
-/* товарные столбцы: ищем шапку и модели по всем её строкам */
-function colPlan(rows){
-  var HDR=Math.min(3,rows.length-1);
-  var n=0;
-  rows.forEach(function(r){ if(r.length>n) n=r.length; });
-  var cols=[];
-  for(var c=0;c<n;c++){
-    var name='', nameRow=-1, sub='';
-    for(var r=HDR;r>=0;r--){
-      var v=((rows[r]||[])[c]||'').trim();
-      if(!v) continue;
-      if(looksSig(v)||looksGroup(v)) continue;
-      name=v; nameRow=r; break;
-    }
-    if(!name) continue;
-    for(var r2=0;r2<nameRow;r2++){
-      var v2=((rows[r2]||[])[c]||'').trim();
-      if(v2 && looksGroup(v2)){ sub=v2; break; }
-    }
-    cols.push({c:c, name:name, nameRow:nameRow, sub:sub});
-  }
-  return cols;
-}
-function buildColCards(s){
-  var rows=s.rows, cols=colPlan(rows);
-  if(!cols.length) return {groups:[],common:[]};
-  var K=cols[0].c;
-  var cards=cols.map(function(cl){
-    return {name:cl.name, sub:cl.sub, nameRow:cl.nameRow, c:cl.c, fields:[]};
-  });
-  var common=[];
-  for(var r=K;r<rows.length;r++){
-    var row=rows[r]||[];
-    var vals=[];
-    cards.forEach(function(cd){
-      var v=(row[cd.c]||'').trim();
-      if(v) vals.push({cd:cd, v:v});
-    });
-    if(!vals.length) continue;
-    var label=labelFrom(row,K);
-    if(vals.length===1 && label){
-      common.push({label:label, r:r, c:vals[0].cd.c, v:vals[0].v});
-      continue;
-    }
-    vals.forEach(function(x){
-      if(x.cd.nameRow>=r) return;
-      x.cd.fields.push({r:r, c:x.cd.c, label:label, v:x.v});
-    });
-  }
-  return {groups:[], cards:cards, common:common};
-}
-function buildRowPlan(rows){
-  var headRow=-1;
-  for(var r=0;r<Math.min(3,rows.length);r++){
-    var cnt=(rows[r]||[]).filter(function(x){ return x!==''; }).length;
-    if(cnt>=3){ headRow=r; break; }
-  }
-  if(headRow<0) headRow=0;
-  var heads=(rows[headRow]||[]).slice();
-  var groups=[], cards=[];
-  for(var r2=headRow+1;r2<rows.length;r2++){
-    var row=rows[r2]||[];
-    var name='', nameCol=-1;
-    for(var c=0;c<3 && c<row.length;c++){
-      var v=(row[c]||'').trim();
-      if(!v) continue;
-      if(v.length<5 && r2>-1){ continue; }
-      name=v; nameCol=c; break;
-    }
-    var filled=row.filter(function(x){ return x!==''; }).length;
-    if(!name){
-      if(filled===1 && cards.length){
-        var only='';
-        for(var c2=0;c2<row.length;c2++){ if((row[c2]||'').trim()){ only=row[c2].trim(); break; } }
-        if(only.length<=60){ groups.push({after:cards.length-1, title:only}); continue; }
-      }
-      if(cards.length){
-        var cur=cards[cards.length-1];
-        for(var c3=0;c3<row.length;c3++){
-          var v3=(row[c3]||'').trim();
-          if(!v3) continue;
-          cur.fields.push({r:r2, c:c3, label:normLabel(heads[c3]||''), v:v3});
-        }
-      }
-      continue;
-    }
-    var card={name:name, col:nameCol, nameRow:r2, fields:[], group:''};
-    cards.push(card);
-    for(var c4=0;c4<row.length;c4++){
-      if(c4===nameCol) continue;
-      var v4=(row[c4]||'').trim();
-      if(!v4) continue;
-      card.fields.push({r:r2, c:c4, label:normLabel(heads[c4]||''), v:v4});
-    }
-  }
-  return {cards:cards, groups:groups};
-}
-function parseSheet(tb,sheet){
-  if(ITEMS.indexOf(sheet)>=0) return {kind:'items', items:toItems(tb)};
-  var rows=matrix(tb);
-  if(!rows.length) return {kind:'items', items:[]};
-  if(COLS.indexOf(sheet)>=0) return {kind:'cards', orient:'col', rows:rows};
-  var cnt=(rows[0]||[]).filter(function(x){ return x!==''; }).length;
-  if(cnt>=3 || /фото|наимен|назван/i.test((rows[0]||[]).slice(0,3).join(' '))){
-    return {kind:'cards', orient:'row', rows:rows};
-  }
-  return {kind:'items', items:toItems(tb)};
-}
-async function loadAll(onProgress){
-  var found={}, done=0, fail=[], empty=[];
-  var queue=SHEETS.slice();
-  async function worker(){
-    while(queue.length){
-      var cfg=queue.shift();
-      try{
-        var parsed=parseSheet(await fetchSheet(cfg[0]),cfg[0]);
-        var ok = parsed.kind==='cards' ? parsed.rows.length>1 : parsed.items.length>0;
-        if(ok) found[cfg[0]]=parsed; else empty.push(cfg[0]);
-      }catch(e){ fail.push(cfg[0]+' ('+e.message+')'); }
-      done++; onProgress(done,SHEETS.length,cfg[1]);
-    }
-  }
-  var workers=[];
-  for(var i=0;i<5;i++) workers.push(worker());
-  await Promise.all(workers);
-  if(fail.length) rep('НЕ ПРОЧИТАЛИСЬ: '+fail.join('; '));
-  if(empty.length) rep('БЕЗ ТЕКСТА: '+empty.join(', '));
-  var sections=SHEETS.filter(function(c){ return found[c[0]]; }).map(function(c){
-    var p=found[c[0]];
-    return {sheet:c[0], title:c[1], group:c[2], kind:p.kind, orient:p.orient||'',
-            items:p.items||[], rows:p.rows||[]};
-  });
-  rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length+' листов.');
-  return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections};
-}
-
+async function pickChannel(){for(var i=0;i<CHANNELS.length;i++){setStatus('Проверяю канал связи '+(i+1)+' из '+CHANNELS.length+' («'+CHANNELS[i].n+'»)…');
+try{var tb=await CHANNELS[i].f(BASE+'tqx=out:json&headers=0&sheet='+enc('EXSTENSO'));WORKING=i;rep('ОК: канал «'+CHANNELS[i].n+'» работает');return true}catch(e){rep('НЕ ПРОШЁЛ: канал «'+CHANNELS[i].n+'» — '+e.message)}} return false}
+async function fetchUrl(url){try{return await CHANNELS[WORKING].f(url)}catch(e1){for(var k=0;k<CHANNELS.length;k++){if(k===WORKING)continue;try{return await CHANNELS[k].f(url)}catch(e2){}}throw new Error(e1.message)}}
+function fetchSheet(sheet){return fetchUrl(BASE+'tqx=out:json&headers=0&sheet='+enc(sheet))}
+function parseRights(tb){var fresh={};(tb.rows||[]).forEach(function(row){var c=(row.c||[]).map(function(x){return x&&x.v!=null?String(x.v):''});
+if(!c[0]||!c[2]||c[0]==='sheet')return;fresh[c[0]+'|'+parseInt(c[1],10)+'|'+c[2]]=c[3]});return fresh}
+async function loadRights(){if(!RIGHTS_ID)return;var tries=[RBASE+'tqx=out:json&headers=0&gid=0',RBASE+'tqx=out:json&headers=0&sheet='+enc(RIGHTS_TAB)];
+for(var t=0;t<tries.length;t++){try{var tb=await fetchUrl(tries[t]);if(tb&&tb.rows&&tb.rows.length){OV=parseRights(tb);try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){};rep('Общих правок: '+Object.keys(OV).length);return}}catch(e){rep('Правки: '+e.message)}}
+rep('Правки: свежих нет, показываю сохранённые ('+Object.keys(OV).length+')')}
+function applyOverlay(sections){var all={},k;for(k in OV)all[k]=OV[k];for(k in PENDING)all[k]=PENDING[k];
+sections.forEach(function(s){if(s.kind==='cards'){for(var key in all){if(key.indexOf(s.sheet+'|')!==0)continue;var p=key.split('|'),ri=parseInt(p[1],10),ci=parseInt(p[2],10);
+if(isNaN(ri)||isNaN(ci))continue;if(!s.rows[ri])s.rows[ri]=[];s.rows[ri][ci]=all[key]}s.__plan=null;return}
+for(var key2 in all){if(key2.indexOf(s.sheet+'|')!==0)continue;var q=key2.split('|'),idx=parseInt(q[1],10),f=q[2],val=all[key2];
+if(idx<0){if(f==='t')s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');continue}
+var it=s.items[idx];if(!it)continue;if(f==='d')it.d=val;else if(f==='t')it.t=val}})}
+/* ---------- матрица листа ---------- */
+function matrix(tb){return (tb.rows||[]).map(function(row){return (row.c||[]).map(function(c){if(!c)return '';var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');
+return cleanText(v)}).filter(function(x,i,a){return true})}).filter(function(r){return r.some(function(x){return x!==''})})}
+function toItems(tb){var out=[];(tb.rows||[]).forEach(function(row){var cells=(row.c||[]).map(function(c){if(!c)return '';var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');return cleanText(v)});
+var filled=cells.filter(function(x){return x!==''});if(!filled.length)return;
+if(filled.length===1){out.push({g:1,t:filled[0]});return}
+if(cells[0]===''){out.push({t:filled[0],d:filled.slice(1).join('\n')});return}
+var first=cells[0],rest=cells.slice(1).filter(function(x){return x!==''});
+if(/^\d{1,2}[.)]?$/.test(first)&&rest.length)out.push({t:rest[0],d:rest.slice(1).join('\n')});else out.push({t:first,d:rest.join('\n')})});return out}
+/* ---------- утилиты плана ---------- */
+function maxLen(rows){var n=0;rows.forEach(function(r){if(r.length>n)n=r.length});return n}
+function V(rows,r,c){return ((rows[r]||[])[c]||'').trim()}
+function isGroup(v){return GROUPWORD.test(String(v||''))}
+function isSig(v){return SIG.test(String(v||''))||/^https?:/i.test(String(v||''))}
+function normLab(v){return String(v||'').replace(/\s+/g,' ').replace(/^[\d]{1,2}[.)]\s*/,'').trim()}
+function cleanHead(h){var t=normLab(h);if(!t)return '';if(/^фото/i.test(t))return '';return t}
+function cleanName(v){return String(v||'').replace(/\s+/g,' ').replace(/[-–—]\s*$/,'').trim()}
+function pickNameCol(rows){var n=Math.min(maxLen(rows),4),best=1,bs=-1;
+for(var c=0;c<n;c++){var s=0;for(var r=0;r<rows.length;r++){var v=V(rows,r,c);if(v.length>=8&&v.length<=140&&v.indexOf('•')!==0)s+=v.length}
+if(s>bs){bs=s;best=c}}return best}
+/* ---------- план: столбцы ---------- */
+function planCol(rows){var n=maxLen(rows),cuts=[0];
+for(var r=1;r<rows.length;r++){var c0=V(rows,r,0);if(c0.length>40&&/наименован/i.test(c0))cuts.push(r)}
+cuts.push(rows.length);var zones=[],idx=0;
+for(var z=0;z<cuts.length-1;z++){var a=cuts[z],b=cuts[z+1];
+var head=cleanName(V(rows,a,0).replace(/наименование[\s\S]*$/i,''));if(head.length>150)head=head.slice(0,150)+'…';
+var dataStart=-1;for(var c=1;c<n;c++){for(var rr=a+1;rr<b;rr++){if(V(rows,rr,c)!==''){dataStart=c;break}}if(dataStart>=0)break}
+if(dataStart<0)continue;
+var cards=[];for(var c2=dataStart;c2<n;c2++){var name='',nameR=-1,grp='';
+for(var r2=a;r2<Math.min(b,a+5);r2++){var v=V(rows,r2,c2);if(!v)continue;
+if(isGroup(v)){if(!grp)grp=cleanName(v);continue} if(isSig(v))continue;
+if(/наимен|ссылк/i.test(v)&&v.length>60)continue;name=v;nameR=r2;break}
+if(!name)continue;cards.push({name:cleanName(name),nameR:nameR,nameC:c2,group:grp,fields:[],idx:idx++})}
+if(!cards.length)continue;
+for(var r3=a;r3<b;r3++){var label='';for(var c3=0;c3<dataStart;c3++){var v3=V(rows,r3,c3);if(!v3||isGroup(v3))continue;label+=(label?' · ':'')+normLab(v3)}
+if(NAME_MARK.test(label)||/ссылк/i.test(label))continue;
+var cur='',src=-1;
+for(var c4=dataStart;c4<n;c4++){var v4=V(rows,r3,c4);if(v4!==''){cur=v4;src=c4}
+if(!cur)continue;var cd=null;for(var q=0;q<cards.length;q++){if(cards[q].nameC===c4){cd=cards[q];break}}
+if(!cd||r3<=cd.nameR)continue;if(!label&&cur===cd.name)continue;
+cd.fields.push({label:label,r:r3,c:src,v:cur})}}
+zones.push({title:cuts.length>2?head:'',cards:cards,groups:{}})}
+return {zones:zones}}
+/* ---------- план: строки ---------- */
+function planRow(rows){var n=maxLen(rows),marks=[];
+for(var r=0;r<Math.min(3,rows.length);r++){for(var c=0;c<n;c++){var v=V(rows,r,c);
+if(NAME_MARK.test(v)&&!marks.some(function(m){return m.c===c}))marks.push({r:r,c:c,t:v})}}
+if(!marks.length){var auto=[];
+for(var c2=0;c2<n;c2++){if(NAME_MARK.test(V(rows,Math.min(2,rows.length-1),c2)))auto.push({r:Math.min(2,rows.length-1),c:c2,t:''})}
+marks=auto.length?auto:[{r:0,c:pickNameCol(rows),t:''}]}
+marks.sort(function(x,y){return x.c-y.c});
+var dataStart=1;marks.forEach(function(m){if(m.r+1>dataStart)dataStart=m.r+1});
+var zones=[],idx=0;
+for(var z=0;z<marks.length;z++){var m=marks[z],cName=m.c;
+var cA=(z===0)?0:Math.floor((marks[z-1].c+m.c)/2)+1;
+var cB=(z===marks.length-1)?n:Math.floor((m.c+marks[z+1].c)/2)+1;
+cA=Math.max(0,cA);cB=Math.min(n,cB);
+var title=(marks.length>1)?cleanName(String(m.t||'').replace(/наименован\w*|название|препарат|модель/ig,'')):'';
+var heads={};for(var cc=cA;cc<cB;cc++){var h='';for(var rr=m.r;rr>=0;rr--){var vv=V(rows,rr,cc);if(vv){h=vv;break}}heads[cc]=h}
+var cards=[],groups={},last=null;
+for(var r3=dataStart;r3<rows.length;r3++){var row=rows[r3]||[],filled=[];
+for(var c3=cA;c3<cB;c3++){if((row[c3]||'').trim()!=='')filled.push(c3)}
+if(!filled.length)continue;
+var name=(row[cName]||'').trim();
+if(!name){if(filled.length===1&&filled[0]!==cName){groups['g'+cards.length]=cleanName(row[filled[0]])}
+else if(last){filled.forEach(function(c4){if(c4===cName)return;last.fields.push({label:cleanHead(heads[c4]),r:r3,c:c4,v:row[c4].trim()})})}
+continue}
+var cd={name:cleanName(name),nameR:r3,nameC:cName,fields:[],idx:idx++};cards.push(cd);last=cd;
+filled.forEach(function(c5){if(c5===cName)return;cd.fields.push({label:cleanHead(heads[c5]),r:r3,c:c5,v:row[c5].trim()})})}
+/* наследование вниз по разреженным колонкам */
+(function(){for(var cc2=cA;cc2<cB;cc2++){if(cc2===cName)continue;
+var vals=[];cards.forEach(function(cd){var f=cd.fields.filter(function(x){return x.c===cc2})[0];if(f)vals.push({r:cd.nameR,v:f.v})});
+if(!vals.length)continue;var long=vals.filter(function(x){return x.v.length>=20});if(!long.length)continue;
+if(vals.length>cards.length*0.6)continue;
+cards.forEach(function(cd){if(cd.fields.some(function(x){return x.c===cc2}))return;
+var prev=null;vals.forEach(function(x){if(x.r<cd.nameR)prev=x});
+if(!prev)return;
+var lab=cleanHead(heads[cc2]);if(!lab)lab='';
+cd.fields.push({label:lab,r:prev.r,c:cc2,v:prev.v,inh:1})})}})();
+zones.push({title:title,cards:cards,groups:groups})}
+return {zones:zones}}
+/* ---------- план: одиночный паспорт ---------- */
+function planSingle(rows){var n=maxLen(rows),name='Паспорт изделия',nameR=0,nameC=0;
+for(var c=0;c<n;c++){if(V(rows,0,c)){name=cleanName(V(rows,0,c));nameC=c;break}}
+var card={name:name,nameR:nameR,nameC:nameC,fields:[],idx:0};
+for(var r=1;r<rows.length;r++){for(var c2=0;c2<n;c2++){var v=V(rows,r,c2);if(!v)continue;
+card.fields.push({label:'',r:r,c:c2,v:v});break}}
+return {zones:[{title:'',cards:[card],groups:{}}]}}
+function planOf(s){if(s.__plan&&s.__planLen===s.rows.length)return s.__plan;
+var p;if(s.mode==='col')p=planCol(s.rows);else if(s.mode==='single')p=planSingle(s.rows);else p=planRow(s.rows);
+s.__plan=p;s.__planLen=s.rows.length;return p}
+function allCards(s){var p=planOf(s),out=[];p.zones.forEach(function(z){z.cards.forEach(function(c){out.push({z:z,c:c})})});return out}
+/* ---------- загрузка ---------- */
+function parseSheet(tb,cfg){var mode=cfg[3]||'auto';
+if(mode==='items')return {kind:'items',items:toItems(tb)};
+var rows=matrix(tb);if(!rows.length)return {kind:'items',items:[]};
+if(mode==='auto'){var hasName=false;for(var r=0;r<Math.min(3,rows.length);r++){for(var c=0;c<maxLen(rows);c++){if(NAME_MARK.test(V(rows,r,c))){hasName=true}}}
+mode=hasName?'row':'col'}
+if(mode==='row'){var s={kind:'cards',mode:'row',rows:rows};var p=planRow(rows);
+ if(cfg[4]!=null){ /* ручная колонка имени */ var m={r:0,c:cfg[4],t:''};p=planRowManual(rows,cfg[4]);s.__plan=p;s.__planLen=rows.length}
+ return s}
+if(mode==='single')return {kind:'cards',mode:'single',rows:rows};
+return {kind:'cards',mode:'col',rows:rows}}
+function planRowManual(rows,cName){var n=maxLen(rows),heads={};
+for(var c=0;c<n;c++){for(var r=0;r<Math.min(3,rows.length);r++){var v=V(rows,r,c);if(v){heads[c]=v;break}}}
+var cards=[],idx=0,last=null;
+for(var r3=1;r3<rows.length;r3++){var row=rows[r3]||[],filled=[];
+for(var c2=0;c2<n;c2++){if((row[c2]||'').trim()!=='')filled.push(c2)}
+if(!filled.length)continue;
+var name=(row[cName]||'').trim();
+if(!name){if(filled.length===1){continue}
+if(last){filled.forEach(function(c4){if(c4===cName)return;last.fields.push({label:cleanHead(heads[c4]),r:r3,c:c4,v:row[c4].trim()})})}
+continue}
+var cd={name:cleanName(name),nameR:r3,nameC:cName,fields:[],idx:idx++};cards.push(cd);last=cd;
+filled.forEach(function(c5){if(c5===cName)return;cd.fields.push({label:cleanHead(heads[c5]),r:r3,c:c5,v:row[c5].trim()})})}
+return {zones:[{title:'',cards:cards,groups:{}}]}}
+async function loadAll(onProgress){var found={},done=0,fail=[],empty=[],queue=SHEETS.slice();
+async function worker(){while(queue.length){var cfg=queue.shift();
+try{var parsed=parseSheet(await fetchSheet(cfg[0]),cfg);
+ var ok=parsed.kind==='cards'?(parsed.rows.length>1):parsed.items.length>0;
+ if(ok)found[cfg[0]]=parsed;else empty.push(cfg[0])}catch(e){fail.push(cfg[0]+' ('+e.message+')')}
+ done++;onProgress(done,SHEETS.length,cfg[1])}}
+var ws=[];for(var i=0;i<5;i++)ws.push(worker());await Promise.all(ws);
+if(fail.length)rep('НЕ ПРОЧИТАЛИСЬ: '+fail.join('; '));
+if(empty.length)rep('БЕЗ ТЕКСТА: '+empty.join(', '));
+var sections=SHEETS.filter(function(c){return found[c[0]]}).map(function(c){var p=found[c[0]];
+return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',items:p.items||[],rows:p.rows||[]}});
+rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length);
+return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections}}
 /* ---------- рендер ---------- */
-function itemHTML(it,i,j){
-  if(it.g) return '<div class="sub" data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t)+'</div>';
-  var imgs=(it.img&&it.img.length)
-    ?'<div class="imgs">'+it.img.map(function(u){ return '<img src="'+esc(u)+'" loading="lazy" alt="">'; }).join('')+'</div>':'';
-  return '<div class="item" id="p'+i+'-'+j+'">'
-    +'<h3 data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t||'')+'</h3>'
-    +'<div class="d" data-sid="'+i+'" data-iid="'+j+'" data-k="d">'+renderText(it.d||'')+'</div>'
-    +imgs
-    +'<div class="tools"><button onclick="kbAddImg('+i+','+j+')">+ картинка</button>'
-    +'<button onclick="kbDelItem('+i+','+j+')">удалить пункт</button></div></div>';
-}
-function dlRows(fields,i,labelWanted){
-  var html='', last='';
-  fields.forEach(function(f){
-    var lab=(labelWanted && f.r===0)?labelWanted:(f.label||'');
-    var showLab=(lab && lab!==last);
-    last=lab;
-    html+=(showLab?'<dt>'+esc(lab)+'</dt>':'<dt></dt>')
-      +'<dd data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c">'+renderText(f.v)+'</dd>';
-  });
-  return html;
-}
-function cardsHTML(s,i){
-  var plan=(s.orient==='col')?buildColCards(s):buildRowPlan(s);
-  var cards=plan.cards||[];
-  var html='<div class="cat">';
-  if(plan.common && plan.common.length){
-    html+='<div class="common"><h4>Общие сведения (в таблице — одной строкой на всю линейку)</h4><dl>';
-    html+=plan.common.map(function(x){
-      return '<dt>'+esc(x.label)+'</dt>'
-        +'<dd data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.c+'" data-k="c">'+renderText(x.v)+'</dd>';
-    }).join('');
-    html+='</dl></div>';
-  }
-  var groups={};
-  (plan.groups||[]).forEach(function(g){ groups[g.after]=(groups[g.after]||'')+g.title; });
-  cards.forEach(function(cd,k){
-    if(groups[k-1]) html+='<div class="catgroup">'+esc(groups[k-1])+'</div>';
-    var subs=(cd.sub?['<span class="ps">'+linkify(esc(cd.sub))+'</span>']:[]).join('');
-    var nameHTML=(cd.nameRow!=null && cd.c!=null)
-      ? '<span class="pt" data-sid="'+i+'" data-row="'+cd.nameRow+'" data-col="'+cd.c+'" data-k="c">'+linkify(esc(cd.name))+'</span>'
-      : '<span class="pt">'+linkify(esc(cd.name))+'</span>';
-    html+='<details class="prod"><summary>'+nameHTML+subs+'</summary>'
-      +'<div class="plate"><dl>'+dlRows(cd.fields,i)+'</dl></div></details>';
-  });
-  return html+'</div>';
-}
-function countCards(s){
-  if(s.orient==='col') return colPlan(s.rows).length;
-  return buildRowPlan(s.rows).cards.length;
-}
-function cardName(s,ri,ci){
-  if(s.orient==='col'){
-    var plan=colPlan(s.rows);
-    for(var i=0;i<plan.length;i++) if(plan[i].c===ci) return plan[i].name;
-    return '';
-  }
-  var row=s.rows[ri]||[], name='';
-  for(var c=0;c<row.length;c++){
-    var v=(row[c]||'').trim();
-    if(!v) continue;
-    if(!name || v.length>=5){ name=v; }
-    if(v.length>=5) break;
-  }
-  return name;
-}
-function renderHome(){
-  var html='<div class="doc"><div class="hero"><h1>Книга знаний</h1>'
-    +'<p>Рабочее пособие для менеджеров: контроль сырья и молочной продукции, лабораторное оборудование, '
-    +'гигиена доения, животноводство и ветеринария. Разделов: '+BOOKS.sections.length+'. '
-    +'Обновлено: '+(BOOKS.updated||'—')+'.</p></div>';
-  var groups=[];
-  BOOKS.sections.forEach(function(s,i){
-    var g=groups.filter(function(x){ return x.name===s.group; })[0];
-    if(!g){ g={name:s.group,list:[]}; groups.push(g); }
-    g.list.push({i:i,s:s});
-  });
-  groups.forEach(function(g){
-    html+='<h2 class="crumbs" style="font:600 13px var(--sans);letter-spacing:.06em;text-transform:uppercase">'+esc(g.name)+'</h2><div class="grid">';
-    g.list.forEach(function(x){
-      var cap=(x.s.kind==='cards')
-        ? (countCards(x.s)+' позиций в каталоге')
-        : (x.s.items.filter(function(it){ return !it.g; }).length+' пунктов');
-      html+='<a class="tile" href="#/r/'+x.i+'"><b>'+esc(x.s.title)+'</b><span>'+cap+'</span></a>';
-    });
-    html+='</div>';
-  });
-  if(!BOOKS.sections.length){
-    html+='<div class="item"><h3>Данные пока не загружены</h3><p>Проверьте соединение с интернетом и обновите страницу.</p></div>';
-  }
-  html+='</div>';
-  $('page').innerHTML=html;
-}
-function renderSection(i,jump){
-  var s=BOOKS.sections[i];
-  if(!s){ renderHome(); return; }
-  var num=i+1, inner, lead;
-  if(s.kind==='cards'){
-    inner=cardsHTML(s,i);
-    lead='Каталог: '+countCards(s)+' позиций. Источник: лист «'+esc(s.sheet)+'». Обновлено '+(BOOKS.updated||'—')+'. Раскройте карточку — все характеристики подтянуты к своей позиции.';
-  } else {
-    inner='<div class="items">'+s.items.map(function(it,k){ return itemHTML(it,i,k); }).join('')+'</div>';
-    lead='Пунктов: '+s.items.filter(function(it){ return !it.g; }).length+'. Источник: лист «'+esc(s.sheet)+'». Обновлено '+(BOOKS.updated||'—')+'.';
-  }
-  var html='<div class="doc">'
-    +'<div class="crumbs"><a href="#/">Содержание</a> · '+esc(s.group)+' · раздел '+num+'</div>'
-    +'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1>'
-    +'<p class="lead">'+lead+'</p>'
-    +'<div class="actions">'
-      +'<button onclick="location.hash=\'#/\'">← К содержанию</button>'
-      +'<button onclick="kbPrint()">🖨 Печать раздела</button>'
-      +'<button onclick="kbCopySection('+i+')">📋 Скопировать раздел</button>'
-      +(s.kind==='cards'?'':'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>')
-    +'</div>'
-    +inner+'</div>';
-  $('page').innerHTML=html;
-  if(s.kind!=='cards' && jump!=null){
-    var el=$('p'+i+'-'+jump);
-    if(el){ el.classList.add('flash'); el.scrollIntoView({block:'center'}); }
-  } else {
-    window.scrollTo(0,0);
-  }
-  buildRail(i);
-}
-function buildRail(cur){
-  var html='<div style="padding:0 8px 6px"><a href="#/" style="font:600 15px var(--serif);padding:6px 2px">Книга знаний</a>'
-    +'<div class="hint" style="font-size:12px">обновлено '+(BOOKS.updated||'—')+'</div></div>';
-  if(cur!=null && BOOKS.sections[cur] && BOOKS.sections[cur].kind!=='cards'){
-    html+='<div class="tocbox"><h4>В этом разделе</h4>';
-    (BOOKS.sections[cur].items||[]).forEach(function(it,k){
-      if(it.g) return;
-      html+='<a href="#/r/'+cur+'/'+k+'">'+esc(it.t||'пункт')+'</a>';
-    });
-    html+='</div>';
-  }
-  var last='';
-  BOOKS.sections.forEach(function(s,i){
-    if(s.group!==last){ html+='<div class="rgroup">'+esc(s.group)+'</div>'; last=s.group; }
-    html+='<a href="#/r/'+i+'" class="'+(i===cur?'on':'')+'"><span class="num">'+(i+1)+'.</span>'+esc(s.title)+'</a>';
-  });
-  $('rail').innerHTML=html;
-}
-function route(){
-  var h=location.hash.replace(/^#\/?/,'');
-  var m=h.match(/^r\/(\d+)(?:\/(\d+))?$/);
-  if(m){
-    var i=+m[1], j=(m[2]!==undefined)?+m[2]:null;
-    if(i>=0 && i<BOOKS.sections.length){ renderSection(i,j); applyEdit(); return; }
-  }
-  renderHome();
-  buildRail(null);
-  applyEdit();
-}
+function itemHTML(it,i,j){if(it.g)return '<div class="sub" data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t)+'</div>';
+var imgs=(it.img&&it.img.length)?'<div class="imgs">'+it.img.map(function(u){return '<img src="'+esc(u)+'" loading="lazy" alt="">'}).join('')+'</div>':'';
+return '<div class="item" id="p'+i+'-'+j+'"><h3 data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t||'')+'</h3>'
++'<div class="d" data-sid="'+i+'" data-iid="'+j+'" data-k="d">'+renderText(it.d||'')+'</div>'+imgs
++'<div class="tools"><button onclick="kbAddImg('+i+','+j+')">+ картинка</button><button onclick="kbDelItem('+i+','+j+')">удалить пункт</button></div></div>'}
+function prodHTML(i,cd){var fields='';
+if(cd.group)fields+='<dt>Линейка</dt><dd>'+esc(cd.group)+'</dd>';
+cd.fields.forEach(function(f){if(!f.v)return;
+fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')
++'<dd data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c">'+renderText(f.v)+'</dd>'});
+return '<details class="prod" id="c'+i+'-'+cd.idx+'"><summary>'
++'<span class="pt" data-sid="'+i+'" data-row="'+cd.nameR+'" data-col="'+cd.nameC+'" data-k="c">'+linkify(esc(cd.name))+'</span>'
++'</summary><div class="plate"><dl>'+fields+'</dl></div></details>'}
+function cardsHTML(s,i){var p=planOf(s),html='<div class="cat">';
+p.zones.forEach(function(z){if(z.title)html+='<div class="catgroup">'+esc(z.title)+'</div>';
+z.cards.forEach(function(cd,k){if(z.groups&&z.groups['g'+k])html+='<div class="catgroup">'+esc(z.groups['g'+k])+'</div>';html+=prodHTML(i,cd)})});
+return html+'</div>'}
+function countCards(s){return allCards(s).length}
+function renderHome(){var html='<div class="doc"><div class="hero"><h1>Книга знаний</h1>'
++'<p>Рабочее пособие для менеджеров: контроль сырья и молочной продукции, лабораторное оборудование, гигиена доения, животноводство и ветеринария. Разделов: '+BOOKS.sections.length+'. Обновлено: '+(BOOKS.updated||'—')+'.</p></div>';
+var groups=[];BOOKS.sections.forEach(function(s,i){var g=groups.filter(function(x){return x.name===s.group})[0];
+if(!g){g={name:s.group,list:[]};groups.push(g)}g.list.push({i:i,s:s})});
+groups.forEach(function(g){html+='<h2 class="crumbs" style="font:600 13px var(--sans);letter-spacing:.06em;text-transform:uppercase">'+esc(g.name)+'</h2><div class="grid">';
+g.list.forEach(function(x){var cap=x.s.kind==='cards'?(countCards(x.s)+' позиций'):(x.s.items.filter(function(it){return !it.g}).length+' пунктов');
+html+='<a class="tile" href="#/r/'+x.i+'"><b>'+esc(x.s.title)+'</b><span>'+cap+'</span></a>'}) ;html+='</div>'});
+if(!BOOKS.sections.length)html+='<div class="item"><h3>Данные пока не загружены</h3><p>Проверьте интернет и обновите страницу.</p></div>';
+html+='</div>';$('page').innerHTML=html}
+function renderSection(i,jump){var s=BOOKS.sections[i];if(!s){renderHome();return}
+var num=i+1,inner,lead;
+if(s.kind==='cards'){inner=cardsHTML(s,i);lead='Каталог: '+countCards(s)+' позиций. Источник: лист «'+esc(s.sheet)+'». Обновлено '+(BOOKS.updated||'—')+'. Раскройте карточку — характеристики подтянуты к своей позиции.'}
+else{inner='<div class="items">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
+lead='Пунктов: '+s.items.filter(function(it){return !it.g}).length+'. Источник: лист «'+esc(s.sheet)+'».'}
+var html='<div class="doc"><div class="crumbs"><a href="#/">Содержание</a> · '+esc(s.group)+' · раздел '+num+'</div>'
++'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1><p class="lead">'+lead+'</p>'
++'<div class="actions"><button onclick="location.hash=\'#/\'">← К содержанию</button><button onclick="kbPrint()">🖨 Печать</button>'
++'<button onclick="kbCopySection('+i+')">📋 Скопировать раздел</button>'
++(s.kind==='cards'?'':'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>')+'</div>'+inner+'</div>';
+$('page').innerHTML=html;
+if(s.kind!=='cards'&&jump!=null){var el=$('p'+i+'-'+jump);if(el){el.classList.add('flash');el.scrollIntoView({block:'center'})}}
+else if(s.kind==='cards'&&jump!=null){var el2=$('c'+i+'-'+jump);if(el2){el2.open=true;el2.classList.add('flash');el2.scrollIntoView({block:'center'})}}
+else window.scrollTo(0,0);
+buildRail(i)}
+function buildRail(cur){var html='<div style="padding:0 8px 6px"><a href="#/" style="font:600 15px var(--serif);padding:6px 2px">Книга знаний</a>'
++'<div class="hint" style="font-size:12px">обновлено '+(BOOKS.updated||'—')+'</div></div>';
+if(cur!=null&&BOOKS.sections[cur]){var s=BOOKS.sections[cur];
+html+='<div class="tocbox"><h4>В этом разделе</h4>';
+if(s.kind==='cards'){allCards(s).forEach(function(x){html+='<a href="#/r/'+cur+'/c'+x.c.idx+'">'+esc(x.c.name)+'</a>'})}
+else{(s.items||[]).forEach(function(it,k){if(it.g)return;html+='<a href="#/r/'+cur+'/'+k+'">'+esc(it.t||'пункт')+'</a>'})}
+html+='</div>'}
+var last='';BOOKS.sections.forEach(function(s,i){if(s.group!==last){html+='<div class="rgroup">'+esc(s.group)+'</div>';last=s.group}
+html+='<a href="#/r/'+i+'" class="'+(i===cur?'on':'')+'"><span class="num">'+(i+1)+'.</span>'+esc(s.title)+'</a>'});
+$('rail').innerHTML=html}
+function route(){var h=location.hash.replace(/^#\/?/,'');var m=h.match(/^r\/(\d+)(?:\/(c?\d+))?$/);
+if(m){var i=+m[1];var jl=m[2];var j=null;if(jl!=null)j=(jl.charAt(0)==='c')?jl.slice(1):jl;
+if(i>=0&&i<BOOKS.sections.length){renderSection(i,j);applyEdit();return}}
+renderHome();buildRail(null);applyEdit()}
 window.addEventListener('hashchange',route);
-
-/* ---------- правка и хранение ---------- */
-function save(){
-  try{ localStorage.setItem(CACHE,JSON.stringify(BOOKS)); }catch(e){}
-  try{ localStorage.setItem(PCACHE,JSON.stringify(PENDING)); }catch(e){}
-  try{ localStorage.setItem(OCACHE,JSON.stringify(OV)); }catch(e){}
-}
-function txtOf(el){
-  var s='';
-  el.childNodes.forEach(function(n){
-    if(n.nodeType===3) s+=n.textContent;
-    else if(n.nodeName==='BR') s+='\n';
-    else if(n.nodeType===1){
-      var b=(n.nodeName==='P'||n.nodeName==='DIV'||n.nodeName==='LI');
-      if(b && s && s.charAt(s.length-1)!=='\n') s+='\n';
-      s+=txtOf(n);
-    }
-  });
-  return s;
-}
-function applyEdit(){
-  var on=ADMIN&&EDIT;
-  document.body.classList.toggle('edit',on);
-  document.querySelectorAll('[data-sid]').forEach(function(el){ el.contentEditable=on?'true':'false'; });
-  var b=$('editBtn'); if(b) b.textContent=on?'✅ Правка вкл.':'✏️ Правка';
-  var n=Object.keys(PENDING).length;
-  var p=$('pubBtn'); if(p) p.textContent='📤 Опубликовать'+(n?' ('+n+')':'');
-}
-document.addEventListener('input',function(e){
-  if(!(ADMIN&&EDIT)) return;
-  var el=e.target && e.target.closest ? e.target.closest('[data-sid]') : null;
-  if(!el) return;
-  var i=+el.dataset.sid, s=BOOKS.sections[i]; if(!s) return;
-  if(el.dataset.row!=null && el.dataset.row!=='' && s.kind==='cards'){
-    var ri=+el.dataset.row, ci=+el.dataset.col;
-    var cv=txtOf(el).replace(/^[ \n]+|[ \n]+$/g,'');
-    s.rows[ri]=s.rows[ri]||[]; s.rows[ri][ci]=cv;
-    PENDING[s.sheet+'|'+ri+'|'+ci]=cv;
-  } else {
-    var j=+el.dataset.iid, k=el.dataset.k, v=txtOf(el);
-    if(j<0){ v=v.replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,''); s.title=v; }
-    else if(s.items[j]) s.items[j][k]=v;
-    PENDING[s.sheet+'|'+j+'|'+k]=v;
-  }
-  save(); applyEdit();
-});
-window.kbAddItem=function(i){
-  if(!(ADMIN&&EDIT)) return;
-  BOOKS.sections[i].items=BOOKS.sections[i].items||[];
-  BOOKS.sections[i].items.push({t:'Новый пункт',d:'Описание…'});
-  save(); renderSection(i); applyEdit();
-};
-window.kbDelItem=function(i,j){
-  if(!(ADMIN&&EDIT)) return;
-  if(confirm('Удалить пункт?')){ BOOKS.sections[i].items.splice(j,1); save(); renderSection(i); applyEdit(); }
-};
-window.kbAddImg=function(i,j){
-  if(!(ADMIN&&EDIT)) return;
-  var u=prompt('Путь или ссылка на картинку (например: img/foto1.jpg)');
-  if(!u) return;
-  var it=BOOKS.sections[i].items[j];
-  it.img=it.img||[]; it.img.push(u.replace(/^\s+|\s+$/g,''));
-  save(); renderSection(i); applyEdit();
-};
-window.kbPrint=function(){
-  Array.prototype.forEach.call(document.querySelectorAll('.prod'),function(d){ d.open=true; });
-  window.print();
-};
-function copyText(t){
-  if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){ alert('Скопировано.'); },fallback); }
-  else fallback();
-  function fallback(){
-    var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
-    ta.select(); try{ document.execCommand('copy'); alert('Скопировано.'); }catch(e){ alert('Не удалось скопировать.'); }
-    ta.remove();
-  }
-}
-window.kbCopySection=function(i){
-  var s=BOOKS.sections[i];
-  if(s.kind==='cards'){
-    var parts=[(i+1)+'. '+s.title,''];
-    var plan=(s.orient==='col')?buildColCards(s):buildRowPlan(s);
-    (plan.common||[]).forEach(function(x){ parts.push('• '+x.label+': '+x.v); });
-    (plan.cards||[]).forEach(function(cd){
-      parts.push('','— '+cd.name);
-      cd.fields.forEach(function(f){ if(f.label) parts.push('    '+f.label+': '+f.v); else parts.push('    '+f.v); });
-    });
-    copyText(parts.join('\n'));
-    return;
-  }
-  var out=[(i+1)+'. '+s.title,''];
-  s.items.forEach(function(it){
-    if(it.g) out.push('',it.t.toUpperCase());
-    else out.push('• '+(it.t||'')+(it.d?': '+it.d:''));
-  });
-  copyText(out.join('\n'));
-};
-
+/* ---------- правки ---------- */
+function save(){try{localStorage.setItem(CACHE,JSON.stringify(BOOKS))}catch(e){}
+try{localStorage.setItem(PCACHE,JSON.stringify(PENDING))}catch(e){}
+try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}}
+function txtOf(el){var s='';el.childNodes.forEach(function(n){if(n.nodeType===3)s+=n.textContent;
+else if(n.nodeName==='BR')s+='\n';
+else if(n.nodeType===1){var b=(n.nodeName==='P'||n.nodeName==='DIV'||n.nodeName==='LI');
+if(b&&s&&s.charAt(s.length-1)!=='\n')s+='\n';s+=txtOf(n)}});return s}
+function applyEdit(){var on=ADMIN&&EDIT;document.body.classList.toggle('edit',on);
+document.querySelectorAll('[data-sid]').forEach(function(el){el.contentEditable=on?'true':'false'});
+var b=$('editBtn');if(b)b.textContent=on?'✅ Правка вкл.':'✏️ Правка';
+var n=Object.keys(PENDING).length;var pb=$('pubBtn');if(pb)pb.textContent='📤 Опубликовать'+(n?' ('+n+')':'')}
+document.addEventListener('input',function(e){if(!(ADMIN&&EDIT))return;
+var el=e.target&&e.target.closest?e.target.closest('[data-sid]'):null;if(!el)return;
+var i=+el.dataset.sid,s=BOOKS.sections[i];if(!s)return;
+if(el.dataset.row!=null&&el.dataset.row!==''&&s.kind==='cards'){
+var ri=+el.dataset.row,ci=+el.dataset.col,cv=txtOf(el).replace(/^[ \n]+|[ \n]+$/g,'');
+s.rows[ri]=s.rows[ri]||[];s.rows[ri][ci]=cv;PENDING[s.sheet+'|'+ri+'|'+ci]=cv;s.__plan=null}
+else{var j=+el.dataset.iid,k=el.dataset.k,v=txtOf(el);
+if(j<0){v=v.replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');s.title=v}else if(s.items[j])s.items[j][k]=v;
+PENDING[s.sheet+'|'+j+'|'+k]=v}
+save();applyEdit()});
+window.kbAddItem=function(i){if(!(ADMIN&&EDIT))return;BOOKS.sections[i].items=BOOKS.sections[i].items||[];
+BOOKS.sections[i].items.push({t:'Новый пункт',d:'Описание…'});save();renderSection(i);applyEdit()};
+window.kbDelItem=function(i,j){if(!(ADMIN&&EDIT))return;if(confirm('Удалить пункт?')){BOOKS.sections[i].items.splice(j,1);save();renderSection(i);applyEdit()}};
+window.kbAddImg=function(i,j){if(!(ADMIN&&EDIT))return;var u=prompt('Путь или ссылка на картинку');if(!u)return;
+var it=BOOKS.sections[i].items[j];it.img=it.img||[];it.img.push(u.trim());save();renderSection(i);applyEdit()};
+window.kbPrint=function(){Array.prototype.forEach.call(document.querySelectorAll('.prod'),function(d){d.open=true});window.print()};
+function copyText(t){if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){alert('Скопировано.')},fb)}else fb();
+function fb(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
+try{document.execCommand('copy');alert('Скопировано.')}catch(e){alert('Не удалось скопировать.')}ta.remove()}}
+window.kbCopySection=function(i){var s=BOOKS.sections[i];
+if(s.kind==='cards'){var parts=[(i+1)+'. '+s.title,''];var p=planOf(s);
+p.zones.forEach(function(z){if(z.title)parts.push('',z.title.toUpperCase());
+z.cards.forEach(function(cd){parts.push('','— '+cd.name);cd.fields.forEach(function(f){parts.push('    '+(f.label?f.label+': ':'')+f.v)})})});
+copyText(parts.join('\n'));return}
+var out=[(i+1)+'. '+s.title,''];s.items.forEach(function(it){if(it.g)out.push('',it.t.toUpperCase());else out.push('• '+(it.t||'')+(it.d?': '+it.d:''))});
+copyText(out.join('\n'))};
 /* ---------- поиск ---------- */
-function runSearch(q){
-  q=q.toLowerCase();
-  var res=[];
-  BOOKS.sections.forEach(function(s,i){
-    if(s.title.toLowerCase().indexOf(q)>=0) res.push({i:i,j:-1,t:s.title,c:'раздел',sn:'Раздел целиком'});
-    if(s.kind==='cards'){
-      var seen={};
-      s.rows.forEach(function(row,ri){
-        row.forEach(function(v,ci){
-          if(!v || v.toLowerCase().indexOf(q)<0) return;
-          if(ri<=3) return;
-          var nm=cardName(s,ri,ci)||s.title;
-          if(!seen[nm]) seen[nm]={i:i,j:-1,t:nm,c:s.title,sn:''};
-          if(seen[nm].sn.length<170){
-            seen[nm].sn+=(seen[nm].sn?' • ':'')+String(v).replace(/\s+/g,' ').slice(0,90);
-          }
-        });
-      });
-      Object.keys(seen).forEach(function(k){ res.push(seen[k]); });
-      return;
-    }
-    s.items.forEach(function(it,j){
-      var hay=((it.t||'')+' '+(it.d||'')).toLowerCase();
-      if(hay.indexOf(q)>=0){
-        var pos=hay.indexOf(q), txt=cleanText(it.d||'').replace(/\s+/g,' ');
-        var start=Math.max(0,pos-40);
-        res.push({i:i,j:j,t:it.t||'(подзаголовок)',c:s.title,sn:(start>0?'…':'')+txt.slice(start,start+180)+'…'});
-      }
-    });
-  });
-  return res.slice(0,80);
-}
-function showSearch(q){
-  var list=runSearch(q);
-  var html=list.length?list.map(function(r,k){
-    return '<div class="res" data-k="'+k+'" data-i="'+r.i+'" data-j="'+r.j+'"><b>'+esc(r.t)+'</b><i>'+esc(r.c)+'</i><span>'+esc(r.sn)+'</span></div>';
-  }).join(''):'<p class="hint">Ничего не найдено.</p>';
-  $('resList').innerHTML=html;
-  $('search').classList.add('on');
-  Array.prototype.forEach.call($('resList').querySelectorAll('.res'),function(el){
-    el.onclick=function(){
-      $('search').classList.remove('on');
-      var i=+el.dataset.i, j=+el.dataset.j;
-      if(j<0) location.hash='#/r/'+i; else location.hash='#/r/'+i+'/'+j;
-    };
-  });
-}
-var tmr=null;
-$('q').addEventListener('input',function(){
-  var v=$('q').value.replace(/^\s+|\s+$/g,'');
-  clearTimeout(tmr);
-  if(v.length<2) return;
-  tmr=setTimeout(function(){ showSearch(v); },220);
-});
-
-/* ---------- импорт из буфера ---------- */
-function parseDelim(text,delim){
-  var rows=[],row=[],cell='',q=false;
-  for(var i=0;i<text.length;i++){
-    var c=text.charAt(i);
-    if(q){ if(c==='"'){ if(text.charAt(i+1)==='"'){ cell+='"'; i++; } else q=false; } else cell+=c; }
-    else if(c==='"') q=true;
-    else if(c===delim){ row.push(cell); cell=''; }
-    else if(c==='\n'){ row.push(cell); rows.push(row); row=[]; cell=''; }
-    else if(c!=='\r') cell+=c;
-  }
-  if(cell!==''||row.length){ row.push(cell); rows.push(row); }
-  return rows;
-}
-function rawToMatrix(raw){
-  var d='\t';
-  if(raw.indexOf('\t')<0) d=(raw.split(';').length>raw.split(',').length)?';':',';
-  return parseDelim(raw,d).map(function(r){
-    return r.map(function(x){ return cleanText(x); });
-  }).filter(function(r){ return r.some(function(x){ return x!==''; }); });
-}
-function rawToItems(raw){
-  var out=[];
-  rawToMatrix(raw).forEach(function(r){
-    var c=r.filter(function(x){ return x!==''; });
-    if(!c.length) return;
-    if(c.length===1) out.push({g:1,t:c[0]});
-    else out.push({t:c[0],d:c.slice(1).join('\n')});
-  });
-  return out;
-}
-$('impBtn').onclick=function(){
-  var raw=$('impText').value;
-  if(!raw.replace(/\s/g,'').length){ alert('Вставьте данные из таблицы'); return; }
-  var tgt=$('impTarget').value;
-  var rows=rawToMatrix(raw);
-  var wide=0;
-  rows.forEach(function(r){ if(r.filter(function(x){ return x!==''; }).length>=3) wide++; });
-  var asCards=wide>=3;
-  if(tgt===''){
-    var title=$('impName').value.replace(/^\s+|\s+$/g,'')||('Новый раздел '+new Date().toLocaleDateString());
-    BOOKS.sections.push(asCards
-      ? {sheet:'(вручную)',title:title,group:'Дополнения',kind:'cards',orient:'row',rows:rows}
-      : {sheet:'(вручную)',title:title,group:'Дополнения',kind:'items',items:rawToItems(raw)});
-  } else {
-    var s=BOOKS.sections[+tgt];
-    if(s.kind==='cards'){ s.rows=s.rows.concat(rows); }
-    else { s.items=(s.items||[]).concat(rawToItems(raw)); }
-  }
-  save(); route(); $('io').classList.remove('on'); $('impText').value='';
-};
-function openIO(){
-  $('impTarget').innerHTML='<option value="">— новый раздел —</option>'
-    +BOOKS.sections.map(function(s,i){ return '<option value="'+i+'">'+esc(s.title)+'</option>'; }).join('');
-  $('io').classList.add('on');
-}
-
-/* ---------- экспорт и отчёт ---------- */
-function dl(text,name,type){
-  var b=new Blob([text],{type:type||'application/json'});
-  var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=name;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
-}
-function backup(){
-  BOOKS.updated=new Date().toISOString().slice(0,10);
-  dl(JSON.stringify(BOOKS,null,1),'kniga-znaniy-backup.json');
-}
-function fillReport(){
-  rep('--- Сведения о среде ---');
-  rep('Адрес страницы: '+location.href.slice(0,90));
-  rep('Браузер: '+navigator.userAgent);
-  rep('Время: '+new Date().toLocaleString('ru-RU'));
-  rep('Режим редактора: '+(ADMIN?'включён':'выключен'));
-  rep('Общих правок: '+Object.keys(OV).length+', неопубликованных: '+Object.keys(PENDING).length);
-  $('repText').value=REPORT.join('\n');
-}
-
-/* ---------- обновление ---------- */
-async function refresh(){
-  REPORT=[];
-  setStatus('Проверяю связь с Google Таблицами…');
-  var ok=await pickChannel();
-  if(!ok){
-    setStatus('Связь с таблицей не установлена ни одним из способов.');
-    applyOverlay(BOOKS.sections);
-    fillReport();
-    showFail('Не удалось получить данные из Google Таблиц.');
-    return;
-  }
-  setStatus('Читаю листы…');
-  var data=await loadAll(function(d,t,n){ setStatus('Читаю листы… '+d+'/'+t+' ('+n+')'); });
-  setStatus('Читаю общие правки…');
-  await loadRights();
-  if(data.sections.length){
-    applyOverlay(data.sections);
-    BOOKS=data; save(); route();
-  }
-  setStatus(BOOKS.sections.length
-    ? 'Готово. Разделов: '+BOOKS.sections.length+'. Обновлено: '+BOOKS.updated
-      +(Object.keys(PENDING).length?' Не опубликовано правок: '+Object.keys(PENDING).length+'.':'')
-    : 'Загрузка прошла, но разделы пусты — откройте «Отчёт».');
-  fillReport();
-}
-function showFail(msg){
-  $('page').innerHTML='<div class="doc"><div class="item"><h3>'+esc(msg)+'</h3>'
-    +'<p>Проверьте подключение к интернету и нажмите «Обновить» (доступно в режиме редактора). '
-    +'Ранее загруженные данные сохранены в браузере и будут показаны при следующем открытии.</p></div></div>';
-}
-
-/* ---------- режим редактора ---------- */
-function applyAdmin(){
-  document.body.classList.toggle('admin',ADMIN);
-  $('adminBtn').textContent=ADMIN?'🔓 Выйти':'⚙ Вход';
-  if(!ADMIN) EDIT=false;
-  applyEdit();
-}
-$('adminBtn').onclick=function(){
-  if(ADMIN){
-    ADMIN=false; EDIT=false;
-    try{ sessionStorage.removeItem('kb_admin'); }catch(e){}
-    applyAdmin(); route();
-    return;
-  }
-  $('passErr').textContent=''; $('passIn').value='';
-  $('login').classList.add('on'); $('passIn').focus();
-};
-function tryPass(){
-  if($('passIn').value===PASS){
-    ADMIN=true; try{ sessionStorage.setItem('kb_admin','1'); }catch(e){}
-    $('login').classList.remove('on');
-    applyAdmin(); route(); setStatus('Режим редактора включён.');
-  } else {
-    $('passErr').textContent='Неверный пароль.';
-  }
-}
-$('passOk').onclick=tryPass;
-$('passIn').addEventListener('keydown',function(e){ if(e.key==='Enter') tryPass(); });
-$('passCancel').onclick=function(){ $('login').classList.remove('on'); };
-$('login').addEventListener('click',function(e){ if(e.target.id==='login') $('login').classList.remove('on'); });
-
-$('editBtn').onclick=function(){ EDIT=!EDIT; route(); };
-$('pubBtn').onclick=publish;
-$('pubCsv').onclick=publishCsv;
-$('pubClose').onclick=function(){ $('pubWarn').classList.remove('on'); };
-$('pubWarn').addEventListener('click',function(e){ if(e.target.id==='pubWarn') $('pubWarn').classList.remove('on'); });
-$('refreshBtn').onclick=function(){
-  if(confirm('Перечитать таблицу? Правки, сделанные в книге, будут заменены данными Google (кроме сохранённых в таблице правок).')) refresh();
-};
-$('reportBtn').onclick=function(){ fillReport(); $('rep').classList.add('on'); };
-$('repCopy').onclick=function(){
-  var ta=$('repText'); ta.removeAttribute('readonly'); ta.select();
-  try{ document.execCommand('copy'); }catch(e){}
-  if(navigator.clipboard){ try{ navigator.clipboard.writeText(ta.value); }catch(e){} }
-  ta.setAttribute('readonly','readonly');
-  alert('Текст скопирован.');
-};
-$('repAgain').onclick=function(){ $('rep').classList.remove('on'); refresh(); };
-$('repClose').onclick=function(){ $('rep').classList.remove('on'); };
-$('importBtn').onclick=openIO;
-$('closeIo').onclick=function(){ $('io').classList.remove('on'); };
-$('exportBtn').onclick=backup;
-$('jsonBtn').onclick=backup;
-$('resetBtn').onclick=function(){
-  if(confirm('Очистить кэш браузера и заново прочитать таблицу?')){
-    try{ localStorage.removeItem(CACHE); localStorage.removeItem(PCACHE); }catch(e){}
-    location.reload();
-  }
-};
-$('resClose').onclick=function(){ $('search').classList.remove('on'); };
-$('search').addEventListener('click',function(e){ if(e.target.id==='search') $('search').classList.remove('on'); });
-$('burger').onclick=function(){ $('rail').classList.toggle('on'); };
-$('rail').addEventListener('click',function(e){
-  if(e.target.tagName==='A' && innerWidth<900) $('rail').classList.remove('on');
-});
-$('lb').addEventListener('click',function(){ $('lb').classList.remove('on'); });
-document.addEventListener('click',function(e){
-  var im=e.target && e.target.closest ? e.target.closest('.imgs img') : null;
-  if(im){ document.querySelector('#lb img').src=im.src; $('lb').classList.add('on'); }
-});
-$('up').onclick=function(){ window.scrollTo({top:0,behavior:'smooth'}); };
-window.addEventListener('scroll',function(){ $('up').classList.toggle('on',window.scrollY>600); });
-$('themeBtn').onclick=function(){
-  var n=document.documentElement.dataset.theme==='dark'?'light':'dark';
-  document.documentElement.dataset.theme=n;
-  try{ localStorage.setItem('kb_theme',n); }catch(e){}
-};
-try{ var th=localStorage.getItem('kb_theme'); if(th) document.documentElement.dataset.theme=th; }catch(e){}
-
-/* ---------- публикация правок ---------- */
-function pendingItems(){
-  return Object.keys(PENDING).map(function(k){
-    var p=k.split('|');
-    return {sheet:p[0], i:parseInt(p[1],10), k:p[2], v:PENDING[k]};
-  });
-}
-async function publish(){
-  var items=pendingItems();
-  if(!items.length){ alert('Неопубликованных правок нет.'); return; }
-  if(!APPS_URL){ $('pubWarn').classList.add('on'); return; }
-  setStatus('Отправляю правки ('+items.length+')…');
-  try{
-    await fetch(APPS_URL,{
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:JSON.stringify({pass:PASS, who:'редактор', items:items})
-    });
-  }catch(e){
-    setStatus('Не удалось отправить правки: '+e.message);
-    $('pubWarn').classList.add('on');
-    return;
-  }
-  items.forEach(function(x){ OV[x.sheet+'|'+x.i+'|'+x.k]=x.v; });
-  PENDING={}; save(); applyEdit();
-  setStatus('Правки отправлены ('+items.length+'). Они появятся у всех при обновлении страницы.');
-  alert('Отправлено правок: '+items.length+'. Они появятся у всех, кто откроет книгу.');
-}
-function rightsCsv(){
-  var head='sheet,idx,field,value,когда,кто\n';
-  return head+pendingItems().map(function(x){
-    return '"'+x.sheet+'",'+x.i+','+x.k+',"'+String(x.v).replace(/"/g,'""').replace(/\n/g,' ')+'",'
-      +'"'+new Date().toLocaleString('ru-RU')+'","редактор"';
-  }).join('\n');
-}
-function publishCsv(){
-  dl(rightsCsv(),'pravki.csv','text/csv');
-  $('pubWarn').classList.remove('on');
-}
-
+function runSearch(q){q=q.toLowerCase();var res=[];
+BOOKS.sections.forEach(function(s,i){if(s.title.toLowerCase().indexOf(q)>=0)res.push({i:i,j:-1,t:s.title,c:'раздел',sn:'Раздел целиком'});
+if(s.kind==='cards'){var seen={};planOf(s).zones.forEach(function(z){z.cards.forEach(function(cd){
+var hay=(cd.name+' '+(cd.group||'')+' '+cd.fields.map(function(f){return f.v}).join(' ')).toLowerCase();
+if(hay.indexOf(q)>=0){var sn='';cd.fields.forEach(function(f){if(f.v.toLowerCase().indexOf(q)>=0&&sn.length<170)sn+=(sn?' • ':'')+String(f.v).replace(/\s+/g,' ').slice(0,90)});
+res.push({i:i,j:'c'+cd.idx,t:cd.name,c:s.title,sn:sn})}})}) ;return}
+s.items.forEach(function(it,j){var hay=((it.t||'')+' '+(it.d||'')).toLowerCase();
+if(hay.indexOf(q)>=0){var pos=hay.indexOf(q),txt=cleanText(it.d||'').replace(/\s+/g,' '),start=Math.max(0,pos-40);
+res.push({i:i,j:j,t:it.t||'(подзаголовок)',c:s.title,sn:(start>0?'…':'')+txt.slice(start,start+180)+'…'})}})});
+return res.slice(0,80)}
+function showSearch(q){var list=runSearch(q);
+var html=list.length?list.map(function(r,k){return '<div class="res" data-k="'+k+'" data-i="'+r.i+'" data-j="'+r.j+'"><b>'+esc(r.t)+'</b><i>'+esc(r.c)+'</i><span>'+esc(r.sn)+'</span></div>'}).join(''):'<p class="hint">Ничего не найдено.</p>';
+$('resList').innerHTML=html;$('search').classList.add('on');
+Array.prototype.forEach.call($('resList').querySelectorAll('.res'),function(el){el.onclick=function(){$('search').classList.remove('on');
+var i=el.dataset.i,j=el.dataset.j;location.hash=(j==='-1')?('#/r/'+i):('#/r/'+i+'/'+j)}})}
+var tmr=null;$('q').addEventListener('input',function(){var v=$('q').value.replace(/^\s+|\s+$/g,'');clearTimeout(tmr);if(v.length<2)return;
+tmr=setTimeout(function(){showSearch(v)},220)});
+/* ---------- импорт/экспорт ---------- */
+function parseDelim(text,delim){var rows=[],row=[],cell='',qq=false;
+for(var i=0;i<text.length;i++){var c=text.charAt(i);
+if(qq){if(c==='"'){if(text.charAt(i+1)==='"'){cell+='"';i++}else qq=false}else cell+=c}
+else if(c==='"')qq=true;else if(c===delim){row.push(cell);cell=''}
+else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=''}
+else if(c!=='\r')cell+=c}
+if(cell!==''||row.length){row.push(cell);rows.push(row)}return rows}
+function rawToMatrix(raw){var d='\t';if(raw.indexOf('\t')<0)d=(raw.split(';').length>raw.split(',').length)?';':',';
+return parseDelim(raw,d).map(function(r){return r.map(function(x){return cleanText(x)})}).filter(function(r){return r.some(function(x){return x!==''})})}
+function rawToItems(raw){var out=[];rawToMatrix(raw).forEach(function(r){var c=r.filter(function(x){return x!==''});
+if(!c.length)return;if(c.length===1)out.push({g:1,t:c[0]});else out.push({t:c[0],d:c.slice(1).join('\n')})});return out}
+$('impBtn').onclick=function(){var raw=$('impText').value;if(!raw.replace(/\s/g,'').length){alert('Вставьте данные');return}
+var tgt=$('impTarget').value,rows=rawToMatrix(raw),wide=0;
+rows.forEach(function(r){if(r.filter(function(x){return x!==''}).length>=3)wide++});
+if(tgt===''){var title=$('impName').value.trim()||('Новый раздел '+new Date().toLocaleDateString());
+BOOKS.sections.push({sheet:'(вручную)',title:title,group:'Дополнения',kind:'cards',mode:'row',rows:rows})}
+else{var s=BOOKS.sections[+tgt];if(s.kind==='cards'){s.rows=s.rows.concat(rows);s.__plan=null}else s.items=(s.items||[]).concat(rawToItems(raw))}
+save();route();$('io').classList.remove('on');$('impText').value=''};
+function openIO(){$('impTarget').innerHTML='<option value="">— новый раздел —</option>'+BOOKS.sections.map(function(s,i){return '<option value="'+i+'">'+esc(s.title)+'</option>'}).join('');
+$('io').classList.add('on')}
+function dl(text,name,type){var b=new Blob([text],{type:type||'application/json'}),a=document.createElement('a');
+a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)}
+function backup(){BOOKS.updated=new Date().toISOString().slice(0,10);dl(JSON.stringify(BOOKS,null,1),'kniga-znaniy-backup.json')}
+function fillReport(){rep('--- Среда ---');rep('Адрес: '+location.href.slice(0,90));rep('Браузер: '+navigator.userAgent);
+rep('Время: '+new Date().toLocaleString('ru-RU'));rep('Редактор: '+(ADMIN?'включён':'выключен'));
+rep('Общих правок: '+Object.keys(OV).length+', локальных: '+Object.keys(PENDING).length);$('repText').value=REPORT.join('\n')}
+async function refresh(){REPORT=[];setStatus('Проверяю связь с Google Таблицами…');
+var ok=await pickChannel();if(!ok){setStatus('Связь с таблицей не установлена.');applyOverlay(BOOKS.sections);fillReport();showFail('Не удалось получить данные из Google Таблиц.');return}
+setStatus('Читаю листы…');var data=await loadAll(function(d,t,n){setStatus('Читаю листы… '+d+'/'+t+' ('+n+')')});
+setStatus('Читаю общие правки…');await loadRights();
+if(data.sections.length){applyOverlay(data.sections);BOOKS=data;save();route()}
+setStatus(BOOKS.sections.length?('Готово. Разделов: '+BOOKS.sections.length+'. Обновлено: '+BOOKS.updated+(Object.keys(PENDING).length?' Не опубликовано: '+Object.keys(PENDING).length:'')):'Разделы пусты — откройте «Отчёт».');
+fillReport()}
+function showFail(msg){$('page').innerHTML='<div class="doc"><div class="item"><h3>'+esc(msg)+'</h3><p>Нажмите «Обновить» (в режиме редактора). Ранее загруженные данные сохранены.</p></div></div>'}
+/* ---------- админ ---------- */
+function applyAdmin(){document.body.classList.toggle('admin',ADMIN);$('adminBtn').textContent=ADMIN?'🔓 Выйти':'⚙ Вход';if(!ADMIN)EDIT=false;applyEdit()}
+$('adminBtn').onclick=function(){if(ADMIN){ADMIN=false;EDIT=false;try{sessionStorage.removeItem('kb_admin')}catch(e){}applyAdmin();route();return}
+$('passErr').textContent='';$('passIn').value='';$('login').classList.add('on');$('passIn').focus()};
+function tryPass(){if($('passIn').value===PASS){ADMIN=true;try{sessionStorage.setItem('kb_admin','1')}catch(e){}
+$('login').classList.remove('on');applyAdmin();route();setStatus('Режим редактора включён.')}else $('passErr').textContent='Неверный пароль.'}
+$('passOk').onclick=tryPass;$('passIn').addEventListener('keydown',function(e){if(e.key==='Enter')tryPass()});
+$('passCancel').onclick=function(){$('login').classList.remove('on')};
+$('login').addEventListener('click',function(e){if(e.target.id==='login')$('login').classList.remove('on')});
+$('editBtn').onclick=function(){EDIT=!EDIT;route()};
+$('pubBtn').onclick=publish;$('pubCsv').onclick=publishCsv;$('pubClose').onclick=function(){$('pubWarn').classList.remove('on')};
+$('pubWarn').addEventListener('click',function(e){if(e.target.id==='pubWarn')$('pubWarn').classList.remove('on')});
+$('refreshBtn').onclick=function(){if(confirm('Перечитать таблицу? Локальные правки будут заменены данными Google (кроме опубликованных).'))refresh()};
+$('reportBtn').onclick=function(){fillReport();$('rep').classList.add('on')};
+$('repCopy').onclick=function(){var ta=$('repText');ta.removeAttribute('readonly');ta.select();try{document.execCommand('copy')}catch(e){}
+if(navigator.clipboard){try{navigator.clipboard.writeText(ta.value)}catch(e){}}ta.setAttribute('readonly','readonly');alert('Скопировано.')};
+$('repAgain').onclick=function(){$('rep').classList.remove('on');refresh()};$('repClose').onclick=function(){$('rep').classList.remove('on')};
+$('importBtn').onclick=openIO;$('closeIo').onclick=function(){$('io').classList.remove('on')};
+$('exportBtn').onclick=backup;$('jsonBtn').onclick=backup;
+$('resetBtn').onclick=function(){if(confirm('Очистить кэш и заново прочитать таблицу?')){
+try{localStorage.removeItem(CACHE);localStorage.removeItem(PCACHE)}catch(e){}location.reload()}};
+$('resClose').onclick=function(){$('search').classList.remove('on')};
+$('search').addEventListener('click',function(e){if(e.target.id==='search')$('search').classList.remove('on')});
+$('burger').onclick=function(){$('rail').classList.toggle('on')};
+$('rail').addEventListener('click',function(e){if(e.target.tagName==='A'&&innerWidth<900)$('rail').classList.remove('on')});
+$('lb').addEventListener('click',function(){$('lb').classList.remove('on')});
+document.addEventListener('click',function(e){var im=e.target&&e.target.closest?e.target.closest('.imgs img'):null;
+if(im){document.querySelector('#lb img').src=im.src;$('lb').classList.add('on')}});
+$('up').onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
+window.addEventListener('scroll',function(){$('up').classList.toggle('on',window.scrollY>600)});
+$('themeBtn').onclick=function(){var n=document.documentElement.dataset.theme==='dark'?'light':'dark';
+document.documentElement.dataset.theme=n;try{localStorage.setItem('kb_theme',n)}catch(e){}};
+try{var th=localStorage.getItem('kb_theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+/* ---------- публикация ---------- */
+function pendingItems(){return Object.keys(PENDING).map(function(k){var p=k.split('|');
+return {sheet:p[0],i:parseInt(p[1],10),k:p[2],v:PENDING[k]}})}
+async function publish(){var items=pendingItems();if(!items.length){alert('Неопубликованных правок нет.');return}
+if(!APPS_URL){$('pubWarn').classList.add('on');return}
+setStatus('Отправляю правки ('+items.length+')…');
+try{await fetch(APPS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+body:JSON.stringify({pass:PASS,who:'редактор',items:items})})}
+catch(e){setStatus('Не удалось отправить: '+e.message);$('pubWarn').classList.add('on');return}
+items.forEach(function(x){OV[x.sheet+'|'+x.i+'|'+x.k]=x.v});PENDING={};save();applyEdit();
+setStatus('Правки отправлены ('+items.length+').');alert('Отправлено правок: '+items.length+'. Их увидят все при обновлении страницы.')}
+function rightsCsv(){var head='sheet,idx,field,value,когда,кто\n';
+return head+pendingItems().map(function(x){return '"'+x.sheet+'",'+x.i+','+x.k+',"'+String(x.v).replace(/"/g,'""').replace(/\n/g,' ')+'",'+'"'+new Date().toLocaleString('ru-RU')+'","редактор"'}).join('\n')}
+function publishCsv(){dl(rightsCsv(),'pravki.csv','text/csv');$('pubWarn').classList.remove('on')}
 /* ---------- старт ---------- */
-(function start(){
-  applyAdmin();
-  try{
-    var c=localStorage.getItem(CACHE);
-    if(c){ BOOKS=JSON.parse(c); applyOverlay(BOOKS.sections); route(); setStatus('Показана сохранённая копия. Запрашиваю свежие данные…'); }
-  }catch(e){}
-  if(!BOOKS.sections.length) setStatus('Загружаю данные из Google Таблиц…');
-  refresh();
-})();
-
+(function start(){applyAdmin();
+try{var c=localStorage.getItem(CACHE);if(c){BOOKS=JSON.parse(c);applyOverlay(BOOKS.sections);route();setStatus('Показана сохранённая копия. Запрашиваю свежие данные…')}}catch(e){}
+if(!BOOKS.sections.length)setStatus('Загружаю данные из Google Таблиц…');
+refresh()})();
 })();
 </script>
 </body>
