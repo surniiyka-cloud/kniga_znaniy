@@ -33,13 +33,13 @@ main{margin-left:var(--railw);padding:26px 44px 90px}
 .crumbs{font:13.5px var(--sans);color:var(--mut);margin:0 0 12px}
 .crumbs a{text-decoration:none}
 h1{font:600 31px/1.25 var(--serif);margin:4px 0 6px}
-.lead{color:var(--mut);font:15px/1.55 var(--sans);margin:0 0 24px}
 .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
 .items{counter-reset:it}
 .item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:0 0 14px;break-inside:avoid}
 .item h3{font:600 18px/1.35 var(--serif);margin:0 0 8px;counter-increment:it}
 .item h3::before{content:counter(it) ". ";color:var(--acc)}
-.sub{font:600 16px/1.4 var(--serif);color:var(--acc);margin:24px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px}
+.items.nonum h3::before{content:none}
+.sub{font:600 20px/1.45 var(--serif);color:var(--acc);margin:28px 0 14px;text-align:center;border-bottom:1px solid var(--line);padding-bottom:6px}
 .d p{margin:0 0 9px;font:16.5px/1.66 var(--serif);text-align:justify;hyphens:auto}
 .d ul{margin:6px 0 10px;padding:0;list-style:none}
 .d li{position:relative;padding-left:20px;margin:0 0 6px;font:16.5px/1.62 var(--serif)}
@@ -60,14 +60,15 @@ body.edit [data-k]{outline:1px dashed var(--line);outline-offset:3px;border-radi
 .flash{animation:fl 1.6s ease}
 @keyframes fl{0%{background:var(--accbg)}100%{background:var(--paper)}}
 .cat{display:grid;gap:12px}
-.catgroup{font:600 14px var(--sans);color:var(--mut);margin:14px 0 -2px;text-transform:uppercase;letter-spacing:.05em}
+.catgroup{font:600 15px var(--sans);color:var(--acc);margin:18px 0 8px;text-transform:uppercase;letter-spacing:.05em;text-align:center}
 .prod{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;scroll-margin-top:80px}
 .prod summary{cursor:pointer;padding:13px 18px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;list-style:none}
 .prod summary::-webkit-details-marker{display:none}
 .prod summary::before{content:"▸";color:var(--acc);font-size:13px;transition:.15s}
 .prod[open] summary::before{content:"▾"}
-.prod summary .pt{font:600 17.5px/1.35 var(--serif)}
+.prod summary .pt{font:600 17.5px/1.35 var(--serif);flex:1 1 auto;min-width:220px;word-break:break-word}
 .prod summary .ps{color:var(--mut);font:13px/1.5 var(--sans)}
+.prod summary .ps.psnum{font:600 14px var(--sans);min-width:22px}
 .prod .plate{padding:4px 18px 16px;border-top:1px dashed var(--line)}
 .prod dl{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:6px 16px;margin:10px 0 0}
 .prod dt{color:var(--mut);font:14px/1.5 var(--sans)}
@@ -75,7 +76,35 @@ body.edit [data-k]{outline:1px dashed var(--line);outline-offset:3px;border-radi
 .prod dd p{margin:0 0 6px}
 .prod dd ul{padding-left:0;margin:4px 0 6px}
 .prod dd li{font:15.5px/1.6 var(--serif);margin-left:16px;list-style:disc}
-@media(max-width:760px){.prod dl{grid-template-columns:1fr;gap:0}.prod dt{margin-top:9px;font-weight:600;color:var(--fg)}}
+.prod dl .grp{grid-column:1 / -1;text-align:center;font:700 15px/1.45 var(--serif);color:var(--acc);margin:14px 0 2px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.prod .hero-lead{font:18px/1.7 var(--serif);text-align:center;margin:0 0 18px;padding:2px 6px 16px;border-bottom:1px dashed var(--line)}
+.prod .hero-lead b{font-weight:600;color:var(--acc)}
+.prod dd.tbl{grid-column:1 / -1;padding:2px 0 8px}
+.ptablewrap{margin:6px 0 0;overflow:auto}
+table.ptable{width:100%;border-collapse:collapse;font:14px/1.5 var(--sans)}
+table.ptable th,table.ptable td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+table.ptable th{background:var(--accbg);color:var(--acc);font-weight:600}
+table.ptable td.c-green{background:#e7f6ed;color:#1d6b45;font-weight:600}
+table.ptable td.c-yellow{background:#fdf6e3;color:#7a5a0b;font-weight:600}
+table.ptable td.c-red{background:#fdeaea;color:#9c1d1d;font-weight:600}
+html[data-theme=dark] table.ptable td.c-green{background:#16321f;color:#84d9a8}
+html[data-theme=dark] table.ptable td.c-yellow{background:#3a2f12;color:#f0dfae}
+html[data-theme=dark] table.ptable td.c-red{background:#3a1d1d;color:#ffb3b3}
+.tblcap{font:600 13.5px/1.4 var(--sans);color:var(--acc);text-align:center;margin:12px 0 6px}
+.tblcap:first-child{margin-top:0}
+.ln{font-weight:600;margin:12px 0 4px}
+.ln:first-child{margin-top:0}
+.steps{margin:0;padding-left:24px}
+.steps li{margin:0 0 8px;font:15.5px/1.6 var(--serif)}
+.reqwrap{margin:16px auto 0;max-width:620px}
+.reqwrap h5{font:600 13.5px/1.4 var(--sans);color:var(--acc);text-align:center;margin:0 0 8px;letter-spacing:.02em}
+table.req{width:100%;border-collapse:collapse;font:14px/1.45 var(--sans)}
+table.req td{border:1px solid var(--line);padding:6px 10px;vertical-align:top}
+table.req td:last-child{text-align:right;white-space:nowrap;font-weight:600;width:40%}
+@media(max-width:760px){
+ .prod dl{grid-template-columns:1fr;gap:0}
+ .prod dt{margin-top:9px;font-weight:600;color:var(--fg)}
+}
 .modal,.lb{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px}
 .modal{background:rgba(0,0,0,.45);z-index:60}
 .lb{background:rgba(0,0,0,.86);z-index:70}
@@ -100,8 +129,21 @@ html[data-theme=dark] .err{color:#ff9c9c}
 #dbg{display:none;margin:10px 14px 0;padding:12px 14px;border:1px solid #d9534f;background:#fdf0ef;color:#7a1c1c;border-radius:10px;white-space:pre-wrap;font:13px/1.5 ui-monospace,Consolas,monospace}
 html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
 #status{color:var(--mut);font-size:13px;padding:8px 16px 0;white-space:pre-wrap}
-@media(max-width:900px){#burger{display:inline-block}#rail{transform:translateX(-102%);transition:.2s;padding-top:20px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}#rail.on{transform:none}main{margin-left:0;padding:16px 16px 80px}.hero{padding:20px}.hero h1{font-size:26px}h1{font-size:25px}}
-@media print{#topbar,#rail,.actions,.crumbs,.tools,#up,#status{display:none!important}main{margin:0;padding:0}.prod{break-inside:avoid;border-color:#ccc}.d p,.d li,.prod dd,.prod dt{font-size:11.5pt}}
+@media(max-width:900px){
+ #burger{display:inline-block}
+ #rail{transform:translateX(-102%);transition:.2s;padding-top:20px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
+ #rail.on{transform:none}
+ main{margin-left:0;padding:16px 16px 80px}
+ .hero{padding:20px}
+ .hero h1{font-size:26px}
+ h1{font-size:25px}
+}
+@media print{
+ #topbar,#rail,.actions,.crumbs,.tools,#up,#status{display:none!important}
+ main{margin:0;padding:0}
+ .prod{break-inside:avoid;border-color:#ccc}
+ .d p,.d li,.prod dd,.prod dt{font-size:11.5pt}
+}
 </style>
 </head>
 <body>
@@ -188,53 +230,120 @@ var RIGHTS_TAB='Правки';
 var APPS_URL='https://script.google.com/macros/s/AKfycbyD-X50gxUmQjjKhx5pUJ1HMDWfuR53gVImre2ASRW1XojvbVsDupQHhWkoVfIL2DGqyw/exec';
 var PASS='134679852';
 
+/* Тексты и таблицы, зафиксированные в книге (перекрывают данные карточки) */
+var SOMCELL_ADV=[
+['Европейское производство — высокое качество сборки и надёжность',
+ 'Прибор производится в Болгарии компанией Milkotronic Ltd., что подтверждает европейское качество сборки и материалов. Анализатор внесён в Госреестр СИ РФ (№ 73649-18), прошёл испытания и рекомендован для применения в молочной отрасли.'],
+['Техническая поддержка и сервис',
+ 'Официальные поставщики обеспечивают техническую поддержку, консультируют по работе прибора и решают возникающие вопросы. Калибровка выполняется однократно перед использованием техническим специалистом, что упрощает эксплуатацию.'],
+['Выезд специалиста для пуско-наладки и обучения',
+ 'Пуско-наладка и первичная калибровка проводятся техническим специалистом на месте, что экономит время сотрудников и исключает ошибки при освоении прибора.'],
+['Мобильность и лёгкий вес',
+ 'Прибор компактен (габариты 255×380×300 мм) и весит всего 7,3 кг, что позволяет легко переносить его между фермой, цехом и лабораторией. Портативный дизайн с интегрированным 10" дисплеем и встроенным принтером делает его удобным для работы в разных условиях.'],
+['Постоянная связь с производителем',
+ 'Благодаря прямому сотрудничеству с Milkotronic Ltd. поставщики хорошо знают продукт, могут оперативно задавать вопросы производителю и устранять возможные недочёты.'],
+['Наличие ПО — анализ, хранение и экспорт данных',
+ 'Встроенное программное обеспечение (tscc.exe) управляет прибором, регистрирует клетки, рассчитывает концентрацию и проводит диагностические тесты. Результаты сохраняются в памяти прибора (4 Гб), возможна печать выборочных измерений на встроенном термопринтере. ПО работает под управлением Windows 7 и выше.'],
+['Определяемые параметры соответствуют обязательным требованиям ГОСТ',
+ 'Прибор предназначен для измерения счётной концентрации соматических клеток в сыром молоке методом флуоресцентной микроскопии, что соответствует обязательному контролю входящего сырья по ГОСТ 31449-2013, ГОСТ Р 52054-2003 и ТР ТС 033/2013.'],
+['Быстрое определение количества соматических клеток',
+ 'Результат выдаётся в течение 20–60 секунд, до 60 образцов в час. Это в 10 раз быстрее стандартного арбитражного метода ручного подсчёта.'],
+['Простота использования — не требуется специально обученный сотрудник',
+ 'Прибор не требует сложной пробоподготовки и калибровки в процессе работы. Управление интуитивно понятно, анализ после размещения кассеты LACTOCHIP полностью автоматический.'],
+['Несложная периодическая калибровка',
+ 'Калибровка выполняется однократно перед вводом в эксплуатацию техническим специалистом, что повышает сходимость результатов с арбитражными методами.'],
+['Разные виды мойки',
+ 'Предусмотрены процедуры промывки, обеспечивающие качественную очистку анализатора и продлевающие срок его службы.'],
+['Собственный сервисный центр',
+ 'Официальные поставщики имеют собственные сервисные центры, что обеспечивает быстрое и качественное обслуживание приборов.'],
+['Расширенная гарантия',
+ 'Стандартная гарантия на прибор составляет 1 год, однако в зависимости от условий поставки может предоставляться расширенная гарантия (уточняйте у конкретного продавца).']
+];
+var CONC_PLUS='<div class="tblcap">Таблица 1. На 1 л средства (обработки)</div>'
+ +'<table class="ptable"><thead><tr><th>Концентрация</th><th>Вода</th><th>Средство</th></tr></thead><tbody>'
+ +'<tr><td>0,5 %</td><td>200 л</td><td>1 л</td></tr>'
+ +'<tr><td>1 %</td><td>10 л</td><td>1 л</td></tr>'
+ +'<tr><td>10 %</td><td>5 л</td><td>1 л</td></tr>'
+ +'</tbody></table>'
+ +'<div class="tblcap">Таблица 2. На 20 л средства (обработки)</div>'
+ +'<table class="ptable"><thead><tr><th>Концентрация</th><th>Вода</th><th>Средство</th></tr></thead><tbody>'
+ +'<tr><td>0,5 %</td><td>4000 л</td><td>20 л</td></tr>'
+ +'<tr><td>1 %</td><td>200 л</td><td>20 л</td></tr>'
+ +'<tr><td>10 %</td><td>100 л</td><td>20 л</td></tr>'
+ +'</tbody></table>';
+var CONC_ECO='<div class="tblcap">Таблица 1. Для 1 л рабочего раствора</div>'
+ +'<table class="ptable"><thead><tr><th>Концентрация</th><th>Вода</th><th>Средство</th></tr></thead><tbody>'
+ +'<tr><td>0,5 %</td><td>200 л</td><td>0,05 л</td></tr>'
+ +'</tbody></table>'
+ +'<div class="tblcap">Таблица 2. Для 20 л рабочего раствора</div>'
+ +'<table class="ptable"><thead><tr><th>Концентрация</th><th>Вода</th><th>Средство</th></tr></thead><tbody>'
+ +'<tr><td>0,5 %</td><td>4000 л</td><td>1 л</td></tr>'
+ +'</tbody></table>';
+var CARD_FIX=[
+  {name:'TIAS SomCell',field:'Преимущества',
+   v:SOMCELL_ADV.map(function(x){return '# '+x[0]+'\n'+x[1]}).join('\n')},
+  {name:'ANKAR Before плюс',field:'Рабочая концентрация',tableHTML:CONC_PLUS,after:'Применение'},
+  {name:'ANKAR Before Eco',field:'Рабочая концентрация',tableHTML:CONC_ECO,after:'Применение'}
+];
+var DROP_CARDS=[
+  {sheet:'Ветеринарные препараты РубиконВ',re:/^препараты?\s*[:.]?$/i}
+];
+
+/* [ лист, название, группа, режим, параметры ] */
 var SHEETS=[
-['термины и определения','Термины, определения, документы','Основы','items'],
-['тесты 4гр','Тесты 4 группы','Экспресс-тесты и контроль сырья','cols',{labelCols:[0]}],
-['тесты_допгруппы','Тесты дополнительных групп','Экспресс-тесты и контроль сырья','zones',{zones:[
-  {titleRow:0,titleCol:1,nameCol:2,labelCol:1,fieldCols:[3,4,5,6]},
-  {titleRow:0,titleCol:8,nameCol:9,labelCol:8,fieldCols:[10,11,12,13]}
-]}],
-['Сравнение чув-ти тестов','Сравнение чувствительности тестов','Экспресс-тесты и контроль сырья','cols',{labelCols:[0]}],
-['EXSTENSO','Система EXTENSO','Экспресс-тесты и контроль сырья','kv',{lc:0,vc:1,name:'Система EXTENSO'}],
-['Тест-пластины Кенгуру','Тест-пластины KangarooSci','Экспресс-тесты и контроль сырья','items'],
-['Био ТФ','Турбидофлуориметр БиоТФ','Лаборатория и приборы','bio'],
-['анализаторы качества','Анализаторы качества молока','Лаборатория и приборы','cols',{labelCols:[1],fillRight:true}],
-['анализаторы соматики','Анализаторы соматики','Лаборатория и приборы','cols',{labelCols:[1],fillRight:true}],
-['Люминометр','Люминометр НМ-ATP','Лаборатория и приборы','single',{name:'Люминометр «НМ-ATP»'}],
-['Среды Углич','Питательные среды (Углич)','Лаборатория и приборы','row',{nc:1}],
+['термины и определения','Термины, определения, документы','Основы','items',{nonum:true}],
+['тесты 4гр','Тесты 4 группы','Экспресс-тесты и контроль сырья','tests4'],
+['тесты_допгруппы','Тесты дополнительных групп','Экспресс-тесты и контроль сырья','testsDop'],
+['Сравнение чув-ти тестов','Сравнение чувствительности тестов','Экспресс-тесты и контроль сырья','sravn'],
+['EXSTENSO','Система EXTENSO','Экспресс-тесты и контроль сырья','kv',{lc:0,vc:1,name:'Система EXTENSO',hero:true}],
+['Тест-пластины Кенгуру','Тест-пластины KangarooSci','Экспресс-тесты и контроль сырья','kangaroo'],
+['Био ТФ','Турбидофлуориметр БиоТФ','Лаборатория и приборы','biotf'],
+['анализаторы качества','Анализаторы качества молока','Лаборатория и приборы','analyzers'],
+['анализаторы соматики','Анализаторы соматики','Лаборатория и приборы','analyzers'],
+['Люминометр','Люминометр НМ-ATP','Лаборатория и приборы','lumin'],
+['Среды Углич','Питательные среды (Углич)','Лаборатория и приборы','row',{nc:1,skip:['Фаготест']}],
 ['ИНКУБАТОР_сч.устр-во','Инкубаторы и считывающие устройства','Лаборатория и приборы','zones',{zones:[
-  {labelCol:0,nameRow:1,from:1,to:5,title:'Инкубаторы для тестов'},
+  {labelCol:0,nameRow:1,from:1,to:6,title:'Инкубаторы для тестов'},
   {labelCol:7,nameRow:1,from:8,title:'Считывающие устройства'}
 ]}],
 ['гигиена и уход за выменем','Средства для вымени','Доение и гигиена','row',{nc:1}],
 ['Вспомогательные товары для доен','Вспомогательные товары для доения','Доение и гигиена','row',{nc:1}],
-['бумага_салфетки','Бумага, полотенца, салфетки','Доение и гигиена','row',{nc:2}],
-['фильтр_сопутствующие товары','Фильтры и сопутствующие товары','Доение и гигиена','row',{nc:1}],
-['моющие средства','Моющие и дезинфицирующие средства','Мойка и дезинфекция','row',{nc:0}],
-['дезинфекция_сопутсвтующие','Дезинфекция: генераторы тумана','Мойка и дезинфекция','row',{nc:1}],
-['рабочий_уборочный','Рабочий и уборочный инвентарь','Мойка и дезинфекция','row',{nc:3,gc:2}],
-['спецодежда','Спецодежда и средства защиты','Спецодежда','row',{nc:1}],
-['Анализ Пишеворения КРС','Анализ пищеварения КРС (Пенсильванское сито)','Животноводство','items'],
+['бумага_салфетки','Бумага, полотенца, салфетки','Доение и гигиена','row',{nc:2,nameMax:260,
+ reName:/^(материал|протирочн|салфетк|бумаг|полотенц|сумк)/i,
+ fallbackName:'6 рулонов',
+ noInherit:true,
+ groupsBy:[{col:6,when:/многоразов/i,title:'Многоразовые салфетки'}]}],
+['фильтр_сопутствующие товары','Фильтры и сопутствующие товары','Доение и гигиена','row',{nc:1,noInherit:true,
+ headerOverrides:{3:'Количество шт в упаковке'},
+ mergeLabels:['Размер фильтрующего элемента','Количество шт в упаковке'],
+ orderFirst:['Размер фильтрующего элемента','Количество шт в упаковке'],
+ omitFields:[{re:/^Корпус фильтра/i,fields:['Дополнительная информация','Преимущества']},
+             {re:/ТИАН\s*PREMIUM/i,fields:['Для какого оборудования можно использовать']}]}],
+['моющие средства','Моющие и дезинфицирующие средства','Мойка и дезинфекция','clean'],
+['дезинфекция_сопутсвтующие','Дезинфекция: генераторы тумана','Мойка и дезинфекция','dez'],
+['рабочий_уборочный','Рабочий и уборочный инвентарь','Мойка и дезинфекция','rw'],
+['спецодежда','Спецодежда и средства защиты','Спецодежда','row',{nc:1,noInherit:true,strictRow:true}],
+['Анализ Пишеворения КРС','Анализ пищеварения КРС (Пенсильванское сито)','Животноводство','digest'],
 ['Лист17','Диагностика обмена веществ КРС','Диагностика и здоровье','row',{nc:1,hr:1}],
 ['Усмерение','Фиксация и усмирение животных','Животноводство','row',{nc:1}],
-['для копыт','Уход за копытами','Животноводство','row',{nc:1}],
+['для копыт','Уход за копытами','Животноводство','row',{nc:1,noInherit:true,alwaysName:true}],
 ['Уход за шкурой и удаление рогов','Уход за шкурой и удаление рогов','Животноводство','row',{nc:1}],
-['Выпойка и содержание молодняка','Выпойка и содержание молодняка','Животноводство','row',{nc:1}],
-['Кормушки поилки','Кормушки и поилки','Животноводство','row',{nc:1}],
+['Выпойка и содержание молодняка','Выпойка и содержание молодняка','Животноводство','row',{nc:1,noInherit:true}],
+['Кормушки поилки','Кормушки и поилки','Животноводство','row',{nc:1,noInherit:true,alwaysName:true}],
 ['маркировка_идентификация','Маркировка и идентификация','Животноводство','row',{nc:1}],
-['электропастух','Электропастух','Животноводство','row',{nc:2}],
+['электропастух','Электропастух','Животноводство','row',{nc:2,noInherit:true,dropHeadEcho:true,
+ headerOverrides:{7:'Чистое пространство',8:'Небольшая растительность',9:'Густая растительность'}}],
 ['влагомер','Влагомер','Животноводство','single',{name:'Влагомер'}],
-['ветеринарные препараты','Ветеринарные препараты','Ветеринария','row',{nc:1}],
+['ветеринарные препараты','Ветеринарные препараты','Ветеринария','row',{nc:1,catCol:0,noInherit:true}],
 ['Ветеринарные препараты РубиконВ','Препараты «РубиконВ»','Ветеринария','row',{nc:0}],
 ['Препараты Экохимтех','Препараты «Экохимтех»','Ветеринария','row',{nc:0}],
-['ветеринарные тесты КРС','Ветеринарные тесты: КРС','Ветеринария','items'],
-['ветеринарные тесты МДЖ','Ветеринарные тесты: молоко','Ветеринария','items'],
+['ветеринарные тесты КРС','Ветеринарные тесты: КРС','Ветеринария','vtests'],
+['ветеринарные тесты МДЖ','Ветеринарные тесты: молоко','Ветеринария','milkTests',{gid:559967924}],
 ['МРС','Мелкий рогатый скот','Ветеринария','row',{nc:1}],
-['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1}],
-['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1}]
+['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1,noInherit:true,nameFirstLine:true,nameMax:300}],
+['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1,noInherit:true,alwaysName:true}]
 ];
-var CACHE='kb_cache_v13',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v14',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
@@ -252,6 +361,7 @@ function setStatus(s){var e=$('status');if(e)e.textContent=s}
 var RE_NAME=/наименован|назван|модел|ассортимент|позиц/i;
 var RE_SIG=/показ|тип|принцип|веществ|решен|фото|характер|применен|состав|ссыл|производ|докумен|описан|свойств|выгод|артикул|размер|упаковк|плотн|материал|област|канал|стоим|цена|дополн|срок|услови|преимущ|примечан|количест|ширин|вид |вид$|концентрац|расход|фасовк|параметр|назначен|вес|масса|объем|объём|габарит|гарант|сертифик|эксплуатац|обслуживан|комплектац|индикац|чувствит|сфера|категори|норма|значен|производител|питание|программ|лунок|таймер|температур|источник|код/i;
 var RE_GRP=/анализатор|линейка|группа|семейство|серия/i;
+var HEAD_ECHO=/^(название|наименование|код|фото|артикул|модель|характеристика|характеристики|описание|размер|цена|ед\.?)$/i;
 function V(rows,r,c){var row=rows[r];var v=row&&row[c]!=null?row[c]:'';return String(v==null?'':v).trim()}
 function maxLen(rows){var n=0;rows.forEach(function(r){if(r.length>n)n=r.length});return n}
 function cleanName(v){return String(v||'').replace(/\s+/g,' ').replace(/[-–—:;\s]+$/,'').trim()}
@@ -265,10 +375,12 @@ function isSig(v){
 }
 function isName(v){
   v=String(v||'').trim();
+  if(/date\(/i.test(v))return false;
   if(v.length<4||v.length>180)return false;
   if(isSig(v))return false;
   return true;
 }
+function keyName(v){return RE_NAME.test(String(v||''))}
 function cleanText(v){
   if(v==null)return '';
   var t=String(v).replace(/\r\n?/g,'\n');
@@ -284,6 +396,7 @@ function cleanText(v){
   t=t.replace(/\s+([,.;:!?])/g,'$1');
   t=t.replace(/([^\s]) - /g,'$1 — ');
   t=t.replace(/--/g,'—');
+  t=t.replace(/\s*\(?\s*модель\s+лактоскан[^)]*\)?/gi,'');
   return t;
 }
 function linkify(h){return h.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')}
@@ -297,8 +410,10 @@ function renderText(d){
     }
   }
   lines.forEach(function(l){
-    var m=l.match(/^[•·▪*]\s*(.+)$/)||l.match(/^[-–—]\s+(.+)$/)||l.match(/^(\d+[.)]\s+.+)$/);
-    if(m&&m[1]&&!/^[•·▪*]\s*$/.test(l)){list.push(m[1]);return}
+    var hd=l.match(/^#\s+(.+)$/);
+    if(hd){flush();html+='<p class="ln">'+linkify(esc(hd[1]))+'</p>';return}
+    var m=l.match(/^[•·▪■*▸◦]\s*(.+)$/)||l.match(/^[-–—]\s+(.+)$/)||l.match(/^(\d+[.)]\s+.+)$/);
+    if(m&&m[1]&&!/^[•·▪■*▸◦]\s*$/.test(l)){list.push(m[1]);return}
     if(!l){flush();return}
     flush();
     html+='<p>'+linkify(esc(l))+'</p>';
@@ -306,12 +421,13 @@ function renderText(d){
   flush();
   return html;
 }
+function noDate(v){return String(v||'').replace(/Date\(\d+,\d+,\d+\)/g,'').trim()}
 function matrix(tb){
   return (tb.rows||[]).map(function(row){
     return (row.c||[]).map(function(c){
       if(!c)return '';
       var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');
-      return cleanText(v);
+      return noDate(cleanText(v));
     });
   }).filter(function(r){return r.some(function(x){return x!==''})});
 }
@@ -327,6 +443,107 @@ function toItems(rows){
     else out.push({t:first,d:rest.join('\n')});
   });
   return out;
+}
+function optsFor(s){
+  for(var i=0;i<SHEETS.length;i++){
+    if(SHEETS[i][0]===s.sheet)return SHEETS[i][4]||{};
+  }
+  return s.opts||{};
+}
+function fillRight(rows){
+  rows.forEach(function(row){
+    var last='';
+    for(var c=0;c<row.length;c++){
+      var v=String(row[c]==null?'':row[c]).trim();
+      if(v!==''){last=v}
+      else if(last!==''){row[c]=last}
+    }
+  });
+}
+function getLabel(rows,r,cols){
+  var parts=[];
+  cols.forEach(function(c){
+    var v=V(rows,r,c);
+    if(!v)return;
+    if(/^\d{1,2}[.)]?$/.test(v))return;
+    var t=normLab(v);
+    if(t&&parts.indexOf(t)<0)parts.push(t);
+  });
+  return parts.join(' · ');
+}
+function findName(rows,c,maxR,minR){
+  minR=minR||0;
+  for(var r=minR;r<maxR;r++){
+    var v=V(rows,r,c);
+    if(!v)continue;
+    if(RE_GRP.test(v)&&v.length<70)continue;
+    if(!isName(v))continue;
+    return {name:cleanName(v),row:r};
+  }
+  return null;
+}
+function findGroup(rows,c,maxR){
+  for(var r=0;r<maxR;r++){
+    var v=V(rows,r,c);
+    if(v&&RE_GRP.test(v)&&v.length<90)return cleanName(v);
+  }
+  return '';
+}
+function okName(v,opts){
+  v=String(v||'').trim();
+  if(!v)return false;
+  if(keyName(v))return false;
+  var max=(opts&&opts.nameMax)||180;
+  if(v.length<4||v.length>max)return false;
+  if(opts&&opts.reName&&opts.reName.test(v))return true;
+  return !isSig(v);
+}
+function applyRowPost(block,opts){
+  if(!block||!block.cards)return;
+  var merge=opts.mergeLabels||[],first=opts.orderFirst||[];
+  block.cards.forEach(function(cd){
+    if(merge.length){
+      var merged={};
+      cd.fields=cd.fields.filter(function(f){
+        if(f.grp)return true;
+        for(var i=0;i<merge.length;i++){
+          if(f.label===merge[i]){
+            var key=f.label;
+            if(!merged[key])merged[key]={label:key,vals:[],r:f.r,c:f.c};
+            var txt=String(f.v==null?'':f.v).trim();
+            if(txt){
+              txt.split('\n').forEach(function(p){
+                p=p.trim();
+                if(p&&merged[key].vals.indexOf(p)<0)merged[key].vals.push(p);
+              });
+            }
+            return false;
+          }
+        }
+        return true;
+      });
+      var newFirst=[];
+      first.forEach(function(lb){
+        if(!merged[lb])return;
+        var sep=(/количеств/i.test(lb))?' · ':'\n';
+        newFirst.push({label:lb,v:merged[lb].vals.join(sep),r:merged[lb].r,c:merged[lb].c,ro:1});
+      });
+      var seen={},cleaned=[];
+      cd.fields.forEach(function(f){
+        var key=(f.label||'')+'|'+String(f.v==null?'':f.v);
+        if(!f.grp&&seen[key])return;
+        seen[key]=1;cleaned.push(f);
+      });
+      cd.fields=newFirst.concat(cleaned);
+    }
+    if(opts.omitFields){
+      opts.omitFields.forEach(function(rule){
+        if(!rule.re.test(cd.name))return;
+        var omit=rule.fields||[];
+        cd.fields=cd.fields.filter(function(f){return omit.indexOf(f.label)<0});
+      });
+    }
+  });
 }
 
 /* ---------- каналы загрузки ---------- */
@@ -397,50 +614,73 @@ async function fetchUrl(url){
     throw new Error(e1.message);
   }
 }
-function fetchSheet(sh){return fetchUrl(BASE+'tqx=out:json&headers=0&sheet='+enc(sh))}
+function fetchSheetCfg(cfg){
+  var opts=cfg[4]||{};
+  var url=BASE+'tqx=out:json&headers=0';
+  if(opts.gid!=null)url+='&gid='+opts.gid;
+  else url+='&sheet='+enc(cfg[0]);
+  return fetchUrl(url);
+}
 
-/* ---------- помощники разбора ---------- */
-function fillRight(rows){
-  rows.forEach(function(row){
-    var last='';
-    for(var c=0;c<row.length;c++){
-      var v=String(row[c]==null?'':row[c]).trim();
-      if(v!==''){last=v}
-      else if(last!==''){row[c]=last}
+/* ---------- общие правки ---------- */
+function parseRights(tb){
+  var fresh={};
+  (tb.rows||[]).forEach(function(row){
+    var c=(row.c||[]).map(function(x){return x&&x.v!=null?String(x.v):''});
+    if(!c[0]||!c[2]||c[0]==='sheet')return;
+    fresh[c[0]+'|'+parseInt(c[1],10)+'|'+c[2]]=c[3];
+  });
+  return fresh;
+}
+async function loadRights(){
+  if(!RIGHTS_ID)return;
+  var tries=[
+    RBASE+'tqx=out:json&headers=0&gid=0',
+    RBASE+'tqx=out:json&headers=0&sheet='+enc(RIGHTS_TAB)
+  ];
+  for(var t=0;t<tries.length;t++){
+    try{
+      var tb=await fetchUrl(tries[t]);
+      if(tb&&tb.rows&&tb.rows.length){
+        OV=parseRights(tb);
+        try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}
+        return;
+      }
+    }catch(e){rep('Правки: '+e.message)}
+  }
+}
+function applyOverlay(sections){
+  var all={},k;
+  for(k in OV)all[k]=OV[k];
+  for(k in PENDING)all[k]=PENDING[k];
+  sections.forEach(function(s){
+    if(s.kind==='cards'&&s.rows&&s.rows.length){
+      for(var key in all){
+        if(key.indexOf(s.sheet+'|')!==0)continue;
+        var p=key.split('|'),ri=parseInt(p[1],10),ci=parseInt(p[2],10);
+        if(isNaN(ri)||isNaN(ci))continue;
+        if(!s.rows[ri])s.rows[ri]=[];
+        s.rows[ri][ci]=all[key];
+      }
+      s.__stale=1;
+      return;
+    }
+    for(var key2 in all){
+      if(key2.indexOf(s.sheet+'|')!==0)continue;
+      var q=key2.split('|'),idx=parseInt(q[1],10),f=q[2],val=all[key2];
+      if(idx<0){
+        if(f==='t')s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');
+        continue;
+      }
+      var it=s.items[idx];
+      if(!it)continue;
+      if(f==='d')it.d=val;
+      else if(f==='t')it.t=val;
     }
   });
 }
-function getLabel(rows,r,cols){
-  var parts=[];
-  cols.forEach(function(c){
-    var v=V(rows,r,c);
-    if(!v)return;
-    if(/^\d{1,2}[.)]?$/.test(v))return;
-    var t=normLab(v);
-    if(t&&parts.indexOf(t)<0)parts.push(t);
-  });
-  return parts.join(' · ');
-}
-function findName(rows,c,maxR,minR){
-  minR=minR||0;
-  for(var r=minR;r<maxR;r++){
-    var v=V(rows,r,c);
-    if(!v)continue;
-    if(RE_GRP.test(v)&&v.length<70)continue;
-    if(!isName(v))continue;
-    return {name:cleanName(v),row:r};
-  }
-  return null;
-}
-function findGroup(rows,c,maxR){
-  for(var r=0;r<maxR;r++){
-    var v=V(rows,r,c);
-    if(v&&RE_GRP.test(v)&&v.length<90)return cleanName(v);
-  }
-  return '';
-}
 
-/* ---------- режим cols ---------- */
+/* ---------- режим cols: позиции в столбцах ---------- */
 function parseCols(rows,opts){
   opts=opts||{};
   var labelCols=opts.labelCols||[0];
@@ -449,7 +689,7 @@ function parseCols(rows,opts){
   var n=maxLen(rows),dataStart=rows.length;
   for(var r=1;r<rows.length;r++){
     var lab=getLabel(rows,r,labelCols);
-    if(lab&&!RE_NAME.test(lab)){dataStart=r;break}
+    if(lab&&!keyName(lab)){dataStart=r;break}
   }
   if(dataStart>hMax)hMax=Math.min(dataStart,6);
   var cards=[];
@@ -475,7 +715,7 @@ function parseCols(rows,opts){
   return {blocks:[{title:'',cards:cards}]};
 }
 
-/* ---------- режим zones ---------- */
+/* ---------- режим zones: несколько зон на листе ---------- */
 function parseZones(rows,opts){
   var blocks=[];
   (opts.zones||[]).forEach(function(z){
@@ -523,86 +763,153 @@ function parseZones(rows,opts){
   return blocks.length?{blocks:blocks}:null;
 }
 
-/* ---------- режим row ---------- */
+/* ---------- режим row: товары в строках ---------- */
 function parseRow(rows,opts){
   opts=opts||{};
   var nc=opts.nc!=null?opts.nc:1;
   var gc=opts.gc!=null?opts.gc:0;
+  var skip=opts.skip||[];
+  var catCol=(opts.catCol!=null)?opts.catCol:null;
+  var curCat='',pendingCat=null;
+  function isSkip(v){
+    v=String(v||'').toLowerCase();
+    for(var i=0;i<skip.length;i++){
+      if(v.indexOf(String(skip[i]).toLowerCase())>=0)return true;
+    }
+    return false;
+  }
   var n=maxLen(rows),first=-1;
   if(opts.hr!=null)first=Math.min(opts.hr,rows.length-1);
   if(first<0){
     for(var r=0;r<rows.length;r++){
       var v=V(rows,r,nc),cnt=0;
       for(var c=0;c<n;c++){if(V(rows,r,c))cnt++}
-      if(v&&cnt>=2&&!RE_NAME.test(v)&&isName(v)){first=r;break}
+      if(cnt>=2&&okName(v,opts)){first=r;break}
     }
   }
   if(first<0)first=0;
   var heads={},pres=[];
   for(var r2=0;r2<first;r2++){
     var cells=[];
-    for(var c2=0;c2<n;c2++){
-      var v2=V(rows,r2,c2);
-      if(v2)cells.push({c:c2,v:v2});
-    }
+    for(var c2=0;c2<n;c2++){var v2=V(rows,r2,c2);if(v2)cells.push({c:c2,v:v2});}
     if(cells.length===1){pres.push({type:'g',v:cleanName(cells[0].v)});continue}
+    var sig=0;
+    cells.forEach(function(x){if(isSig(x.v)||keyName(x.v))sig++});
+    if(opts.fallbackName&&cells.length>=3&&sig<cells.length/2){
+      var fcard={name:opts.fallbackName,nameR:r2,nameC:nc,fields:[],idx:0};
+      cells.forEach(function(x){
+        if(x.c===nc)return;
+        fcard.fields.push({label:heads[x.c]||'',v:x.v,r:r2,c:x.c});
+      });
+      pres.push({type:'card',card:fcard});
+      continue;
+    }
     cells.forEach(function(x){
-      if(!heads[x.c]&&x.v.length<=45&&!RE_NAME.test(x.v))heads[x.c]=normLab(x.v);
+      if(!heads[x.c]&&x.v.length<=45&&!keyName(x.v))heads[x.c]=normLab(x.v);
     });
   }
+  if(opts.headerOverrides){
+    for(var hc in opts.headerOverrides){
+      if(opts.headerOverrides.hasOwnProperty(hc))heads[hc]=opts.headerOverrides[hc];
+    }
+  }
   var cards=[],groups={},last=null;
-  pres.forEach(function(p){groups[0]=groups[0]?groups[0]+' · '+p.v:p.v});
+  pres.forEach(function(p){
+    if(p.type==='g'){groups[0]=groups[0]?groups[0]+' · '+p.v:p.v;return}
+    p.card.idx=cards.length;cards.push(p.card);last=p.card;
+  });
+  var gDone={};
   for(var r3=first;r3<rows.length;r3++){
     var cells3=[];
-    for(var c3=0;c3<n;c3++){
-      var v3=V(rows,r3,c3);
-      if(v3)cells3.push({c:c3,v:v3});
-    }
+    for(var c3=0;c3<n;c3++){var v3=V(rows,r3,c3);if(v3)cells3.push({c:c3,v:v3});}
     if(!cells3.length)continue;
-    var nm=V(rows,r3,nc);
+    var skipIt=false;
+    cells3.forEach(function(x){if(isSkip(x.v))skipIt=true});
+    if(skipIt)continue;
+    if(opts.dropHeadEcho){
+      cells3=cells3.filter(function(x){
+        var h=heads[x.c];
+        var t=String(x.v).trim();
+        if(HEAD_ECHO.test(t))return false;
+        if(h&&normLab(t).toLowerCase()===normLab(h).toLowerCase())return false;
+        return true;
+      });
+      if(!cells3.length)continue;
+    }
+    if(catCol!=null){
+      var catV=V(rows,r3,catCol);
+      if(catV&&catV!==curCat){curCat=catV;pendingCat=catV}
+      cells3=cells3.filter(function(x){return x.c!==catCol});
+      if(!cells3.length)continue;
+    }
     if(cells3.length===1){
       var cc=cells3[0].c;
       if(cc===gc||cc===nc){groups[cards.length]=cleanName(cells3[0].v);continue}
-      if(last)last.fields.push({label:heads[cc]||'',v:cells3[0].v,r:r3,c:cc});
-      continue;
+      if(opts.strictRow)continue;
+      if(last){last.fields.push({label:heads[cc]||'',v:cells3[0].v,r:r3,c:cc});continue}
     }
-    if(!nm||RE_NAME.test(nm)||!isName(nm)){
+    var nmRaw=V(rows,r3,nc);
+    var nm=nmRaw;
+    if(opts.nameFirstLine&&nmRaw)nm=String(nmRaw).split('\n')[0].trim();
+    var goodName=opts.alwaysName?!!(nm&&nm.length>=3):okName(nm,opts);
+    if(!goodName){
+      if(opts.strictRow){
+        if(cells3.length===1)groups[cards.length]=cleanName(cells3[0].v);
+        continue;
+      }
       if(last){
         cells3.forEach(function(x){
           if(x.c===nc)return;
           last.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c});
         });
-      } else {
+      } else if(cells3.length){
         groups[cards.length]=cleanName(cells3[0].v);
       }
       continue;
     }
+    if(opts.groupsBy){
+      for(var gI=0;gI<opts.groupsBy.length;gI++){
+        var g=opts.groupsBy[gI];
+        if(gDone[gI])continue;
+        var gv='';
+        for(var gi=0;gi<cells3.length;gi++){if(cells3[gi].c===g.col){gv=cells3[gi].v;break}}
+        if(g.when.test(gv)){groups[cards.length]=g.title;gDone[gI]=1;}
+      }
+    }
+    if(pendingCat){groups[cards.length]=pendingCat;pendingCat=null}
     var cd={name:cleanName(nm),nameR:r3,nameC:nc,fields:[],idx:cards.length};
-    cards.push(cd);
-    last=cd;
+    if(opts.nameFirstLine){
+      var linesN=String(nmRaw).split('\n');
+      var tailN=linesN.slice(1).join('\n').replace(/^\s*\n+/,'').replace(/^"+|"+$/g,'').trim();
+      if(tailN)cd.fields.push({label:'Характеристики',v:tailN,r:r3,c:nc,ro:1});
+    }
+    cards.push(cd);last=cd;
     cells3.forEach(function(x){
       if(x.c===nc)return;
       cd.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c});
     });
   }
-  for(var c4=0;c4<n;c4++){
-    if(c4===nc)continue;
-    var vals=[];
-    cards.forEach(function(o){
-      var f=o.fields.filter(function(x){return x.c===c4})[0];
-      if(f)vals.push({r:o.nameR,v:f.v});
-    });
-    if(!vals.length||vals.length>cards.length*0.8)continue;
-    var longest=0;
-    vals.forEach(function(x){if(x.v.length>longest)longest=x.v.length});
-    if(longest<18)continue;
-    cards.forEach(function(o){
-      if(o.fields.some(function(x){return x.c===c4}))return;
-      var prev=null;
-      vals.forEach(function(x){if(x.r<o.nameR)prev=x});
-      if(prev)o.fields.push({label:heads[c4]||'',v:prev.v,r:prev.r,c:c4});
-    });
+  if(!opts.noInherit){
+    for(var c4=0;c4<n;c4++){
+      if(c4===nc)continue;
+      var vals=[];
+      cards.forEach(function(o){
+        var f=o.fields.filter(function(x){return x.c===c4})[0];
+        if(f)vals.push({r:o.nameR,v:f.v});
+      });
+      if(!vals.length||vals.length>cards.length*0.8)continue;
+      var longest=0;
+      vals.forEach(function(x){if(x.v.length>longest)longest=x.v.length});
+      if(longest<18)continue;
+      cards.forEach(function(o){
+        if(o.fields.some(function(x){return x.c===c4}))return;
+        var prev=null;
+        vals.forEach(function(x){if(x.r<o.nameR)prev=x});
+        if(prev)o.fields.push({label:heads[c4]||'',v:prev.v,r:prev.r,c:c4});
+      });
+    }
   }
+  if(opts.mergeLabels||opts.omitFields)applyRowPost({cards:cards},opts);
   return {blocks:[{title:'',cards:cards,groups:groups}]};
 }
 
@@ -625,6 +932,11 @@ function parseKV(rows,opts){
     if(!lv&&!vv)continue;
     card.fields.push({label:(vv&&lv&&lv!==vv)?normLab(lv):'',v:vv||lv,r:r,c:vc});
   }
+  if(opts.hero){
+    for(var q=0;q<card.fields.length;q++){
+      if(String(card.fields[q].v).length>100){card.fields[q].hero=1;break}
+    }
+  }
   return {blocks:[{title:'',cards:[card]}]};
 }
 
@@ -643,68 +955,800 @@ function parseSingle(rows,opts){
   return {blocks:[{title:'',cards:[card]}]};
 }
 
-/* ---------- режим bio ---------- */
-function parseBio(rows){
-  var n=maxLen(rows),sets=[],mainFields=[],start=-1;
+/* ---------- раздел KangarooSci: данные вшиты в книгу ---------- */
+function buildKangaroo(){
+  function F(label,v){return {label:label,v:v,ro:1}}
+  var t=[
+    ['№','Название тест-пластины','Цвет колоний','Условия роста (температура, время)'],
+    ['1','Aerobic Count Plate','Красный','30±1 °C / 36±1 °C, 48–72 ч'],
+    ['2','Staphylococcus aureus Count Plate','Красно-фиолетовые','36±1 °C, 24±2 ч'],
+    ['3','Listeria Count Plate','Сине-зелёные','36±1 °C, 24±2 ч'],
+    ['4','Coliform Count Plate','Красные','36±1 °C, 18–24±2 ч'],
+    ['5','E.coli / Coliform Count Plate','Сине-фиолетовые и красные','36±1 °C, 18–24±2 ч'],
+    ['6','Salmonella Count Plate','Красно-фиолетовые','36±1 °C, 24±2 ч'],
+    ['7','Enterobacteriaceae Count Plate','Красные','36±1 °C, 24±2 ч'],
+    ['8','Yeasts and Molds Count Plate','Зелёные','25–28±1 °C, 48–72 ч'],
+    ['9','Bacillus Cereus Count Plate','Красно-фиолетовые','36±1 °C, 24±2 ч']
+  ];
+  var cards=[
+    {name:'Назначение и общее описание',fields:[
+      F('Назначение','Предназначены для подсчёта микроорганизмов в готовой продукции, сырье, а также в смывах с поверхностей.'),
+      F('Принцип действия','Готовый тест для количественного определения микроорганизмов.'),
+      F('Альтернатива','Используются в качестве альтернативы классическим чашкам Петри.'),
+      F('Упаковка','Поставляются по 12 тест-пластин в упаковке, что оптимально для небольших объёмов испытаний.')
+    ]},
+    {name:'Преимущества',fields:[
+      F('','• быстрый результат;\n• простая методика использования, схожая с традиционным агаровым методом;\n• сокращение рабочего времени на проведение анализа;\n• экономия рабочего места;\n• снижение потребления энергии, воды и расходов на утилизацию отходов.')
+    ]},
+    {name:'Состав и структура тест-пластины',fields:[
+      F('','• стандартная питательная среда;\n• ПВХ-подложка с разметкой;\n• пластиковая плёнка с индикатором;\n• зона герметизации.')
+    ]},
+    {name:'Методика проведения анализа',fields:[
+      {grp:'Подготовка образцов для посева',v:'',ro:1},
+      F('','Обработка продуктов производится в соответствии с методикой анализа одним из следующих способов:\n• растворение вязких продуктов;\n• разбавление жидких продуктов;\n• суспензирование порошков и пастообразных продуктов;\n• гомогенизация твёрдых продуктов.'),
+      {grp:'Проведение испытаний (посев)',v:'',ro:1},
+      F('','• поместите тест-пластину на плоскую поверхность и выждите некоторое время для доведения пластины до комнатной температуры;\n• поднимите крышку и поместите 1 мл суспензии образца в центр тест-пластины;\n• осторожно опустите крышку на образец, избегая образования пузырьков;\n• убедитесь, что жидкий образец постепенно распределяется по всей тест-пластине;\n• плотно прижмите нижний конец крышки тест-пластины к подложке;\n• оставьте пластину на 3–5 минут на горизонтальной поверхности.'),
+      {grp:'Инкубация',v:'',ro:1},
+      F('','Тест-пластины имеют разный срок и температуру инкубации (в зависимости от определяемого микроорганизма).'),
+      {grp:'Интерпретация результатов',v:'',ro:1},
+      F('','Количественный подсчёт результатов на тест-пластине проводится визуально.')
+    ]},
+    {name:'Спектр определяемых микроорганизмов и условия культивирования',fields:[
+      {table:t},
+      F('','Для разных типов микроорганизмов предусмотрены свои температурные режимы (от 25 до 36 °C) и время инкубации (от 18 до 72 часов).')
+    ]}
+  ];
+  cards.forEach(function(c,k){c.idx=k;c.nameR=-1;c.nameC=-1});
+  return {blocks:[{title:'',cards:cards}]};
+}
+
+/* ---------- раздел Пищеварение КРС: тексты вшиты в книгу ---------- */
+function digestItems(){
+  return [
+    {g:1,t:'Общая информация'},
+    {t:'Назначение документа',d:'Документ представляет собой методическое пособие по работе с Пенсильванским ситом — устройством для измерения результатов повреждения кормов и оценки качества кормосмеси.'},
+    {g:1,t:'Порядок работы'},
+    {t:'Начало работы',d:'Сита устанавливают друг на друга в порядке: верхнее (диаметр отверстий 19 мм), среднее (8 мм), нижнее (4 мм), поддон. Конструкция ставится на ровную плоскую поверхность.'},
+    {t:'Как отбирать пробу',d:'Для анализа собирают пробу корма массой 300–400 грамм. Пробу берут из нескольких мест кормового стола.'},
+    {t:'Как работать с ситом',d:'Сито встряхивают в одном направлении 5–6 раз, затем поворачивают на четверть оборота (90 градусов). Процедура встряхивания повторяется после каждого поворота.\nНа схемах показаны 4 положения сита (квадраты с красной, синей, зелёной и жёлтой рамками) — это соответствует полному кругу поворотов на 360 градусов. Красные стрелки указывают направление вращения по часовой стрелке.\nВизуально: трясёте сито, поворачиваете на 90 градусов, снова трясёте, снова поворачиваете — и так проходите все четыре стороны.'},
+    {t:'Определяем доли фракций в кормосмеси',d:'В результате просеивания корм разделяется на фракции. Процентное содержание каждой фракции в кормосмеси рассчитывается по формуле:\n% в кормосмеси = (масса образца из бочки / общая масса) × 100 %'},
+    {t:'Таблица оценочных значений',table:[
+      ['Сито','Диаметр отверстий','Задерживает частицы','Рекомендуемый процент'],
+      ['Верхнее','19 мм','> 19 мм','< 5 %'],
+      ['Среднее','8 мм','8–19 мм','> 50 %'],
+      ['Нижнее','4 мм','4–8 мм','10–20 %'],
+      ['Поддон','—','< 4 мм','25–30 %']
+    ]},
+    {t:'Как рассчитать эффективность клетчатки',d:'После просеивания рассчитывается эффективность клетчатки (оптимально 18–22 %).'},
+    {g:1,t:'Итоговый алгоритм действий'},
+    {t:'Порядок действий',d:'1. Взять пробу 300–400 г.\n2. Установить сита друг на друга (в порядке: верхнее 19 мм, среднее 8 мм, нижнее 4 мм, поддон).\n3. Поставить конструкцию на ровную поверхность.\n4. Трясти в одном направлении 5–6 раз.\n5. Повернуть на 90 градусов.\n6. Повторить пункты 4 и 5 для всех четырёх сторон.\n7. Взвесить содержимое каждого сита и поддона для расчёта процентного соотношения фракций.'}
+  ];
+}
+
+/* ---------- режим tests4: склеенная шапка + требования ---------- */
+var GEN_TOK=['экспресс','тест','тесты','системы','система','набор','набора','milk','test','kit','для'];
+var RE_DOC=/(гост|валидац|письмо|внесен|внесён|внесены|тр тс|фгну|вними|ilvo|afnor|декларац|сертифик)/i;
+var RE_SUBTAIL=/\s+(ß-лактамы|бета-лактамы|тетрациклины|хлорамфеникол(?:\s*\([^)]*\))?|стрептомицин|сульфаниламиды|макролиды|аминогликозиды|триметроприм|дапсон|ингибирующие в-ва)\s*$/i;
+function toks(s){
+  return String(s||'').toLowerCase().split(/[^a-zа-яё0-9]+/i).filter(function(t){
+    return t.length>=4&&GEN_TOK.indexOf(t)<0;
+  });
+}
+function sameLine(a,b){
+  var A=toks(a),B=toks(b);
+  for(var i=0;i<A.length;i++){if(B.indexOf(A[i])>=0)return true}
+  return false;
+}
+function renumberList(text){
+  var lines=String(text).split('\n'),idx=[],nums=[];
+  lines.forEach(function(l,i){
+    var m=l.match(/^\s*(\d{1,2})[.)]\s+/);
+    if(m){idx.push(i);nums.push(parseInt(m[1],10))}
+  });
+  if(idx.length<2)return text;
+  var ok=(nums[0]===1);
+  for(var i=1;i<nums.length&&ok;i++){if(nums[i]!==nums[i-1]+1)ok=false}
+  if(ok)return text;
+  idx.forEach(function(li,k){lines[li]=lines[li].replace(/^\s*\d{1,2}[.)]\s+/,(k+1)+'. ')});
+  return lines.join('\n');
+}
+function splitTestCell(text){
+  var t=cleanText(text),out={name:'',link:'',producer:'',docs:'',what:''},rest='';
+  var m=t.match(/https?:\/\/\S+/);
+  if(m){out.link=m[0].replace(/[),.;]+$/,'');t=t.replace(m[0],'\n')}
+  var pg=t.match(/\([^)]{2,40}\)/);
+  if(pg){
+    var p=t.indexOf(pg[0]),j=p;
+    while(j>0&&/[A-Za-zА-Яа-яЁё0-9 &.,\/+-]/.test(t.charAt(j-1)))j--;
+    if(p-j>=2){
+      out.producer=cleanName(t.slice(j,p)+pg[0]);
+      out.name=cleanName(t.slice(0,j));
+      rest=t.slice(p+pg[0].length);
+    } else {out.name=cleanName(t)}
+  } else {out.name=cleanName(t)}
+  var docs=[],what=[];
+  rest.split('\n').forEach(function(l){
+    l=cleanName(l);
+    if(!l)return;
+    if(RE_DOC.test(l)||l.length>70)docs.push(l);
+    else what.push(l);
+  });
+  if(docs.length){
+    var last=docs[docs.length-1],tm=last.match(RE_SUBTAIL);
+    if(tm){docs[docs.length-1]=cleanName(last.replace(RE_SUBTAIL,''));what.unshift(cleanName(tm[1]))}
+  }
+  out.docs=docs.join('\n');
+  out.what=what.join('\n');
+  return out;
+}
+function parseTests4(rows){
+  var n=maxLen(rows),cards=[],req=[],reqRow=-1;
   for(var r=0;r<rows.length;r++){
-    var c0=V(rows,r,0),c1=V(rows,r,1),c2=V(rows,r,2);
-    if(c0&&(c1||c2)&&c2.length>50&&c0.length<120&&!/перечень|тест-\s*набор/i.test(c0)){
-      if(start<0)start=r;
-      sets.push({name:cleanName(c0),nameR:r,nameC:0,fields:[],idx:sets.length});
-    }
-    if(start<0){
-      for(var c=0;c<n;c++){
-        var v=V(rows,r,c);
-        if(!v)continue;
-        mainFields.push({label:'',v:v,r:r,c:c});
-        break;
-      }
-    } else if(sets.length){
-      for(var c2b=0;c2b<n;c2b++){
-        var v2=V(rows,r,c2b);
-        if(!v2)continue;
-        var target=null;
-        for(var q=0;q<sets.length;q++){
-          if(sets[q].nameC===c2b)target=sets[q];
-        }
-        if(target&&r>target.nameR)target.fields.push({label:'',v:v2,r:r,c:c2b});
-      }
+    if(/Требования к физико-химическим/i.test(V(rows,r,0)+' '+V(rows,r,1))){reqRow=r;break}
+  }
+  var dataEnd=(reqRow>0)?reqRow:rows.length;
+  if(reqRow>0){
+    for(var r1=reqRow+1;r1<rows.length;r1++){
+      var lab=V(rows,r1,1)||V(rows,r1,0);
+      var val=V(rows,r1,3)||V(rows,r1,2);
+      if(lab&&val)req.push({label:cleanName(lab),value:cleanName(val)});
     }
   }
+  for(var c=1;c<n;c++){
+    var cell=V(rows,0,c);
+    if(!cell)continue;
+    var p=splitTestCell(cell);
+    var cd={name:p.name||('Тест '+(cards.length+1)),nameR:-1,nameC:c,fields:[],idx:cards.length,req:req};
+    if(p.link)cd.fields.push({label:'Ссылка',v:p.link,ro:1});
+    if(p.producer)cd.fields.push({label:'Производитель',v:p.producer,ro:1});
+    if(p.docs)cd.fields.push({label:'Документы',v:p.docs,ro:1});
+    if(p.what)cd.fields.push({label:'Что определяет',v:p.what,ro:1});
+    cards.push(cd);
+  }
+  if(!cards.length)return null;
+  for(var r2=1;r2<dataEnd;r2++){
+    var lab2=cleanName(V(rows,r2,0));
+    if(!lab2)continue;
+    for(var q=0;q<cards.length;q++){
+      var cdq=cards[q],v=V(rows,r2,cdq.nameC);
+      if(!v)continue;
+      if(/состав набора/i.test(lab2))v=renumberList(v);
+      cdq.fields.push({label:lab2,v:v,r:r2,c:cdq.nameC});
+    }
+  }
+  for(var q2=1;q2<cards.length;q2++){
+    var cur=cards[q2],pr=cards[q2-1];
+    if(!sameLine(cur.name,pr.name))continue;
+    pr.fields.forEach(function(f){
+      if(!f.ro)return;
+      if(cur.fields.some(function(x){return x.label===f.label}))return;
+      cur.fields.push({label:f.label,v:f.v,ro:1});
+    });
+  }
+  return {blocks:[{title:'',cards:cards}]};
+}
+
+/* ---------- режим testsDop: две линейки ---------- */
+var DOP_TXT={
+ 'garant':'Одноразовая пипетка в наборе (вместо дозатора) – упрощение способа дозирования молока, а также повышение стерильности и точности внесения нужного объёма пробы;\nОдновременное определение антибиотиков и ингибирующих веществ;\nПростота в использовании и минимум действий;\nОбнаружение более 65 антибиотиков одновременно;\nШирокая линейка, закрывающая большую часть решения № 28 ЕЭК;\nЯркое окрашивание тестовых линий, что удобно при визуальном считывании;\nОбозначено расположение линий на тест-полоске, что исключает ошибку и путаницу при использовании разных тест-систем.',
+ 'sensor':'Сокращение количества повторных анализов и экономия тест-полосок за счёт низкого количества ложных результатов;\nИсследован на российском молоке, что даёт корректный результат даже на жирном молоке вплоть до 6%;\nВозможность визуальной интерпретации результатов – экономия на считывающем устройстве;\nКлиентоориентированность производителя – готовы рассматривать и дорабатывать продукт, консультировать клиента напрямую;\nВозможность исследования на одну определённую группу – удобно для поставщиков;\nПривычная ширина тест-полоски 5 мм, что удобно для визуального считывания;\nНет необходимости приобретать ещё одно считывающее устройство и инкубатор – экономия рабочего пространства и средств.'
+};
+function splitNumName(v){
+  var t=cleanText(v),m=t.match(/^\s*(\d{1,2})\s*[.)]?\s*/);
+  if(!m)return {num:'',name:cleanName(t)};
+  return {num:m[1],name:cleanName(t.slice(m[0].length))};
+}
+function isGarant(name){
+  if(/^garant/i.test(name))return true;
+  if(/^(qmle|amino|sulfa|colonist|colistin|albendazole|bacitracin|ftsp|avermectins|dpf)/i.test(name))return true;
+  if(/garant\s*dpf/i.test(name))return true;
+  return false;
+}
+function fixTerm(text){
+  return String(text||'')
+    .replace(/инкубаорный/gi,'инкубаторный')
+    .replace(/инкубаорного/gi,'инкубаторного')
+    .replace(/инкубаорен/gi,'инкубаторный')
+    .replace(/безинкубаорный/gi,'безинкубаторный');
+}
+function parseDop(rows){
+  var zones=[
+    {title:'Линейка «GARANT» (Ring Biotenology)',numCol:1,nameCol:2,fieldCols:[3,4,5,6],kind:'garant'},
+    {title:'Линейка «UNISENSOR»',numCol:8,nameCol:9,fieldCols:[10,11,12,13],kind:'sensor'}
+  ];
   var blocks=[];
-  if(sets.length)blocks.push({title:'Тест-наборы и назначение',cards:sets});
-  if(mainFields.length)blocks.push({title:'',cards:[{name:'Турбидофлуориметр БиоТФ',nameR:-1,nameC:-1,fields:mainFields}]});
+  zones.forEach(function(z){
+    var cards=[];
+    for(var r=1;r<rows.length;r++){
+      var raw=V(rows,r,z.nameCol);
+      if(!raw||!isName(raw))continue;
+      var sn=splitNumName(raw);
+      var name=sn.name;
+      if(!name)continue;
+      var cd={name:name,num:sn.num,nameR:r,nameC:z.nameCol,fields:[],idx:cards.length};
+      cd.fields.push({label:'Что определяет',v:fixTerm(V(rows,r,z.fieldCols[0])),r:r,c:z.fieldCols[0]});
+      cd.fields.push({label:'Условия',v:fixTerm(V(rows,r,z.fieldCols[1])),r:r,c:z.fieldCols[1]});
+      var note=fixTerm(V(rows,r,z.fieldCols[2]));
+      if(note)cd.fields.push({label:'Примечания',v:note,r:r,c:z.fieldCols[2]});
+      var adv=fixTerm(V(rows,r,z.fieldCols[3]));
+      if(!adv)adv=(z.kind==='garant')?DOP_TXT.garant:DOP_TXT.sensor;
+      cd.fields.push({label:'Преимущества',v:adv,r:r,c:z.fieldCols[3]});
+      cards.push(cd);
+    }
+    if(cards.length)blocks.push({title:z.title,cards:cards});
+  });
   return blocks.length?{blocks:blocks}:null;
+}
+
+/* ---------- режим sravn: сравнение чувствительности ---------- */
+var SRAVN_DEFAULT='Пенициллин ТР ТС 033/2013, не более – 4 PPB';
+var SRAVN_GROUPS=[
+  {re:/^(Тетрациклин|Окситетрациклин|Доксициклин|Хлортетрациклин)$/i,
+   title:'Тетрациклиновая группа ТР ТС 033/2013, не более – 10 PPB'},
+  {re:/^(Стрептомицин|Дигидрострептомицин)$/i,
+   title:'Стрептомицин ТР ТС 033/2013, не более – 200 PPB'},
+  {re:/^(Левомицетин \(Хлорамфеникол\)|Левомицетина натрия сукцинат)$/i,
+   title:'Левомицетин (Хлорамфеникол) ТР ТС 033/2013, не более – 0,3 PPB'}
+];
+function sravnGroupOf(label){
+  for(var i=0;i<SRAVN_GROUPS.length;i++){
+    if(SRAVN_GROUPS[i].re.test(label))return SRAVN_GROUPS[i].title;
+  }
+  return SRAVN_DEFAULT;
+}
+function parseSravn(rows){
+  var n=maxLen(rows),hdrRow=0,best=-1;
+  for(var r=0;r<Math.min(4,rows.length);r++){
+    var score=0;
+    for(var c=1;c<n;c++){
+      var v=V(rows,r,c);
+      if(!v)continue;
+      if(/date\(/i.test(v))continue;
+      if(/^[\d\s.,;:()\/+–—-]+$/.test(v))continue;
+      score+=Math.min(v.length,60);
+    }
+    if(score>best){best=score;hdrRow=r}
+  }
+  var cards=[];
+  for(var c2=1;c2<n;c2++){
+    var nm='';
+    for(var r2=0;r2<=hdrRow+1&&r2<rows.length;r2++){
+      var v2=V(rows,r2,c2);
+      if(!v2||/date\(/i.test(v2))continue;
+      var t=cleanName(v2);
+      if(t.length>nm.length)nm=t;
+    }
+    if(!nm)continue;
+    if(c2===1)nm='Решение № 28, ppb (ТР ТС 033/2013)';
+    cards.push({name:nm,nameR:hdrRow,nameC:c2,fields:[],idx:cards.length});
+  }
+  if(!cards.length)return null;
+  var byC={};
+  cards.forEach(function(o){byC[o.nameC]=o});
+  var cur='';
+  for(var r3=hdrRow+1;r3<rows.length;r3++){
+    var lab=cleanName(V(rows,r3,0));
+    if(!lab)continue;
+    if(/date\(/i.test(lab))continue;
+    if(/^[\d\s.,;:()\/+–—-]+$/.test(lab))continue;
+    var grp=sravnGroupOf(lab);
+    for(var c3=1;c3<n;c3++){
+      var cd=byC[c3];
+      if(!cd)continue;
+      var val=V(rows,r3,c3);
+      if(!val)continue;
+      if(cur!==grp||!cd.fields.length){cd.fields.push({grp:grp,v:''})}
+      cd.fields.push({label:lab,v:val,r:r3,c:c3});
+    }
+    cur=grp;
+  }
+  return {blocks:[{title:'',cards:cards}]};
+}
+
+/* ---------- режим biotf ---------- */
+var RE_KIT=/^\s*(СТАРТ|ПАСТ|ПРО|ЩФ)[\s(0]/i;
+function parseBioTF(rows){
+  var n=maxLen(rows),fields=[];
+  for(var r=0;r<rows.length;r++){
+    var a=V(rows,r,0),rest=[],vCol=-1;
+    for(var c=1;c<n;c++){
+      var v=V(rows,r,c);
+      if(!v)continue;
+      if(vCol<0)vCol=c;
+      rest.push(v);
+    }
+    var line=(a+' '+rest.join(' ')).replace(/\s+/g,' ').trim();
+    if(!line)continue;
+    if(/перечень\s*тест-?набор/i.test(line))break;
+    if(RE_KIT.test(a))break;
+    if(/^набор\s*на\s*\d+\s*определ/i.test(a))break;
+    if(a&&rest.length&&a.length<=90&&!/[.;:]$/.test(a)){
+      fields.push({label:cleanName(a),v:rest.join('\n'),r:r,c:vCol});
+    } else {
+      fields.push({label:'',v:[a].concat(rest).filter(function(x){return x}).join('\n'),r:r,c:(a?0:vCol)});
+    }
+  }
+  return {fields:fields};
+}
+function bioTFKits(){
+  function F(l,v){return {label:l,v:v,ro:1}}
+  return [
+    {name:'СТАРТ 0 (Количественный метод)',fields:[
+      F('Состав набора','Набор на 100 определений:\n• 4 фольгированных пакета с тест-пробирками СТАРТ (в каждом по 25 штук)'),
+      F('Описание','Экспресс-определение общего количества микроорганизмов в сыром молоке за 15 минут (стандартная методика определения общего количества микроорганизмов — 72 часа).\nМетод основан на измерении скорости образования флуоресцентных веществ из флуорогенных субстратов в результате жизнедеятельности микроорганизмов. Скорость изменения флуоресценции прямо пропорциональна биомассе жизнеспособных микроорганизмов в сыром молоке.\nИсходя из средней массы бактериальной клетки, равной 1 пг, программное обеспечение прибора трансформирует значение биомассы в наиболее вероятное число клеток микроорганизмов (НВЧ/см³): биомасса (пг) ⇔ НВЧ/см³ ⇔ КОЕ/см³.'),
+      F('Диапазон измерения','20 000 – 5 000 000 КОЕ/г')
+    ]},
+    {name:'ПАСТ (Количественный метод)',fields:[
+      F('Состав набора','Набор на 50 определений:\n• 4 фольгированных пакета с тест-пробирками ПАСТ (в каждом по 25 штук);\n• 2 флакона со стерилизующим агентом (в каждом по 5 мл)'),
+      F('Описание','Определение общего количества микроорганизмов в пастеризованном и ультрапастеризованном молоке.\nТест-пробирка содержит смесь флуорогенных субстратов, которые участвуют в микробном метаболизме с образованием флуоресцентных продуктов.'),
+      F('Диапазон измерения','10 – 500 000 КОЕ/г')
+    ]},
+    {name:'ПРО (Качественный метод)',fields:[
+      F('Состав набора','Набор на 100 определений:\n• 4 фольгированных пакета с тест-пробирками ПРО (в каждом по 25 штук);\n• дополнительно приобретаются 20 пластиковых контейнеров (в каждом по 5 мл свободной от белка дистиллированной воды)'),
+      F('Описание','Определение остаточной концентрации белка (экспресс-контроль чистоты) на поверхности, в технической и смывной воде.\nОстаточный белок определяют по интенсивности флуоресценции комплекса белка с флуорохромом.')
+    ]},
+    {name:'ЩФ (Качественный метод)',fields:[
+      F('Состав набора','Набор на 100 определений:\n• 4 фольгированных пакета с тест-пробирками ЩФ (в каждом по 25 штук)'),
+      F('Описание','Определение остаточной активности щелочной фосфатазы (фермента) в пастеризованном молоке и молочных продуктах — определение эффективности пастеризации за счёт полной инактивации ЩФ.\nАктивность щелочной фосфатазы определяется методом прямого флуориметрического кинетического анализа. Скорость флуоресценции прямо пропорциональна активности щелочной фосфатазы.')
+    ]}
+  ];
+}
+function parseBioTFPlan(rows){
+  var pf=parseBioTF(rows),blocks=[],kits=bioTFKits(),base=0;
+  if(pf.fields.length){
+    blocks.push({title:'',cards:[{name:'Турбидофлуориметр БиоТФ',nameR:-1,nameC:-1,idx:0,fields:pf.fields}]});
+    base=1;
+  }
+  kits.forEach(function(k,q){k.idx=q+base;k.nameR=-1;k.nameC=-1});
+  blocks.push({title:'Перечень тест-наборов:',cards:kits});
+  return {blocks:blocks};
+}
+
+/* ---------- режим analyzers ---------- */
+function classAnalyzer(label,val){
+  var s=String(val||'');
+  if(/перед началом работы/i.test(s)&&/вод/i.test(s))return 'Обслуживание';
+  if(/ГОСРЕЕСТР|ISO\s*9001|Декларац/i.test(s))return 'Сертификаты, свидетельства';
+  if(/^\s*\d+\s*(год|года|лет)\b/i.test(s))return 'Гарантия';
+  if(/Европа|Болгария|Бельгия/i.test(s)&&s.length<80&&!/анализатор/i.test(s))return 'Производство';
+  if(/^\s*\d+\s*[xх*×]\s*\d+/i.test(s)&&/мм/i.test(s))return 'Габариты и масса';
+  if(/анализатор,|кабель 12V|руководство и поверка|стаканчик|плунжер|чист\.|дозатор|вортекс|наконечник|флешка|шприц|порошок EKOPRIM|колба/i.test(s))return 'Комплектация';
+  if(/подключен|опция|деаэратор|Windows|сенсорн|WI-?FI|Wi-fi|часы реал|система сбора|мешалк|заводских настроек|встроен/i.test(s))return 'Особенности';
+  var l=normLab(label||'').replace(/\s*\(гиперссылка\)/i,'');
+  if(/^приемущества|^преимущества/i.test(l))return 'Преимущества';
+  if(/^габриты|^габариты/i.test(l))return 'Габариты и масса';
+  if(/^обслуживание/i.test(l))return 'Обслуживание';
+  return l;
+}
+function parseAnalyzers(rows){
+  var n=maxLen(rows),nameRow=-1,groupRow=-1;
+  for(var r=0;r<rows.length;r++){
+    var a=String(V(rows,r,0));
+    if(/^\s*показатели/i.test(a)&&groupRow<0)groupRow=r;
+    if(/название\s+анализатора/i.test(a+' '+V(rows,r,1))){nameRow=r;break}
+  }
+  if(nameRow<0)return null;
+  var gRow=(groupRow>=0)?groupRow:0,groups={},cur='';
+  for(var c=0;c<n;c++){var gv=V(rows,gRow,c);if(gv)cur=cleanName(gv);groups[c]=cur}
+  var cards=[];
+  for(var c2=0;c2<n;c2++){
+    var nm=cleanName(V(rows,nameRow,c2).replace(/\s+/g,' '));
+    if(!nm)continue;
+    if(/^(назван|показател)/i.test(nm))continue;
+    cards.push({name:nm,nameR:nameRow,nameC:c2,group:groups[c2]||'',fields:[],idx:cards.length});
+  }
+  if(!cards.length)return null;
+  var byC={};
+  cards.forEach(function(o){byC[o.nameC]=o});
+  var prevLabel='';
+  for(var r2=nameRow+1;r2<rows.length;r2++){
+    var a2=cleanName(V(rows,r2,0)),b2=V(rows,r2,1),lab='';
+    if(/^\d{1,2}$/.test(a2)&&b2)lab=normLab(b2);
+    else if(a2)lab=normLab(a2);
+    else if(b2)lab=prevLabel;
+    if(lab&&!/^(назван|показател)/i.test(lab))prevLabel=lab; else if(!lab)lab=prevLabel;
+    for(var c3=0;c3<n;c3++){
+      var cd=byC[c3];if(!cd)continue;
+      var v=V(rows,r2,c3);if(!v)continue;
+      var canon=classAnalyzer(lab,v);
+      if(!canon||/^(показател|название)/i.test(canon))continue;
+      cd.fields.push({label:canon,v:v,r:r2,c:c3});
+    }
+  }
+  cards.forEach(function(cd){
+    if(!/TIAS FULL Check/i.test(cd.name))return;
+    var pos=-1;
+    for(var q=0;q<cd.fields.length;q++){if(/принцип работы/i.test(cd.fields[q].label)){pos=q;break}}
+    var f={label:'Для подробного ознакомления',v:'https://youtu.be/DWhRq9hWR1Q',ro:1};
+    if(pos>=0)cd.fields.splice(pos+1,0,f); else cd.fields.unshift(f);
+  });
+  var blocks=[],map={};
+  cards.forEach(function(cd){
+    var g=cd.group||'Анализаторы качества молока';
+    if(!map[g]){map[g]={title:g,cards:[]};blocks.push(map[g])}
+    map[g].cards.push(cd);
+  });
+  return {blocks:blocks};
+}
+
+/* ---------- режим lumin ---------- */
+var LUMIN_NORMS='<div class="reqwrap"><h5>Рекомендуемые нормы производителя</h5>'
+ +'<div class="ptablewrap"><table class="ptable norms"><thead>'
+ +'<tr><th>Поверхность</th><th>Вода</th></tr></thead><tbody>'
+ +'<tr><td class="c-green">0-99 RLU</td><td class="c-green" rowspan="2">0-25 RLU</td></tr>'
+ +'<tr><td class="c-yellow">100-199 RLU</td></tr>'
+ +'<tr><td class="c-red">≥ 200 RLU</td><td class="c-red">≥ 26 RLU</td></tr>'
+ +'</tbody></table></div></div>';
+function parseLumin(rows){
+  var n=maxLen(rows);
+  var nam=cleanName(V(rows,0,0)),desc=V(rows,0,1);
+  if(!desc){
+    var ls=String(V(rows,0,0)).split('\n');
+    if(ls.length>1){nam=cleanName(ls[0]);desc=ls.slice(1).join('\n')}
+  }
+  var fields=[];
+  for(var r=1;r<rows.length;r++){
+    var parts=[];
+    for(var c=0;c<n;c++){var v=V(rows,r,c);if(v)parts.push(v)}
+    var line=parts.join('\n');
+    if(!line)continue;
+    if(/рекомендуемые\s+нормы/i.test(line)&&line.length<90){
+      fields.push({tableHTML:LUMIN_NORMS,ro:1});
+      continue;
+    }
+    var fl=line.split('\n')[0],rest=line.slice(fl.length).replace(/^\n+/,'');
+    var m=fl.match(/^(.{2,60}?)\s*[-–—:]\s*(.*)$/);
+    if(m){
+      var lab=cleanName(m[1]).replace(/\s*\(гиперссылка\)/i,'').replace(/Диапозон/,'Диапазон');
+      var val=m[2]?(m[2]+(rest?'\n'+rest:'')):rest;
+      fields.push({label:lab,v:val,r:r,c:0});
+    } else {
+      fields.push({label:'',v:line,r:r,c:0});
+    }
+  }
+  var card={name:nam,nameR:0,nameC:0,autoopen:1,
+            hero:{desc:desc,descR:0,descC:1},
+            fields:fields,idx:0};
+  return {blocks:[{title:'',cards:[card]}]};
+}
+
+/* ---------- режим clean: моющие средства ---------- */
+function capitalize(s){s=String(s||'');return s.charAt(0).toUpperCase()+s.slice(1)}
+function stripNum(v){return String(v||'').replace(/^\s*\d{1,2}[.)]\s*/,'').trim()}
+function parseClean(rows){
+  var n=maxLen(rows),heads={};
+  for(var c=1;c<n;c++){heads[c]=capitalize(normLab(V(rows,0,c)))}
+  var cats=[],steps=null;
+  for(var r=0;r<rows.length;r++){
+    var a=String(V(rows,r,0)).trim();
+    if(!a)continue;
+    if(/^этапы\s+промывки/i.test(a)){
+      var l1=[];
+      for(var r1=r+1;r1<rows.length;r1++){
+        var c1=[];
+        for(var cc=0;cc<n;cc++){var vv=V(rows,r1,cc);if(vv)c1.push({v:vv,r:r1,c:cc})}
+        if(!c1.length)continue;
+        if(/^дополнительно\s+можем/i.test(c1[0].v))break;
+        c1.forEach(function(x){l1.push({v:stripNum(x.v),r:x.r,c:x.c})});
+      }
+      var l2=[],start2=-1;
+      for(var r2=0;r2<rows.length;r2++){
+        if(/^дополнительно\s+можем/i.test(String(V(rows,r2,0)))){start2=r2;break}
+      }
+      if(start2>=0){
+        for(var r3=start2+1;r3<rows.length;r3++){
+          var c2=[];
+          for(var cc2=0;cc2<n;cc2++){var vv2=V(rows,r3,cc2);if(vv2)c2.push({v:vv2,r:r3,c:cc2})}
+          if(!c2.length)continue;
+          c2.forEach(function(x){l2.push({v:x.v,r:x.r,c:x.c})});
+        }
+      }
+      var flds=[];
+      if(l1.length)flds.push({list:l1,ro:1});
+      flds.push({grp:'Дополнительно можем рекомендовать клиенту:',ro:1});
+      if(l2.length)flds.push({list:l2,ro:1});
+      steps={name:cleanName(a.replace(/[.:]\s*$/,'')),nameR:r,nameC:0,fields:flds,idx:0};
+      continue;
+    }
+    if(/моющ/i.test(a)&&cats.length<4){
+      var cd={name:capitalize(a),nameR:r,nameC:0,fields:[],idx:0},any=false;
+      for(var c4=1;c4<n;c4++){
+        var v4=V(rows,r,c4);
+        if(!v4)continue;
+        any=true;
+        cd.fields.push({label:heads[c4]||'',v:v4,r:r,c:c4});
+      }
+      if(any)cats.push(cd);
+    }
+  }
+  var cards=cats.slice();
+  if(steps)cards.push(steps);
+  cards.forEach(function(cd,k){cd.idx=k});
+  return {blocks:[{title:'',cards:cards}]};
+}
+
+/* ---------- режим dez ---------- */
+function kvText(text){
+  var out=[];
+  String(text||'').split('\n').forEach(function(line){
+    var t=line.trim();
+    if(!t)return;
+    if(/^[-•*]\s*/.test(t)){
+      if(out.length&&!out[out.length-1].grp)out[out.length-1].v=(out[out.length-1].v?out[out.length-1].v+'\n':'')+t;
+      else out.push({label:'',v:t});
+      return;
+    }
+    var m=t.match(/^([^:]{2,60}):\s*(.*)$/);
+    if(m){
+      var lab=m[1].trim(),val=m[2].trim();
+      if(!val)out.push({label:'',v:t});
+      else out.push({label:lab,v:val});
+      return;
+    }
+    out.push({label:'',v:t});
+  });
+  return out;
+}
+var DEZ_FIX=[{name:'Что такое дезковрики',nameR:-1,nameC:-1,idx:0,fields:[
+ {label:'',v:'Дезковрики представляют собой напольные покрытия разного размера для обеззараживания подошвы обуви, транспортных шин, колёс тележек и медицинских каталок.\nИх используют в ЛПУ, детских садах и школах, лабораториях, зоопарках, аэропортах, на предприятиях пищевой промышленности и вокзалах, на птицефермах и др.',ro:1},
+ {label:'Состав дезковрика',v:'• верхний прочный сетчатый слой из ПВХ — обеспечивает смачивание дезинфекционным раствором подошв, колёс и протекторов шин;\n• средний хорошо впитывающий влагу слой — плотный мат из ППУ ВВ (пенополиуретан вторичный вспененный), способен поглощать до 30 л раствора дезинфектанта и равномерно распределять его внутри;\n• нижний влагонепроницаемый слой — не протекает и не скользит (особо прочный ПВХ).',ro:1},
+ {label:'Размеры',v:'От самого малого 20 × 25 см (впитывает 1,5 л жидкости) до большого 100 × 200 см (24–30 л). Чаще востребованы средние: 100 × 100 (до 14 л) и 50 × 50 (до 4 л).',ro:1},
+ {label:'Виды',v:'• стандартные — для обуви;\n• ветеринарные — для лечения копыт животных;\n• медицинские — для каталок и кресел (самые тонкие, так как в ЛПУ требуется беспрепятственная проходимость тележек и каталок);\n• автобарьеры — для колёс транспорта.',ro:1},
+ {label:'Ресурс',v:'Один дезковрик обеспечивает в среднем до 2000 прохождений в день.',ro:1},
+ {grp:'Как использовать коврик дезинфекционный',v:'',ro:1},
+ {label:'',v:'Коврики укладывают перед входом, на пороге или в самом помещении у входных дверей сетчатым слоем вверх.\nЗатем их заливают подготовленным раствором дезсредства (например, «Септолит» или «Септолит Софт») в объёме, соответствующем размеру коврика (идеально — 80 % от максимальной вместимости). Это действие производят постепенно, чтобы жидкость пропитала его равномерно.\nКогда человек входит в помещение и наступает на этот барьер, подошва его обуви обрабатывается дезинфектантом, а остатки средства впитываются обратно в коврик. Обеспечивается барьерная дезинфекция — уничтожение болезнетворных микроорганизмов с обуви.\nЗаправлять дезинфекционный коврик следует еженедельно. Перед этим его промывают в проточной воде и сушат сеткой вниз.',ro:1},
+ {grp:'Чем пропитывать дезинфицирующий коврик',v:'',ro:1},
+ {label:'',v:'Для пропитки барьерных дезковриков используются дезинфектанты, обладающие следующими свойствами:\n• широкий спектр антибактериального, противовирусного и противогрибкового действия;\n• хорошая моющая способность;\n• стабильность во внешней среде;\n• отсутствие резкого запаха;\n• отсутствие повреждающего воздействия на обувь;\n• наличие необходимого пакета документов и разрешения к применению от Роспотребнадзора.',ro:1}
+]}];
+function parseDez(rows){
+  var n=maxLen(rows),sec='gen',grp='',mDesc='';
+  var gcards=[],ggroups={},gg=0,curG='',mounts=[];
+  for(var r=0;r<rows.length;r++){
+    var a=String(V(rows,r,0)).trim(),b=String(V(rows,r,1)).trim(),j=String(V(rows,r,2)).trim();
+    var key=b||a;
+    if(/^дезковрик/i.test(key)&&key.length<40){sec='dez';continue}
+    if(/^дезустановк/i.test(key)&&key.length<40){sec='mounts';continue}
+    if(sec==='dez')continue;
+    if(sec==='mounts'){
+      if(/^(описание|модели)\s+дезустановок/i.test(key))continue;
+      if(b&&j){mounts.push({name:cleanName(b),text:j,nameR:r});continue}
+      if(key.length>120){mDesc=key;continue}
+      continue;
+    }
+    if(/^модели\s+аккумуляторных\s+генераторов\s+холодного/i.test(b)||/^модели\s+генераторов\s+холодного/i.test(key)){grp='Генераторы холодного тумана';continue}
+    if(/^модели\s+генераторов\s+горячего/i.test(key)){grp='Генераторы горячего тумана';continue}
+    if(/^мини\s+генераторы\s+тумана/i.test(key)){grp='Мини генераторы тумана';continue}
+    if(!b||!j)continue;
+    if(grp&&grp!==curG){ggroups[gg]=grp;curG=grp}
+    gcards.push({name:cleanName(b),nameR:r,nameC:1,fields:kvText(j),idx:gg});gg++;
+  }
+  var blocks=[];
+  if(gcards.length)blocks.push({title:'Генераторы тумана',cards:gcards,groups:ggroups});
+  var mcards=[];
+  if(mDesc)mcards.push({name:'Описание дезустановок',nameR:-1,nameC:-1,fields:[{label:'',v:mDesc,ro:1}],idx:0});
+  mounts.forEach(function(m){
+    mcards.push({name:m.name,nameR:m.nameR,nameC:1,fields:kvText(m.text),idx:mcards.length});
+  });
+  if(mcards.length)blocks.push({title:'Дезустановки',cards:mcards});
+  blocks.push({title:'Дезковрики',cards:DEZ_FIX});
+  return {blocks:blocks};
+}
+
+/* ---------- режим rw: рабочий и уборочный инвентарь ---------- */
+var RW_GROUPS=[
+ {re:/профессиональн\w*\s+уборочн/i,title:'Профессиональный уборочный инвентарь FBK (Дания)'},
+ {re:/щетки\s+и\s+ерши/i,title:'Щётки и ерши для мытья ёмкостей молока и доильного оборудования'},
+ {re:/борьба\s+с\s+насекомыми/i,title:'Борьба с насекомыми'},
+ {re:/рабочий\s+инвентарь/i,title:'Рабочий инвентарь'}
+];
+function parseRW(rows){
+  var n=maxLen(rows),out=[];
+  for(var r=0;r<rows.length;r++){
+    var cells=[];
+    for(var c=0;c<n;c++){
+      var v=V(rows,r,c);
+      if(v)cells.push({c:c,v:v});
+    }
+    if(!cells.length)continue;
+    var gTitle='';
+    for(var gi=0;gi<RW_GROUPS.length;gi++){
+      for(var k=0;k<cells.length;k++){
+        if(RW_GROUPS[gi].re.test(cells[k].v)){gTitle=RW_GROUPS[gi].title;break}
+      }
+      if(gTitle)break;
+    }
+    if(gTitle){out.push({g:1,t:gTitle});continue}
+    var main=cells[cells.length-1];
+    if(main.c<2)continue;
+    var lines=String(main.v).split('\n');
+    var title=cleanName(lines[0]);
+    if(!title)continue;
+    var art=[];
+    cells.forEach(function(x){
+      if(x.c===main.c)return;
+      if(/артикул/i.test(x.v))return;
+      art.push(String(x.v).replace(/\s+/g,' ').trim());
+    });
+    var d=[];
+    var rest=lines.slice(1).join('\n').replace(/^\s*\n+/,'');
+    if(rest)d.push(rest);
+    if(art.length)d.push('Артикул: '+art.join(' / '));
+    out.push({t:title,d:d.join('\n\n')});
+  }
+  return out;
+}
+
+/* ---------- режим vtests: ветеринарные тесты КРС ---------- */
+function parseVTests(rows){
+  var nc=1,pc=2,rc=3,sc=4,bc=5;
+  var th=[normLab(V(rows,0,4))||'Свойство',normLab(V(rows,0,5))||'Выгода'];
+  var cards=[],groups={},curCat='',card=null;
+  for(var r=0;r<rows.length;r++){
+    var cat=cleanName(V(rows,r,0));
+    if(cat)curCat=cat;
+    var nm=V(rows,r,nc);
+    if(nm&&/^(назван|наименов)/i.test(nm))nm='';
+    if(nm&&isName(nm)){
+      card={name:cleanName(nm),nameR:r,nameC:nc,fields:[],idx:cards.length};
+      if(curCat)groups[cards.length]=curCat;
+      var pv=V(rows,r,pc);
+      if(pv)card.fields.push({label:'Принцип действия',v:pv,r:r,c:pc});
+      var rv=V(rows,r,rc);
+      if(rv)card.fields.push({label:'Нормы и интерпретация',v:rv,r:r,c:rc});
+      cards.push(card);
+    }
+    if(!card)continue;
+    var sv=V(rows,r,sc),bv=V(rows,r,bc);
+    if(!sv&&!bv)continue;
+    if(/^свойство$/i.test(sv)&&/^выгода$/i.test(bv))continue;
+    var pf=null;
+    for(var q=card.fields.length-1;q>=0;q--){if(card.fields[q].pairs){pf=card.fields[q];break}}
+    if(!pf){pf={pairs:[],th:th};card.fields.push(pf)}
+    pf.pairs.push({s:sv,b:bv,r:r,sc:sc,bc:bc});
+  }
+  return {blocks:[{title:'',cards:cards,groups:groups}]};
+}
+
+/* ---------- режим milkTests: ветеринарные тесты МДЖ ---------- */
+function parseMilkTests(rows){
+  var SCOPE=0,NAME=1,DESC=2,PROP=3,BEN=4;
+  var scope='',cards=[],pairs=[];
+  var th=[normLab(V(rows,0,PROP))||'Свойство',normLab(V(rows,0,BEN))||'Выгода'];
+  for(var r=1;r<rows.length;r++){
+    if(!scope&&V(rows,r,SCOPE))scope=V(rows,r,SCOPE);
+    var nm=V(rows,r,NAME);
+    if(nm){
+      var cd={name:cleanName(nm),nameR:r,nameC:NAME,fields:[],idx:cards.length+1};
+      var dv=V(rows,r,DESC);
+      if(dv)cd.fields.push({label:'Описание',v:dv,r:r,c:DESC});
+      cards.push(cd);
+    }
+    var pv=V(rows,r,PROP),bv=V(rows,r,BEN);
+    if(pv||bv)pairs.push({s:pv,b:bv,r:r,sc:PROP,bc:BEN});
+  }
+  if(!cards.length)return null;
+  var common=[];
+  if(scope)common.push({label:'Сфера применения',v:scope,ro:1});
+  if(pairs.length)common.push({pairs:pairs,th:th});
+  return {blocks:[
+    {title:'',cards:[{name:'Свойства линейки Fassisi (общие для всех тестов)',nameR:-1,nameC:-1,fields:common,idx:0}]},
+    {title:'Экспресс-тесты Fassisi',cards:cards}
+  ]};
+}
+
+/* ---------- правки карточек ---------- */
+function applyCardFixes(cards){
+  if(typeof CARD_FIX==='undefined')return;
+  cards.forEach(function(cd){
+    CARD_FIX.forEach(function(fx){
+      if(cd.name.toLowerCase().indexOf(fx.name.toLowerCase())<0)return;
+      var pos=-1;
+      for(var q=cd.fields.length-1;q>=0;q--){
+        if(cd.fields[q].label===fx.field){
+          if(pos<0)pos=q;
+          cd.fields.splice(q,1);
+        }
+      }
+      var nf={label:fx.field,ro:1,fix:1};
+      if(fx.tableHTML)nf.tableHTML=fx.tableHTML; else nf.v=fx.v;
+      if(pos>=0){cd.fields.splice(pos,0,nf);return}
+      var after=-1;
+      if(fx.after){
+        for(var w=0;w<cd.fields.length;w++){if(cd.fields[w].label===fx.after){after=w;break}}
+      }
+      if(after>=0)cd.fields.splice(after+1,0,nf); else cd.fields.push(nf);
+    });
+  });
+}
+function applyFixesToPlan(plan,sheet){
+  if(!plan||!plan.blocks)return;
+  plan.blocks.forEach(function(b){
+    if(!b.cards)return;
+    if(typeof DROP_CARDS!=='undefined'&&DROP_CARDS.length){
+      var orig=b.cards.length,dropped={},map={},keep=[];
+      b.cards.forEach(function(cd,k){
+        var nm=String(cd.name||'').trim(),drop=false;
+        for(var i=0;i<DROP_CARDS.length;i++){
+          var d=DROP_CARDS[i];
+          if(d.sheet&&sheet&&d.sheet!==sheet)continue;
+          if(d.re&&d.re.test(nm)){drop=true;break}
+          if(d.exact&&nm.toLowerCase()===String(d.exact).toLowerCase()){drop=true;break}
+        }
+        dropped[k]=drop;
+        if(drop)return;
+        map[k]=keep.length;
+        keep.push(cd);
+      });
+      if(keep.length!==orig){
+        b.cards=keep;
+        if(b.groups&&Object.keys(b.groups).length){
+          var ng={};
+          Object.keys(b.groups).forEach(function(key){
+            var ki=parseInt(key,10);
+            for(var q=ki;q<=orig;q++){
+              if(!dropped[q]&&map[q]!=null){ng[map[q]]=b.groups[key];break}
+            }
+          });
+          b.groups=ng;
+        }
+      }
+    }
+    applyCardFixes(b.cards);
+  });
 }
 
 /* ---------- разбор листа ---------- */
 function parseSheet(tb,cfg){
-  var rows=matrix(tb);
-  if(!rows.length)return {kind:'items',items:[]};
   var mode=cfg[3],opts=cfg[4]||{};
-  if(mode==='items')return {kind:'items',items:toItems(rows)};
+  if(mode==='kangaroo')return {kind:'cards',mode:'kangaroo',opts:opts,rows:[],__plan:buildKangaroo()};
+  if(mode==='digest')return {kind:'items',items:digestItems(),opts:opts};
+  var rows=matrix(tb);
+  if(!rows.length)return {kind:'items',items:[],opts:opts};
+  if(mode==='items')return {kind:'items',items:toItems(rows),opts:opts};
+  if(mode==='rw')return {kind:'items',items:parseRW(rows),opts:opts};
   var plan=null;
   if(mode==='cols')plan=parseCols(rows,opts);
   else if(mode==='zones')plan=parseZones(rows,opts);
   else if(mode==='row')plan=parseRow(rows,opts);
   else if(mode==='kv')plan=parseKV(rows,opts);
   else if(mode==='single')plan=parseSingle(rows,opts);
-  else if(mode==='bio')plan=parseBio(rows);
+  else if(mode==='tests4')plan=parseTests4(rows);
+  else if(mode==='testsDop')plan=parseDop(rows);
+  else if(mode==='sravn')plan=parseSravn(rows);
+  else if(mode==='biotf')plan=parseBioTFPlan(rows);
+  else if(mode==='analyzers')plan=parseAnalyzers(rows);
+  else if(mode==='lumin')plan=parseLumin(rows);
+  else if(mode==='clean')plan=parseClean(rows);
+  else if(mode==='dez')plan=parseDez(rows);
+  else if(mode==='vtests')plan=parseVTests(rows);
+  else if(mode==='milkTests')plan=parseMilkTests(rows);
+  if(plan)applyFixesToPlan(plan,cfg[0]);
   if(plan&&plan.blocks&&plan.blocks.length){
     return {kind:'cards',mode:mode,opts:opts,rows:rows,__plan:plan};
   }
-  return {kind:'items',items:toItems(rows)};
+  return {kind:'items',items:toItems(rows),opts:opts};
 }
 function planOf(s){
   if(s.kind!=='cards')return null;
+  if(s.mode==='kangaroo'){return s.__plan||(s.__plan=buildKangaroo())}
   if(s.__plan&&!s.__stale)return s.__plan;
-  var rows=s.rows,opts=s.opts||{},mode=s.mode,plan=null;
+  var rows=s.rows,opts=optsFor(s),mode=s.mode,plan=null;
   if(mode==='cols')plan=parseCols(rows,opts);
   else if(mode==='zones')plan=parseZones(rows,opts);
   else if(mode==='row')plan=parseRow(rows,opts);
   else if(mode==='kv')plan=parseKV(rows,opts);
   else if(mode==='single')plan=parseSingle(rows,opts);
-  else if(mode==='bio')plan=parseBio(rows);
+  else if(mode==='tests4')plan=parseTests4(rows);
+  else if(mode==='testsDop')plan=parseDop(rows);
+  else if(mode==='sravn')plan=parseSravn(rows);
+  else if(mode==='biotf')plan=parseBioTFPlan(rows);
+  else if(mode==='analyzers')plan=parseAnalyzers(rows);
+  else if(mode==='lumin')plan=parseLumin(rows);
+  else if(mode==='clean')plan=parseClean(rows);
+  else if(mode==='dez')plan=parseDez(rows);
+  else if(mode==='vtests')plan=parseVTests(rows);
+  else if(mode==='milkTests')plan=parseMilkTests(rows);
+  if(plan)applyFixesToPlan(plan,s.sheet);
   s.__plan=plan||{blocks:[]};
   s.__stale=0;
   return s.__plan;
@@ -726,7 +1770,7 @@ async function loadAll(onProgress){
     while(queue.length){
       var cfg=queue.shift();
       try{
-        var parsed=parseSheet(await fetchSheet(cfg[0]),cfg);
+        var parsed=(cfg[3]==='kangaroo'||cfg[3]==='digest')?parseSheet(null,cfg):parseSheet(await fetchSheetCfg(cfg),cfg);
         var ok=false;
         if(parsed.kind==='cards')ok=!!(parsed.__plan&&parsed.__plan.blocks&&parsed.__plan.blocks.length);
         else ok=parsed.items.length>0;
@@ -744,7 +1788,7 @@ async function loadAll(onProgress){
   if(empty.length)rep('БЕЗ ТЕКСТА: '+empty.join(', '));
   var sections=SHEETS.filter(function(c){return found[c[0]]}).map(function(c){
     var p=found[c[0]];
-    return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},items:p.items||[],rows:p.rows||[],__plan:p.__plan||null};
+    return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},nonum:!!(p.opts&&p.opts.nonum),items:p.items||[],rows:p.rows||[],__plan:p.__plan||null};
   });
   rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length);
   return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections};
@@ -757,28 +1801,85 @@ function itemHTML(it,i,j){
   if(it.img&&it.img.length){
     imgs='<div class="imgs">'+it.img.map(function(u){return '<img src="'+esc(u)+'" loading="lazy" alt="">'}).join('')+'</div>';
   }
+  var tbl='';
+  if(it.table){
+    tbl='<div class="ptablewrap"><table class="ptable"><tbody>'
+      +it.table.map(function(row,ri){
+        return '<tr>'+row.map(function(cell){
+          return (ri?'<td>':'<th>')+esc(cell)+(ri?'</td>':'</th>');
+        }).join('')+'</tr>';
+      }).join('')
+      +'</tbody></table></div>';
+  }
   return '<div class="item" id="p'+i+'-'+j+'">'
     +'<h3 data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t||'')+'</h3>'
     +'<div class="d" data-sid="'+i+'" data-iid="'+j+'" data-k="d">'+renderText(it.d||'')+'</div>'
+    +tbl
     +imgs
     +'<div class="tools"><button onclick="kbAddImg('+i+','+j+')">+ картинка</button>'
     +'<button onclick="kbDelItem('+i+','+j+')">удалить пункт</button></div></div>';
 }
 function cardHTML(i,cd){
-  var fields='';
+  var fields='',heroHTML='';
+  if(cd.hero&&cd.hero.desc){
+    heroHTML+='<div class="hero-lead"><span data-sid="'+i+'" data-row="'+cd.hero.descR+'" data-col="'+cd.hero.descC+'" data-k="c">'+renderText(cd.hero.desc)+'</span></div>';
+  }
   cd.fields.forEach(function(f){
+    if(f.grp){fields+='<dt class="grp">'+esc(f.grp)+'</dt>';return}
+    if(f.tableHTML){
+      fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')+'<dd class="tbl">'+f.tableHTML+'</dd>';
+      return;
+    }
+    if(f.table){
+      fields+='<dd class="tbl"><div class="ptablewrap"><table class="ptable"><tbody>'
+        +f.table.map(function(row,ri){
+          return '<tr>'+row.map(function(cell){
+            return (ri?'<td>':'<th>')+esc(cell)+(ri?'</td>':'</th>');
+          }).join('')+'</tr>';
+        }).join('')+'</tbody></table></div></dd>';
+      return;
+    }
+    if(f.pairs){
+      fields+='<dd class="tbl"><div class="ptablewrap"><table class="ptable"><thead><tr><th>'
+        +esc((f.th&&f.th[0])||'Свойство')+'</th><th>'+esc((f.th&&f.th[1])||'Выгода')+'</th></tr></thead><tbody>'
+        +f.pairs.map(function(x){
+          var a1=x.s?' data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.sc+'" data-k="c"':'';
+          var a2=x.b?' data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.bc+'" data-k="c"':'';
+          return '<tr><td'+a1+'>'+renderText(x.s)+'</td><td'+a2+'>'+renderText(x.b)+'</td></tr>';
+        }).join('')
+        +'</tbody></table></div></dd>';
+      return;
+    }
+    if(f.list){
+      fields+='<dt></dt><dd class="tbl"><ol class="steps">'
+        +f.list.map(function(x){
+          var a2=(x.r!=null)?' data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.c+'" data-k="c"':'';
+          return '<li'+a2+'>'+linkify(esc(x.v))+'</li>';
+        }).join('')
+        +'</ol></dd>';
+      return;
+    }
+    if(f.hero){
+      heroHTML+='<div class="hero-lead" data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c">'+(f.label?'<b>'+esc(f.label)+'</b> — ':'')+renderText(f.v)+'</div>';
+      return;
+    }
     if(!f.v)return;
-    fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')
-      +'<dd data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c">'+renderText(f.v)+'</dd>';
+    var attrs=f.ro?'':' data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c"';
+    fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')+'<dd'+attrs+'>'+renderText(f.v)+'</dd>';
   });
+  var req='';
+  if(cd.req&&cd.req.length){
+    req='<div class="reqwrap"><h5>Требования к физико-химическим показателям молока для проведения анализа</h5><table class="req"><tbody>'+cd.req.map(function(x){return '<tr><td>'+esc(x.label)+'</td><td>'+esc(x.value)+'</td></tr>'}).join('')+'</tbody></table></div>';
+  }
+  var numHTML=cd.num?'<span class="ps psnum">'+esc(cd.num)+'</span>':'';
   var name='';
   if(cd.nameR!=null&&cd.nameR>=0){
     name='<span class="pt" data-sid="'+i+'" data-row="'+cd.nameR+'" data-col="'+cd.nameC+'" data-k="c">'+linkify(esc(cd.name))+'</span>';
   } else {
     name='<span class="pt">'+linkify(esc(cd.name))+'</span>';
   }
-  return '<details class="prod" id="c'+i+'-'+cd.idx+'"><summary>'+name+'</summary>'
-    +'<div class="plate"><dl>'+fields+'</dl></div></details>';
+  return '<details class="prod" id="c'+i+'-'+cd.idx+'"'+(cd.autoopen?' open':'')+'><summary>'+numHTML+name+'</summary>'
+    +'<div class="plate">'+heroHTML+'<dl>'+fields+'</dl>'+req+'</div></details>';
 }
 function cardsHTML(s,i){
   var p=planOf(s),html='<div class="cat">';
@@ -822,24 +1923,22 @@ function renderHome(){
 function renderSection(i,jump){
   var s=BOOKS.sections[i];
   if(!s){renderHome();return}
-  var num=i+1,inner,lead;
+  var num=i+1,inner;
   if(s.kind==='cards'){
     inner=cardsHTML(s,i);
-    lead='Каталог: '+countCards(s)+' позиций. Источник: лист «'+esc(s.sheet)+'». Обновлено '+(BOOKS.updated||'—')+'. Раскройте карточку — характеристики привязаны к своей позиции.';
   } else {
-    inner='<div class="items">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
-    lead='Пунктов: '+s.items.filter(function(it){return !it.g}).length+'. Источник: лист «'+esc(s.sheet)+'».';
+    inner='<div class="items'+(s.nonum?' nonum':'')+'">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
   }
   var html='<div class="doc">'
-    +'<div class="crumbs"><a href="#/">Содержание</a> · '+esc(s.group)+' · раздел '+num+'</div>'
-    +'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1>'
-    +'<p class="lead">'+lead+'</p>'
+    +'<div class="crumbs"><a href="#/">Содержание</a> · '+esc(s.group)+'</div>'
     +'<div class="actions">'
       +'<button onclick="location.hash=\'#/\'">← К содержанию</button>'
       +'<button onclick="kbPrint()">🖨 Печать</button>'
       +'<button onclick="kbCopySection('+i+')">📋 Скопировать раздел</button>'
       +(s.kind==='cards'?'':'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>')
-    +'</div>'+inner+'</div>';
+    +'</div>'
+    +'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1>'
+    +inner+'</div>';
   $('page').innerHTML=html;
   var target=null;
   if(s.kind==='cards'){if(jump!=null)target=$('c'+i+'-'+jump)}
@@ -954,6 +2053,7 @@ document.addEventListener('blur',function(e){
   if(s&&s.__stale){
     s.__plan=null;
     renderSection(i);
+    applyEdit();
   }
 },true);
 window.kbAddItem=function(i){
@@ -1000,15 +2100,29 @@ window.kbCopySection=function(i){
     var parts=[(i+1)+'. '+s.title,''];
     allCards(s).forEach(function(cd){
       parts.push('','— '+(cd.name||''));
-      cd.fields.forEach(function(f){parts.push('    '+(f.label?f.label+': ':'')+f.v)});
+      cd.fields.forEach(function(f){
+        if(f.grp){parts.push('',f.grp);return}
+        if(f.pairs){f.pairs.forEach(function(x){parts.push('    '+(x.s||'')+' — '+(x.b||''))});return}
+        if(f.list){f.list.forEach(function(x,k){parts.push('    '+(k+1)+'. '+x.v)});return}
+        if(f.table){f.table.forEach(function(row){parts.push('    '+row.join(' | '))});return}
+        if(f.tableHTML)return;
+        parts.push('    '+(f.label?f.label+': ':'')+f.v);
+      });
+      if(cd.req&&cd.req.length){
+        cd.req.forEach(function(x){parts.push('    '+x.label+' — '+x.value)});
+      }
     });
     copyText(parts.join('\n'));
     return;
   }
   var out=[(i+1)+'. '+s.title,''];
   s.items.forEach(function(it){
-    if(it.g)out.push('',it.t.toUpperCase());
-    else out.push('• '+(it.t||'')+(it.d?': '+it.d:''));
+    if(it.g){out.push('',it.t.toUpperCase());return}
+    if(it.table){
+      it.table.forEach(function(row){out.push('    '+row.join(' | '))});
+      return;
+    }
+    out.push('• '+(it.t||'')+(it.d?': '+it.d:''));
   });
   copyText(out.join('\n'));
 };
@@ -1023,13 +2137,26 @@ function runSearch(q){
     }
     if(s.kind==='cards'){
       allCards(s).forEach(function(cd){
-        var hay=(cd.name+' '+(cd.group||'')+' '+cd.fields.map(function(f){return f.v}).join(' ')).toLowerCase();
+        var parts=[cd.name,cd.group||''];
+        cd.fields.forEach(function(f){
+          if(f.grp)parts.push(f.grp);
+          if(f.v)parts.push(f.v);
+          if(f.pairs)f.pairs.forEach(function(x){parts.push(x.s||'',x.b||'')});
+          if(f.list)f.list.forEach(function(x){parts.push(x.v||'')});
+          if(f.table)f.table.forEach(function(row){parts.push(row.join(' '))});
+        });
+        if(cd.req)cd.req.forEach(function(x){parts.push(x.label,x.value)});
+        var hay=parts.join(' ').toLowerCase();
         if(hay.indexOf(q)<0)return;
         var sn='';
-        cd.fields.forEach(function(f){
-          if(f.v.toLowerCase().indexOf(q)>=0&&sn.length<170){
-            sn+=(sn?' • ':'')+String(f.v).replace(/\s+/g,' ').slice(0,90);
-          }
+        parts.forEach(function(v){
+          if(!v)return;
+          String(v).split('\n').forEach(function(line){
+            line=line.replace(/\s+/g,' ').trim();
+            if(!line||sn.length>=170)return;
+            if(line.toLowerCase().indexOf(q)<0)return;
+            sn+=(sn?' • ':'')+line.slice(0,90);
+          });
         });
         res.push({i:i,j:'c'+cd.idx,t:cd.name,c:s.title,sn:sn});
       });
@@ -1193,62 +2320,6 @@ async function refresh(){
 function showFail(msg){
   $('page').innerHTML='<div class="doc"><div class="item"><h3>'+esc(msg)+'</h3>'
     +'<p>Нажмите «Обновить» в режиме редактора. Ранее загруженные данные сохранены.</p></div></div>';
-}
-function parseRights(tb){
-  var fresh={};
-  (tb.rows||[]).forEach(function(row){
-    var c=(row.c||[]).map(function(x){return x&&x.v!=null?String(x.v):''});
-    if(!c[0]||!c[2]||c[0]==='sheet')return;
-    fresh[c[0]+'|'+parseInt(c[1],10)+'|'+c[2]]=c[3];
-  });
-  return fresh;
-}
-async function loadRights(){
-  if(!RIGHTS_ID)return;
-  var tries=[
-    RBASE+'tqx=out:json&headers=0&gid=0',
-    RBASE+'tqx=out:json&headers=0&sheet='+enc(RIGHTS_TAB)
-  ];
-  for(var t=0;t<tries.length;t++){
-    try{
-      var tb=await fetchUrl(tries[t]);
-      if(tb&&tb.rows&&tb.rows.length){
-        OV=parseRights(tb);
-        try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}
-        return;
-      }
-    }catch(e){rep('Правки: '+e.message)}
-  }
-}
-function applyOverlay(sections){
-  var all={},k;
-  for(k in OV)all[k]=OV[k];
-  for(k in PENDING)all[k]=PENDING[k];
-  sections.forEach(function(s){
-    if(s.kind==='cards'&&s.rows&&s.rows.length){
-      for(var key in all){
-        if(key.indexOf(s.sheet+'|')!==0)continue;
-        var p=key.split('|'),ri=parseInt(p[1],10),ci=parseInt(p[2],10);
-        if(isNaN(ri)||isNaN(ci))continue;
-        if(!s.rows[ri])s.rows[ri]=[];
-        s.rows[ri][ci]=all[key];
-      }
-      s.__stale=1;
-      return;
-    }
-    for(var key2 in all){
-      if(key2.indexOf(s.sheet+'|')!==0)continue;
-      var q=key2.split('|'),idx=parseInt(q[1],10),f=q[2],val=all[key2];
-      if(idx<0){
-        if(f==='t')s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');
-        continue;
-      }
-      var it=s.items[idx];
-      if(!it)continue;
-      if(f==='d')it.d=val;
-      else if(f==='t')it.t=val;
-    }
-  });
 }
 
 /* ---------- режим редактора ---------- */
