@@ -181,17 +181,20 @@ window.addEventListener('unhandledrejection',function(e){var r=e.reason;show('О
 <script>
 (function(){
 'use strict';
+/* ================= НАСТРОЙКИ ================= */
 var SHEET_ID='1eGt77EFduFVxYnvLzS3c_bVljDBKVULB';
 var RIGHTS_ID='1hRsk0lrLjUA6bcikzfSd38PC1bI4WZ70val46khFnPU';
 var RIGHTS_TAB='Правки';
 var APPS_URL='https://script.google.com/macros/s/AKfycbyD-X50gxUmQjjKhx5pUJ1HMDWfuR53gVImre2ASRW1XojvbVsDupQHhWkoVfIL2DGqyw/exec';
 var PASS='134679852';
+
 var SHEETS=[
 ['термины и определения','Термины, определения, документы','Основы','items'],
 ['тесты 4гр','Тесты 4 группы','Экспресс-тесты и контроль сырья','cols',{labelCols:[0]}],
 ['тесты_допгруппы','Тесты дополнительных групп','Экспресс-тесты и контроль сырья','zones',{zones:[
-   {titleRow:0,titleCol:1,nameCol:2,labelCol:1,fieldCols:[3,4,5,6]},
-   {titleRow:0,titleCol:8,nameCol:9,labelCol:8,fieldCols:[10,11,12,13]}]}],
+  {titleRow:0,titleCol:1,nameCol:2,labelCol:1,fieldCols:[3,4,5,6]},
+  {titleRow:0,titleCol:8,nameCol:9,labelCol:8,fieldCols:[10,11,12,13]}
+]}],
 ['Сравнение чув-ти тестов','Сравнение чувствительности тестов','Экспресс-тесты и контроль сырья','cols',{labelCols:[0]}],
 ['EXSTENSO','Система EXTENSO','Экспресс-тесты и контроль сырья','kv',{lc:0,vc:1,name:'Система EXTENSO'}],
 ['Тест-пластины Кенгуру','Тест-пластины KangarooSci','Экспресс-тесты и контроль сырья','items'],
@@ -201,8 +204,9 @@ var SHEETS=[
 ['Люминометр','Люминометр НМ-ATP','Лаборатория и приборы','single',{name:'Люминометр «НМ-ATP»'}],
 ['Среды Углич','Питательные среды (Углич)','Лаборатория и приборы','row',{nc:1}],
 ['ИНКУБАТОР_сч.устр-во','Инкубаторы и считывающие устройства','Лаборатория и приборы','zones',{zones:[
-   {labelCol:0,nameRow:1,from:1,to:5,title:'Инкубаторы для тестов'},
-   {labelCol:7,nameRow:1,from:8,title:'Считывающие устройства'}]}],
+  {labelCol:0,nameRow:1,from:1,to:5,title:'Инкубаторы для тестов'},
+  {labelCol:7,nameRow:1,from:8,title:'Считывающие устройства'}
+]}],
 ['гигиена и уход за выменем','Средства для вымени','Доение и гигиена','row',{nc:1}],
 ['Вспомогательные товары для доен','Вспомогательные товары для доения','Доение и гигиена','row',{nc:1}],
 ['бумага_салфетки','Бумага, полотенца, салфетки','Доение и гигиена','row',{nc:2}],
@@ -230,17 +234,21 @@ var SHEETS=[
 ['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1}],
 ['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1}]
 ];
-var CACHE='kb_cache_v12',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v13',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
+/* ============================================ */
 var $=function(id){return document.getElementById(id)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
 var BOOKS={title:'Книга знаний',updated:'',sections:[]},REPORT=[],ADMIN=false,EDIT=false,OV={},PENDING={};
 try{ADMIN=sessionStorage.getItem('kb_admin')==='1'}catch(e){}
 try{PENDING=JSON.parse(localStorage.getItem(PCACHE))||{}}catch(e){PENDING={}}
 try{OV=JSON.parse(localStorage.getItem(OCACHE))||{}}catch(e){OV={}}
-function rep(s){REPORT.push(s)} function setStatus(s){var e=$('status');if(e)e.textContent=s}
+function rep(s){REPORT.push(s)}
+function setStatus(s){var e=$('status');if(e)e.textContent=s}
+
+/* ---------- маркеры и утилиты ---------- */
 var RE_NAME=/наименован|назван|модел|ассортимент|позиц/i;
 var RE_SIG=/показ|тип|принцип|веществ|решен|фото|характер|применен|состав|ссыл|производ|докумен|описан|свойств|выгод|артикул|размер|упаковк|плотн|материал|област|канал|стоим|цена|дополн|срок|услови|преимущ|примечан|количест|ширин|вид |вид$|концентрац|расход|фасовк|параметр|назначен|вес|масса|объем|объём|габарит|гарант|сертифик|эксплуатац|обслуживан|комплектац|индикац|чувствит|сфера|категори|норма|значен|производител|питание|программ|лунок|таймер|температур|источник|код/i;
 var RE_GRP=/анализатор|линейка|группа|семейство|серия/i;
@@ -248,424 +256,1138 @@ function V(rows,r,c){var row=rows[r];var v=row&&row[c]!=null?row[c]:'';return St
 function maxLen(rows){var n=0;rows.forEach(function(r){if(r.length>n)n=r.length});return n}
 function cleanName(v){return String(v||'').replace(/\s+/g,' ').replace(/[-–—:;\s]+$/,'').trim()}
 function normLab(v){return cleanName(String(v||'').replace(/^\d{1,2}[.)]\s*/,''))}
-function isSig(v){v=String(v||'').trim();if(!v)return true;if(/^https?:/i.test(v))return true;if(/^[\d\s.,;:()\/+–—-]+$/.test(v))return true;return RE_SIG.test(v.toLowerCase())}
-function isName(v){v=String(v||'').trim();if(v.length<4||v.length>180)return false;if(isSig(v))return false;return true}
-function cleanText(v){if(v==null)return '';var t=String(v).replace(/\r\n?/g,'\n');
-var lines=t.split('\n').map(function(l){return l.replace(/[\t\u00a0 ]+/g,' ').replace(/^[ ]+|[ ]+$/g,'')});
-while(lines.length&&!lines[0])lines.shift();while(lines.length&&!lines[lines.length-1])lines.pop();
-var out=[];lines.forEach(function(l){if(!l&&out.length&&out[out.length-1]==='')return;out.push(l)});t=out.join('\n');
-t=t.replace(/\.{3,}/g,'…');var o=true;t=t.replace(/"/g,function(){var c=o?'«':'»';o=!o;return c});
-t=t.replace(/\s+([,.;:!?])/g,'$1');t=t.replace(/([^\s]) - /g,'$1 — ');t=t.replace(/--/g,'—');return t}
+function isSig(v){
+  v=String(v||'').trim();
+  if(!v)return true;
+  if(/^https?:/i.test(v))return true;
+  if(/^[\d\s.,;:()\/+–—-]+$/.test(v))return true;
+  return RE_SIG.test(v.toLowerCase());
+}
+function isName(v){
+  v=String(v||'').trim();
+  if(v.length<4||v.length>180)return false;
+  if(isSig(v))return false;
+  return true;
+}
+function cleanText(v){
+  if(v==null)return '';
+  var t=String(v).replace(/\r\n?/g,'\n');
+  var lines=t.split('\n').map(function(l){return l.replace(/[\t\u00a0 ]+/g,' ').replace(/^[ ]+|[ ]+$/g,'')});
+  while(lines.length&&!lines[0])lines.shift();
+  while(lines.length&&!lines[lines.length-1])lines.pop();
+  var out=[];
+  lines.forEach(function(l){if(!l&&out.length&&out[out.length-1]==='')return;out.push(l)});
+  t=out.join('\n');
+  t=t.replace(/\.{3,}/g,'…');
+  var o=true;
+  t=t.replace(/"/g,function(){var c=o?'«':'»';o=!o;return c});
+  t=t.replace(/\s+([,.;:!?])/g,'$1');
+  t=t.replace(/([^\s]) - /g,'$1 — ');
+  t=t.replace(/--/g,'—');
+  return t;
+}
 function linkify(h){return h.replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>')}
-function renderText(d){if(!d)return '';var lines=String(d).split('\n'),html='',list=[];
-function flush(){if(list.length){html+='<ul>'+list.map(function(x){return '<li>'+linkify(esc(x))+'</li>'}).join('')+'</ul>';list=[]}}
-lines.forEach(function(l){var m=l.match(/^[•·▪*]\s*(.+)$/)||l.match(/^[-–—]\s+(.+)$/)||l.match(/^(\d+[.)]\s+.+)$/);
-if(m&&m[1]&&!/^[•·▪*]\s*$/.test(l)){list.push(m[1]);return}if(!l){flush();return}flush();html+='<p>'+linkify(esc(l))+'</p>'});
-flush();return html}
-function matrix(tb){return (tb.rows||[]).map(function(row){return (row.c||[]).map(function(c){if(!c)return '';
-var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');return cleanText(v)})}).filter(function(r){return r.some(function(x){return x!==''})})}
-function toItems(rows){var out=[];rows.forEach(function(r){var c=r.map(function(x){return cleanName(x)}).filter(function(x){return x!==''});
-if(!c.length)return;if(c.length===1){out.push({g:1,t:c[0]});return}
-if(!String(r[0]||'').trim()){out.push({t:c[0],d:c.slice(1).join('\n')});return}
-var first=cleanName(r[0]),rest=c.slice(1);
-if(/^\d{1,2}[.)]?$/.test(first)&&rest.length)out.push({t:rest[0],d:rest.slice(1).join('\n')});
-else out.push({t:first,d:rest.join('\n')})});return out}
-function jsonp(url,ms){return new Promise(function(res,rej){var cb='__kb'+Math.random().toString(36).slice(2),s=document.createElement('script');
-var t=setTimeout(function(){done();rej(new Error('нет ответа за '+Math.round(ms/1000)+' сек'))},ms);
-function done(){clearTimeout(t);try{delete window[cb]}catch(e){window[cb]=undefined}if(s.parentNode)s.parentNode.removeChild(s)}
-window[cb]=function(d){done();res(d)};s.onerror=function(){done();rej(new Error('запрос заблокирован браузером или сетью'))};
-s.src=url.replace('tqx=out:json','tqx=out:json;responseHandler:'+cb);document.head.appendChild(s)})}
-function parseGviz(txt){if(!txt)throw new Error('пустой ответ');var a=txt.indexOf('{'),b=txt.lastIndexOf('}');
-if(a<0||b<0)throw new Error('в ответе нет данных');var j=JSON.parse(txt.slice(a,b+1));if(!j.table)throw new Error('в ответе нет таблицы');return j.table}
+function renderText(d){
+  if(!d)return '';
+  var lines=String(d).split('\n'),html='',list=[];
+  function flush(){
+    if(list.length){
+      html+='<ul>'+list.map(function(x){return '<li>'+linkify(esc(x))+'</li>'}).join('')+'</ul>';
+      list=[];
+    }
+  }
+  lines.forEach(function(l){
+    var m=l.match(/^[•·▪*]\s*(.+)$/)||l.match(/^[-–—]\s+(.+)$/)||l.match(/^(\d+[.)]\s+.+)$/);
+    if(m&&m[1]&&!/^[•·▪*]\s*$/.test(l)){list.push(m[1]);return}
+    if(!l){flush();return}
+    flush();
+    html+='<p>'+linkify(esc(l))+'</p>';
+  });
+  flush();
+  return html;
+}
+function matrix(tb){
+  return (tb.rows||[]).map(function(row){
+    return (row.c||[]).map(function(c){
+      if(!c)return '';
+      var v=(c.v!=null)?c.v:(c.f!=null?c.f:'');
+      return cleanText(v);
+    });
+  }).filter(function(r){return r.some(function(x){return x!==''})});
+}
+function toItems(rows){
+  var out=[];
+  rows.forEach(function(r){
+    var c=r.map(function(x){return cleanName(x)}).filter(function(x){return x!==''});
+    if(!c.length)return;
+    if(c.length===1){out.push({g:1,t:c[0]});return}
+    if(!String(r[0]||'').trim()){out.push({t:c[0],d:c.slice(1).join('\n')});return}
+    var first=cleanName(r[0]),rest=c.slice(1);
+    if(/^\d{1,2}[.)]?$/.test(first)&&rest.length)out.push({t:rest[0],d:rest.slice(1).join('\n')});
+    else out.push({t:first,d:rest.join('\n')});
+  });
+  return out;
+}
+
+/* ---------- каналы загрузки ---------- */
+function jsonp(url,ms){
+  return new Promise(function(res,rej){
+    var cb='__kb'+Math.random().toString(36).slice(2),s=document.createElement('script');
+    var t=setTimeout(function(){done();rej(new Error('нет ответа за '+Math.round(ms/1000)+' сек'))},ms);
+    function done(){
+      clearTimeout(t);
+      try{delete window[cb]}catch(e){window[cb]=undefined}
+      if(s.parentNode)s.parentNode.removeChild(s);
+    }
+    window[cb]=function(d){done();res(d)};
+    s.onerror=function(){done();rej(new Error('запрос заблокирован браузером или сетью'))};
+    s.src=url.replace('tqx=out:json','tqx=out:json;responseHandler:'+cb);
+    document.head.appendChild(s);
+  });
+}
+function parseGviz(txt){
+  if(!txt)throw new Error('пустой ответ');
+  var a=txt.indexOf('{'),b=txt.lastIndexOf('}');
+  if(a<0||b<0)throw new Error('в ответе нет данных');
+  var j=JSON.parse(txt.slice(a,b+1));
+  if(!j.table)throw new Error('в ответе нет таблицы');
+  return j.table;
+}
 var CHANNELS=[
-{n:'прямой запрос к Google',f:async function(url){var d=await jsonp(url,9000);if(d&&d.table)return d.table;throw new Error('ответ без таблицы')}},
-{n:'обходной сервер 1',f:async function(url){var r=await fetch('https://api.allorigins.win/raw?url='+enc(url),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return parseGviz(await r.text())}},
-{n:'обходной сервер 2',f:async function(url){var r=await fetch('https://corsproxy.io/?url='+enc(url),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return parseGviz(await r.text())}},
-{n:'обходной сервер 3',f:async function(url){var r=await fetch('https://api.codetabs.com/v1/proxy?quest='+enc(url),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return parseGviz(await r.text())}}];
+{n:'прямой запрос к Google',f:async function(url){
+  var d=await jsonp(url,9000);
+  if(d&&d.table)return d.table;
+  throw new Error('ответ без таблицы');
+}},
+{n:'обходной сервер 1',f:async function(url){
+  var r=await fetch('https://api.allorigins.win/raw?url='+enc(url),{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return parseGviz(await r.text());
+}},
+{n:'обходной сервер 2',f:async function(url){
+  var r=await fetch('https://corsproxy.io/?url='+enc(url),{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return parseGviz(await r.text());
+}},
+{n:'обходной сервер 3',f:async function(url){
+  var r=await fetch('https://api.codetabs.com/v1/proxy?quest='+enc(url),{cache:'no-store'});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return parseGviz(await r.text());
+}}];
 var WORKING=0;
-async function pickChannel(){for(var i=0;i<CHANNELS.length;i++){setStatus('Проверяю канал связи '+(i+1)+' из '+CHANNELS.length+' («'+CHANNELS[i].n+'»)…');
-try{await CHANNELS[i].f(BASE+'tqx=out:json&headers=0&sheet='+enc('EXSTENSO'));WORKING=i;rep('ОК: канал «'+CHANNELS[i].n+'»');return true}catch(e){rep('НЕ ПРОШЁЛ: «'+CHANNELS[i].n+'» — '+e.message)}}return false}
-async function fetchUrl(url){try{return await CHANNELS[WORKING].f(url)}catch(e1){for(var k=0;k<CHANNELS.length;k++){if(k===WORKING)continue;try{return await CHANNELS[k].f(url)}catch(e2){}}throw new Error(e1.message)}}
+async function pickChannel(){
+  for(var i=0;i<CHANNELS.length;i++){
+    setStatus('Проверяю канал связи '+(i+1)+' из '+CHANNELS.length+' («'+CHANNELS[i].n+'»)…');
+    try{
+      await CHANNELS[i].f(BASE+'tqx=out:json&headers=0&sheet='+enc('EXSTENSO'));
+      WORKING=i;
+      rep('ОК: канал «'+CHANNELS[i].n+'»');
+      return true;
+    }catch(e){rep('НЕ ПРОШЁЛ: «'+CHANNELS[i].n+'» — '+e.message)}
+  }
+  return false;
+}
+async function fetchUrl(url){
+  try{return await CHANNELS[WORKING].f(url)}
+  catch(e1){
+    for(var k=0;k<CHANNELS.length;k++){
+      if(k===WORKING)continue;
+      try{return await CHANNELS[k].f(url)}catch(e2){}
+    }
+    throw new Error(e1.message);
+  }
+}
 function fetchSheet(sh){return fetchUrl(BASE+'tqx=out:json&headers=0&sheet='+enc(sh))}
-function fillRight(rows){rows.forEach(function(row){var last='';
-for(var c=0;c<row.length;c++){var v=String(row[c]==null?'':row[c]).trim();
-if(v!==''){last=v}else if(last!==''){row[c]=last}}})}
-function getLabel(rows,r,cols){var parts=[];
-cols.forEach(function(c){var v=V(rows,r,c);if(!v)return;if(/^\d{1,2}[.)]?$/.test(v))return;
-var t=normLab(v);if(t&&parts.indexOf(t)<0)parts.push(t)});return parts.join(' · ')}
-function findName(rows,c,maxR,minR){minR=minR||0;
-for(var r=minR;r<maxR;r++){var v=V(rows,r,c);if(!v)continue;if(RE_GRP.test(v)&&v.length<70)continue;if(!isName(v))continue;
-return {name:cleanName(v),row:r}}
-return null}
-function findGroup(rows,c,maxR){for(var r=0;r<maxR;r++){var v=V(rows,r,c);if(v&&RE_GRP.test(v)&&v.length<90)return cleanName(v)}return ''}
-function parseCols(rows,opts){opts=opts||{};var labelCols=opts.labelCols||[0],hMax=opts.hMax||4;
-if(opts.fillRight)fillRight(rows);
-var n=maxLen(rows),dataStart=rows.length;
-for(var r=1;r<rows.length;r++){var lab=getLabel(rows,r,labelCols);
-if(lab&&!RE_NAME.test(lab)){dataStart=r;break}}
-if(dataStart>hMax)hMax=Math.min(dataStart,6);
-var cards=[],taken={};
-for(var c=0;c<n;c++){if(labelCols.indexOf(c)>=0)continue;if(taken[c])continue;
-var fn=findName(rows,c,Math.max(hMax,1));if(!fn)continue;
-cards.push({name:fn.name,nameR:fn.row,nameC:c,group:findGroup(rows,c,fn.row),fields:[],idx:cards.length});taken[c]=1}
-if(!cards.length)return null;
-var byCol={};cards.forEach(function(o){byCol[o.nameC]=o});
-for(var r3=dataStart;r3<rows.length;r3++){
-var lab=getLabel(rows,r3,labelCols);
-for(var c3=0;c3<n;c3++){var cd=byCol[c3];if(!cd)continue;
-var val=V(rows,r3,c3);if(!val)continue;
-cd.fields.push({label:lab,v:val,r:r3,c:c3})}}
-return {blocks:[{title:'',cards:cards}]}}
-function parseZones(rows,opts){var blocks=[];
-(opts.zones||[]).forEach(function(z){
-var title=z.title||'';
-if(z.titleRow!=null)title=cleanName(String(V(rows,z.titleRow,z.titleCol)||'').replace(RE_NAME,''))||title;
-var cards=[];
-if(z.nameCol!=null){
- for(var r=1;r<rows.length;r++){var nm=V(rows,r,z.nameCol);if(!nm||!isName(nm))continue;
-  var cd={name:cleanName(nm),nameR:r,nameC:z.nameCol,fields:[],idx:cards.length};
-  (z.fieldCols||[]).forEach(function(fc){
-   var hv=normLab(V(rows,z.titleRow!=null?z.titleRow:0,fc));
-   var vv=V(rows,r,fc);if(!vv)return;
-   cd.fields.push({label:hv,v:vv,r:r,c:fc})});
-  cards.push(cd)}
-}else{
- var nr=z.nameRow||1,from=z.from||1,to=z.to||maxLen(rows);
- for(var c=from;c<to;c++){var nm2=V(rows,nr,c);if(!nm2||!isName(nm2))continue;
-  cards.push({name:cleanName(nm2),nameR:nr,nameC:c,fields:[],idx:cards.length})}
- var byC={};cards.forEach(function(o){byC[o.nameC]=o});
- for(var r2=nr+1;r2<rows.length;r2++){var lab=V(rows,r2,z.labelCol);
-  for(var c2=from;c2<to;c2++){var cd2=byC[c2];if(!cd2)continue;var v2=V(rows,r2,c2);if(!v2)continue;
-   cd2.fields.push({label:normLab(lab),v:v2,r:r2,c:c2})}}
+
+/* ---------- помощники разбора ---------- */
+function fillRight(rows){
+  rows.forEach(function(row){
+    var last='';
+    for(var c=0;c<row.length;c++){
+      var v=String(row[c]==null?'':row[c]).trim();
+      if(v!==''){last=v}
+      else if(last!==''){row[c]=last}
+    }
+  });
 }
-if(cards.length)blocks.push({title:title,cards:cards})});
-return blocks.length?{blocks:blocks}:null}
-function parseRow(rows,opts){opts=opts||{};var nc=opts.nc!=null?opts.nc:1,gc=opts.gc!=null?opts.gc:0;
-var n=maxLen(rows),first=-1;
-if(opts.hr!=null)first=Math.min(opts.hr,rows.length-1);
-if(first<0){for(var r=0;r<rows.length;r++){
-var v=V(rows,r,nc),cnt=0;for(var c=0;c<n;c++){if(V(rows,r,c))cnt++}
-if(v&&cnt>=2&&!RE_NAME.test(v)&&isName(v)){first=r;break}}}
-if(first<0)first=0;
-var heads={},pres=[];
-for(var r2=0;r2<first;r2++){var cells=[];
-for(var c2=0;c2<n;c2++){var v2=V(rows,r2,c2);if(v2)cells.push({c:c2,v:v2})}
-if(cells.length===1){pres.push({type:'g',v:cleanName(cells[0].v)});continue}
-cells.forEach(function(x){if(!heads[x.c]&&x.v.length<=45&&!RE_NAME.test(x.v))heads[x.c]=normLab(x.v)})}
-var card={name:(opts.name||''),nameR:-1,nameC:-1,fields:[]};
-var cards=[],groups={},last=null;
-pres.forEach(function(p){groups[0]=groups[0]?groups[0]+' · '+p.v:p.v});
-for(var r3=first;r3<rows.length;r3++){
-var cells3=[];
-for(var c3=0;c3<n;c3++){var v3=V(rows,r3,c3);if(v3)cells3.push({c:c3,v:v3})}
-if(!cells3.length)continue;
-var nm=V(rows,r3,nc);
-if(cells3.length===1){
-var cc=cells3[0].c;
-if(cc===gc||cc===nc){groups[cards.length]=cleanName(cells3[0].v);continue}
-if(last){last.fields.push({label:heads[cc]||'',v:cells3[0].v,r:r3,c:cc})}
-continue}
-if(!nm||RE_NAME.test(nm)||!isName(nm)){
-if(last){cells3.forEach(function(x){if(x.c===nc)return;last.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c})})}
-else{groups[cards.length]=cleanName(cells3[0].v)}
-continue}
-var cd={name:cleanName(nm),nameR:r3,nameC:nc,fields:[],idx:cards.length};
-if(!cards.length&&card.fields.length){card.fields.forEach(function(f){cd.fields.push(f)})}
-cards.push(cd);last=cd;
-cells3.forEach(function(x){if(x.c===nc)return;cd.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c})})}
-for(var c4=0;c4<n;c4++){if(c4===nc)continue;
-var vals=[];cards.forEach(function(o){var f=o.fields.filter(function(x){return x.c===c4})[0];if(f)vals.push({r:o.nameR,v:f.v})});
-if(!vals.length||vals.length>cards.length*0.8)continue;
-var longest=0;vals.forEach(function(x){if(x.v.length>longest)longest=x.v.length});
-if(longest<18)continue;
-cards.forEach(function(o){if(o.fields.some(function(x){return x.c===c4}))return;
-var prev=null;vals.forEach(function(x){if(x.r<o.nameR)prev=x});
-if(prev)o.fields.push({label:heads[c4]||'',v:prev.v,r:prev.r,c:c4})})}
-return {blocks:[{title:'',cards:cards,groups:groups}]}}
-function parseKV(rows,opts){var lc=opts.lc||0,vc=opts.vc!=null?opts.vc:1;
-var card={name:opts.name||'',nameR:-1,nameC:-1,fields:[]};
-for(var r=0;r<rows.length;r++){var lv=V(rows,r,lc),vv=V(rows,r,vc);
-if(lc===vc){var all=[];for(var c=0;c<maxLen(rows);c++){var v=V(rows,r,c);if(v)all.push({c:c,v:v})}
-all.forEach(function(x){card.fields.push({label:'',v:x.v,r:r,c:x.c})});continue}
-if(!lv&&!vv)continue;
-card.fields.push({label:(vv&&lv&&lv!==vv)?normLab(lv):'',v:vv||lv,r:r,c:vc})}
-return {blocks:[{title:'',cards:[card]}]}}
-function parseSingle(rows,opts){var card={name:(opts.name||''),nameR:-1,nameC:-1,fields:[]};
-var n=maxLen(rows);
-for(var r=0;r<rows.length;r++){for(var c=0;c<n;c++){var v=V(rows,r,c);if(!v)continue;
-card.fields.push({label:'',v:v,r:r,c:c});break}}
-return {blocks:[{title:'',cards:[card]}]}}
-function parseBio(rows){var n=maxLen(rows),sets=[],mainFields=[],start=-1;
-for(var r=0;r<rows.length;r++){var c0=V(rows,r,0),c1=V(rows,r,1),c2=V(rows,r,2);
-if(c0&&(c1||c2)&&c2.length>50&&c0.length<120&&!/перечень|тест-\s*набор/i.test(c0)){
-if(start<0)start=r;sets.push({name:cleanName(c0),nameR:r,nameC:0,fields:[],idx:sets.length})}
-if(start<0){for(var c=0;c<n;c++){var v=V(rows,r,c);if(!v)continue;mainFields.push({label:'',v:v,r:r,c:c})}}
-else if(sets.length){for(var c2b=0;c2b<n;c2b++){var v2=V(rows,r,c2b);if(!v2)continue;
-var target=null;for(var q=0;q<sets.length;q++){if(sets[q].nameC===c2b)target=sets[q]}
-if(target&&r>target.nameR)target.fields.push({label:'',v:v2,r:r,c:c2b})}}
+function getLabel(rows,r,cols){
+  var parts=[];
+  cols.forEach(function(c){
+    var v=V(rows,r,c);
+    if(!v)return;
+    if(/^\d{1,2}[.)]?$/.test(v))return;
+    var t=normLab(v);
+    if(t&&parts.indexOf(t)<0)parts.push(t);
+  });
+  return parts.join(' · ');
 }
-var blocks=[];
-if(sets.length)blocks.push({title:'Тест-наборы и назначение',cards:sets});
-if(mainFields.length)blocks.push({title:'',cards:[{name:'Турбидофлуориметр БиоТФ',nameR:-1,nameC:-1,fields:mainFields}]});
-return blocks.length?{blocks:blocks}:null}
-function parseSheet(tb,cfg){var rows=matrix(tb);
-if(!rows.length)return {kind:'items',items:[]};
-var mode=cfg[3],opts=cfg[4]||{};
-if(mode==='items')return {kind:'items',items:toItems(rows)};
-var plan=null;
-if(mode==='cols')plan=parseCols(rows,opts);
-else if(mode==='zones')plan=parseZones(rows,opts);
-else if(mode==='row')plan=parseRow(rows,opts);
-else if(mode==='kv')plan=parseKV(rows,opts);
-else if(mode==='single')plan=parseSingle(rows,opts);
-else if(mode==='bio')plan=parseBio(rows);
-if(plan&&plan.blocks&&plan.blocks.length)return {kind:'cards',mode:mode,opts:opts,rows:rows,__plan:plan};
-return {kind:'items',items:toItems(rows)}}
-function planOf(s){if(s.kind!=='cards')return null;
-if(s.__plan&&!s.__stale)return s.__plan;
-var rows=s.rows,opts=s.opts||{},mode=s.mode,plan=null;
-if(mode==='cols')plan=parseCols(rows,opts);
-else if(mode==='zones')plan=parseZones(rows,opts);
-else if(mode==='row')plan=parseRow(rows,opts);
-else if(mode==='kv')plan=parseKV(rows,opts);
-else if(mode==='single')plan=parseSingle(rows,opts);
-else if(mode==='bio')plan=parseBio(rows);
-s.__plan=plan||{blocks:[]};s.__stale=0;return s.__plan}
-function allCards(s){var p=planOf(s),out=[];if(!p)return out;
-(p.blocks||[]).forEach(function(b){(b.cards||[]).forEach(function(cd){out.push(cd)})});return out}
+function findName(rows,c,maxR,minR){
+  minR=minR||0;
+  for(var r=minR;r<maxR;r++){
+    var v=V(rows,r,c);
+    if(!v)continue;
+    if(RE_GRP.test(v)&&v.length<70)continue;
+    if(!isName(v))continue;
+    return {name:cleanName(v),row:r};
+  }
+  return null;
+}
+function findGroup(rows,c,maxR){
+  for(var r=0;r<maxR;r++){
+    var v=V(rows,r,c);
+    if(v&&RE_GRP.test(v)&&v.length<90)return cleanName(v);
+  }
+  return '';
+}
+
+/* ---------- режим cols ---------- */
+function parseCols(rows,opts){
+  opts=opts||{};
+  var labelCols=opts.labelCols||[0];
+  var hMax=opts.hMax||4;
+  if(opts.fillRight)fillRight(rows);
+  var n=maxLen(rows),dataStart=rows.length;
+  for(var r=1;r<rows.length;r++){
+    var lab=getLabel(rows,r,labelCols);
+    if(lab&&!RE_NAME.test(lab)){dataStart=r;break}
+  }
+  if(dataStart>hMax)hMax=Math.min(dataStart,6);
+  var cards=[];
+  for(var c=0;c<n;c++){
+    if(labelCols.indexOf(c)>=0)continue;
+    var fn=findName(rows,c,Math.max(hMax,1));
+    if(!fn)continue;
+    cards.push({name:fn.name,nameR:fn.row,nameC:c,group:findGroup(rows,c,fn.row),fields:[],idx:cards.length});
+  }
+  if(!cards.length)return null;
+  var byCol={};
+  cards.forEach(function(o){byCol[o.nameC]=o});
+  for(var r3=dataStart;r3<rows.length;r3++){
+    var lab3=getLabel(rows,r3,labelCols);
+    for(var c3=0;c3<n;c3++){
+      var cd=byCol[c3];
+      if(!cd)continue;
+      var val=V(rows,r3,c3);
+      if(!val)continue;
+      cd.fields.push({label:lab3,v:val,r:r3,c:c3});
+    }
+  }
+  return {blocks:[{title:'',cards:cards}]};
+}
+
+/* ---------- режим zones ---------- */
+function parseZones(rows,opts){
+  var blocks=[];
+  (opts.zones||[]).forEach(function(z){
+    var title=z.title||'';
+    if(z.titleRow!=null){
+      var tv=cleanName(String(V(rows,z.titleRow,z.titleCol)||'').replace(RE_NAME,''));
+      if(tv)title=tv;
+    }
+    var cards=[];
+    if(z.nameCol!=null){
+      for(var r=1;r<rows.length;r++){
+        var nm=V(rows,r,z.nameCol);
+        if(!nm||!isName(nm))continue;
+        var cd={name:cleanName(nm),nameR:r,nameC:z.nameCol,fields:[],idx:cards.length};
+        (z.fieldCols||[]).forEach(function(fc){
+          var hv=normLab(V(rows,z.titleRow!=null?z.titleRow:0,fc));
+          var vv=V(rows,r,fc);
+          if(!vv)return;
+          cd.fields.push({label:hv,v:vv,r:r,c:fc});
+        });
+        cards.push(cd);
+      }
+    } else {
+      var nr=z.nameRow||1,from=z.from||1,to=z.to||maxLen(rows);
+      for(var c=from;c<to;c++){
+        var nm2=V(rows,nr,c);
+        if(!nm2||!isName(nm2))continue;
+        cards.push({name:cleanName(nm2),nameR:nr,nameC:c,fields:[],idx:cards.length});
+      }
+      var byC={};
+      cards.forEach(function(o){byC[o.nameC]=o});
+      for(var r2=nr+1;r2<rows.length;r2++){
+        var lab=V(rows,r2,z.labelCol);
+        for(var c2=from;c2<to;c2++){
+          var cd2=byC[c2];
+          if(!cd2)continue;
+          var v2=V(rows,r2,c2);
+          if(!v2)continue;
+          cd2.fields.push({label:normLab(lab),v:v2,r:r2,c:c2});
+        }
+      }
+    }
+    if(cards.length)blocks.push({title:title,cards:cards});
+  });
+  return blocks.length?{blocks:blocks}:null;
+}
+
+/* ---------- режим row ---------- */
+function parseRow(rows,opts){
+  opts=opts||{};
+  var nc=opts.nc!=null?opts.nc:1;
+  var gc=opts.gc!=null?opts.gc:0;
+  var n=maxLen(rows),first=-1;
+  if(opts.hr!=null)first=Math.min(opts.hr,rows.length-1);
+  if(first<0){
+    for(var r=0;r<rows.length;r++){
+      var v=V(rows,r,nc),cnt=0;
+      for(var c=0;c<n;c++){if(V(rows,r,c))cnt++}
+      if(v&&cnt>=2&&!RE_NAME.test(v)&&isName(v)){first=r;break}
+    }
+  }
+  if(first<0)first=0;
+  var heads={},pres=[];
+  for(var r2=0;r2<first;r2++){
+    var cells=[];
+    for(var c2=0;c2<n;c2++){
+      var v2=V(rows,r2,c2);
+      if(v2)cells.push({c:c2,v:v2});
+    }
+    if(cells.length===1){pres.push({type:'g',v:cleanName(cells[0].v)});continue}
+    cells.forEach(function(x){
+      if(!heads[x.c]&&x.v.length<=45&&!RE_NAME.test(x.v))heads[x.c]=normLab(x.v);
+    });
+  }
+  var cards=[],groups={},last=null;
+  pres.forEach(function(p){groups[0]=groups[0]?groups[0]+' · '+p.v:p.v});
+  for(var r3=first;r3<rows.length;r3++){
+    var cells3=[];
+    for(var c3=0;c3<n;c3++){
+      var v3=V(rows,r3,c3);
+      if(v3)cells3.push({c:c3,v:v3});
+    }
+    if(!cells3.length)continue;
+    var nm=V(rows,r3,nc);
+    if(cells3.length===1){
+      var cc=cells3[0].c;
+      if(cc===gc||cc===nc){groups[cards.length]=cleanName(cells3[0].v);continue}
+      if(last)last.fields.push({label:heads[cc]||'',v:cells3[0].v,r:r3,c:cc});
+      continue;
+    }
+    if(!nm||RE_NAME.test(nm)||!isName(nm)){
+      if(last){
+        cells3.forEach(function(x){
+          if(x.c===nc)return;
+          last.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c});
+        });
+      } else {
+        groups[cards.length]=cleanName(cells3[0].v);
+      }
+      continue;
+    }
+    var cd={name:cleanName(nm),nameR:r3,nameC:nc,fields:[],idx:cards.length};
+    cards.push(cd);
+    last=cd;
+    cells3.forEach(function(x){
+      if(x.c===nc)return;
+      cd.fields.push({label:heads[x.c]||'',v:x.v,r:r3,c:x.c});
+    });
+  }
+  for(var c4=0;c4<n;c4++){
+    if(c4===nc)continue;
+    var vals=[];
+    cards.forEach(function(o){
+      var f=o.fields.filter(function(x){return x.c===c4})[0];
+      if(f)vals.push({r:o.nameR,v:f.v});
+    });
+    if(!vals.length||vals.length>cards.length*0.8)continue;
+    var longest=0;
+    vals.forEach(function(x){if(x.v.length>longest)longest=x.v.length});
+    if(longest<18)continue;
+    cards.forEach(function(o){
+      if(o.fields.some(function(x){return x.c===c4}))return;
+      var prev=null;
+      vals.forEach(function(x){if(x.r<o.nameR)prev=x});
+      if(prev)o.fields.push({label:heads[c4]||'',v:prev.v,r:prev.r,c:c4});
+    });
+  }
+  return {blocks:[{title:'',cards:cards,groups:groups}]};
+}
+
+/* ---------- режим kv ---------- */
+function parseKV(rows,opts){
+  var lc=opts.lc||0;
+  var vc=opts.vc!=null?opts.vc:1;
+  var card={name:opts.name||'',nameR:-1,nameC:-1,fields:[]};
+  for(var r=0;r<rows.length;r++){
+    if(lc===vc){
+      var all=[];
+      for(var c=0;c<maxLen(rows);c++){
+        var v=V(rows,r,c);
+        if(v)all.push({c:c,v:v});
+      }
+      all.forEach(function(x){card.fields.push({label:'',v:x.v,r:r,c:x.c})});
+      continue;
+    }
+    var lv=V(rows,r,lc),vv=V(rows,r,vc);
+    if(!lv&&!vv)continue;
+    card.fields.push({label:(vv&&lv&&lv!==vv)?normLab(lv):'',v:vv||lv,r:r,c:vc});
+  }
+  return {blocks:[{title:'',cards:[card]}]};
+}
+
+/* ---------- режим single ---------- */
+function parseSingle(rows,opts){
+  var card={name:(opts.name||''),nameR:-1,nameC:-1,fields:[]};
+  var n=maxLen(rows);
+  for(var r=0;r<rows.length;r++){
+    for(var c=0;c<n;c++){
+      var v=V(rows,r,c);
+      if(!v)continue;
+      card.fields.push({label:'',v:v,r:r,c:c});
+      break;
+    }
+  }
+  return {blocks:[{title:'',cards:[card]}]};
+}
+
+/* ---------- режим bio ---------- */
+function parseBio(rows){
+  var n=maxLen(rows),sets=[],mainFields=[],start=-1;
+  for(var r=0;r<rows.length;r++){
+    var c0=V(rows,r,0),c1=V(rows,r,1),c2=V(rows,r,2);
+    if(c0&&(c1||c2)&&c2.length>50&&c0.length<120&&!/перечень|тест-\s*набор/i.test(c0)){
+      if(start<0)start=r;
+      sets.push({name:cleanName(c0),nameR:r,nameC:0,fields:[],idx:sets.length});
+    }
+    if(start<0){
+      for(var c=0;c<n;c++){
+        var v=V(rows,r,c);
+        if(!v)continue;
+        mainFields.push({label:'',v:v,r:r,c:c});
+        break;
+      }
+    } else if(sets.length){
+      for(var c2b=0;c2b<n;c2b++){
+        var v2=V(rows,r,c2b);
+        if(!v2)continue;
+        var target=null;
+        for(var q=0;q<sets.length;q++){
+          if(sets[q].nameC===c2b)target=sets[q];
+        }
+        if(target&&r>target.nameR)target.fields.push({label:'',v:v2,r:r,c:c2b});
+      }
+    }
+  }
+  var blocks=[];
+  if(sets.length)blocks.push({title:'Тест-наборы и назначение',cards:sets});
+  if(mainFields.length)blocks.push({title:'',cards:[{name:'Турбидофлуориметр БиоТФ',nameR:-1,nameC:-1,fields:mainFields}]});
+  return blocks.length?{blocks:blocks}:null;
+}
+
+/* ---------- разбор листа ---------- */
+function parseSheet(tb,cfg){
+  var rows=matrix(tb);
+  if(!rows.length)return {kind:'items',items:[]};
+  var mode=cfg[3],opts=cfg[4]||{};
+  if(mode==='items')return {kind:'items',items:toItems(rows)};
+  var plan=null;
+  if(mode==='cols')plan=parseCols(rows,opts);
+  else if(mode==='zones')plan=parseZones(rows,opts);
+  else if(mode==='row')plan=parseRow(rows,opts);
+  else if(mode==='kv')plan=parseKV(rows,opts);
+  else if(mode==='single')plan=parseSingle(rows,opts);
+  else if(mode==='bio')plan=parseBio(rows);
+  if(plan&&plan.blocks&&plan.blocks.length){
+    return {kind:'cards',mode:mode,opts:opts,rows:rows,__plan:plan};
+  }
+  return {kind:'items',items:toItems(rows)};
+}
+function planOf(s){
+  if(s.kind!=='cards')return null;
+  if(s.__plan&&!s.__stale)return s.__plan;
+  var rows=s.rows,opts=s.opts||{},mode=s.mode,plan=null;
+  if(mode==='cols')plan=parseCols(rows,opts);
+  else if(mode==='zones')plan=parseZones(rows,opts);
+  else if(mode==='row')plan=parseRow(rows,opts);
+  else if(mode==='kv')plan=parseKV(rows,opts);
+  else if(mode==='single')plan=parseSingle(rows,opts);
+  else if(mode==='bio')plan=parseBio(rows);
+  s.__plan=plan||{blocks:[]};
+  s.__stale=0;
+  return s.__plan;
+}
+function allCards(s){
+  var p=planOf(s),out=[];
+  if(!p)return out;
+  (p.blocks||[]).forEach(function(b){
+    (b.cards||[]).forEach(function(cd){out.push(cd)});
+  });
+  return out;
+}
 function countCards(s){return allCards(s).length}
-async function loadAll(onProgress){var found={},done=0,fail=[],empty=[],queue=SHEETS.slice();
-async function worker(){while(queue.length){var cfg=queue.shift();
-try{var parsed=parseSheet(await fetchSheet(cfg[0]),cfg);
-var ok=parsed.kind==='cards'?(parsed.__plan.blocks.length>0):parsed.items.length>0;
-if(ok)found[cfg[0]]=parsed;else empty.push(cfg[0])}catch(e){fail.push(cfg[0]+' ('+e.message+')')}
-done++;onProgress(done,SHEETS.length,cfg[1])}}
-var ws=[];for(var i=0;i<5;i++)ws.push(worker());await Promise.all(ws);
-if(fail.length)rep('НЕ ПРОЧИТАЛИСЬ: '+fail.join('; '));
-if(empty.length)rep('БЕЗ ТЕКСТА: '+empty.join(', '));
-var sections=SHEETS.filter(function(c){return found[c[0]]}).map(function(c){var p=found[c[0]];
-return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},items:p.items||[],rows:p.rows||[],__plan:p.__plan||null}});
-rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length);
-return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections}}
-function itemHTML(it,i,j){if(it.g)return '<div class="sub" data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t)+'</div>';
-var imgs=(it.img&&it.img.length)?'<div class="imgs">'+it.img.map(function(u){return '<img src="'+esc(u)+'" loading="lazy" alt="">'}).join('')+'</div>':'';
-return '<div class="item" id="p'+i+'-'+j+'"><h3 data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t||'')+'</h3>'
-+'<div class="d" data-sid="'+i+'" data-iid="'+j+'" data-k="d">'+renderText(it.d||'')+'</div>'+imgs
-+'<div class="tools"><button onclick="kbAddImg('+i+','+j+')">+ картинка</button><button onclick="kbDelItem('+i+','+j+')">удалить пункт</button></div></div>'}
+
+/* ---------- загрузка всех листов ---------- */
+async function loadAll(onProgress){
+  var found={},done=0,fail=[],empty=[],queue=SHEETS.slice();
+  async function worker(){
+    while(queue.length){
+      var cfg=queue.shift();
+      try{
+        var parsed=parseSheet(await fetchSheet(cfg[0]),cfg);
+        var ok=false;
+        if(parsed.kind==='cards')ok=!!(parsed.__plan&&parsed.__plan.blocks&&parsed.__plan.blocks.length);
+        else ok=parsed.items.length>0;
+        if(ok)found[cfg[0]]=parsed;
+        else empty.push(cfg[0]);
+      }catch(e){fail.push(cfg[0]+' ('+e.message+')')}
+      done++;
+      onProgress(done,SHEETS.length,cfg[1]);
+    }
+  }
+  var ws=[];
+  for(var i=0;i<5;i++)ws.push(worker());
+  await Promise.all(ws);
+  if(fail.length)rep('НЕ ПРОЧИТАЛИСЬ: '+fail.join('; '));
+  if(empty.length)rep('БЕЗ ТЕКСТА: '+empty.join(', '));
+  var sections=SHEETS.filter(function(c){return found[c[0]]}).map(function(c){
+    var p=found[c[0]];
+    return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},items:p.items||[],rows:p.rows||[],__plan:p.__plan||null};
+  });
+  rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length);
+  return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections};
+}
+
+/* ---------- рендер ---------- */
+function itemHTML(it,i,j){
+  if(it.g)return '<div class="sub" data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t)+'</div>';
+  var imgs='';
+  if(it.img&&it.img.length){
+    imgs='<div class="imgs">'+it.img.map(function(u){return '<img src="'+esc(u)+'" loading="lazy" alt="">'}).join('')+'</div>';
+  }
+  return '<div class="item" id="p'+i+'-'+j+'">'
+    +'<h3 data-sid="'+i+'" data-iid="'+j+'" data-k="t">'+esc(it.t||'')+'</h3>'
+    +'<div class="d" data-sid="'+i+'" data-iid="'+j+'" data-k="d">'+renderText(it.d||'')+'</div>'
+    +imgs
+    +'<div class="tools"><button onclick="kbAddImg('+i+','+j+')">+ картинка</button>'
+    +'<button onclick="kbDelItem('+i+','+j+')">удалить пункт</button></div></div>';
+}
 function cardHTML(i,cd){
-var fields='';
-cd.fields.forEach(function(f){if(!f.v)return;
-fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')+'<dd data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c">'+renderText(f.v)+'</dd>'});
-var name=(cd.nameR!=null&&cd.nameR>=0)
-?'<span class="pt" data-sid="'+i+'" data-row="'+cd.nameR+'" data-col="'+cd.nameC+'" data-k="c">'+linkify(esc(cd.name))+'</span>'
-:'<span class="pt">'+linkify(esc(cd.name))+'</span>';
-return '<details class="prod" id="c'+i+'-'+cd.idx+'"><summary>'+name+'</summary><div class="plate"><dl>'+fields+'</dl></div></details>'}
-function cardsHTML(s,i){var p=planOf(s),html='<div class="cat">';if(!p)return html;
-(p.blocks||[]).forEach(function(b){
-if(b.title)html+='<div class="catgroup">'+esc(b.title)+'</div>';
-(b.cards||[]).forEach(function(cd,k){
-if(b.groups&&b.groups[k]!=null)html+='<div class="catgroup">'+esc(b.groups[k])+'</div>';
-else if(b.groups&&b.groups['g'+k])html+='<div class="catgroup">'+esc(b.groups['g'+k])+'</div>';
-html+=cardHTML(i,cd)})});
-return html+'</div>'}
-function renderHome(){var html='<div class="doc"><div class="hero"><h1>Книга знаний</h1>'
-+'<p>Рабочее пособие для менеджеров: контроль сырья и молочной продукции, лабораторное оборудование, гигиена доения, животноводство и ветеринария. Разделов: '+BOOKS.sections.length+'. Обновлено: '+(BOOKS.updated||'—')+'.</p></div>';
-var groups=[];BOOKS.sections.forEach(function(s,i){var g=groups.filter(function(x){return x.name===s.group})[0];
-if(!g){g={name:s.group,list:[]};groups.push(g)}g.list.push({i:i,s:s})});
-groups.forEach(function(g){html+='<h2 class="crumbs" style="font:600 13px var(--sans);letter-spacing:.06em;text-transform:uppercase">'+esc(g.name)+'</h2><div class="grid">';
-g.list.forEach(function(x){var cap=x.s.kind==='cards'?(countCards(x.s)+' позиций'):(x.s.items.filter(function(it){return !it.g}).length+' пунктов');
-html+='<a class="tile" href="#/r/'+x.i+'"><b>'+esc(x.s.title)+'</b><span>'+cap+'</span></a>'});
-html+='</div>'});
-if(!BOOKS.sections.length)html+='<div class="item"><h3>Данные пока не загружены</h3><p>Проверьте интернет и обновите страницу.</p></div>';
-html+='</div>';$('page').innerHTML=html}
-function renderSection(i,jump){var s=BOOKS.sections[i];if(!s){renderHome();return}
-var num=i+1,inner,lead;
-if(s.kind==='cards'){inner=cardsHTML(s,i);lead='Каталог: '+countCards(s)+' позиций. Источник: лист «'+esc(s.sheet)+'». Обновлено '+(BOOKS.updated||'—')+'. Раскройте карточку — характеристики привязаны к своей позиции.'}
-else{inner='<div class="items">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
-lead='Пунктов: '+s.items.filter(function(it){return !it.g}).length+'. Источник: лист «'+esc(s.sheet)+'».'}
-var html='<div class="doc"><div class="crumbs"><a href="#/">Содержание</a> · '+esc(s.group)+' · раздел '+num+'</div>'
-+'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1><p class="lead">'+lead+'</p>'
-+'<div class="actions"><button onclick="location.hash=\'#/\'">← К содержанию</button><button onclick="kbPrint()">🖨 Печать</button>'
-+'<button onclick="kbCopySection('+i+')">📋 Скопировать раздел</button>'
-+(s.kind==='cards'?'':'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>')+'</div>'+inner+'</div>';
-$('page').innerHTML=html;
-var target=null;
-if(s.kind==='cards'){if(jump!=null)target=$('c'+i+'-'+jump)}
-else{if(jump!=null)target=$('p'+i+'-'+jump)}
-if(target){if(target.tagName==='DETAILS')target.open=true;target.classList.add('flash');target.scrollIntoView({block:'center'})}
-else window.scrollTo(0,0);
-buildRail(i)}
-function buildRail(cur){var html='<div style="padding:0 8px 6px"><a href="#/" style="font:600 15px var(--serif);padding:6px 2px">Книга знаний</a>'
-+'<div class="hint" style="font-size:12px">обновлено '+(BOOKS.updated||'—')+'</div></div>';
-if(cur!=null&&BOOKS.sections[cur]){var s=BOOKS.sections[cur];
-html+='<div class="tocbox"><h4>В этом разделе</h4>';
-if(s.kind==='cards'){allCards(s).forEach(function(cd){if(cd.name)html+='<a href="#/r/'+cur+'/c'+cd.idx+'">'+esc(cd.name)+'</a>'})}
-else{(s.items||[]).forEach(function(it,k){if(it.g)return;html+='<a href="#/r/'+cur+'/'+k+'">'+esc(it.t||'пункт')+'</a>'})}
-html+='</div>'}
-var last='';BOOKS.sections.forEach(function(s,i){if(s.group!==last){html+='<div class="rgroup">'+esc(s.group)+'</div>';last=s.group}
-html+='<a href="#/r/'+i+'" class="'+(i===cur?'on':'')+'"><span class="num">'+(i+1)+'.</span>'+esc(s.title)+'</a>'});
-$('rail').innerHTML=html}
-function route(){var h=location.hash.replace(/^#\/?/,'');var m=h.match(/^r\/(\d+)(?:\/((?:c)?\d+))?$/);
-if(m){var i=+m[1],jl=m[2],j=null;if(jl!=null)j=(jl.charAt(0)==='c')?jl.slice(1):jl;
-if(i>=0&&i<BOOKS.sections.length){renderSection(i,j);applyEdit();return}}
-renderHome();buildRail(null);applyEdit()}
+  var fields='';
+  cd.fields.forEach(function(f){
+    if(!f.v)return;
+    fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')
+      +'<dd data-sid="'+i+'" data-row="'+f.r+'" data-col="'+f.c+'" data-k="c">'+renderText(f.v)+'</dd>';
+  });
+  var name='';
+  if(cd.nameR!=null&&cd.nameR>=0){
+    name='<span class="pt" data-sid="'+i+'" data-row="'+cd.nameR+'" data-col="'+cd.nameC+'" data-k="c">'+linkify(esc(cd.name))+'</span>';
+  } else {
+    name='<span class="pt">'+linkify(esc(cd.name))+'</span>';
+  }
+  return '<details class="prod" id="c'+i+'-'+cd.idx+'"><summary>'+name+'</summary>'
+    +'<div class="plate"><dl>'+fields+'</dl></div></details>';
+}
+function cardsHTML(s,i){
+  var p=planOf(s),html='<div class="cat">';
+  if(!p)return html;
+  (p.blocks||[]).forEach(function(b){
+    if(b.title)html+='<div class="catgroup">'+esc(b.title)+'</div>';
+    (b.cards||[]).forEach(function(cd,k){
+      if(b.groups&&b.groups[k]!=null)html+='<div class="catgroup">'+esc(b.groups[k])+'</div>';
+      html+=cardHTML(i,cd);
+    });
+  });
+  return html+'</div>';
+}
+function renderHome(){
+  var html='<div class="doc"><div class="hero"><h1>Книга знаний</h1>'
+    +'<p>Рабочее пособие для менеджеров: контроль сырья и молочной продукции, лабораторное оборудование, '
+    +'гигиена доения, животноводство и ветеринария. Разделов: '+BOOKS.sections.length+'. '
+    +'Обновлено: '+(BOOKS.updated||'—')+'.</p></div>';
+  var groups=[];
+  BOOKS.sections.forEach(function(s,i){
+    var g=groups.filter(function(x){return x.name===s.group})[0];
+    if(!g){g={name:s.group,list:[]};groups.push(g)}
+    g.list.push({i:i,s:s});
+  });
+  groups.forEach(function(g){
+    html+='<h2 class="crumbs" style="font:600 13px var(--sans);letter-spacing:.06em;text-transform:uppercase">'+esc(g.name)+'</h2><div class="grid">';
+    g.list.forEach(function(x){
+      var cap='';
+      if(x.s.kind==='cards')cap=countCards(x.s)+' позиций';
+      else cap=x.s.items.filter(function(it){return !it.g}).length+' пунктов';
+      html+='<a class="tile" href="#/r/'+x.i+'"><b>'+esc(x.s.title)+'</b><span>'+cap+'</span></a>';
+    });
+    html+='</div>';
+  });
+  if(!BOOKS.sections.length){
+    html+='<div class="item"><h3>Данные пока не загружены</h3><p>Проверьте интернет и обновите страницу.</p></div>';
+  }
+  html+='</div>';
+  $('page').innerHTML=html;
+}
+function renderSection(i,jump){
+  var s=BOOKS.sections[i];
+  if(!s){renderHome();return}
+  var num=i+1,inner,lead;
+  if(s.kind==='cards'){
+    inner=cardsHTML(s,i);
+    lead='Каталог: '+countCards(s)+' позиций. Источник: лист «'+esc(s.sheet)+'». Обновлено '+(BOOKS.updated||'—')+'. Раскройте карточку — характеристики привязаны к своей позиции.';
+  } else {
+    inner='<div class="items">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
+    lead='Пунктов: '+s.items.filter(function(it){return !it.g}).length+'. Источник: лист «'+esc(s.sheet)+'».';
+  }
+  var html='<div class="doc">'
+    +'<div class="crumbs"><a href="#/">Содержание</a> · '+esc(s.group)+' · раздел '+num+'</div>'
+    +'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1>'
+    +'<p class="lead">'+lead+'</p>'
+    +'<div class="actions">'
+      +'<button onclick="location.hash=\'#/\'">← К содержанию</button>'
+      +'<button onclick="kbPrint()">🖨 Печать</button>'
+      +'<button onclick="kbCopySection('+i+')">📋 Скопировать раздел</button>'
+      +(s.kind==='cards'?'':'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>')
+    +'</div>'+inner+'</div>';
+  $('page').innerHTML=html;
+  var target=null;
+  if(s.kind==='cards'){if(jump!=null)target=$('c'+i+'-'+jump)}
+  else {if(jump!=null)target=$('p'+i+'-'+jump)}
+  if(target){
+    if(target.tagName==='DETAILS')target.open=true;
+    target.classList.add('flash');
+    target.scrollIntoView({block:'center'});
+  } else {
+    window.scrollTo(0,0);
+  }
+  buildRail(i);
+}
+function buildRail(cur){
+  var html='<div style="padding:0 8px 6px"><a href="#/" style="font:600 15px var(--serif);padding:6px 2px">Книга знаний</a>'
+    +'<div class="hint" style="font-size:12px">обновлено '+(BOOKS.updated||'—')+'</div></div>';
+  if(cur!=null&&BOOKS.sections[cur]){
+    var s=BOOKS.sections[cur];
+    html+='<div class="tocbox"><h4>В этом разделе</h4>';
+    if(s.kind==='cards'){
+      allCards(s).forEach(function(cd){
+        if(cd.name)html+='<a href="#/r/'+cur+'/c'+cd.idx+'">'+esc(cd.name)+'</a>';
+      });
+    } else {
+      (s.items||[]).forEach(function(it,k){
+        if(it.g)return;
+        html+='<a href="#/r/'+cur+'/'+k+'">'+esc(it.t||'пункт')+'</a>';
+      });
+    }
+    html+='</div>';
+  }
+  var last='';
+  BOOKS.sections.forEach(function(s,i){
+    if(s.group!==last){html+='<div class="rgroup">'+esc(s.group)+'</div>';last=s.group}
+    html+='<a href="#/r/'+i+'" class="'+(i===cur?'on':'')+'"><span class="num">'+(i+1)+'.</span>'+esc(s.title)+'</a>';
+  });
+  $('rail').innerHTML=html;
+}
+function route(){
+  var h=location.hash.replace(/^#\/?/,'');
+  var m=h.match(/^r\/(\d+)(?:\/((?:c)?\d+))?$/);
+  if(m){
+    var i=+m[1],jl=m[2],j=null;
+    if(jl!=null)j=(jl.charAt(0)==='c')?jl.slice(1):jl;
+    if(i>=0&&i<BOOKS.sections.length){
+      renderSection(i,j);
+      applyEdit();
+      return;
+    }
+  }
+  renderHome();
+  buildRail(null);
+  applyEdit();
+}
 window.addEventListener('hashchange',route);
-function save(){try{localStorage.setItem(CACHE,JSON.stringify(BOOKS))}catch(e){}
-try{localStorage.setItem(PCACHE,JSON.stringify(PENDING))}catch(e){}
-try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}}
-function txtOf(el){var s='';el.childNodes.forEach(function(n){if(n.nodeType===3)s+=n.textContent;
-else if(n.nodeName==='BR')s+='\n';
-else if(n.nodeType===1){var b=(n.nodeName==='P'||n.nodeName==='DIV'||n.nodeName==='LI');
-if(b&&s&&s.charAt(s.length-1)!=='\n')s+='\n';s+=txtOf(n)}});return s}
-function applyEdit(){var on=ADMIN&&EDIT;document.body.classList.toggle('edit',on);
-document.querySelectorAll('[data-sid]').forEach(function(el){el.contentEditable=on?'true':'false'});
-var b=$('editBtn');if(b)b.textContent=on?'✅ Правка вкл.':'✏️ Правка';
-var n=Object.keys(PENDING).length;var pb=$('pubBtn');if(pb)pb.textContent='📤 Опубликовать'+(n?' ('+n+')':'')}
-document.addEventListener('input',function(e){if(!(ADMIN&&EDIT))return;
-var el=e.target&&e.target.closest?e.target.closest('[data-sid]'):null;if(!el)return;
-var i=+el.dataset.sid,s=BOOKS.sections[i];if(!s)return;
-if(el.dataset.row!=null&&el.dataset.row!==''&&s.kind==='cards'&&s.rows.length){
-var ri=+el.dataset.row,ci=+el.dataset.col,cv=txtOf(el).replace(/^[ \n]+|[ \n]+$/g,'');
-s.rows[ri]=s.rows[ri]||[];s.rows[ri][ci]=cv;PENDING[s.sheet+'|'+ri+'|'+ci]=cv;s.__stale=1}
-else{var j=+el.dataset.iid,k=el.dataset.k,v=txtOf(el);
-if(j<0){v=v.replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');s.title=v}else if(s.items[j])s.items[j][k]=v;
-PENDING[s.sheet+'|'+j+'|'+k]=v}
-save();applyEdit()});
-document.addEventListener('blur',function(e){var el=e.target&&e.target.closest?e.target.closest('[data-row]'):null;
-if(!el)return;var i=+el.dataset.sid,s=BOOKS.sections[i];if(s&&s.__stale)renderSection(i)},true);
-window.kbAddItem=function(i){if(!(ADMIN&&EDIT))return;var s=BOOKS.sections[i];
-s.items=s.items||[];s.items.push({t:'Новый пункт',d:'Описание…'});save();renderSection(i);applyEdit()};
-window.kbDelItem=function(i,j){if(!(ADMIN&&EDIT))return;var s=BOOKS.sections[i];
-if(confirm('Удалить пункт?')){s.items.splice(j,1);save();renderSection(i);applyEdit()}};
-window.kbAddImg=function(i,j){if(!(ADMIN&&EDIT))return;var u=prompt('Путь или ссылка на картинку');if(!u)return;
-var it=BOOKS.sections[i].items[j];it.img=it.img||[];it.img.push(u.trim());save();renderSection(i);applyEdit()};
-window.kbPrint=function(){Array.prototype.forEach.call(document.querySelectorAll('.prod'),function(d){d.open=true});window.print()};
-function copyText(t){if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){alert('Скопировано.')},fb)}else fb();
-function fb(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();
-try{document.execCommand('copy');alert('Скопировано.')}catch(e){alert('Не удалось скопировать.')}ta.remove()}}
-window.kbCopySection=function(i){var s=BOOKS.sections[i];
-if(s.kind==='cards'){var parts=[(i+1)+'. '+s.title,''];
-allCards(s).forEach(function(cd){parts.push('','— '+(cd.name||''));cd.fields.forEach(function(f){parts.push('    '+(f.label?f.label+': ':'')+f.v)})});
-copyText(parts.join('\n'));return}
-var out=[(i+1)+'. '+s.title,''];s.items.forEach(function(it){if(it.g)out.push('',it.t.toUpperCase());else out.push('• '+(it.t||'')+(it.d?': '+it.d:''))});
-copyText(out.join('\n'))};
-function runSearch(q){q=q.toLowerCase();var res=[];
-BOOKS.sections.forEach(function(s,i){if(s.title.toLowerCase().indexOf(q)>=0)res.push({i:i,j:-1,t:s.title,c:'раздел',sn:'Раздел целиком'});
-if(s.kind==='cards'){allCards(s).forEach(function(cd){
-var hay=(cd.name+' '+(cd.group||'')+' '+cd.fields.map(function(f){return f.v}).join(' ')).toLowerCase();
-if(hay.indexOf(q)>=0){var sn='';cd.fields.forEach(function(f){if(f.v.toLowerCase().indexOf(q)>=0&&sn.length<170)sn+=(sn?' • ':'')+String(f.v).replace(/\s+/g,' ').slice(0,90)});
-res.push({i:i,j:'c'+cd.idx,t:cd.name,c:s.title,sn:sn})})});return}
-s.items.forEach(function(it,j){var hay=((it.t||'')+' '+(it.d||'')).toLowerCase();
-if(hay.indexOf(q)>=0){var pos=hay.indexOf(q),t=cleanText(it.d||'').replace(/\s+/g,' '),st=Math.max(0,pos-40);
-res.push({i:i,j:j,t:it.t||'(подзаголовок)',c:s.title,sn:(st>0?'…':'')+t.slice(st,st+180)+'…'})}})});
-return res.slice(0,80)}
-function showSearch(q){var list=runSearch(q);
-var html=list.length?list.map(function(r){return '<div class="res" data-i="'+r.i+'" data-j="'+r.j+'"><b>'+esc(r.t)+'</b><i>'+esc(r.c)+'</i><span>'+esc(r.sn)+'</span></div>'}).join(''):'<p class="hint">Ничего не найдено.</p>';
-$('resList').innerHTML=html;$('search').classList.add('on');
-Array.prototype.forEach.call($('resList').querySelectorAll('.res'),function(el){el.onclick=function(){$('search').classList.remove('on');
-var i=el.dataset.i,j=el.dataset.j;location.hash=(j==='-1')?('#/r/'+i):('#/r/'+i+'/'+j)}})}
-var tmr=null;$('q').addEventListener('input',function(){var v=$('q').value.replace(/^\s+|\s+$/g,'');clearTimeout(tmr);if(v.length<2)return;
-tmr=setTimeout(function(){showSearch(v)},220)});
-function parseDelim(text,delim){var rows=[],row=[],cell='',qq=false;
-for(var i=0;i<text.length;i++){var c=text.charAt(i);
-if(qq){if(c==='"'){if(text.charAt(i+1)==='"'){cell+='"';i++}else qq=false}else cell+=c}
-else if(c==='"')qq=true;else if(c===delim){row.push(cell);cell=''}
-else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=''}
-else if(c!=='\r')cell+=c}
-if(cell!==''||row.length){row.push(cell);rows.push(row)}return rows}
-function rawToMatrix(raw){var d='\t';if(raw.indexOf('\t')<0)d=(raw.split(';').length>raw.split(',').length)?';':',';
-return parseDelim(raw,d).map(function(r){return r.map(function(x){return cleanText(x)})}).filter(function(r){return r.some(function(x){return x!==''})})}
-function rawToItems(raw){var out=[];rawToMatrix(raw).forEach(function(r){var c=r.filter(function(x){return x!==''});
-if(!c.length)return;if(c.length===1)out.push({g:1,t:c[0]});else out.push({t:c[0],d:c.slice(1).join('\n')})});return out}
-$('impBtn').onclick=function(){var raw=$('impText').value;if(!raw.replace(/\s/g,'').length){alert('Вставьте данные');return}
-var tgt=$('impTarget').value,rows=rawToMatrix(raw);
-if(!rows.length){alert('Не удалось распознать данные');return}
-var plan=parseRow(rows,{nc:0});
-if(tgt===''){var title=$('impName').value.trim()||('Новый раздел '+new Date().toLocaleDateString());
-BOOKS.sections.push({sheet:'(вручную)',title:title,group:'Дополнения',kind:'cards',mode:'row',opts:{nc:0},rows:rows,__plan:plan})}
-else{var s=BOOKS.sections[+tgt];
-if(s.kind==='cards'){var add=parseRow(rows,{nc:(s.opts&&s.opts.nc!=null)?s.opts.nc:0});
-if(add&&add.blocks[0]&&add.blocks[0].cards.length){var bl=s.__plan.blocks[s.__plan.blocks.length-1];
-bl.cards=bl.cards||[];bl.cards.push.apply(bl.cards,add.blocks[0].cards)}}
-else s.items=(s.items||[]).concat(rawToItems(raw))}
-save();route();$('io').classList.remove('on');$('impText').value=''};
-function openIO(){$('impTarget').innerHTML='<option value="">— новый раздел —</option>'+BOOKS.sections.map(function(s,i){return '<option value="'+i+'">'+esc(s.title)+'</option>'}).join('');
-$('io').classList.add('on')}
-function dl(text,name,type){var b=new Blob([text],{type:type||'application/json'}),a=document.createElement('a');
-a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)}
-function backup(){BOOKS.updated=new Date().toISOString().slice(0,10);dl(JSON.stringify(BOOKS,null,1),'kniga-znaniy-backup.json')}
-function fillReport(){rep('--- Среда ---');rep('Адрес: '+location.href.slice(0,90));rep('Браузер: '+navigator.userAgent);
-rep('Время: '+new Date().toLocaleString('ru-RU'));rep('Редактор: '+(ADMIN?'включён':'выключен'));
-rep('Общих правок: '+Object.keys(OV).length+', локальных: '+Object.keys(PENDING).length);$('repText').value=REPORT.join('\n')}
-async function refresh(){REPORT=[];setStatus('Проверяю связь с Google Таблицами…');
-var ok=await pickChannel();if(!ok){setStatus('Связь с таблицей не установлена.');fillReport();showFail('Не удалось получить данные из Google Таблиц.');return}
-setStatus('Читаю листы…');var data=await loadAll(function(d,t,n){setStatus('Читаю листы… '+d+'/'+t+' ('+n+')')});
-setStatus('Читаю общие правки…');await loadRights();
-if(data.sections.length){applyOverlay(data.sections);BOOKS=data;save();route()}
-setStatus(BOOKS.sections.length?('Готово. Разделов: '+BOOKS.sections.length+'. Обновлено: '+BOOKS.updated+(Object.keys(PENDING).length?' Не опубликовано: '+Object.keys(PENDING).length:'')):'Разделы пусты — откройте «Отчёт».');
-fillReport()}
-function showFail(msg){$('page').innerHTML='<div class="doc"><div class="item"><h3>'+esc(msg)+'</h3><p>Нажмите «Обновить» в режиме редактора. Ранее загруженные данные сохранены.</p></div></div>'}
-function parseRights(tb){var fresh={};(tb.rows||[]).forEach(function(row){var c=(row.c||[]).map(function(x){return x&&x.v!=null?String(x.v):''});
-if(!c[0]||!c[2]||c[0]==='sheet')return;fresh[c[0]+'|'+parseInt(c[1],10)+'|'+c[2]]=c[3]});return fresh}
-async function loadRights(){if(!RIGHTS_ID)return;var tries=[RBASE+'tqx=out:json&headers=0&gid=0',RBASE+'tqx=out:json&headers=0&sheet='+enc(RIGHTS_TAB)];
-for(var t=0;t<tries.length;t++){try{var tb=await fetchUrl(tries[t]);if(tb&&tb.rows&&tb.rows.length){OV=parseRights(tb);try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){};return}}catch(e){rep('Правки: '+e.message)}}}
-function applyOverlay(sections){var all={},k;for(k in OV)all[k]=OV[k];for(k in PENDING)all[k]=PENDING[k];
-sections.forEach(function(s){if(s.kind==='cards'&&s.rows&&s.rows.length){for(var key in all){if(key.indexOf(s.sheet+'|')!==0)continue;
-var p=key.split('|'),ri=parseInt(p[1],10),ci=parseInt(p[2],10);if(isNaN(ri)||isNaN(ci))continue;
-if(!s.rows[ri])s.rows[ri]=[];s.rows[ri][ci]=all[key]}
-s.__stale=1;return}
-for(var key2 in all){if(key2.indexOf(s.sheet+'|')!==0)continue;var q=key2.split('|'),idx=parseInt(q[1],10),f=q[2],val=all[key2];
-if(idx<0){if(f==='t')s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');continue}
-var it=s.items[idx];if(!it)continue;if(f==='d')it.d=val;else if(f==='t')it.t=val}})}
-function applyAdmin(){document.body.classList.toggle('admin',ADMIN);$('adminBtn').textContent=ADMIN?'🔓 Выйти':'⚙ Вход';if(!ADMIN)EDIT=false;applyEdit()}
-$('adminBtn').onclick=function(){if(ADMIN){ADMIN=false;EDIT=false;try{sessionStorage.removeItem('kb_admin')}catch(e){}applyAdmin();route();return}
-$('passErr').textContent='';$('passIn').value='';$('login').classList.add('on');$('passIn').focus()};
-function tryPass(){if($('passIn').value===PASS){ADMIN=true;try{sessionStorage.setItem('kb_admin','1')}catch(e){}
-$('login').classList.remove('on');applyAdmin();route();setStatus('Режим редактора включён.')}else $('passErr').textContent='Неверный пароль.'}
-$('passOk').onclick=tryPass;$('passIn').addEventListener('keydown',function(e){if(e.key==='Enter')tryPass()});
+
+/* ---------- хранение и правка ---------- */
+function save(){
+  try{localStorage.setItem(CACHE,JSON.stringify(BOOKS))}catch(e){}
+  try{localStorage.setItem(PCACHE,JSON.stringify(PENDING))}catch(e){}
+  try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}
+}
+function txtOf(el){
+  var s='';
+  el.childNodes.forEach(function(n){
+    if(n.nodeType===3)s+=n.textContent;
+    else if(n.nodeName==='BR')s+='\n';
+    else if(n.nodeType===1){
+      var b=(n.nodeName==='P'||n.nodeName==='DIV'||n.nodeName==='LI');
+      if(b&&s&&s.charAt(s.length-1)!=='\n')s+='\n';
+      s+=txtOf(n);
+    }
+  });
+  return s;
+}
+function applyEdit(){
+  var on=ADMIN&&EDIT;
+  document.body.classList.toggle('edit',on);
+  document.querySelectorAll('[data-sid]').forEach(function(el){el.contentEditable=on?'true':'false'});
+  var b=$('editBtn');
+  if(b)b.textContent=on?'✅ Правка вкл.':'✏️ Правка';
+  var n=Object.keys(PENDING).length;
+  var pb=$('pubBtn');
+  if(pb)pb.textContent='📤 Опубликовать'+(n?' ('+n+')':'');
+}
+document.addEventListener('input',function(e){
+  if(!(ADMIN&&EDIT))return;
+  var el=e.target&&e.target.closest?e.target.closest('[data-sid]'):null;
+  if(!el)return;
+  var i=+el.dataset.sid,s=BOOKS.sections[i];
+  if(!s)return;
+  if(el.dataset.row!=null&&el.dataset.row!==''&&s.kind==='cards'&&s.rows.length){
+    var ri=+el.dataset.row,ci=+el.dataset.col;
+    var cv=txtOf(el).replace(/^[ \n]+|[ \n]+$/g,'');
+    s.rows[ri]=s.rows[ri]||[];
+    s.rows[ri][ci]=cv;
+    PENDING[s.sheet+'|'+ri+'|'+ci]=cv;
+    s.__stale=1;
+  } else {
+    var j=+el.dataset.iid,k=el.dataset.k,v=txtOf(el);
+    if(j<0){v=v.replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');s.title=v}
+    else if(s.items[j])s.items[j][k]=v;
+    PENDING[s.sheet+'|'+j+'|'+k]=v;
+  }
+  save();
+  applyEdit();
+});
+document.addEventListener('blur',function(e){
+  var el=e.target&&e.target.closest?e.target.closest('[data-row]'):null;
+  if(!el)return;
+  var i=+el.dataset.sid,s=BOOKS.sections[i];
+  if(s&&s.__stale){
+    s.__plan=null;
+    renderSection(i);
+  }
+},true);
+window.kbAddItem=function(i){
+  if(!(ADMIN&&EDIT))return;
+  var s=BOOKS.sections[i];
+  s.items=s.items||[];
+  s.items.push({t:'Новый пункт',d:'Описание…'});
+  save();renderSection(i);applyEdit();
+};
+window.kbDelItem=function(i,j){
+  if(!(ADMIN&&EDIT))return;
+  var s=BOOKS.sections[i];
+  if(confirm('Удалить пункт?')){s.items.splice(j,1);save();renderSection(i);applyEdit()}
+};
+window.kbAddImg=function(i,j){
+  if(!(ADMIN&&EDIT))return;
+  var u=prompt('Путь или ссылка на картинку');
+  if(!u)return;
+  var it=BOOKS.sections[i].items[j];
+  it.img=it.img||[];
+  it.img.push(u.trim());
+  save();renderSection(i);applyEdit();
+};
+window.kbPrint=function(){
+  Array.prototype.forEach.call(document.querySelectorAll('.prod'),function(d){d.open=true});
+  window.print();
+};
+function copyText(t){
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(t).then(function(){alert('Скопировано.')},fb);
+  } else fb();
+  function fb(){
+    var ta=document.createElement('textarea');
+    ta.value=t;
+    document.body.appendChild(ta);
+    ta.select();
+    try{document.execCommand('copy');alert('Скопировано.')}catch(e){alert('Не удалось скопировать.')}
+    ta.remove();
+  }
+}
+window.kbCopySection=function(i){
+  var s=BOOKS.sections[i];
+  if(s.kind==='cards'){
+    var parts=[(i+1)+'. '+s.title,''];
+    allCards(s).forEach(function(cd){
+      parts.push('','— '+(cd.name||''));
+      cd.fields.forEach(function(f){parts.push('    '+(f.label?f.label+': ':'')+f.v)});
+    });
+    copyText(parts.join('\n'));
+    return;
+  }
+  var out=[(i+1)+'. '+s.title,''];
+  s.items.forEach(function(it){
+    if(it.g)out.push('',it.t.toUpperCase());
+    else out.push('• '+(it.t||'')+(it.d?': '+it.d:''));
+  });
+  copyText(out.join('\n'));
+};
+
+/* ---------- поиск ---------- */
+function runSearch(q){
+  q=q.toLowerCase();
+  var res=[];
+  BOOKS.sections.forEach(function(s,i){
+    if(s.title.toLowerCase().indexOf(q)>=0){
+      res.push({i:i,j:-1,t:s.title,c:'раздел',sn:'Раздел целиком'});
+    }
+    if(s.kind==='cards'){
+      allCards(s).forEach(function(cd){
+        var hay=(cd.name+' '+(cd.group||'')+' '+cd.fields.map(function(f){return f.v}).join(' ')).toLowerCase();
+        if(hay.indexOf(q)<0)return;
+        var sn='';
+        cd.fields.forEach(function(f){
+          if(f.v.toLowerCase().indexOf(q)>=0&&sn.length<170){
+            sn+=(sn?' • ':'')+String(f.v).replace(/\s+/g,' ').slice(0,90);
+          }
+        });
+        res.push({i:i,j:'c'+cd.idx,t:cd.name,c:s.title,sn:sn});
+      });
+      return;
+    }
+    s.items.forEach(function(it,j){
+      var hay=((it.t||'')+' '+(it.d||'')).toLowerCase();
+      if(hay.indexOf(q)<0)return;
+      var pos=hay.indexOf(q);
+      var t=cleanText(it.d||'').replace(/\s+/g,' ');
+      var st=Math.max(0,pos-40);
+      res.push({i:i,j:j,t:it.t||'(подзаголовок)',c:s.title,sn:(st>0?'…':'')+t.slice(st,st+180)+'…'});
+    });
+  });
+  return res.slice(0,80);
+}
+function showSearch(q){
+  var list=runSearch(q);
+  var html;
+  if(list.length){
+    html=list.map(function(r){
+      return '<div class="res" data-i="'+r.i+'" data-j="'+r.j+'"><b>'+esc(r.t)+'</b><i>'+esc(r.c)+'</i><span>'+esc(r.sn)+'</span></div>';
+    }).join('');
+  } else {
+    html='<p class="hint">Ничего не найдено.</p>';
+  }
+  $('resList').innerHTML=html;
+  $('search').classList.add('on');
+  Array.prototype.forEach.call($('resList').querySelectorAll('.res'),function(el){
+    el.onclick=function(){
+      $('search').classList.remove('on');
+      var i=el.dataset.i,j=el.dataset.j;
+      if(j==='-1')location.hash='#/r/'+i;
+      else location.hash='#/r/'+i+'/'+j;
+    };
+  });
+}
+var tmr=null;
+$('q').addEventListener('input',function(){
+  var v=$('q').value.replace(/^\s+|\s+$/g,'');
+  clearTimeout(tmr);
+  if(v.length<2)return;
+  tmr=setTimeout(function(){showSearch(v)},220);
+});
+
+/* ---------- импорт и файлы ---------- */
+function parseDelim(text,delim){
+  var rows=[],row=[],cell='',qq=false;
+  for(var i=0;i<text.length;i++){
+    var c=text.charAt(i);
+    if(qq){
+      if(c==='"'){if(text.charAt(i+1)==='"'){cell+='"';i++}else qq=false}
+      else cell+=c;
+    }
+    else if(c==='"')qq=true;
+    else if(c===delim){row.push(cell);cell=''}
+    else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell=''}
+    else if(c!=='\r')cell+=c;
+  }
+  if(cell!==''||row.length){row.push(cell);rows.push(row)}
+  return rows;
+}
+function rawToMatrix(raw){
+  var d='\t';
+  if(raw.indexOf('\t')<0)d=(raw.split(';').length>raw.split(',').length)?';':',';
+  return parseDelim(raw,d).map(function(r){return r.map(function(x){return cleanText(x)})}).filter(function(r){return r.some(function(x){return x!==''})});
+}
+function rawToItems(raw){
+  var out=[];
+  rawToMatrix(raw).forEach(function(r){
+    var c=r.filter(function(x){return x!==''});
+    if(!c.length)return;
+    if(c.length===1)out.push({g:1,t:c[0]});
+    else out.push({t:c[0],d:c.slice(1).join('\n')});
+  });
+  return out;
+}
+$('impBtn').onclick=function(){
+  var raw=$('impText').value;
+  if(!raw.replace(/\s/g,'').length){alert('Вставьте данные');return}
+  var tgt=$('impTarget').value;
+  var rows=rawToMatrix(raw);
+  if(!rows.length){alert('Не удалось распознать данные');return}
+  if(tgt===''){
+    var title=$('impName').value.trim()||('Новый раздел '+new Date().toLocaleDateString());
+    var plan=parseRow(rows,{nc:0});
+    BOOKS.sections.push({sheet:'(вручную)',title:title,group:'Дополнения',kind:'cards',mode:'row',opts:{nc:0},rows:rows,__plan:plan});
+  } else {
+    var s=BOOKS.sections[+tgt];
+    if(s.kind==='cards'){
+      var add=parseRow(rows,{nc:(s.opts&&s.opts.nc!=null)?s.opts.nc:0});
+      if(add&&add.blocks[0]&&add.blocks[0].cards.length){
+        var bl=s.__plan.blocks[s.__plan.blocks.length-1];
+        bl.cards=bl.cards||[];
+        bl.cards.push.apply(bl.cards,add.blocks[0].cards);
+      }
+    } else {
+      s.items=(s.items||[]).concat(rawToItems(raw));
+    }
+  }
+  save();route();
+  $('io').classList.remove('on');
+  $('impText').value='';
+};
+function openIO(){
+  $('impTarget').innerHTML='<option value="">— новый раздел —</option>'
+    +BOOKS.sections.map(function(s,i){return '<option value="'+i+'">'+esc(s.title)+'</option>'}).join('');
+  $('io').classList.add('on');
+}
+function dl(text,name,type){
+  var b=new Blob([text],{type:type||'application/json'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download=name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+}
+function backup(){
+  BOOKS.updated=new Date().toISOString().slice(0,10);
+  dl(JSON.stringify(BOOKS,null,1),'kniga-znaniy-backup.json');
+}
+function fillReport(){
+  rep('--- Среда ---');
+  rep('Адрес: '+location.href.slice(0,90));
+  rep('Браузер: '+navigator.userAgent);
+  rep('Время: '+new Date().toLocaleString('ru-RU'));
+  rep('Редактор: '+(ADMIN?'включён':'выключен'));
+  rep('Общих правок: '+Object.keys(OV).length+', локальных: '+Object.keys(PENDING).length);
+  $('repText').value=REPORT.join('\n');
+}
+
+/* ---------- обновление ---------- */
+async function refresh(){
+  REPORT=[];
+  setStatus('Проверяю связь с Google Таблицами…');
+  var ok=await pickChannel();
+  if(!ok){
+    setStatus('Связь с таблицей не установлена.');
+    fillReport();
+    showFail('Не удалось получить данные из Google Таблиц.');
+    return;
+  }
+  setStatus('Читаю листы…');
+  var data=await loadAll(function(d,t,n){setStatus('Читаю листы… '+d+'/'+t+' ('+n+')')});
+  setStatus('Читаю общие правки…');
+  await loadRights();
+  if(data.sections.length){
+    applyOverlay(data.sections);
+    BOOKS=data;
+    save();
+    route();
+  }
+  if(BOOKS.sections.length){
+    setStatus('Готово. Разделов: '+BOOKS.sections.length+'. Обновлено: '+BOOKS.updated+(Object.keys(PENDING).length?' Не опубликовано: '+Object.keys(PENDING).length:''));
+  } else {
+    setStatus('Разделы пусты — откройте «Отчёт».');
+  }
+  fillReport();
+}
+function showFail(msg){
+  $('page').innerHTML='<div class="doc"><div class="item"><h3>'+esc(msg)+'</h3>'
+    +'<p>Нажмите «Обновить» в режиме редактора. Ранее загруженные данные сохранены.</p></div></div>';
+}
+function parseRights(tb){
+  var fresh={};
+  (tb.rows||[]).forEach(function(row){
+    var c=(row.c||[]).map(function(x){return x&&x.v!=null?String(x.v):''});
+    if(!c[0]||!c[2]||c[0]==='sheet')return;
+    fresh[c[0]+'|'+parseInt(c[1],10)+'|'+c[2]]=c[3];
+  });
+  return fresh;
+}
+async function loadRights(){
+  if(!RIGHTS_ID)return;
+  var tries=[
+    RBASE+'tqx=out:json&headers=0&gid=0',
+    RBASE+'tqx=out:json&headers=0&sheet='+enc(RIGHTS_TAB)
+  ];
+  for(var t=0;t<tries.length;t++){
+    try{
+      var tb=await fetchUrl(tries[t]);
+      if(tb&&tb.rows&&tb.rows.length){
+        OV=parseRights(tb);
+        try{localStorage.setItem(OCACHE,JSON.stringify(OV))}catch(e){}
+        return;
+      }
+    }catch(e){rep('Правки: '+e.message)}
+  }
+}
+function applyOverlay(sections){
+  var all={},k;
+  for(k in OV)all[k]=OV[k];
+  for(k in PENDING)all[k]=PENDING[k];
+  sections.forEach(function(s){
+    if(s.kind==='cards'&&s.rows&&s.rows.length){
+      for(var key in all){
+        if(key.indexOf(s.sheet+'|')!==0)continue;
+        var p=key.split('|'),ri=parseInt(p[1],10),ci=parseInt(p[2],10);
+        if(isNaN(ri)||isNaN(ci))continue;
+        if(!s.rows[ri])s.rows[ri]=[];
+        s.rows[ri][ci]=all[key];
+      }
+      s.__stale=1;
+      return;
+    }
+    for(var key2 in all){
+      if(key2.indexOf(s.sheet+'|')!==0)continue;
+      var q=key2.split('|'),idx=parseInt(q[1],10),f=q[2],val=all[key2];
+      if(idx<0){
+        if(f==='t')s.title=String(val).replace(/^\s*\d+\.\s*/,'').replace(/^\s+|\s+$/g,'');
+        continue;
+      }
+      var it=s.items[idx];
+      if(!it)continue;
+      if(f==='d')it.d=val;
+      else if(f==='t')it.t=val;
+    }
+  });
+}
+
+/* ---------- режим редактора ---------- */
+function applyAdmin(){
+  document.body.classList.toggle('admin',ADMIN);
+  $('adminBtn').textContent=ADMIN?'🔓 Выйти':'⚙ Вход';
+  if(!ADMIN)EDIT=false;
+  applyEdit();
+}
+$('adminBtn').onclick=function(){
+  if(ADMIN){
+    ADMIN=false;EDIT=false;
+    try{sessionStorage.removeItem('kb_admin')}catch(e){}
+    applyAdmin();route();
+    return;
+  }
+  $('passErr').textContent='';
+  $('passIn').value='';
+  $('login').classList.add('on');
+  $('passIn').focus();
+};
+function tryPass(){
+  if($('passIn').value===PASS){
+    ADMIN=true;
+    try{sessionStorage.setItem('kb_admin','1')}catch(e){}
+    $('login').classList.remove('on');
+    applyAdmin();route();
+    setStatus('Режим редактора включён.');
+  } else {
+    $('passErr').textContent='Неверный пароль.';
+  }
+}
+$('passOk').onclick=tryPass;
+$('passIn').addEventListener('keydown',function(e){if(e.key==='Enter')tryPass()});
 $('passCancel').onclick=function(){$('login').classList.remove('on')};
 $('login').addEventListener('click',function(e){if(e.target.id==='login')$('login').classList.remove('on')});
 $('editBtn').onclick=function(){EDIT=!EDIT;route()};
-$('pubBtn').onclick=publish;$('pubCsv').onclick=publishCsv;$('pubClose').onclick=function(){$('pubWarn').classList.remove('on')};
+$('pubBtn').onclick=publish;
+$('pubCsv').onclick=publishCsv;
+$('pubClose').onclick=function(){$('pubWarn').classList.remove('on')};
 $('pubWarn').addEventListener('click',function(e){if(e.target.id==='pubWarn')$('pubWarn').classList.remove('on')});
-$('refreshBtn').onclick=function(){if(confirm('Перечитать таблицу? Локальные правки будут заменены данными Google (кроме опубликованных).'))refresh()};
+$('refreshBtn').onclick=function(){
+  if(confirm('Перечитать таблицу? Локальные правки будут заменены данными Google (кроме опубликованных).'))refresh();
+};
 $('reportBtn').onclick=function(){fillReport();$('rep').classList.add('on')};
-$('repCopy').onclick=function(){var ta=$('repText');ta.removeAttribute('readonly');ta.select();try{document.execCommand('copy')}catch(e){}
-if(navigator.clipboard){try{navigator.clipboard.writeText(ta.value)}catch(e){}}ta.setAttribute('readonly','readonly');alert('Скопировано.')};
-$('repAgain').onclick=function(){$('rep').classList.remove('on');refresh()};$('repClose').onclick=function(){$('rep').classList.remove('on')};
-$('importBtn').onclick=openIO;$('closeIo').onclick=function(){$('io').classList.remove('on')};
-$('exportBtn').onclick=backup;$('jsonBtn').onclick=backup;
-$('resetBtn').onclick=function(){if(confirm('Очистить кэш и заново прочитать таблицу?')){
-try{localStorage.removeItem(CACHE);localStorage.removeItem(PCACHE)}catch(e){}location.reload()}};
+$('repCopy').onclick=function(){
+  var ta=$('repText');
+  ta.removeAttribute('readonly');
+  ta.select();
+  try{document.execCommand('copy')}catch(e){}
+  if(navigator.clipboard){try{navigator.clipboard.writeText(ta.value)}catch(e){}}
+  ta.setAttribute('readonly','readonly');
+  alert('Скопировано.');
+};
+$('repAgain').onclick=function(){$('rep').classList.remove('on');refresh()};
+$('repClose').onclick=function(){$('rep').classList.remove('on')};
+$('importBtn').onclick=openIO;
+$('closeIo').onclick=function(){$('io').classList.remove('on')};
+$('exportBtn').onclick=backup;
+$('jsonBtn').onclick=backup;
+$('resetBtn').onclick=function(){
+  if(confirm('Очистить кэш и заново прочитать таблицу?')){
+    try{localStorage.removeItem(CACHE);localStorage.removeItem(PCACHE)}catch(e){}
+    location.reload();
+  }
+};
 $('resClose').onclick=function(){$('search').classList.remove('on')};
 $('search').addEventListener('click',function(e){if(e.target.id==='search')$('search').classList.remove('on')});
 $('burger').onclick=function(){$('rail').classList.toggle('on')};
 $('rail').addEventListener('click',function(e){if(e.target.tagName==='A'&&innerWidth<900)$('rail').classList.remove('on')});
 $('lb').addEventListener('click',function(){$('lb').classList.remove('on')});
-document.addEventListener('click',function(e){var im=e.target&&e.target.closest?e.target.closest('.imgs img'):null;
-if(im){document.querySelector('#lb img').src=im.src;$('lb').classList.add('on')}});
+document.addEventListener('click',function(e){
+  var im=e.target&&e.target.closest?e.target.closest('.imgs img'):null;
+  if(im){document.querySelector('#lb img').src=im.src;$('lb').classList.add('on')}
+});
 $('up').onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
 window.addEventListener('scroll',function(){$('up').classList.toggle('on',window.scrollY>600)});
-$('themeBtn').onclick=function(){var n=document.documentElement.dataset.theme==='dark'?'light':'dark';
-document.documentElement.dataset.theme=n;try{localStorage.setItem('kb_theme',n)}catch(e){}};
+$('themeBtn').onclick=function(){
+  var n=document.documentElement.dataset.theme==='dark'?'light':'dark';
+  document.documentElement.dataset.theme=n;
+  try{localStorage.setItem('kb_theme',n)}catch(e){}
+};
 try{var th=localStorage.getItem('kb_theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
-function pendingItems(){return Object.keys(PENDING).map(function(k){var p=k.split('|');
-return {sheet:p[0],i:parseInt(p[1],10),k:p[2],v:PENDING[k]}})}
-async function publish(){var items=pendingItems();if(!items.length){alert('Неопубликованных правок нет.');return}
-if(!APPS_URL){$('pubWarn').classList.add('on');return}
-setStatus('Отправляю правки ('+items.length+')…');
-try{await fetch(APPS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
-body:JSON.stringify({pass:PASS,who:'редактор',items:items})})}
-catch(e){setStatus('Не удалось отправить: '+e.message);$('pubWarn').classList.add('on');return}
-items.forEach(function(x){OV[x.sheet+'|'+x.i+'|'+x.k]=x.v});PENDING={};save();applyEdit();
-setStatus('Правки отправлены ('+items.length+').');alert('Отправлено правок: '+items.length+'. Их увидят все при обновлении страницы.')}
-function rightsCsv(){var head='sheet,idx,field,value,когда,кто\n';
-return head+pendingItems().map(function(x){return '"'+x.sheet+'",'+x.i+','+x.k+',"'+String(x.v).replace(/"/g,'""').replace(/\n/g,' ')+'","'+new Date().toLocaleString('ru-RU')+'","редактор"'}).join('\n')}
-function publishCsv(){dl(rightsCsv(),'pravki.csv','text/csv');$('pubWarn').classList.remove('on')}
-(function start(){applyAdmin();
-try{var c=localStorage.getItem(CACHE);if(c){BOOKS=JSON.parse(c);applyOverlay(BOOKS.sections);route();setStatus('Показана сохранённая копия. Запрашиваю свежие данные…')}}catch(e){}
-if(!BOOKS.sections.length)setStatus('Загружаю данные из Google Таблиц…');
-refresh()})();
+
+/* ---------- публикация правок ---------- */
+function pendingItems(){
+  return Object.keys(PENDING).map(function(k){
+    var p=k.split('|');
+    return {sheet:p[0],i:parseInt(p[1],10),k:p[2],v:PENDING[k]};
+  });
+}
+async function publish(){
+  var items=pendingItems();
+  if(!items.length){alert('Неопубликованных правок нет.');return}
+  if(!APPS_URL){$('pubWarn').classList.add('on');return}
+  setStatus('Отправляю правки ('+items.length+')…');
+  try{
+    await fetch(APPS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({pass:PASS,who:'редактор',items:items})});
+  }catch(e){
+    setStatus('Не удалось отправить: '+e.message);
+    $('pubWarn').classList.add('on');
+    return;
+  }
+  items.forEach(function(x){OV[x.sheet+'|'+x.i+'|'+x.k]=x.v});
+  PENDING={};
+  save();
+  applyEdit();
+  setStatus('Правки отправлены ('+items.length+').');
+  alert('Отправлено правок: '+items.length+'. Их увидят все при обновлении страницы.');
+}
+function rightsCsv(){
+  var head='sheet,idx,field,value,когда,кто\n';
+  return head+pendingItems().map(function(x){
+    return '"'+x.sheet+'",'+x.i+','+x.k+',"'+String(x.v).replace(/"/g,'""').replace(/\n/g,' ')+'","'
+      +new Date().toLocaleString('ru-RU')+'","редактор"';
+  }).join('\n');
+}
+function publishCsv(){
+  dl(rightsCsv(),'pravki.csv','text/csv');
+  $('pubWarn').classList.remove('on');
+}
+
+/* ---------- старт ---------- */
+(function start(){
+  applyAdmin();
+  try{
+    var c=localStorage.getItem(CACHE);
+    if(c){
+      BOOKS=JSON.parse(c);
+      applyOverlay(BOOKS.sections);
+      route();
+      setStatus('Показана сохранённая копия. Запрашиваю свежие данные…');
+    }
+  }catch(e){}
+  if(!BOOKS.sections.length)setStatus('Загружаю данные из Google Таблиц…');
+  refresh();
+})();
+
 })();
 </script>
 </body>
