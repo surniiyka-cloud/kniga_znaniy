@@ -334,16 +334,16 @@ var SHEETS=[
 ['электропастух','Электропастух','Животноводство','row',{nc:2,noInherit:true,dropHeadEcho:true,
  headerOverrides:{7:'Чистое пространство',8:'Небольшая растительность',9:'Густая растительность'}}],
 ['влагомер','Влагомер','Животноводство','single',{name:'Влагомер'}],
-['ветеринарные препараты','Ветеринарные препараты','Ветеринария','row',{nc:1,catCol:0,noInherit:true}],
+['ветеринарные препараты','Ветеринарные препараты','Ветеринария','row',{nc:1,catCol:0,noInherit:true,gid:1113516594}],
 ['Ветеринарные препараты РубиконВ','Препараты «РубиконВ»','Ветеринария','row',{nc:0}],
 ['Препараты Экохимтех','Препараты «Экохимтех»','Ветеринария','row',{nc:0}],
-['ветеринарные тесты КРС','Ветеринарные тесты: КРС','Ветеринария','vtests'],
+['ветеринарные тесты КРС','Ветеринарные тесты: КРС','Ветеринария','vtests',{gid:1013282028}],
 ['ветеринарные тесты МДЖ','Ветеринарные тесты: молоко','Ветеринария','milkTests',{gid:559967924}],
 ['МРС','Мелкий рогатый скот','Ветеринария','row',{nc:1}],
 ['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1,noInherit:true,nameFirstLine:true,nameMax:300}],
 ['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1,noInherit:true,alwaysName:true}]
 ];
-var CACHE='kb_cache_v14',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v15',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
@@ -1137,12 +1137,6 @@ function splitNumName(v){
   var t=cleanText(v),m=t.match(/^\s*(\d{1,2})\s*[.)]?\s*/);
   if(!m)return {num:'',name:cleanName(t)};
   return {num:m[1],name:cleanName(t.slice(m[0].length))};
-}
-function isGarant(name){
-  if(/^garant/i.test(name))return true;
-  if(/^(qmle|amino|sulfa|colonist|colistin|albendazole|bacitracin|ftsp|avermectins|dpf)/i.test(name))return true;
-  if(/garant\s*dpf/i.test(name))return true;
-  return false;
 }
 function fixTerm(text){
   return String(text||'')
