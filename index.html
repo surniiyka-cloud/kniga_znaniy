@@ -104,7 +104,7 @@ table.req td:last-child{text-align:right;white-space:nowrap;font-weight:600;widt
 /* Таблица сравнения чувствительности */
 .mxwrap{overflow:auto;max-height:80vh;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
 table.mx{border-collapse:separate;border-spacing:0;font:14px/1.5 var(--sans);min-width:100%}
-table.mx th,table.mx td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;min-width:104px}
+table.mx th,table.mx td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;min-width:104px;white-space:pre-line}
 table.mx tbody tr:last-child th,table.mx tbody tr:last-child td{border-bottom:0}
 table.mx thead th{position:sticky;top:0;background:var(--paper);z-index:3;font-weight:600}
 table.mx .mxstub{position:sticky;left:0;background:var(--paper);z-index:2;min-width:210px;max-width:280px;font-weight:600}
@@ -354,7 +354,7 @@ var SHEETS=[
 ['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1,noInherit:true,nameFirstLine:true,nameMax:300}],
 ['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1,noInherit:true,alwaysName:true}]
 ];
-var CACHE='kb_cache_v18',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v19',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
@@ -604,6 +604,7 @@ var CHANNELS=[
   return parseGviz(await r.text());
 }}];
 var WORKING=0;
+
 async function pickChannel(){
   for(var i=0;i<CHANNELS.length;i++){
     setStatus('Проверяю канал связи '+(i+1)+' из '+CHANNELS.length+' («'+CHANNELS[i].n+'»)…');
@@ -1202,33 +1203,64 @@ function sravnGroupOf(label){
   }
   return SRAVN_DEFAULT;
 }
+/* Названия всех столбцов таблицы — жёстко, в порядке слева направо */
+var SRAVN_COLS=[
+ 'Решение № 28, ppb\nНе более',
+ 'Garant 4 Ultra Milk',
+ 'Ankar Milk',
+ '4sensor\n(ГОСТ 32219)',
+ '4sensor sensitive\n/кит160',
+ 'Extenso\nКIT275',
+ 'CHARM QUAD (ГОСТ 32254)',
+ 'Proqui-test 4 (ГОСТ 32219)',
+ 'BetaStar 4D (ГОСТ 32219)',
+ 'BetaStar 4D /данные из валидации ILVO',
+ 'Delvotest SP-NT (ГОСТ 31502 +ГОСТ 23454) ампульный',
+ 'Delvotest T (ГОСТ 31502 +ГОСТ 23454)',
+ 'BRT Inhbitor Test (ГОСТ 23454)',
+ 'MilksafeTM 4BTSC / данные из валидации ILVO',
+ 'Test MilkPro 4D (Bioeasy)',
+ 'Продоскрин Лактест-4',
+ 'Bioeasy / данные из валидации ILVO',
+ 'PIONEER BIO-TECH (4 В 1)',
+ 'SPEKTR MILK-BTCS',
+ 'Kwinbon Test Rapid',
+ 'Ballya\n(4Sensor\nTest Kit)',
+ 'Partner 4S Milk Test',
+ 'Dairy Check'
+];
 function buildSravnMatrix(rows){
   rows=rows||[];
-  var n=maxLen(rows),hdrRow=0,best=-1;
+  var n=maxLen(rows);
+  if(!n)return {cols:[],rows:[]};
+  var hdrRow=0,best=-1;
   for(var r=0;r<Math.min(4,rows.length);r++){
     var score=0;
     for(var c=1;c<n;c++){
       var v=V(rows,r,c);
       if(!v)continue;
       if(/date\(/i.test(v))continue;
-      if(/^[\d\s.,;:()\/+–—-]+$/.test(v))continue;
       score+=Math.min(v.length,60);
     }
     if(score>best){best=score;hdrRow=r}
   }
-  var colsAll=[];
+  var cols=[];
   for(var c2=1;c2<n;c2++){
-    var nm='';
-    for(var r2=0;r2<=hdrRow+1&&r2<rows.length;r2++){
-      var v2=V(rows,r2,c2);
-      if(!v2||/date\(/i.test(v2))continue;
-      var t=cleanName(v2);
-      if(t.length>nm.length)nm=t;
+    var label='';
+    var fi=c2-1;
+    if(fi<SRAVN_COLS.length)label=SRAVN_COLS[fi];
+    if(!label){
+      for(var r2=0;r2<=hdrRow+1&&r2<rows.length;r2++){
+        var v2=V(rows,r2,c2);
+        if(!v2||/date\(/i.test(v2))continue;
+        var t2=cleanName(v2);
+        if(t2.length>label.length)label=t2;
+      }
     }
-    if(!nm)continue;
-    if(c2===1)nm='Решение № 28, ppb (ТР ТС 033/2013)';
-    colsAll.push({label:nm,col:c2});
+    if(!label)label='Тест '+(fi+1);
+    cols.push({label:label,col:c2});
   }
+  if(!cols.length)return {cols:[],rows:[]};
   var rowsAll=[];
   for(var r3=hdrRow+1;r3<rows.length;r3++){
     var lab=cleanName(V(rows,r3,0));
@@ -1241,10 +1273,6 @@ function buildSravnMatrix(rows){
     var g=sravnGroupOf(lab);
     rowsAll.push({label:lab,row:r3,grp:(g===SRAVN_DEFAULT)?'':g});
   }
-  var cols=colsAll.filter(function(cl){
-    for(var i=0;i<rowsAll.length;i++){if(V(rows,rowsAll[i].row,cl.col))return true}
-    return false;
-  });
   var rows2=rowsAll.map(function(rw){
     return {label:rw.label,row:rw.row,grp:rw.grp,cells:cols.map(function(cl){
       return {v:V(rows,rw.row,cl.col),c:cl.col};
@@ -2157,7 +2185,7 @@ window.kbCopySection=function(i){
   if(s.kind==='matrix'){
     var mx=buildSravnMatrix(s.rows||[]);
     var lines=[s.title,''];
-    lines.push(['Показатель'].concat(mx.cols.map(function(cl){return cl.label})).join('\t'));
+    lines.push(['Показатель'].concat(mx.cols.map(function(cl){return String(cl.label).replace(/\n/g,' ' )})).join('\t'));
     var lastG='';
     mx.rows.forEach(function(row){
       if(row.grp&&row.grp!==lastG){lastG=row.grp;lines.push(row.grp)}
