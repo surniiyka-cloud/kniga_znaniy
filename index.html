@@ -101,6 +101,15 @@ html[data-theme=dark] table.ptable td.c-red{background:#3a1d1d;color:#ffb3b3}
 table.req{width:100%;border-collapse:collapse;font:14px/1.45 var(--sans)}
 table.req td{border:1px solid var(--line);padding:6px 10px;vertical-align:top}
 table.req td:last-child{text-align:right;white-space:nowrap;font-weight:600;width:40%}
+/* Таблица сравнения чувствительности */
+.mxwrap{overflow:auto;max-height:80vh;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+table.mx{border-collapse:separate;border-spacing:0;font:14px/1.5 var(--sans);min-width:100%}
+table.mx th,table.mx td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left;min-width:104px}
+table.mx tbody tr:last-child th,table.mx tbody tr:last-child td{border-bottom:0}
+table.mx thead th{position:sticky;top:0;background:var(--paper);z-index:3;font-weight:600}
+table.mx .mxstub{position:sticky;left:0;background:var(--paper);z-index:2;min-width:210px;max-width:280px;font-weight:600}
+table.mx thead th.mxstub{z-index:4}
+table.mx tr.mxgrp td{background:var(--accbg);color:var(--acc);font:700 14px/1.5 var(--sans);text-align:center;border-right:0}
 @media(max-width:760px){
  .prod dl{grid-template-columns:1fr;gap:0}
  .prod dt{margin-top:9px;font-weight:600;color:var(--fg)}
@@ -143,6 +152,8 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
  main{margin:0;padding:0}
  .prod{break-inside:avoid;border-color:#ccc}
  .d p,.d li,.prod dd,.prod dt{font-size:11.5pt}
+ .mxwrap{max-height:none;overflow:visible;border:0}
+ table.mx .mxstub,table.mx thead th{position:static!important}
 }
 </style>
 </head>
@@ -169,7 +180,7 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
 
 <div id="login" class="modal"><div class="box small">
   <h3>Режим редактора</h3>
-  <p class="hint">Пароль открывает правку, публикацию, обновление из таблицы, импорт, бэкап и отчёт.</p>
+  <p class="hint">Пароль открывает правку текста, публикацию изменений, обновление из таблицы, импорт, бэкап и отчёт.</p>
   <div class="row"><input id="passIn" type="password" placeholder="Пароль" autocomplete="off">
     <button id="passOk">Войти</button><button id="passCancel">Отмена</button></div>
   <div id="passErr" class="err"></div>
@@ -183,7 +194,7 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
 
 <div id="pubWarn" class="modal"><div class="box small">
   <h3>Публикация правок</h3>
-  <p class="hint">Не удалось отправить правки на сервер. Правки сохранены локально — их можно выгрузить файлом.</p>
+  <p class="hint">Не удалось отправить правки на сервер. Проверьте интернет и адрес публикации. Правки сохранены локально — их можно выгрузить файлом.</p>
   <div class="row"><button id="pubCsv">📄 Скачать правки файлом</button><button id="pubClose">Закрыть</button></div>
 </div></div>
 
@@ -201,7 +212,7 @@ html[data-theme=dark] #dbg{background:#3a1d1d;color:#ffb3b3}
     <button id="jsonBtn">💾 Скачать копию JSON</button>
     <button id="resetBtn">♻️ Сбросить кэш и перечитать таблицу</button>
   </div>
-  <p class="hint">Картинки: файлы кладите в папку <code>img/</code> и указывайте путь вида <code>img/foto1.jpg</code>.</p>
+  <p class="hint">Картинки к отдельным пунктам добавляются кнопкой «+ картинка» в режиме правки.</p>
   <div class="row"><button id="closeIo">Закрыть</button></div>
 </div></div>
 
@@ -343,10 +354,11 @@ var SHEETS=[
 ['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1,noInherit:true,nameFirstLine:true,nameMax:300}],
 ['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1,noInherit:true,alwaysName:true}]
 ];
-var CACHE='kb_cache_v15',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v18',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
+
 /* ============================================ */
 var $=function(id){return document.getElementById(id)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
@@ -654,7 +666,7 @@ function applyOverlay(sections){
   for(k in OV)all[k]=OV[k];
   for(k in PENDING)all[k]=PENDING[k];
   sections.forEach(function(s){
-    if(s.kind==='cards'&&s.rows&&s.rows.length){
+    if((s.kind==='cards'||s.kind==='matrix')&&s.rows&&s.rows.length){
       for(var key in all){
         if(key.indexOf(s.sheet+'|')!==0)continue;
         var p=key.split('|'),ri=parseInt(p[1],10),ci=parseInt(p[2],10);
@@ -1174,7 +1186,7 @@ function parseDop(rows){
   return blocks.length?{blocks:blocks}:null;
 }
 
-/* ---------- режим sravn: сравнение чувствительности ---------- */
+/* ---------- режим sravn: сравнение чувствительности, всё таблицей ---------- */
 var SRAVN_DEFAULT='Пенициллин ТР ТС 033/2013, не более – 4 PPB';
 var SRAVN_GROUPS=[
   {re:/^(Тетрациклин|Окситетрациклин|Доксициклин|Хлортетрациклин)$/i,
@@ -1190,7 +1202,8 @@ function sravnGroupOf(label){
   }
   return SRAVN_DEFAULT;
 }
-function parseSravn(rows){
+function buildSravnMatrix(rows){
+  rows=rows||[];
   var n=maxLen(rows),hdrRow=0,best=-1;
   for(var r=0;r<Math.min(4,rows.length);r++){
     var score=0;
@@ -1203,7 +1216,7 @@ function parseSravn(rows){
     }
     if(score>best){best=score;hdrRow=r}
   }
-  var cards=[];
+  var colsAll=[];
   for(var c2=1;c2<n;c2++){
     var nm='';
     for(var r2=0;r2<=hdrRow+1&&r2<rows.length;r2++){
@@ -1214,29 +1227,51 @@ function parseSravn(rows){
     }
     if(!nm)continue;
     if(c2===1)nm='Решение № 28, ppb (ТР ТС 033/2013)';
-    cards.push({name:nm,nameR:hdrRow,nameC:c2,fields:[],idx:cards.length});
+    colsAll.push({label:nm,col:c2});
   }
-  if(!cards.length)return null;
-  var byC={};
-  cards.forEach(function(o){byC[o.nameC]=o});
-  var cur='';
+  var rowsAll=[];
   for(var r3=hdrRow+1;r3<rows.length;r3++){
     var lab=cleanName(V(rows,r3,0));
     if(!lab)continue;
     if(/date\(/i.test(lab))continue;
     if(/^[\d\s.,;:()\/+–—-]+$/.test(lab))continue;
-    var grp=sravnGroupOf(lab);
-    for(var c3=1;c3<n;c3++){
-      var cd=byC[c3];
-      if(!cd)continue;
-      var val=V(rows,r3,c3);
-      if(!val)continue;
-      if(cur!==grp||!cd.fields.length){cd.fields.push({grp:grp,v:''})}
-      cd.fields.push({label:lab,v:val,r:r3,c:c3});
-    }
-    cur=grp;
+    var any=false;
+    for(var c3=1;c3<n;c3++){if(V(rows,r3,c3))any=true}
+    if(!any)continue;
+    var g=sravnGroupOf(lab);
+    rowsAll.push({label:lab,row:r3,grp:(g===SRAVN_DEFAULT)?'':g});
   }
-  return {blocks:[{title:'',cards:cards}]};
+  var cols=colsAll.filter(function(cl){
+    for(var i=0;i<rowsAll.length;i++){if(V(rows,rowsAll[i].row,cl.col))return true}
+    return false;
+  });
+  var rows2=rowsAll.map(function(rw){
+    return {label:rw.label,row:rw.row,grp:rw.grp,cells:cols.map(function(cl){
+      return {v:V(rows,rw.row,cl.col),c:cl.col};
+    })};
+  });
+  return {cols:cols,rows:rows2};
+}
+function matrixHTML(s,i){
+  var mx=buildSravnMatrix(s.rows||[]);
+  if(!mx.cols.length||!mx.rows.length)return '<p class="hint">Нет данных для таблицы.</p>';
+  var h='<p class="hint" style="margin:0 0 10px">Строки — определяемые вещества, столбцы — тесты. Все значения видны рядом, каждое — в своей ячейке.</p>';
+  h+='<div class="mxwrap"><table class="mx"><thead><tr><th class="mxstub">Показатель</th>';
+  mx.cols.forEach(function(cl){h+='<th>'+esc(cl.label)+'</th>'});
+  h+='</tr></thead><tbody>';
+  var lastG='';
+  mx.rows.forEach(function(row,ri){
+    if(row.grp&&row.grp!==lastG){lastG=row.grp;
+      h+='<tr class="mxgrp"><td colspan="'+(mx.cols.length+1)+'">'+esc(row.grp)+'</td></tr>';
+    }
+    h+='<tr id="m'+i+'-'+ri+'"><th class="mxstub">'+esc(row.label)+'</th>';
+    row.cells.forEach(function(x){
+      h+='<td data-sid="'+i+'" data-row="'+row.row+'" data-col="'+x.c+'" data-k="c">'+esc(x.v||'')+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table></div>';
+  return h;
 }
 
 /* ---------- режим biotf ---------- */
@@ -1700,6 +1735,11 @@ function parseSheet(tb,cfg){
   if(!rows.length)return {kind:'items',items:[],opts:opts};
   if(mode==='items')return {kind:'items',items:toItems(rows),opts:opts};
   if(mode==='rw')return {kind:'items',items:parseRW(rows),opts:opts};
+  if(mode==='sravn'){
+    var mx0=buildSravnMatrix(rows);
+    if(mx0.cols.length&&mx0.rows.length)return {kind:'matrix',mode:'sravn',opts:opts,rows:rows};
+    return {kind:'items',items:toItems(rows),opts:opts};
+  }
   var plan=null;
   if(mode==='cols')plan=parseCols(rows,opts);
   else if(mode==='zones')plan=parseZones(rows,opts);
@@ -1708,7 +1748,6 @@ function parseSheet(tb,cfg){
   else if(mode==='single')plan=parseSingle(rows,opts);
   else if(mode==='tests4')plan=parseTests4(rows);
   else if(mode==='testsDop')plan=parseDop(rows);
-  else if(mode==='sravn')plan=parseSravn(rows);
   else if(mode==='biotf')plan=parseBioTFPlan(rows);
   else if(mode==='analyzers')plan=parseAnalyzers(rows);
   else if(mode==='lumin')plan=parseLumin(rows);
@@ -1734,7 +1773,6 @@ function planOf(s){
   else if(mode==='single')plan=parseSingle(rows,opts);
   else if(mode==='tests4')plan=parseTests4(rows);
   else if(mode==='testsDop')plan=parseDop(rows);
-  else if(mode==='sravn')plan=parseSravn(rows);
   else if(mode==='biotf')plan=parseBioTFPlan(rows);
   else if(mode==='analyzers')plan=parseAnalyzers(rows);
   else if(mode==='lumin')plan=parseLumin(rows);
@@ -1767,6 +1805,7 @@ async function loadAll(onProgress){
         var parsed=(cfg[3]==='kangaroo'||cfg[3]==='digest')?parseSheet(null,cfg):parseSheet(await fetchSheetCfg(cfg),cfg);
         var ok=false;
         if(parsed.kind==='cards')ok=!!(parsed.__plan&&parsed.__plan.blocks&&parsed.__plan.blocks.length);
+        else if(parsed.kind==='matrix')ok=true;
         else ok=parsed.items.length>0;
         if(ok)found[cfg[0]]=parsed;
         else empty.push(cfg[0]);
@@ -1820,10 +1859,7 @@ function cardHTML(i,cd){
   }
   cd.fields.forEach(function(f){
     if(f.grp){fields+='<dt class="grp">'+esc(f.grp)+'</dt>';return}
-    if(f.tableHTML){
-      fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')+'<dd class="tbl">'+f.tableHTML+'</dd>';
-      return;
-    }
+    if(f.tableHTML){fields+=(f.label?'<dt>'+esc(f.label)+'</dt>':'<dt></dt>')+'<dd class="tbl">'+f.tableHTML+'</dd>';return}
     if(f.table){
       fields+='<dd class="tbl"><div class="ptablewrap"><table class="ptable"><tbody>'
         +f.table.map(function(row,ri){
@@ -1834,14 +1870,12 @@ function cardHTML(i,cd){
       return;
     }
     if(f.pairs){
-      fields+='<dd class="tbl"><div class="ptablewrap"><table class="ptable"><thead><tr><th>'
-        +esc((f.th&&f.th[0])||'Свойство')+'</th><th>'+esc((f.th&&f.th[1])||'Выгода')+'</th></tr></thead><tbody>'
+      fields+='<dd class="tbl"><div class="ptablewrap"><table class="ptable"><thead><tr><th>'+esc((f.th&&f.th[0])||'Свойство')+'</th><th>'+esc((f.th&&f.th[1])||'Выгода')+'</th></tr></thead><tbody>'
         +f.pairs.map(function(x){
           var a1=x.s?' data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.sc+'" data-k="c"':'';
           var a2=x.b?' data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.bc+'" data-k="c"':'';
           return '<tr><td'+a1+'>'+renderText(x.s)+'</td><td'+a2+'>'+renderText(x.b)+'</td></tr>';
-        }).join('')
-        +'</tbody></table></div></dd>';
+        }).join('')+'</tbody></table></div></dd>';
       return;
     }
     if(f.list){
@@ -1849,8 +1883,7 @@ function cardHTML(i,cd){
         +f.list.map(function(x){
           var a2=(x.r!=null)?' data-sid="'+i+'" data-row="'+x.r+'" data-col="'+x.c+'" data-k="c"':'';
           return '<li'+a2+'>'+linkify(esc(x.v))+'</li>';
-        }).join('')
-        +'</ol></dd>';
+        }).join('')+'</ol></dd>';
       return;
     }
     if(f.hero){
@@ -1863,7 +1896,9 @@ function cardHTML(i,cd){
   });
   var req='';
   if(cd.req&&cd.req.length){
-    req='<div class="reqwrap"><h5>Требования к физико-химическим показателям молока для проведения анализа</h5><table class="req"><tbody>'+cd.req.map(function(x){return '<tr><td>'+esc(x.label)+'</td><td>'+esc(x.value)+'</td></tr>'}).join('')+'</tbody></table></div>';
+    req='<div class="reqwrap"><h5>Требования к физико-химическим показателям молока для проведения анализа</h5><table class="req"><tbody>'
+      +cd.req.map(function(x){return '<tr><td>'+esc(x.label)+'</td><td>'+esc(x.value)+'</td></tr>'}).join('')
+      +'</tbody></table></div>';
   }
   var numHTML=cd.num?'<span class="ps psnum">'+esc(cd.num)+'</span>':'';
   var name='';
@@ -1903,6 +1938,7 @@ function renderHome(){
     g.list.forEach(function(x){
       var cap='';
       if(x.s.kind==='cards')cap=countCards(x.s)+' позиций';
+      else if(x.s.kind==='matrix')cap='таблица сравнения';
       else cap=x.s.items.filter(function(it){return !it.g}).length+' пунктов';
       html+='<a class="tile" href="#/r/'+x.i+'"><b>'+esc(x.s.title)+'</b><span>'+cap+'</span></a>';
     });
@@ -1918,7 +1954,9 @@ function renderSection(i,jump){
   var s=BOOKS.sections[i];
   if(!s){renderHome();return}
   var num=i+1,inner;
-  if(s.kind==='cards'){
+  if(s.kind==='matrix'){
+    inner=matrixHTML(s,i);
+  } else if(s.kind==='cards'){
     inner=cardsHTML(s,i);
   } else {
     inner='<div class="items'+(s.nonum?' nonum':'')+'">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
@@ -1929,14 +1967,18 @@ function renderSection(i,jump){
       +'<button onclick="location.hash=\'#/\'">← К содержанию</button>'
       +'<button onclick="kbPrint()">🖨 Печать</button>'
       +'<button onclick="kbCopySection('+i+')">📋 Скопировать раздел</button>'
-      +(s.kind==='cards'?'':'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>')
+      +(s.kind==='items'?'<button class="adm" onclick="kbAddItem('+i+')">+ пункт</button>':'')
     +'</div>'
     +'<h1 data-sid="'+i+'" data-iid="-1" data-k="t">'+num+'. '+esc(s.title)+'</h1>'
     +inner+'</div>';
   $('page').innerHTML=html;
   var target=null;
-  if(s.kind==='cards'){if(jump!=null)target=$('c'+i+'-'+jump)}
-  else {if(jump!=null)target=$('p'+i+'-'+jump)}
+  if(jump!=null){
+    var js=String(jump);
+    if(s.kind==='matrix')target=$('m'+i+'-'+js.replace(/^m/,''));
+    else if(s.kind==='cards')target=$('c'+i+'-'+js.replace(/^c/,''));
+    else target=$('p'+i+'-'+js);
+  }
   if(target){
     if(target.tagName==='DETAILS')target.open=true;
     target.classList.add('flash');
@@ -1956,6 +1998,10 @@ function buildRail(cur){
       allCards(s).forEach(function(cd){
         if(cd.name)html+='<a href="#/r/'+cur+'/c'+cd.idx+'">'+esc(cd.name)+'</a>';
       });
+    } else if(s.kind==='matrix'){
+      buildSravnMatrix(s.rows||[]).rows.forEach(function(row,ri){
+        html+='<a href="#/r/'+cur+'/m'+ri+'">'+esc(row.label)+'</a>';
+      });
     } else {
       (s.items||[]).forEach(function(it,k){
         if(it.g)return;
@@ -1973,10 +2019,9 @@ function buildRail(cur){
 }
 function route(){
   var h=location.hash.replace(/^#\/?/,'');
-  var m=h.match(/^r\/(\d+)(?:\/((?:c)?\d+))?$/);
+  var m=h.match(/^r\/(\d+)(?:\/([cm]?\d+))?$/);
   if(m){
-    var i=+m[1],jl=m[2],j=null;
-    if(jl!=null)j=(jl.charAt(0)==='c')?jl.slice(1):jl;
+    var i=+m[1],j=(m[2]!=null)?m[2]:null;
     if(i>=0&&i<BOOKS.sections.length){
       renderSection(i,j);
       applyEdit();
@@ -2024,7 +2069,7 @@ document.addEventListener('input',function(e){
   if(!el)return;
   var i=+el.dataset.sid,s=BOOKS.sections[i];
   if(!s)return;
-  if(el.dataset.row!=null&&el.dataset.row!==''&&s.kind==='cards'&&s.rows.length){
+  if(el.dataset.row!=null&&el.dataset.row!==''&&(s.kind==='cards'||s.kind==='matrix')&&s.rows.length){
     var ri=+el.dataset.row,ci=+el.dataset.col;
     var cv=txtOf(el).replace(/^[ \n]+|[ \n]+$/g,'');
     s.rows[ri]=s.rows[ri]||[];
@@ -2109,6 +2154,18 @@ window.kbCopySection=function(i){
     copyText(parts.join('\n'));
     return;
   }
+  if(s.kind==='matrix'){
+    var mx=buildSravnMatrix(s.rows||[]);
+    var lines=[s.title,''];
+    lines.push(['Показатель'].concat(mx.cols.map(function(cl){return cl.label})).join('\t'));
+    var lastG='';
+    mx.rows.forEach(function(row){
+      if(row.grp&&row.grp!==lastG){lastG=row.grp;lines.push(row.grp)}
+      lines.push([row.label].concat(row.cells.map(function(x){return x.v||''})).join('\t'));
+    });
+    copyText(lines.join('\n'));
+    return;
+  }
   var out=[(i+1)+'. '+s.title,''];
   s.items.forEach(function(it){
     if(it.g){out.push('',it.t.toUpperCase());return}
@@ -2153,6 +2210,21 @@ function runSearch(q){
           });
         });
         res.push({i:i,j:'c'+cd.idx,t:cd.name,c:s.title,sn:sn});
+      });
+      return;
+    }
+    if(s.kind==='matrix'){
+      var mx=buildSravnMatrix(s.rows||[]);
+      mx.rows.forEach(function(row,ri){
+        var parts=[row.label];
+        row.cells.forEach(function(cell){if(cell.v)parts.push(cell.v)});
+        var hay=parts.join(' ').toLowerCase();
+        if(hay.indexOf(q)<0)return;
+        var sn='';
+        row.cells.forEach(function(cell){
+          if(cell.v&&cell.v.toLowerCase().indexOf(q)>=0&&sn.length<170)sn+=(sn?' • ':'')+cell.v.replace(/\s+/g,' ').slice(0,90);
+        });
+        res.push({i:i,j:'m'+ri,t:row.label,c:s.title,sn:sn});
       });
       return;
     }
@@ -2384,11 +2456,6 @@ $('resClose').onclick=function(){$('search').classList.remove('on')};
 $('search').addEventListener('click',function(e){if(e.target.id==='search')$('search').classList.remove('on')});
 $('burger').onclick=function(){$('rail').classList.toggle('on')};
 $('rail').addEventListener('click',function(e){if(e.target.tagName==='A'&&innerWidth<900)$('rail').classList.remove('on')});
-$('lb').addEventListener('click',function(){$('lb').classList.remove('on')});
-document.addEventListener('click',function(e){
-  var im=e.target&&e.target.closest?e.target.closest('.imgs img'):null;
-  if(im){document.querySelector('#lb img').src=im.src;$('lb').classList.add('on')}
-});
 $('up').onclick=function(){window.scrollTo({top:0,behavior:'smooth'})};
 window.addEventListener('scroll',function(){$('up').classList.toggle('on',window.scrollY>600)});
 $('themeBtn').onclick=function(){
@@ -2397,6 +2464,14 @@ $('themeBtn').onclick=function(){
   try{localStorage.setItem('kb_theme',n)}catch(e){}
 };
 try{var th=localStorage.getItem('kb_theme');if(th)document.documentElement.dataset.theme=th}catch(e){}
+
+/* ---------- лайтбокс для картинок пунктов ---------- */
+$('lb').addEventListener('click',function(){$('lb').classList.remove('on')});
+document.addEventListener('click',function(e){
+  var im=e.target&&e.target.closest?e.target.closest('.imgs img'):null;
+  if(im){document.querySelector('#lb img').src=im.src;$('lb').classList.add('on')}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')$('lb').classList.remove('on')});
 
 /* ---------- публикация правок ---------- */
 function pendingItems(){
