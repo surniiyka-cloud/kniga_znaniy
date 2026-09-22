@@ -1,0 +1,48 @@
+name: Сжатие фото
+
+on:
+  push:
+    paths:
+      - 'img/photos/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compress-photos
+  cancel-in-progress: false
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Скачать репозиторий
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Установить инструменты
+        run: sudo apt-get update && sudo apt-get install -y pngquant jpegoptim
+
+      - name: Сжать PNG (только тяжёлые)
+        run: |
+          find img/photos -type f -iname '*.png' -size +300k -print0 \
+            | xargs -0 -r -n1 -P4 pngquant --force --quality=70-95 --strip --ext .png
+
+      - name: Сжать JPEG (только тяжёлые)
+        run: |
+          find img/photos -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -size +300k -print0 \
+            | xargs -0 -r jpegoptim --strip-all --max=85
+
+      - name: Закоммитить результат
+        run: |
+          git config user.name "photo-bot"
+          git config user.email "photo-bot@users.noreply.github.com"
+          git add -A img/photos
+          if git diff --cached --quiet; then
+            echo "Сжимать нечего"
+          else
+            git commit -m "Авто-сжатие фото"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
