@@ -332,7 +332,7 @@ var SHEETS=[
 ['маркировка_идентификация','Маркировка и идентификация','Животноводство','row',{nc:1}],
 ['электропастух','Электропастух','Животноводство','row',{nc:2,noInherit:true,dropHeadEcho:true,
  headerOverrides:{7:'Чистое пространство',8:'Небольшая растительность',9:'Густая растительность'}}],
-['влагомер','Влагомер','Животноводство','single',{name:'Влагомер',stub:true}],
+['влагомер','Влагомер','Животноводство','row',{nc:1,catCol:0,hr:1,noInherit:true}],
 ['ветеринарные препараты','Ветеринарные препараты','Ветеринария','row',{nc:1,catCol:0,noInherit:true,gid:1113516594}],
 ['Ветеринарные препараты РубиконВ','Препараты «РубиконВ»','Ветеринария','row',{nc:0}],
 ['Препараты Экохимтех','Препараты «Экохимтех»','Ветеринария','row',{nc:0}],
@@ -342,7 +342,7 @@ var SHEETS=[
 ['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1,noInherit:true,nameFirstLine:true,nameMax:300}],
 ['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1,noInherit:true,alwaysName:true}]
 ];
-var CACHE='kb_cache_v32',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v33',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
@@ -2432,7 +2432,10 @@ $('impBtn').onclick=function(){
   }else{
     var s=BOOKS.sections[+tgt];
     if(s.kind==='cards'){
-      var add=parseRow(rows,{nc:(s.opts&&s.opts.nc!=null)?s.opts.nc:0});
+      var rowOpts={};
+      var srcOpts=s.opts||{};
+      for(var ok in srcOpts){if(srcOpts.hasOwnProperty(ok))rowOpts[ok]=srcOpts[ok]}
+      var add=parseRow(rows,rowOpts);
       if(add&&add.blocks[0]&&add.blocks[0].cards.length){
         var bl=s.__plan.blocks[s.__plan.blocks.length-1];bl.cards=bl.cards||[];
         bl.cards.push.apply(bl.cards,add.blocks[0].cards);
