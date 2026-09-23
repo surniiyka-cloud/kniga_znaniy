@@ -332,7 +332,7 @@ var SHEETS=[
 ['маркировка_идентификация','Маркировка и идентификация','Животноводство','row',{nc:1}],
 ['электропастух','Электропастух','Животноводство','row',{nc:2,noInherit:true,dropHeadEcho:true,
  headerOverrides:{7:'Чистое пространство',8:'Небольшая растительность',9:'Густая растительность'}}],
-['влагомер','Влагомер','Животноводство','single',{name:'Влагомер'}],
+['влагомер','Влагомер','Животноводство','single',{name:'Влагомер',stub:true}],
 ['ветеринарные препараты','Ветеринарные препараты','Ветеринария','row',{nc:1,catCol:0,noInherit:true,gid:1113516594}],
 ['Ветеринарные препараты РубиконВ','Препараты «РубиконВ»','Ветеринария','row',{nc:0}],
 ['Препараты Экохимтех','Препараты «Экохимтех»','Ветеринария','row',{nc:0}],
@@ -342,7 +342,7 @@ var SHEETS=[
 ['Искусственное осеменение','Искусственное осеменение','Ветеринария','row',{nc:1,noInherit:true,nameFirstLine:true,nameMax:300}],
 ['Ветеринарные инструменты','Ветеринарные инструменты','Ветеринария','row',{nc:1,noInherit:true,alwaysName:true}]
 ];
-var CACHE='kb_cache_v31',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
+var CACHE='kb_cache_v32',PCACHE='kb_pending_v1',OCACHE='kb_overlay_v1';
 var BASE='https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?';
 var RBASE='https://docs.google.com/spreadsheets/d/'+RIGHTS_ID+'/gviz/tq?';
 var enc=encodeURIComponent;
@@ -1985,7 +1985,9 @@ async function loadAll(onProgress){
         if(parsed.kind==='cards')ok=!!(parsed.__plan&&parsed.__plan.blocks&&parsed.__plan.blocks.length);
         else if(parsed.kind==='matrix')ok=true;
         else ok=parsed.items.length>0;
-        if(ok)found[cfg[0]]=parsed;else empty.push(cfg[0]);
+                if(ok){found[cfg[0]]=parsed}
+        else if(cfg[4]&&cfg[4].stub){parsed.stub=1;found[cfg[0]]=parsed}
+        else empty.push(cfg[0]);
       }catch(e){fail.push(cfg[0]+' ('+e.message+')')}
       done++;onProgress(done,SHEETS.length,cfg[1]);
     }
@@ -1996,7 +1998,7 @@ async function loadAll(onProgress){
   if(empty.length)rep('БЕЗ ТЕКСТА: '+empty.join(', '));
   var sections=SHEETS.filter(function(c){return found[c[0]]}).map(function(c){
     var p=found[c[0]];
-    return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},nonum:!!(p.opts&&p.opts.nonum),items:p.items||[],rows:p.rows||[],__plan:p.__plan||null};
+        return {sheet:c[0],title:c[1],group:c[2],kind:p.kind,mode:p.mode||'',opts:p.opts||{},nonum:!!(p.opts&&p.opts.nonum),stub:!!p.stub,items:p.items||[],rows:p.rows||[],__plan:p.__plan||null};
   });
   rep('ИТОГ: разделов '+sections.length+' из '+SHEETS.length);
   return {title:'Книга знаний',updated:new Date().toISOString().slice(0,10),sections:sections};
@@ -2114,6 +2116,7 @@ function renderHome(){
       var cap='';
       if(x.s.kind==='cards')cap=countCards(x.s)+' позиций';
       else if(x.s.kind==='matrix')cap='таблица сравнения';
+            else if(x.s.stub)cap='информация пока отсутствует';
       else cap=x.s.items.filter(function(it){return !it.g}).length+' пунктов';
       html+='<a class="tile" href="#/r/'+x.i+'"><b>'+esc(x.s.title)+'</b><span>'+cap+'</span></a>';
     });
@@ -2126,8 +2129,12 @@ function renderHome(){
 function renderSection(i,jump){
   var s=BOOKS.sections[i];
   if(!s){renderHome();return}
-  var num=i+1,inner;
-  if(s.kind==='matrix')inner=matrixHTML(s,i);
+    var num=i+1,inner;
+  if(s.stub&&!(s.items&&s.items.length)){
+    inner='<div class="item"><h3>Информация пока отсутствует</h3>'
+      +'<div class="d"><p>Раздел добавлен в книгу, но данные в него ещё не занесены. Как только лист заполнится в Google Таблице, содержимое появится здесь само — обновлять код не нужно.</p></div></div>';
+  }
+  else if(s.kind==='matrix')inner=matrixHTML(s,i);
   else if(s.kind==='cards')inner=cardsHTML(s,i);
   else inner='<div class="items'+(s.nonum?' nonum':'')+'">'+s.items.map(function(it,k){return itemHTML(it,i,k)}).join('')+'</div>';
   var html='<div class="doc">'
