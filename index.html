@@ -1856,7 +1856,7 @@ function exportPhotoList(){
   dl(csv,'foto-list.csv','text/csv');
 }
 function buildPhotoPaths(rel,sheet){
-  var dir=dirFor(sheet),pre=dir?dir+'/':'';
+ var dir=dirFor(sheet),pre=dir?'img/photos/'+dir+'/':'img/photos/';
   var out=[];
   if(typeof PHOTO_BASE!=='undefined'&&PHOTO_BASE){
     var base=String(PHOTO_BASE).replace(/\/+$/,'');
