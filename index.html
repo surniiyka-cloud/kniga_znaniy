@@ -1981,7 +1981,21 @@ async function loadAll(onProgress){
     while(queue.length){
       var cfg=queue.shift();
       try{
-        var parsed=(cfg[3]==='kangaroo'||cfg[3]==='digest')?parseSheet(null,cfg):parseSheet(await fetchSheetCfg(cfg),cfg);
+                var parsed;
+        if(cfg[3]==='kangaroo'||cfg[3]==='digest'){
+          parsed=parseSheet(null,cfg);
+        } else {
+          var tb=await fetchSheetCfg(cfg);
+          var o=cfg[4]||{};
+          if(o.gid==null&&tb&&tb.title){
+            var wantN=String(cfg[0]).toLowerCase().replace(/[\s_\-]+/g,'');
+            var gotN=String(tb.title).toLowerCase().replace(/[\s_\-]+/g,'');
+            if(wantN!==gotN){
+              throw new Error('в таблице нет листа «'+cfg[0]+'» — Google вернул «'+tb.title+'»');
+            }
+          }
+          parsed=parseSheet(tb,cfg);
+        }
         var ok=false;
         if(parsed.kind==='cards')ok=!!(parsed.__plan&&parsed.__plan.blocks&&parsed.__plan.blocks.length);
         else if(parsed.kind==='matrix')ok=true;
