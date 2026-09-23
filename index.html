@@ -1843,7 +1843,7 @@ function exportPhotoList(){
   BOOKS.sections.forEach(function(s,i){
     var dir=dirFor(s.sheet),items=[];
     if(s.kind==='cards')items=allCards(s).map(function(cd){return {name:cd.name,idx:cd.idx}});
-    else if(s.kind==='items'&&s.sheet==='рабочий_уборочный')items=s.items.filter(function(it){return !it.g}).map(function(it){return {name:it.t,idx:0}});
+    else if(s.kind==='items'&&(s.sheet==='рабочий_уборочный'||s.sheet==='Анализ Пишеворения КРС'))items=s.items.filter(function(it){return !it.g}).map(function(it){return {name:it.t,idx:0}});
     items.forEach(function(x){
       var rel=photoRelName(s.sheet,x.name,x.idx);
       if(!rel)return;
@@ -1898,6 +1898,7 @@ function itemPhotoSrcs(i,name){
   var s=BOOKS.sections[i];if(!s)return [];
   var rel=[];
   if(s.sheet==='рабочий_уборочный'){var a=rwFile(name);if(!a)return [];rel.push(a)}
+  else if(s.sheet==='Анализ Пишеворения КРС'&&name){rel.push(secNum(s.sheet)+'-'+slugify(name))}
   return buildPhotoPaths(rel,s.sheet);
 }
 window.kbImgFail=function(img){
