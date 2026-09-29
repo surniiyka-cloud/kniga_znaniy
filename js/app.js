@@ -5,6 +5,7 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
+const isAdmin=(()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}})();
 const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
@@ -30,7 +31,8 @@ function mapData(){
 }
 function renderNav(){
   nav.innerHTML=state.book.chapters.map((ch)=>{
-    return '<div class="nav-chapter" data-chapter="'+esc(ch.id)+'"><button class="nav-chapter-btn" data-nav-chapter="'+esc(ch.id)+'"><span class="nav-num">'+esc(ch.id)+'</span><span>'+esc(ch.title)+'</span><span class="nav-caret">›</span></button><div class="nav-sub">'+ch.sections.map((s)=>'<a class="nav-link" data-nav-section="'+esc(s.id)+'" href="'+href("section",s.id)+'">'+esc(s.id)+' · '+esc(s.title)+'</a>').join("")+'</div></div>';
+    const sections=ch.sections.filter((s)=>isAdmin||s.id!=="1.3");
+    return '<div class="nav-chapter" data-chapter="'+esc(ch.id)+'"><button class="nav-chapter-btn" data-nav-chapter="'+esc(ch.id)+'"><span class="nav-num">'+esc(ch.id)+'</span><span>'+esc(ch.title)+'</span><span class="nav-caret">›</span></button><div class="nav-sub">'+sections.map((s)=>'<a class="nav-link" data-nav-section="'+esc(s.id)+'" href="'+href("section",s.id)+'">'+esc(s.id)+' · '+esc(s.title)+'</a>').join("")+'</div></div>';
   }).join("");
 }
 function activeNav(){
@@ -130,12 +132,62 @@ function renderHome(){
   const photoProducts=Object.keys(state.assets.productImages||{}).length;
   app.innerHTML='<section class="hero"><div class="hero-copy"><span class="eyebrow">TIAN-Трейд · внутренняя база знаний</span><h1>Вся продуктовая экспертиза — в одной системе</h1><p>Поиск по ассортименту, артикулам, назначению и характеристикам. Данные автоматически собираются из рабочей Книги знаний.</p><div class="hero-actions"><button class="btn hero-btn" data-focus-search>⌕ Найти товар</button><button class="btn hero-btn secondary" data-route="favorites">★ Избранное</button></div><div class="hero-meta"><span class="hero-chip">'+state.book.chapters.length+' глав</span><span class="hero-chip">'+state.sections.size+' подразделов</span><span class="hero-chip">'+state.products.size+' карточек</span><span class="hero-chip">Обновлено '+fmtDate(state.book.generatedAt)+'</span></div></div></section><section class="stats"><div class="stat"><strong>'+state.book.chapters.length+'</strong><span>глав</span></div><div class="stat"><strong>'+state.sections.size+'</strong><span>подразделов</span></div><div class="stat"><strong>'+state.products.size+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+photoProducts+'</strong><span>товаров с индивидуальными фото</span></div></section><section class="home-tools"><button type="button" class="home-tool" data-focus-search><span>⌕</span><strong>Глобальный поиск</strong><small>Название, артикул, назначение</small></button><button type="button" class="home-tool" data-route="compare"><span>⇄</span><strong>Сравнение товаров</strong><small>До четырёх карточек рядом</small></button><button type="button" class="home-tool" data-route="diagnostics"><span>✓</span><strong>Диагностика данных</strong><small>Фото, дубликаты и качество базы</small></button></section><div class="section-heading"><div><span class="eyebrow">Навигация</span><h2>Разделы Книги знаний</h2></div></div><section class="chapter-grid">'+state.book.chapters.map((ch)=>'<article class="chapter-card" data-num="'+esc(ch.id)+'" data-open-chapter="'+esc(ch.id)+'"><span class="chapter-num">'+esc(ch.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(ch.title)+'</h3><p>'+ch.sections.length+' подразделов</p></article>').join("")+'</section>'+(recentItems.length?'<div class="section-heading"><div><span class="eyebrow">История</span><h2>Недавно просмотренные</h2></div></div><section class="recent-grid">'+recentItems.map(card).join("")+'</section>':"");
 }
+function renderImportant(title,items,foot=""){
+  return '<section class="important-panel"><div class="important-icon">!</div><div><h2>'+esc(title)+'</h2><ul>'+items.map((x)=>'<li><strong>'+esc(x[0])+'</strong> '+esc(x[1])+'</li>').join("")+'</ul>'+(foot?'<p class="important-foot">'+esc(foot)+'</p>':"")+'</div></section>';
+}
+function renderTermsSection(ch,s){
+  const important=[
+    ["Сертификат или Декларация?","Не все товары требуют обязательного сертификата. Для многих достаточно декларации о соответствии. Однако именно сертификат выдается на бланке и заверяется органом по сертификации, тогда как за достоверность декларации отвечает сам заявитель. Мы поможем подобрать оптимальную схему."],
+    ["Сроки действия не вечны.","Сертификаты и декларации ТР ТС/ЕАЭС обычно выдаются на срок до 5 лет. А вот свидетельства о поверке средств измерений (СИ) имеют свой межповерочный интервал — от 1 года до нескольких лет. Просроченный документ приравнивается к его отсутствию."],
+    ["Территориальность.","Документы, оформленные по техническим регламентам ЕАЭС (ТР ТС), действуют на всей территории Союза: Россия, Беларусь, Казахстан, Армения, Кыргызстан. Национальные ГОСТы, например ГОСТ Р, действуют только в пределах РФ."],
+    ["Метрология — это отдельный мир.","Не путайте поверку — обязательную процедуру для СИ, применяемых в сфере госрегулирования, и калибровку — добровольную процедуру для внутренних нужд. Аккредитация лаборатории подтверждает её право проводить официальные испытания."],
+    ["Валидация и верификация.","Это не просто «проверки». Верификация подтверждает, что лаборатория корректно применяет методику, а валидация — что сама методика подходит для поставленной задачи и условий применения."]
+  ];
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Словарь ключевых документов, метрологических процедур и рабочих понятий.</p></div></div>'+
+    '<section class="term-grid">'+(s.pairs||[]).map((x,i)=>'<article class="term-card"><div class="term-no">'+String(i+1).padStart(2,"0")+'</div><div><span class="term-label">Термин</span><h3>'+esc(x.label)+'</h3><span class="definition-label">Определение</span><p>'+esc(x.value)+'</p></div></article>').join("")+'</section>'+
+    renderImportant("Важно знать перед началом оформления документов:",important);
+}
+function renderNormsSection(ch,s){
+  const rows=(s.rows||[]);
+  const docs=[],units=[],reading=[],steps=[];
+  let mode="";
+  for(const r of rows){
+    const a=String(r[0]||"").trim();
+    if(a.startsWith("1.")){mode="docs";continue}
+    if(a.startsWith("2.")){mode="units";continue}
+    if(a.startsWith("3.")){mode="reading";continue}
+    if(a==="Порядок подбора товара"){mode="steps";continue}
+    if(["Документ","Обозначение","Показатель / обозначение","Шаг"].includes(a))continue;
+    if(!a||a.startsWith("Важно:"))continue;
+    const target=mode==="docs"?docs:mode==="units"?units:mode==="reading"?reading:mode==="steps"?steps:null;
+    if(target)target.push(r);
+  }
+  const important=[
+    ["Не путайте характеристики с нормативами.","Диапазон измерения и предел обнаружения (ppb) — это возможности прибора. «Не более» и «Не менее» — это требования закона: ТР ТС, ГОСТ."],
+    ["ppb = мкг/кг.","Символы < и > обозначают границы, а не точные значения."],
+    ["Минимальный ppb — не панацея.","Низкий предел обнаружения по одному веществу не делает тест лучшим. Оценивайте весь спектр определяемых соединений и диапазон чувствительности."],
+    ["Учитывайте матрицу и время.","Методы для молока, мяса и поверхностей различаются. Время анализа, например 5+5 мин, не включает пробоподготовку."],
+    ["Комплексный подход.","Нельзя выбрать товар только по одному параметру. Учитывайте задачу, образец, норматив, методику, время и комплектацию: количество тестов и опции."]
+  ];
+  const cards=(arr,kind)=>'<div class="norm-grid">'+arr.map((r)=>'<article class="norm-card"><span>'+esc(kind)+'</span><h3>'+esc(r[0])+'</h3><p>'+esc(r[1]||"")+'</p>'+(r[2]?'<small>'+esc(r[2])+'</small>':"")+(r[3]?'<em>'+esc(r[3])+'</em>':"")+'</article>').join("")+'</div>';
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Нормативные документы, единицы измерения и правила чтения характеристик — без табличной каши.</p></div></div>'+
+    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Документы</span><h2>Нормативы</h2></div><p>'+docs.length+' позиций</p></div>'+cards(docs,"Норматив")+'</section>'+
+    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Сокращения</span><h2>Обозначения и единицы измерения</h2></div><p>'+units.length+' терминов</p></div>'+cards(units,"Обозначение")+'</section>'+
+    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Практика</span><h2>Как читать показатели</h2></div><p>'+reading.length+' пояснений</p></div>'+cards(reading,"Показатель")+'</section>'+
+    (steps.length?'<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Алгоритм</span><h2>Порядок подбора товара</h2></div></div><div class="step-list">'+steps.map((r,i)=>'<article><b>'+esc(r[0]||String(i+1))+'</b><p>'+esc(r[1]||"")+'</p></article>').join("")+'</div></section>':"")+
+    renderImportant("Важно знать перед подбором тестов и оборудования:",important,"Обратите внимание: опции, например измерение лактозы, и комплектации — 96/112/480 тестов — могут различаться. Уточняйте артикулы при заказе.");
+}
 function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
-  app.innerHTML=crumb([{label:"Глава "+ch.id}])+'<div class="page-head"><div><span class="eyebrow">Глава '+esc(ch.id)+'</span><h1>'+esc(ch.title)+'</h1><p>'+ch.sections.length+' подразделов</p></div></div><section class="chapter-grid">'+ch.sections.map((s)=>'<article class="chapter-card" data-num="'+esc(s.id)+'" data-open-section="'+esc(s.id)+'"><span class="chapter-num">'+esc(s.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(s.title)+'</h3><p>'+((s.products||[]).length?((s.products||[]).length+" карточек"):"Справочный материал")+'</p></article>').join("")+'</section>';
+  const sections=ch.sections.filter((s)=>isAdmin||s.id!=="1.3");
+  app.innerHTML=crumb([{label:"Глава "+ch.id}])+'<div class="page-head"><div><span class="eyebrow">Глава '+esc(ch.id)+'</span><h1>'+esc(ch.title)+'</h1><p>'+sections.length+' подразделов</p></div></div><section class="chapter-grid">'+sections.map((s)=>'<article class="chapter-card" data-num="'+esc(s.id)+'" data-open-section="'+esc(s.id)+'"><span class="chapter-num">'+esc(s.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(s.title)+'</h3><p>'+((s.products||[]).length?((s.products||[]).length+" карточек"):"Справочный материал")+'</p></article>').join("")+'</section>';
 }
 function renderSection(id){
-  const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;title(s.id+" "+s.title);
+  const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;if(id==="1.3"&&!isAdmin)return notFound();title(s.id+" "+s.title);
+  if(id==="1.1")return renderTermsSection(ch,s);
+  if(id==="1.2")return renderNormsSection(ch,s);
   const items=(s.products||[]).map((p)=>({chapter:ch,section:s,product:p}));
   const sectionImgs=state.assets.sectionImages?.[s.id]||[];
   const subtitle=items.length?items.length+" карточек":(sectionImgs.length?sectionImgs.length+" визуальных позиций":"Справочный материал");
