@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T09:25:33.450Z",
+  "generatedAt": "2026-09-29T09:34:03.426Z",
   "sheets": 89,
   "sections": 88,
   "products": 698,
@@ -715,32 +715,7 @@
     }
   ],
   "suspiciousProducts": [],
-  "duplicateIds": [
-    {
-      "id": "рэнровет-10",
-      "count": 2
-    },
-    {
-      "id": "рэнрокол",
-      "count": 2
-    },
-    {
-      "id": "тилар",
-      "count": 2
-    },
-    {
-      "id": "тетрамизол-20",
-      "count": 2
-    },
-    {
-      "id": "тетрамизол-10",
-      "count": 2
-    },
-    {
-      "id": "спороветин-для-всех-видов-животных",
-      "count": 2
-    }
-  ],
+  "duplicateIds": [],
   "duplicateArticles": [
     {
       "article": "0202.012",
