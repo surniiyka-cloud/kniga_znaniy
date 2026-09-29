@@ -56,10 +56,19 @@ function splitPairBlocks(s){
       if(cur?.name)blocks.push(cur);
       cur={name:v,fields:[]};continue;
     }
-    if(!cur)cur={name:"",fields:[]};
+    if(!cur)cur={name:"",fields:[],advantages:[],practical:[]};
     if(l&&v)cur.fields.push([l,v]);
   }
   if(cur?.name)blocks.push(cur);
+  for(const b of blocks){
+    const special=b.fields.findIndex((r)=>/^(Преимущество|Особенность)$/i.test(r[0])&&/Практическое значение/i.test(r[1]));
+    if(special>=0){
+      const tail=b.fields.slice(special+1);
+      b.advantages=uniquePairs(tail);
+      b.practical=uniquePairs(tail);
+      b.fields=b.fields.slice(0,special);
+    }else{b.advantages=[];b.practical=[];}
+  }
   return blocks;
 }
 function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
@@ -67,7 +76,7 @@ function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   const id="catalog-"+safeSlug(sectionId+"-"+name+"-"+(state.sectionCatalog.get(sectionId)?.length||0));
   const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
   const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
-  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f};
+  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],practical:opts.practical||[],substances:opts.substances||[]};
   const ctxObj={chapter:x.chapter,section:x.section,product:p};
   if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
   state.sectionCatalog.get(sectionId).push(ctxObj);
@@ -80,21 +89,49 @@ function bestImage(sectionId,needle){
   const compact=(v)=>safeSlug(v.split("/").pop()).replace(/-/g,"");
   return imgs.find((x)=>{const z=compact(x);return n.split(/\d+/)[0]&&z.includes(n.replace(/^экспресстест/,"").slice(0,12));})||imgs[0]||"";
 }
+
+function uniquePairs(arr){
+  const seen=new Set(),out=[];
+  for(const r of arr||[]){const k=String(r?.[0]||"").trim()+"\u0000"+String(r?.[1]||"").trim();if(!r?.[0]||!r?.[1]||seen.has(k))continue;seen.add(k);out.push([String(r[0]).trim(),String(r[1]).trim()]);}
+  return out;
+}
+function parseRowBlock(rows,config={}){
+  const fields=[],advantages=[],practical=[],substances=[];let group="";
+  const pairs=config.fieldPairs||[[0,1]];
+  for(const r of rows||[]){
+    for(const [a,b] of pairs){
+      const l=String(r?.[a]||"").trim(),v=String(r?.[b]||"").trim();
+      if(!l||!v||l.length>110||/^(Характеристика|Наименование|Преимущество|Практическое значение|Антибиотик \/ вещество|ppb)/i.test(l))continue;
+      if(v==="—"||v==="-")continue;
+      fields.push([l,v]);
+    }
+    if(config.advCols){
+      const av=String(r?.[config.advCols[0]]||"").trim(),pv=String(r?.[config.advCols[1]]||"").trim();
+      if(av&&pv&&!/^(Преимущество|Практическое значение)$/i.test(av)&&av.length<140){
+        advantages.push([av,pv]); practical.push([av,pv]);
+      }
+    }
+    if(config.substanceCols){
+      const s=String(r?.[config.substanceCols[0]]||"").trim(),v=String(r?.[config.substanceCols[1]]||"").trim();
+      if(s&&!v&&!/^(Антибиотик \/ вещество|ppb)/i.test(s)){group=s;continue;}
+      if(s&&v&&!/^(Антибиотик \/ вещество|ppb)/i.test(s))substances.push({group,substance:s,ppb:v});
+    }
+    if(config.groupCol!=null){
+      const g=String(r?.[config.groupCol]||"").trim();
+      if(g&&!String(r?.[config.substanceCols?.[0]]||"").trim()&&!/^(Группа)$/i.test(g))group=g;
+    }
+  }
+  return {fields:uniquePairs(fields),advantages:uniquePairs(advantages),practical:uniquePairs(practical),substances};
+}
 function buildGarantCards(s){
   const rows=s.rows||[],starts=[];
   rows.forEach((r,i)=>{const a=String(r[0]||"").trim();if(i===0&&/GARANT BTSC PLUS/i.test(a))starts.push(i);else if(a==="Наименование"&&/GARANT/i.test(String(r[1]||"")))starts.push(i);});
   const img=state.assets.sectionImages?.[s.id]?.[0]||"";
   starts.forEach((st,idx)=>{
     const en=starts[idx+1]??rows.length, block=rows.slice(st,en);
-    let name=st===0?"Экспресс-тест GARANT BTSC PLUS":String(block[0]?.[1]||"").trim();
-    const fs=[];
-    if(st===0)fs.push(["Наименование",name]);
-    for(const r of block){
-      const l=String(r[0]||"").trim(),v=String(r[1]||"").trim();
-      if(!l||!v||l==="Наименование"||l.length>80)continue;
-      fs.push([l,v]);
-    }
-    registerCatalog(s.id,name,fs,img?[img]:[]);
+    const name=st===0?"Экспресс-тест GARANT BTSC PLUS":String(block[0]?.[1]||"").trim();
+    const parsed=parseRowBlock(block,{fieldPairs:[[0,1]],advCols:[2,3],substanceCols:[4,5]});
+    registerCatalog(s.id,name,parsed.fields,img?[img]:[],{advantages:parsed.advantages,practical:parsed.practical,substances:parsed.substances});
   });
 }
 function buildChapter2Catalog(){
@@ -102,15 +139,18 @@ function buildChapter2Catalog(){
   const ch=state.chapters.get("2");if(!ch)return;
   const sBy=(id)=>ch.sections.find((s)=>s.id===id);
 
-  // 2.1.1 — ровно четыре теста
-  const four=[
-    ["4SENSOR KIT 060","img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",[["Производитель","Unisensor, Бельгия"],["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","5 + 5 минут"],["Тип теста","Инкубаторный"],["Артикул","1002.04.008"],["Исследуемый материал","Молоко"]]],
-    ["4SENSOR SENSITIVE","img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",[["Производитель","Unisensor, Бельгия"],["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","5 + 5 минут"],["Тип теста","Инкубаторный"],["Исследуемый материал","Молоко"]]],
-    ["ANKAR MILK TEST 4","img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",[["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","5 + 5 минут"],["Тип теста","Инкубаторный"],["Исследуемый материал","Молоко"]]],
-    ["GARANT 4 ULTRA MILK","img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",[["Производитель","GARANT"],["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","3 + 7 минут"],["Тип теста","Безинкубаторный / инкубаторный"],["Исследуемый материал","Молоко"]]]
+  // 2.1.1 — ровно четыре теста, все данные раскладываем по вкладкам
+  const fourS=sBy("2.1.1"),fr=fourS?.rows||[];
+  const specs=[
+    {name:"4SENSOR KIT 060",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",a:1,b:35,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[7,8],groupCol:6},
+    {name:"4SENSOR SENSITIVE",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",a:37,b:84,fieldPairs:[[0,1],[2,3],[4,5]],advCols:[6,7],substanceCols:[8,9]},
+    {name:"ANKAR MILK TEST 4",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",a:86,b:131,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7]},
+    {name:"GARANT 4 ULTRA MILK",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",a:133,b:fr.length,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7]}
   ];
-  four.forEach((x)=>registerCatalog("2.1.1",x[0],x[2],[x[1]]));
-
+  specs.forEach((sp)=>{
+    const parsed=parseRowBlock(fr.slice(sp.a,sp.b),sp);
+    registerCatalog("2.1.1",sp.name,parsed.fields,[sp.img],{advantages:parsed.advantages,practical:parsed.practical,substances:parsed.substances});
+  });
   // 2.1.2 — визуальная линейка Unisensor
   const us=sBy("2.1.2");
   (state.assets.sectionImages?.["2.1.2"]||[]).forEach((im)=>registerCatalog("2.1.2",visualTitle(im),[["Категория","Экспресс-тест Unisensor"]],[im]));
@@ -128,7 +168,7 @@ function buildChapter2Catalog(){
 
   const readers=sBy("2.5");if(readers){
     const blocks=splitPairBlocks(readers);
-    blocks.forEach((b,i)=>registerCatalog("2.5",b.name,b.fields,i===0?["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png"]:[]));
+    blocks.forEach((b,i)=>registerCatalog("2.5",b.name,b.fields,i===0?["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png"]:[],{advantages:b.advantages,practical:b.practical}));
   }
 
   // объединённые разделы 2.6 и 2.7
@@ -147,7 +187,7 @@ function buildChapter2Catalog(){
     const s=sBy(id);if(!s)continue;
     const blocks=splitPairBlocks(s);
     if(blocks.length){
-      blocks.forEach((b,i)=>registerCatalog(id,b.name,b.fields,(state.assets.sectionImages?.[id]||[]).slice(i,i+1)));
+      blocks.forEach((b,i)=>registerCatalog(id,b.name,b.fields,(state.assets.sectionImages?.[id]||[]).slice(i,i+1),{advantages:b.advantages,practical:b.practical}));
     }else registerCatalog(id,s.title,cleanPairs(s.pairs),state.assets.sectionImages?.[id]||[]);
   }
 
@@ -408,10 +448,32 @@ function fields(p){
   if(p.detailFields?.length)return p.detailFields.filter((x)=>x?.[0]&&x?.[1]);
   return [["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose],["Характеристики / особенности",p.features],["Производитель",p.manufacturer],["Страна",p.country]].filter((x)=>x[1]);
 }
+
+function productTabs(p){
+  const tabs=[{id:"specs",label:"Характеристики",show:true}];
+  if(p.advantages?.length)tabs.push({id:"advantages",label:"Преимущества",show:true});
+  if(p.practical?.length)tabs.push({id:"practical",label:"Практическое значение",show:true});
+  if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb",show:true});
+  return tabs;
+}
+function pairCards(rows,cls="feature-tab-grid"){
+  return '<div class="'+cls+'">'+(rows||[]).map((r)=>'<article class="feature-tab-card"><strong>'+esc(r[0])+'</strong><p>'+esc(r[1])+'</p></article>').join("")+'</div>';
+}
+function substanceTable(rows){
+  let last="";
+  return '<div class="substance-table-wrap"><table class="substance-table"><thead><tr><th>Вещество</th><th>ppb (мкг/кг)</th></tr></thead><tbody>'+(rows||[]).map((r)=>{const head=r.group&&r.group!==last?(last=r.group,'<tr class="substance-group"><td colspan="2">'+esc(r.group)+'</td></tr>'):"";return head+'<tr><td>'+esc(r.substance)+'</td><td>'+esc(r.ppb)+'</td></tr>';}).join("")+'</tbody></table></div>';
+}
+function tabPanelHtml(p,id){
+  if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
+  if(id==="advantages")return pairCards(p.advantages||[]);
+  if(id==="practical")return pairCards(p.practical||[]);
+  if(id==="substances")return substanceTable(p.substances||[]);
+  return "";
+}
 function renderProduct(id){
   const x=ctx(id);if(!x)return notFound();const p=x.product,s=x.section,ch=x.chapter;recent.add(p.id);counters();title(p.name);
-  const imgs=state.assets.productImages?.[p.id]||[],im=imgs[0]||"";
-  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title,route:"section",id:s.id},{label:p.name}])+'<div class="product-page"><aside class="gallery-card"><div class="gallery-topline"><span>Фотографии товара</span><b>'+(imgs.length?imgs.length:"—")+'</b></div><div class="gallery-main '+(im?"":"product-image placeholder")+'" '+(im?'data-lightbox-product="'+esc(p.id)+'" data-lightbox-index="0"':"")+'>'+(im?'<img src="./'+esc(im)+'" alt="'+esc(p.name)+'">':'<div class="gallery-empty"><img src="./assets/brand/favicon.svg" alt=""><strong>Фото пока не привязано</strong><span>Карточка уже работает; изображение появится после сопоставления в диагностике.</span></div>')+'</div>'+(imgs.length>1?'<div class="gallery-thumbs">'+imgs.map((v,i)=>'<button class="gallery-thumb '+(i===0?"active":"")+'" data-gallery-product="'+esc(p.id)+'" data-gallery-index="'+i+'"><img src="./'+esc(v)+'" alt=""></button>').join("")+'</div>':"")+'</aside><article class="info-card"><span class="eyebrow">'+esc(s.id)+' · '+esc(s.title)+'</span><h1 class="product-title">'+esc(p.name)+'</h1><div class="product-meta">'+(article(p)?'<span class="badge article">Арт. '+esc(article(p))+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div>'+(p.purpose?'<p class="product-lead">'+esc(p.purpose)+'</p>':"")+'<div class="quick-actions"><button class="btn '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'">★ '+(favorites.has(p.id)?"В избранном":"В избранное")+'</button><button class="btn '+(comparison.has(p.id)?"active":"")+'" data-compare="'+esc(p.id)+'">⇄ '+(comparison.has(p.id)?"Добавлено":"Сравнить")+'</button><button class="btn ghost" data-copy>⌁ Скопировать ссылку</button></div><div class="tabs"><button class="tab active">Карточка товара</button></div><div class="tab-panel"><dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl></div></article></div>';
+  const imgs=state.assets.productImages?.[p.id]||[],im=imgs[0]||"",tabs=productTabs(p);
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title,route:"section",id:s.id},{label:p.name}])+'<div class="product-page"><aside class="gallery-card"><div class="gallery-topline"><span>Фотографии товара</span><b>'+(imgs.length?imgs.length:"—")+'</b></div><div class="gallery-main '+(im?"":"product-image placeholder")+'" '+(im?'data-lightbox-product="'+esc(p.id)+'" data-lightbox-index="0"':"")+'>'+(im?'<img src="./'+esc(im)+'" alt="'+esc(p.name)+'">':'<div class="gallery-empty"><img src="./assets/brand/favicon.svg" alt=""><strong>Фото пока не привязано</strong><span>Карточка уже работает; изображение появится после сопоставления в диагностике.</span></div>')+'</div>'+(imgs.length>1?'<div class="gallery-thumbs">'+imgs.map((v,i)=>'<button class="gallery-thumb '+(i===0?"active":"")+'" data-gallery-product="'+esc(p.id)+'" data-gallery-index="'+i+'"><img src="./'+esc(v)+'" alt=""></button>').join("")+'</div>':"")+'</aside><article class="info-card"><span class="eyebrow">'+esc(s.id)+' · '+esc(s.title)+'</span><h1 class="product-title">'+esc(p.name)+'</h1><div class="product-meta">'+(article(p)?'<span class="badge article">Арт. '+esc(article(p))+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div>'+(p.purpose?'<p class="product-lead">'+esc(p.purpose)+'</p>':"")+'<div class="quick-actions"><button class="btn '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'">★ '+(favorites.has(p.id)?"В избранном":"В избранное")+'</button><button class="btn '+(comparison.has(p.id)?"active":"")+'" data-compare="'+esc(p.id)+'">⇄ '+(comparison.has(p.id)?"Добавлено":"Сравнить")+'</button><button class="btn ghost" data-copy>⌁ Скопировать ссылку</button></div><div class="tabs product-tabs">'+tabs.map((t,i)=>'<button class="tab '+(i===0?"active":"")+'" data-product-tab="'+esc(t.id)+'">'+esc(t.label)+'</button>').join("")+'</div><div class="product-tab-panels">'+tabs.map((t,i)=>'<div class="tab-panel" data-product-panel="'+esc(t.id)+'" '+(i===0?"":"hidden")+'>'+tabPanelHtml(p,t.id)+'</div>').join("")+'</div></article></div>';
 }
 function renderFavorites(){
   const items=favorites.get().map(ctx).filter(Boolean);title("Избранное");
@@ -485,6 +547,7 @@ function bind(){
     if(e.target.closest("[data-clear-favorites]")){favorites.clear();render();return;}
     if(e.target.closest("[data-clear-compare]")){comparison.clear();render();return;}
     if(e.target.closest("[data-copy]")){navigator.clipboard?.writeText(location.href).then(()=>toast("Ссылка скопирована"));return;}
+    const pt=e.target.closest("[data-product-tab]");if(pt){const id=pt.dataset.productTab;document.querySelectorAll("[data-product-tab]").forEach((x)=>x.classList.toggle("active",x===pt));document.querySelectorAll("[data-product-panel]").forEach((x)=>x.hidden=x.dataset.productPanel!==id);return;}
     const g=e.target.closest("[data-gallery-product]");if(g){const x=ctx(g.dataset.galleryProduct),imgs=x?state.assets.productImages?.[x.product.id]||[]:[],i=Number(g.dataset.galleryIndex||0),m=q(".gallery-main");if(m&&imgs[i]){m.innerHTML='<img src="./'+esc(imgs[i])+'" alt="'+esc(x.product.name)+'">';m.dataset.lightboxProduct=x.product.id;m.dataset.lightboxIndex=String(i);}document.querySelectorAll(".gallery-thumb").forEach((t)=>t.classList.toggle("active",t===g));return;}
     const direct=e.target.closest("[data-lightbox-src]");
     if(direct){showLightbox([direct.dataset.lightboxSrc],0,direct.querySelector("img")?.alt||"");return;}
