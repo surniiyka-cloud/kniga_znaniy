@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-29T10:20:05.306Z",
+  "generatedAt": "2026-09-29T10:20:22.736Z",
   "imagesTotal": 338,
-  "imagesMatched": 268,
+  "imagesMatched": 271,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -45,9 +45,6 @@
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-chernoe.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-oranzhevoe.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-3-zuba.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-4-zuba.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-6-zubov.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-galoshi-kerbl.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-halat-protsedurnyy.png",
@@ -861,84 +858,6 @@
       "candidates": []
     },
     {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-3-zuba.png",
-      "candidates": [
-        {
-          "id": "8.2-0403-072-вилы-для-соломы",
-          "name": "Вилы для соломы",
-          "article": "0403.072",
-          "section": "8.2",
-          "score": 0.5
-        },
-        {
-          "id": "8.2-0403-074-вилы-навозные",
-          "name": "Вилы навозные",
-          "article": "0403.074",
-          "section": "8.2",
-          "score": 0.5
-        },
-        {
-          "id": "8.2-0403-077-вилы-для-силоса",
-          "name": "Вилы для силоса",
-          "article": "0403.077",
-          "section": "8.2",
-          "score": 0.5
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-4-zuba.png",
-      "candidates": [
-        {
-          "id": "8.2-0403-072-вилы-для-соломы",
-          "name": "Вилы для соломы",
-          "article": "0403.072",
-          "section": "8.2",
-          "score": 0.5
-        },
-        {
-          "id": "8.2-0403-074-вилы-навозные",
-          "name": "Вилы навозные",
-          "article": "0403.074",
-          "section": "8.2",
-          "score": 0.5
-        },
-        {
-          "id": "8.2-0403-077-вилы-для-силоса",
-          "name": "Вилы для силоса",
-          "article": "0403.077",
-          "section": "8.2",
-          "score": 0.5
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-6-zubov.png",
-      "candidates": [
-        {
-          "id": "8.2-0403-072-вилы-для-соломы",
-          "name": "Вилы для соломы",
-          "article": "0403.072",
-          "section": "8.2",
-          "score": 0.5
-        },
-        {
-          "id": "8.2-0403-074-вилы-навозные",
-          "name": "Вилы навозные",
-          "article": "0403.074",
-          "section": "8.2",
-          "score": 0.5
-        },
-        {
-          "id": "8.2-0403-077-вилы-для-силоса",
-          "name": "Вилы для силоса",
-          "article": "0403.077",
-          "section": "8.2",
-          "score": 0.5
-        }
-      ]
-    },
-    {
       "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png",
       "candidates": [
         {
@@ -1211,7 +1130,7 @@
     }
   ],
   "productsTotal": 776,
-  "productsWithImages": 119,
+  "productsWithImages": 122,
   "productsWithoutImages": [
     {
       "id": "2.11-10001311-agrastrip-rur-hs-bulk-grain",
@@ -4290,24 +4209,6 @@
       "section": "8.1",
       "name": "Щётка ANKAR для молочных шлангов",
       "article": "0404.038"
-    },
-    {
-      "id": "8.2-0403-072-вилы-для-соломы",
-      "section": "8.2",
-      "name": "Вилы для соломы",
-      "article": "0403.072"
-    },
-    {
-      "id": "8.2-0403-074-вилы-навозные",
-      "section": "8.2",
-      "name": "Вилы навозные",
-      "article": "0403.074"
-    },
-    {
-      "id": "8.2-0403-077-вилы-для-силоса",
-      "section": "8.2",
-      "name": "Вилы для силоса",
-      "article": "0403.077"
     },
     {
       "id": "8.2-0403-087-лопата-ankar-для-зерна-и-снега-36-см",
