@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T09:54:40.451Z",
+  "generatedAt": "2026-09-29T10:01:54.702Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -8,7 +8,8 @@
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-foam.png"
     ],
     "3.4-0301-030-ankar-before-oxy-foam": [
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy-foam.png"
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy-foam.png",
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png"
     ],
     "3.4-0301-005-ankar-before-плюс": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-plyus.png"
@@ -27,6 +28,9 @@
     ],
     "3.5-0301-032-ankar-profi-aloe": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-aloe.png"
+    ],
+    "3.5-0301-036-ankar-profi-lavander": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-lavender.png"
     ],
     "3.5-0301-031-ankar-profi-panthenol": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-panthenol.png"
@@ -47,6 +51,7 @@
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-ankar.png"
     ],
     "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-kerbl.png",
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-premium-kerbl.png"
     ],
@@ -69,6 +74,8 @@
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-svecha.png"
     ],
     "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-kerbl.png",
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-kerbl.png"
     ],
     "3.2-0303-017-стаканчик-для-сдаивания-продольный": [
@@ -115,6 +122,12 @@
     "8.3-tian-superacid-hw-foam": [
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superacid-foam.png"
     ],
+    "8.3-tian-superalkali-hw-foam-cl": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-foam-cl.png"
+    ],
+    "8.3-tian-superalkali-hw-foam-no-cl": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-foam-no-cl.png"
+    ],
     "8.3-tian-superalkali-hw-no-cl": [
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-hw-no-cl.png"
     ],
@@ -141,6 +154,9 @@
     ],
     "9.1-аккумуляторный-генератор-холодного-тумана-jp-s20": [
       "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png"
+    ],
+    "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png"
     ],
     "9.1-мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик": [
       "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png"
@@ -248,6 +264,7 @@
       "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4268-analizator-glyukozy.png"
     ],
     "5.6-0203-055-антибрык-anti-kick-сталь": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
       "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-stal.png"
     ],
     "5.6-погонщик-скота-ankar-shock-pro-2500": [
@@ -276,6 +293,9 @@
     "5.6-0203-011-щипцы-носовые-для-быков-harms-с-замком-из-нержавеющей-стали": [
       "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-schiptsy-nosovye-dlya-bykov-harms-s-zamkom-iz-nerzhaveyuschey-stali-118.png"
     ],
+    "5.2-0208-001-средство-для-обработки-копыт-ankar-hoof": [
+      "img/photos/24-uhod-za-kopytami/24-ankar-hoof-sredstvo-dlya-obrabotki-kopyt-kanistra-20-kg.png"
+    ],
     "5.2-0208-016-деревянная-колодка-130-56-мм": [
       "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-130-mm-xl-10-sht-v-upakovke-16105-10.png",
       "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-klinovidnaya.png"
@@ -290,8 +310,15 @@
     "5.2-0208-059-копытный-рашпиль": [
       "img/photos/24-uhod-za-kopytami/24-kopytnyy-rashpil-dick-200-x-45-x-5-mm.png"
     ],
+    "5.2-0208-051-набор-ножей": [
+      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png"
+    ],
     "5.2-0208-020-набор-по-уходу-за-копытами-technobase-8000": [
       "img/photos/24-uhod-za-kopytami/24-nabor-po-uhodu-za-kopytami-technobase-8000.png"
+    ],
+    "5.2-16801-16803-16805-ножи-для-копыт-profi": [
+      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
+      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png"
     ],
     "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий": [
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-uzkiy-16801.png"
@@ -303,14 +330,23 @@
       "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-105mm-16358.png",
       "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-125mm-16360.png"
     ],
+    "5.2-0208-060-щипцы-боковые-для-обработки-копыт": [
+      "img/photos/24-uhod-za-kopytami/24-schiptsy-bokovye-dlya-obrabotki-kopyt-60-sm.png"
+    ],
     "5.2-0208-175-щипцы-для-обработки-копыт": [
       "img/photos/24-uhod-za-kopytami/24-schiptsy-dlya-obrabotki-kopyt.png"
     ],
     "5.2-0208-061-щипцы-для-ветобработки-копыт-у-коров": [
       "img/photos/24-uhod-za-kopytami/24-schiptsy-dlya-vetobrabotki-kopyt-u-korov-163.png"
     ],
+    "5.2-0208-048-стандартный-диск-для-обработки-копыт-super": [
+      "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png"
+    ],
     "5.2-0208-039-скотч-для-копыт-черный": [
       "img/photos/24-uhod-za-kopytami/24-skotch-dlya-kopyt-chernyy-dlina-50-m-shirina-50-mm.png"
+    ],
+    "5.2-0208-137-средство-для-обработки-копыт-tian-hoof": [
+      "img/photos/24-uhod-za-kopytami/24-sredstvo-gigienicheskoe-dlya-obrabotki-kopyt-tian-noof.png"
     ],
     "5.2-0208-118-точильный-камень": [
       "img/photos/24-uhod-za-kopytami/24-tochilnyy-kamen.png"
@@ -449,9 +485,7 @@
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-filtra.png"
     ],
     "8.3": [
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kompomol-dz-chas-v.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-foam-cl.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-foam-no-cl.png"
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kompomol-dz-chas-v.png"
     ],
     "9.1": [
       "img/photos/18-dezinfektsiya-generatory-tumana/18-bf-150.png",
@@ -459,7 +493,6 @@
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-dvs.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-elektro.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-750.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-sf-720.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-strim-a.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-th-250-h400.png",
@@ -484,7 +517,6 @@
     ],
     "5.2": [
       "img/photos/24-uhod-za-kopytami/24-almaznoe-tochilo-dick-16169.png",
-      "img/photos/24-uhod-za-kopytami/24-ankar-hoof-sredstvo-dlya-obrabotki-kopyt-kanistra-20-kg.png",
       "img/photos/24-uhod-za-kopytami/24-bandazh-dlya-kopyt-samoklyaschiysya-10h450sm-ankar-bandazh-dlya-kopyt-samoklyaschiysya-7-5h450sm-ankar.png",
       "img/photos/24-uhod-za-kopytami/24-bashmak-dlya-kopyta-shoof.png",
       "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-112-mm-10-sht-v-upakovke-16104-10.png",
@@ -497,7 +529,6 @@
       "img/photos/24-uhod-za-kopytami/24-kartridzh-technovit-2cb-25ml.png",
       "img/photos/24-uhod-za-kopytami/24-kopytnyy-nozh-dvoynoy-uzkiy.png",
       "img/photos/24-uhod-za-kopytami/24-nabor-dlya-povrezhdennyh-kopyt-shoof.png",
-      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png",
       "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png",
       "img/photos/24-uhod-za-kopytami/24-nachalnyy-komplekt-technovit-2-bond-s-dozirovochnym-pistoletom-10-primeneniy.png",
       "img/photos/24-uhod-za-kopytami/24-nakonechniki-smesiteli-12-shtuk-dlya-technovit-2cb.png",
@@ -508,9 +539,7 @@
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-aesculap-pravostoronniy-uzkiy-vc320r.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-pravostoronniy-uzkiy-16163.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-dvuhstoronniy-sredniy-16805.png",
-      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-odnostoronniy-levyy-uzkiy-16803-klinok-s-odnim-lezviem-sleva-uzkiy.png",
-      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-superprofi-odnostoronniy-levyy-uzkiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-superprofi-odnostoronniy-pravyy-uzkiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dvuhstoronniy-aesculap-shirokiy-vc317v.png",
@@ -524,10 +553,7 @@
       "img/photos/24-uhod-za-kopytami/24-pasta-ortopedicheskaya-zhivino-banka-500g.png",
       "img/photos/24-uhod-za-kopytami/24-povyazka-degtevaya-kromberg-dlina-25-m-shirina-45-mm-1638.png",
       "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png",
-      "img/photos/24-uhod-za-kopytami/24-schiptsy-bokovye-dlya-obrabotki-kopyt-60-sm.png",
-      "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png",
       "img/photos/24-uhod-za-kopytami/24-sredstvo-dlya-uhoda-za-kopytami-tar-paste.png",
-      "img/photos/24-uhod-za-kopytami/24-sredstvo-gigienicheskoe-dlya-obrabotki-kopyt-tian-noof.png",
       "img/photos/24-uhod-za-kopytami/24-stalnaya-obsechka-dick.png",
       "img/photos/24-uhod-za-kopytami/24-zaschita-dlya-kopyt-korov-loshadey.png"
     ]

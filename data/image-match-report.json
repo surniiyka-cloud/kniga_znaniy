@@ -1,16 +1,13 @@
 {
-  "generatedAt": "2026-09-29T09:54:40.451Z",
+  "generatedAt": "2026-09-29T10:01:54.702Z",
   "imagesTotal": 338,
-  "imagesMatched": 258,
+  "imagesMatched": 264,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
-    "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
-    "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-lavender.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-bidon-8l.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-instrument-chistki.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-kateter-8-5.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-plastik.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-zhelezo.png",
@@ -18,11 +15,9 @@
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-skameyka.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovyy-kolokolchik.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-nl.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ambic.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ankar.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-kerbl.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-ankar.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-shchetka.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-vts-klapan.png",
@@ -63,7 +58,6 @@
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-kasper-belyy.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-plash-317.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-shapochka-sharlotta.png",
-    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-flexcow-110.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-330-vts.png",
@@ -94,86 +88,6 @@
       "candidates": []
     },
     {
-      "image": "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
-      "candidates": [
-        {
-          "id": "3.4-0301-030-ankar-before-oxy-foam",
-          "name": "ANKAR BEFORE OXY FOAM",
-          "article": "0301.030",
-          "section": "3.4",
-          "score": 0.667
-        },
-        {
-          "id": "3.4-0301-001-ankar-before",
-          "name": "ANKAR BEFORE",
-          "article": "0301.001",
-          "section": "3.4",
-          "score": 0.5
-        },
-        {
-          "id": "3.4-0301-003-ankar-before-eco",
-          "name": "ANKAR BEFORE ECO",
-          "article": "0301.003",
-          "section": "3.4",
-          "score": 0.5
-        },
-        {
-          "id": "3.4-0301-005-ankar-before-плюс",
-          "name": "ANKAR BEFORE ПЛЮС",
-          "article": "0301.005",
-          "section": "3.4",
-          "score": 0.5
-        },
-        {
-          "id": "3.4-0301-034-ankar-before-foam",
-          "name": "ANKAR BEFORE FOAM",
-          "article": "0301.034",
-          "section": "3.4",
-          "score": 0.5
-        }
-      ]
-    },
-    {
-      "image": "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-lavender.png",
-      "candidates": [
-        {
-          "id": "3.5-0301-031-ankar-profi-panthenol",
-          "name": "ANKAR PROFI PANTHENOL",
-          "article": "0301.031",
-          "section": "3.5",
-          "score": 0.5
-        },
-        {
-          "id": "3.5-0301-032-ankar-profi-aloe",
-          "name": "ANKAR PROFI ALOE",
-          "article": "0301.032",
-          "section": "3.5",
-          "score": 0.5
-        },
-        {
-          "id": "3.5-0301-036-ankar-profi-lavander",
-          "name": "ANKAR PROFI LAVANDER",
-          "article": "0301.036",
-          "section": "3.5",
-          "score": 0.5
-        },
-        {
-          "id": "3.5-0301-010-ankar-profi-25",
-          "name": "ANKAR PROFI 25",
-          "article": "0301.010",
-          "section": "3.5",
-          "score": 0.5
-        },
-        {
-          "id": "3.5-0301-010-ankar-profi-50",
-          "name": "ANKAR PROFI 50",
-          "article": "0301.010*",
-          "section": "3.5",
-          "score": 0.5
-        }
-      ]
-    },
-    {
       "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-bidon-8l.png",
       "candidates": []
     },
@@ -184,25 +98,6 @@
     {
       "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-kateter-8-5.png",
       "candidates": []
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
-      "candidates": [
-        {
-          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
-          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
-          "article": "0303.014",
-          "section": "3.2",
-          "score": 0.429
-        },
-        {
-          "id": "3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar",
-          "name": "Стаканчик для дезинфекции сосков NON-RETURN ANKAR®",
-          "article": "0303.009",
-          "section": "3.2",
-          "score": 0.4
-        }
-      ]
     },
     {
       "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png",
@@ -328,46 +223,6 @@
       ]
     },
     {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
-      "candidates": [
-        {
-          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
-          "name": "Стаканчик для пенного средства PREMIUM KERBL",
-          "article": "0303.007",
-          "section": "3.2",
-          "score": 0.4
-        },
-        {
-          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
-          "name": "Стаканчик для сдаивания продольный",
-          "article": "0303.017",
-          "section": "3.2",
-          "score": 0.333
-        },
-        {
-          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
-          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
-          "article": "0303.014",
-          "section": "3.2",
-          "score": 0.286
-        },
-        {
-          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
-          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
-          "article": "0303.005",
-          "section": "3.2",
-          "score": 0.25
-        },
-        {
-          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
-          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
-          "article": "0303.004",
-          "section": "3.2",
-          "score": 0.25
-        }
-      ]
-    },
-    {
       "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-nl.png",
       "candidates": [
         {
@@ -461,46 +316,6 @@
           "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
           "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
           "article": "0303.012",
-          "section": "3.2",
-          "score": 0.25
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-kerbl.png",
-      "candidates": [
-        {
-          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
-          "name": "Стаканчик для пенного средства PREMIUM KERBL",
-          "article": "0303.007",
-          "section": "3.2",
-          "score": 0.4
-        },
-        {
-          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
-          "name": "Стаканчик для сдаивания продольный",
-          "article": "0303.017",
-          "section": "3.2",
-          "score": 0.333
-        },
-        {
-          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
-          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
-          "article": "0303.014",
-          "section": "3.2",
-          "score": 0.286
-        },
-        {
-          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
-          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
-          "article": "0303.005",
-          "section": "3.2",
-          "score": 0.25
-        },
-        {
-          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
-          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
-          "article": "0303.004",
           "section": "3.2",
           "score": 0.25
         }
@@ -1228,25 +1043,6 @@
       "candidates": []
     },
     {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
-      "candidates": [
-        {
-          "id": "5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian",
-          "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
-          "article": "0203.001",
-          "section": "5.6",
-          "score": 0.6
-        },
-        {
-          "id": "5.6-0203-055-антибрык-anti-kick-сталь",
-          "name": "Антибрык ANTI-KICK, сталь",
-          "article": "0203.055",
-          "section": "5.6",
-          "score": 0.6
-        }
-      ]
-    },
-    {
       "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
       "candidates": [
         {
@@ -1451,7 +1247,7 @@
     }
   ],
   "productsTotal": 776,
-  "productsWithImages": 106,
+  "productsWithImages": 116,
   "productsWithoutImages": [
     {
       "id": "2.11-10001311-agrastrip-rur-hs-bulk-grain",
@@ -1548,12 +1344,6 @@
       "section": "3.4",
       "name": "TIAN OXY",
       "article": "0301.025"
-    },
-    {
-      "id": "3.5-0301-036-ankar-profi-lavander",
-      "section": "3.5",
-      "name": "ANKAR PROFI LAVANDER",
-      "article": "0301.036"
     },
     {
       "id": "3.5-0301-010-ankar-profi-50",
@@ -3242,28 +3032,10 @@
       "article": "-"
     },
     {
-      "id": "5.2-0208-051-набор-ножей",
-      "section": "5.2",
-      "name": "Набор ножей",
-      "article": "0208.051"
-    },
-    {
-      "id": "5.2-0208-048-стандартный-диск-для-обработки-копыт-super",
-      "section": "5.2",
-      "name": "Стандартный диск для обработки копыт SUPER",
-      "article": "0208.048"
-    },
-    {
       "id": "5.2-0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей",
       "section": "5.2",
       "name": "Дисковый нож для обработки копыт BTC, 6 ножей",
       "article": "0208.046"
-    },
-    {
-      "id": "5.2-0208-060-щипцы-боковые-для-обработки-копыт",
-      "section": "5.2",
-      "name": "Щипцы боковые для обработки копыт",
-      "article": "0208.060"
     },
     {
       "id": "5.2-0208-067-клещи-копытные-knipex",
@@ -3302,12 +3074,6 @@
       "article": "VC 320R; VC 321R; VC 315V; VC 316V; VC 317V; VC 302V; VC 307V"
     },
     {
-      "id": "5.2-16801-16803-16805-ножи-для-копыт-profi",
-      "section": "5.2",
-      "name": "Ножи для копыт PROFI",
-      "article": "16801; 16803; 16805"
-    },
-    {
       "id": "5.2-8312-16805-ножи-для-копыт",
       "section": "5.2",
       "name": "Ножи для копыт",
@@ -3330,18 +3096,6 @@
       "section": "5.2",
       "name": "Повязка дегтевая для копыт 25 × 45 мм",
       "article": "0208.022"
-    },
-    {
-      "id": "5.2-0208-001-средство-для-обработки-копыт-ankar-hoof",
-      "section": "5.2",
-      "name": "Средство для обработки копыт ANKAR HOOF",
-      "article": "0208.001"
-    },
-    {
-      "id": "5.2-0208-137-средство-для-обработки-копыт-tian-hoof",
-      "section": "5.2",
-      "name": "Средство для обработки копыт TIAN HOOF",
-      "article": "0208.137"
     },
     {
       "id": "5.3-0207-010-красная-0207-011-зеленая-0207-012-синяя-краска-аэрозоль-ankar",
@@ -4742,18 +4496,6 @@
       "article": "-"
     },
     {
-      "id": "8.3-tian-superalkali-hw-foam-no-cl",
-      "section": "8.3",
-      "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
-      "article": "-"
-    },
-    {
-      "id": "8.3-tian-superalkali-hw-foam-cl",
-      "section": "8.3",
-      "name": "TIAN-SUPERALKALI-HW FOAM CL",
-      "article": "-"
-    },
-    {
       "id": "9.1-генератор-холодного-тумана-storm-5-литров",
       "section": "9.1",
       "name": "Генератор холодного тумана \"Storm\" 5 литров",
@@ -4895,12 +4637,6 @@
       "id": "9.1-генератор-горячего-тумана-blackfog-bd-35a",
       "section": "9.1",
       "name": "Генератор горячего тумана BlackFog BD - 35A",
-      "article": "—"
-    },
-    {
-      "id": "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик",
-      "section": "9.1",
-      "name": "Мини генератор тумана Minifog HYT-2 газовый баллончик",
       "article": "—"
     },
     {
@@ -5476,23 +5212,6 @@
   ],
   "ambiguous": [
     {
-      "image": "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
-      "candidates": [
-        {
-          "id": "3.4-0301-030-ankar-before-oxy-foam",
-          "name": "ANKAR BEFORE OXY FOAM",
-          "section": "3.4",
-          "score": 98
-        },
-        {
-          "id": "3.4-0301-001-ankar-before",
-          "name": "ANKAR BEFORE",
-          "section": "3.4",
-          "score": 98
-        }
-      ]
-    },
-    {
       "image": "img/photos/15-bumaga-polotentsa-salfetki/15-bumaga-dlya-vymeni-6-rulonov.png",
       "candidates": [
         {
@@ -5541,91 +5260,6 @@
           "name": "Бумага для вымени коров ТИАН 812",
           "section": "3.6",
           "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-foam-cl.png",
-      "candidates": [
-        {
-          "id": "8.3-tian-superalkali-hw-foam-no-cl",
-          "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
-          "section": "8.3",
-          "score": 98
-        },
-        {
-          "id": "8.3-tian-superalkali-hw-foam-cl",
-          "name": "TIAN-SUPERALKALI-HW FOAM CL",
-          "section": "8.3",
-          "score": 98
-        }
-      ]
-    },
-    {
-      "image": "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-foam-no-cl.png",
-      "candidates": [
-        {
-          "id": "8.3-tian-superalkali-hw-foam-no-cl",
-          "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
-          "section": "8.3",
-          "score": 98
-        },
-        {
-          "id": "8.3-tian-superalkali-hw-foam-cl",
-          "name": "TIAN-SUPERALKALI-HW FOAM CL",
-          "section": "8.3",
-          "score": 98
-        }
-      ]
-    },
-    {
-      "image": "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png",
-      "candidates": [
-        {
-          "id": "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик",
-          "name": "Мини генератор тумана Minifog HYT-2 газовый баллончик",
-          "section": "9.1",
-          "score": 98
-        },
-        {
-          "id": "9.1-мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик",
-          "name": "Мини генератор тумана Minifog HYT-2W газовый баллончик",
-          "section": "9.1",
-          "score": 98
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
-      "candidates": [
-        {
-          "id": "5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian",
-          "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
-          "section": "5.6",
-          "score": 86
-        },
-        {
-          "id": "5.6-0203-055-антибрык-anti-kick-сталь",
-          "name": "Антибрык ANTI-KICK, сталь",
-          "section": "5.6",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-ankar-hoof-sredstvo-dlya-obrabotki-kopyt-kanistra-20-kg.png",
-      "candidates": [
-        {
-          "id": "5.2-0208-001-средство-для-обработки-копыт-ankar-hoof",
-          "name": "Средство для обработки копыт ANKAR HOOF",
-          "section": "5.2",
-          "score": 98
-        },
-        {
-          "id": "5.2-0208-137-средство-для-обработки-копыт-tian-hoof",
-          "name": "Средство для обработки копыт TIAN HOOF",
-          "section": "5.2",
-          "score": 98
         }
       ]
     },
@@ -5681,23 +5315,6 @@
       ]
     },
     {
-      "image": "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png",
-      "candidates": [
-        {
-          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
-          "name": "Диск для обработки копыт",
-          "section": "5.2",
-          "score": 104
-        },
-        {
-          "id": "5.2-0208-051-набор-ножей",
-          "name": "Набор ножей",
-          "section": "5.2",
-          "score": 98
-        }
-      ]
-    },
-    {
       "image": "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png",
       "candidates": [
         {
@@ -5720,40 +5337,6 @@
         {
           "id": "5.2-0208-167-0208-168-0208-166-нож-для-копыт-узкий",
           "name": "Нож для копыт узкий",
-          "section": "5.2",
-          "score": 86
-        },
-        {
-          "id": "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
-          "name": "Нож для копыт PROFI узкий",
-          "section": "5.2",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
-      "candidates": [
-        {
-          "id": "5.2-16801-16803-16805-ножи-для-копыт-profi",
-          "name": "Ножи для копыт PROFI",
-          "section": "5.2",
-          "score": 86
-        },
-        {
-          "id": "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
-          "name": "Нож для копыт PROFI узкий",
-          "section": "5.2",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
-      "candidates": [
-        {
-          "id": "5.2-16801-16803-16805-ножи-для-копыт-profi",
-          "name": "Ножи для копыт PROFI",
           "section": "5.2",
           "score": 86
         },
@@ -5820,57 +5403,6 @@
           "name": "Ванна для обработки копыт",
           "section": "5.2",
           "score": 92
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-schiptsy-bokovye-dlya-obrabotki-kopyt-60-sm.png",
-      "candidates": [
-        {
-          "id": "5.2-0208-060-щипцы-боковые-для-обработки-копыт",
-          "name": "Щипцы боковые для обработки копыт",
-          "section": "5.2",
-          "score": 98
-        },
-        {
-          "id": "5.2-0208-175-щипцы-для-обработки-копыт",
-          "name": "Щипцы для обработки копыт",
-          "section": "5.2",
-          "score": 92
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png",
-      "candidates": [
-        {
-          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
-          "name": "Диск для обработки копыт",
-          "section": "5.2",
-          "score": 98
-        },
-        {
-          "id": "5.2-0208-048-стандартный-диск-для-обработки-копыт-super",
-          "name": "Стандартный диск для обработки копыт SUPER",
-          "section": "5.2",
-          "score": 92
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-sredstvo-gigienicheskoe-dlya-obrabotki-kopyt-tian-noof.png",
-      "candidates": [
-        {
-          "id": "5.2-0208-001-средство-для-обработки-копыт-ankar-hoof",
-          "name": "Средство для обработки копыт ANKAR HOOF",
-          "section": "5.2",
-          "score": 86
-        },
-        {
-          "id": "5.2-0208-137-средство-для-обработки-копыт-tian-hoof",
-          "name": "Средство для обработки копыт TIAN HOOF",
-          "section": "5.2",
-          "score": 86
         }
       ]
     }
