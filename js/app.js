@@ -5,7 +5,7 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
-const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
+const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -52,21 +52,83 @@ function grouped(items){
   items.forEach((x)=>{const g=x.product.group||"";if(g&&g!==last){out+='<h3 class="group-title">'+esc(g)+'</h3>';last=g;}out+=card(x);});
   return out;
 }
-function tables(s){
+const IMAGE_LABELS={
+  "02-dipsensor":"Dipsensor",
+  "02-ekspress-test-4sensor-sensitive":"4Sensor Sensitive",
+  "02-ekspress-test-4sensor":"4Sensor",
+  "02-ekspress-test-ankar-milk-test":"ANKAR Milk Test",
+  "02-ekspress-test-garant-4-utra-milk":"GARANT 4 Ultra Milk",
+  "02-test-sistemy-delvotest-sp-nt":"Delvotest SP-NT",
+  "02-test-sistemy-delvotest-t":"Delvotest T",
+  "03-aflasensor":"Aflasensor",
+  "03-aminosensor":"Aminosensor",
+  "03-cowsensor":"Cowsensor",
+  "03-milksensor-ltse":"Milksensor LTSE",
+  "03-quinosensor":"Quinosensor",
+  "03-sulfasensor":"Sulfasensor",
+  "03-tylosensor":"Tylosensor",
+  "03-garant":"GARANT",
+  "05-sistema-extenso":"Система EXTENSO",
+  "12-ankar-100":"ANKAR 100",
+  "12-delvotest":"Инкубатор Delvotest",
+  "12-heatsensor-duo":"HeatSensor DUO",
+  "12-heatsensor-hs-00647":"HeatSensor HS-00647",
+  "12-heatsensor-octo":"HeatSensor OCTO",
+  "12-tias":"Считывающее устройство TIAS",
+  "08-ekomilk-120-6-parametrov":"Ekomilk 120 — 6 параметров",
+  "08-ekomilk-120-9-parametrov":"Ekomilk 120 — 9 параметров",
+  "08-ekomilk-total-bez-printera":"Ekomilk TOTAL — без принтера",
+  "08-ekomilk-total-s-printerom":"Ekomilk TOTAL — с принтером",
+  "08-ekomilk-horizon":"Ekomilk HORIZON",
+  "09-ekomilk-horizon":"Ekomilk HORIZON",
+  "08-tias-agro":"TIAS AGRO",
+  "08-tias-agro-plus":"TIAS AGRO PLUS",
+  "08-tias-full-check-plus":"TIAS FULLCHECK PLUS",
+  "08-tias-full-check":"TIAS FULLCHECK",
+  "09-ekomilk-scan":"Ekomilk SCAN",
+  "09-tias-somcell":"TIAS SomCell",
+  "06-test-plastiny-kangaroosci":"Тест-пластины KangarooSci",
+  "07-turbidofluorimetr-biotf":"Турбидофлуориметр БиоТФ",
+  "10-lyuminometr":"Люминометр"
+};
+function visualTitle(path){
+  const base=String(path||"").split("/").pop().replace(/\.[^.]+$/,"");
+  if(IMAGE_LABELS[base])return IMAGE_LABELS[base];
+  return base.replace(/^\d+-/,"").replace(/-/g," ").replace(/\b\w/g,(m)=>m.toUpperCase());
+}
+function visualCatalog(s,images){
+  if(!images?.length)return "";
+  return '<section class="visual-catalog"><div class="section-heading compact"><div><span class="eyebrow">Позиции раздела</span><h2>Товары и оборудование</h2></div><p>'+images.length+' фото</p></div><div class="visual-grid">'+images.map((im)=>'<article class="visual-card"><button class="visual-image" type="button" data-lightbox-src="./'+esc(im)+'"><img src="./'+esc(im)+'" loading="lazy" alt="'+esc(visualTitle(im))+'"></button><div class="visual-body"><span class="visual-kicker">'+esc(s.id)+'</span><h3>'+esc(visualTitle(im))+'</h3><p>Фото относится к этой конкретной позиции. Характеристики и справочные данные собраны ниже.</p></div></article>').join("")+'</div></section>';
+}
+function knowledgeCards(s){
   let out="";
-  (s.tables||[]).forEach((t)=>{
-    out+='<section class="data-block"><h3>'+esc(t.title||"Дополнительные данные")+'</h3><div class="table-wrap"><table class="data-table"><thead><tr>'+((t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join(""))+'</tr></thead><tbody>'+((t.rows||[]).map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join(""))+'</tbody></table></div></section>';
-  });
-  if(s.pairs?.length)out+='<section class="data-block"><h3>Данные раздела</h3><dl class="definition-list">'+s.pairs.map((x)=>'<dt>'+esc(x.label)+'</dt><dd>'+esc(x.value)+'</dd>').join("")+'</dl></section>';
-  if(s.rows?.length){const cols=Math.max(1,...s.rows.map((r)=>r.length));out+='<section class="data-block"><h3>Материалы раздела</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.rows.map((r)=>'<tr>'+Array.from({length:cols},(_,i)=>'<td>'+esc(r[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';}
-  if(s.notes?.length)out+='<section class="data-block"><h3>Примечания</h3><div class="note-list">'+s.notes.map((n)=>'<div class="note">'+esc(n)+'</div>').join("")+'</div></section>';
+  if(s.pairs?.length){
+    out+='<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Ключевая информация</span><h2>Характеристики и сведения</h2></div><p>'+s.pairs.length+' пунктов</p></div><div class="knowledge-grid">'+s.pairs.map((x)=>'<article class="knowledge-card"><span>'+esc(x.label)+'</span><p>'+esc(x.value)+'</p></article>').join("")+'</div></section>';
+  }
+  if(s.notes?.length){
+    out+='<section class="knowledge-section"><div class="section-heading compact"><div><h2>Что важно знать</h2></div></div><div class="note-cards">'+s.notes.map((n)=>'<article class="note-card">'+esc(n)+'</article>').join("")+'</div></section>';
+  }
   return out;
 }
+function rawTables(s){
+  let inner="";
+  (s.tables||[]).forEach((t)=>{
+    inner+='<section class="raw-table-block"><h3>'+esc(t.title||"Дополнительные данные")+'</h3><div class="table-wrap"><table class="data-table"><thead><tr>'+((t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join(""))+'</tr></thead><tbody>'+((t.rows||[]).map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join(""))+'</tbody></table></div></section>';
+  });
+  if(s.rows?.length){
+    const cols=Math.max(1,...s.rows.map((r)=>r.length));
+    inner+='<section class="raw-table-block"><h3>Исходные материалы раздела</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.rows.map((r)=>'<tr>'+Array.from({length:cols},(_,i)=>'<td>'+esc(r[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+  }
+  if(!inner)return "";
+  return '<details class="raw-details"><summary><span><strong>Полные табличные данные</strong><small>Открыть исходные таблицы и служебные материалы раздела</small></span><b>+</b></summary><div class="raw-details-body">'+inner+'</div></details>';
+}
+function sectionContent(s){return knowledgeCards(s)+rawTables(s);}
+
 function renderHome(){
   title("");
   const recentItems=recent.get().map(ctx).filter(Boolean).slice(0,6);
   const photoProducts=Object.keys(state.assets.productImages||{}).length;
-  app.innerHTML='<section class="hero"><div class="hero-copy"><span class="eyebrow">TIAN-Трейд · внутренняя база знаний</span><h1>Вся продуктовая экспертиза — в одной системе</h1><p>Поиск по ассортименту, артикулам, назначению и характеристикам. Данные автоматически собираются из рабочей Книги знаний.</p><div class="hero-actions"><button class="btn hero-btn" data-focus-search>⌕ Найти товар</button><button class="btn hero-btn secondary" data-route="favorites">★ Избранное</button></div><div class="hero-meta"><span class="hero-chip">'+state.book.chapters.length+' глав</span><span class="hero-chip">'+state.sections.size+' подразделов</span><span class="hero-chip">'+state.products.size+' карточек</span><span class="hero-chip">Обновлено '+fmtDate(state.book.generatedAt)+'</span></div></div><div class="hero-brand" aria-hidden="true"><img src="./assets/brand/logo.svg" alt=""></div></section><section class="stats"><div class="stat"><strong>'+state.book.chapters.length+'</strong><span>глав</span></div><div class="stat"><strong>'+state.sections.size+'</strong><span>подразделов</span></div><div class="stat"><strong>'+state.products.size+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+photoProducts+'</strong><span>товаров с индивидуальными фото</span></div></section><section class="home-tools"><button type="button" class="home-tool" data-focus-search><span>⌕</span><strong>Глобальный поиск</strong><small>Название, артикул, назначение</small></button><button type="button" class="home-tool" data-route="compare"><span>⇄</span><strong>Сравнение товаров</strong><small>До четырёх карточек рядом</small></button><button type="button" class="home-tool" data-route="diagnostics"><span>✓</span><strong>Диагностика данных</strong><small>Фото, дубликаты и качество базы</small></button></section><div class="section-heading"><div><span class="eyebrow">Навигация</span><h2>Разделы Книги знаний</h2></div></div><section class="chapter-grid">'+state.book.chapters.map((ch)=>'<article class="chapter-card" data-num="'+esc(ch.id)+'" data-open-chapter="'+esc(ch.id)+'"><span class="chapter-num">'+esc(ch.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(ch.title)+'</h3><p>'+ch.sections.length+' подразделов</p></article>').join("")+'</section>'+(recentItems.length?'<div class="section-heading"><div><span class="eyebrow">История</span><h2>Недавно просмотренные</h2></div></div><section class="recent-grid">'+recentItems.map(card).join("")+'</section>':"");
+  app.innerHTML='<section class="hero"><div class="hero-copy"><span class="eyebrow">TIAN-Трейд · внутренняя база знаний</span><h1>Вся продуктовая экспертиза — в одной системе</h1><p>Поиск по ассортименту, артикулам, назначению и характеристикам. Данные автоматически собираются из рабочей Книги знаний.</p><div class="hero-actions"><button class="btn hero-btn" data-focus-search>⌕ Найти товар</button><button class="btn hero-btn secondary" data-route="favorites">★ Избранное</button></div><div class="hero-meta"><span class="hero-chip">'+state.book.chapters.length+' глав</span><span class="hero-chip">'+state.sections.size+' подразделов</span><span class="hero-chip">'+state.products.size+' карточек</span><span class="hero-chip">Обновлено '+fmtDate(state.book.generatedAt)+'</span></div></div></section><section class="stats"><div class="stat"><strong>'+state.book.chapters.length+'</strong><span>глав</span></div><div class="stat"><strong>'+state.sections.size+'</strong><span>подразделов</span></div><div class="stat"><strong>'+state.products.size+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+photoProducts+'</strong><span>товаров с индивидуальными фото</span></div></section><section class="home-tools"><button type="button" class="home-tool" data-focus-search><span>⌕</span><strong>Глобальный поиск</strong><small>Название, артикул, назначение</small></button><button type="button" class="home-tool" data-route="compare"><span>⇄</span><strong>Сравнение товаров</strong><small>До четырёх карточек рядом</small></button><button type="button" class="home-tool" data-route="diagnostics"><span>✓</span><strong>Диагностика данных</strong><small>Фото, дубликаты и качество базы</small></button></section><div class="section-heading"><div><span class="eyebrow">Навигация</span><h2>Разделы Книги знаний</h2></div></div><section class="chapter-grid">'+state.book.chapters.map((ch)=>'<article class="chapter-card" data-num="'+esc(ch.id)+'" data-open-chapter="'+esc(ch.id)+'"><span class="chapter-num">'+esc(ch.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(ch.title)+'</h3><p>'+ch.sections.length+' подразделов</p></article>').join("")+'</section>'+(recentItems.length?'<div class="section-heading"><div><span class="eyebrow">История</span><h2>Недавно просмотренные</h2></div></div><section class="recent-grid">'+recentItems.map(card).join("")+'</section>':"");
 }
 function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
@@ -76,8 +138,11 @@ function renderSection(id){
   const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;title(s.id+" "+s.title);
   const items=(s.products||[]).map((p)=>({chapter:ch,section:s,product:p}));
   const sectionImgs=state.assets.sectionImages?.[s.id]||[];
-  const media=sectionImgs.length?'<section class="section-media"><div class="section-heading compact"><div><h2>Фото раздела</h2></div><p>'+sectionImgs.length+' изображений</p></div><div class="section-media-strip">'+sectionImgs.map((im)=>'<button class="section-media-item" data-lightbox-src="./'+esc(im)+'" type="button"><img src="./'+esc(im)+'" loading="lazy" alt="'+esc(s.title)+'"></button>').join("")+'</div></section>':"";
-  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+'<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+(items.length?items.length+" карточек":"Справочный материал")+'</p></div></div>'+media+(items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':'<div class="empty-state"><strong>Справочный раздел</strong><p>Материал ниже сохранён в структуре рабочей книги.</p></div>')+tables(s);
+  const subtitle=items.length?items.length+" карточек":(sectionImgs.length?sectionImgs.length+" визуальных позиций":"Справочный материал");
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+subtitle+'</p></div></div>'+
+    (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':visualCatalog(s,sectionImgs))+
+    sectionContent(s);
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function fields(p){
@@ -141,6 +206,8 @@ function searchRender(v){
 function bind(){
   window.addEventListener("hashchange",render);
   q("#brandHome").onclick=()=>go("home");q("#favoritesBtn").onclick=()=>go("favorites");q("#compareBtn").onclick=()=>go("compare");
+  q("#versionLogBtn").onclick=()=>openVersionLog();
+  document.querySelectorAll("[data-close-version]").forEach((x)=>x.onclick=()=>closeVersionLog());
   q("#themeBtn").onclick=()=>{const t=cycleTheme();toast("Тема: "+({"system":"как в системе","light":"светлая","dark":"тёмная"}[t]));};
   q("#openSidebar").onclick=()=>document.body.classList.add("sidebar-open");q("#closeSidebar").onclick=closeMenu;q("#sidebarBackdrop").onclick=closeMenu;
   nav.onclick=(e)=>{const b=e.target.closest("[data-nav-chapter]");if(b)document.querySelector('.nav-chapter[data-chapter="'+CSS.escape(b.dataset.navChapter)+'"]')?.classList.toggle("open");};
@@ -163,12 +230,18 @@ function bind(){
     if(direct){showLightbox([direct.dataset.lightboxSrc],0,direct.querySelector("img")?.alt||"");return;}
     const l=e.target.closest("[data-lightbox-product]");if(l)openLightbox(l.dataset.lightboxProduct,Number(l.dataset.lightboxIndex||0));
   });
-  document.addEventListener("keydown",(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();}if(e.key==="Escape"){searchPanel.hidden=true;q("#lightbox").hidden=true;closeMenu();}if(!q("#lightbox").hidden&&e.key==="ArrowLeft")stepLightbox(-1);if(!q("#lightbox").hidden&&e.key==="ArrowRight")stepLightbox(1);});
+  document.addEventListener("keydown",(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();}if(e.key==="Escape"){searchPanel.hidden=true;q("#lightbox").hidden=true;closeVersionLog();closeMenu();}if(!q("#lightbox").hidden&&e.key==="ArrowLeft")stepLightbox(-1);if(!q("#lightbox").hidden&&e.key==="ArrowRight")stepLightbox(1);});
   q("#lightbox .lightbox-close").onclick=()=>q("#lightbox").hidden=true;
   q("#lightbox .lightbox-prev").onclick=()=>stepLightbox(-1);
   q("#lightbox .lightbox-next").onclick=()=>stepLightbox(1);
   q("#lightbox").onclick=(e)=>{if(e.target===q("#lightbox"))q("#lightbox").hidden=true;};
 }
+function openVersionLog(){
+  const modal=q("#versionModal"),box=q("#versionEntries");
+  box.innerHTML=(state.versionLog.entries||[]).map((e,i)=>'<article class="version-entry '+(i===0?"latest":"")+'"><div class="version-meta"><strong>v'+esc(e.version)+'</strong><span>'+esc(e.date)+'</span>'+(i===0?'<b>Текущая</b>':"")+'</div><h3>'+esc(e.title||"Обновление")+'</h3><ul>'+(e.changes||[]).map((x)=>'<li>'+esc(x)+'</li>').join("")+'</ul></article>').join("");
+  modal.hidden=false;document.body.classList.add("modal-open");
+}
+function closeVersionLog(){const modal=q("#versionModal");if(modal){modal.hidden=true;document.body.classList.remove("modal-open");}}
 function lightboxSrc(v){const s=String(v||"");return s.startsWith("./")?s:"./"+s;}
 function showLightbox(images,index=0,alt=""){
   const list=(images||[]).filter(Boolean);if(!list.length)return;
@@ -194,7 +267,8 @@ async function init(){
     fetch("./data/assets.json",{cache:"no-store"}),
     fetch("./data/search-index.json",{cache:"no-store"}),
     fetch("./data/sync-report.json",{cache:"no-store"}).catch(()=>null),
-    fetch("./data/image-match-report.json",{cache:"no-store"}).catch(()=>null)
+    fetch("./data/image-match-report.json",{cache:"no-store"}).catch(()=>null),
+    fetch("./data/version-log.json",{cache:"no-store"}).catch(()=>null)
   ]);
   if(!rs[0].ok||!rs[2].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
@@ -202,6 +276,8 @@ async function init(){
   state.index=await rs[2].json();
   state.reports.sync=rs[3]?.ok?await rs[3].json():null;
   state.reports.images=rs[4]?.ok?await rs[4].json():null;
+  state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
+  q("#versionNumber").textContent=state.versionLog.current||"2.0";
   state.search=makeSearch(state.index);
   mapData();renderNav();bind();counters();q("#syncState").textContent="Данные обновлены "+fmtDate(state.book.generatedAt);
   if(!location.hash)go("home");else render();
