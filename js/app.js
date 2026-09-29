@@ -180,4 +180,5 @@ async function init(){
   mapData();renderNav();bind();counters();q("#syncState").textContent="Данные обновлены "+fmtDate(state.book.generatedAt);
   if(!location.hash)go("home");else render();
 }
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}
 init().catch((e)=>{console.error(e);app.innerHTML='<div class="empty-state"><strong>Ошибка загрузки</strong><p>'+esc(e.message)+'</p><button class="btn primary" onclick="location.reload()">Повторить</button></div>';});
