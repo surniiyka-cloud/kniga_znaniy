@@ -84,6 +84,1372 @@
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png"
   ],
+  "unmatchedSuggestions": [
+    {
+      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
+      "candidates": [
+        {
+          "id": "3.4-0301-030-ankar-before-oxy-foam",
+          "name": "ANKAR BEFORE OXY FOAM",
+          "article": "0301.030",
+          "section": "3.4",
+          "score": 0.667
+        },
+        {
+          "id": "3.4-0301-001-ankar-before",
+          "name": "ANKAR BEFORE",
+          "article": "0301.001",
+          "section": "3.4",
+          "score": 0.5
+        },
+        {
+          "id": "3.4-0301-003-ankar-before-eco",
+          "name": "ANKAR BEFORE ECO",
+          "article": "0301.003",
+          "section": "3.4",
+          "score": 0.5
+        },
+        {
+          "id": "3.4-0301-005-ankar-before-плюс",
+          "name": "ANKAR BEFORE ПЛЮС",
+          "article": "0301.005",
+          "section": "3.4",
+          "score": 0.5
+        },
+        {
+          "id": "3.4-0301-034-ankar-before-foam",
+          "name": "ANKAR BEFORE FOAM",
+          "article": "0301.034",
+          "section": "3.4",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "image": "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-lavender.png",
+      "candidates": [
+        {
+          "id": "3.5-0301-031-ankar-profi-panthenol",
+          "name": "ANKAR PROFI PANTHENOL",
+          "article": "0301.031",
+          "section": "3.5",
+          "score": 0.5
+        },
+        {
+          "id": "3.5-0301-032-ankar-profi-aloe",
+          "name": "ANKAR PROFI ALOE",
+          "article": "0301.032",
+          "section": "3.5",
+          "score": 0.5
+        },
+        {
+          "id": "3.5-0301-036-ankar-profi-lavander",
+          "name": "ANKAR PROFI LAVANDER",
+          "article": "0301.036",
+          "section": "3.5",
+          "score": 0.5
+        },
+        {
+          "id": "3.5-0301-010-ankar-profi-25",
+          "name": "ANKAR PROFI 25",
+          "article": "0301.010",
+          "section": "3.5",
+          "score": 0.5
+        },
+        {
+          "id": "3.5-0301-010-ankar-profi-50",
+          "name": "ANKAR PROFI 50",
+          "article": "0301.010*",
+          "section": "3.5",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-bidon-8l.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-instrument-chistki.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-kateter-8-5.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
+          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
+          "article": "0303.014",
+          "section": "3.2",
+          "score": 0.429
+        },
+        {
+          "id": "3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar",
+          "name": "Стаканчик для дезинфекции сосков NON-RETURN ANKAR®",
+          "article": "0303.009",
+          "section": "3.2",
+          "score": 0.4
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-plastik.png",
+      "candidates": [
+        {
+          "id": "3.9-термометр-пластиковый-min-max-ankar",
+          "name": "Термометр пластиковый MIN-MAX ANKAR",
+          "article": "-",
+          "section": "3.9",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-zhelezo.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-plastik-50.png",
+      "candidates": [
+        {
+          "id": "3.3-0303-056-штифты-расширительные",
+          "name": "Штифты расширительные",
+          "article": "0303.056",
+          "section": "3.3",
+          "score": 0.5
+        },
+        {
+          "id": "3.3-0303-054-штифты-силиконовые",
+          "name": "Штифты силиконовые",
+          "article": "0303.054",
+          "section": "3.3",
+          "score": 0.5
+        },
+        {
+          "id": "3.3-0303-052-штифты-для-сосков-с-изгибом-на-ручке",
+          "name": "Штифты для сосков с изгибом на ручке",
+          "article": "0303.052",
+          "section": "3.3",
+          "score": 0.25
+        },
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке",
+          "name": "Штифты для сосков с жемчужиной на ручке",
+          "article": "0303.051",
+          "section": "3.3",
+          "score": 0.25
+        },
+        {
+          "id": "3.9-термометр-пластиковый-min-max-ankar",
+          "name": "Термометр пластиковый MIN-MAX ANKAR",
+          "article": "-",
+          "section": "3.9",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-skameyka.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png",
+      "candidates": [
+        {
+          "id": "3.3-0303-057-сосковая-свечка",
+          "name": "Сосковая свечка",
+          "article": "0303.057",
+          "section": "3.3",
+          "score": 0.5
+        },
+        {
+          "id": "3.3-0303-060-пластырь-для-сосков-udderosoft",
+          "name": "Пластырь для сосков UDDEROSOFT",
+          "article": "0303.060",
+          "section": "3.3",
+          "score": 0.333
+        },
+        {
+          "id": "3.3-0303-052-штифты-для-сосков-с-изгибом-на-ручке",
+          "name": "Штифты для сосков с изгибом на ручке",
+          "article": "0303.052",
+          "section": "3.3",
+          "score": 0.25
+        },
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке",
+          "name": "Штифты для сосков с жемчужиной на ручке",
+          "article": "0303.051",
+          "section": "3.3",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovyy-kolokolchik.png",
+      "candidates": [
+        {
+          "id": "3.3-0303-060-пластырь-для-сосков-udderosoft",
+          "name": "Пластырь для сосков UDDEROSOFT",
+          "article": "0303.060",
+          "section": "3.3",
+          "score": 0.333
+        },
+        {
+          "id": "3.3-0303-052-штифты-для-сосков-с-изгибом-на-ручке",
+          "name": "Штифты для сосков с изгибом на ручке",
+          "article": "0303.052",
+          "section": "3.3",
+          "score": 0.25
+        },
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке",
+          "name": "Штифты для сосков с жемчужиной на ручке",
+          "article": "0303.051",
+          "section": "3.3",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
+          "name": "Стаканчик для пенного средства PREMIUM KERBL",
+          "article": "0303.007",
+          "section": "3.2",
+          "score": 0.4
+        },
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
+          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
+          "article": "0303.014",
+          "section": "3.2",
+          "score": 0.286
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-nl.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ambic.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ankar.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-kerbl.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
+          "name": "Стаканчик для пенного средства PREMIUM KERBL",
+          "article": "0303.007",
+          "section": "3.2",
+          "score": 0.4
+        },
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
+          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
+          "article": "0303.014",
+          "section": "3.2",
+          "score": 0.286
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-ankar.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.5
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.5
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.5
+        },
+        {
+          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
+          "name": "Стаканчик для пенного средства PREMIUM KERBL",
+          "article": "0303.007",
+          "section": "3.2",
+          "score": 0.4
+        },
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-shchetka.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-vts-klapan.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-vts.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-017-стаканчик-для-сдаивания-продольный",
+          "name": "Стаканчик для сдаивания продольный",
+          "article": "0303.017",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.25
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-uddero-sprayer.png",
+      "candidates": [
+        {
+          "id": "3.3-0303-060-пластырь-для-сосков-udderosoft",
+          "name": "Пластырь для сосков UDDEROSOFT",
+          "article": "0303.060",
+          "section": "3.3",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-doilnyh.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-pl-iso.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-10x150x500.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-20x150x500.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-30x150x500.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-40x150x500.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-50x150x500.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-60x150x500.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-drenazhnyy.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
+          "name": "Ёрш для коллектора ДПР-7",
+          "article": "0404.001",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
+          "name": "Ёрш для патрубков ДПР-9",
+          "article": "0404.003",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
+          "name": "Ёрш для сосковой резины ДПР-8",
+          "article": "0404.002",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
+          "name": "Ёрш для молочных шлангов ДПР-10",
+          "article": "0404.004",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-ergonomichnaya.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-053-щетка-с-короткой-рукояткой-ankar",
+          "name": "Щётка с короткой рукояткой ANKAR",
+          "article": "0404.053",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-054-щетка-с-длинной-рукояткой-ankar",
+          "name": "Щётка с длинной рукояткой ANKAR",
+          "article": "0404.054",
+          "section": "8.1",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-monoblok.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-053-щетка-с-короткой-рукояткой-ankar",
+          "name": "Щётка с короткой рукояткой ANKAR",
+          "article": "0404.053",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-054-щетка-с-длинной-рукояткой-ankar",
+          "name": "Щётка с длинной рукояткой ANKAR",
+          "article": "0404.054",
+          "section": "8.1",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-zhestkaya.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-posudy.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-rezervuarov.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-korotkaya-ruchka.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая",
+          "name": "Ручка для щётки для пола ANKAR, зелёная",
+          "article": "0404.060",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-krug-125-myagkaya.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-210x70.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-285x130.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-dlya-pola.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-059-щетка-угловая-для-пола-ankar",
+          "name": "Щётка угловая для пола ANKAR",
+          "article": "0404.059",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-058-щетка-для-пола-ankar",
+          "name": "Щётка для пола ANKAR",
+          "article": "0404.058",
+          "section": "8.1",
+          "score": 0.25
+        },
+        {
+          "id": "8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая",
+          "name": "Ручка для щётки для пола ANKAR, зелёная",
+          "article": "0404.060",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrebkovaya-180x60.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-letagita.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-shchetka-doilnyy-stakan-60sm.png",
+      "candidates": [
+        {
+          "id": "8.1-0404-036-щетка-ankar-для-доильного-стакана",
+          "name": "Щётка ANKAR для доильного стакана",
+          "article": "0404.036",
+          "section": "8.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-chernoe.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-oranzhevoe.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-3-zuba.png",
+      "candidates": [
+        {
+          "id": "8.2-0403-072-вилы-для-соломы",
+          "name": "Вилы для соломы",
+          "article": "0403.072",
+          "section": "8.2",
+          "score": 0.5
+        },
+        {
+          "id": "8.2-0403-074-вилы-навозные",
+          "name": "Вилы навозные",
+          "article": "0403.074",
+          "section": "8.2",
+          "score": 0.5
+        },
+        {
+          "id": "8.2-0403-077-вилы-для-силоса",
+          "name": "Вилы для силоса",
+          "article": "0403.077",
+          "section": "8.2",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-4-zuba.png",
+      "candidates": [
+        {
+          "id": "8.2-0403-072-вилы-для-соломы",
+          "name": "Вилы для соломы",
+          "article": "0403.072",
+          "section": "8.2",
+          "score": 0.5
+        },
+        {
+          "id": "8.2-0403-074-вилы-навозные",
+          "name": "Вилы навозные",
+          "article": "0403.074",
+          "section": "8.2",
+          "score": 0.5
+        },
+        {
+          "id": "8.2-0403-077-вилы-для-силоса",
+          "name": "Вилы для силоса",
+          "article": "0403.077",
+          "section": "8.2",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-6-zubov.png",
+      "candidates": [
+        {
+          "id": "8.2-0403-072-вилы-для-соломы",
+          "name": "Вилы для соломы",
+          "article": "0403.072",
+          "section": "8.2",
+          "score": 0.5
+        },
+        {
+          "id": "8.2-0403-074-вилы-навозные",
+          "name": "Вилы навозные",
+          "article": "0403.074",
+          "section": "8.2",
+          "score": 0.5
+        },
+        {
+          "id": "8.2-0403-077-вилы-для-силоса",
+          "name": "Вилы для силоса",
+          "article": "0403.077",
+          "section": "8.2",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png",
+      "candidates": [
+        {
+          "id": "11.3-фартук-врача-ортопеда",
+          "name": "Фартук врача ортопеда",
+          "article": "",
+          "section": "11.3",
+          "score": 0.333
+        },
+        {
+          "id": "11.3-303-фартук-с-рукавами-и-логотипом",
+          "name": "Фартук с рукавами и логотипом",
+          "article": "303",
+          "section": "11.3",
+          "score": 0.333
+        },
+        {
+          "id": "11.3-312-фартук-без-рукавов-с-логотипом",
+          "name": "Фартук без рукавов с логотипом",
+          "article": "312",
+          "section": "11.3",
+          "score": 0.333
+        },
+        {
+          "id": "11.3-фартук-специальный-пищевой-белый",
+          "name": "Фартук специальный пищевой, белый",
+          "article": "",
+          "section": "11.3",
+          "score": 0.25
+        },
+        {
+          "id": "11.3-фартук-специальный-пищевой-изумруд",
+          "name": "Фартук специальный пищевой, изумруд",
+          "article": "",
+          "section": "11.3",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-galoshi-kerbl.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-halat-protsedurnyy.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-kasper-belyy.png",
+      "candidates": [
+        {
+          "id": "11.3-фартук-специальный-пищевой-белый",
+          "name": "Фартук специальный пищевой, белый",
+          "article": "",
+          "section": "11.3",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-plash-317.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-shapochka-sharlotta.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
+      "candidates": [
+        {
+          "id": "5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian",
+          "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
+          "article": "0203.001",
+          "section": "5.6",
+          "score": 0.6
+        },
+        {
+          "id": "5.6-0203-055-антибрык-anti-kick-сталь",
+          "name": "Антибрык ANTI-KICK, сталь",
+          "article": "0203.055",
+          "section": "5.6",
+          "score": 0.6
+        }
+      ]
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
+      "candidates": [
+        {
+          "id": "5.6-0203-077-недоуздок-для-коров-с-цепочкой",
+          "name": "Недоуздок для коров с цепочкой",
+          "article": "0203.077",
+          "section": "5.6",
+          "score": 0.333
+        },
+        {
+          "id": "5.6-0203-076-недоуздок-для-коров",
+          "name": "Недоуздок для коров",
+          "article": "0203.076",
+          "section": "5.6",
+          "score": 0.333
+        },
+        {
+          "id": "5.6-0203-055-антибрык-anti-kick-сталь",
+          "name": "Антибрык ANTI-KICK, сталь",
+          "article": "0203.055",
+          "section": "5.6",
+          "score": 0.25
+        },
+        {
+          "id": "5.6-0203-054-недоуздок-для-коров-и-молодых-бычков",
+          "name": "Недоуздок для коров и молодых бычков",
+          "article": "0203.054",
+          "section": "5.6",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-flexcow-110.png",
+      "candidates": [
+        {
+          "id": "5.6-0203-055-антибрык-anti-kick-сталь",
+          "name": "Антибрык ANTI-KICK, сталь",
+          "article": "0203.055",
+          "section": "5.6",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-330-vts.png",
+      "candidates": [
+        {
+          "id": "5.6-погонщик-скота-ankar-shock-pro-2500",
+          "name": "Погонщик скота ANKAR SHOCK PRO 2500",
+          "article": "-",
+          "section": "5.6",
+          "score": 0.5
+        },
+        {
+          "id": "5.6-0203-020-погонщик-скота-shock-2500-tian-trade",
+          "name": "Погонщик скота SHOCK 2500 TIAN TRADE",
+          "article": "0203.020",
+          "section": "5.6",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovoe-koltso-dlya-bykov-aktions-11140-52-54-sm.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-dlya-privyazi-korov-130h4sm-s-dvumya-otsinkovannymi-tsepyami-s-karabinom-i-zakrutkoy-zveno-6-mm.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-povodok-dlya-bykov-tsepnoy-metall.png",
+      "candidates": [
+        {
+          "id": "5.6-0203-040-веревка-для-транспортировки-быков",
+          "name": "Верёвка для транспортировки быков",
+          "article": "0203.040",
+          "section": "5.6",
+          "score": 0.25
+        },
+        {
+          "id": "5.6-0203-047-щипцы-носовые-для-быков",
+          "name": "Щипцы носовые для быков",
+          "article": "0203.047",
+          "section": "5.6",
+          "score": 0.25
+        },
+        {
+          "id": "5.6-0203-044-щипцы-носовые-для-быков-harms",
+          "name": "Щипцы носовые для быков HARMS",
+          "article": "0203.044",
+          "section": "5.6",
+          "score": 0.25
+        },
+        {
+          "id": "5.6-0203-043-щипцы-носовые-для-быков-с-канатом",
+          "name": "Щипцы носовые для быков с канатом",
+          "article": "0203.043",
+          "section": "5.6",
+          "score": 0.25
+        },
+        {
+          "id": "5.6-0203-076-недоуздок-для-быков",
+          "name": "Недоуздок для быков",
+          "article": "0203.076*",
+          "section": "5.6",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-latunnaya-chesalka.png",
+      "candidates": [
+        {
+          "id": "5.1-0202-001-щетка-чесалка-для-скота-texas",
+          "name": "Щётка-чесалка для скота TEXAS",
+          "article": "0202.001",
+          "section": "5.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-krupnozubchataya-10h14-5.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-melkozubchataya-9-5-x14-5-sm-189.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskiy-skrebok-dlya-krs-spiralnyy.png",
+      "candidates": [
+        {
+          "id": "5.1-скребок-спиральный-для-шкуры-4-рядный-tian",
+          "name": "Скребок спиральный для шкуры 4-рядный TIAN",
+          "article": "-",
+          "section": "5.1",
+          "score": 0.5
+        },
+        {
+          "id": "5.1-скребок-спиральный-для-шкуры-5-рядный-tian",
+          "name": "Скребок спиральный для шкуры 5-рядный TIAN",
+          "article": "-",
+          "section": "5.1",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-12-m-v-plastikovoy-korobke.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-3-6-m-v-plastikovoy-korobke.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-ruchki-dlya-provolochnoy-pily-poparno.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetochnaya-chesalka.png",
+      "candidates": [
+        {
+          "id": "5.1-0202-001-щетка-чесалка-для-скота-texas",
+          "name": "Щётка-чесалка для скота TEXAS",
+          "article": "0202.001",
+          "section": "5.1",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-dvoynaya.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallicheskaya-ovalnaya-s-naruchnoy-petley-s-3-ryadami-tonkih-volnistyh-zubev.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallitseskaya-aldus-11h12-5-1810.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png",
+      "candidates": [
+        {
+          "id": "5.1-0202-002-запасная-щетка-texas",
+          "name": "Запасная щётка TEXAS",
+          "article": "0202.002",
+          "section": "5.1",
+          "score": 0.4
+        }
+      ]
+    }
+  ],
   "productsTotal": 776,
   "productsWithImages": 106,
   "productsWithoutImages": [
