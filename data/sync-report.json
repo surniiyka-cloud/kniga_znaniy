@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-29T09:36:23.919Z",
+  "generatedAt": "2026-09-29T09:47:10.939Z",
   "sheets": 89,
   "sections": 88,
-  "products": 698,
+  "products": 776,
   "byKind": {
-    "richTable": 21,
-    "keyValue": 19,
-    "products": 49
+    "richTable": 13,
+    "keyValue": 17,
+    "products": 59
   },
   "perSection": [
     {
@@ -316,8 +316,8 @@
     {
       "id": "3.9",
       "title": "Измерительные приборы",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 7,
       "tables": 0,
       "notes": 0
     },
@@ -340,32 +340,32 @@
     {
       "id": "4.3",
       "title": "Исследование качества кормов",
-      "kind": "keyValue",
-      "products": 0,
-      "tables": 0,
+      "kind": "products",
+      "products": 6,
+      "tables": 1,
       "notes": 0
     },
     {
       "id": "4.4",
       "title": "Шприцы и вакцинаторы",
-      "kind": "keyValue",
-      "products": 0,
-      "tables": 0,
+      "kind": "products",
+      "products": 6,
+      "tables": 1,
       "notes": 0
     },
     {
       "id": "4.5",
       "title": "Иглы многоразовые",
-      "kind": "richTable",
-      "products": 0,
-      "tables": 1,
-      "notes": 1
+      "kind": "products",
+      "products": 2,
+      "tables": 2,
+      "notes": 0
     },
     {
       "id": "4.6",
       "title": "Вспомогательные специальные средства",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 9,
       "tables": 0,
       "notes": 0
     },
@@ -452,8 +452,8 @@
     {
       "id": "5.5",
       "title": "Ушные бирки и инструменты для маркировки",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 11,
       "tables": 0,
       "notes": 0
     },
@@ -476,8 +476,8 @@
     {
       "id": "6.1",
       "title": "Домики для телят",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 2,
       "tables": 0,
       "notes": 0
     },
@@ -492,8 +492,8 @@
     {
       "id": "6.3",
       "title": "Вёдра для выпойки телят",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 14,
       "tables": 0,
       "notes": 0
     },
@@ -564,8 +564,8 @@
     {
       "id": "7.1",
       "title": "Выпойка и кормление МРС",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 16,
       "tables": 0,
       "notes": 0
     },
@@ -580,8 +580,8 @@
     {
       "id": "7.3",
       "title": "Обработка копыт",
-      "kind": "richTable",
-      "products": 0,
+      "kind": "products",
+      "products": 5,
       "tables": 0,
       "notes": 0
     },
@@ -726,7 +726,15 @@
       "count": 2
     },
     {
+      "article": "0203.040",
+      "count": 2
+    },
+    {
       "article": "0203.015*",
+      "count": 2
+    },
+    {
+      "article": "0201.028*",
       "count": 2
     },
     {
