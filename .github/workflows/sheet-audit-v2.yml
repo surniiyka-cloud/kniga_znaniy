@@ -1,0 +1,38 @@
+name: Аудит Google Sheets v2
+
+on:
+  push:
+    branches: [site-v2]
+    paths:
+      - 'data/sheets-manifest.json'
+      - 'scripts/inspect-sheets.mjs'
+      - '.github/workflows/sheet-audit-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Проверить 89 листов Google Sheets
+        run: node scripts/inspect-sheets.mjs
+
+      - name: Сохранить отчёт
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sheet-audit-v2
+          path: data/sheet-audit.json
+          if-no-files-found: error
+          retention-days: 14
