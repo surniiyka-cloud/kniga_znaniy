@@ -161,22 +161,35 @@ function buildChapter2Catalog(){
     });
   }
 
-  // микотоксины/ГМО — уже структурированные товары
+  // микотоксины/ГМО — уже структурированные товары, но выводим их тем же карточным каталогом
+  const myco=sBy("2.11");if(myco){
+    state.sectionCatalog.set("2.11",(myco.products||[]).map((p)=>state.products.get(p.id)).filter(Boolean));
+  }
+
   // микробиологический контроль — HygieneChek + KangarooSci
   const micro=sBy("2.13");if(micro){
     registerCatalog("2.13","Тест-пластины KangarooSci",[["Назначение","Количественное определение микроорганизмов в готовой продукции, сырье и смывах с поверхностей"],["Формат","Готовые тест-пластины"],["Упаковка","12 тест-пластин"],["Считывание","Визуальный количественный подсчёт колоний"]],state.assets.sectionImages?.["2.13"]||[]);
     const t=micro.tables?.[0];if(t)(t.rows||[]).forEach((r)=>registerCatalog("2.13","HygieneChek Plus · "+r[1]+(r[2]!==r[1]?" / "+r[2]:""),(t.headers||[]).map((h,i)=>[h,r[i]]).filter((x)=>x[1]),[],{article:r[0]}));
   }
 
-  // питательные среды — каждая строка ассортимента отдельной карточкой
+  // питательные среды — каждая строка ассортимента отдельной карточкой; фото только при уверенном совпадении
   const media=sBy("2.14");if(media){
-    const imgs=state.assets.sectionImages?.["2.14"]||[];let imgIndex=0;
+    const imgMap=[
+      [/сухой питательный бульон/i,"11-suhoy-bulon.png"],[/сухой питательный агар/i,"11-suhoy-agar.png"],
+      [/кмафанм/i,"11-kmafanm.png"],[/мкм-1/i,"11-mkm-1.png"],[/мкм-2/i,"11-mkm-2.png"],
+      [/кесслер/i,"11-kessler.png"],[/ажфк/i,"11-azhfk.png"],[/\bкода\b/i,"11-koda.png"],[/гпс/i,"11-gps.png"],[/лпс/i,"11-lps.png"],
+      [/полужидкая среда с лактозой/i,"11-poluzhidkaya-s-laktozoy.png"],[/эндо/i,"11-endo.png"],[/\bсда\b/i,"11-sda.png"],
+      [/ласса/i,"11-lassa.png"],[/сабуро/i,"11-saburo.png"],[/солевой бульон/i,"11-solevoy-bulon.png"],
+      [/резазурина натриевая/i,"11-rezazurina-natriya.png"],[/неомицина сульфат/i,"11-neomitsina-sulfat.png"],
+      [/термофильного.*b\s*19/i,"11-termofilnyy-streptokokk-b19.png"]
+    ];
+    const folder="img/photos/11-pitatelnye-sredy-uglich/";
     for(const r of media.rows||[]){
       const name=String(r[1]||"").trim(),purpose=String(r[3]||"").trim();
       if(!name||!purpose||name===name.toUpperCase())continue;
       const fs=[["Назначение",purpose],["Фасовка",r[4]||""],["ТУ / стандарт",r[5]||""]].filter((x)=>x[1]);
-      const im=imgs[imgIndex++]||"";
-      registerCatalog("2.14",name,fs,im?[im]:[]);
+      const hit=imgMap.find(([rx])=>rx.test(name));
+      registerCatalog("2.14",name,fs,hit?[folder+hit[1]]:[]);
     }
   }
 }
