@@ -168,6 +168,18 @@ for(const img of images){
   }
 }
 const matchedImages=Object.keys(imageAssignments);
+const unmatchedImages=images.filter(x=>!imageAssignments[x.path]);
+function relaxedSuggestions(img){
+  const hinted=folderHints[img.folder]||[];
+  const pool=hinted.length?products.filter(p=>hinted.includes(p.section)):products;
+  return pool.map(p=>{
+    const sim=similarity(p.name,img.file);
+    const article=articleHit(p.article,img.file);
+    const score=(article?1.2:0)+sim;
+    return {id:p.id,name:p.name,article:p.article||"",section:p.section,score:+score.toFixed(3)};
+  }).filter(x=>x.score>=0.24).sort((a,b)=>b.score-a.score).slice(0,5);
+}
+const unmatchedSuggestions=unmatchedImages.map(img=>({image:img.path,candidates:relaxedSuggestions(img)}));
 const proposedAssets={productImages:productAssets,sectionImages:sectionAssets};
 const previousAssets=JSON.parse(await fs.readFile("data/assets.json","utf8").catch(()=>"null"));
 let assetsGeneratedAt=new Date().toISOString();
@@ -180,7 +192,8 @@ const report={
   generatedAt:assets.generatedAt,
   imagesTotal:images.length,
   imagesMatched:matchedImages.length,
-  imagesUnmatched:images.filter(x=>!imageAssignments[x.path]).map(x=>x.path),
+  imagesUnmatched:unmatchedImages.map(x=>x.path),
+  unmatchedSuggestions,
   productsTotal:products.length,
   productsWithImages:products.filter(p=>productAssets[p.id]?.length).length,
   productsWithoutImages:products.filter(p=>!productAssets[p.id]?.length).map(p=>({id:p.id,section:p.section,name:p.name,article:p.article||""})),
