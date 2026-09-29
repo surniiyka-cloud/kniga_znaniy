@@ -76,7 +76,7 @@ function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   const id="catalog-"+safeSlug(sectionId+"-"+name+"-"+(state.sectionCatalog.get(sectionId)?.length||0));
   const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
   const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
-  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],options:opts.options||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[]};
+  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],options:opts.options||[],variants:opts.variants||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[],washCycle:opts.washCycle||[],customTabs:opts.customTabs||[]};
   const ctxObj={chapter:x.chapter,section:x.section,product:p};
   if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
   state.sectionCatalog.get(sectionId).push(ctxObj);
@@ -141,20 +141,24 @@ function splitAdvantages(pairs){
   return {fields:cleanPairs(arr.slice(0,idx)),advantages:uniquePairs(arr.slice(idx+1).map((p)=>[p.label,p.value]))};
 }
 function buildAnalyzerParts(pairs){
-  const a=splitAdvantages(pairs),fields=[],indicators=[],options=[];
+  const a=splitAdvantages(pairs),fields=[],indicators=[],options=[],variants=[];
   let mode="fields";
-  const optionRx=/^(Термопринтер|Связь|Передача данных|Автоматический пробоотбор|Ультразвуковая мешалка|Операционная система|Управление|Встроенный pH-метр|Определение удельной электропроводности|Реагенты)$/i;
+  const optionRx=/^(Термопринтер|Связь|Передача данных|Автоматический пробоотбор|Ультразвуковая мешалка|Операционная система|Управление|Встроенный pH-метр|Определение удельной электропроводности|Реагенты|Меню)$/i;
   for(const r of a.fields){
     const l=String(r[0]).trim(),v=String(r[1]).trim();
     if(!l||!v||l.length>120)continue;
     if(/^(Показатель|Дополнительный показатель)$/i.test(l)&&/^(Диапазон измерения|Обозначение)$/i.test(v)){mode=l.startsWith("Доп")?"options":"indicators";continue;}
+    if(l==="Исполнение"&&v==="Артикул"){mode="variants";continue;}
+    if(l==="Канал"&&/Калибровка/i.test(v)){mode="options";continue;}
+    if(l==="Функция"&&/Описание/i.test(v)){mode="options";continue;}
     if(/доп\. опция/i.test(l)){options.push([l.replace(/\s*\(доп\. опция\)/i,""),v]);continue;}
     if(optionRx.test(l)){options.push([l,v]);continue;}
     if(mode==="indicators")indicators.push([l,v]);
     else if(mode==="options")options.push([l,v]);
+    else if(mode==="variants")variants.push([l,v]);
     else fields.push([l,v]);
   }
-  return {fields:uniquePairs(fields),indicators:uniquePairs(indicators),options:uniquePairs(options),advantages:a.advantages};
+  return {fields:uniquePairs(fields),indicators:uniquePairs(indicators),options:uniquePairs(options),variants:uniquePairs(variants),advantages:a.advantages};
 }
 function buildAnalyzerRows(rows){
   const fields=[],indicators=[],options=[],advantages=[];let mode="fields";
@@ -188,28 +192,30 @@ function buildExtensoCard(ext){
   const rows=ext.rows||[];
   const fields=[
     ["Производитель","Unisensor, Бельгия"],["Артикул","1002.03.003"],["Тип системы","Диагностическая мультиплексная платформа"],
-    ["Назначение","Скрининг ветеринарно-лекарственных средств и афлатоксина M1"],["Основная матрица","Молоко"],
+    ["Назначение","Скрининг ветеринарно-лекарственных средств и афлатоксина M1"],["Основная матрица","Молоко и мясо"],
     ["Что определяет в молоке","103 вида антибиотиков + афлатоксин M1"],["Количество специфических групп в молоке","17 каналов"],
     ["Время анализа молока","13 минут"],["Интерпретация","Автоматическая"],["Питание","От сети или встроенной батареи"],
     ["Совместимость","Тест-полоски Unisensor"],["Масса","6 кг"],["Происхождение","Бельгия"],
     ["Нормативная информация","ТР ТС 021, приложение 5.1 (Решение ЕЭК №70); ГОСТ Р 59507-2021"]
   ];
-  const comp=[],workflow=[],calibration=[],advantages=[],substances=[];let mode="",sub="";
+  const milk=[["Исследуемый материал","Молоко"],["Что определяет","103 вида антибиотиков + афлатоксин M1"],["Количество каналов","17 специфических групп"],["Время анализа","13 минут"],["Температура анализа","35 °C"],["Схема инкубации","3 минуты + 10 минут"],["Подогрев молока","Не требуется"],["Микролунки","Не используются"],["Реагент","В стеклянной ампуле"],["Дозирование","Индивидуальная одноразовая пипетка для каждой полоски"],["Интерпретация","Автоматическая"],["Повторность","Каждая проба / группа анализируется трижды одной тест-полоской"]];
+  const meat=[["Исследуемый материал","Мясо"],["Количество образца","2 г"],["Дополнительный компонент","Буфер из комплекта"],["Пробоподготовка","5 минут"],["Количество специфических групп антибиотиков","14"],["Время анализа после пробоподготовки","13 минут"],["Температура анализа","35 °C"],["Схема инкубации","3 минуты + 10 минут"],["Нормативная информация","Чувствительность метода соответствует ТР ТС 021/2011 и ТР ТС 034/2013"]];
+  const compMilk=[],compMeat=[],workMilk=[],workMeat=[],calibration=[],advantages=[],substances=[];let mode="",sub="";
   for(const r of rows){
     const a=String(r[0]||"").trim(),v=String(r[1]||"").trim();
-    if(a==="КОМПЛЕКТАЦИЯ"){mode="comp";continue}
-    if(a==="ПОРЯДОК РАБОТЫ"){mode="workflow";continue}
+    if(a==="КОМПЛЕКТАЦИЯ"){mode="comp";sub="";continue}
+    if(a==="ПОРЯДОК РАБОТЫ"){mode="workflow";sub="";continue}
     if(a==="КАЛИБРОВКА"){mode="cal";continue}
     if(a==="ПРЕИМУЩЕСТВА И ПРАКТИЧЕСКОЕ ЗНАЧЕНИЕ"){mode="adv";continue}
     if(a.startsWith("ТАБЛИЦА ЧУВСТВИТЕЛЬНОСТИ EXTENSO")){mode="sens";continue}
     if(mode==="comp"){
       if(["Молоко","Мясо"].includes(a)){sub=a;continue}
-      if(a&&v&&!["Компонент","Количество"].includes(a))comp.push([sub?sub+" · "+a:a,v]);
+      if(a&&v&&!["Компонент","Количество"].includes(a))(sub==="Мясо"?compMeat:compMilk).push([a,v]);
     }else if(mode==="workflow"){
       if(["Молоко","Мясо"].includes(a)){sub=a;continue}
-      if(a&&v&&!["Этап","Действие"].includes(a))workflow.push([sub?sub+" · шаг "+a:a,v]);
+      if(a&&v&&!["Этап","Действие"].includes(a))(sub==="Мясо"?workMeat:workMilk).push(["Шаг "+a,v]);
     }else if(mode==="cal"){
-      if(a&&v)calibration.push([a,v]);
+      if(a&&v&&a!=="Вид калибровки")calibration.push([a,v]);
     }else if(mode==="adv"){
       if(a&&v&&a!=="Преимущество")advantages.push([a,v]);
     }else if(mode==="sens"){
@@ -217,10 +223,19 @@ function buildExtensoCard(ext){
       if(name&&ppb&&!/Определяемое вещество/i.test(name))substances.push({group,substance:name,ppb});
     }
   }
-  return {fields,complectation:comp,workflow,calibration,advantages,substances};
+  const customTabs=[
+    {id:"extMilk",label:"EXTENSO для молока",kind:"pairs",rows:milk},
+    {id:"extMeat",label:"EXTENSO для мяса",kind:"pairs",rows:meat},
+    {id:"compMilk",label:"Комплектация · молоко",kind:"pairs",rows:compMilk},
+    {id:"compMeat",label:"Комплектация · мясо",kind:"pairs",rows:compMeat},
+    {id:"workMilk",label:"Порядок работы · молоко",kind:"steps",rows:workMilk},
+    {id:"workMeat",label:"Порядок работы · мясо",kind:"steps",rows:workMeat}
+  ];
+  return {fields,customTabs,calibration,advantages,substances};
 }
 function buildConsumableBlocks(s){
   const pairs=s.pairs||[],starts=[0,19,51,70,98],names=["EKODAY","EKOWEEK","EKOPRIM","MASTOPRIM","LACTOCHIP"],out=[];
+  const washCycle=[["Шаг 1","Вода 20 ± 5 °C"],["Шаг 2","Вода 50 ± 5 °C"],["Шаг 3","EKODAY 2% ежедневно ИЛИ EKOWEEK 5% еженедельно, 50 ± 5 °C"],["Шаг 4","Вода 50 ± 5 °C"],["Шаг 5","Вода 20 ± 5 °C"],["Простой более 15 минут","Промыть систему дистиллированной водой"],["Простой после промывки","Входную и выходную трубки поместить в стакан с дистиллированной водой"],["Зачем","Предотвращение образования воздушных пузырьков в системе"]];
   starts.forEach((st,i)=>{
     const en=starts[i+1]??pairs.length,block=pairs.slice(st,en),name=names[i],advAt=block.findIndex((p)=>/^(Преимущество|Особенность)$/i.test(String(p.label||"").trim())&&/Практическое значение/i.test(String(p.value||"")));
     const main=(advAt>=0?block.slice(0,advAt):block),advantages=(advAt>=0?block.slice(advAt+1):[]);
@@ -232,9 +247,9 @@ function buildConsumableBlocks(s){
       if(/^\d+$/.test(l)||l==="Этап"){if(/^\d+$/.test(l))workflow.push(["Шаг "+l,v]);continue;}
       if(name==="LACTOCHIP"&&["Компонент","Количество"].includes(l))continue;
       if(name==="LACTOCHIP"&&["Тест-пластины LACTOCHIP","SOFIA GREEN","Наконечники автоматического дозатора"].includes(l)){complectation.push([l,v]);continue;}
-      fields.push([l,v]);
+      if(!["Ситуация","Зачем это нужно"].includes(l))fields.push([l,v]);
     }
-    out.push({name,fields:uniquePairs(fields),advantages:uniquePairs(advantages.map((p)=>[p.label,p.value])),workflow:uniquePairs(workflow),complectation:uniquePairs(complectation)});
+    out.push({name,fields:uniquePairs(fields),advantages:uniquePairs(advantages.map((p)=>[p.label,p.value])),workflow:uniquePairs(workflow),complectation:uniquePairs(complectation),washCycle:["EKODAY","EKOWEEK"].includes(name)?washCycle:[]});
   });
   return out;
 }
@@ -267,11 +282,11 @@ function buildChapter2Catalog(){
     "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-t.png"
   ]);
 
-  const ext=sBy("2.3");if(ext){const x=buildExtensoCard(ext);registerCatalog("2.3","Система EXTENSO",x.fields,state.assets.sectionImages?.["2.3"]||[],x);}
+  const ext=sBy("2.3");if(ext){const x=buildExtensoCard(ext);registerCatalog("2.3","Система EXTENSO · молоко и мясо",x.fields,state.assets.sectionImages?.["2.3"]||[],x);}
   const inc=sBy("2.4");if(inc){
     const x=splitAdvantages(inc.pairs);
     const fields=[["Артикул","1001.01.006"],["Назначение","Инкубация экспресс-тестов для определения антибиотиков в молоке"],["Производство","Болгария"],["Количество тест-полосок","До 8 одновременно"],["Диапазон температуры","30–80 °C"],...x.fields.filter((r)=>!["Особенности","Источник","Режим","№1","№2","№3"].includes(r[0]))];
-    registerCatalog("2.4","Термостатическое устройство TIAS",uniquePairs(fields),["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"],{advantages:x.advantages,options:[["Режим №1","GARANT — 37 °C, 3+7 минут"],["Режим №2","TwinSensor — 40 °C, 3+3 минуты"],["Режим №3","4Sensor, ANKAR Milk, Sensitive — 40 °C, 5+5 минут"]]});
+    registerCatalog("2.4","Термостатическое устройство TIAS",uniquePairs(fields),["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"],{advantages:x.advantages,customTabs:[{id:"modes",label:"Режимы работы",kind:"pairs",rows:[["Режим №1","GARANT — 37 °C, 3+7 минут"],["Режим №2","TwinSensor — 40 °C, 3+3 минуты"],["Режим №3","4Sensor, ANKAR Milk, Sensitive — 40 °C, 5+5 минут"]]}]});
   }
 
   const readers=sBy("2.5");if(readers){
@@ -289,7 +304,8 @@ function buildChapter2Catalog(){
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
     const x=child.id==="2.6.2"?buildAnalyzerRows(child.rows):(child.pairs?.length?buildAnalyzerParts(child.pairs):buildAnalyzerRows(child.rows));
     const fields=uniquePairs([...(analyzerBase[child.id]||[]),...x.fields]);
-    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока",indicators:x.indicators,options:x.options,advantages:x.advantages});
+    const variants=child.id==="2.6.3"?[["Без принтера","0704.05.008"],["Со встроенным термопринтером","0704.05.007"]]:x.variants||[];
+    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока",indicators:x.indicators,options:x.options,variants,advantages:x.advantages});
   }
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
     if(child.id==="2.7.1"){
@@ -303,7 +319,7 @@ function buildChapter2Catalog(){
 
   // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
   const cons=sBy("2.8");if(cons){
-    buildConsumableBlocks(cons).forEach((b)=>registerCatalog("2.8",b.name,b.fields,[],{advantages:b.advantages,workflow:b.workflow,complectation:b.complectation}));
+    buildConsumableBlocks(cons).forEach((b)=>registerCatalog("2.8",b.name,b.fields,[],{advantages:b.advantages,workflow:b.workflow,complectation:b.complectation,washCycle:b.washCycle}));
   }
 
   // остальные key-value каталоги
@@ -314,29 +330,35 @@ function buildChapter2Catalog(){
     else registerCatalog(id,s.title,cleanPairs(s.pairs),state.assets.sectionImages?.[id]||[]);
   }
 
-  // 2.15 — один БиоТФ, тест-наборы внутри карточки
+  // 2.15 — один БиоТФ; СТАРТ / ПАСТ / ПРО / ЩФ — отдельные вкладки
   const bio=sBy("2.15");if(bio){
-    const pairs=bio.pairs||[],kits=[],features=[];let current="";
-    for(const p of pairs){
-      const l=String(p.label||"").trim(),v=String(p.value||"").trim();
-      if(l==="Наименование"&&/^Тест-набор/i.test(v)){current=v;continue;}
-      if(current&&l&&v&&!["Характеристика","Наименование"].includes(l)){
-        if(l==="Особенность"&&/Практическое значение/i.test(v)){current="";continue;}
-        kits.push([current+" · "+l,v]);
-      }else if(l&&v&&["Контроль остаточного белка","Работа со смывной водой","Качественный метод"].includes(l))features.push([l,v]);
-    }
+    const start=[["Тип анализа","Количественный"],["Назначение","Экспресс-определение общего количества микроорганизмов в сыром молоке"],["Количество определений","100"],["Состав","4 фольгированных пакета по 25 тест-пробирок СТАРТ"],["Диапазон измерения","20 000–5 000 000 КОЕ/г"]];
+    const past=[["Тип анализа","Количественный"],["Назначение","Определение общего количества микроорганизмов в пастеризованном и ультрапастеризованном молоке"],["Диапазон измерения","10–500 000 КОЕ/г"],["Дополнительный реагент","Стерилизующий агент"],["Принцип","Тест-пробирка содержит смесь флуорогенных субстратов, участвующих в микробном метаболизме с образованием флуоресцентных продуктов"]];
+    const pro=[["Тип анализа","Качественный"],["Назначение","Экспресс-контроль остаточного белка"],["Объекты контроля","Поверхности, техническая вода, смывная вода"],["Количество определений","100"],["Состав","4 фольгированных пакета по 25 тест-пробирок ПРО"],["Принцип","Определение остаточного белка по интенсивности флуоресценции комплекса белка с флуорохромом"],["Практическое значение","Позволяет оценить качество очистки поверхностей и проводить санитарный контроль после мойки оборудования"]];
+    const shf=[["Тип анализа","Качественный"],["Назначение","Определение остаточной активности щелочной фосфатазы"],["Объекты исследования","Пастеризованное молоко и молочные продукты"],["Практическая задача","Оценка эффективности пастеризации"],["Количество определений","100"],["Состав","4 фольгированных пакета по 25 тест-пробирок ЩФ"],["Метод","Прямой флуориметрический кинетический анализ"],["Принцип","Скорость изменения флуоресценции пропорциональна активности щелочной фосфатазы"],["Интерпретация","После достаточной тепловой обработки активность щелочной фосфатазы должна быть инактивирована"]];
     const fields=[["Назначение","Количественное определение общего микробного числа (ОМЧ) в молоке"],["Время исследования","20–30 минут"],["Метод","Турбидофлуориметрический / флуориметрический"],["Стандарт","ГОСТ 34472-2018"],["Госреестр СИ","№ 56270-14"],["Обработка результата","Автоматическая, программная"]];
-    registerCatalog("2.15","Турбидофлуориметр БиоТФ",fields,state.assets.sectionImages?.["2.15"]||[],{testKits:uniquePairs(kits),advantages:features});
+    registerCatalog("2.15","Турбидофлуориметр БиоТФ",fields,state.assets.sectionImages?.["2.15"]||[],{customTabs:[
+      {id:"bioStart",label:"СТАРТ",kind:"pairs",rows:start},{id:"bioPast",label:"ПАСТ",kind:"pairs",rows:past},
+      {id:"bioPro",label:"ПРО",kind:"pairs",rows:pro},{id:"bioShf",label:"ЩФ",kind:"pairs",rows:shf}
+    ]});
   }
-
-  // 2.16 — LuciPac находится внутри карточки люминометра
+  // 2.16 — Люминометр SMART; LuciPac и интерпретация внутри карточки
   const san=sBy("2.16");if(san){
-    const ps=san.pairs||[],cut=ps.findIndex((p)=>p.label==="Особенность"&&/Практическое значение/.test(p.value));
-    const second=ps.findIndex((p)=>p.label==="Наименование"&&/LuciPac/.test(p.value));
-    const fields=cleanPairs(ps.slice(1,cut>=0?cut:second)).filter((r)=>r[0]!=="Наименование");
-    const advantages=uniquePairs(ps.slice((cut>=0?cut+1:11),second>=0?second:18).map((p)=>[p.label,p.value]));
-    const consumables=second>=0?cleanPairs(ps.slice(second+1)).filter((r)=>!["Категория"].includes(r[0])):[];
-    registerCatalog("2.16","Люминометр SMART",fields,state.assets.sectionImages?.["2.16"]||[],{advantages,consumables});
+    const ps=san.pairs||[];
+    const fields=[["Категория","Санитарный мониторинг"],["Артикул","0706.36.001"],["Тип","ATP/A3 люминометр"],["Назначение","Быстрый контроль гигиены производственных поверхностей, оборудования и воды"],["Результат измерения","RLU"],["Управление","Сенсорный экран"],["Беспроводная связь","Wi-Fi"],["Работа с результатами","Облачная база результатов"],["Расходные материалы","LuciPac A3 Water / Surface"]];
+    const advantages=uniquePairs(ps.slice(12,18).map((p)=>[p.label,p.value]));
+    const luci=[["Артикул","0706.36.007"],["Категория","Расходные материалы для люминометра"],["Совместимость","Люминометр SMART"],["Назначение","Контроль воды и поверхностей"],["Область применения","Санитарный мониторинг"],["Производственная поверхность","LuciPac A3 Surface"],["Вода","LuciPac A3 Water"]];
+    const interpretation=[
+      ["Поверхность · 0–99 RLU","Чисто / рекомендуемый уровень"],
+      ["Поверхность · 100–199 RLU","Пограничная зона — требуется внимание и повторный контроль"],
+      ["Поверхность · ≥200 RLU","Неудовлетворительный результат — требуется повторная санитарная обработка"],
+      ["Вода · 0–25 RLU","Чисто / рекомендуемый уровень"],
+      ["Вода · ≥26 RLU","Повышенный уровень — требуется дополнительный контроль"]
+    ];
+    registerCatalog("2.16","Люминометр SMART",fields,state.assets.sectionImages?.["2.16"]||[],{advantages,customTabs:[
+      {id:"luci",label:"LuciPac A3",kind:"pairs",rows:luci},
+      {id:"rlu",label:"Интерпретация RLU",kind:"pairs",rows:interpretation}
+    ]});
   }
 
   // индикаторные полоски — строка таблицы = отдельная карточка
@@ -606,18 +628,24 @@ function productTabs(p){
   const tabs=[{id:"specs",label:"Характеристики"}];
   if(p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
   if(p.options?.length)tabs.push({id:"options",label:"Дополнительные опции"});
-  if(p.advantages?.length)tabs.push({id:"advantages",label:"Преимущества"});
+  if(p.variants?.length)tabs.push({id:"variants",label:"Варианты исполнения"});
+  if(p.advantages?.length)tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества"});
   if(p.complectation?.length)tabs.push({id:"complectation",label:"Комплектация"});
+  if(p.washCycle?.length)tabs.push({id:"washCycle",label:"Рекомендуемый цикл мойки"});
   if(p.workflow?.length)tabs.push({id:"workflow",label:"Порядок работы"});
   if(p.calibration?.length)tabs.push({id:"calibration",label:"Калибровка"});
   if(p.assortment?.length)tabs.push({id:"assortment",label:"Линейка"});
   if(p.consumables?.length)tabs.push({id:"consumables",label:"Расходные материалы"});
   if(p.testKits?.length)tabs.push({id:"testKits",label:"Тест-наборы"});
+  for(const t of p.customTabs||[])tabs.push({id:t.id,label:t.label});
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
   return tabs;
 }
 function pairCards(rows,cls="feature-tab-grid"){
   return '<div class="'+cls+'">'+(rows||[]).map((r)=>'<article class="feature-tab-card"><strong>'+esc(r[0])+'</strong><p>'+esc(r[1])+'</p></article>').join("")+'</div>';
+}
+function stepCards(rows){
+  return '<div class="step-cards">'+(rows||[]).map((r,i)=>'<article class="step-card"><span>'+(i+1)+'</span><div><strong>'+esc(r[0])+'</strong><p>'+esc(r[1])+'</p></div></article>').join("")+'</div>';
 }
 function substanceTable(rows){
   let last="";
@@ -628,12 +656,16 @@ function tabPanelHtml(p,id){
   if(id==="advantages")return pairCards(p.advantages||[]);
   if(id==="indicators")return pairCards(p.indicators||[]);
   if(id==="options")return pairCards(p.options||[]);
+  if(id==="variants")return pairCards(p.variants||[]);
   if(id==="complectation")return pairCards(p.complectation||[]);
-  if(id==="workflow")return pairCards(p.workflow||[]);
+  if(id==="washCycle")return stepCards(p.washCycle||[]);
+  if(id==="workflow")return stepCards(p.workflow||[]);
   if(id==="calibration")return pairCards(p.calibration||[]);
   if(id==="assortment")return pairCards(p.assortment||[]);
   if(id==="consumables")return pairCards(p.consumables||[]);
   if(id==="testKits")return pairCards(p.testKits||[]);
+  const custom=(p.customTabs||[]).find((t)=>t.id===id);
+  if(custom)return custom.kind==="steps"?stepCards(custom.rows||[]):pairCards(custom.rows||[]);
   if(id==="substances")return substanceTable(p.substances||[]);
   return "";
 }
