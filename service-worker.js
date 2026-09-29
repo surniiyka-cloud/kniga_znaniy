@@ -1,30 +1,15 @@
-const CACHE="tian-kb-v2-static-1";
-const STATIC=["./","./index.html","./css/app.css","./js/app.js","./js/search.js","./js/router.js","./js/storage.js","./manifest.webmanifest"];
-self.addEventListener("install",(event)=>{
-  event.waitUntil(caches.open(CACHE).then(c=>c.addAll(STATIC)).then(()=>self.skipWaiting()));
-});
-self.addEventListener("activate",(event)=>{
-  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith("tian-kb-v2-")&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
-});
-self.addEventListener("fetch",(event)=>{
-  const req=event.request;
-  if(req.method!=="GET")return;
-  const url=new URL(req.url);
+const CACHE="tian-kb-v2-1";
+const CORE=["./","./index.html","./css/app.css","./js/app.js","./js/router.js","./js/search.js","./js/storage.js","./data/book.json","./data/assets.json","./data/search-index.json","./assets/brand/favicon.svg"];
+self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener("fetch",event=>{
+  if(event.request.method!=="GET")return;
+  const url=new URL(event.request.url);
   if(url.origin!==location.origin)return;
-  if(url.pathname.includes("/data/")){
-    event.respondWith(fetch(req).then(res=>{
-      const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy));return res;
-    }).catch(()=>caches.match(req)));
+  const isData=url.pathname.includes("/data/")||event.request.mode==="navigate";
+  if(isData){
+    event.respondWith(fetch(event.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(event.request,copy));return r;}).catch(()=>caches.match(event.request).then(r=>r||caches.match("./index.html"))));
     return;
   }
-  if(url.pathname.includes("/img/photos/")){
-    event.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(res=>{
-      const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy));return res;
-    })));
-    return;
-  }
-  event.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(res=>{
-    if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy));}
-    return res;
-  })));
+  event.respondWith(caches.match(event.request).then(hit=>hit||fetch(event.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put(event.request,copy));return r;})));
 });
