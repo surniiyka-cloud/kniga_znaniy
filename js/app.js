@@ -6,38 +6,7 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
 const isAdmin=(()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}})();
-const sidebarPrefs={
-  get(){try{return localStorage.getItem("kb_sidebar_pinned")!=="0"}catch{return true}},
-  set(v){try{localStorage.setItem("kb_sidebar_pinned",v?"1":"0")}catch{}}
-};
-function sidebarIsWide(){return window.matchMedia("(min-width:901px)").matches;}
-function sidebarPinned(){return sidebarIsWide()&&sidebarPrefs.get();}
-function applySidebarState(){
-  const pinned=sidebarPinned();
-  document.body.classList.toggle("sidebar-pinned",pinned);
-  document.body.classList.toggle("sidebar-unpinned",!pinned);
-  const pin=q("#sidebarPinBtn");
-  if(pin){
-    pin.setAttribute("aria-pressed",String(pinned));
-    pin.title=pinned?"Открепить панель":"Закрепить панель";
-    pin.textContent=pinned?"⊣":"⊢";
-  }
-  if(pinned)document.body.classList.remove("sidebar-open");
-}
-function toggleSidebarFromBurger(){
-  if(sidebarPinned()){
-    sidebarPrefs.set(false);applySidebarState();
-    return;
-  }
-  document.body.classList.toggle("sidebar-open");
-}
-function toggleSidebarPin(){
-  const next=!sidebarPinned();
-  sidebarPrefs.set(next);
-  applySidebarState();
-  if(!next)document.body.classList.remove("sidebar-open");
-}
-const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
+const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -50,19 +19,211 @@ function title(t){document.title=t?(t+" · Книга знаний TIAN-Трей
 function closeMenu(){document.body.classList.remove("sidebar-open");}
 function crumb(items){return '<div class="crumbs"><button data-route="home">Главная</button>'+items.map((x)=>'<span>›</span>'+(x.route?'<button data-route="'+esc(x.route)+'" data-id="'+esc(x.id||"")+'">'+esc(x.label)+'</button>':'<span>'+esc(x.label)+'</span>')).join("")+'</div>';}
 
+
+function safeSlug(v){return String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9]+/gi,"-").replace(/^-|-$/g,"").slice(0,72)||"item";}
+function displaySections(ch){
+  const base=ch.sections.filter((s)=>isAdmin||!["1.3","2.2.1"].includes(s.id));
+  if(ch.id!=="2")return base;
+  const out=[];let six=false,seven=false;
+  for(const s of base){
+    if(s.id.startsWith("2.6.")){if(!six){out.push({id:"2.6",title:"Анализаторы качества молока",composite:true});six=true;}continue;}
+    if(s.id.startsWith("2.7.")){if(!seven){out.push({id:"2.7",title:"Анализаторы соматических клеток",composite:true});seven=true;}continue;}
+    out.push(s);
+  }
+  return out;
+}
+function cleanPairs(arr){
+  return (arr||[]).filter((x)=>{
+    const l=String(x.label||"").trim(),v=String(x.value||"").trim();
+    return l&&v&&!["Характеристика","Показатель","Особенность","Преимущество","Этап","Функция","Вариант работы","Объект"].includes(l)&&!["Значение","Описание","Практическое значение","Диапазон измерения","Интерпретация"].includes(v);
+  }).map((x)=>[String(x.label).trim(),String(x.value).trim()]);
+}
+function fieldsFromRows(rows){
+  const out=[];
+  for(const r of rows||[]){
+    const l=String(r?.[0]||"").trim(),v=String(r?.[1]||"").trim();
+    if(!l||!v||l.length>90||["Характеристика","Наименование","Преимущество","Показатель","Определяемое вещество"].includes(l))continue;
+    out.push([l,v]);
+  }
+  return out;
+}
+function splitPairBlocks(s){
+  const pairs=s.pairs||[];const blocks=[];let cur=null;
+  for(let i=0;i<pairs.length;i++){
+    const l=String(pairs[i].label||"").trim(),v=String(pairs[i].value||"").trim();
+    if(l==="Характеристика"&&/^(Значение|Данные)$/i.test(v)){if(cur?.name)blocks.push(cur);cur={name:"",fields:[]};continue;}
+    if(l==="Наименование"){
+      if(cur?.name)blocks.push(cur);
+      cur={name:v,fields:[]};continue;
+    }
+    if(!cur)cur={name:"",fields:[]};
+    if(l&&v)cur.fields.push([l,v]);
+  }
+  if(cur?.name)blocks.push(cur);
+  return blocks;
+}
+function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
+  const x=state.sections.get(sectionId);if(!x)return null;
+  const id="catalog-"+safeSlug(sectionId+"-"+name+"-"+(state.sectionCatalog.get(sectionId)?.length||0));
+  const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
+  const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
+  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f};
+  const ctxObj={chapter:x.chapter,section:x.section,product:p};
+  if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
+  state.sectionCatalog.get(sectionId).push(ctxObj);
+  state.products.set(id,ctxObj);
+  if(images?.length)state.assets.productImages[id]=images;
+  return ctxObj;
+}
+function bestImage(sectionId,needle){
+  const imgs=state.assets.sectionImages?.[sectionId]||[], n=safeSlug(needle).replace(/-/g,"");
+  const compact=(v)=>safeSlug(v.split("/").pop()).replace(/-/g,"");
+  return imgs.find((x)=>{const z=compact(x);return n.split(/\d+/)[0]&&z.includes(n.replace(/^экспресстест/,"").slice(0,12));})||imgs[0]||"";
+}
+function buildGarantCards(s){
+  const rows=s.rows||[],starts=[];
+  rows.forEach((r,i)=>{const a=String(r[0]||"").trim();if(i===0&&/GARANT BTSC PLUS/i.test(a))starts.push(i);else if(a==="Наименование"&&/GARANT/i.test(String(r[1]||"")))starts.push(i);});
+  const img=state.assets.sectionImages?.[s.id]?.[0]||"";
+  starts.forEach((st,idx)=>{
+    const en=starts[idx+1]??rows.length, block=rows.slice(st,en);
+    let name=st===0?"Экспресс-тест GARANT BTSC PLUS":String(block[0]?.[1]||"").trim();
+    const fs=[];
+    if(st===0)fs.push(["Наименование",name]);
+    for(const r of block){
+      const l=String(r[0]||"").trim(),v=String(r[1]||"").trim();
+      if(!l||!v||l==="Наименование"||l.length>80)continue;
+      fs.push([l,v]);
+    }
+    registerCatalog(s.id,name,fs,img?[img]:[]);
+  });
+}
+function buildChapter2Catalog(){
+  state.sectionCatalog.clear();
+  const ch=state.chapters.get("2");if(!ch)return;
+  const sBy=(id)=>ch.sections.find((s)=>s.id===id);
+
+  // 2.1.1 — ровно четыре теста
+  const four=[
+    ["4SENSOR KIT 060","img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",[["Производитель","Unisensor, Бельгия"],["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","5 + 5 минут"],["Тип теста","Инкубаторный"],["Артикул","1002.04.008"],["Исследуемый материал","Молоко"]]],
+    ["4SENSOR SENSITIVE","img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",[["Производитель","Unisensor, Бельгия"],["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","5 + 5 минут"],["Тип теста","Инкубаторный"],["Исследуемый материал","Молоко"]]],
+    ["ANKAR MILK TEST 4","img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",[["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","5 + 5 минут"],["Тип теста","Инкубаторный"],["Исследуемый материал","Молоко"]]],
+    ["GARANT 4 ULTRA MILK","img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",[["Производитель","GARANT"],["Определяемые группы","β-лактамы, тетрациклины, хлорамфеникол, стрептомицин"],["Время анализа","3 + 7 минут"],["Тип теста","Безинкубаторный / инкубаторный"],["Исследуемый материал","Молоко"]]]
+  ];
+  four.forEach((x)=>registerCatalog("2.1.1",x[0],x[2],[x[1]]));
+
+  // 2.1.2 — визуальная линейка Unisensor
+  const us=sBy("2.1.2");
+  (state.assets.sectionImages?.["2.1.2"]||[]).forEach((im)=>registerCatalog("2.1.2",visualTitle(im),[["Категория","Экспресс-тест Unisensor"]],[im]));
+
+  const g=sBy("2.1.3");if(g)buildGarantCards(g);
+
+  const d=sBy("2.1.4");
+  if(d)registerCatalog("2.1.4","Delvotest SP-NT / Delvotest T",cleanPairs(d.pairs),[
+    "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-sp-nt.png",
+    "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-t.png"
+  ]);
+
+  const ext=sBy("2.3");if(ext)registerCatalog("2.3","Система EXTENSO",fieldsFromRows(ext.rows),state.assets.sectionImages?.["2.3"]||[]);
+  const inc=sBy("2.4");if(inc)registerCatalog("2.4","Термостатическое устройство TIAS",cleanPairs(inc.pairs),["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"]);
+
+  const readers=sBy("2.5");if(readers){
+    const blocks=splitPairBlocks(readers);
+    blocks.forEach((b,i)=>registerCatalog("2.5",b.name,b.fields,i===0?["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png"]:[]));
+  }
+
+  // объединённые разделы 2.6 и 2.7
+  const sec6=state.sections.get("2.6")?.section,sec7=state.sections.get("2.7")?.section;
+  for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
+    let fs=child.pairs?.length?cleanPairs(child.pairs):fieldsFromRows(child.rows);
+    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fs,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока"});
+  }
+  for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
+    let fs=child.pairs?.length?cleanPairs(child.pairs):fieldsFromRows(child.rows);
+    registerCatalog("2.7",child.title,fs,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток"});
+  }
+
+  // key-value каталоги дальше по главе
+  for(const id of ["2.8","2.9","2.12","2.15","2.16"]){
+    const s=sBy(id);if(!s)continue;
+    const blocks=splitPairBlocks(s);
+    if(blocks.length){
+      blocks.forEach((b,i)=>registerCatalog(id,b.name,b.fields,(state.assets.sectionImages?.[id]||[]).slice(i,i+1)));
+    }else registerCatalog(id,s.title,cleanPairs(s.pairs),state.assets.sectionImages?.[id]||[]);
+  }
+
+  // индикаторные полоски — строка таблицы = отдельная карточка
+  const strips=sBy("2.10");if(strips){
+    (strips.tables||[]).forEach((t)=>{
+      (t.rows||[]).forEach((r)=>{
+        const fs=(t.headers||[]).slice(1).map((h,i)=>[h,r[i+1]]).filter((x)=>x[1]);
+        registerCatalog("2.10",r[0],fs,[],{type:t.title});
+      });
+    });
+  }
+
+  // микотоксины/ГМО — уже структурированные товары
+  // микробиологический контроль — HygieneChek + KangarooSci
+  const micro=sBy("2.13");if(micro){
+    registerCatalog("2.13","Тест-пластины KangarooSci",[["Назначение","Количественное определение микроорганизмов в готовой продукции, сырье и смывах с поверхностей"],["Формат","Готовые тест-пластины"],["Упаковка","12 тест-пластин"],["Считывание","Визуальный количественный подсчёт колоний"]],state.assets.sectionImages?.["2.13"]||[]);
+    const t=micro.tables?.[0];if(t)(t.rows||[]).forEach((r)=>registerCatalog("2.13","HygieneChek Plus · "+r[1]+(r[2]!==r[1]?" / "+r[2]:""),(t.headers||[]).map((h,i)=>[h,r[i]]).filter((x)=>x[1]),[],{article:r[0]}));
+  }
+
+  // питательные среды — каждая строка ассортимента отдельной карточкой
+  const media=sBy("2.14");if(media){
+    const imgs=state.assets.sectionImages?.["2.14"]||[];let imgIndex=0;
+    for(const r of media.rows||[]){
+      const name=String(r[1]||"").trim(),purpose=String(r[3]||"").trim();
+      if(!name||!purpose||name===name.toUpperCase())continue;
+      const fs=[["Назначение",purpose],["Фасовка",r[4]||""],["ТУ / стандарт",r[5]||""]].filter((x)=>x[1]);
+      const im=imgs[imgIndex++]||"";
+      registerCatalog("2.14",name,fs,im?[im]:[]);
+    }
+  }
+}
+function renderSensitivitySection(ch,s){
+  const tests=["4SENSOR KIT 060","4SENSOR SENSITIVE","ANKAR MILK TEST 4","GARANT 4 ULTRA MILK"];
+  const groups=[];let current={name:"Пенициллины",rows:[
+    ["Пенициллин G","2–3","0,5–1","0,5–1","1–1,5"],
+    ["Пенициллин V","3–4","1–3","1–3","—"]
+  ]};groups.push(current);
+  for(const r of (s.rows||[]).slice(1)){
+    const a=String(r[0]||"").trim();
+    if(!a||a.startsWith("Примечание."))continue;
+    if(r.length===1){current={name:a,rows:[]};groups.push(current);continue;}
+    if(a==="Определяемое вещество")continue;
+    if(r.length>=5)current.rows.push([a,r[1]||"—",r[2]||"—",r[3]||"—",r[4]||"—"]);
+  }
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Сравнение чувствительности четырёх тестов по группам веществ. Все значения — ppb (мкг/кг).</p></div></div>'+
+    '<div class="sensitivity-legend">'+tests.map((t,i)=>'<span><b>'+(i+1)+'</b>'+esc(t)+'</span>').join("")+'</div>'+
+    groups.filter((g)=>g.rows.length).map((g)=>'<section class="sensitivity-group"><div class="section-heading compact"><div><h2>'+esc(g.name)+'</h2></div><p>'+g.rows.length+' веществ</p></div><div class="sensitivity-wrap"><table class="sensitivity-table"><thead><tr><th>Вещество</th>'+tests.map((t)=>'<th>'+esc(t)+'</th>').join("")+'</tr></thead><tbody>'+g.rows.map((r)=>'<tr><td>'+esc(r[0])+'</td>'+r.slice(1).map((v)=>'<td class="'+(v==="—"?"empty":"")+'">'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>').join("")+
+    '<p class="sensitivity-note">Знак «—» означает, что значение не приведено в использованной таблице чувствительности. Для полного перечня характеристик открывайте карточку конкретного теста.</p>';
+}
+function renderCatalogSection(ch,s){
+  const items=state.sectionCatalog.get(s.id)||[];
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+items.length+' карточек</p></div></div>'+
+    (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>');
+  if(items.length)q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
+}
 function mapData(){
-  state.products.clear();state.sections.clear();state.chapters.clear();
+  state.products.clear();state.sections.clear();state.chapters.clear();state.sectionCatalog.clear();
   state.book.chapters.forEach((ch)=>{
     state.chapters.set(ch.id,ch);
     ch.sections.forEach((s)=>{
       state.sections.set(s.id,{chapter:ch,section:s});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
+    if(ch.id==="2"){
+      state.sections.set("2.6",{chapter:ch,section:{id:"2.6",title:"Анализаторы качества молока",composite:true}});
+      state.sections.set("2.7",{chapter:ch,section:{id:"2.7",title:"Анализаторы соматических клеток",composite:true}});
+    }
   });
+  buildChapter2Catalog();
 }
 function renderNav(){
   nav.innerHTML=state.book.chapters.map((ch)=>{
-    const sections=ch.sections.filter((s)=>isAdmin||s.id!=="1.3");
+    const sections=displaySections(ch);
     return '<div class="nav-chapter" data-chapter="'+esc(ch.id)+'"><button class="nav-chapter-btn" data-nav-chapter="'+esc(ch.id)+'"><span class="nav-num">'+esc(ch.id)+'</span><span>'+esc(ch.title)+'</span><span class="nav-caret">›</span></button><div class="nav-sub">'+sections.map((s)=>'<a class="nav-link" data-nav-section="'+esc(s.id)+'" href="'+href("section",s.id)+'">'+esc(s.id)+' · '+esc(s.title)+'</a>').join("")+'</div></div>';
   }).join("");
 }
@@ -212,11 +373,13 @@ function renderNormsSection(ch,s){
 }
 function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
-  const sections=ch.sections.filter((s)=>isAdmin||s.id!=="1.3");
+  const sections=displaySections(ch);
   app.innerHTML=crumb([{label:"Глава "+ch.id}])+'<div class="page-head"><div><span class="eyebrow">Глава '+esc(ch.id)+'</span><h1>'+esc(ch.title)+'</h1><p>'+sections.length+' подразделов</p></div></div><section class="chapter-grid">'+sections.map((s)=>'<article class="chapter-card" data-num="'+esc(s.id)+'" data-open-section="'+esc(s.id)+'"><span class="chapter-num">'+esc(s.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(s.title)+'</h3><p>'+((s.products||[]).length?((s.products||[]).length+" карточек"):"Справочный материал")+'</p></article>').join("")+'</section>';
 }
 function renderSection(id){
-  const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;if(id==="1.3"&&!isAdmin)return notFound();title(s.id+" "+s.title);
+  const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;if(["1.3","2.2.1"].includes(id)&&!isAdmin)return notFound();title(s.id+" "+s.title);
+  if(id==="2.2.2")return renderSensitivitySection(ch,s);
+  if(ch.id==="2" && (state.sectionCatalog.get(id)?.length))return renderCatalogSection(ch,s);
   if(id==="1.1")return renderTermsSection(ch,s);
   if(id==="1.2")return renderNormsSection(ch,s);
   const items=(s.products||[]).map((p)=>({chapter:ch,section:s,product:p}));
@@ -229,6 +392,7 @@ function renderSection(id){
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function fields(p){
+  if(p.detailFields?.length)return p.detailFields.filter((x)=>x?.[0]&&x?.[1]);
   return [["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose],["Характеристики / особенности",p.features],["Производитель",p.manufacturer],["Страна",p.country]].filter((x)=>x[1]);
 }
 function renderProduct(id){
@@ -292,8 +456,7 @@ function bind(){
   q("#versionLogBtn").onclick=()=>openVersionLog();
   document.querySelectorAll("[data-close-version]").forEach((x)=>x.onclick=()=>closeVersionLog());
   q("#themeBtn").onclick=()=>{const t=cycleTheme();toast("Тема: "+({"system":"как в системе","light":"светлая","dark":"тёмная"}[t]));};
-  q("#openSidebar").onclick=toggleSidebarFromBurger;q("#sidebarPinBtn").onclick=toggleSidebarPin;q("#closeSidebar").onclick=closeMenu;q("#sidebarBackdrop").onclick=closeMenu;
-  window.addEventListener("resize",applySidebarState);
+  q("#openSidebar").onclick=()=>document.body.classList.add("sidebar-open");q("#closeSidebar").onclick=closeMenu;q("#sidebarBackdrop").onclick=closeMenu;
   nav.onclick=(e)=>{const b=e.target.closest("[data-nav-chapter]");if(b)document.querySelector('.nav-chapter[data-chapter="'+CSS.escape(b.dataset.navChapter)+'"]')?.classList.toggle("open");};
   searchInput.oninput=()=>searchRender(searchInput.value);searchInput.onfocus=()=>{if(searchInput.value.trim())searchRender(searchInput.value);};
   searchPanel.onclick=(e)=>{const x=e.target.closest("[data-search-id]");if(x){searchPanel.hidden=true;searchInput.value="";go("product",x.dataset.searchId);}};
@@ -346,7 +509,6 @@ function openLightbox(id,i){
 }
 async function init(){
   applyTheme();
-  applySidebarState();
   const rs=await Promise.all([
     fetch("./data/book.json",{cache:"no-store"}),
     fetch("./data/assets.json",{cache:"no-store"}),
