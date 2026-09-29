@@ -1,0 +1,30 @@
+name: Карта структуры книги v2
+
+on:
+  push:
+    branches: [site-v2]
+    paths:
+      - 'scripts/inspect-outline.mjs'
+      - '.github/workflows/outline-audit-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  outline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Прочитать оглавление новой Книги знаний
+        run: node scripts/inspect-outline.mjs > outline-audit.json
+      - name: Сохранить карту
+        uses: actions/upload-artifact@v4
+        with:
+          name: outline-audit-v2
+          path: outline-audit.json
+          retention-days: 14
