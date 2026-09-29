@@ -42,6 +42,7 @@ function inspectRows(rows) {
     colCount: nonempty.reduce((m,r)=>Math.max(m,r.length),0),
     suggestedTitle,
     sample,
+    rawSample: nonempty.slice(0,3).map(r=>r.slice(0,8)),
     firstColumn: nonempty.map(r=>clean(r[0])).filter(Boolean)
   };
 }
