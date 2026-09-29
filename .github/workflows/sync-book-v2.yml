@@ -39,5 +39,6 @@ jobs:
             echo "Изменений данных нет"
           else
             git commit -m "data: sync Knowledge Book v2"
+            git pull --rebase origin ${{ github.ref_name }}
             git push origin HEAD:${{ github.ref_name }}
           fi
