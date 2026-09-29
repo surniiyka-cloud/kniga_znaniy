@@ -100,11 +100,11 @@ for(const img of images){
     const best=scored[0], second=scored[1];
     const close=scored.filter(x=>best.score-x.score<7);
     if(close.length>1){
-      ambiguous.push({image:img.path,candidates:close.slice(0,5).map(x=>({id:x.p.candidateId,name:x.p.name,section:x.p.section,score:+x.score.toFixed(1)}))});
+      ambiguous.push({image:img.path,candidates:close.slice(0,5).map(x=>({id:x.p.id,name:x.p.name,section:x.p.section,score:+x.score.toFixed(1)}))});
     }else{
       const p=best.p;
-      (productAssets[p.candidateId] ||= []).push(img.path);
-      imageAssignments[img.path]={type:"product",id:p.candidateId,section:p.section,score:+best.score.toFixed(1)};
+      (productAssets[p.id] ||= []).push(img.path);
+      imageAssignments[img.path]={type:"product",id:p.id,section:p.section,score:+best.score.toFixed(1)};
       continue;
     }
   }
@@ -126,8 +126,8 @@ const report={
   imagesMatched:matchedImages.length,
   imagesUnmatched:images.filter(x=>!imageAssignments[x.path]).map(x=>x.path),
   productsTotal:products.length,
-  productsWithImages:products.filter(p=>productAssets[p.candidateId]?.length).length,
-  productsWithoutImages:products.filter(p=>!productAssets[p.candidateId]?.length).map(p=>({id:p.candidateId,section:p.section,name:p.name,article:p.article||""})),
+  productsWithImages:products.filter(p=>productAssets[p.id]?.length).length,
+  productsWithoutImages:products.filter(p=>!productAssets[p.id]?.length).map(p=>({id:p.id,section:p.section,name:p.name,article:p.article||""})),
   ambiguous
 };
 await fs.writeFile("data/assets.json",JSON.stringify(assets,null,2)+"\n");
