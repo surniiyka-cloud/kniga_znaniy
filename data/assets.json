@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T09:47:14.845Z",
+  "generatedAt": "2026-09-29T09:51:21.915Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -70,11 +70,13 @@
     "3.6-wipe1-материал-протирочный-двухслойный-wipe1": [
       "img/photos/15-bumaga-polotentsa-salfetki/15-wipe1.png"
     ],
+    "3.7-0406-091-5506-2-5503-5-0406-101-фильтр-рукавный": [
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png",
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-rukavnyy-patroonnyy-filtr.png"
+    ],
     "3.7-1105-043-корпус-для-рукавного-патронного-фильтра": [
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-dlya-rukavnogo.png"
-    ],
-    "3.7-0406-091-5506-2-5503-5-0406-101-фильтр-рукавный": [
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-rukavnyy-patroonnyy-filtr.png"
     ],
     "3.7-2214-1-0406-096-2214-2-2214-5-фильтр-tian-premium": [
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-tian-premium.png"
@@ -142,6 +144,12 @@
     "9.1-генератор-горячего-тумана-th-180": [
       "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png"
     ],
+    "8.1-0404-001-ерш-для-коллектора-дпр-7": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png"
+    ],
+    "8.1-0404-005-ерш-для-молокопроводов-дф-00-070": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molokoprovod-df00-070.png"
+    ],
     "8.2-0403-120-скребок-ankar": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-skrebok-ankar.png"
     ],
@@ -168,6 +176,9 @@
     ],
     "11.3-314-сумка-поясная-для-дояра": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-doyara-314.png"
+    ],
+    "11.1-0205-120-s-0205-121-m-0205-122-l-0205-123-xl-перчатки-нитриловые-tian-black": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril-black.png"
     ],
     "4.9-экспресс-тест-для-определения-уровня-мочевины-в-молоке-mun-rapid": [
       "img/photos/22-diagnostika-obmena-veshchestv-krs/22-mate-mun-ekspress-test-mocheviny-v-moloke.png"
@@ -213,32 +224,20 @@
       "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120-mm-3-nozha-16316.png",
       "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120mm-6-nozhey-16318.png",
       "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-protrim-3-nozha.png",
-      "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png"
-    ],
-    "5.2-0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей": [
-      "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-6-nozhey.png",
-      "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-7-nozhey.png"
+      "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-6-lezviy-v-komplekte.png",
+      "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-7-lezviy-v-komplekte.png"
     ],
     "5.2-0208-059-копытный-рашпиль": [
       "img/photos/24-uhod-za-kopytami/24-kopytnyy-rashpil-dick-200-x-45-x-5-mm.png"
-    ],
-    "5.2-0208-051-набор-ножей": [
-      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png",
-      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png"
     ],
     "5.2-0208-020-набор-по-уходу-за-копытами-technobase-8000": [
       "img/photos/24-uhod-za-kopytami/24-nabor-po-uhodu-za-kopytami-technobase-8000.png"
     ],
     "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий": [
-      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
-      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-uzkiy-16801.png"
     ],
     "5.2-0208-062-пара-сменных-лезвий-для-щипцов": [
       "img/photos/24-uhod-za-kopytami/24-para-smennyh-lezviy-dlya-schiptsov-obrabotki-kopyt-164.png"
-    ],
-    "5.2-0208-007-рашпиль-для-обработки-копыт-disc": [
-      "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png"
     ],
     "5.2-0202-018-режущий-диск-для-копыт-p6": [
       "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-105mm-16358.png",
@@ -282,6 +281,9 @@
       "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-sp-nt.png",
       "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-t.png"
     ],
+    "2.1.3": [
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png"
+    ],
     "2.3": [
       "img/photos/05-sistema-extenso/05-sistema-extenso.png"
     ],
@@ -290,6 +292,30 @@
     ],
     "2.15": [
       "img/photos/07-turbidofluorimetr-biotf/07-turbidofluorimetr-biotf.png"
+    ],
+    "2.6.4": [
+      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png"
+    ],
+    "2.6.3": [
+      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-bez-printera.png",
+      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-s-printerom.png"
+    ],
+    "2.6.6": [
+      "img/photos/08-analizatory-kachestva-moloka/08-tias-agro-plus.png"
+    ],
+    "2.6.5": [
+      "img/photos/08-analizatory-kachestva-moloka/08-tias-agro.png"
+    ],
+    "2.6.7": [
+      "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check-plus.png",
+      "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check.png"
+    ],
+    "2.7.1": [
+      "img/photos/09-analizatory-somatiki/09-ekomilk-horizon.png",
+      "img/photos/09-analizatory-somatiki/09-ekomilk-scan.png"
+    ],
+    "2.7.2": [
+      "img/photos/09-analizatory-somatiki/09-tias-somcell.png"
     ],
     "2.16": [
       "img/photos/10-lyuminometr/10-lyuminometr.png"
@@ -334,8 +360,6 @@
     ],
     "3.7": [
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-elementy-filtruyushchie-rb.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png",
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-filtra.png"
     ],
     "8.3": [
@@ -356,6 +380,9 @@
       "img/photos/18-dezinfektsiya-generatory-tumana/18-th-250-h400.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-tn-fog-130.png"
     ],
+    "11.1": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-vinilovye-tian.png"
+    ],
     "4.3": [
       "img/photos/21-analiz-pischevareniya-krs-pensilvanskoe-sito/21-naznachenie-dokumenta.png"
     ],
@@ -369,6 +396,8 @@
       "img/photos/24-uhod-za-kopytami/24-bandazh-dlya-kopyt-samoklyaschiysya-10h450sm-ankar-bandazh-dlya-kopyt-samoklyaschiysya-7-5h450sm-ankar.png",
       "img/photos/24-uhod-za-kopytami/24-bashmak-dlya-kopyta-shoof.png",
       "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-112-mm-10-sht-v-upakovke-16104-10.png",
+      "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-6-nozhey.png",
+      "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-7-nozhey.png",
       "img/photos/24-uhod-za-kopytami/24-dozirovochnyy-pistolet-dlya-technovit-2-bond.png",
       "img/photos/24-uhod-za-kopytami/24-dozirovochnyy-pistolet-dlya-technovit-2cb-dlya-kartridzhey-160-ml.png",
       "img/photos/24-uhod-za-kopytami/24-kartridzh-technovit-2-bond-160-ml.png",
@@ -376,6 +405,8 @@
       "img/photos/24-uhod-za-kopytami/24-kartridzh-technovit-2cb-25ml.png",
       "img/photos/24-uhod-za-kopytami/24-kopytnyy-nozh-dvoynoy-uzkiy.png",
       "img/photos/24-uhod-za-kopytami/24-nabor-dlya-povrezhdennyh-kopyt-shoof.png",
+      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png",
+      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png",
       "img/photos/24-uhod-za-kopytami/24-nachalnyy-komplekt-technovit-2-bond-s-dozirovochnym-pistoletom-10-primeneniy.png",
       "img/photos/24-uhod-za-kopytami/24-nakonechniki-smesiteli-12-shtuk-dlya-technovit-2cb.png",
       "img/photos/24-uhod-za-kopytami/24-nakonechniki-smesiteli-25-shtuk-dlya-technovit-2-bond.png",
@@ -385,7 +416,9 @@
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-aesculap-pravostoronniy-uzkiy-vc320r.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-pravostoronniy-uzkiy-16163.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-dvuhstoronniy-sredniy-16805.png",
+      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-odnostoronniy-levyy-uzkiy-16803-klinok-s-odnim-lezviem-sleva-uzkiy.png",
+      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-superprofi-odnostoronniy-levyy-uzkiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-superprofi-odnostoronniy-pravyy-uzkiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dvuhstoronniy-aesculap-shirokiy-vc317v.png",
@@ -398,12 +431,12 @@
       "img/photos/24-uhod-za-kopytami/24-originalnye-kopytnye-kleschi-knipex.png",
       "img/photos/24-uhod-za-kopytami/24-pasta-ortopedicheskaya-zhivino-banka-500g.png",
       "img/photos/24-uhod-za-kopytami/24-povyazka-degtevaya-kromberg-dlina-25-m-shirina-45-mm-1638.png",
+      "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png",
       "img/photos/24-uhod-za-kopytami/24-schiptsy-bokovye-dlya-obrabotki-kopyt-60-sm.png",
+      "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png",
       "img/photos/24-uhod-za-kopytami/24-sredstvo-dlya-uhoda-za-kopytami-tar-paste.png",
       "img/photos/24-uhod-za-kopytami/24-sredstvo-gigienicheskoe-dlya-obrabotki-kopyt-tian-noof.png",
       "img/photos/24-uhod-za-kopytami/24-stalnaya-obsechka-dick.png",
-      "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-6-lezviy-v-komplekte.png",
-      "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-7-lezviy-v-komplekte.png",
       "img/photos/24-uhod-za-kopytami/24-zaschita-dlya-kopyt-korov-loshadey.png"
     ]
   }

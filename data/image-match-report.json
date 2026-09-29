@@ -1,30 +1,19 @@
 {
-  "generatedAt": "2026-09-29T09:47:14.845Z",
+  "generatedAt": "2026-09-29T09:51:21.915Z",
   "imagesTotal": 338,
-  "imagesMatched": 203,
+  "imagesMatched": 218,
   "imagesUnmatched": [
     "img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png",
     "img/photos/03-testy-dopolnitelnyh-grupp/03-aminosensor.png",
     "img/photos/03-testy-dopolnitelnyh-grupp/03-cowsensor.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png",
     "img/photos/03-testy-dopolnitelnyh-grupp/03-milksensor-ltse.png",
     "img/photos/03-testy-dopolnitelnyh-grupp/03-quinosensor.png",
     "img/photos/03-testy-dopolnitelnyh-grupp/03-sulfasensor.png",
     "img/photos/03-testy-dopolnitelnyh-grupp/03-tylosensor.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-6-parametrov.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-9-parametrov.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-bez-printera.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-s-printerom.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-tias-agro-plus.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-tias-agro.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check-plus.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check.png",
-    "img/photos/09-analizatory-somatiki/09-ekomilk-horizon.png",
-    "img/photos/09-analizatory-somatiki/09-ekomilk-scan.png",
-    "img/photos/09-analizatory-somatiki/09-tias-somcell.png",
     "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png",
     "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-delvotest.png",
     "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-duo.png",
@@ -61,9 +50,7 @@
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-uddero-sprayer.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-doilnyh.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-pl-iso.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molochnye-shlangi-dpr10.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molokoprovod-df00-070.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-patrubki-dpr9.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-soskovaya-rezina-dpr8.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-10x150x500.png",
@@ -107,11 +94,9 @@
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-kasper-belyy.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-naplechnik-315.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-napleshnik.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-vinilovye-tian.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-plash-317.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-shapochka-sharlotta.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-vetvracha-316.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril-black.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
@@ -1955,10 +1940,22 @@
       "article": "-"
     },
     {
+      "id": "5.2-0208-051-набор-ножей",
+      "section": "5.2",
+      "name": "Набор ножей",
+      "article": "0208.051"
+    },
+    {
       "id": "5.2-0208-048-стандартный-диск-для-обработки-копыт-super",
       "section": "5.2",
       "name": "Стандартный диск для обработки копыт SUPER",
       "article": "0208.048"
+    },
+    {
+      "id": "5.2-0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей",
+      "section": "5.2",
+      "name": "Дисковый нож для обработки копыт BTC, 6 ножей",
+      "article": "0208.046"
     },
     {
       "id": "5.2-0208-060-щипцы-боковые-для-обработки-копыт",
@@ -1989,6 +1986,12 @@
       "section": "5.2",
       "name": "Точило для ножей",
       "article": "0208.171"
+    },
+    {
+      "id": "5.2-0208-007-рашпиль-для-обработки-копыт-disc",
+      "section": "5.2",
+      "name": "Рашпиль для обработки копыт DISC",
+      "article": "0208.007"
     },
     {
       "id": "5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap",
@@ -3299,12 +3302,6 @@
       "article": "0404.038"
     },
     {
-      "id": "8.1-0404-001-ерш-для-коллектора-дпр-7",
-      "section": "8.1",
-      "name": "Ёрш для коллектора ДПР-7",
-      "article": "0404.001"
-    },
-    {
       "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
       "section": "8.1",
       "name": "Ёрш для сосковой резины ДПР-8",
@@ -3321,12 +3318,6 @@
       "section": "8.1",
       "name": "Ёрш для молочных шлангов ДПР-10",
       "article": "0404.004"
-    },
-    {
-      "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
-      "section": "8.1",
-      "name": "Ёрш для молокопроводов ДФ-00.070",
-      "article": "0404.005"
     },
     {
       "id": "8.2-0403-072-вилы-для-соломы",
@@ -4163,12 +4154,6 @@
       "article": "0205.124 — S; 0205.125 — M; 0205.126 — L; 0205.127 — XL"
     },
     {
-      "id": "11.1-0205-120-s-0205-121-m-0205-122-l-0205-123-xl-перчатки-нитриловые-tian-black",
-      "section": "11.1",
-      "name": "Перчатки нитриловые TIAN BLACK",
-      "article": "0205.120 — S; 0205.121 — M; 0205.122 — L; 0205.123 — XL"
-    },
-    {
       "id": "11.1-0205-025-s-0205-026-m-0205-027-l-0205-028-xl-перчатки-нитриловые-milkmaster",
       "section": "11.1",
       "name": "Перчатки нитриловые MILKMASTER",
@@ -4302,31 +4287,31 @@
           "id": "3.6-0302-014-бумага-для-вымени-кр206",
           "name": "Бумага для вымени КР206",
           "section": "3.6",
-          "score": 84
+          "score": 92
         },
         {
           "id": "3.6-0302-019-бумага-для-вымени-ankar",
           "name": "Бумага для вымени ANKAR",
           "section": "3.6",
-          "score": 84
+          "score": 92
         },
         {
           "id": "3.6-w202-бумага-для-вымени-w202",
           "name": "Бумага для вымени W202",
           "section": "3.6",
-          "score": 84
+          "score": 92
         },
         {
           "id": "3.6-w202-бумага-для-вымени-w203",
           "name": "Бумага для вымени W203",
           "section": "3.6",
-          "score": 84
+          "score": 92
         },
         {
           "id": "3.6-0302-015-бумага-для-вымени-кр210",
           "name": "Бумага для вымени КР210",
           "section": "3.6",
-          "score": 84
+          "score": 92
         }
       ]
     },
@@ -4354,13 +4339,13 @@
           "id": "8.3-tian-superalkali-hw-foam-no-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
           "section": "8.3",
-          "score": 92
+          "score": 98
         },
         {
           "id": "8.3-tian-superalkali-hw-foam-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM CL",
           "section": "8.3",
-          "score": 92
+          "score": 98
         }
       ]
     },
@@ -4371,13 +4356,13 @@
           "id": "8.3-tian-superalkali-hw-foam-no-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
           "section": "8.3",
-          "score": 92
+          "score": 98
         },
         {
           "id": "8.3-tian-superalkali-hw-foam-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM CL",
           "section": "8.3",
-          "score": 92
+          "score": 98
         }
       ]
     },
@@ -4405,13 +4390,13 @@
           "id": "5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian",
           "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
           "section": "5.6",
-          "score": 84
+          "score": 86
         },
         {
           "id": "5.6-0203-055-антибрык-anti-kick-сталь",
           "name": "Антибрык ANTI-KICK, сталь",
           "section": "5.6",
-          "score": 84
+          "score": 86
         }
       ]
     },
@@ -4445,13 +4430,98 @@
           "id": "5.2-0208-001-средство-для-обработки-копыт-ankar-hoof",
           "name": "Средство для обработки копыт ANKAR HOOF",
           "section": "5.2",
-          "score": 92
+          "score": 98
         },
         {
           "id": "5.2-0208-137-средство-для-обработки-копыт-tian-hoof",
           "name": "Средство для обработки копыт TIAN HOOF",
           "section": "5.2",
+          "score": 98
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-6-nozhey.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+          "name": "Диск для обработки копыт",
+          "section": "5.2",
+          "score": 104
+        },
+        {
+          "id": "5.2-0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей",
+          "name": "Дисковый нож для обработки копыт BTC, 6 ножей",
+          "section": "5.2",
+          "score": 98
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-7-nozhey.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+          "name": "Диск для обработки копыт",
+          "section": "5.2",
+          "score": 104
+        },
+        {
+          "id": "5.2-0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей",
+          "name": "Дисковый нож для обработки копыт BTC, 6 ножей",
+          "section": "5.2",
+          "score": 98
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-kopytnyy-nozh-dvoynoy-uzkiy.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-167-0208-168-0208-166-нож-для-копыт-узкий",
+          "name": "Нож для копыт узкий",
+          "section": "5.2",
           "score": 92
+        },
+        {
+          "id": "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
+          "name": "Нож для копыт PROFI узкий",
+          "section": "5.2",
+          "score": 92
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+          "name": "Диск для обработки копыт",
+          "section": "5.2",
+          "score": 104
+        },
+        {
+          "id": "5.2-0208-051-набор-ножей",
+          "name": "Набор ножей",
+          "section": "5.2",
+          "score": 98
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+          "name": "Диск для обработки копыт",
+          "section": "5.2",
+          "score": 104
+        },
+        {
+          "id": "5.2-0208-051-набор-ножей",
+          "name": "Набор ножей",
+          "section": "5.2",
+          "score": 98
         }
       ]
     },
@@ -4462,13 +4532,47 @@
           "id": "5.2-0208-167-0208-168-0208-166-нож-для-копыт-узкий",
           "name": "Нож для копыт узкий",
           "section": "5.2",
-          "score": 84
+          "score": 86
         },
         {
           "id": "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
           "name": "Нож для копыт PROFI узкий",
           "section": "5.2",
-          "score": 84
+          "score": 86
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
+      "candidates": [
+        {
+          "id": "5.2-16801-16803-16805-ножи-для-копыт-profi",
+          "name": "Ножи для копыт PROFI",
+          "section": "5.2",
+          "score": 86
+        },
+        {
+          "id": "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
+          "name": "Нож для копыт PROFI узкий",
+          "section": "5.2",
+          "score": 86
+        }
+      ]
+    },
+    {
+      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
+      "candidates": [
+        {
+          "id": "5.2-16801-16803-16805-ножи-для-копыт-profi",
+          "name": "Ножи для копыт PROFI",
+          "section": "5.2",
+          "score": 86
+        },
+        {
+          "id": "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
+          "name": "Нож для копыт PROFI узкий",
+          "section": "5.2",
+          "score": 86
         }
       ]
     },
@@ -4496,6 +4600,41 @@
       ]
     },
     {
+      "image": "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+          "name": "Диск для обработки копыт",
+          "section": "5.2",
+          "score": 92
+        },
+        {
+          "id": "5.2-0208-175-щипцы-для-обработки-копыт",
+          "name": "Щипцы для обработки копыт",
+          "section": "5.2",
+          "score": 92
+        },
+        {
+          "id": "5.2-0208-007-рашпиль-для-обработки-копыт-disc",
+          "name": "Рашпиль для обработки копыт DISC",
+          "section": "5.2",
+          "score": 92
+        },
+        {
+          "id": "5.2-0208-059-копытный-рашпиль",
+          "name": "Копытный рашпиль",
+          "section": "5.2",
+          "score": 92
+        },
+        {
+          "id": "5.2-0208-011-ванна-для-обработки-копыт",
+          "name": "Ванна для обработки копыт",
+          "section": "5.2",
+          "score": 92
+        }
+      ]
+    },
+    {
       "image": "img/photos/24-uhod-za-kopytami/24-schiptsy-bokovye-dlya-obrabotki-kopyt-60-sm.png",
       "candidates": [
         {
@@ -4513,19 +4652,36 @@
       ]
     },
     {
+      "image": "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+          "name": "Диск для обработки копыт",
+          "section": "5.2",
+          "score": 98
+        },
+        {
+          "id": "5.2-0208-048-стандартный-диск-для-обработки-копыт-super",
+          "name": "Стандартный диск для обработки копыт SUPER",
+          "section": "5.2",
+          "score": 92
+        }
+      ]
+    },
+    {
       "image": "img/photos/24-uhod-za-kopytami/24-sredstvo-gigienicheskoe-dlya-obrabotki-kopyt-tian-noof.png",
       "candidates": [
         {
           "id": "5.2-0208-001-средство-для-обработки-копыт-ankar-hoof",
           "name": "Средство для обработки копыт ANKAR HOOF",
           "section": "5.2",
-          "score": 84
+          "score": 86
         },
         {
           "id": "5.2-0208-137-средство-для-обработки-копыт-tian-hoof",
           "name": "Средство для обработки копыт TIAN HOOF",
           "section": "5.2",
-          "score": 84
+          "score": 86
         }
       ]
     }
