@@ -7,12 +7,14 @@ export function route(){
   if(parts[0]==="chapter"&&parts[1])return {name:"chapter",id:parts[1]};
   if(parts[0]==="favorites")return {name:"favorites"};
   if(parts[0]==="compare")return {name:"compare"};
+  if(parts[0]==="diagnostics")return {name:"diagnostics"};
   return {name:"home"};
 }
 export function href(name,id=""){
   if(name==="home")return "#/home";
   if(name==="favorites")return "#/favorites";
   if(name==="compare")return "#/compare";
+  if(name==="diagnostics")return "#/diagnostics";
   return `#/${name}/${encodeURIComponent(id)}`;
 }
 export function go(name,id=""){location.hash=href(name,id)}
