@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-29T10:01:54.702Z",
+  "generatedAt": "2026-09-29T10:12:48.486Z",
   "imagesTotal": 338,
-  "imagesMatched": 264,
+  "imagesMatched": 268,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -34,11 +34,8 @@
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-drenazhnyy.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-ergonomichnaya.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-monoblok.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-zhestkaya.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-posudy.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-rezervuarov.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-korotkaya-ruchka.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-krug-125-myagkaya.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-210x70.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-285x130.png",
@@ -46,7 +43,6 @@
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrebkovaya-180x60.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-letagita.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-shchetka-doilnyy-stakan-60sm.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-chernoe.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-oranzhevoe.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-3-zuba.png",
@@ -799,32 +795,12 @@
       ]
     },
     {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png",
-      "candidates": []
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-zhestkaya.png",
-      "candidates": []
-    },
-    {
       "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-posudy.png",
       "candidates": []
     },
     {
       "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-rezervuarov.png",
       "candidates": []
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-korotkaya-ruchka.png",
-      "candidates": [
-        {
-          "id": "8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая",
-          "name": "Ручка для щётки для пола ANKAR, зелёная",
-          "article": "0404.060",
-          "section": "8.1",
-          "score": 0.25
-        }
-      ]
     },
     {
       "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-krug-125-myagkaya.png",
@@ -875,18 +851,6 @@
     {
       "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
       "candidates": []
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-shchetka-doilnyy-stakan-60sm.png",
-      "candidates": [
-        {
-          "id": "8.1-0404-036-щетка-ankar-для-доильного-стакана",
-          "name": "Щётка ANKAR для доильного стакана",
-          "article": "0404.036",
-          "section": "8.1",
-          "score": 0.25
-        }
-      ]
     },
     {
       "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-chernoe.png",
@@ -1247,7 +1211,7 @@
     }
   ],
   "productsTotal": 776,
-  "productsWithImages": 116,
+  "productsWithImages": 119,
   "productsWithoutImages": [
     {
       "id": "2.11-10001311-agrastrip-rur-hs-bulk-grain",
@@ -4274,18 +4238,6 @@
       "article": "0404.052"
     },
     {
-      "id": "8.1-0404-053-щетка-с-короткой-рукояткой-ankar",
-      "section": "8.1",
-      "name": "Щётка с короткой рукояткой ANKAR",
-      "article": "0404.053"
-    },
-    {
-      "id": "8.1-0404-054-щетка-с-длинной-рукояткой-ankar",
-      "section": "8.1",
-      "name": "Щётка с длинной рукояткой ANKAR",
-      "article": "0404.054"
-    },
-    {
       "id": "8.1-0404-055-щетка-для-молочных-танков-ankar",
       "section": "8.1",
       "name": "Щётка для молочных танков ANKAR",
@@ -4326,12 +4278,6 @@
       "section": "8.1",
       "name": "Щётка для молокопроводов / танков",
       "article": "0404.037"
-    },
-    {
-      "id": "8.1-0404-036-щетка-ankar-для-доильного-стакана",
-      "section": "8.1",
-      "name": "Щётка ANKAR для доильного стакана",
-      "article": "0404.036"
     },
     {
       "id": "8.1-0404-039-щетка-ankar-для-сосковой-резины-с-деревянной-ручкой",
