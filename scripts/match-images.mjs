@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const book=JSON.parse(await fs.readFile("data/book.json","utf8"));
+const aliases=JSON.parse(await fs.readFile("data/image-aliases.json","utf8").catch(()=>"{}"));
 const root=path.resolve("img/photos");
 const folderHints={
   "02-testy-4-gruppy":["2.1.1"],
@@ -113,7 +114,28 @@ const productAssets={};
 const sectionAssets={};
 const imageAssignments={};
 const ambiguous=[];
+const invalidAliases=[];
 for(const img of images){
+  const manual=aliases[img.path];
+  if(manual){
+    if(manual.product){
+      const p=products.find(x=>x.id===manual.product);
+      if(p){
+        (productAssets[p.id] ||= []).push(img.path);
+        imageAssignments[img.path]={type:"product",id:p.id,section:p.section,score:999,source:"alias"};
+        continue;
+      }
+      invalidAliases.push({image:img.path,target:manual.product,type:"product"});
+    }else if(manual.section){
+      const s=sectionTitles.find(x=>x.section===manual.section);
+      if(s){
+        (sectionAssets[s.section] ||= []).push(img.path);
+        imageAssignments[img.path]={type:"section",id:s.section,score:999,source:"alias"};
+        continue;
+      }
+      invalidAliases.push({image:img.path,target:manual.section,type:"section"});
+    }
+  }
   const scored=products.map(p=>{
     const e=scoreImage(img,p); return {p,...e};
   }).filter(x=>x.strong&&x.score>=76).sort((a,b)=>b.score-a.score);
@@ -159,7 +181,8 @@ const report={
   productsTotal:products.length,
   productsWithImages:products.filter(p=>productAssets[p.id]?.length).length,
   productsWithoutImages:products.filter(p=>!productAssets[p.id]?.length).map(p=>({id:p.id,section:p.section,name:p.name,article:p.article||""})),
-  ambiguous
+  ambiguous,
+  invalidAliases
 };
 await fs.writeFile("data/assets.json",JSON.stringify(assets,null,2)+"\n");
 await fs.writeFile("data/image-match-report.json",JSON.stringify(report,null,2)+"\n");
