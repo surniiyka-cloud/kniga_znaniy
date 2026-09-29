@@ -92,8 +92,10 @@ a{color:inherit}
 .nav-link.active{color:#fff;background:rgba(202,77,23,.28);box-shadow:inset 3px 0 0 var(--orange)}
 .sidebar-foot{
   padding:13px 18px;border-top:1px solid rgba(255,255,255,.09);
-  color:rgba(255,255,255,.56);font-size:11px
+  color:rgba(255,255,255,.56);font-size:11px;display:grid;gap:8px
 }
+.diag-link{color:rgba(255,255,255,.78);text-decoration:none;font-weight:700}
+.diag-link:hover{color:#fff}
 .workspace{margin-left:var(--sidebar);min-height:100vh}
 .topbar{
   position:sticky;top:0;z-index:20;height:var(--topbar);display:flex;align-items:center;gap:14px;
@@ -312,3 +314,9 @@ a{color:inherit}
   .lightbox{padding:60px 14px}
   .lightbox-prev{left:8px}.lightbox-next{right:8px}
 }
+
+.diag-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.diag-item{padding:15px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}
+.diag-item b{display:block;font-size:22px;color:var(--green)}
+.diag-item span{font-size:11px;color:var(--muted)}
+@media(max-width:760px){.diag-grid{grid-template-columns:1fr 1fr}}
