@@ -926,3 +926,49 @@ body.modal-open{overflow:hidden}
     top:0;
   }
 }
+
+
+/* v2.0.10 deep sheet grouping */
+.step-cards{
+  display:grid;
+  gap:10px;
+}
+.step-card{
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  padding:13px 14px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--surface-2);
+}
+.step-card>span{
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:var(--green);
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+}
+.step-card strong{
+  display:block;
+  margin:1px 0 4px;
+  font-size:11.5px;
+  color:var(--green);
+}
+.step-card p{
+  margin:0;
+  font-size:12px;
+  line-height:1.58;
+  color:var(--text);
+}
+.product-tabs{
+  scrollbar-width:thin;
+}
+.product-tabs .tab{
+  flex:0 0 auto;
+}
