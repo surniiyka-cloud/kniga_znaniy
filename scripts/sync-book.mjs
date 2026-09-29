@@ -3,6 +3,7 @@ import crypto from "node:crypto";
 
 const manifest=JSON.parse(await fs.readFile("data/sheets-manifest.json","utf8"));
 const sections=JSON.parse(await fs.readFile("data/sections.json","utf8"));
+const packedOverrides=JSON.parse(await fs.readFile("data/packed-overrides.json","utf8").catch(()=>"{}"));
 const sheetId=manifest.spreadsheetId;
 
 function clean(v){
@@ -183,7 +184,48 @@ function collectNotes(rows){
   }
   return [...new Set(notes)];
 }
-function classify(inputRows){
+
+function applyPackedOverride(inputRows,meta){
+  const spec=packedOverrides[meta?.section];
+  if(!spec)return null;
+  const products=(spec.products||[]).map((p,i)=>{
+    const obj={...p,sourceRow:1};
+    obj.candidateId=slug((obj.article&&obj.article!=="-"&&obj.article!=="—"?obj.article+"-":"")+obj.name)
+      ||crypto.createHash("sha1").update(meta.section+"|"+i+"|"+obj.name).digest("hex").slice(0,10);
+    return obj;
+  });
+  if(spec.appendRows){
+    const keys=["name","type","article","purpose","features"];
+    for(let i=1;i<inputRows.length;i++){
+      const r=inputRows[i].map(flat);
+      if(nonemptyCount(r)<2||!r[0]||!r[1])continue;
+      if(headerInfo(r).any)continue;
+      const obj=rowToObject(r,keys,i+1,"");
+      if(obj.name)products.push(obj);
+    }
+  }
+  const tables=(spec.tables||[]).map(t=>{
+    const start=Math.max(1,Number(t.startRow||1));
+    const end=Math.min(inputRows.length,Number(t.endRow||inputRows.length));
+    const rows=[];
+    for(let n=start;n<=end;n++){
+      const source=inputRows[n-1]||[];
+      const r=(t.columns||[]).map(col=>flat(source[col]||""));
+      if(r.some(Boolean))rows.push(r);
+    }
+    return {title:t.title||"",headers:t.headers||[],rows};
+  }).filter(t=>t.rows.length);
+  return {
+    kind:"products",
+    products,
+    productBlocks:[{group:"",header:["Наименование","Тип","Артикул","Назначение","Особенности"],count:products.length}],
+    tables:tables.length?tables:undefined
+  };
+}
+
+function classify(inputRows,meta){
+  const override=applyPackedOverride(inputRows,meta);
+  if(override)return override;
   const rows=expandPackedRows(inputRows).filter(r=>r.some(v=>flat(v)));
   const {products,productBlocks}=parseProductTables(rows);
   const tables=parseGenericTables(rows);
@@ -205,7 +247,7 @@ async function fetchSheet(meta){
   const body=await res.text();
   if(!res.ok) throw new Error(`gid ${meta.gid}: HTTP ${res.status}`);
   const rows=parseCsv(body);
-  return {meta,rows,parsed:classify(rows)};
+  return {meta,rows,parsed:classify(rows,meta)};
 }
 const fetched=[];
 for(const meta of manifest.sheets){
