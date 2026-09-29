@@ -36,13 +36,33 @@ function norm(s){
 }
 function articleNorm(s){return String(s??"").toLowerCase().replace(/[^a-zа-я0-9]/gi,"")}
 const SIZE_NAMES=new Set(["s","m","l","xl","xxl","xxxl","xs"]);
-function tokens(s){
-  return new Set(norm(s).split("-").filter(x=>x.length>2 && !["dlya","tian","ankar","sht","sm","mm"].includes(x)));
+const STOP=new Set(["dlya","tian","ankar","sht","sm","mm","s","i","iz","na","po","v","bez","pod"]);
+function tokenList(s){
+  return norm(s).split("-").filter(x=>(x.length>2||/^\\d+$/.test(x))&&!STOP.has(x));
+}
+function tokens(s){return new Set(tokenList(s))}
+function tokenMatch(a,b){
+  if(a===b)return true;
+  if(/^\\d+$/.test(a)||/^\\d+$/.test(b))return false;
+  const m=Math.min(a.length,b.length);
+  return m>=4&&(a.startsWith(b)||b.startsWith(a));
 }
 function similarity(a,b){
-  const A=tokens(a),B=tokens(b); if(!A.size||!B.size)return 0;
-  let inter=0; for(const x of A)if(B.has(x))inter++;
-  return inter/Math.max(A.size,B.size);
+  const A=[...tokens(a)],B=[...tokens(b)]; if(!A.length||!B.length)return 0;
+  const used=new Set();let hit=0;
+  for(const x of A){
+    const j=B.findIndex((y,i)=>!used.has(i)&&tokenMatch(x,y));
+    if(j>=0){used.add(j);hit++}
+  }
+  return hit/Math.max(A.length,B.length);
+}
+function articleHit(article,file){
+  const f=new Set(tokenList(file).map(x=>/^\\d+$/.test(x)?String(Number(x)):x));
+  const parts=String(article||"").toLowerCase().match(/[a-zа-я]+|\\d+/gi)||[];
+  return parts.some(x=>{
+    const z=/^\\d+$/.test(x)?String(Number(x)):norm(x);
+    return z.length>=3&&f.has(z);
+  });
 }
 function validProductName(name){
   const n=norm(name);
@@ -77,13 +97,14 @@ function scoreImage(img,p){
   const substring=pn.length>=7&&(iname.includes(pn)||pn.includes(iname));
   const sim=similarity(p.name,iname);
   const art=articleNorm(p.article);
-  const article=art.length>=4&&articleNorm(img.file).includes(art);
+  const article=(art.length>=4&&articleNorm(img.file).includes(art))||articleHit(p.article,img.file);
   let s=0;
   if(exact)s=100;
   else if(article)s=94;
   else if(substring)s=88;
-  else if(sim>=0.72)s=82;
-  else if(sim>=0.58)s=74;
+  else if(sim>=0.78)s=88;
+  else if(sim>=0.62)s=82;
+  else if(sim>=0.50)s=76;
   if(inHint)s+=10;
   else if(hinted.length&&s<95)s-=24;
   return {score:Math.max(0,Math.min(110,s)),strong:exact||article||substring||sim>=0.58};
@@ -112,6 +133,16 @@ for(const img of images){
   if(hinted.length===1){
     (sectionAssets[hinted[0]] ||= []).push(img.path);
     imageAssignments[img.path]={type:"section",id:hinted[0],score:1};
+  }else if(hinted.length>1){
+    const ranked=hinted.map(id=>{
+      const s=sectionTitles.find(x=>x.section===id);
+      return {id,title:s?.title||id,score:similarity(s?.title||"",img.file)};
+    }).sort((a,b)=>b.score-a.score);
+    const best=ranked[0],second=ranked[1];
+    if(best&&best.score>=0.45&&(!second||best.score-second.score>=0.12)){
+      (sectionAssets[best.id] ||= []).push(img.path);
+      imageAssignments[img.path]={type:"section",id:best.id,score:+best.score.toFixed(2)};
+    }
   }
 }
 const matchedImages=Object.keys(imageAssignments);
