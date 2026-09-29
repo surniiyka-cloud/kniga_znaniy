@@ -274,12 +274,14 @@ const chapters=sections.chapters.map(ch=>({
       rows:src?.parsed.rows||undefined}
   })
 }));
-const book={
-  version:2,
-  generatedAt:new Date().toISOString(),
-  spreadsheetId:sheetId,
-  chapters
-};
+const previousBook=JSON.parse(await fs.readFile("data/book.json","utf8").catch(()=>"null"));
+const proposedBook={version:2,spreadsheetId:sheetId,chapters};
+let bookGeneratedAt=new Date().toISOString();
+if(previousBook){
+  const {generatedAt:_oldGeneratedAt,...previousCore}=previousBook;
+  if(JSON.stringify(previousCore)===JSON.stringify(proposedBook))bookGeneratedAt=previousBook.generatedAt||bookGeneratedAt;
+}
+const book={version:2,generatedAt:bookGeneratedAt,spreadsheetId:sheetId,chapters};
 const search=[];
 for(const ch of chapters)for(const s of ch.sections){
   if(s.products)for(const p of s.products)search.push({
