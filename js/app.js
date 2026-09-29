@@ -5,7 +5,7 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
-const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[]};
+const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[]};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -94,10 +94,33 @@ function renderCompare(){
   const rows=[["Артикул",(x)=>article(x.product)||"—"],["Тип",(x)=>x.product.type||"—"],["Назначение",(x)=>x.product.purpose||"—"],["Характеристики",(x)=>x.product.features||"—"]];
   app.innerHTML=crumb([{label:"Сравнение"}])+'<div class="page-head"><div><span class="eyebrow">До 4 товаров</span><h1>Сравнение</h1><p>'+items.length+' выбрано</p></div>'+(items.length?'<div class="page-tools"><button class="btn ghost" data-clear-compare>Очистить</button></div>':"")+'</div>'+(items.length?'<div class="table-wrap"><table class="compare-table"><thead><tr><th>Параметр</th>'+items.map((x)=>'<th class="compare-product-head"><strong>'+esc(x.product.name)+'</strong><small>'+esc(x.section.id)+' · '+esc(x.section.title)+'</small><button class="btn ghost" data-compare="'+esc(x.product.id)+'">Убрать</button></th>').join("")+'</tr></thead><tbody>'+rows.map((r)=>{const vals=items.map(r[1]),diff=new Set(vals).size>1;return '<tr class="'+(diff?"compare-diff":"")+'"><td><strong>'+esc(r[0])+'</strong></td>'+vals.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>';}).join("")+'</tbody></table></div>':'<div class="empty-state"><strong>Выберите товары для сравнения</strong><p>На карточках нажимайте ⇄.</p></div>');
 }
+function renderDiagnostics(){
+  title("Диагностика данных");
+  const s=state.reports.sync||{},im=state.reports.images||{};
+  const dup=(s.duplicateArticles||[]);
+  const amb=(im.ambiguous||[]);
+  const un=(im.imagesUnmatched||[]);
+  const missing=(im.productsWithoutImages||[]);
+  app.innerHTML=crumb([{label:"Диагностика"}])+
+    '<div class="page-head"><div><span class="eyebrow">Контроль качества</span><h1>Диагностика Книги знаний</h1><p>Автоматические проверки источников, карточек и изображений.</p></div></div>'+
+    '<section class="stats"><div class="stat"><strong>'+esc(s.sheets??"—")+'</strong><span>листов Google Sheets</span></div><div class="stat"><strong>'+esc(s.products??"—")+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+esc(im.imagesTotal??"—")+'</strong><span>фото в репозитории</span></div><div class="stat"><strong>'+esc(im.productsWithImages??"—")+'</strong><span>товаров с уверенно привязанным фото</span></div></section>'+
+    '<section class="data-block"><h3>Состояние данных</h3><div class="diag-grid">'+
+      '<div class="diag-item"><b>'+(s.duplicateIds?.length||0)+'</b><span>дубликатов product ID</span></div>'+
+      '<div class="diag-item"><b>'+dup.length+'</b><span>повторяющихся артикулов</span></div>'+
+      '<div class="diag-item"><b>'+(s.suspiciousProducts?.length||0)+'</b><span>подозрительных карточек</span></div>'+
+      '<div class="diag-item"><b>'+amb.length+'</b><span>неоднозначных фото</span></div>'+
+      '<div class="diag-item"><b>'+un.length+'</b><span>непривязанных фото</span></div>'+
+      '<div class="diag-item"><b>'+missing.length+'</b><span>товаров без индивидуального фото</span></div>'+
+    '</div></section>'+
+    (dup.length?'<section class="data-block"><h3>Повторяющиеся артикулы</h3><div class="table-wrap"><table class="data-table"><thead><tr><th>Артикул</th><th>Количество</th></tr></thead><tbody>'+dup.map((x)=>'<tr><td>'+esc(x.article)+'</td><td>'+esc(x.count)+'</td></tr>').join("")+'</tbody></table></div></section>':"")+
+    (amb.length?'<section class="data-block"><h3>Фото, требующие ручной проверки</h3><div class="note-list">'+amb.slice(0,50).map((x)=>'<div class="note"><strong>'+esc(x.image)+'</strong><br>'+esc((x.candidates||[]).map((y)=>y.section+" · "+y.name).join(" ↔ "))+'</div>').join("")+'</div></section>':"")+
+    (un.length?'<section class="data-block"><h3>Непривязанные изображения</h3><div class="note-list">'+un.slice(0,80).map((x)=>'<div class="note">'+esc(x)+'</div>').join("")+(un.length>80?'<div class="note">…ещё '+(un.length-80)+'</div>':"")+'</div></section>':"");
+}
+
 function notFound(){title("Не найдено");app.innerHTML='<div class="empty-state"><strong>Страница не найдена</strong><p>Возможно, ссылка относится к старой версии книги.</p><button class="btn primary" data-route="home">На главную</button></div>';}
 function render(){
   closeMenu();const r=route();
-  if(r.name==="home")renderHome();else if(r.name==="chapter")renderChapter(r.id);else if(r.name==="section")renderSection(r.id);else if(r.name==="product")renderProduct(r.id);else if(r.name==="favorites")renderFavorites();else if(r.name==="compare")renderCompare();else notFound();
+  if(r.name==="home")renderHome();else if(r.name==="chapter")renderChapter(r.id);else if(r.name==="section")renderSection(r.id);else if(r.name==="product")renderProduct(r.id);else if(r.name==="favorites")renderFavorites();else if(r.name==="compare")renderCompare();else if(r.name==="diagnostics")renderDiagnostics();else notFound();
   activeNav();counters();window.scrollTo(0,0);
 }
 function searchRender(v){
@@ -136,9 +159,20 @@ function openLightbox(id,i){
 }
 async function init(){
   applyTheme();
-  const rs=await Promise.all([fetch("./data/book.json",{cache:"no-store"}),fetch("./data/assets.json",{cache:"no-store"}),fetch("./data/search-index.json",{cache:"no-store"})]);
+  const rs=await Promise.all([
+    fetch("./data/book.json",{cache:"no-store"}),
+    fetch("./data/assets.json",{cache:"no-store"}),
+    fetch("./data/search-index.json",{cache:"no-store"}),
+    fetch("./data/sync-report.json",{cache:"no-store"}).catch(()=>null),
+    fetch("./data/image-match-report.json",{cache:"no-store"}).catch(()=>null)
+  ]);
   if(!rs[0].ok||!rs[2].ok)throw new Error("Не удалось загрузить данные.");
-  state.book=await rs[0].json();state.assets=rs[1].ok?await rs[1].json():state.assets;state.index=await rs[2].json();state.search=makeSearch(state.index);
+  state.book=await rs[0].json();
+  state.assets=rs[1].ok?await rs[1].json():state.assets;
+  state.index=await rs[2].json();
+  state.reports.sync=rs[3]?.ok?await rs[3].json():null;
+  state.reports.images=rs[4]?.ok?await rs[4].json():null;
+  state.search=makeSearch(state.index);
   mapData();renderNav();bind();counters();q("#syncState").textContent="Данные обновлены "+fmtDate(state.book.generatedAt);
   if(!location.hash)go("home");else render();
 }
