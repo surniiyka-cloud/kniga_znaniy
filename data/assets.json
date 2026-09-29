@@ -1,102 +1,274 @@
 {
-  "generatedAt": "2026-09-29T09:33:44.006Z",
+  "generatedAt": "2026-09-29T09:36:27.068Z",
   "productImages": {
-    "undefined": [
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-foam.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy-foam.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-plyus.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-extra-25.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-green-eco.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-25.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-aloe.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-panthenol.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-tian-blue.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-tian-foam.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-tian-green.png",
-      "img/photos/13-sredstva-dlya-vymeni/13-tian-jod.png",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-ankar.png",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-kerbl.png",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-rasshiritelnye.png",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-silikon.png",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-kerbl.png",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-prodolnyy-ankar.png",
-      "img/photos/15-bumaga-polotentsa-salfetki/15-polotentse-dlya-vymeni-1000.png",
-      "img/photos/15-bumaga-polotentsa-salfetki/15-v32-200-noname.png",
-      "img/photos/15-bumaga-polotentsa-salfetki/15-wipe1.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-dlya-rukavnogo.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-rukavnyy-patroonnyy-filtr.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-tian-premium.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-ankar-superalkali-hw.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kruiz-2.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kruiz-2а.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-antiseptic.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-nitral-foam.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-soap.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superacid-foam.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-hw-no-cl.png",
-      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/ANKAR-superacid-HW.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ae35.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ar35e.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-bd-400.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-benzin.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-50.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-good-fog.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-moo-gun.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-swg2020.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-tf15-ffg-10.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png",
-      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-skrebok-ankar.png",
-      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-telezhka-to-260.png",
-      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-telezhka-tu-250.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-ankar-multimaster.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-bahily-vysokie.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-ortopeda.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-90-21.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-nitrilovye-ankar.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-doyara-314.png",
-      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-mate-mun-ekspress-test-mocheviny-v-moloke.png",
-      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-taidoc-4268-test-poloski-dlya-glyukozy.png",
-      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4235e-analizator-ketonovyh-tel.png",
-      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4235e-test-poloski.png",
-      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4268-analizator-glyukozy.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-stal.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-homut-dlya-skota-s-tsepyu-zelenyy-art-kerbl-125010-sdelano-v-germanii.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-homut-sizalevyy-s-koltsom-7-35mm.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nedouzdok-dlya-korov-i-molodyh-bychkov.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovye-schiptsy-dlya-fiksatsii-krs-s-kanatom.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-2500-tian-trade.png",
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-pro-2500-11262-kerbl.png",
+    "3.4-0301-003-ankar-before-eco": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
+    ],
+    "3.4-0301-034-ankar-before-foam": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-foam.png"
+    ],
+    "3.4-0301-030-ankar-before-oxy-foam": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy-foam.png"
+    ],
+    "3.4-0301-005-ankar-before-плюс": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-plyus.png"
+    ],
+    "3.4-0301-001-ankar-before": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-before.png"
+    ],
+    "3.5-0301-006-ankar-extra-25": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-extra-25.png"
+    ],
+    "3.5-0301-008-ankar-green-eco": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-green-eco.png"
+    ],
+    "3.5-0301-010-ankar-profi-25": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-25.png"
+    ],
+    "3.5-0301-032-ankar-profi-aloe": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-aloe.png"
+    ],
+    "3.5-0301-031-ankar-profi-panthenol": [
+      "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-panthenol.png"
+    ],
+    "3.5-0301-026-tian-blue": [
+      "img/photos/13-sredstva-dlya-vymeni/13-tian-blue.png"
+    ],
+    "3.4-0301-024-tian-foam": [
+      "img/photos/13-sredstva-dlya-vymeni/13-tian-foam.png"
+    ],
+    "3.5-0301-029-tian-green": [
+      "img/photos/13-sredstva-dlya-vymeni/13-tian-green.png"
+    ],
+    "3.5-0301-028-tian-jod": [
+      "img/photos/13-sredstva-dlya-vymeni/13-tian-jod.png"
+    ],
+    "3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-ankar.png"
+    ],
+    "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-kerbl.png"
+    ],
+    "3.3-0303-056-штифты-расширительные": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-rasshiritelnye.png"
+    ],
+    "3.3-0303-054-штифты-силиконовые": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-silikon.png"
+    ],
+    "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-kerbl.png"
+    ],
+    "3.2-0303-017-стаканчик-для-сдаивания-продольный": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-prodolnyy-ankar.png"
+    ],
+    "3.6-0302-009-полотенце-для-вымени": [
+      "img/photos/15-bumaga-polotentsa-salfetki/15-polotentse-dlya-vymeni-1000.png"
+    ],
+    "3.6-v32-200-бумажные-полотенца-листовые-v32-200": [
+      "img/photos/15-bumaga-polotentsa-salfetki/15-v32-200-noname.png"
+    ],
+    "3.6-wipe1-материал-протирочный-двухслойный-wipe1": [
+      "img/photos/15-bumaga-polotentsa-salfetki/15-wipe1.png"
+    ],
+    "3.7-1105-043-корпус-для-рукавного-патронного-фильтра": [
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-dlya-rukavnogo.png"
+    ],
+    "3.7-0406-091-5506-2-5503-5-0406-101-фильтр-рукавный": [
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-rukavnyy-patroonnyy-filtr.png"
+    ],
+    "3.7-2214-1-0406-096-2214-2-2214-5-фильтр-tian-premium": [
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-tian-premium.png"
+    ],
+    "8.3-0405-006-ankar-superalkali-hw": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-ankar-superalkali-hw.png"
+    ],
+    "9.3-0401-052-круиз-2": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kruiz-2.png"
+    ],
+    "9.3-0401-054-круиз-2а": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kruiz-2а.png"
+    ],
+    "8.3-антисептическое-средство-tian-antiseptic": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-antiseptic.png"
+    ],
+    "8.3-tian-nitral-foam": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-nitral-foam.png"
+    ],
+    "8.3-жидкое-мыло-tian-soap": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-soap.png"
+    ],
+    "8.3-tian-superacid-hw-foam": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superacid-foam.png"
+    ],
+    "8.3-tian-superalkali-hw-no-cl": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superalkali-hw-no-cl.png"
+    ],
+    "8.3-0405-002-ankar-superacid-hw": [
+      "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/ANKAR-superacid-HW.png"
+    ],
+    "9.1-генератор-горячего-тумана-аирофог-ae35": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ae35.png"
+    ],
+    "9.1-генератор-горячего-тумана-аирофог-ar35e": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ar35e.png"
+    ],
+    "9.1-генератор-горячего-тумана-bd-400": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-bd-400.png"
+    ],
+    "9.1-дезинфекционная-установка-ds-160-бензиновый-двигатель": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-benzin.png"
+    ],
+    "9.1-дезинфекционная-установка-ds-50-50-литров-с-бензиновым-двигателем": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-50.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-good-fog": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-good-fog.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-jp-s20": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png"
+    ],
+    "9.1-мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-moo-gun": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-moo-gun.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-swg2020": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-swg2020.png"
+    ],
+    "9.1-генератор-горячего-тумана-tf15-ffg-10": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-tf15-ffg-10.png"
+    ],
+    "9.1-генератор-горячего-тумана-th-180": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png"
+    ],
+    "8.2-0403-120-скребок-ankar": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-skrebok-ankar.png"
+    ],
+    "8.2-0202-069-тележка-опрокидывающаяся-то-260": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-telezhka-to-260.png"
+    ],
+    "8.2-0202-066-полиуретановые-колеса-0202-090-пневматические-колеса-тележка-универсальная-ту-250": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-telezhka-tu-250.png"
+    ],
+    "11.1-0205-015-s-0205-016-m-0205-017-l-0205-018-xl-перчатки-нитриловые-ankar-multimaster": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-ankar-multimaster.png"
+    ],
+    "11.2-0205-086-бахилы-высокие": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-bahily-vysokie.png"
+    ],
+    "11.3-фартук-врача-ортопеда": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-ortopeda.png"
+    ],
+    "11.2-перчатка-для-ио-90-21": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-90-21.png"
+    ],
+    "11.1-0205-001-s-0205-003-m-0205-005-l-0205-007-xl-перчатки-нитриловые-ankar": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-nitrilovye-ankar.png"
+    ],
+    "11.3-314-сумка-поясная-для-дояра": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-doyara-314.png"
+    ],
+    "4.9-экспресс-тест-для-определения-уровня-мочевины-в-молоке-mun-rapid": [
+      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-mate-mun-ekspress-test-mocheviny-v-moloke.png"
+    ],
+    "4.9-1106-019-тест-полоски-к-анализатору-taidoc-4268": [
+      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-taidoc-4268-test-poloski-dlya-glyukozy.png"
+    ],
+    "4.9-1106-017-анализатор-кетоновых-тел-taidoc-4235e": [
+      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4235e-analizator-ketonovyh-tel.png"
+    ],
+    "4.9-1106-020-тест-полоски-к-анализатору-taidoc-4235e": [
+      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4235e-test-poloski.png"
+    ],
+    "4.9-1106-016-анализатор-глюкозы-в-крови-taidoc-4268": [
+      "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4268-analizator-glyukozy.png"
+    ],
+    "5.6-0203-055-антибрык-anti-kick-сталь": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-stal.png"
+    ],
+    "5.6-0203-039-хомут-для-скота-с-цепью-зеленый": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-homut-dlya-skota-s-tsepyu-zelenyy-art-kerbl-125010-sdelano-v-germanii.png"
+    ],
+    "5.6-0203-051-хомут-сизалевый-с-кольцом": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-homut-sizalevyy-s-koltsom-7-35mm.png"
+    ],
+    "5.6-0203-054-недоуздок-для-коров-и-молодых-бычков": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nedouzdok-dlya-korov-i-molodyh-bychkov.png"
+    ],
+    "5.6-0203-042-носовые-щипцы-для-фиксации-крс-с-канатом": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovye-schiptsy-dlya-fiksatsii-krs-s-kanatom.png"
+    ],
+    "5.6-0203-020-погонщик-скота-shock-2500-tian-trade": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-2500-tian-trade.png"
+    ],
+    "5.6-погонщик-скота-ankar-shock-pro-2500": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-pro-2500-11262-kerbl.png"
+    ],
+    "5.2-0208-016-деревянная-колодка-130-56-мм": [
       "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-130-mm-xl-10-sht-v-upakovke-16105-10.png",
-      "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-klinovidnaya.png",
+      "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-klinovidnaya.png"
+    ],
+    "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт": [
       "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120-mm-3-nozha-16316.png",
       "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120mm-6-nozhey-16318.png",
       "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-protrim-3-nozha.png",
+      "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png"
+    ],
+    "5.2-0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей": [
       "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-6-nozhey.png",
-      "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-7-nozhey.png",
-      "img/photos/24-uhod-za-kopytami/24-kopytnyy-rashpil-dick-200-x-45-x-5-mm.png",
+      "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-7-nozhey.png"
+    ],
+    "5.2-0208-059-копытный-рашпиль": [
+      "img/photos/24-uhod-za-kopytami/24-kopytnyy-rashpil-dick-200-x-45-x-5-mm.png"
+    ],
+    "5.2-0208-051-набор-ножей": [
       "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-dlya-diska-dlya-obrabotki-kopyt-3-sht-16320.png",
-      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png",
-      "img/photos/24-uhod-za-kopytami/24-nabor-po-uhodu-za-kopytami-technobase-8000.png",
+      "img/photos/24-uhod-za-kopytami/24-nabor-nozhey-protrim-10-sht.png"
+    ],
+    "5.2-0208-020-набор-по-уходу-за-копытами-technobase-8000": [
+      "img/photos/24-uhod-za-kopytami/24-nabor-po-uhodu-za-kopytami-technobase-8000.png"
+    ],
+    "5.2-0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий": [
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
       "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
-      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-uzkiy-16801.png",
-      "img/photos/24-uhod-za-kopytami/24-para-smennyh-lezviy-dlya-schiptsov-obrabotki-kopyt-164.png",
-      "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png",
+      "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-uzkiy-16801.png"
+    ],
+    "5.2-0208-062-пара-сменных-лезвий-для-щипцов": [
+      "img/photos/24-uhod-za-kopytami/24-para-smennyh-lezviy-dlya-schiptsov-obrabotki-kopyt-164.png"
+    ],
+    "5.2-0208-007-рашпиль-для-обработки-копыт-disc": [
+      "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png"
+    ],
+    "5.2-0202-018-режущий-диск-для-копыт-p6": [
       "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-105mm-16358.png",
-      "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-125mm-16360.png",
-      "img/photos/24-uhod-za-kopytami/24-schiptsy-dlya-obrabotki-kopyt.png",
-      "img/photos/24-uhod-za-kopytami/24-schiptsy-dlya-vetobrabotki-kopyt-u-korov-163.png",
-      "img/photos/24-uhod-za-kopytami/24-shlifovalnyy-disk-dlya-obrabotki-kopyt-super-125mm.png",
-      "img/photos/24-uhod-za-kopytami/24-skotch-dlya-kopyt-chernyy-dlina-50-m-shirina-50-mm.png",
-      "img/photos/24-uhod-za-kopytami/24-tochilnyy-kamen.png",
-      "img/photos/24-uhod-za-kopytami/24-vanna-dlya-dezinfektsii-kopyt-superkombi.png",
-      "img/photos/24-uhod-za-kopytami/24-vanna-dlya-obrabotki-kopyt-vok-200.png",
-      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetka-chesalka-dlya-chistki-skota-texas.png",
-      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-tailwell2-trimmer-dlya-hvosta-drel-v-komplekt-ne-vhodit.png",
+      "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-125mm-16360.png"
+    ],
+    "5.2-0208-175-щипцы-для-обработки-копыт": [
+      "img/photos/24-uhod-za-kopytami/24-schiptsy-dlya-obrabotki-kopyt.png"
+    ],
+    "5.2-0208-061-щипцы-для-ветобработки-копыт-у-коров": [
+      "img/photos/24-uhod-za-kopytami/24-schiptsy-dlya-vetobrabotki-kopyt-u-korov-163.png"
+    ],
+    "5.2-0208-039-скотч-для-копыт-черный": [
+      "img/photos/24-uhod-za-kopytami/24-skotch-dlya-kopyt-chernyy-dlina-50-m-shirina-50-mm.png"
+    ],
+    "5.2-0208-118-точильный-камень": [
+      "img/photos/24-uhod-za-kopytami/24-tochilnyy-kamen.png"
+    ],
+    "5.2-0208-009-ванна-для-дезинфекции-копыт-superkombi": [
+      "img/photos/24-uhod-za-kopytami/24-vanna-dlya-dezinfektsii-kopyt-superkombi.png"
+    ],
+    "5.2-0208-011-ванна-для-обработки-копыт": [
+      "img/photos/24-uhod-za-kopytami/24-vanna-dlya-obrabotki-kopyt-vok-200.png"
+    ],
+    "5.1-0202-001-щетка-чесалка-для-скота-texas": [
+      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetka-chesalka-dlya-chistki-skota-texas.png"
+    ],
+    "5.1-0202-015-tailwell2-триммер-для-хвоста": [
+      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-tailwell2-trimmer-dlya-hvosta-drel-v-komplekt-ne-vhodit.png"
+    ],
+    "5.1-0202-002-запасная-щетка-texas": [
       "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-schetka-texas.png"
     ]
   },
