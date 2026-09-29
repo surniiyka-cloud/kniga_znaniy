@@ -668,50 +668,70 @@ body.modal-open{overflow:hidden}
 }
 
 
-/* v2 sidebar pin + readability */
-.sidebar{
-  transition:transform .2s ease,box-shadow .2s ease
-}
-.sidebar-toggle{display:grid;flex:0 0 auto}
-.sidebar-tools{gap:8px}
-.sidebar-tool-actions{display:flex;align-items:center;gap:6px}
-.pin-btn{
-  width:34px;height:34px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);
-  border-radius:10px;background:rgba(255,255,255,.06);color:#fff;cursor:pointer;
-  font-size:18px;line-height:1;transition:.16s
-}
-.pin-btn:hover{background:rgba(255,255,255,.12)}
-.pin-btn[aria-pressed="true"]{background:rgba(202,77,23,.28);border-color:rgba(232,82,34,.48)}
-.sidebar-backdrop{
-  display:block;position:fixed;inset:0;background:rgba(0,0,0,.34);z-index:25;
-  opacity:0;pointer-events:none;transition:.2s
-}
-body.sidebar-open .sidebar-backdrop{opacity:1;pointer-events:auto}
-body.sidebar-open .sidebar{transform:none}
-
-@media(min-width:901px){
-  body.sidebar-pinned .sidebar{transform:none}
-  body.sidebar-pinned .workspace{margin-left:var(--sidebar)}
-  body.sidebar-unpinned .sidebar{transform:translateX(-102%);box-shadow:var(--shadow)}
-  body.sidebar-unpinned .workspace{margin-left:0}
-  body.sidebar-unpinned.sidebar-open .sidebar{transform:none}
-  body.sidebar-pinned .sidebar-backdrop{opacity:0;pointer-events:none}
-}
-@media(max-width:900px){
-  .pin-btn{display:none}
-  .sidebar{transform:translateX(-102%);box-shadow:var(--shadow)}
-  .workspace{margin-left:0}
-  body.sidebar-open .sidebar{transform:none}
-}
-
+/* v2.0.7 laboratory catalog polish */
 .brand-banner-home img{
-  width:min(620px,52vw);height:min(620px,52vw);
-  right:-78px;opacity:.26
+  width:min(650px,54vw);height:min(650px,54vw);
+  right:-58px;top:38%;transform:translateY(-50%);
+  opacity:.28
 }
-
 .term-card h3{font-size:16px;line-height:1.4}
 .term-card p{
   color:var(--text);font-size:14px;line-height:1.68;font-weight:500;
   letter-spacing:.003em
 }
 .definition-label{font-size:9px;color:var(--green)}
+
+.sensitivity-legend{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 18px
+}
+.sensitivity-legend span{
+  display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--line);
+  border-radius:12px;background:var(--surface);font-size:10px;font-weight:800
+}
+.sensitivity-legend b{
+  width:24px;height:24px;display:grid;place-items:center;border-radius:8px;
+  background:var(--green);color:#fff;font-size:10px
+}
+.sensitivity-group{
+  margin:18px 0 0;padding:16px;border:1px solid var(--line);border-radius:18px;
+  background:var(--surface);box-shadow:var(--shadow-sm)
+}
+.sensitivity-wrap{overflow:auto;border:1px solid var(--line);border-radius:13px}
+.sensitivity-table{width:100%;min-width:860px;border-collapse:collapse;font-size:11px}
+.sensitivity-table th,.sensitivity-table td{
+  padding:10px 11px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);
+  text-align:center;vertical-align:middle
+}
+.sensitivity-table th:first-child,.sensitivity-table td:first-child{
+  text-align:left;position:sticky;left:0;z-index:1;background:var(--surface)
+}
+.sensitivity-table th{background:var(--surface-2);color:var(--muted);font-weight:900}
+.sensitivity-table td:not(:first-child){font-weight:800;color:var(--green)}
+.sensitivity-table td.empty{color:var(--muted);font-weight:500}
+.sensitivity-table tr:hover td{background:color-mix(in srgb,var(--green-3) 58%,var(--surface))}
+.sensitivity-note{
+  margin:14px 0 0;padding:12px 14px;border-radius:12px;background:var(--surface-2);
+  color:var(--muted);font-size:10px;line-height:1.55
+}
+
+.product-card .product-body p{
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden
+}
+.product-card .product-actions{margin-top:auto}
+.product-card{display:flex;flex-direction:column}
+.product-card .product-body{display:flex;flex:1;flex-direction:column}
+
+.info-card .definition-list dd{
+  font-size:13px;line-height:1.62;color:var(--text)
+}
+.info-card .definition-list dt{
+  font-size:10px;color:var(--green)
+}
+
+@media(max-width:1100px){
+  .sensitivity-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .brand-banner-home img{width:250px;height:250px;right:-96px;top:34%}
+  .sensitivity-legend{grid-template-columns:1fr}
+}
