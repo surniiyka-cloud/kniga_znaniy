@@ -1,11 +1,177 @@
 {
-  "generatedAt": "2026-09-29T09:15:16.025Z",
+  "generatedAt": "2026-09-29T09:24:13.705Z",
   "imagesTotal": 338,
-  "imagesMatched": 338,
-  "imagesUnmatched": [],
-  "productsTotal": 544,
-  "productsWithImages": 69,
+  "imagesMatched": 203,
+  "imagesUnmatched": [
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-aminosensor.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-cowsensor.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-milksensor-ltse.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-quinosensor.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-sulfasensor.png",
+    "img/photos/03-testy-dopolnitelnyh-grupp/03-tylosensor.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-6-parametrov.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-9-parametrov.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-bez-printera.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-s-printerom.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-tias-agro-plus.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-tias-agro.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check-plus.png",
+    "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check.png",
+    "img/photos/09-analizatory-somatiki/09-ekomilk-horizon.png",
+    "img/photos/09-analizatory-somatiki/09-ekomilk-scan.png",
+    "img/photos/09-analizatory-somatiki/09-tias-somcell.png",
+    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png",
+    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-delvotest.png",
+    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-duo.png",
+    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-hs-00647.png",
+    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-octo.png",
+    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png",
+    "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
+    "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-lavender.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-bidon-8l.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-instrument-chistki.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-kateter-8-5.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-premium-kerbl.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-plastik.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-zhelezo.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-plastyr-uddersoft.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-plastik-50.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-sherstyanye.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-zhemchug.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-skameyka.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-svecha.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovyy-kolokolchik.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-nl.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ambic.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ankar.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-kerbl.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-ankar.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-shchetka.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-vts-klapan.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-vts.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-uddero-sprayer.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-doilnyh.png",
+    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-pl-iso.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molochnye-shlangi-dpr10.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molokoprovod-df00-070.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-patrubki-dpr9.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-soskovaya-rezina-dpr8.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-10x150x500.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-20x150x500.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-30x150x500.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-40x150x500.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-50x150x500.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-60x150x500.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-drenazhnyy.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-ergonomichnaya.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-monoblok.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-zhestkaya.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-posudy.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-rezervuarov.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-korotkaya-ruchka.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-krug-125-myagkaya.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-210x70.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-285x130.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-dlya-pola.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrebkovaya-180x60.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-letagita.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-ankar.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-tian.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-shchetka-doilnyy-stakan-60sm.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-chernoe.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-oranzhevoe.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-3-zuba.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-4-zuba.png",
+    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-6-zubov.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-303.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-312.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-galoshi-kerbl.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-halat-protsedurnyy.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-high-risk.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-kasper-belyy.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-naplechnik-315.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-napleshnik.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-vinilovye-tian.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-plash-317.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-shapochka-sharlotta.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-vetvracha-316.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril-black.png",
+    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-flexcow-110.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-250-vts.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-330-vts.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovoe-koltso-dlya-bykov-aktions-11140-52-54-sm.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-130x4sm-s-ovalnym-zvenom-i-d-obraznym-koltsom.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-85-x-4-mm-s-ovalnymi-zvenyami-i-d-obraznym-koltsom.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-dlya-privyazi-korov-130h4sm-s-dvumya-otsinkovannymi-tsepyami-s-karabinom-i-zakrutkoy-zveno-6-mm.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-povodok-dlya-bykov-tsepnoy-metall.png",
+    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-schiptsy-nosovye-dlya-bykov-harms-s-zamkom-iz-nerzhaveyuschey-stali-118.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-latunnaya-chesalka.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-krupnozubchataya-10h14-5.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-melkozubchataya-9-5-x14-5-sm-189.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskiy-skrebok-dlya-krs-spiralnyy.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-nozh-dlya-tailwell2.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-12-m-v-plastikovoy-korobke.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-3-6-m-v-plastikovoy-korobke.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-ruchki-dlya-provolochnoy-pily-poparno.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetochnaya-chesalka.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-dvoynaya.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallicheskaya-ovalnaya-s-naruchnoy-petley-s-3-ryadami-tonkih-volnistyh-zubev.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallitseskaya-aldus-11h12-5-1810.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png"
+  ],
+  "productsTotal": 698,
+  "productsWithImages": 87,
   "productsWithoutImages": [
+    {
+      "id": "10001311-agrastrip-rur-hs-bulk-grain",
+      "section": "2.11",
+      "name": "AgraStrip RUR-HS Bulk Grain",
+      "article": "10001311"
+    },
+    {
+      "id": "10001312-agrastrip-rur-bulk-grain",
+      "section": "2.11",
+      "name": "AgraStrip RUR Bulk Grain",
+      "article": "10001312"
+    },
+    {
+      "id": "10001313-agrastrip-rur-seed-and-leaf",
+      "section": "2.11",
+      "name": "AgraStrip RUR Seed and Leaf",
+      "article": "10001313"
+    },
+    {
+      "id": "10001317-agrastrip-cry1ab-bulk-grain",
+      "section": "2.11",
+      "name": "AgraStrip Cry1Ab Bulk Grain",
+      "article": "10001317"
+    },
+    {
+      "id": "10001318-agrastrip-cry1ab-seed-and-leaf",
+      "section": "2.11",
+      "name": "AgraStrip Cry1Ab Seed and Leaf",
+      "article": "10001318"
+    },
     {
       "id": "0202-012-reventa-1-5-m",
       "section": "3.1",
@@ -31,12 +197,6 @@
       "article": "0202.103"
     },
     {
-      "id": "0303-007-стаканчик-для-пенного-средства-premium-kerbl",
-      "section": "3.2",
-      "name": "Стаканчик для пенного средства PREMIUM KERBL",
-      "article": "0303.007"
-    },
-    {
       "id": "0303-005-стаканчик-для-пенного-средства-premium-ankar",
       "section": "3.2",
       "name": "Стаканчик для пенного средства PREMIUM ANKAR",
@@ -55,10 +215,10 @@
       "article": "0303.012"
     },
     {
-      "id": "0303-017-стаканчик-для-сдаивания-продольный",
+      "id": "0303-022-кружка-для-сдаивания-первых-струек-молока-premium",
       "section": "3.2",
-      "name": "Стаканчик для сдаивания продольный",
-      "article": "0303.017"
+      "name": "Кружка для сдаивания первых струек молока PREMIUM",
+      "article": "0303.022"
     },
     {
       "id": "0303-052-штифты-для-сосков-с-изгибом-на-ручке",
@@ -217,12 +377,6 @@
       "article": "-"
     },
     {
-      "id": "v32-200-бумажные-полотенца-листовые-v32-200",
-      "section": "3.6",
-      "name": "Бумажные полотенца листовые V32-200",
-      "article": "V32-200"
-    },
-    {
       "id": "сумка-для-бумаги-uddero-clean-с-логотипом-тиан-трейд",
       "section": "3.6",
       "name": "Сумка для бумаги UDDERO-CLEAN с логотипом ТИАН-Трейд",
@@ -271,12 +425,6 @@
       "article": "0406.001–0406.007"
     },
     {
-      "id": "0406-091-5506-2-5503-5-0406-101-фильтр-рукавный",
-      "section": "3.7",
-      "name": "Фильтр рукавный",
-      "article": "0406.091 / 5506/2 / 5503/5 / 0406.101"
-    },
-    {
       "id": "0209-111-молокомер-waikato",
       "section": "3.8",
       "name": "Молокомер WAIKATO",
@@ -305,30 +453,6 @@
       "section": "3.8",
       "name": "Ёмкость мерная",
       "article": "0704.01.001"
-    },
-    {
-      "id": "12591350-электронный-ветеринарный-термометр",
-      "section": "3.9",
-      "name": "Электронный ветеринарный термометр",
-      "article": "12591350"
-    },
-    {
-      "id": "1105-054-термометр-жидкостной",
-      "section": "3.9",
-      "name": "Термометр жидкостной",
-      "article": "1105.054"
-    },
-    {
-      "id": "термометр-пластиковый-min-max-ankar",
-      "section": "3.9",
-      "name": "Термометр пластиковый MIN-MAX ANKAR",
-      "article": "-"
-    },
-    {
-      "id": "0704-01-010-прибор-для-определения-степени-чистоты-молока-очм-м",
-      "section": "3.9",
-      "name": "Прибор для определения степени чистоты молока ОЧМ-М",
-      "article": "0704.01.010"
     },
     {
       "id": "1105-010-родовспомогатель-для-коров-vink-180",
@@ -377,462 +501,6 @@
       "section": "4.2",
       "name": "Дренчер Drench-Mate 1 / 1,5",
       "article": "1105.030"
-    },
-    {
-      "id": "1105-035-запасная-муфта-для-drench-mate",
-      "section": "4.2",
-      "name": "Запасная муфта для Drench-Mate",
-      "article": "1105.035"
-    },
-    {
-      "id": "1105-037-набор-комплектующих-для-drench-mate-расширенный",
-      "section": "4.2",
-      "name": "Набор комплектующих для Drench-Mate расширенный",
-      "article": "1105.037"
-    },
-    {
-      "id": "1105-032-запасная-пружина-drench-mate",
-      "section": "4.2",
-      "name": "Запасная пружина Drench-Mate",
-      "article": "1105.032"
-    },
-    {
-      "id": "1105-034-запасной-насос-для-drench-mate",
-      "section": "4.2",
-      "name": "Запасной насос для Drench-Mate",
-      "article": "1105.034"
-    },
-    {
-      "id": "1105-032-запасной-рукав-и-патрубок-drench-mate",
-      "section": "4.2",
-      "name": "Запасной рукав и патрубок Drench-Mate",
-      "article": "1105.032*"
-    },
-    {
-      "id": "1105-036-набор-комплектующих-для-drench-mate-начальный",
-      "section": "4.2",
-      "name": "Набор комплектующих для Drench-Mate начальный",
-      "article": "1105.036"
-    },
-    {
-      "id": "емкость-с-крышкой-для-drench-mate-1",
-      "section": "4.2",
-      "name": "Ёмкость с крышкой для Drench-Mate 1",
-      "article": "-"
-    },
-    {
-      "id": "колено-и-всасывающая-труба-для-drench-mate-1",
-      "section": "4.2",
-      "name": "Колено и всасывающая труба для Drench-Mate 1",
-      "article": "-"
-    },
-    {
-      "id": "ручка-насоса-для-drench-mate-1",
-      "section": "4.2",
-      "name": "Ручка насоса для Drench-Mate 1",
-      "article": "-"
-    },
-    {
-      "id": "фиксатор-носа-на-патрубок-для-drench-mate",
-      "section": "4.2",
-      "name": "Фиксатор носа на патрубок для Drench-Mate",
-      "article": "-"
-    },
-    {
-      "id": "сито-1",
-      "section": "4.3",
-      "name": "Сито №1",
-      "article": ""
-    },
-    {
-      "id": "сито-2",
-      "section": "4.3",
-      "name": "Сито №2",
-      "article": ""
-    },
-    {
-      "id": "сито-3",
-      "section": "4.3",
-      "name": "Сито №3",
-      "article": ""
-    },
-    {
-      "id": "корпус-системы-влажного-просеивания",
-      "section": "4.3",
-      "name": "Корпус системы влажного просеивания",
-      "article": ""
-    },
-    {
-      "id": "ведро-с-крышкой",
-      "section": "4.3",
-      "name": "Ведро с крышкой",
-      "article": ""
-    },
-    {
-      "id": "емкость-для-образцов",
-      "section": "4.3",
-      "name": "Ёмкость для образцов",
-      "article": ""
-    },
-    {
-      "id": "ковшик-для-отбора-проб",
-      "section": "4.3",
-      "name": "Ковшик для отбора проб",
-      "article": ""
-    },
-    {
-      "id": "весы-для-взвешивания-образцов",
-      "section": "4.3",
-      "name": "Весы для взвешивания образцов",
-      "article": ""
-    },
-    {
-      "id": "пистолет-распылитель",
-      "section": "4.3",
-      "name": "Пистолет распылитель",
-      "article": ""
-    },
-    {
-      "id": "коннектор",
-      "section": "4.3",
-      "name": "Коннектор",
-      "article": ""
-    },
-    {
-      "id": "руководство-по-эскплуатации",
-      "section": "4.3",
-      "name": "Руководство по эскплуатации",
-      "article": ""
-    },
-    {
-      "id": "корпус-в-сборе-со-шлангами-с-пробкой-и-штуцером-фильтра-без-иглодержателя",
-      "section": "4.4",
-      "name": "Корпус в сборе со шлангами, с пробкой и штуцером фильтра (без иглодержателя)",
-      "article": ""
-    },
-    {
-      "id": "корпус-с-ручкой-в-сборе",
-      "section": "4.4",
-      "name": "Корпус с ручкой (в сборе)",
-      "article": ""
-    },
-    {
-      "id": "шприц-ветеринарный-вместимостью-5-мл",
-      "section": "4.4",
-      "name": "Шприц ветеринарный вместимостью 5 мл",
-      "article": ""
-    },
-    {
-      "id": "иглодержатель",
-      "section": "4.4",
-      "name": "Иглодержатель",
-      "article": ""
-    },
-    {
-      "id": "руководство-по-применению-со-схемой-крепления-шприца",
-      "section": "4.4",
-      "name": "Руководство по применению со схемой крепления шприца",
-      "article": ""
-    },
-    {
-      "id": "упаковочная-коробка",
-      "section": "4.4",
-      "name": "Упаковочная коробка",
-      "article": ""
-    },
-    {
-      "id": "1104-170",
-      "section": "4.5",
-      "name": "1104.170",
-      "article": ""
-    },
-    {
-      "id": "1104-171",
-      "section": "4.5",
-      "name": "1104.171",
-      "article": ""
-    },
-    {
-      "id": "1104-125",
-      "section": "4.5",
-      "name": "1104.125",
-      "article": ""
-    },
-    {
-      "id": "1104-126",
-      "section": "4.5",
-      "name": "1104.126",
-      "article": ""
-    },
-    {
-      "id": "1104-027",
-      "section": "4.5",
-      "name": "1104.027",
-      "article": ""
-    },
-    {
-      "id": "1104-028",
-      "section": "4.5",
-      "name": "1104.028",
-      "article": ""
-    },
-    {
-      "id": "1104-127",
-      "section": "4.5",
-      "name": "1104.127",
-      "article": ""
-    },
-    {
-      "id": "1104-128",
-      "section": "4.5",
-      "name": "1104.128",
-      "article": ""
-    },
-    {
-      "id": "1104-129",
-      "section": "4.5",
-      "name": "1104.129",
-      "article": ""
-    },
-    {
-      "id": "1104-029",
-      "section": "4.5",
-      "name": "1104.029",
-      "article": ""
-    },
-    {
-      "id": "1104-030",
-      "section": "4.5",
-      "name": "1104.030",
-      "article": ""
-    },
-    {
-      "id": "1104-130",
-      "section": "4.5",
-      "name": "1104.130",
-      "article": ""
-    },
-    {
-      "id": "1104-031",
-      "section": "4.5",
-      "name": "1104.031",
-      "article": ""
-    },
-    {
-      "id": "1104-032",
-      "section": "4.5",
-      "name": "1104.032",
-      "article": ""
-    },
-    {
-      "id": "1104-033",
-      "section": "4.5",
-      "name": "1104.033",
-      "article": ""
-    },
-    {
-      "id": "1104-131",
-      "section": "4.5",
-      "name": "1104.131",
-      "article": ""
-    },
-    {
-      "id": "1104-132",
-      "section": "4.5",
-      "name": "1104.132",
-      "article": ""
-    },
-    {
-      "id": "1104-133",
-      "section": "4.5",
-      "name": "1104.133",
-      "article": ""
-    },
-    {
-      "id": "1104-034",
-      "section": "4.5",
-      "name": "1104.034",
-      "article": ""
-    },
-    {
-      "id": "1104-134",
-      "section": "4.5",
-      "name": "1104.134",
-      "article": ""
-    },
-    {
-      "id": "1104-135",
-      "section": "4.5",
-      "name": "1104.135",
-      "article": ""
-    },
-    {
-      "id": "1104-035",
-      "section": "4.5",
-      "name": "1104.035",
-      "article": ""
-    },
-    {
-      "id": "1104-036",
-      "section": "4.5",
-      "name": "1104.036",
-      "article": ""
-    },
-    {
-      "id": "1104-037",
-      "section": "4.5",
-      "name": "1104.037",
-      "article": ""
-    },
-    {
-      "id": "1104-038",
-      "section": "4.5",
-      "name": "1104.038",
-      "article": ""
-    },
-    {
-      "id": "1104-039",
-      "section": "4.5",
-      "name": "1104.039",
-      "article": ""
-    },
-    {
-      "id": "1104-136",
-      "section": "4.5",
-      "name": "1104.136",
-      "article": ""
-    },
-    {
-      "id": "1104-040",
-      "section": "4.5",
-      "name": "1104.040",
-      "article": ""
-    },
-    {
-      "id": "1104-041",
-      "section": "4.5",
-      "name": "1104.041",
-      "article": ""
-    },
-    {
-      "id": "1104-137",
-      "section": "4.5",
-      "name": "1104.137",
-      "article": ""
-    },
-    {
-      "id": "1104-138",
-      "section": "4.5",
-      "name": "1104.138",
-      "article": ""
-    },
-    {
-      "id": "1104-139",
-      "section": "4.5",
-      "name": "1104.139",
-      "article": ""
-    },
-    {
-      "id": "1104-140",
-      "section": "4.5",
-      "name": "1104.140",
-      "article": ""
-    },
-    {
-      "id": "1104-042",
-      "section": "4.5",
-      "name": "1104.042",
-      "article": ""
-    },
-    {
-      "id": "1104-043",
-      "section": "4.5",
-      "name": "1104.043",
-      "article": ""
-    },
-    {
-      "id": "1104-044",
-      "section": "4.5",
-      "name": "1104.044",
-      "article": ""
-    },
-    {
-      "id": "1104-110",
-      "section": "4.5",
-      "name": "1104.110",
-      "article": ""
-    },
-    {
-      "id": "1104-175",
-      "section": "4.5",
-      "name": "1104.175",
-      "article": ""
-    },
-    {
-      "id": "1104-176",
-      "section": "4.5",
-      "name": "1104.176",
-      "article": ""
-    },
-    {
-      "id": "1104-177",
-      "section": "4.5",
-      "name": "1104.177",
-      "article": ""
-    },
-    {
-      "id": "1104-178",
-      "section": "4.5",
-      "name": "1104.178",
-      "article": ""
-    },
-    {
-      "id": "152185-троакар-с-кональной-насадкой-для-подшива-сычуга",
-      "section": "4.6",
-      "name": "Троакар с кональной насадкой для подшива сычуга",
-      "article": "152185"
-    },
-    {
-      "id": "424-нить-для-подшива-сычуга-kruuse",
-      "section": "4.6",
-      "name": "Нить для подшива сычуга KRUUSE",
-      "article": "424"
-    },
-    {
-      "id": "1105-015-9-см-5-мм-1105-016-12-см-7-мм-1105-017-15-см-10-мм-троакар",
-      "section": "4.6",
-      "name": "Троакар",
-      "article": "1105.015 — 9 см / Ø5 мм; 1105.016 — 12 см / Ø7 мм; 1105.017 — 15 см / Ø10 мм"
-    },
-    {
-      "id": "повал-9-м-зеленый-синий",
-      "section": "4.6",
-      "name": "Повал 9 м, зелёный / синий",
-      "article": "-"
-    },
-    {
-      "id": "подъемник-для-коров-универсальный-до-1500-кг-vink",
-      "section": "4.6",
-      "name": "Подъёмник для коров универсальный до 1500 кг VINK",
-      "article": "-"
-    },
-    {
-      "id": "0203-013-до-900-1000-кг-0203-014-до-1500-кг-подъемный-механизм-для-коров-profi",
-      "section": "4.6",
-      "name": "Подъёмный механизм для коров PROFI",
-      "article": "0203.013 — до 900/1000 кг; 0203.014 — до 1500 кг"
-    },
-    {
-      "id": "0203-070-до-1000-кг-0203-071-до-1500-кг-подъемный-механизм-для-коров-ankar",
-      "section": "4.6",
-      "name": "Подъёмный механизм для коров ANKAR",
-      "article": "0203.070 — до 1000 кг; 0203.071 — до 1500 кг"
-    },
-    {
-      "id": "0203-040-поддержка-для-головы-крс-vink",
-      "section": "4.6",
-      "name": "Поддержка для головы КРС VINK",
-      "article": "0203.040"
     },
     {
       "id": "0203-081-путы-для-крс-profi",
@@ -913,36 +581,6 @@
       "article": "1103.007"
     },
     {
-      "id": "1106-017-анализатор-кетоновых-тел-taidoc-4235e",
-      "section": "4.9",
-      "name": "Анализатор кетоновых тел TAIDOC 4235E",
-      "article": "1106.017"
-    },
-    {
-      "id": "1106-020-тест-полоски-к-анализатору-taidoc-4235e",
-      "section": "4.9",
-      "name": "Тест-полоски к анализатору TAIDOC 4235E",
-      "article": "1106.020"
-    },
-    {
-      "id": "1106-016-анализатор-глюкозы-в-крови-taidoc-4268",
-      "section": "4.9",
-      "name": "Анализатор глюкозы в крови TAIDOC 4268",
-      "article": "1106.016"
-    },
-    {
-      "id": "1106-019-тест-полоски-к-анализатору-taidoc-4268",
-      "section": "4.9",
-      "name": "Тест-полоски к анализатору TAIDOC 4268",
-      "article": "1106.019"
-    },
-    {
-      "id": "экспресс-тест-для-определения-уровня-мочевины-в-молоке-mun-rapid",
-      "section": "4.9",
-      "name": "Экспресс-тест для определения уровня мочевины в молоке MUN RAPID",
-      "article": "-"
-    },
-    {
       "id": "1106-005-1-л-1106-006-5-л-экспресс-тест-для-выявления-субклинического-мастита-kerba-test",
       "section": "4.9",
       "name": "Экспресс-тест для выявления субклинического мастита KERBA TEST",
@@ -989,6 +627,474 @@
       "section": "4.10",
       "name": "ЦЕФТ 50",
       "article": "-"
+    },
+    {
+      "id": "амоксиджект-la",
+      "section": "4.10",
+      "name": "Амоксиджект LA",
+      "article": "-"
+    },
+    {
+      "id": "амоксим-80",
+      "section": "4.10",
+      "name": "Амоксим 80%",
+      "article": "-"
+    },
+    {
+      "id": "ветбензицин-3",
+      "section": "4.10",
+      "name": "Ветбензицин-3",
+      "article": "-"
+    },
+    {
+      "id": "гентафарм-10",
+      "section": "4.10",
+      "name": "Гентафарм 10%",
+      "article": "-"
+    },
+    {
+      "id": "сульфаприм-аква-трв",
+      "section": "4.10",
+      "name": "Сульфаприм Аква-ТРВ",
+      "article": "-"
+    },
+    {
+      "id": "утеробел",
+      "section": "4.10",
+      "name": "Утеробел",
+      "article": "-"
+    },
+    {
+      "id": "хелсивит",
+      "section": "4.10",
+      "name": "Хелсивит",
+      "article": "-"
+    },
+    {
+      "id": "цефтивитам-звс",
+      "section": "4.10",
+      "name": "ЦефтиВитам ЗВС",
+      "article": "-"
+    },
+    {
+      "id": "бовитаб",
+      "section": "4.10",
+      "name": "БовиТаб",
+      "article": "-"
+    },
+    {
+      "id": "диетевит-тоник",
+      "section": "4.10",
+      "name": "Диетевит Тоник",
+      "article": "-"
+    },
+    {
+      "id": "диетевит-флэш",
+      "section": "4.10",
+      "name": "Диетевит Флэш",
+      "article": "-"
+    },
+    {
+      "id": "диетевит-иксель",
+      "section": "4.10",
+      "name": "Диетевит-Иксель",
+      "article": "-"
+    },
+    {
+      "id": "концентрат-кормовой-минеральный-кальфид",
+      "section": "4.10",
+      "name": "Концентрат кормовой минеральный «Кальфид»",
+      "article": "-"
+    },
+    {
+      "id": "нутризан",
+      "section": "4.10",
+      "name": "Нутризан",
+      "article": "-"
+    },
+    {
+      "id": "пувмкк-золотой-фелуцен-зфк-2-4-для-крс",
+      "section": "4.10",
+      "name": "ПУВМКК «Золотой Фелуцен» ЗФК-2/4 для КРС",
+      "article": "-"
+    },
+    {
+      "id": "лактофреш-оранж",
+      "section": "4.10",
+      "name": "Лактофреш Оранж",
+      "article": "-"
+    },
+    {
+      "id": "старт-энерджи",
+      "section": "4.10",
+      "name": "Старт Энерджи",
+      "article": "-"
+    },
+    {
+      "id": "фелуцен-к-2-4-для-молодняка-крс-ментоловый",
+      "section": "4.10",
+      "name": "Фелуцен К 2-4 для молодняка КРС, ментоловый",
+      "article": "-"
+    },
+    {
+      "id": "фелуцен-к2-4-для-молодняка-крс-энергетический",
+      "section": "4.10",
+      "name": "Фелуцен К2-4 для молодняка КРС, энергетический",
+      "article": "-"
+    },
+    {
+      "id": "борглюконат-кальция-20-бионит",
+      "section": "4.10",
+      "name": "Борглюконат кальция 20% «БИОНИТ»",
+      "article": "-"
+    },
+    {
+      "id": "борглюконат-кальция-20",
+      "section": "4.10",
+      "name": "Борглюконат кальция 20%",
+      "article": "-"
+    },
+    {
+      "id": "витам",
+      "section": "4.10",
+      "name": "Витам",
+      "article": "-"
+    },
+    {
+      "id": "кобакто-75lc",
+      "section": "4.10",
+      "name": "Кобакто 75LC",
+      "article": "-"
+    },
+    {
+      "id": "антитокс",
+      "section": "4.10",
+      "name": "Антитокс",
+      "article": "-"
+    },
+    {
+      "id": "биостомасан",
+      "section": "4.10",
+      "name": "Биостомасан",
+      "article": "-"
+    },
+    {
+      "id": "бутастим-асконт",
+      "section": "4.10",
+      "name": "Бутастим «Асконт+»",
+      "article": "-"
+    },
+    {
+      "id": "вазелин-ветеринарный",
+      "section": "4.10",
+      "name": "Вазелин ветеринарный",
+      "article": "-"
+    },
+    {
+      "id": "вакцина-комбовак-р-для-крс",
+      "section": "4.10",
+      "name": "Вакцина Комбовак Р для КРС",
+      "article": "-"
+    },
+    {
+      "id": "вакцина-против-сибирской-язвы-и-эмкара-орловская",
+      "section": "4.10",
+      "name": "Вакцина против сибирской язвы и ЭМКАРа, Орловская",
+      "article": "-"
+    },
+    {
+      "id": "гелерон",
+      "section": "4.10",
+      "name": "Гелерон",
+      "article": "-"
+    },
+    {
+      "id": "гемпотин-с-распылителем",
+      "section": "4.10",
+      "name": "Гемпотин с распылителем",
+      "article": "-"
+    },
+    {
+      "id": "гепатоджект",
+      "section": "4.10",
+      "name": "Гепатоджект",
+      "article": "-"
+    },
+    {
+      "id": "глюкоза-40-раствор-для-инъекций",
+      "section": "4.10",
+      "name": "Глюкоза 40%, раствор для инъекций",
+      "article": "-"
+    },
+    {
+      "id": "диарвит",
+      "section": "4.10",
+      "name": "Диарвит",
+      "article": "-"
+    },
+    {
+      "id": "интрасан",
+      "section": "4.10",
+      "name": "Интрасан",
+      "article": "-"
+    },
+    {
+      "id": "ихтиоловые-свечи",
+      "section": "4.10",
+      "name": "Ихтиоловые свечи",
+      "article": "-"
+    },
+    {
+      "id": "йод-однохлористый",
+      "section": "4.10",
+      "name": "Йод однохлористый",
+      "article": "-"
+    },
+    {
+      "id": "кабуфол-нита",
+      "section": "4.10",
+      "name": "Кабуфол «Нита»",
+      "article": "-"
+    },
+    {
+      "id": "кальция-хлорид-10-раствор-для-инъекций",
+      "section": "4.10",
+      "name": "Кальция хлорид 10%, раствор для инъекций",
+      "article": "-"
+    },
+    {
+      "id": "клиодезив-дез",
+      "section": "4.10",
+      "name": "Клиодезив-Дез",
+      "article": "-"
+    },
+    {
+      "id": "клиодезив",
+      "section": "4.10",
+      "name": "Клиодезив",
+      "article": "-"
+    },
+    {
+      "id": "клоксам",
+      "section": "4.10",
+      "name": "Клоксам",
+      "article": "-"
+    },
+    {
+      "id": "клоксам-упаковка-20-шт",
+      "section": "4.10",
+      "name": "Клоксам, упаковка 20 шт.",
+      "article": "-"
+    },
+    {
+      "id": "кофеина-бензоат-натрия-20",
+      "section": "4.10",
+      "name": "Кофеина бензоат натрия 20%",
+      "article": "-"
+    },
+    {
+      "id": "крем-зорька",
+      "section": "4.10",
+      "name": "Крем «Зорька»",
+      "article": "-"
+    },
+    {
+      "id": "лексоджект",
+      "section": "4.10",
+      "name": "Лексоджект",
+      "article": "-"
+    },
+    {
+      "id": "мазь-ихтиоловая-10",
+      "section": "4.10",
+      "name": "Мазь ихтиоловая 10%",
+      "article": "-"
+    },
+    {
+      "id": "мазь-камфорная-10",
+      "section": "4.10",
+      "name": "Мазь камфорная 10%",
+      "article": "-"
+    },
+    {
+      "id": "мазь-левомеколь-вет",
+      "section": "4.10",
+      "name": "Мазь Левомеколь вет.",
+      "article": "-"
+    },
+    {
+      "id": "мазь-мастисепт-а",
+      "section": "4.10",
+      "name": "Мазь Мастисепт-А",
+      "article": "-"
+    },
+    {
+      "id": "мастибак",
+      "section": "4.10",
+      "name": "Мастибак",
+      "article": "-"
+    },
+    {
+      "id": "мастибак-упаковка-20-шт",
+      "section": "4.10",
+      "name": "Мастибак, упаковка 20 шт.",
+      "article": "-"
+    },
+    {
+      "id": "мастоцефт",
+      "section": "4.10",
+      "name": "Мастоцефт",
+      "article": "-"
+    },
+    {
+      "id": "метримаст-звс",
+      "section": "4.10",
+      "name": "МетриМаст ЗВС",
+      "article": "-"
+    },
+    {
+      "id": "метримаст-звс-упаковка-20-шт",
+      "section": "4.10",
+      "name": "МетриМаст ЗВС, упаковка 20 шт.",
+      "article": "-"
+    },
+    {
+      "id": "метриприм",
+      "section": "4.10",
+      "name": "Метриприм",
+      "article": "-"
+    },
+    {
+      "id": "метростимовит-звс",
+      "section": "4.10",
+      "name": "МетростимоВит ЗВС",
+      "article": "-"
+    },
+    {
+      "id": "натрия-хлорид-0-9-раствор",
+      "section": "4.10",
+      "name": "Натрия хлорид 0,9%, раствор",
+      "article": "-"
+    },
+    {
+      "id": "неокальф",
+      "section": "4.10",
+      "name": "Неокальф",
+      "article": "-"
+    },
+    {
+      "id": "новокаин-0-5",
+      "section": "4.10",
+      "name": "Новокаин 0,5%",
+      "article": "-"
+    },
+    {
+      "id": "оксареп",
+      "section": "4.10",
+      "name": "Оксареп",
+      "article": "-"
+    },
+    {
+      "id": "пенивитакан",
+      "section": "4.10",
+      "name": "ПениВитаКан",
+      "article": "-"
+    },
+    {
+      "id": "пенивитакан-упаковка-20-шт",
+      "section": "4.10",
+      "name": "ПениВитаКан, упаковка 20 шт.",
+      "article": "-"
+    },
+    {
+      "id": "прогестамаг",
+      "section": "4.10",
+      "name": "Прогестамаг",
+      "article": "-"
+    },
+    {
+      "id": "прогестерон-2-5",
+      "section": "4.10",
+      "name": "Прогестерон 2,5%",
+      "article": "-"
+    },
+    {
+      "id": "раствор-рингера-локка",
+      "section": "4.10",
+      "name": "Раствор Рингера–Локка",
+      "article": "-"
+    },
+    {
+      "id": "сидр",
+      "section": "4.10",
+      "name": "СИДР",
+      "article": "-"
+    },
+    {
+      "id": "сыворотка-9-валентная-для-крс",
+      "section": "4.10",
+      "name": "Сыворотка 9-валентная для КРС",
+      "article": "-"
+    },
+    {
+      "id": "иммуносерум",
+      "section": "4.10",
+      "name": "Иммуносерум",
+      "article": "-"
+    },
+    {
+      "id": "террамицин-аэрозоль-спрей",
+      "section": "4.10",
+      "name": "Террамицин Аэрозоль Спрей",
+      "article": "-"
+    },
+    {
+      "id": "эстробел-d",
+      "section": "4.10",
+      "name": "Эстробел D",
+      "article": "-"
+    },
+    {
+      "id": "мультивит-минералы-immcont-gmbh-германия",
+      "section": "4.10",
+      "name": "Мультивит + Минералы ImmCont GmbH, Германия",
+      "article": "—"
+    },
+    {
+      "id": "кальцифос-biowet-drwalew-польша",
+      "section": "4.10",
+      "name": "Кальцифос Biowet-drwalew, Польша",
+      "article": "—"
+    },
+    {
+      "id": "олиговит-kela-бельгия",
+      "section": "4.10",
+      "name": "Олиговит KELA, Бельгия",
+      "article": "—"
+    },
+    {
+      "id": "пеникан-п-kela-бельгия",
+      "section": "4.10",
+      "name": "Пеникан П KELA, Бельгия",
+      "article": "—"
+    },
+    {
+      "id": "боваклокс-дс-24-norbrook-ирландия",
+      "section": "4.10",
+      "name": "Боваклокс ДС №24 Norbrook, Ирландия",
+      "article": "—"
+    },
+    {
+      "id": "биоветальгин-biowet-drwalew-польша",
+      "section": "4.10",
+      "name": "Биоветальгин Biowet-drwalew, Польша",
+      "article": "—"
+    },
+    {
+      "id": "смекто-плюс-ооо-белбиорост-республика-беларусь",
+      "section": "4.10",
+      "name": "Смекто Плюс, ООО «БелБиоРост», Республика Беларусь",
+      "article": "—"
     },
     {
       "id": "айвлазин",
@@ -1213,6 +1319,336 @@
       "article": "—"
     },
     {
+      "id": "мастидез-концентрат",
+      "section": "4.11",
+      "name": "Мастидез-концентрат",
+      "article": "—"
+    },
+    {
+      "id": "мастипен",
+      "section": "4.11",
+      "name": "Мастипен",
+      "article": "—"
+    },
+    {
+      "id": "гель-повиаргола-1",
+      "section": "4.11",
+      "name": "Гель Повиаргола 1%",
+      "article": "—"
+    },
+    {
+      "id": "полийодметрин",
+      "section": "4.11",
+      "name": "Полийодметрин",
+      "article": "—"
+    },
+    {
+      "id": "рамоклокс-dc",
+      "section": "4.11",
+      "name": "Рамоклокс DC",
+      "article": "—"
+    },
+    {
+      "id": "рихометрин-п",
+      "section": "4.11",
+      "name": "Рихометрин П",
+      "article": "—"
+    },
+    {
+      "id": "рэнросепт",
+      "section": "4.11",
+      "name": "Рэнросепт",
+      "article": "—"
+    },
+    {
+      "id": "уберосан",
+      "section": "4.11",
+      "name": "Уберосан",
+      "article": "—"
+    },
+    {
+      "id": "утеросепт-био",
+      "section": "4.11",
+      "name": "Утеросепт Био",
+      "article": "—"
+    },
+    {
+      "id": "цефалек-dc",
+      "section": "4.11",
+      "name": "Цефалек DC",
+      "article": "—"
+    },
+    {
+      "id": "цефапирин-рн",
+      "section": "4.11",
+      "name": "Цефапирин-РН",
+      "article": "—"
+    },
+    {
+      "id": "цефтисепт",
+      "section": "4.11",
+      "name": "Цефтисепт",
+      "article": "—"
+    },
+    {
+      "id": "альбазен-10",
+      "section": "4.11",
+      "name": "Альбазен 10%",
+      "article": "—"
+    },
+    {
+      "id": "альбазен-2-5",
+      "section": "4.11",
+      "name": "Альбазен 2,5%",
+      "article": "—"
+    },
+    {
+      "id": "альбазен-20",
+      "section": "4.11",
+      "name": "Альбазен 20%",
+      "article": "—"
+    },
+    {
+      "id": "альбазен-0-36",
+      "section": "4.11",
+      "name": "Альбазен 0,36",
+      "article": "—"
+    },
+    {
+      "id": "дац",
+      "section": "4.11",
+      "name": "ДАЦ",
+      "article": "—"
+    },
+    {
+      "id": "дорамек",
+      "section": "4.11",
+      "name": "Дорамек",
+      "article": "—"
+    },
+    {
+      "id": "пирокарб",
+      "section": "4.11",
+      "name": "Пирокарб",
+      "article": "—"
+    },
+    {
+      "id": "празитаб",
+      "section": "4.11",
+      "name": "Празитаб",
+      "article": "—"
+    },
+    {
+      "id": "празитаб-плюс",
+      "section": "4.11",
+      "name": "Празитаб Плюс",
+      "article": "—"
+    },
+    {
+      "id": "риверкон",
+      "section": "4.11",
+      "name": "Риверкон",
+      "article": "—"
+    },
+    {
+      "id": "ривертин-1",
+      "section": "4.11",
+      "name": "Ривертин 1%",
+      "article": "—"
+    },
+    {
+      "id": "тетрамизол-20",
+      "section": "4.11",
+      "name": "Тетрамизол 20%",
+      "article": "—"
+    },
+    {
+      "id": "тетрамизол-10",
+      "section": "4.11",
+      "name": "Тетрамизол 10%",
+      "article": "—"
+    },
+    {
+      "id": "тетрамизол-20",
+      "section": "4.11",
+      "name": "Тетрамизол 20%",
+      "article": "—"
+    },
+    {
+      "id": "тетрамизол-10",
+      "section": "4.11",
+      "name": "Тетрамизол 10%",
+      "article": "—"
+    },
+    {
+      "id": "торукокс-2-5",
+      "section": "4.11",
+      "name": "Торукокс 2,5%",
+      "article": "—"
+    },
+    {
+      "id": "торукокс-5",
+      "section": "4.11",
+      "name": "Торукокс 5%",
+      "article": "—"
+    },
+    {
+      "id": "фенбазен-22-2",
+      "section": "4.11",
+      "name": "Фенбазен 22,2%",
+      "article": "—"
+    },
+    {
+      "id": "эприкон-20",
+      "section": "4.11",
+      "name": "Эприкон 20",
+      "article": "—"
+    },
+    {
+      "id": "микофарм",
+      "section": "4.11",
+      "name": "Микофарм",
+      "article": "—"
+    },
+    {
+      "id": "тайфун",
+      "section": "4.11",
+      "name": "Тайфун",
+      "article": "—"
+    },
+    {
+      "id": "ратеид",
+      "section": "4.11",
+      "name": "Ратеид",
+      "article": "—"
+    },
+    {
+      "id": "ратокс",
+      "section": "4.11",
+      "name": "Ратокс",
+      "article": "—"
+    },
+    {
+      "id": "рацидол",
+      "section": "4.11",
+      "name": "Рацидол",
+      "article": "—"
+    },
+    {
+      "id": "флуатрин",
+      "section": "4.11",
+      "name": "Флуатрин",
+      "article": "—"
+    },
+    {
+      "id": "эктофен",
+      "section": "4.11",
+      "name": "Эктофен",
+      "article": "—"
+    },
+    {
+      "id": "глютар",
+      "section": "4.11",
+      "name": "Глютар",
+      "article": "—"
+    },
+    {
+      "id": "биосан",
+      "section": "4.11",
+      "name": "Биосан",
+      "article": "—"
+    },
+    {
+      "id": "витамикс-1",
+      "section": "4.11",
+      "name": "Витамикс-1",
+      "article": "—"
+    },
+    {
+      "id": "витасорб",
+      "section": "4.11",
+      "name": "Витасорб",
+      "article": "—"
+    },
+    {
+      "id": "мексикам",
+      "section": "4.11",
+      "name": "Мексикам",
+      "article": "—"
+    },
+    {
+      "id": "селекар",
+      "section": "4.11",
+      "name": "Селекар",
+      "article": "—"
+    },
+    {
+      "id": "стимулонг",
+      "section": "4.11",
+      "name": "Стимулонг",
+      "article": "—"
+    },
+    {
+      "id": "руфферан-200-плюс",
+      "section": "4.11",
+      "name": "Руфферан-200 Плюс",
+      "article": "—"
+    },
+    {
+      "id": "руфферан",
+      "section": "4.11",
+      "name": "Руфферан",
+      "article": "—"
+    },
+    {
+      "id": "рубиотик",
+      "section": "4.11",
+      "name": "Рубиотик",
+      "article": "—"
+    },
+    {
+      "id": "крем-буренка",
+      "section": "4.11",
+      "name": "Крем «Бурёнка»",
+      "article": "—"
+    },
+    {
+      "id": "гель-декорнум",
+      "section": "4.11",
+      "name": "Гель Декорнум",
+      "article": "—"
+    },
+    {
+      "id": "мазь-камфорно-ихтиоловая",
+      "section": "4.11",
+      "name": "Мазь Камфорно-Ихтиоловая",
+      "article": "—"
+    },
+    {
+      "id": "биохелат-гель",
+      "section": "4.11",
+      "name": "Биохелат Гель",
+      "article": "—"
+    },
+    {
+      "id": "биохелат-концентрат",
+      "section": "4.11",
+      "name": "Биохелат Концентрат",
+      "article": "—"
+    },
+    {
+      "id": "ксиловит",
+      "section": "4.11",
+      "name": "Ксиловит",
+      "article": "—"
+    },
+    {
+      "id": "имупрофен-10",
+      "section": "4.11",
+      "name": "Имупрофен 10%",
+      "article": "—"
+    },
+    {
       "id": "antistress-horse-hhl-horse-health-line",
       "section": "4.12",
       "name": "Antistress Horse (HHL – Horse Health Line)",
@@ -1225,10 +1661,106 @@
       "article": "—"
     },
     {
-      "id": "0202-001-щетка-чесалка-для-скота-texas",
-      "section": "5.1",
-      "name": "Щётка-чесалка для скота TEXAS",
-      "article": "0202.001"
+      "id": "нуклеостим-водорастворимый",
+      "section": "4.12",
+      "name": "Нуклеостим водорастворимый",
+      "article": "—"
+    },
+    {
+      "id": "витаспорин",
+      "section": "4.12",
+      "name": "Витаспорин",
+      "article": "—"
+    },
+    {
+      "id": "нуклеопептид",
+      "section": "4.12",
+      "name": "Нуклеопептид",
+      "article": "—"
+    },
+    {
+      "id": "спороветин-для-всех-видов-животных",
+      "section": "4.12",
+      "name": "Спороветин для всех видов животных",
+      "article": "—"
+    },
+    {
+      "id": "спороветин-для-всех-видов-животных",
+      "section": "4.12",
+      "name": "Спороветин для всех видов животных",
+      "article": "—"
+    },
+    {
+      "id": "костоправ",
+      "section": "4.12",
+      "name": "Костоправ",
+      "article": "—"
+    },
+    {
+      "id": "септопол",
+      "section": "4.12",
+      "name": "Септопол",
+      "article": "—"
+    },
+    {
+      "id": "сангра",
+      "section": "4.12",
+      "name": "Сангра",
+      "article": "—"
+    },
+    {
+      "id": "тринорм",
+      "section": "4.12",
+      "name": "Тринорм",
+      "article": "—"
+    },
+    {
+      "id": "лизин",
+      "section": "4.12",
+      "name": "Лизин",
+      "article": "—"
+    },
+    {
+      "id": "микровитам",
+      "section": "4.12",
+      "name": "Микровитам",
+      "article": "—"
+    },
+    {
+      "id": "азинокс-ветеринарный",
+      "section": "4.12",
+      "name": "Азинокс® ветеринарный",
+      "article": "—"
+    },
+    {
+      "id": "хондро-про",
+      "section": "4.12",
+      "name": "Хондро-Про",
+      "article": "—"
+    },
+    {
+      "id": "ультра-антисептик",
+      "section": "4.12",
+      "name": "Ультра-антисептик",
+      "article": "—"
+    },
+    {
+      "id": "биозоль-спрей",
+      "section": "4.12",
+      "name": "Биозоль Спрей",
+      "article": "—"
+    },
+    {
+      "id": "раносепт-спрей",
+      "section": "4.12",
+      "name": "Раносепт спрей",
+      "article": "—"
+    },
+    {
+      "id": "алюмиспрей",
+      "section": "4.12",
+      "name": "Алюмиспрей",
+      "article": "—"
     },
     {
       "id": "скребок-спиральный-для-шкуры-4-рядный-tian",
@@ -1249,22 +1781,22 @@
       "article": "0208.048"
     },
     {
-      "id": "0202-018-режущий-диск-для-копыт-p6",
+      "id": "0208-060-щипцы-боковые-для-обработки-копыт",
       "section": "5.2",
-      "name": "Режущий диск для копыт P6",
-      "article": "0202.018*"
-    },
-    {
-      "id": "0208-046-дисковый-нож-для-обработки-копыт-btc-6-ножей",
-      "section": "5.2",
-      "name": "Дисковый нож для обработки копыт BTC, 6 ножей",
-      "article": "0208.046"
+      "name": "Щипцы боковые для обработки копыт",
+      "article": "0208.060"
     },
     {
       "id": "0208-067-клещи-копытные-knipex",
       "section": "5.2",
       "name": "Клещи копытные KNIPEX",
       "article": "0208.067"
+    },
+    {
+      "id": "0208-170-копытные-клещи-knipex",
+      "section": "5.2",
+      "name": "Копытные клещи KNIPEX",
+      "article": "0208.170"
     },
     {
       "id": "0208-169-копытные-клещи",
@@ -1277,12 +1809,6 @@
       "section": "5.2",
       "name": "Точило для ножей",
       "article": "0208.171"
-    },
-    {
-      "id": "0208-007-рашпиль-для-обработки-копыт-disc",
-      "section": "5.2",
-      "name": "Рашпиль для обработки копыт DISC",
-      "article": "0208.007"
     },
     {
       "id": "vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap",
@@ -1309,12 +1835,6 @@
       "article": "0208.167; 0208.168; 0208.166"
     },
     {
-      "id": "0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
-      "section": "5.2",
-      "name": "Нож для копыт PROFI узкий",
-      "article": "0208.160; 0208.161; 0208.162"
-    },
-    {
       "id": "0208-0105-0208-0108-0208-0101-0208-0104-бандаж-для-копыт-ankar",
       "section": "5.2",
       "name": "Бандаж для копыт ANKAR",
@@ -1325,12 +1845,6 @@
       "section": "5.2",
       "name": "Повязка дегтевая для копыт 25 × 45 мм",
       "article": "0208.022"
-    },
-    {
-      "id": "0208-016-деревянная-колодка-130-56-мм",
-      "section": "5.2",
-      "name": "Деревянная колодка 130 × 56 мм",
-      "article": "0208.016"
     },
     {
       "id": "0208-001-средство-для-обработки-копыт-ankar-hoof",
@@ -1366,6 +1880,12 @@
       "id": "повязка-метка-на-ногу-ankar",
       "section": "5.3",
       "name": "Повязка-метка на ногу ANKAR",
+      "article": "-"
+    },
+    {
+      "id": "повязка-липучка-tian",
+      "section": "5.3",
+      "name": "Повязка-липучка TIAN",
       "article": "-"
     },
     {
@@ -1453,6 +1973,12 @@
       "article": "0207.149"
     },
     {
+      "id": "0203-038-ошейник-для-привязи-коров",
+      "section": "5.4",
+      "name": "Ошейник для привязи коров",
+      "article": "0203.038"
+    },
+    {
       "id": "0203-033-ошейник-с-овальным-и-d-образным-кольцом",
       "section": "5.4",
       "name": "Ошейник с овальным и D-образным кольцом",
@@ -1495,36 +2021,6 @@
       "article": "-"
     },
     {
-      "id": "96623-маркер-для-бирок-толстый-all-weather",
-      "section": "5.5",
-      "name": "Маркер для бирок толстый ALL-WEATHER",
-      "article": "96623"
-    },
-    {
-      "id": "щипцы-универсальные-без-иглы",
-      "section": "5.5",
-      "name": "Щипцы универсальные без иглы",
-      "article": "-"
-    },
-    {
-      "id": "щипцы-универсальные-с-иглой",
-      "section": "5.5",
-      "name": "Щипцы универсальные с иглой",
-      "article": "-"
-    },
-    {
-      "id": "щипцы-для-металлических-бирок",
-      "section": "5.5",
-      "name": "Щипцы для металлических бирок",
-      "article": "-"
-    },
-    {
-      "id": "тавратор-для-ушных-бирок-allflex",
-      "section": "5.5",
-      "name": "Тавратор для ушных бирок ALLFLEX",
-      "article": "-"
-    },
-    {
       "id": "0203-053-веревка-для-транспортировки-скота",
       "section": "5.6",
       "name": "Верёвка для транспортировки скота",
@@ -1537,12 +2033,6 @@
       "article": "0203.040"
     },
     {
-      "id": "погонщик-скота-ankar-shock-pro-2500",
-      "section": "5.6",
-      "name": "Погонщик скота ANKAR SHOCK PRO 2500",
-      "article": "-"
-    },
-    {
       "id": "погонщик-скота-mini-tian-trade",
       "section": "5.6",
       "name": "Погонщик скота MINI TIAN TRADE",
@@ -1553,6 +2043,12 @@
       "section": "5.6",
       "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
       "article": "0203.001"
+    },
+    {
+      "id": "0203-011-щипцы-носовые-для-быков-harms-с-замком-из-нержавеющей-стали",
+      "section": "5.6",
+      "name": "Щипцы носовые для быков HARMS с замком из нержавеющей стали",
+      "article": "0203.011"
     },
     {
       "id": "0203-047-щипцы-носовые-для-быков",
@@ -1675,10 +2171,238 @@
       "article": "—"
     },
     {
-      "id": "190031-металлический-вольер-трубка",
-      "section": "6.1",
-      "name": "Металлический вольер-трубка",
-      "article": "190031"
+      "id": "электропастух-olli-100",
+      "section": "5.7",
+      "name": "Электропастух OLLI 100",
+      "article": "—"
+    },
+    {
+      "id": "электропастух-olli-300",
+      "section": "5.7",
+      "name": "Электропастух OLLI 300",
+      "article": "—"
+    },
+    {
+      "id": "электропастух-olli-600",
+      "section": "5.7",
+      "name": "Электропастух OLLI 600",
+      "article": "—"
+    },
+    {
+      "id": "электропастух-olli-950",
+      "section": "5.7",
+      "name": "Электропастух OLLI 950",
+      "article": "—"
+    },
+    {
+      "id": "электропастух-olli-1000",
+      "section": "5.7",
+      "name": "Электропастух OLLI 1000",
+      "article": "—"
+    },
+    {
+      "id": "электропастух-olli-protector-11",
+      "section": "5.7",
+      "name": "Электропастух OLLI PROTECTOR 11",
+      "article": "—"
+    },
+    {
+      "id": "зеленая-многожильная-лента-shockteq-20-мм-200-м",
+      "section": "5.7",
+      "name": "Зелёная многожильная лента Shockteq 20 мм / 200 м",
+      "article": "—"
+    },
+    {
+      "id": "зимняя-лента-shockteq-40-мм-200-м",
+      "section": "5.7",
+      "name": "Зимняя лента SHOCKTEQ 40 мм / 200 м",
+      "article": "—"
+    },
+    {
+      "id": "многожильная-лента-40-мм-200-м",
+      "section": "5.7",
+      "name": "Многожильная лента 40 мм / 200 м",
+      "article": "—"
+    },
+    {
+      "id": "многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white",
+      "section": "5.7",
+      "name": "Многожильный шнур OLLI Shockteq Wire 3 мм / 1000 м Black/White",
+      "article": "—"
+    },
+    {
+      "id": "многожильный-шнур-shockteq-super-6-3-мм-1000-м",
+      "section": "5.7",
+      "name": "Многожильный шнур Shockteq Super-6, 3 мм / 1000 м",
+      "article": "—"
+    },
+    {
+      "id": "многожильный-шнур-shockteq-super-6-3-мм-200-м",
+      "section": "5.7",
+      "name": "Многожильный шнур Shockteq Super-6, 3 мм / 200 м",
+      "article": "—"
+    },
+    {
+      "id": "шнур-тор-барьер-1000",
+      "section": "5.7",
+      "name": "Шнур ТОР Барьер-1000",
+      "article": "—"
+    },
+    {
+      "id": "моток-оцинкованной-проволоки-1-2-мм-1000-м",
+      "section": "5.7",
+      "name": "Моток оцинкованной проволоки 1,2 мм, 1000 м",
+      "article": "—"
+    },
+    {
+      "id": "клейкая-лента-panzertape-kerbl",
+      "section": "5.7",
+      "name": "Клейкая лента Panzertape Kerbl",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-olli",
+      "section": "5.7",
+      "name": "Изолятор OLLI",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-для-арматуры-тор-тип-б",
+      "section": "5.7",
+      "name": "Изолятор для арматуры ТОР, тип Б",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-для-дерева-тор-тип-а",
+      "section": "5.7",
+      "name": "Изолятор для дерева ТОР, тип А",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-для-калиток-ленточных-ограждений-stockteq",
+      "section": "5.7",
+      "name": "Изолятор для калиток ленточных ограждений Stockteq",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-для-лент-olli",
+      "section": "5.7",
+      "name": "Изолятор для лент OLLI",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-кольцевой-черный",
+      "section": "5.7",
+      "name": "Изолятор кольцевой, чёрный",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-круглый-черный",
+      "section": "5.7",
+      "name": "Изолятор круглый, чёрный",
+      "article": "—"
+    },
+    {
+      "id": "изолятор-на-стекловолоконные-столбики-и-арматуру",
+      "section": "5.7",
+      "name": "Изолятор на стекловолоконные столбики и арматуру",
+      "article": "—"
+    },
+    {
+      "id": "комбинированный-изолятор-duo",
+      "section": "5.7",
+      "name": "Комбинированный изолятор DUO",
+      "article": "—"
+    },
+    {
+      "id": "комбинированный-изолятор-для-лент-и-проводов",
+      "section": "5.7",
+      "name": "Комбинированный изолятор для лент и проводов",
+      "article": "—"
+    },
+    {
+      "id": "набор-соединителей-для-лент-шириной-10-40-мм",
+      "section": "5.7",
+      "name": "Набор соединителей для лент шириной 10–40 мм",
+      "article": "—"
+    },
+    {
+      "id": "натяжитель-проводов",
+      "section": "5.7",
+      "name": "Натяжитель проводов",
+      "article": "—"
+    },
+    {
+      "id": "пластичный-зажим-для-проводов-3-мм",
+      "section": "5.7",
+      "name": "Пластичный зажим для проводов 3 мм",
+      "article": "—"
+    },
+    {
+      "id": "соединитель-для-лент-шириной-10-12-мм",
+      "section": "5.7",
+      "name": "Соединитель для лент шириной 10–12 мм",
+      "article": "—"
+    },
+    {
+      "id": "соединитель-проволоки-duplex-3",
+      "section": "5.7",
+      "name": "Соединитель проволоки Duplex-3",
+      "article": "—"
+    },
+    {
+      "id": "калитка-ворота-пружинная-1-ряд-5-м",
+      "section": "5.7",
+      "name": "Калитка (ворота) пружинная, 1 ряд, 5 м",
+      "article": "—"
+    },
+    {
+      "id": "комплект-для-калитки-с-гибким-шнуром-4-5-м",
+      "section": "5.7",
+      "name": "Комплект для калитки с гибким шнуром, 4,5 м",
+      "article": "—"
+    },
+    {
+      "id": "ручка-для-калитки",
+      "section": "5.7",
+      "name": "Ручка для калитки",
+      "article": "—"
+    },
+    {
+      "id": "набор-пружинной-калитки-1-ряд-5-м",
+      "section": "5.7",
+      "name": "Набор пружинной калитки, 1 ряд / 5 м",
+      "article": "—"
+    },
+    {
+      "id": "стекловолоконный-столбик-olli-140-см",
+      "section": "5.7",
+      "name": "Стекловолоконный столбик OLLI, 140 см",
+      "article": "—"
+    },
+    {
+      "id": "шест-заземления-с-соединительным-кабелем",
+      "section": "5.7",
+      "name": "Шест заземления с соединительным кабелем",
+      "article": "—"
+    },
+    {
+      "id": "грозозащитный-разрядник",
+      "section": "5.7",
+      "name": "Грозозащитный разрядник",
+      "article": "—"
+    },
+    {
+      "id": "устройство-молниезащиты-грозозащиты-двухканальное",
+      "section": "5.7",
+      "name": "Устройство молниезащиты / грозозащиты двухканальное",
+      "article": "—"
+    },
+    {
+      "id": "измеритель-напряжения-изгороди-olli-digitester-plus",
+      "section": "5.7",
+      "name": "Измеритель напряжения изгороди OLLI DIGITESTER PLUS",
+      "article": "—"
     },
     {
       "id": "дренчер-для-телят-ankar-2-л-с-жестким-зондом",
@@ -1799,60 +2523,6 @@
       "section": "6.2",
       "name": "Запасной зонд для дренчера TRUSTI TUBER XS",
       "article": "0206.142 / TT05 / TT05B"
-    },
-    {
-      "id": "302101-соска-для-ведра-ankar-красная",
-      "section": "6.3",
-      "name": "Соска для ведра ANKAR, красная",
-      "article": "302101"
-    },
-    {
-      "id": "0206-056-соска-для-ведра-ankar-белая",
-      "section": "6.3",
-      "name": "Соска для ведра ANKAR, белая",
-      "article": "0206.056"
-    },
-    {
-      "id": "0206-052-соска-запасная-для-ведра-ankar",
-      "section": "6.3",
-      "name": "Соска запасная для ведра ANKAR",
-      "article": "0206.052"
-    },
-    {
-      "id": "0206-049-соска-big-softy",
-      "section": "6.3",
-      "name": "Соска BIG SOFTY",
-      "article": "0206.049"
-    },
-    {
-      "id": "0206-057-соска-для-ведра",
-      "section": "6.3",
-      "name": "Соска для ведра",
-      "article": "0206.057"
-    },
-    {
-      "id": "0206-059-соска-плавающая-kerbl",
-      "section": "6.3",
-      "name": "Соска плавающая KERBL",
-      "article": "0206.059"
-    },
-    {
-      "id": "0206-086-0206-085-кронштейн-для-ведра-поилки-оцинкованный-крепление-для-ведер-ankar",
-      "section": "6.3",
-      "name": "Кронштейн для ведра-поилки, оцинкованный / крепление для ведер ANKAR",
-      "article": "0206.086 / 0206.085"
-    },
-    {
-      "id": "0206-059-клапан-запасной-для-ведра-kerbl-ankar",
-      "section": "6.3",
-      "name": "Клапан запасной для ведра KERBL / ANKAR",
-      "article": "0206.059*"
-    },
-    {
-      "id": "0206-078-прокладка-для-клапана",
-      "section": "6.3",
-      "name": "Прокладка для клапана",
-      "article": "0206.078"
     },
     {
       "id": "поилка-для-коров-и-телят-5-л",
@@ -2047,58 +2717,10 @@
       "article": "-"
     },
     {
-      "id": "275-запасной-клапан-для-ведра-0210-007",
-      "section": "7.1",
-      "name": "Запасной клапан для ведра 0210.007",
-      "article": "275"
-    },
-    {
-      "id": "0210-010-запасная-соска",
-      "section": "7.1",
-      "name": "Запасная соска",
-      "article": "0210.010"
-    },
-    {
-      "id": "0210-003-бутылка-для-мрс-anti-vac",
-      "section": "7.1",
-      "name": "Бутылка для МРС ANTI-VAC",
-      "article": "0210.003"
-    },
-    {
-      "id": "0210-009-запасная-соска-для-anti-vac",
-      "section": "7.1",
-      "name": "Запасная соска для ANTI-VAC",
-      "article": "0210.009"
-    },
-    {
-      "id": "0210-013-держатель-бутылочек-для-мрс",
-      "section": "7.1",
-      "name": "Держатель бутылочек для МРС",
-      "article": "0210.013"
-    },
-    {
-      "id": "0210-001-roslam-бутылка-дренчер-для-выпойки-жидкого-питания-мрс",
-      "section": "7.1",
-      "name": "ROSLAM, бутылка-дренчер для выпойки жидкого питания МРС",
-      "article": "0210.001"
-    },
-    {
-      "id": "0210-012-привинчивающаяся-соска-к-бутылке-для-мрс",
-      "section": "7.1",
-      "name": "Привинчивающаяся соска к бутылке для МРС",
-      "article": "0210.012"
-    },
-    {
       "id": "0210-035-щипцы-для-кастрации-ягнят",
       "section": "7.2",
       "name": "Щипцы для кастрации ягнят",
       "article": "0210.035"
-    },
-    {
-      "id": "16819-копытный-нож-profi-двусторонний",
-      "section": "7.3",
-      "name": "Копытный нож PROFI двусторонний",
-      "article": "16819"
     },
     {
       "id": "0210-036-ножницы-для-стрижки-овец-ankar",
@@ -2383,22 +3005,16 @@
       "article": "0403.133 — 58 см; 0403.134 — 66 см"
     },
     {
-      "id": "0202-066-полиуретановые-колеса-0202-090-пневматические-колеса-тележка-универсальная-ту-250",
-      "section": "8.2",
-      "name": "Тележка универсальная ТУ-250",
-      "article": "0202.066 — полиуретановые колёса; 0202.090 — пневматические колёса"
-    },
-    {
       "id": "тележка-универсальная-с-весами-для-телят",
       "section": "8.2",
       "name": "Тележка универсальная с весами для телят",
       "article": "-"
     },
     {
-      "id": "0202-069-тележка-опрокидывающаяся-то-260",
-      "section": "8.2",
-      "name": "Тележка опрокидывающаяся ТО-260",
-      "article": "0202.069"
+      "id": "tian-superalkali-hw-foam-no-cl",
+      "section": "8.3",
+      "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
+      "article": "-"
     },
     {
       "id": "tian-superalkali-hw-foam-cl",
@@ -2518,6 +3134,372 @@
       "id": "напольный-вентилятор-с-увлажнителем-воздуха-blackfog-df-26",
       "section": "9.1",
       "name": "Напольный вентилятор с увлажнителем воздуха BlackFog DF 26",
+      "article": "—"
+    },
+    {
+      "id": "генератор-горячего-тумана-b-f-150",
+      "section": "9.1",
+      "name": "Генератор горячего тумана \"B.F.\" 150",
+      "article": "—"
+    },
+    {
+      "id": "генератор-горячего-тумана-t-h-fog-130-a",
+      "section": "9.1",
+      "name": "Генератор горячего тумана \"T.H. Fog\" 130 A",
+      "article": "—"
+    },
+    {
+      "id": "генератор-горячего-тумана-ss-200",
+      "section": "9.1",
+      "name": "Генератор горячего тумана SS-200",
+      "article": "—"
+    },
+    {
+      "id": "генератор-горячего-тумана-t-h-250-h400",
+      "section": "9.1",
+      "name": "Генератор горячего тумана T.H. 250/H400",
+      "article": "—"
+    },
+    {
+      "id": "генератор-горячего-тумана-blackfog-bd-35a",
+      "section": "9.1",
+      "name": "Генератор горячего тумана BlackFog BD - 35A",
+      "article": "—"
+    },
+    {
+      "id": "мини-генератор-тумана-minifog-hyt-2-газовый-баллончик",
+      "section": "9.1",
+      "name": "Мини генератор тумана Minifog HYT-2 газовый баллончик",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-моторный-farmate-3wf-5",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый моторный \"FARMATE 3WF-5\"",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-моторный-kasei-3w-15a",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый моторный \"Kasei\" 3W-15A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-моторный-kasei-3w-30-18-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый моторный \"Kasei\" 3W-30 18 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-моторный-kasei-3wf-14b",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый моторный \"Kasei\" 3WF-14B",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-моторный-kasei-3wf-16",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый моторный \"Kasei\" 3WF-16",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-моторный-kasei-3wf-20a",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый моторный \"Kasei\" 3WF-20A",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-ds-160-200-литров-бензиновый-двигатель",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DS-160 (200 литров) бензиновый двигатель",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-ds-160-200-литров-с-электр-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DS-160 (200 литров) с электр. двигателем",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-ds-160-300-литров-с-бензиновым-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DS-160 (300 литров) с бензиновым двигателем",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-ds-160-300-литров-с-электр-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DS-160 (300 литров) с электр. двигателем",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-ds-160-с-электр-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DS-160 с электр. двигателем",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-du-125-унигрин-двс",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DU 125 (УНИГРИН) ДВС",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-du-125-унигрин-с-электр-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка DU 125 (УНИГРИН) с электр. двигателем",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-gartena-bd-160-160-литров-с-бензиновым-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка Gartena BD-160 (160 литров) с бензиновым двигателем",
+      "article": "—"
+    },
+    {
+      "id": "дезинфекционная-установка-gartena-bd-160-160-литров-с-электрич-двигателем",
+      "section": "9.1",
+      "name": "Дезинфекционная установка Gartena BD-160 (160 литров) с электрич. двигателем",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-fm-10a-10-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE FM-10A\" 10 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-fm-5a-5-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE FM-5A\" 5 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-fm-7a-7-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE FM-7A\" 7 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-ns-2-2-литра",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE NS-2\" 2 литра",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-ns-3-3-литра",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE NS-3\" 3 литра",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-ns5n-5-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE NS5N\" 5 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-10-10-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE-10\" 10 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-farmate-7-7-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный \"FARMATE-7\" 7 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-наплечный-10-литров-нерж-сталь",
+      "section": "9.1",
+      "name": "Опрыскиватель наплечный 10 литров нерж. сталь",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-ns5a-5-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый \"NS5A\" 5 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-farmate-fm-12-12-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый \"FARMATE FM-12\" 12 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-farmate-fm-16v-16-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый \"FARMATE FM-16V\" 16 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-farmate-ns-12-12-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый \"FARMATE NS-12\" 12 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-ранцевый-farmate-ns-16b-16-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель ранцевый \"FARMATE NS-16B\" 16 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-leaf-1015-1-5-литра",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический LEAF 1015 1,5 литра",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-leaf-1120-2-литра",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический LEAF 1120 2 литра",
+      "article": "—"
+    },
+    {
+      "id": "телескопическая-удочка-volpitech-125-250-см",
+      "section": "9.1",
+      "name": "Телескопическая удочка VOLPITECH (125–250 см)",
+      "article": "—"
+    },
+    {
+      "id": "электрический-распылитель-gartena-od-mg06-для-опрыскивателя",
+      "section": "9.1",
+      "name": "Электрический распылитель Gartena OD-MG06 для опрыскивателя",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-gartena-tm-05a",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический Gartena TM-05A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-gartena-tm-08a",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический Gartena TM-08A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-gartena-tm-10a",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический Gartena TM-10A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-gartena-tm-18ld",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический Gartena TM-18LD",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-пневматический-gartena-od-05a",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena OD-05A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-пневматический-gartena-od-08a",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena OD-08A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-14-литров-мод-od-14a",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 14 литров мод. OD-14A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-16-литров-мод-od-16a",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 16 литров мод. OD-16A",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-18-литров-мод-od-18wd",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 18 литров мод. OD-18WD",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-45-литров-мод-od-45rd",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 45 литров мод. OD-45RD",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-пневматический-gartena-8018-20-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena 8018 20 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-пневматический-gartena-8009-16-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena 8009 16 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-10-литров-мод-8008",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 10 литров мод. 8008",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-8-литров-мод-8007",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 8 литров мод. 8007",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-gartena-5-литров-мод-8006",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный Gartena 5 литров мод. 8006",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-leaf-12-литров-проф-серии",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный LEAF 12 литров ПРОФ серии",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-leaf-8-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный LEAF 8 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-leaf-6-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный LEAF 6 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-leaf-5-литров",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный LEAF 5 литров",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-аккумуляторный-leaf-1-литр",
+      "section": "9.1",
+      "name": "Опрыскиватель аккумуляторный LEAF 1 литр",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-leaf-2-л",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический LEAF 2 л",
+      "article": "—"
+    },
+    {
+      "id": "опрыскиватель-пневматический-leaf-1-5-л",
+      "section": "9.1",
+      "name": "Опрыскиватель пневматический LEAF 1,5 л",
       "article": "—"
     },
     {
@@ -2755,12 +3737,6 @@
       "article": "-"
     },
     {
-      "id": "перчатка-для-ио-90-21",
-      "section": "11.2",
-      "name": "Перчатка для ИО 90/21",
-      "article": "-"
-    },
-    {
       "id": "1102-004-наплечник-осеменатора",
       "section": "11.2",
       "name": "Наплечник осеменатора",
@@ -2797,12 +3773,6 @@
       "article": "313"
     },
     {
-      "id": "314-сумка-поясная-для-дояра",
-      "section": "11.3",
-      "name": "Сумка поясная для дояра",
-      "article": "314"
-    },
-    {
       "id": "316-ветеринарная-сумка",
       "section": "11.3",
       "name": "Ветеринарная сумка",
@@ -2837,711 +3807,9 @@
       "section": "11.3",
       "name": "Фартук специальный пищевой, оливка",
       "article": ""
-    },
-    {
-      "id": "21-xl",
-      "section": "11.3",
-      "name": "XL",
-      "article": "21"
-    },
-    {
-      "id": "22-xxl",
-      "section": "11.3",
-      "name": "XXL",
-      "article": "22"
-    },
-    {
-      "id": "23-xxxl",
-      "section": "11.3",
-      "name": "XXXL",
-      "article": "23"
     }
   ],
   "ambiguous": [
-    {
-      "image": "img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-sp-nt.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-t.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/03-testy-dopolnitelnyh-grupp/03-aminosensor.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/03-testy-dopolnitelnyh-grupp/03-milksensor-ltse.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/03-testy-dopolnitelnyh-grupp/03-sulfasensor.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/03-testy-dopolnitelnyh-grupp/03-tylosensor.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/05-sistema-extenso/05-sistema-extenso.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/06-test-plastiny-kangaroosci/06-test-plastiny-kangaroosci.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/07-turbidofluorimetr-biotf/07-turbidofluorimetr-biotf.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-6-parametrov.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-9-parametrov.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-bez-printera.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-s-printerom.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-tias-agro-plus.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check-plus.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/09-analizatory-somatiki/09-ekomilk-horizon.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/09-analizatory-somatiki/09-ekomilk-scan.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/09-analizatory-somatiki/09-tias-somcell.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/10-lyuminometr/10-lyuminometr.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-kessler.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-lassa.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-lps.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-neomitsina-sulfat.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-poluzhidkaya-s-laktozoy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-sda.png",
-      "candidates": [
-        {
-          "id": "0303-022-кружка-для-сдаивания-первых-струек-молока-premium",
-          "name": "Кружка для сдаивания первых струек молока PREMIUM",
-          "section": "3.2",
-          "score": 86
-        },
-        {
-          "id": "0303-017-стаканчик-для-сдаивания-продольный",
-          "name": "Стаканчик для сдаивания продольный",
-          "section": "3.2",
-          "score": 86
-        },
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-solevoy-bulon.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-suhoy-bulon.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/11-pitatelnye-sredy-uglich/11-termofilnyy-streptokokk-b19.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-delvotest.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
     {
       "image": "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
       "candidates": [
@@ -3549,405 +3817,13 @@
           "id": "0301-030-ankar-before-oxy-foam",
           "name": "ANKAR BEFORE OXY FOAM",
           "section": "3.4",
-          "score": 104
+          "score": 98
         },
         {
           "id": "0301-001-ankar-before",
           "name": "ANKAR BEFORE",
           "section": "3.4",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-instrument-chistki.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-premium-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-plastik.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-zhelezo.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-plastyr-uddersoft.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-plastik-50.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-zhemchug.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-skameyka.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovyy-kolokolchik.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-nl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-ambic.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-ankar.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-prodolnyy-ankar.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-vts-klapan.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-doilnyh.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-pl-iso.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "score": 98
         }
       ]
     },
@@ -3955,153 +3831,51 @@
       "image": "img/photos/15-bumaga-polotentsa-salfetki/15-bumaga-dlya-vymeni-6-rulonov.png",
       "candidates": [
         {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
+          "id": "0302-014-бумага-для-вымени-кр206",
+          "name": "Бумага для вымени КР206",
+          "section": "3.6",
+          "score": 84
         },
         {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "0302-019-бумага-для-вымени-ankar",
+          "name": "Бумага для вымени ANKAR",
+          "section": "3.6",
+          "score": 84
+        },
+        {
+          "id": "w202-бумага-для-вымени-w202",
+          "name": "Бумага для вымени W202",
+          "section": "3.6",
+          "score": 84
+        },
+        {
+          "id": "w202-бумага-для-вымени-w203",
+          "name": "Бумага для вымени W203",
+          "section": "3.6",
+          "score": 84
+        },
+        {
+          "id": "0302-015-бумага-для-вымени-кр210",
+          "name": "Бумага для вымени КР210",
+          "section": "3.6",
+          "score": 84
         }
       ]
     },
     {
-      "image": "img/photos/15-bumaga-polotentsa-salfetki/15-tian-polotentsa.png",
+      "image": "img/photos/15-bumaga-polotentsa-salfetki/15-viero-premium-wp305.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "wp305-бумага-для-обработки-вымени-коров-тиан-эко",
+          "name": "Бумага для обработки вымени коров ТИАН ЭКО",
+          "section": "3.6",
+          "score": 104
         },
         {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-elementy-filtruyushchie-rb.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-filtra.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kompomol-dz-chas-v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-tian-superacid-foam.png",
-      "candidates": [
-        {
-          "id": "tian-superacid-hw-foam",
-          "name": "TIAN-SUPERACID-HW FOAM",
-          "section": "8.3",
-          "score": 90
-        },
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
+          "id": "wp305-бумага-для-вымени-коров-тиан-812",
+          "name": "Бумага для вымени коров ТИАН 812",
+          "section": "3.6",
+          "score": 104
         }
       ]
     },
@@ -4112,31 +3886,13 @@
           "id": "tian-superalkali-hw-foam-no-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
           "section": "8.3",
-          "score": 90
+          "score": 92
         },
         {
           "id": "tian-superalkali-hw-foam-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM CL",
           "section": "8.3",
-          "score": 90
-        },
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "score": 92
         }
       ]
     },
@@ -4147,767 +3903,47 @@
           "id": "tian-superalkali-hw-foam-no-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM NO CL",
           "section": "8.3",
-          "score": 90
+          "score": 92
         },
         {
           "id": "tian-superalkali-hw-foam-cl",
           "name": "TIAN-SUPERALKALI-HW FOAM CL",
           "section": "8.3",
-          "score": 90
-        },
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "score": 92
         }
       ]
     },
     {
-      "image": "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-elektro.png",
+      "image": "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "мини-генератор-тумана-minifog-hyt-2-газовый-баллончик",
+          "name": "Мини генератор тумана Minifog HYT-2 газовый баллончик",
+          "section": "9.1",
+          "score": 98
         },
         {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик",
+          "name": "Мини генератор тумана Minifog HYT-2W газовый баллончик",
+          "section": "9.1",
+          "score": 98
         }
       ]
     },
     {
-      "image": "img/photos/18-dezinfektsiya-generatory-tumana/18-strim-a.png",
+      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "0203-001-антибрык-anti-kick-нержавеющая-сталь-tian",
+          "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
+          "section": "5.6",
+          "score": 84
         },
         {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molochnye-shlangi-dpr10.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molokoprovod-df00-070.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-rukoyat-monoblok.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-zhestkaya.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-posudy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlya-rezervuarov.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-krug-125-myagkaya.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-dlya-pola.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-tian.png",
-      "candidates": [
-        {
-          "id": "повязка-липучка-tian",
-          "name": "Повязка-липучка TIAN",
-          "section": "5.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/19-rabochiy-i-uborochnyy-inventar/19-shchetka-doilnyy-stakan-60sm.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-ankar-multimaster.png",
-      "candidates": [
-        {
-          "id": "0205-015-s-0205-016-m-0205-017-l-0205-018-xl-перчатки-нитриловые-ankar-multimaster",
-          "name": "Перчатки нитриловые ANKAR-MULTIMASTER",
-          "section": "11.1",
-          "score": 104
-        },
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-galoshi-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-halat-protsedurnyy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-kasper-belyy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-napleshnik.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-plash-317.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-shapochka-sharlotta.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-doyara-314.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-vetvracha-316.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 104
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/22-diagnostika-obmena-veshchestv-krs/22-mate-mun-ekspress-test-mocheviny-v-moloke.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/22-diagnostika-obmena-veshchestv-krs/22-taidoc-4268-test-poloski-dlya-glyukozy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/22-diagnostika-obmena-veshchestv-krs/22-taidoc-5220-test-nabor-dlya-opredeleniya-kaltsiya.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/22-diagnostika-obmena-veshchestv-krs/22-taidoc-td-5220-izmeritel-kaltsiya.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/22-diagnostika-obmena-veshchestv-krs/22-tiadoc-4235e-test-poloski.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-250-vts.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-330-vts.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovoe-koltso-dlya-bykov-aktions-11140-52-54-sm.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-130x4sm-s-ovalnym-zvenom-i-d-obraznym-koltsom.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-85-x-4-mm-s-ovalnymi-zvenyami-i-d-obraznym-koltsom.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-dlya-privyazi-korov-130h4sm-s-dvumya-otsinkovannymi-tsepyami-s-karabinom-i-zakrutkoy-zveno-6-mm.png",
-      "candidates": [
-        {
-          "id": "0203-038-ошейник-для-привязи-коров",
-          "name": "Ошейник для привязи коров",
-          "section": "5.4",
-          "score": 86
-        },
-        {
-          "id": "0207-024-ошейник-для-привязи-коров",
-          "name": "Ошейник для привязи коров",
-          "section": "5.4",
-          "score": 86
-        },
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-pro-2500-11262-kerbl.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-povodok-dlya-bykov-tsepnoy-metall.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "0203-055-антибрык-anti-kick-сталь",
+          "name": "Антибрык ANTI-KICK, сталь",
+          "section": "5.6",
+          "score": 84
         }
       ]
     },
@@ -4918,36 +3954,19 @@
           "id": "0203-011-щипцы-носовые-для-быков-harms-с-замком-из-нержавеющей-стали",
           "name": "Щипцы носовые для быков HARMS с замком из нержавеющей стали",
           "section": "5.6",
-          "score": 104
+          "score": 98
         },
         {
           "id": "0203-047-щипцы-носовые-для-быков",
           "name": "Щипцы носовые для быков",
           "section": "5.6",
-          "score": 104
+          "score": 98
         },
         {
           "id": "0203-044-щипцы-носовые-для-быков-harms",
           "name": "Щипцы носовые для быков HARMS",
           "section": "5.6",
-          "score": 104
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-almaznoe-tochilo-dick-16169.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "score": 98
         }
       ]
     },
@@ -4955,399 +3974,16 @@
       "image": "img/photos/24-uhod-za-kopytami/24-ankar-hoof-sredstvo-dlya-obrabotki-kopyt-kanistra-20-kg.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-001-средство-для-обработки-копыт-ankar-hoof",
+          "name": "Средство для обработки копыт ANKAR HOOF",
+          "section": "5.2",
+          "score": 92
         },
         {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-bandazh-dlya-kopyt-samoklyaschiysya-10h450sm-ankar-bandazh-dlya-kopyt-samoklyaschiysya-7-5h450sm-ankar.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-bashmak-dlya-kopyta-shoof.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-112-mm-10-sht-v-upakovke-16104-10.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-130-mm-xl-10-sht-v-upakovke-16105-10.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "21-xl",
-          "name": "XL",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-6-nozhey.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-diskovyy-nozh-dlya-obrabotki-kopyt-vts-7-nozhey.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-dozirovochnyy-pistolet-dlya-technovit-2-bond.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-dozirovochnyy-pistolet-dlya-technovit-2cb-dlya-kartridzhey-160-ml.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-kartridzh-technovit-2-bond-160-ml.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-kartridzh-technovit-2cb-200ml.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-kartridzh-technovit-2cb-25ml.png",
-      "candidates": [
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nabor-dlya-povrezhdennyh-kopyt-shoof.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nachalnyy-komplekt-technovit-2-bond-s-dozirovochnym-pistoletom-10-primeneniy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nakonechniki-smesiteli-12-shtuk-dlya-technovit-2cb.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nakonechniki-smesiteli-25-shtuk-dlya-technovit-2-bond.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-aesculap-levostoronniy-uzkiy-s-ebenovoy-rukoyatkoy-vc311v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-aesculap-dvustoronniy-uzkiy-vc315v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-aesculap-pravostoronniy-uzkiy-datskaya-forma-s-ebenovoy-rukoyatkoy-vc310v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-aesculap-pravostoronniy-uzkiy-vc320r.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-137-средство-для-обработки-копыт-tian-hoof",
+          "name": "Средство для обработки копыт TIAN HOOF",
+          "section": "5.2",
+          "score": 92
         }
       ]
     },
@@ -5355,243 +3991,16 @@
       "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-pravostoronniy-uzkiy-16163.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-167-0208-168-0208-166-нож-для-копыт-узкий",
+          "name": "Нож для копыт узкий",
+          "section": "5.2",
+          "score": 84
         },
         {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-dvuhstoronniy-sredniy-16805.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-levostoronniy-shirokiy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-odnostoronniy-levyy-uzkiy-16803-klinok-s-odnim-lezviem-sleva-uzkiy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-uzkiy-16801.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-superprofi-odnostoronniy-levyy-uzkiy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-superprofi-odnostoronniy-pravyy-uzkiy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dvuhstoronniy-aesculap-shirokiy-vc317v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-dvuhstoronniy-aesculap-sredniy-vc316v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-odnostoronniy-aesculap-levyy-shirokiy-vc307v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-odnostoronniy-aesculap-levyy-uzkiy-vc305v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-odnostoronniy-aesculap-pravyy-shirokiy-vc302v.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-nozh-odnostoronniy-aesculap-profi-levyy-uzkiy-vc321r.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-160-0208-161-0208-162-нож-для-копыт-profi-узкий",
+          "name": "Нож для копыт PROFI узкий",
+          "section": "5.2",
+          "score": 84
         }
       ]
     },
@@ -5602,128 +4011,36 @@
           "id": "0208-170-копытные-клещи-knipex",
           "name": "Копытные клещи KNIPEX",
           "section": "5.2",
-          "score": 104
+          "score": 98
         },
         {
           "id": "0208-169-копытные-клещи",
           "name": "Копытные клещи",
           "section": "5.2",
-          "score": 104
+          "score": 98
+        },
+        {
+          "id": "0208-067-клещи-копытные-knipex",
+          "name": "Клещи копытные KNIPEX",
+          "section": "5.2",
+          "score": 92
         }
       ]
     },
     {
-      "image": "img/photos/24-uhod-za-kopytami/24-povyazka-degtevaya-kromberg-dlina-25-m-shirina-45-mm-1638.png",
+      "image": "img/photos/24-uhod-za-kopytami/24-schiptsy-bokovye-dlya-obrabotki-kopyt-60-sm.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-060-щипцы-боковые-для-обработки-копыт",
+          "name": "Щипцы боковые для обработки копыт",
+          "section": "5.2",
+          "score": 98
         },
         {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-rashpil-dlya-obrabotki-kopyt-35-sm.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-105mm-16358.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-rezhuschiy-disk-dlya-kopyt-r6-125mm-16360.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-sredstvo-dlya-uhoda-za-kopytami-tar-paste.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-175-щипцы-для-обработки-копыт",
+          "name": "Щипцы для обработки копыт",
+          "section": "5.2",
+          "score": 92
         }
       ]
     },
@@ -5731,348 +4048,16 @@
       "image": "img/photos/24-uhod-za-kopytami/24-sredstvo-gigienicheskoe-dlya-obrabotki-kopyt-tian-noof.png",
       "candidates": [
         {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-001-средство-для-обработки-копыт-ankar-hoof",
+          "name": "Средство для обработки копыт ANKAR HOOF",
+          "section": "5.2",
+          "score": 84
         },
         {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-stalnaya-obsechka-dick.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-6-lezviy-v-komplekte.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-7-lezviy-v-komplekte.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/24-uhod-za-kopytami/24-zaschita-dlya-kopyt-korov-loshadey.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-latunnaya-chesalka.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-krupnozubchataya-10h14-5.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-melkozubchataya-9-5-x14-5-sm-189.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskiy-skrebok-dlya-krs-spiralnyy.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-12-m-v-plastikovoy-korobke.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-3-6-m-v-plastikovoy-korobke.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetka-chesalka-dlya-chistki-skota-texas.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetochnaya-chesalka.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallicheskaya-ovalnaya-s-naruchnoy-petley-s-3-ryadami-tonkih-volnistyh-zubev.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallitseskaya-aldus-11h12-5-1810.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "19-m",
-          "name": "M",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png",
-      "candidates": [
-        {
-          "id": "19-s",
-          "name": "S",
-          "section": "11.3",
-          "score": 86
-        },
-        {
-          "id": "20-l",
-          "name": "L",
-          "section": "11.3",
-          "score": 86
+          "id": "0208-137-средство-для-обработки-копыт-tian-hoof",
+          "name": "Средство для обработки копыт TIAN HOOF",
+          "section": "5.2",
+          "score": 84
         }
       ]
     }
