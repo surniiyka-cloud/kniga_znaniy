@@ -4,7 +4,8 @@ on:
   push:
     branches: [site-v2]
     paths:
-      - 'data/book.json'\n      - 'data/image-aliases.json'
+      - 'data/book.json'
+      - 'data/image-aliases.json'
       - 'img/photos/**'
       - 'scripts/match-images.mjs'
       - '.github/workflows/match-images-v2.yml'
