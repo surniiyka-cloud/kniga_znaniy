@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-29T09:14:13.850Z",
+  "generatedAt": "2026-09-29T09:23:19.981Z",
   "sheets": 89,
   "sections": 88,
-  "products": 544,
+  "products": 698,
   "byKind": {
-    "richTable": 14,
-    "keyValue": 17,
-    "products": 58
+    "richTable": 21,
+    "keyValue": 19,
+    "products": 49
   }
 }
