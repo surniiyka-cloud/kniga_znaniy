@@ -13,12 +13,15 @@
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Навигация по книге">
-      <div class="brand compact-brand">
+      <div class="brand compact-brand sidebar-tools">
         <button class="brand-home" id="brandHome" type="button" aria-label="На главную">
           <span class="brand-home-icon" aria-hidden="true">⌂</span>
           <span class="brand-home-text">Главная</span>
         </button>
-        <button class="icon-btn mobile-only" id="closeSidebar" type="button" aria-label="Закрыть меню">×</button>
+        <div class="sidebar-tool-actions">
+          <button class="pin-btn" id="sidebarPinBtn" type="button" aria-pressed="true" title="Открепить панель" aria-label="Закрепить или открепить левую панель">⊣</button>
+          <button class="icon-btn mobile-only" id="closeSidebar" type="button" aria-label="Закрыть меню">×</button>
+        </div>
       </div>
       <nav class="nav" id="nav"></nav>
       <div class="sidebar-foot">
@@ -41,7 +44,7 @@
         </button>
       </section>
       <header class="topbar">
-        <button class="icon-btn mobile-only" id="openSidebar" type="button" aria-label="Открыть меню">☰</button>
+        <button class="icon-btn sidebar-toggle" id="openSidebar" type="button" aria-label="Открыть или свернуть меню" title="Меню">☰</button>
         <div class="search-wrap">
           <span class="search-icon" aria-hidden="true">⌕</span>
           <input id="globalSearch" class="search-input" type="search"
