@@ -1,0 +1,897 @@
+{
+  "version": 1,
+  "spreadsheetId": "16PAmRHUQoAFUpWuvp4OkAzqR6XfPkZp9a3WZ2ebsQ3k",
+  "generatedFrom": "Ссылки на книгу (2).txt",
+  "sheets": [
+    {
+      "order": 1,
+      "gid": "1781424892",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 2,
+      "gid": "1227240316",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 3,
+      "gid": "2133853298",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 4,
+      "gid": "2094280872",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 5,
+      "gid": "1079732300",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 6,
+      "gid": "666727749",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 7,
+      "gid": "2103620805",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 8,
+      "gid": "467160444",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 9,
+      "gid": "928280956",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 10,
+      "gid": "1284157475",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 11,
+      "gid": "1574030304",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 12,
+      "gid": "945320591",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 13,
+      "gid": "189036737",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 14,
+      "gid": "562493554",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 15,
+      "gid": "1454201740",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 16,
+      "gid": "372022790",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 17,
+      "gid": "1238220390",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 18,
+      "gid": "655077729",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 19,
+      "gid": "411010457",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 20,
+      "gid": "746354970",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 21,
+      "gid": "246245050",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 22,
+      "gid": "1864851221",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 23,
+      "gid": "740478688",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 24,
+      "gid": "117963968",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 25,
+      "gid": "956023249",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 26,
+      "gid": "801333063",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 27,
+      "gid": "1433901780",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 28,
+      "gid": "291995699",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 29,
+      "gid": "1089878827",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 30,
+      "gid": "231705427",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 31,
+      "gid": "345362022",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 32,
+      "gid": "1019751609",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 33,
+      "gid": "115339332",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 34,
+      "gid": "1967702041",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 35,
+      "gid": "2044173238",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 36,
+      "gid": "474602427",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 37,
+      "gid": "405139494",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 38,
+      "gid": "395268306",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 39,
+      "gid": "1337619628",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 40,
+      "gid": "331570182",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 41,
+      "gid": "9708256",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 42,
+      "gid": "52584247",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 43,
+      "gid": "540223173",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 44,
+      "gid": "139599599",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 45,
+      "gid": "1242028154",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 46,
+      "gid": "896867643",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 47,
+      "gid": "1370627658",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 48,
+      "gid": "700075288",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 49,
+      "gid": "1303183319",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 50,
+      "gid": "154334751",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 51,
+      "gid": "45404528",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 52,
+      "gid": "1732002965",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 53,
+      "gid": "1853032161",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 54,
+      "gid": "2028445589",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 55,
+      "gid": "1767985980",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 56,
+      "gid": "1914994071",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 57,
+      "gid": "1023828311",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 58,
+      "gid": "1470108531",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 59,
+      "gid": "1330188133",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 60,
+      "gid": "1408948090",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 61,
+      "gid": "1648080788",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 62,
+      "gid": "1589211291",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 63,
+      "gid": "1208986993",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 64,
+      "gid": "366366370",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 65,
+      "gid": "2105130596",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 66,
+      "gid": "1102234598",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 67,
+      "gid": "2085821295",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 68,
+      "gid": "1106909585",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 69,
+      "gid": "1766766258",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 70,
+      "gid": "1584839270",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 71,
+      "gid": "1355923906",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 72,
+      "gid": "679554453",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 73,
+      "gid": "285119264",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 74,
+      "gid": "439499152",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 75,
+      "gid": "1416355436",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 76,
+      "gid": "1132276909",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 77,
+      "gid": "779536739",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 78,
+      "gid": "141353263",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 79,
+      "gid": "909969405",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 80,
+      "gid": "1586346663",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 81,
+      "gid": "1756678085",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 82,
+      "gid": "465073246",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 83,
+      "gid": "262854775",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 84,
+      "gid": "1100298844",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 85,
+      "gid": "1598821744",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 86,
+      "gid": "1424763511",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 87,
+      "gid": "216383932",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 88,
+      "gid": "231731817",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    },
+    {
+      "order": 89,
+      "gid": "945363290",
+      "enabled": true,
+      "chapter": null,
+      "section": null,
+      "title": null,
+      "parser": "auto",
+      "status": "unmapped"
+    }
+  ]
+}
