@@ -1,0 +1,43 @@
+name: Сборка Книги знаний v2
+
+on:
+  push:
+    branches: [site-v2]
+    paths:
+      - 'data/sheets-manifest.json'
+      - 'data/sections.json'
+      - 'scripts/sync-book.mjs'
+      - '.github/workflows/sync-book-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-book-v2
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Собрать book.json из Google Sheets
+        run: node scripts/sync-book.mjs
+      - name: Сохранить собранные данные
+        run: |
+          git config user.name "knowledge-book-bot"
+          git config user.email "knowledge-book-bot@users.noreply.github.com"
+          git add data/book.json data/search-index.json data/sync-report.json
+          if git diff --cached --quiet; then
+            echo "Изменений данных нет"
+          else
+            git commit -m "data: sync Knowledge Book v2"
+            git push origin HEAD:${{ github.ref_name }}
+          fi
