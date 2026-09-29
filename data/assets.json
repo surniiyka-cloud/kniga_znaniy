@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T10:12:48.486Z",
+  "generatedAt": "2026-09-29T10:19:16.649Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -90,13 +90,9 @@
     "3.6-wipe1-материал-протирочный-двухслойный-wipe1": [
       "img/photos/15-bumaga-polotentsa-salfetki/15-wipe1.png"
     ],
-    "3.7-0406-091-5506-2-5503-5-0406-101-фильтр-рукавный": [
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-rukavnyy-patroonnyy-filtr.png"
-    ],
     "3.7-1105-043-корпус-для-рукавного-патронного-фильтра": [
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-dlya-rukavnogo.png"
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-dlya-rukavnogo.png",
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-filtra.png"
     ],
     "3.7-2214-1-0406-096-2214-2-2214-5-фильтр-tian-premium": [
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-tian-premium.png"
@@ -492,7 +488,9 @@
     ],
     "3.7": [
       "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-elementy-filtruyushchie-rb.png",
-      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-korpus-filtra.png"
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png",
+      "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-rukavnyy-patroonnyy-filtr.png"
     ],
     "8.3": [
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kompomol-dz-chas-v.png"
