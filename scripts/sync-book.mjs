@@ -239,12 +239,32 @@ for(const ch of chapters)for(const s of ch.sections){
     text:clean([p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country].filter(Boolean).join(" "))
   });
 }
+const allProducts=[];
+for(const ch of chapters)for(const s of ch.sections)for(const p of (s.products||[]))allProducts.push({chapter:ch.id,section:s.id,...p});
+const idCounts={}; for(const p of allProducts)idCounts[p.candidateId]=(idCounts[p.candidateId]||0)+1;
+const articleCounts={};
+for(const p of allProducts){
+  const a=flat(p.article||"");
+  if(a&&a!=="-"&&a!=="—"&&!/^в каталоге не указан/i.test(a))articleCounts[a]=(articleCounts[a]||0)+1;
+}
 const report={
   generatedAt:book.generatedAt,
   sheets:fetched.length,
   sections:chapters.reduce((n,c)=>n+c.sections.length,0),
   products:search.length,
-  byKind:fetched.reduce((a,x)=>(a[x.parsed.kind]=(a[x.parsed.kind]||0)+1,a),{})
+  byKind:fetched.reduce((a,x)=>(a[x.parsed.kind]=(a[x.parsed.kind]||0)+1,a),{}),
+  perSection:chapters.flatMap(ch=>ch.sections.map(s=>({
+    id:s.id,title:s.title,kind:s.kind,
+    products:(s.products||[]).length,
+    tables:(s.tables||[]).length,
+    notes:(s.notes||[]).length
+  }))),
+  suspiciousProducts:allProducts.filter(p=>{
+    const n=flat(p.name||"");
+    return /^(s|m|l|xl|xxl|xxxl|xs)$/i.test(n)||/^размер$/i.test(n)||n.length<2;
+  }).map(p=>({section:p.section,name:p.name,article:p.article||"",sourceRow:p.sourceRow})),
+  duplicateIds:Object.entries(idCounts).filter(([,n])=>n>1).map(([id,count])=>({id,count})),
+  duplicateArticles:Object.entries(articleCounts).filter(([,n])=>n>1).map(([article,count])=>({article,count}))
 };
 await fs.mkdir("data",{recursive:true});
 await fs.writeFile("data/book.json",JSON.stringify(book,null,2)+"\n");
