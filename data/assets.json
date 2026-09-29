@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T09:51:21.915Z",
+  "generatedAt": "2026-09-29T09:54:40.451Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -47,13 +47,26 @@
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-ankar.png"
     ],
     "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl": [
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-kerbl.png"
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-kerbl.png",
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-premium-kerbl.png"
+    ],
+    "3.3-0303-060-пластырь-для-сосков-udderosoft": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-plastyr-uddersoft.png"
     ],
     "3.3-0303-056-штифты-расширительные": [
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-rasshiritelnye.png"
     ],
+    "3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-sherstyanye.png"
+    ],
     "3.3-0303-054-штифты-силиконовые": [
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-silikon.png"
+    ],
+    "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-zhemchug.png"
+    ],
+    "3.3-0303-057-сосковая-свечка": [
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-svecha.png"
     ],
     "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl": [
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-premium-kerbl.png"
@@ -147,8 +160,17 @@
     "8.1-0404-001-ерш-для-коллектора-дпр-7": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png"
     ],
+    "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molochnye-shlangi-dpr10.png"
+    ],
     "8.1-0404-005-ерш-для-молокопроводов-дф-00-070": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molokoprovod-df00-070.png"
+    ],
+    "8.1-0404-003-ерш-для-патрубков-дпр-9": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-patrubki-dpr9.png"
+    ],
+    "8.1-0404-002-ерш-для-сосковой-резины-дпр-8": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-soskovaya-rezina-dpr8.png"
     ],
     "8.2-0403-120-скребок-ankar": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-skrebok-ankar.png"
@@ -165,11 +187,35 @@
     "11.2-0205-086-бахилы-высокие": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-bahily-vysokie.png"
     ],
+    "11.3-303-фартук-с-рукавами-и-логотипом": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-303.png"
+    ],
+    "11.3-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png"
+    ],
+    "11.3-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png"
+    ],
+    "11.3-310-фартук-с-нарукавниками-с-логотипом-tian-трейд-цельный-без-карманов": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310.png"
+    ],
+    "11.3-312-фартук-без-рукавов-с-логотипом": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-312.png"
+    ],
     "11.3-фартук-врача-ортопеда": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-ortopeda.png"
     ],
+    "11.1-в-каталоге-не-указан-перчатки-highrisk-ankar": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-high-risk.png"
+    ],
+    "11.2-1102-004-наплечник-осеменатора": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-naplechnik-315.png"
+    ],
     "11.2-перчатка-для-ио-90-21": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-90-21.png"
+    ],
+    "11.2-9121-3-перчатка-для-ио-с-наплечником": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-napleshnik.png"
     ],
     "11.1-0205-001-s-0205-003-m-0205-005-l-0205-007-xl-перчатки-нитриловые-ankar": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-nitrilovye-ankar.png"
@@ -177,8 +223,14 @@
     "11.3-314-сумка-поясная-для-дояра": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-doyara-314.png"
     ],
+    "11.3-316-ветеринарная-сумка": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-vetvracha-316.png"
+    ],
     "11.1-0205-120-s-0205-121-m-0205-122-l-0205-123-xl-перчатки-нитриловые-tian-black": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril-black.png"
+    ],
+    "11.1-0205-124-s-0205-125-m-0205-126-l-0205-127-xl-перчатки-нитриловые-tian": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril.png"
     ],
     "4.9-экспресс-тест-для-определения-уровня-мочевины-в-молоке-mun-rapid": [
       "img/photos/22-diagnostika-obmena-veshchestv-krs/22-mate-mun-ekspress-test-mocheviny-v-moloke.png"
@@ -198,6 +250,10 @@
     "5.6-0203-055-антибрык-anti-kick-сталь": [
       "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-stal.png"
     ],
+    "5.6-погонщик-скота-ankar-shock-pro-2500": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-250-vts.png",
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-pro-2500-11262-kerbl.png"
+    ],
     "5.6-0203-039-хомут-для-скота-с-цепью-зеленый": [
       "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-homut-dlya-skota-s-tsepyu-zelenyy-art-kerbl-125010-sdelano-v-germanii.png"
     ],
@@ -210,11 +266,15 @@
     "5.6-0203-042-носовые-щипцы-для-фиксации-крс-с-канатом": [
       "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovye-schiptsy-dlya-fiksatsii-krs-s-kanatom.png"
     ],
+    "5.4-0203-033-ошейник-с-овальным-и-d-образным-кольцом": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-130x4sm-s-ovalnym-zvenom-i-d-obraznym-koltsom.png",
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-85-x-4-mm-s-ovalnymi-zvenyami-i-d-obraznym-koltsom.png"
+    ],
     "5.6-0203-020-погонщик-скота-shock-2500-tian-trade": [
       "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-2500-tian-trade.png"
     ],
-    "5.6-погонщик-скота-ankar-shock-pro-2500": [
-      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-pogonschik-skota-shock-pro-2500-11262-kerbl.png"
+    "5.6-0203-011-щипцы-носовые-для-быков-harms-с-замком-из-нержавеющей-стали": [
+      "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-schiptsy-nosovye-dlya-bykov-harms-s-zamkom-iz-nerzhaveyuschey-stali-118.png"
     ],
     "5.2-0208-016-деревянная-колодка-130-56-мм": [
       "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-130-mm-xl-10-sht-v-upakovke-16105-10.png",
@@ -261,11 +321,12 @@
     "5.2-0208-011-ванна-для-обработки-копыт": [
       "img/photos/24-uhod-za-kopytami/24-vanna-dlya-obrabotki-kopyt-vok-200.png"
     ],
+    "5.1-0202-015-tailwell2-триммер-для-хвоста": [
+      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-nozh-dlya-tailwell2.png",
+      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-tailwell2-trimmer-dlya-hvosta-drel-v-komplekt-ne-vhodit.png"
+    ],
     "5.1-0202-001-щетка-чесалка-для-скота-texas": [
       "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetka-chesalka-dlya-chistki-skota-texas.png"
-    ],
-    "5.1-0202-015-tailwell2-триммер-для-хвоста": [
-      "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-tailwell2-trimmer-dlya-hvosta-drel-v-komplekt-ne-vhodit.png"
     ],
     "5.1-0202-002-запасная-щетка-texas": [
       "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-schetka-texas.png"
@@ -281,6 +342,15 @@
       "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-sp-nt.png",
       "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-t.png"
     ],
+    "2.1.2": [
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png",
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-aminosensor.png",
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-cowsensor.png",
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-milksensor-ltse.png",
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-quinosensor.png",
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-sulfasensor.png",
+      "img/photos/03-testy-dopolnitelnyh-grupp/03-tylosensor.png"
+    ],
     "2.1.3": [
       "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png"
     ],
@@ -293,8 +363,15 @@
     "2.15": [
       "img/photos/07-turbidofluorimetr-biotf/07-turbidofluorimetr-biotf.png"
     ],
+    "2.6.1": [
+      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-6-parametrov.png"
+    ],
+    "2.6.2": [
+      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-9-parametrov.png"
+    ],
     "2.6.4": [
-      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png"
+      "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png",
+      "img/photos/09-analizatory-somatiki/09-ekomilk-horizon.png"
     ],
     "2.6.3": [
       "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-total-bez-printera.png",
@@ -311,7 +388,6 @@
       "img/photos/08-analizatory-kachestva-moloka/08-tias-full-check.png"
     ],
     "2.7.1": [
-      "img/photos/09-analizatory-somatiki/09-ekomilk-horizon.png",
       "img/photos/09-analizatory-somatiki/09-ekomilk-scan.png"
     ],
     "2.7.2": [
@@ -341,6 +417,16 @@
       "img/photos/11-pitatelnye-sredy-uglich/11-suhoy-bulon.png",
       "img/photos/11-pitatelnye-sredy-uglich/11-termofilnyy-streptokokk-b19.png"
     ],
+    "2.4": [
+      "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png",
+      "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-delvotest.png",
+      "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-duo.png",
+      "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-hs-00647.png",
+      "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-octo.png"
+    ],
+    "2.5": [
+      "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"
+    ],
     "3.6": [
       "img/photos/15-bumaga-polotentsa-salfetki/15-ankar-vlazhnaya-1000.png",
       "img/photos/15-bumaga-polotentsa-salfetki/15-bumaga-dlya-vymeni-6-rulonov.png",
@@ -369,7 +455,6 @@
     ],
     "9.1": [
       "img/photos/18-dezinfektsiya-generatory-tumana/18-bf-150.png",
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-dezkovriki.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-elektro.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-dvs.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-elektro.png",
@@ -379,6 +464,13 @@
       "img/photos/18-dezinfektsiya-generatory-tumana/18-strim-a.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-th-250-h400.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-tn-fog-130.png"
+    ],
+    "9.2": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-dezkovriki.png"
+    ],
+    "9.4": [
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-ankar.png",
+      "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-tian.png"
     ],
     "11.1": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatki-vinilovye-tian.png"

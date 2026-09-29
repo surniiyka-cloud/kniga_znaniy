@@ -1,42 +1,22 @@
 {
-  "generatedAt": "2026-09-29T09:51:21.915Z",
+  "generatedAt": "2026-09-29T09:54:40.451Z",
   "imagesTotal": 338,
-  "imagesMatched": 218,
+  "imagesMatched": 258,
   "imagesUnmatched": [
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-aminosensor.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-cowsensor.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-milksensor-ltse.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-quinosensor.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-sulfasensor.png",
-    "img/photos/03-testy-dopolnitelnyh-grupp/03-tylosensor.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-6-parametrov.png",
-    "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-120-9-parametrov.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
-    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png",
-    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-delvotest.png",
-    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-duo.png",
-    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-hs-00647.png",
-    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-octo.png",
-    "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png",
     "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy.png",
     "img/photos/13-sredstva-dlya-vymeni/13-ankar-profi-lavender.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-bidon-8l.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-instrument-chistki.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-kateter-8-5.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-premium-kerbl.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-plastik.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-gilmour-zhelezo.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-plastyr-uddersoft.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-plastik-50.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-sherstyanye.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-zhemchug.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-skameyka.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png",
-    "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-svecha.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovyy-kolokolchik.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-kerbl.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakan-nl.png",
@@ -50,9 +30,6 @@
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-uddero-sprayer.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-doilnyh.png",
     "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-zaglushka-pl-iso.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-molochnye-shlangi-dpr10.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-patrubki-dpr9.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-soskovaya-rezina-dpr8.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-10x150x500.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-20x150x500.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-ersh-30x150x500.png",
@@ -73,8 +50,6 @@
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrab-dlya-pola.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-skrebkovaya-180x60.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-letagita.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-ankar.png",
-    "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-tian.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lovushka-well-we-150-215s.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-shchetka-doilnyy-stakan-60sm.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vedro-tian-chernoe.png",
@@ -82,38 +57,23 @@
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-3-zuba.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-4-zuba.png",
     "img/photos/19-rabochiy-i-uborochnyy-inventar/19-vily-ankar-6-zubov.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-303.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-312.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-galoshi-kerbl.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-halat-protsedurnyy.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-high-risk.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-kasper-belyy.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-naplechnik-315.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-napleshnik.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-plash-317.png",
     "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-shapochka-sharlotta.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-vetvracha-316.png",
-    "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-tian-nitril.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-otsinkovannyy-111.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-dlya-korov-amerika.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-flexcow-110.png",
-    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-250-vts.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-330-vts.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-nosovoe-koltso-dlya-bykov-aktions-11140-52-54-sm.png",
-    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-130x4sm-s-ovalnym-zvenom-i-d-obraznym-koltsom.png",
-    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-85-x-4-mm-s-ovalnymi-zvenyami-i-d-obraznym-koltsom.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-dlya-privyazi-korov-130h4sm-s-dvumya-otsinkovannymi-tsepyami-s-karabinom-i-zakrutkoy-zveno-6-mm.png",
     "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-povodok-dlya-bykov-tsepnoy-metall.png",
-    "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-schiptsy-nosovye-dlya-bykov-harms-s-zamkom-iz-nerzhaveyuschey-stali-118.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-latunnaya-chesalka.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-krupnozubchataya-10h14-5.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskaya-skrebnitsa-melkozubchataya-9-5-x14-5-sm-189.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-metallicheskiy-skrebok-dlya-krs-spiralnyy.png",
-    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-nozh-dlya-tailwell2.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-12-m-v-plastikovoy-korobke.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-provolochnaya-pila-3-6-m-v-plastikovoy-korobke.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-ruchki-dlya-provolochnoy-pily-poparno.png",
@@ -125,7 +85,7 @@
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png"
   ],
   "productsTotal": 776,
-  "productsWithImages": 87,
+  "productsWithImages": 106,
   "productsWithoutImages": [
     {
       "id": "2.11-10001311-agrastrip-rur-hs-bulk-grain",
@@ -210,30 +170,6 @@
       "section": "3.3",
       "name": "Штифты для сосков с изгибом на ручке",
       "article": "0303.052"
-    },
-    {
-      "id": "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке",
-      "section": "3.3",
-      "name": "Штифты для сосков с жемчужиной на ручке",
-      "article": "0303.051"
-    },
-    {
-      "id": "3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити",
-      "section": "3.3",
-      "name": "Штифты для сосков из усиленной шерстяной нити",
-      "article": "0303.051*"
-    },
-    {
-      "id": "3.3-0303-057-сосковая-свечка",
-      "section": "3.3",
-      "name": "Сосковая свечка",
-      "article": "0303.057"
-    },
-    {
-      "id": "3.3-0303-060-пластырь-для-сосков-udderosoft",
-      "section": "3.3",
-      "name": "Пластырь для сосков UDDEROSOFT",
-      "article": "0303.060"
     },
     {
       "id": "3.4-0301-037-tian-pre-foam",
@@ -2162,12 +2098,6 @@
       "article": "0203.038"
     },
     {
-      "id": "5.4-0203-033-ошейник-с-овальным-и-d-образным-кольцом",
-      "section": "5.4",
-      "name": "Ошейник с овальным и D-образным кольцом",
-      "article": "0203.033"
-    },
-    {
       "id": "5.4-0203-036-ошейник-для-привязи-телят",
       "section": "5.4",
       "name": "Ошейник для привязи телят",
@@ -2292,12 +2222,6 @@
       "section": "5.6",
       "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
       "article": "0203.001"
-    },
-    {
-      "id": "5.6-0203-011-щипцы-носовые-для-быков-harms-с-замком-из-нержавеющей-стали",
-      "section": "5.6",
-      "name": "Щипцы носовые для быков HARMS с замком из нержавеющей стали",
-      "article": "0203.011"
     },
     {
       "id": "5.6-0203-047-щипцы-носовые-для-быков",
@@ -3302,24 +3226,6 @@
       "article": "0404.038"
     },
     {
-      "id": "8.1-0404-002-ерш-для-сосковой-резины-дпр-8",
-      "section": "8.1",
-      "name": "Ёрш для сосковой резины ДПР-8",
-      "article": "0404.002"
-    },
-    {
-      "id": "8.1-0404-003-ерш-для-патрубков-дпр-9",
-      "section": "8.1",
-      "name": "Ёрш для патрубков ДПР-9",
-      "article": "0404.003"
-    },
-    {
-      "id": "8.1-0404-004-ерш-для-молочных-шлангов-дпр-10",
-      "section": "8.1",
-      "name": "Ёрш для молочных шлангов ДПР-10",
-      "article": "0404.004"
-    },
-    {
       "id": "8.2-0403-072-вилы-для-соломы",
       "section": "8.2",
       "name": "Вилы для соломы",
@@ -4148,34 +4054,16 @@
       "article": "0605.003"
     },
     {
-      "id": "11.1-0205-124-s-0205-125-m-0205-126-l-0205-127-xl-перчатки-нитриловые-tian",
-      "section": "11.1",
-      "name": "Перчатки нитриловые TIAN",
-      "article": "0205.124 — S; 0205.125 — M; 0205.126 — L; 0205.127 — XL"
-    },
-    {
       "id": "11.1-0205-025-s-0205-026-m-0205-027-l-0205-028-xl-перчатки-нитриловые-milkmaster",
       "section": "11.1",
       "name": "Перчатки нитриловые MILKMASTER",
       "article": "0205.025 — S; 0205.026 — M; 0205.027 — L; 0205.028 — XL"
     },
     {
-      "id": "11.1-в-каталоге-не-указан-перчатки-highrisk-ankar",
-      "section": "11.1",
-      "name": "Перчатки HIGHRISK ANKAR",
-      "article": "В каталоге не указан"
-    },
-    {
       "id": "11.1-0205-040-s-0205-041-m-0205-042-l-0205-043-xl-перчатки-латексные",
       "section": "11.1",
       "name": "Перчатки латексные",
       "article": "0205.040 — S; 0205.041 — M; 0205.042 — L; 0205.043 — XL"
-    },
-    {
-      "id": "11.2-9121-3-перчатка-для-ио-с-наплечником",
-      "section": "11.2",
-      "name": "Перчатка для ИО с наплечником",
-      "article": "9121/3"
     },
     {
       "id": "11.2-перчатки-ветеринарные-с-наплечником-пвн-120-25",
@@ -4190,30 +4078,6 @@
       "article": "-"
     },
     {
-      "id": "11.2-1102-004-наплечник-осеменатора",
-      "section": "11.2",
-      "name": "Наплечник осеменатора",
-      "article": "1102.004"
-    },
-    {
-      "id": "11.3-310-фартук-с-нарукавниками-с-логотипом-tian-трейд-цельный-без-карманов",
-      "section": "11.3",
-      "name": "Фартук с нарукавниками с логотипом TIAN-Трейд, цельный без карманов",
-      "article": "310"
-    },
-    {
-      "id": "11.3-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом",
-      "section": "11.3",
-      "name": "Фартук с нарукавниками с логотипом TIAN-Трейд, с одним карманом",
-      "article": ""
-    },
-    {
-      "id": "11.3-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами",
-      "section": "11.3",
-      "name": "Фартук с нарукавниками с логотипом TIAN-Трейд, с двумя карманами",
-      "article": ""
-    },
-    {
       "id": "11.3-оранжевый-плащ-из-винилискожи",
       "section": "11.3",
       "name": "Оранжевый плащ из винилискожи",
@@ -4224,24 +4088,6 @@
       "section": "11.3",
       "name": "Нарукавники",
       "article": "313"
-    },
-    {
-      "id": "11.3-316-ветеринарная-сумка",
-      "section": "11.3",
-      "name": "Ветеринарная сумка",
-      "article": "316"
-    },
-    {
-      "id": "11.3-303-фартук-с-рукавами-и-логотипом",
-      "section": "11.3",
-      "name": "Фартук с рукавами и логотипом",
-      "article": "303"
-    },
-    {
-      "id": "11.3-312-фартук-без-рукавов-с-логотипом",
-      "section": "11.3",
-      "name": "Фартук без рукавов с логотипом",
-      "article": "312"
     },
     {
       "id": "11.3-фартук-специальный-пищевой-белый",
@@ -4397,29 +4243,6 @@
           "name": "Антибрык ANTI-KICK, сталь",
           "section": "5.6",
           "score": 86
-        }
-      ]
-    },
-    {
-      "image": "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-schiptsy-nosovye-dlya-bykov-harms-s-zamkom-iz-nerzhaveyuschey-stali-118.png",
-      "candidates": [
-        {
-          "id": "5.6-0203-011-щипцы-носовые-для-быков-harms-с-замком-из-нержавеющей-стали",
-          "name": "Щипцы носовые для быков HARMS с замком из нержавеющей стали",
-          "section": "5.6",
-          "score": 98
-        },
-        {
-          "id": "5.6-0203-047-щипцы-носовые-для-быков",
-          "name": "Щипцы носовые для быков",
-          "section": "5.6",
-          "score": 98
-        },
-        {
-          "id": "5.6-0203-044-щипцы-носовые-для-быков-harms",
-          "name": "Щипцы носовые для быков HARMS",
-          "section": "5.6",
-          "score": 98
         }
       ]
     },
@@ -4685,5 +4508,6 @@
         }
       ]
     }
-  ]
+  ],
+  "invalidAliases": []
 }
