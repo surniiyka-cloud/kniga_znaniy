@@ -38,5 +38,6 @@ jobs:
             echo "Изменений нет"
           else
             git commit -m "data: match product images v2"
+            git pull --rebase origin ${{ github.ref_name }}
             git push origin HEAD:${{ github.ref_name }}
           fi
