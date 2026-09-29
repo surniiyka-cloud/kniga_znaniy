@@ -217,8 +217,14 @@ const chapters=sections.chapters.map(ch=>({
   id:ch.id,title:ch.title,
   sections:ch.sections.map(s=>{
     const src=fetched.find(x=>x.meta.order===s.sourceOrder);
+    const seen={};
+    const products=(src?.parsed.products||[]).map(p=>{
+      const base=`${s.section}-${p.candidateId}`;
+      const n=(seen[base]=(seen[base]||0)+1);
+      return {...p,id:n===1?base:`${base}-${n}`};
+    });
     return {id:s.section,title:s.title,gid:src?.meta.gid||null,kind:src?.parsed.kind||null,
-      products:src?.parsed.products||undefined,
+      products:products.length?products:undefined,
       productBlocks:src?.parsed.productBlocks||undefined,
       tables:src?.parsed.tables||undefined,
       notes:src?.parsed.notes||undefined,
@@ -235,13 +241,13 @@ const book={
 const search=[];
 for(const ch of chapters)for(const s of ch.sections){
   if(s.products)for(const p of s.products)search.push({
-    id:p.candidateId,section:s.id,chapter:ch.id,name:p.name||"",article:p.article||"",
+    id:p.id,section:s.id,chapter:ch.id,name:p.name||"",article:p.article||"",
     text:clean([p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country].filter(Boolean).join(" "))
   });
 }
 const allProducts=[];
 for(const ch of chapters)for(const s of ch.sections)for(const p of (s.products||[]))allProducts.push({chapter:ch.id,section:s.id,...p});
-const idCounts={}; for(const p of allProducts)idCounts[p.candidateId]=(idCounts[p.candidateId]||0)+1;
+const idCounts={}; for(const p of allProducts)idCounts[p.id]=(idCounts[p.id]||0)+1;
 const articleCounts={};
 for(const p of allProducts){
   const a=flat(p.article||"");
