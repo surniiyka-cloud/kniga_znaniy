@@ -13,13 +13,10 @@
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Навигация по книге">
-      <div class="brand">
+      <div class="brand compact-brand">
         <button class="brand-home" id="brandHome" type="button" aria-label="На главную">
-          <span class="brand-mark" aria-hidden="true"><img src="./assets/brand/logo.svg" alt=""></span>
-          <span class="brand-copy">
-            <strong>ТИАН-Трейд</strong>
-            <small>Книга знаний</small>
-          </span>
+          <span class="brand-home-icon" aria-hidden="true">⌂</span>
+          <span class="brand-home-text">Главная</span>
         </button>
         <button class="icon-btn mobile-only" id="closeSidebar" type="button" aria-label="Закрыть меню">×</button>
       </div>
@@ -34,6 +31,15 @@
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
     <div class="workspace">
+      <section class="brand-banner" aria-label="ТИАН-Трейд — Книга знаний">
+        <button class="brand-banner-home" type="button" data-route="home" aria-label="На главную">
+          <span class="brand-banner-copy">
+            <strong>ТИАН-ТРЕЙД</strong>
+            <b>КНИГА ЗНАНИЙ</b>
+          </span>
+          <img src="./assets/brand/favicon.svg" alt="" aria-hidden="true">
+        </button>
+      </section>
       <header class="topbar">
         <button class="icon-btn mobile-only" id="openSidebar" type="button" aria-label="Открыть меню">☰</button>
         <div class="search-wrap">
