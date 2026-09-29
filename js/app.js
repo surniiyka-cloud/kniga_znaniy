@@ -146,13 +146,37 @@ function buildAnalyzerParts(pairs){
   const optionRx=/^(Термопринтер|Связь|Передача данных|Автоматический пробоотбор|Ультразвуковая мешалка|Операционная система|Управление|Встроенный pH-метр|Определение удельной электропроводности|Реагенты)$/i;
   for(const r of a.fields){
     const l=String(r[0]).trim(),v=String(r[1]).trim();
+    if(!l||!v||l.length>120)continue;
     if(/^(Показатель|Дополнительный показатель)$/i.test(l)&&/^(Диапазон измерения|Обозначение)$/i.test(v)){mode=l.startsWith("Доп")?"options":"indicators";continue;}
+    if(/доп\. опция/i.test(l)){options.push([l.replace(/\s*\(доп\. опция\)/i,""),v]);continue;}
     if(optionRx.test(l)){options.push([l,v]);continue;}
     if(mode==="indicators")indicators.push([l,v]);
     else if(mode==="options")options.push([l,v]);
     else fields.push([l,v]);
   }
   return {fields:uniquePairs(fields),indicators:uniquePairs(indicators),options:uniquePairs(options),advantages:a.advantages};
+}
+function buildAnalyzerRows(rows){
+  const fields=[],indicators=[],options=[],advantages=[];let mode="fields";
+  for(const r of rows||[]){
+    const a=String(r[0]||"").trim();
+    if(!a)continue;
+    if(a==="Измеряемые показатели"){mode="indicators";continue;}
+    if(a==="Дополнительные параметры / опции"||a==="Дополнительная комплектация"){mode="options";continue;}
+    if(a==="Преимущества и практическое значение"){mode="advantages";continue;}
+    if(["Показатель","Дополнительный показатель","Преимущество","Дополнительная опция"].includes(a))continue;
+    if(mode==="fields"){
+      if(r.length>=2&&a.length<100&&a!=="Источник")fields.push([a,String(r[1]||"").trim()]);
+    }else if(mode==="indicators"){
+      if(r.length>=3)indicators.push([a,[r[1],r[2],r[3]?"погрешность "+r[3]:""].filter(Boolean).join(" · ")]);
+    }else if(mode==="options"){
+      if(r.length===1)options.push([a,"Доступно"]);
+      else if(r.length>=2)options.push([a,String(r[1]||"").trim()]);
+    }else if(mode==="advantages"&&r.length>=2){
+      advantages.push([a,String(r[1]||"").trim()]);
+    }
+  }
+  return {fields:uniquePairs(fields),indicators:uniquePairs(indicators),options:uniquePairs(options),advantages:uniquePairs(advantages)};
 }
 function sectionRowsBetween(rows,startLabel,endLabel){
   const a=rows.findIndex((r)=>String(r[0]||"").trim()===startLabel);
@@ -256,13 +280,25 @@ function buildChapter2Catalog(){
   }
 
   // объединённые разделы 2.6 и 2.7 — характеристики распределяем по смысловым вкладкам
+  const analyzerBase={
+    "2.6.2":[["Артикул","0704.05.006"],["Исследуемый материал","Молоко и молочное сырьё"]],
+    "2.6.5":[["Артикул","0704.05.022"],["Исследуемый материал","Молоко и молочное сырьё"]],
+    "2.6.6":[["Артикул","0704.05.023"],["Исследуемый материал","Молоко и молочное сырьё"]],
+    "2.6.7":[["Артикул","0704.05.024"],["Исследуемый материал","Молоко и молочное сырьё"]]
+  };
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
-    const x=child.pairs?.length?buildAnalyzerParts(child.pairs):{fields:fieldsFromRows(child.rows),indicators:[],options:[],advantages:[]};
-    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),x.fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока",indicators:x.indicators,options:x.options,advantages:x.advantages});
+    const x=child.id==="2.6.2"?buildAnalyzerRows(child.rows):(child.pairs?.length?buildAnalyzerParts(child.pairs):buildAnalyzerRows(child.rows));
+    const fields=uniquePairs([...(analyzerBase[child.id]||[]),...x.fields]);
+    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока",indicators:x.indicators,options:x.options,advantages:x.advantages});
   }
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
-    const x=child.pairs?.length?buildAnalyzerParts(child.pairs):{fields:fieldsFromRows(child.rows),indicators:[],options:[],advantages:[]};
-    registerCatalog("2.7",child.title,x.fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток",indicators:x.indicators,options:x.options,advantages:x.advantages});
+    if(child.id==="2.7.1"){
+      const p=child.pairs||[],adv=uniquePairs(p.slice(15).map((x)=>[x.label,x.value]));
+      registerCatalog("2.7",child.title,[["Артикул","0704.04.002"],["Тип оборудования","Анализатор количества соматических клеток"],["Исследуемый материал","Молоко"],["Метод","Вискозиметрический"],["Диапазон измерения","90–1500 тыс. клеток/см³"],["Реагент","Мастоприм"],["Стандарт","ГОСТ 23453-2014"],["Госреестр СИ","№65516-16"],["Гарантия","2 года"],["Время анализа","4 минуты"],["Габариты","200 × 260 × 290 мм"],["Масса","4,5 кг"]],state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток",workflow:p.slice(1,5).map((x)=>["Шаг "+x.label,x.value]),indicators:p.slice(6,14).map((x)=>[x.label,x.value]),advantages:adv});
+    }else{
+      const p=child.pairs||[],adv=uniquePairs(p.slice(23).map((x)=>[x.label,x.value]));
+      registerCatalog("2.7",child.title,[["Артикул","0704.04.004"],["Тип оборудования","Анализатор количества соматических клеток"],["Исследуемый материал","Молоко"],["Метод","Флуоресцентный"],["Диапазон измерения","0–10 000 000 клеток/см³"],["Расходный материал","4-камерная одноразовая кассета"],["Госреестр СИ","№73649-18"],["Гарантия","2 года"],...cleanPairs(p.slice(1,7))],state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток",workflow:p.slice(8,14).map((x)=>["Шаг "+x.label,x.value]),options:cleanPairs(p.slice(15,22)),advantages:adv});
+    }
   }
 
   // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
@@ -381,7 +417,7 @@ function mapData(){
   state.book.chapters.forEach((ch)=>{
     state.chapters.set(ch.id,ch);
     ch.sections.forEach((s)=>{
-      state.sections.set(s.id,{chapter:ch,section:s});
+      state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:"Тест-пластины KangarooSci"}:s)});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
     if(ch.id==="2"){
