@@ -5,9 +5,17 @@ const manifest=JSON.parse(await fs.readFile("data/sheets-manifest.json","utf8"))
 const sections=JSON.parse(await fs.readFile("data/sections.json","utf8"));
 const sheetId=manifest.spreadsheetId;
 
-function clean(v){return String(v??"").replace(/\u00a0/g," ").replace(/[ \t]+/g," ").trim()}
+function clean(v){
+  return String(v??"")
+    .replace(/\u00a0/g," ")
+    .split(/\r?\n/)
+    .map(x=>x.replace(/[ \t]+/g," ").trim())
+    .join("\n")
+    .trim();
+}
+function flat(v){return clean(v).replace(/\s*\n\s*/g," ").trim()}
 function slug(v){
-  return clean(v).toLowerCase()
+  return flat(v).toLowerCase()
     .replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi,"-").replace(/^-+|-+$/g,"").slice(0,100)
 }
 function parseCsv(text){
@@ -27,70 +35,169 @@ function parseCsv(text){
   }
   row.push(clean(cell.replace(/\r$/,"")));
   if(row.some(Boolean)) rows.push(row);
-  return rows.map(r=>{while(r.length&& !r[r.length-1])r.pop();return r});
+  return rows.map(r=>{while(r.length&&!r[r.length-1])r.pop();return r});
 }
-function nonemptyCount(r){return r.filter(Boolean).length}
+function nonemptyCount(r){return r.filter(v=>flat(v)).length}
 function canonHeader(s){
-  const x=clean(s).toLowerCase();
-  if(/^наименование|^название/.test(x)) return "name";
+  const x=flat(s).toLowerCase().replace(/[.:]+$/,"");
+  if(/^(наименование|название)( товара| позиции)?$/.test(x)) return "name";
   if(/^артикул/.test(x)) return "article";
-  if(/^тип/.test(x)) return "type";
-  if(/^назначение/.test(x)) return "purpose";
-  if(/характерист|особенност|преимуществ/.test(x)) return "features";
-  if(/^значение/.test(x)) return "value";
-  if(/^параметр|^характеристика$/.test(x)) return "parameter";
+  if(/^тип$/.test(x)) return "type";
+  if(/^назначение$/.test(x)) return "purpose";
+  if(/^(характеристики?|особенности?|преимущества?|характеристики \/ особенности|характеристики \/ преимущества)$/.test(x)) return "features";
+  if(/^значение$/.test(x)) return "value";
+  if(/^параметр$/.test(x)) return "parameter";
   if(/^производител/.test(x)) return "manufacturer";
   if(/^страна/.test(x)) return "country";
-  return slug(s)||"field";
+  if(/^размер/.test(x)) return "size";
+  if(/^(кол-во|количество)/.test(x)) return "quantity";
+  if(/^рост/.test(x)) return "height";
+  if(/^ширина/.test(x)) return "width";
+  if(/^длина/.test(x)) return "length";
+  if(/^толщина/.test(x)) return "thickness";
+  return "field";
 }
-function detectHeader(rows){
-  let best=null;
-  for(let i=0;i<Math.min(rows.length,18);i++){
-    const r=rows[i], vals=r.filter(Boolean), joined=vals.join(" | ").toLowerCase();
-    let score=0;
-    if(joined.includes("наименование"))score+=5;
-    if(joined.includes("артикул"))score+=3;
-    if(joined.includes("назначение"))score+=3;
-    if(joined.includes("характерист"))score+=2;
-    if(joined.includes("значение"))score+=2;
-    score+=Math.min(nonemptyCount(r),6)*.2;
-    if(!best||score>best.score)best={i,score,row:r};
-  }
-  return best&&best.score>=4?best:null;
-}
-function parseStandardTable(rows,header){
-  const keys=header.row.map(canonHeader);
-  const nameIdx=keys.indexOf("name");
-  if(nameIdx<0)return null;
+const HEADER_KEYS=new Set(["name","article","type","purpose","features","value","parameter","manufacturer","country","size","quantity","height","width","length","thickness"]);
+function headerInfo(row){
+  const keys=row.map(canonHeader);
+  const recognized=keys.filter(k=>HEADER_KEYS.has(k)&&k!=="field").length;
   const strong=["article","type","purpose","features"].filter(k=>keys.includes(k)).length;
-  if(strong<2)return null;
-  const items=[];
-  const genericName=/^(наименование|название|категория|тип|артикул|назначение|характеристика|характеристики|особенности|преимущества|параметр|значение|комплектация|размер|размеры|общие свойства|общая норма|важно|примечание|источник)$/i;
-  for(let i=header.i+1;i<rows.length;i++){
-    const r=rows[i], count=nonemptyCount(r);
-    const name=clean(r[nameIdx]);
-    if(!name)continue;
-    const recognized=r.filter(Boolean).map(canonHeader).filter(k=>["name","article","type","purpose","features","value","parameter","manufacturer","country"].includes(k)).length;
-    if(items.length && (recognized>=2 || /^(размеры|общие свойства|общая норма|практическое значение|комплектация|варианты|принцип|интерпретация)/i.test(name))) break;
-    if(count<2 || genericName.test(name))continue;
-    const obj={};
-    keys.forEach((k,j)=>{if(r[j])obj[k]=clean(r[j])});
-    obj.sourceRow=i+1;
-    obj.candidateId=slug((obj.article&&obj.article!=="-"?obj.article+"-":"")+name)||crypto.createHash("sha1").update(name).digest("hex").slice(0,10);
-    items.push(obj);
-  }
-  return items.length?items:null;
+  const product=keys.includes("name")&&strong>=2;
+  const generic=!product&&recognized>=2;
+  return {keys,recognized,strong,product,generic,any:product||generic};
 }
-function classify(rows){
-  const nonempty=rows.filter(r=>r.some(Boolean));
-  const header=detectHeader(nonempty);
-  const products=header?parseStandardTable(nonempty,header):null;
-  if(products)return {kind:"products",headerRow:header.i+1,products};
-  const twoCol=nonempty.filter(r=>nonemptyCount(r)===2).length;
-  if(nonempty.length&&twoCol/nonempty.length>=0.55){
-    return {kind:"keyValue",pairs:nonempty.filter(r=>nonemptyCount(r)>=2).map((r,i)=>({label:r.find(Boolean),value:r.slice(r.findIndex(Boolean)+1).find(Boolean)||"",sourceRow:i+1}))};
+function expandPackedRows(rows){
+  const expanded=[];
+  for(let ri=0;ri<rows.length;ri++){
+    const row=rows[ri];
+    const parts=row.map(v=>String(v??"").split(/\r?\n/).map(x=>flat(x)));
+    const multi=parts.filter(p=>p.length>1).length;
+    const first=parts.map(p=>p[0]||"");
+    const headerish=headerInfo(first).any || /(^| )(наименование|название|артикул|параметр|размер)( |$)/i.test(first.join(" "));
+    if(multi>=2&&headerish){
+      const max=Math.max(...parts.map(p=>p.length));
+      for(let k=0;k<max;k++){
+        const r=parts.map(p=>p[k]||"");
+        while(r.length&&!r[r.length-1])r.pop();
+        if(r.some(Boolean))expanded.push(r);
+      }
+    }else{
+      expanded.push(row.map(v=>flat(v)));
+    }
   }
-  return {kind:"richTable",rows:nonempty};
+  const out=[];
+  for(let i=0;i<expanded.length;i++){
+    const r=expanded[i], next=expanded[i+1]||[];
+    if(/^варианты\b/i.test(flat(r[0])) &&
+       r.slice(1).some(v=>["size","quantity"].includes(canonHeader(v))) &&
+       /^артикул/i.test(flat(next[0])) && nonemptyCount(next)===1){
+      out.push([flat(r[0])]);
+      out.push([flat(next[0]),...r.slice(1)]);
+      i++;
+      continue;
+    }
+    out.push(r);
+  }
+  return out;
+}
+function precedingTitle(rows,i){
+  for(let k=i-1;k>=Math.max(0,i-3);k--){
+    if(nonemptyCount(rows[k])===1){
+      const t=flat(rows[k].find(Boolean));
+      if(t&&!headerInfo(rows[k]).any)return t;
+    }
+    if(nonemptyCount(rows[k])>1)break;
+  }
+  return "";
+}
+function rowToObject(row,keys,sourceRow,group){
+  const obj={};
+  keys.forEach((k,j)=>{
+    if(k!=="field"&&row[j])obj[k]=flat(row[j]);
+  });
+  if(group)obj.group=group;
+  obj.sourceRow=sourceRow;
+  const name=obj.name||"";
+  obj.candidateId=slug((obj.article&&obj.article!=="-"&&obj.article!=="—"?obj.article+"-":"")+name)
+    ||crypto.createHash("sha1").update(JSON.stringify(row)).digest("hex").slice(0,10);
+  return obj;
+}
+function parseProductTables(rows){
+  const products=[], productBlocks=[];
+  const genericName=/^(наименование|название|категория|тип|артикул|назначение|характеристика|характеристики|особенности|преимущества|параметр|значение|комплектация|размер|размеры|общие свойства|общая норма|важно|примечание|источник)$/i;
+  for(let i=0;i<rows.length;i++){
+    const h=headerInfo(rows[i]);
+    if(!h.product)continue;
+    const group=precedingTitle(rows,i);
+    const block=[];
+    let j=i+1;
+    for(;j<rows.length;j++){
+      const r=rows[j], info=headerInfo(r), count=nonemptyCount(r);
+      if(info.any)break;
+      if(count===0)continue;
+      if(count===1){
+        if(block.length)break;
+        continue;
+      }
+      const nameIdx=h.keys.indexOf("name");
+      const name=flat(r[nameIdx]);
+      if(!name||genericName.test(name))continue;
+      const obj=rowToObject(r,h.keys,j+1,group);
+      if(!obj.name)continue;
+      block.push(obj);
+      products.push(obj);
+    }
+    productBlocks.push({group,header:rows[i].map(flat),count:block.length});
+    i=Math.max(i,j-1);
+  }
+  return {products,productBlocks};
+}
+function parseGenericTables(rows){
+  const tables=[];
+  for(let i=0;i<rows.length;i++){
+    const h=headerInfo(rows[i]);
+    if(!h.generic)continue;
+    const title=precedingTitle(rows,i);
+    const body=[];
+    let j=i+1;
+    for(;j<rows.length;j++){
+      const r=rows[j], info=headerInfo(r), count=nonemptyCount(r);
+      if(info.any)break;
+      if(count===0)continue;
+      if(count===1&&body.length)break;
+      if(count>=2)body.push(r.map(flat));
+    }
+    if(body.length)tables.push({title,headers:rows[i].map(flat),rows:body});
+    i=Math.max(i,j-1);
+  }
+  return tables;
+}
+function collectNotes(rows){
+  const notes=[];
+  for(let i=0;i<rows.length;i++){
+    if(nonemptyCount(rows[i])!==1)continue;
+    const t=flat(rows[i].find(Boolean));
+    if(!t||headerInfo(rows[i]).any)continue;
+    if(t.length<3)continue;
+    notes.push(t);
+  }
+  return [...new Set(notes)];
+}
+function classify(inputRows){
+  const rows=expandPackedRows(inputRows).filter(r=>r.some(v=>flat(v)));
+  const {products,productBlocks}=parseProductTables(rows);
+  const tables=parseGenericTables(rows);
+  const notes=collectNotes(rows);
+  if(products.length)return {kind:"products",products,productBlocks,tables:tables.length?tables:undefined,notes:notes.length?notes:undefined};
+  const twoCol=rows.filter(r=>nonemptyCount(r)===2).length;
+  if(rows.length&&twoCol/rows.length>=0.55){
+    return {kind:"keyValue",pairs:rows.filter(r=>nonemptyCount(r)>=2).map((r,i)=>({
+      label:flat(r.find(Boolean)),
+      value:flat(r.slice(r.findIndex(Boolean)+1).find(Boolean)||""),
+      sourceRow:i+1
+    })),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined};
+  }
+  return {kind:"richTable",rows:rows.map(r=>r.map(flat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined};
 }
 async function fetchSheet(meta){
   const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${meta.gid}`;
@@ -111,7 +218,12 @@ const chapters=sections.chapters.map(ch=>({
   sections:ch.sections.map(s=>{
     const src=fetched.find(x=>x.meta.order===s.sourceOrder);
     return {id:s.section,title:s.title,gid:src?.meta.gid||null,kind:src?.parsed.kind||null,
-      products:src?.parsed.products||undefined,pairs:src?.parsed.pairs||undefined,rows:src?.parsed.rows||undefined}
+      products:src?.parsed.products||undefined,
+      productBlocks:src?.parsed.productBlocks||undefined,
+      tables:src?.parsed.tables||undefined,
+      notes:src?.parsed.notes||undefined,
+      pairs:src?.parsed.pairs||undefined,
+      rows:src?.parsed.rows||undefined}
   })
 }));
 const book={
