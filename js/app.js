@@ -6,6 +6,37 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
 const isAdmin=(()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}})();
+const sidebarPrefs={
+  get(){try{return localStorage.getItem("kb_sidebar_pinned")!=="0"}catch{return true}},
+  set(v){try{localStorage.setItem("kb_sidebar_pinned",v?"1":"0")}catch{}}
+};
+function sidebarIsWide(){return window.matchMedia("(min-width:901px)").matches;}
+function sidebarPinned(){return sidebarIsWide()&&sidebarPrefs.get();}
+function applySidebarState(){
+  const pinned=sidebarPinned();
+  document.body.classList.toggle("sidebar-pinned",pinned);
+  document.body.classList.toggle("sidebar-unpinned",!pinned);
+  const pin=q("#sidebarPinBtn");
+  if(pin){
+    pin.setAttribute("aria-pressed",String(pinned));
+    pin.title=pinned?"Открепить панель":"Закрепить панель";
+    pin.textContent=pinned?"⊣":"⊢";
+  }
+  if(pinned)document.body.classList.remove("sidebar-open");
+}
+function toggleSidebarFromBurger(){
+  if(sidebarPinned()){
+    sidebarPrefs.set(false);applySidebarState();
+    return;
+  }
+  document.body.classList.toggle("sidebar-open");
+}
+function toggleSidebarPin(){
+  const next=!sidebarPinned();
+  sidebarPrefs.set(next);
+  applySidebarState();
+  if(!next)document.body.classList.remove("sidebar-open");
+}
 const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
@@ -261,7 +292,8 @@ function bind(){
   q("#versionLogBtn").onclick=()=>openVersionLog();
   document.querySelectorAll("[data-close-version]").forEach((x)=>x.onclick=()=>closeVersionLog());
   q("#themeBtn").onclick=()=>{const t=cycleTheme();toast("Тема: "+({"system":"как в системе","light":"светлая","dark":"тёмная"}[t]));};
-  q("#openSidebar").onclick=()=>document.body.classList.add("sidebar-open");q("#closeSidebar").onclick=closeMenu;q("#sidebarBackdrop").onclick=closeMenu;
+  q("#openSidebar").onclick=toggleSidebarFromBurger;q("#sidebarPinBtn").onclick=toggleSidebarPin;q("#closeSidebar").onclick=closeMenu;q("#sidebarBackdrop").onclick=closeMenu;
+  window.addEventListener("resize",applySidebarState);
   nav.onclick=(e)=>{const b=e.target.closest("[data-nav-chapter]");if(b)document.querySelector('.nav-chapter[data-chapter="'+CSS.escape(b.dataset.navChapter)+'"]')?.classList.toggle("open");};
   searchInput.oninput=()=>searchRender(searchInput.value);searchInput.onfocus=()=>{if(searchInput.value.trim())searchRender(searchInput.value);};
   searchPanel.onclick=(e)=>{const x=e.target.closest("[data-search-id]");if(x){searchPanel.hidden=true;searchInput.value="";go("product",x.dataset.searchId);}};
@@ -314,6 +346,7 @@ function openLightbox(id,i){
 }
 async function init(){
   applyTheme();
+  applySidebarState();
   const rs=await Promise.all([
     fetch("./data/book.json",{cache:"no-store"}),
     fetch("./data/assets.json",{cache:"no-store"}),
