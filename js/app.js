@@ -28,7 +28,7 @@ function displaySections(ch){
   for(const s of base){
     if(s.id.startsWith("2.6.")){if(!six){out.push({id:"2.6",title:"Анализаторы качества молока",composite:true});six=true;}continue;}
     if(s.id.startsWith("2.7.")){if(!seven){out.push({id:"2.7",title:"Анализаторы соматических клеток",composite:true});seven=true;}continue;}
-    out.push(s);
+    out.push(s.id==="2.13"?{...s,title:"Тест-пластины KangarooSci"}:s);
   }
   return out;
 }
@@ -76,7 +76,7 @@ function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   const id="catalog-"+safeSlug(sectionId+"-"+name+"-"+(state.sectionCatalog.get(sectionId)?.length||0));
   const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
   const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
-  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],practical:opts.practical||[],substances:opts.substances||[]};
+  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],options:opts.options||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[]};
   const ctxObj={chapter:x.chapter,section:x.section,product:p};
   if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
   state.sectionCatalog.get(sectionId).push(ctxObj);
@@ -96,7 +96,7 @@ function uniquePairs(arr){
   return out;
 }
 function parseRowBlock(rows,config={}){
-  const fields=[],advantages=[],practical=[],substances=[];let group="";
+  const fields=[],advantages=[],substances=[];let group=config.initialGroup||"";
   const pairs=config.fieldPairs||[[0,1]];
   for(const r of rows||[]){
     for(const [a,b] of pairs){
@@ -108,7 +108,7 @@ function parseRowBlock(rows,config={}){
     if(config.advCols){
       const av=String(r?.[config.advCols[0]]||"").trim(),pv=String(r?.[config.advCols[1]]||"").trim();
       if(av&&pv&&!/^(Преимущество|Практическое значение)$/i.test(av)&&av.length<140){
-        advantages.push([av,pv]); practical.push([av,pv]);
+        advantages.push([av,pv]);
       }
     }
     if(config.substanceCols){
@@ -121,7 +121,7 @@ function parseRowBlock(rows,config={}){
       if(g&&!String(r?.[config.substanceCols?.[0]]||"").trim()&&!/^(Группа)$/i.test(g))group=g;
     }
   }
-  return {fields:uniquePairs(fields),advantages:uniquePairs(advantages),practical:uniquePairs(practical),substances};
+  return {fields:uniquePairs(fields),advantages:uniquePairs(advantages),substances};
 }
 function buildGarantCards(s){
   const rows=s.rows||[],starts=[];
@@ -131,8 +131,88 @@ function buildGarantCards(s){
     const en=starts[idx+1]??rows.length, block=rows.slice(st,en);
     const name=st===0?"Экспресс-тест GARANT BTSC PLUS":String(block[0]?.[1]||"").trim();
     const parsed=parseRowBlock(block,{fieldPairs:[[0,1]],advCols:[2,3],substanceCols:[4,5]});
-    registerCatalog(s.id,name,parsed.fields,img?[img]:[],{advantages:parsed.advantages,practical:parsed.practical,substances:parsed.substances});
+    registerCatalog(s.id,name,parsed.fields,img?[img]:[],{advantages:parsed.advantages,substances:parsed.substances});
   });
+}
+
+function splitAdvantages(pairs){
+  const arr=pairs||[],idx=arr.findIndex((p)=>/^(Преимущество|Особенность)$/i.test(String(p.label||"").trim())&&/Практическое значение/i.test(String(p.value||"")));
+  if(idx<0)return {fields:cleanPairs(arr),advantages:[]};
+  return {fields:cleanPairs(arr.slice(0,idx)),advantages:uniquePairs(arr.slice(idx+1).map((p)=>[p.label,p.value]))};
+}
+function buildAnalyzerParts(pairs){
+  const a=splitAdvantages(pairs),fields=[],indicators=[],options=[];
+  let mode="fields";
+  const optionRx=/^(Термопринтер|Связь|Передача данных|Автоматический пробоотбор|Ультразвуковая мешалка|Операционная система|Управление|Встроенный pH-метр|Определение удельной электропроводности|Реагенты)$/i;
+  for(const r of a.fields){
+    const l=String(r[0]).trim(),v=String(r[1]).trim();
+    if(/^(Показатель|Дополнительный показатель)$/i.test(l)&&/^(Диапазон измерения|Обозначение)$/i.test(v)){mode=l.startsWith("Доп")?"options":"indicators";continue;}
+    if(optionRx.test(l)){options.push([l,v]);continue;}
+    if(mode==="indicators")indicators.push([l,v]);
+    else if(mode==="options")options.push([l,v]);
+    else fields.push([l,v]);
+  }
+  return {fields:uniquePairs(fields),indicators:uniquePairs(indicators),options:uniquePairs(options),advantages:a.advantages};
+}
+function sectionRowsBetween(rows,startLabel,endLabel){
+  const a=rows.findIndex((r)=>String(r[0]||"").trim()===startLabel);
+  if(a<0)return [];
+  const b=endLabel?rows.findIndex((r,i)=>i>a&&String(r[0]||"").trim()===endLabel):rows.length;
+  return rows.slice(a+1,b<0?rows.length:b);
+}
+function buildExtensoCard(ext){
+  const rows=ext.rows||[];
+  const fields=[
+    ["Производитель","Unisensor, Бельгия"],["Артикул","1002.03.003"],["Тип системы","Диагностическая мультиплексная платформа"],
+    ["Назначение","Скрининг ветеринарно-лекарственных средств и афлатоксина M1"],["Основная матрица","Молоко"],
+    ["Что определяет в молоке","103 вида антибиотиков + афлатоксин M1"],["Количество специфических групп в молоке","17 каналов"],
+    ["Время анализа молока","13 минут"],["Интерпретация","Автоматическая"],["Питание","От сети или встроенной батареи"],
+    ["Совместимость","Тест-полоски Unisensor"],["Масса","6 кг"],["Происхождение","Бельгия"],
+    ["Нормативная информация","ТР ТС 021, приложение 5.1 (Решение ЕЭК №70); ГОСТ Р 59507-2021"]
+  ];
+  const comp=[],workflow=[],calibration=[],advantages=[],substances=[];let mode="",sub="";
+  for(const r of rows){
+    const a=String(r[0]||"").trim(),v=String(r[1]||"").trim();
+    if(a==="КОМПЛЕКТАЦИЯ"){mode="comp";continue}
+    if(a==="ПОРЯДОК РАБОТЫ"){mode="workflow";continue}
+    if(a==="КАЛИБРОВКА"){mode="cal";continue}
+    if(a==="ПРЕИМУЩЕСТВА И ПРАКТИЧЕСКОЕ ЗНАЧЕНИЕ"){mode="adv";continue}
+    if(a.startsWith("ТАБЛИЦА ЧУВСТВИТЕЛЬНОСТИ EXTENSO")){mode="sens";continue}
+    if(mode==="comp"){
+      if(["Молоко","Мясо"].includes(a)){sub=a;continue}
+      if(a&&v&&!["Компонент","Количество"].includes(a))comp.push([sub?sub+" · "+a:a,v]);
+    }else if(mode==="workflow"){
+      if(["Молоко","Мясо"].includes(a)){sub=a;continue}
+      if(a&&v&&!["Этап","Действие"].includes(a))workflow.push([sub?sub+" · шаг "+a:a,v]);
+    }else if(mode==="cal"){
+      if(a&&v)calibration.push([a,v]);
+    }else if(mode==="adv"){
+      if(a&&v&&a!=="Преимущество")advantages.push([a,v]);
+    }else if(mode==="sens"){
+      const group=String(r[1]||"").trim(),name=String(r[2]||"").trim(),ppb=String(r[3]||"").trim();
+      if(name&&ppb&&!/Определяемое вещество/i.test(name))substances.push({group,substance:name,ppb});
+    }
+  }
+  return {fields,complectation:comp,workflow,calibration,advantages,substances};
+}
+function buildConsumableBlocks(s){
+  const pairs=s.pairs||[],starts=[0,19,51,70,98],names=["EKODAY","EKOWEEK","EKOPRIM","MASTOPRIM","LACTOCHIP"],out=[];
+  starts.forEach((st,i)=>{
+    const en=starts[i+1]??pairs.length,block=pairs.slice(st,en),name=names[i],advAt=block.findIndex((p)=>/^(Преимущество|Особенность)$/i.test(String(p.label||"").trim())&&/Практическое значение/i.test(String(p.value||"")));
+    const main=(advAt>=0?block.slice(0,advAt):block),advantages=(advAt>=0?block.slice(advAt+1):[]);
+    const fields=[],workflow=[],complectation=[];
+    if(name==="EKODAY")fields.push(["Категория","Моющее средство для анализаторов молока"],["Артикул","0704.01.012"],["Тип средства","Щелочное"],["Назначение","Ежедневная промывка анализаторов молока"],["Форма","Сухой реагент"],["Упаковка","2 пакета × 100 г"],["Общая масса","200 г"]);
+    for(const p of main){
+      const l=String(p.label||"").trim(),v=String(p.value||"").trim();
+      if(!l||!v||l==="Характеристика"||l==="Наименование"||l.length>100)continue;
+      if(/^\d+$/.test(l)||l==="Этап"){if(/^\d+$/.test(l))workflow.push(["Шаг "+l,v]);continue;}
+      if(name==="LACTOCHIP"&&["Компонент","Количество"].includes(l))continue;
+      if(name==="LACTOCHIP"&&["Тест-пластины LACTOCHIP","SOFIA GREEN","Наконечники автоматического дозатора"].includes(l)){complectation.push([l,v]);continue;}
+      fields.push([l,v]);
+    }
+    out.push({name,fields:uniquePairs(fields),advantages:uniquePairs(advantages.map((p)=>[p.label,p.value])),workflow:uniquePairs(workflow),complectation:uniquePairs(complectation)});
+  });
+  return out;
 }
 function buildChapter2Catalog(){
   state.sectionCatalog.clear();
@@ -142,14 +222,14 @@ function buildChapter2Catalog(){
   // 2.1.1 — ровно четыре теста, все данные раскладываем по вкладкам
   const fourS=sBy("2.1.1"),fr=fourS?.rows||[];
   const specs=[
-    {name:"4SENSOR KIT 060",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",a:1,b:35,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[7,8],groupCol:6},
-    {name:"4SENSOR SENSITIVE",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",a:37,b:84,fieldPairs:[[0,1],[2,3],[4,5]],advCols:[6,7],substanceCols:[8,9]},
-    {name:"ANKAR MILK TEST 4",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",a:86,b:131,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7]},
-    {name:"GARANT 4 ULTRA MILK",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",a:133,b:fr.length,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7]}
+    {name:"4SENSOR KIT 060",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",a:1,b:35,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[7,8],groupCol:6,initialGroup:"Пенициллины"},
+    {name:"4SENSOR SENSITIVE",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",a:37,b:84,fieldPairs:[[0,1],[2,3],[4,5]],advCols:[6,7],substanceCols:[8,9],initialGroup:"Пенициллины"},
+    {name:"ANKAR MILK TEST 4",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",a:86,b:131,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7],initialGroup:"Пенициллины"},
+    {name:"GARANT 4 ULTRA MILK",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",a:133,b:fr.length,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7],initialGroup:"Пенициллины"}
   ];
   specs.forEach((sp)=>{
     const parsed=parseRowBlock(fr.slice(sp.a,sp.b),sp);
-    registerCatalog("2.1.1",sp.name,parsed.fields,[sp.img],{advantages:parsed.advantages,practical:parsed.practical,substances:parsed.substances});
+    registerCatalog("2.1.1",sp.name,parsed.fields,[sp.img],{advantages:parsed.advantages,substances:parsed.substances});
   });
   // 2.1.2 — визуальная линейка Unisensor
   const us=sBy("2.1.2");
@@ -163,32 +243,64 @@ function buildChapter2Catalog(){
     "img/photos/02-testy-4-gruppy/02-test-sistemy-delvotest-t.png"
   ]);
 
-  const ext=sBy("2.3");if(ext)registerCatalog("2.3","Система EXTENSO",fieldsFromRows(ext.rows),state.assets.sectionImages?.["2.3"]||[]);
-  const inc=sBy("2.4");if(inc)registerCatalog("2.4","Термостатическое устройство TIAS",cleanPairs(inc.pairs),["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"]);
+  const ext=sBy("2.3");if(ext){const x=buildExtensoCard(ext);registerCatalog("2.3","Система EXTENSO",x.fields,state.assets.sectionImages?.["2.3"]||[],x);}
+  const inc=sBy("2.4");if(inc){
+    const x=splitAdvantages(inc.pairs);
+    const fields=[["Артикул","1001.01.006"],["Назначение","Инкубация экспресс-тестов для определения антибиотиков в молоке"],["Производство","Болгария"],["Количество тест-полосок","До 8 одновременно"],["Диапазон температуры","30–80 °C"],...x.fields.filter((r)=>!["Особенности","Источник","Режим","№1","№2","№3"].includes(r[0]))];
+    registerCatalog("2.4","Термостатическое устройство TIAS",uniquePairs(fields),["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"],{advantages:x.advantages,options:[["Режим №1","GARANT — 37 °C, 3+7 минут"],["Режим №2","TwinSensor — 40 °C, 3+3 минуты"],["Режим №3","4Sensor, ANKAR Milk, Sensitive — 40 °C, 5+5 минут"]]});
+  }
 
   const readers=sBy("2.5");if(readers){
     const blocks=splitPairBlocks(readers);
-    blocks.forEach((b,i)=>registerCatalog("2.5",b.name,b.fields,i===0?["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png"]:[],{advantages:b.advantages,practical:b.practical}));
+    blocks.forEach((b,i)=>registerCatalog("2.5",b.name,b.fields,i===0?["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png"]:[],{advantages:b.advantages}));
   }
 
-  // объединённые разделы 2.6 и 2.7
-  const sec6=state.sections.get("2.6")?.section,sec7=state.sections.get("2.7")?.section;
+  // объединённые разделы 2.6 и 2.7 — характеристики распределяем по смысловым вкладкам
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
-    let fs=child.pairs?.length?cleanPairs(child.pairs):fieldsFromRows(child.rows);
-    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fs,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока"});
+    const x=child.pairs?.length?buildAnalyzerParts(child.pairs):{fields:fieldsFromRows(child.rows),indicators:[],options:[],advantages:[]};
+    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),x.fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока",indicators:x.indicators,options:x.options,advantages:x.advantages});
   }
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
-    let fs=child.pairs?.length?cleanPairs(child.pairs):fieldsFromRows(child.rows);
-    registerCatalog("2.7",child.title,fs,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток"});
+    const x=child.pairs?.length?buildAnalyzerParts(child.pairs):{fields:fieldsFromRows(child.rows),indicators:[],options:[],advantages:[]};
+    registerCatalog("2.7",child.title,x.fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток",indicators:x.indicators,options:x.options,advantages:x.advantages});
   }
 
-  // key-value каталоги дальше по главе
-  for(const id of ["2.8","2.9","2.12","2.15","2.16"]){
+  // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
+  const cons=sBy("2.8");if(cons){
+    buildConsumableBlocks(cons).forEach((b)=>registerCatalog("2.8",b.name,b.fields,[],{advantages:b.advantages,workflow:b.workflow,complectation:b.complectation}));
+  }
+
+  // остальные key-value каталоги
+  for(const id of ["2.9","2.12"]){
     const s=sBy(id);if(!s)continue;
     const blocks=splitPairBlocks(s);
-    if(blocks.length){
-      blocks.forEach((b,i)=>registerCatalog(id,b.name,b.fields,(state.assets.sectionImages?.[id]||[]).slice(i,i+1),{advantages:b.advantages,practical:b.practical}));
-    }else registerCatalog(id,s.title,cleanPairs(s.pairs),state.assets.sectionImages?.[id]||[]);
+    if(blocks.length)blocks.forEach((b,i)=>registerCatalog(id,b.name,b.fields,(state.assets.sectionImages?.[id]||[]).slice(i,i+1),{advantages:b.advantages}));
+    else registerCatalog(id,s.title,cleanPairs(s.pairs),state.assets.sectionImages?.[id]||[]);
+  }
+
+  // 2.15 — один БиоТФ, тест-наборы внутри карточки
+  const bio=sBy("2.15");if(bio){
+    const pairs=bio.pairs||[],kits=[],features=[];let current="";
+    for(const p of pairs){
+      const l=String(p.label||"").trim(),v=String(p.value||"").trim();
+      if(l==="Наименование"&&/^Тест-набор/i.test(v)){current=v;continue;}
+      if(current&&l&&v&&!["Характеристика","Наименование"].includes(l)){
+        if(l==="Особенность"&&/Практическое значение/i.test(v)){current="";continue;}
+        kits.push([current+" · "+l,v]);
+      }else if(l&&v&&["Контроль остаточного белка","Работа со смывной водой","Качественный метод"].includes(l))features.push([l,v]);
+    }
+    const fields=[["Назначение","Количественное определение общего микробного числа (ОМЧ) в молоке"],["Время исследования","20–30 минут"],["Метод","Турбидофлуориметрический / флуориметрический"],["Стандарт","ГОСТ 34472-2018"],["Госреестр СИ","№ 56270-14"],["Обработка результата","Автоматическая, программная"]];
+    registerCatalog("2.15","Турбидофлуориметр БиоТФ",fields,state.assets.sectionImages?.["2.15"]||[],{testKits:uniquePairs(kits),advantages:features});
+  }
+
+  // 2.16 — LuciPac находится внутри карточки люминометра
+  const san=sBy("2.16");if(san){
+    const ps=san.pairs||[],cut=ps.findIndex((p)=>p.label==="Особенность"&&/Практическое значение/.test(p.value));
+    const second=ps.findIndex((p)=>p.label==="Наименование"&&/LuciPac/.test(p.value));
+    const fields=cleanPairs(ps.slice(1,cut>=0?cut:second)).filter((r)=>r[0]!=="Наименование");
+    const advantages=uniquePairs(ps.slice((cut>=0?cut+1:11),second>=0?second:18).map((p)=>[p.label,p.value]));
+    const consumables=second>=0?cleanPairs(ps.slice(second+1)).filter((r)=>!["Категория"].includes(r[0])):[];
+    registerCatalog("2.16","Люминометр SMART",fields,state.assets.sectionImages?.["2.16"]||[],{advantages,consumables});
   }
 
   // индикаторные полоски — строка таблицы = отдельная карточка
@@ -206,10 +318,15 @@ function buildChapter2Catalog(){
     state.sectionCatalog.set("2.11",(myco.products||[]).map((p)=>state.products.get(p.id)).filter(Boolean));
   }
 
-  // микробиологический контроль — HygieneChek + KangarooSci
+  // 2.13 — одна главная карточка KangarooSci, линейка внутри
   const micro=sBy("2.13");if(micro){
-    registerCatalog("2.13","Тест-пластины KangarooSci",[["Назначение","Количественное определение микроорганизмов в готовой продукции, сырье и смывах с поверхностей"],["Формат","Готовые тест-пластины"],["Упаковка","12 тест-пластин"],["Считывание","Визуальный количественный подсчёт колоний"]],state.assets.sectionImages?.["2.13"]||[]);
-    const t=micro.tables?.[0];if(t)(t.rows||[]).forEach((r)=>registerCatalog("2.13","HygieneChek Plus · "+r[1]+(r[2]!==r[1]?" / "+r[2]:""),(t.headers||[]).map((h,i)=>[h,r[i]]).filter((x)=>x[1]),[],{article:r[0]}));
+    const assortment=[
+      ["Молочнокислые микроорганизмы (МКБ)","KangarooSci Lactic Acid / KGR014"],["КМАФАнМ (ОМЧ)","KangarooSci KGR001"],
+      ["Дрожжи и плесневые грибы","KangarooSci KGR008"],["БГКП","KangarooSci KGR010"],["БГКП + E. coli","KangarooSci KGR011"],
+      ["Золотистый стафилококк","KangarooSci KGR002"],["Сальмонелла","KangarooSci KGR015"],["Listeria monocytogenes","KangarooSci KGR005"],
+      ["Bacillus cereus","KangarooSci KGR013"],["Энтеробактерии","KangarooSci KGR016"]
+    ];
+    registerCatalog("2.13","Тест-пластины KangarooSci",[["Назначение","Количественное определение микроорганизмов в готовой продукции, сырье и смывах с поверхностей"],["Формат","Готовая тест-пластина"],["Упаковка","12 тест-пластин"],["Объём вносимой суспензии","1 мл"],["Считывание","Визуальный количественный подсчёт колоний"]],state.assets.sectionImages?.["2.13"]||[],{assortment});
   }
 
   // питательные среды — каждая строка ассортимента отдельной карточкой; фото только при уверенном совпадении
@@ -450,10 +567,17 @@ function fields(p){
 }
 
 function productTabs(p){
-  const tabs=[{id:"specs",label:"Характеристики",show:true}];
-  if(p.advantages?.length)tabs.push({id:"advantages",label:"Преимущества",show:true});
-  if(p.practical?.length)tabs.push({id:"practical",label:"Практическое значение",show:true});
-  if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb",show:true});
+  const tabs=[{id:"specs",label:"Характеристики"}];
+  if(p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
+  if(p.options?.length)tabs.push({id:"options",label:"Дополнительные опции"});
+  if(p.advantages?.length)tabs.push({id:"advantages",label:"Преимущества"});
+  if(p.complectation?.length)tabs.push({id:"complectation",label:"Комплектация"});
+  if(p.workflow?.length)tabs.push({id:"workflow",label:"Порядок работы"});
+  if(p.calibration?.length)tabs.push({id:"calibration",label:"Калибровка"});
+  if(p.assortment?.length)tabs.push({id:"assortment",label:"Линейка"});
+  if(p.consumables?.length)tabs.push({id:"consumables",label:"Расходные материалы"});
+  if(p.testKits?.length)tabs.push({id:"testKits",label:"Тест-наборы"});
+  if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
   return tabs;
 }
 function pairCards(rows,cls="feature-tab-grid"){
@@ -466,7 +590,14 @@ function substanceTable(rows){
 function tabPanelHtml(p,id){
   if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
   if(id==="advantages")return pairCards(p.advantages||[]);
-  if(id==="practical")return pairCards(p.practical||[]);
+  if(id==="indicators")return pairCards(p.indicators||[]);
+  if(id==="options")return pairCards(p.options||[]);
+  if(id==="complectation")return pairCards(p.complectation||[]);
+  if(id==="workflow")return pairCards(p.workflow||[]);
+  if(id==="calibration")return pairCards(p.calibration||[]);
+  if(id==="assortment")return pairCards(p.assortment||[]);
+  if(id==="consumables")return pairCards(p.consumables||[]);
+  if(id==="testKits")return pairCards(p.testKits||[]);
   if(id==="substances")return substanceTable(p.substances||[]);
   return "";
 }
