@@ -168,11 +168,14 @@ for(const img of images){
   }
 }
 const matchedImages=Object.keys(imageAssignments);
-const assets={
-  generatedAt:new Date().toISOString(),
-  productImages:productAssets,
-  sectionImages:sectionAssets
-};
+const proposedAssets={productImages:productAssets,sectionImages:sectionAssets};
+const previousAssets=JSON.parse(await fs.readFile("data/assets.json","utf8").catch(()=>"null"));
+let assetsGeneratedAt=new Date().toISOString();
+if(previousAssets){
+  const {generatedAt:_oldGeneratedAt,...previousCore}=previousAssets;
+  if(JSON.stringify(previousCore)===JSON.stringify(proposedAssets))assetsGeneratedAt=previousAssets.generatedAt||assetsGeneratedAt;
+}
+const assets={generatedAt:assetsGeneratedAt,...proposedAssets};
 const report={
   generatedAt:assets.generatedAt,
   imagesTotal:images.length,
