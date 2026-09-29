@@ -1,11 +1,18 @@
 {
-  "name": "Книга знаний TIAN-Трейд",
-  "short_name": "TIAN KB",
-  "description": "Единая внутренняя база знаний TIAN-Трейд",
-  "lang": "ru",
-  "start_url": "./#/home",
+  "name": "Книга знаний ТИАН-Трейд",
+  "short_name": "ТИАН-Трейд",
+  "description": "Единая внутренняя база знаний по продукции ТИАН-Трейд",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#F5F7F5",
-  "theme_color": "#335D42"
+  "theme_color": "#335D42",
+  "icons": [
+    {
+      "src": "./assets/brand/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
