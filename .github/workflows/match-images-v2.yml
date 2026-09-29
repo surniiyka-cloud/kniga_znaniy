@@ -14,8 +14,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: match-images-v2
-  cancel-in-progress: true
+  group: knowledge-data-v2
+  cancel-in-progress: false
 
 jobs:
   match:
