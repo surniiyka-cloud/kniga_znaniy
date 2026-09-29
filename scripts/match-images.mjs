@@ -97,6 +97,8 @@ function scoreImage(img,p){
   const exact=pn&&iname===pn;
   const substring=pn.length>=7&&(iname.includes(pn)||pn.includes(iname));
   const sim=similarity(p.name,iname);
+  const typeSim=similarity(p.type||"",iname);
+  const typed=sim>=0.20&&typeSim>=0.66;
   const art=articleNorm(p.article);
   const article=(art.length>=4&&articleNorm(img.file).includes(art))||articleHit(p.article,img.file);
   let s=0;
@@ -104,11 +106,12 @@ function scoreImage(img,p){
   else if(article)s=94;
   else if(substring)s=88;
   else if(sim>=0.78)s=88;
+  else if(typed)s=86;
   else if(sim>=0.62)s=82;
   else if(sim>=0.50)s=76;
   if(inHint)s+=10;
   else if(hinted.length&&s<95)s-=24;
-  return {score:Math.max(0,Math.min(110,s)),strong:exact||article||substring||sim>=0.58};
+  return {score:Math.max(0,Math.min(110,s)),strong:exact||article||substring||sim>=0.58||typed};
 }
 const productAssets={};
 const sectionAssets={};
