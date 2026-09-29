@@ -74,7 +74,9 @@ function renderChapter(id){
 function renderSection(id){
   const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;title(s.id+" "+s.title);
   const items=(s.products||[]).map((p)=>({chapter:ch,section:s,product:p}));
-  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+'<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+(items.length?items.length+" карточек":"Справочный материал")+'</p></div></div>'+(items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':'<div class="empty-state"><strong>Справочный раздел</strong><p>Материал ниже сохранён в структуре рабочей книги.</p></div>')+tables(s);
+  const sectionImgs=state.assets.sectionImages?.[s.id]||[];
+  const media=sectionImgs.length?'<section class="section-media"><div class="section-heading compact"><div><h2>Фото раздела</h2></div><p>'+sectionImgs.length+' изображений</p></div><div class="section-media-strip">'+sectionImgs.map((im)=>'<button class="section-media-item" data-lightbox-src="./'+esc(im)+'" type="button"><img src="./'+esc(im)+'" loading="lazy" alt="'+esc(s.title)+'"></button>').join("")+'</div></section>':"";
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+'<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+(items.length?items.length+" карточек":"Справочный материал")+'</p></div></div>'+media+(items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':'<div class="empty-state"><strong>Справочный раздел</strong><p>Материал ниже сохранён в структуре рабочей книги.</p></div>')+tables(s);
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function fields(p){
@@ -147,6 +149,8 @@ function bind(){
     if(e.target.closest("[data-clear-compare]")){comparison.clear();render();return;}
     if(e.target.closest("[data-copy]")){navigator.clipboard?.writeText(location.href).then(()=>toast("Ссылка скопирована"));return;}
     const g=e.target.closest("[data-gallery-product]");if(g){const x=ctx(g.dataset.galleryProduct),imgs=x?state.assets.productImages?.[x.product.id]||[]:[],i=Number(g.dataset.galleryIndex||0),m=q(".gallery-main");if(m&&imgs[i]){m.innerHTML='<img src="./'+esc(imgs[i])+'" alt="'+esc(x.product.name)+'">';m.dataset.lightboxProduct=x.product.id;m.dataset.lightboxIndex=String(i);}document.querySelectorAll(".gallery-thumb").forEach((t)=>t.classList.toggle("active",t===g));return;}
+    const direct=e.target.closest("[data-lightbox-src]");
+    if(direct){const lb=q("#lightbox");lb.hidden=false;lb.querySelector("img").src=direct.dataset.lightboxSrc;lb.querySelector("img").alt="";return;}
     const l=e.target.closest("[data-lightbox-product]");if(l)openLightbox(l.dataset.lightboxProduct,Number(l.dataset.lightboxIndex||0));
   });
   document.addEventListener("keydown",(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();}if(e.key==="Escape"){searchPanel.hidden=true;q("#lightbox").hidden=true;closeMenu();}});
