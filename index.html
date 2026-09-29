@@ -15,7 +15,7 @@
     <aside class="sidebar" id="sidebar" aria-label="Навигация по книге">
       <div class="brand">
         <button class="brand-home" id="brandHome" type="button" aria-label="На главную">
-          <span class="brand-mark" aria-hidden="true"><img src="./assets/brand/favicon.svg" alt=""></span>
+          <span class="brand-mark" aria-hidden="true"><img src="./assets/brand/logo.svg" alt=""></span>
           <span class="brand-copy">
             <strong>ТИАН-Трейд</strong>
             <small>Книга знаний</small>
@@ -26,6 +26,7 @@
       <nav class="nav" id="nav"></nav>
       <div class="sidebar-foot">
         <a class="diag-link" href="#/diagnostics">Диагностика данных</a>
+        <button class="version-link" id="versionLogBtn" type="button">ver. <span id="versionNumber">2.0</span> log</button>
         <span id="syncState" class="sync-state">Загрузка данных…</span>
       </div>
     </aside>
@@ -60,6 +61,19 @@
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="versionModal" class="version-modal" hidden>
+    <div class="version-backdrop" data-close-version></div>
+    <section class="version-panel" role="dialog" aria-modal="true" aria-labelledby="versionTitle">
+      <div class="version-head">
+        <div>
+          <span class="eyebrow">История обновлений</span>
+          <h2 id="versionTitle">ver. log</h2>
+        </div>
+        <button class="icon-btn" type="button" data-close-version aria-label="Закрыть">×</button>
+      </div>
+      <div id="versionEntries" class="version-entries"></div>
+    </section>
+  </div>
   <div id="lightbox" class="lightbox" hidden>
     <button class="lightbox-close" type="button" aria-label="Закрыть">×</button>
     <button class="lightbox-prev" type="button" aria-label="Предыдущее изображение">‹</button>
