@@ -35,11 +35,18 @@ function norm(s){
     .replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
 }
 function articleNorm(s){return String(s??"").toLowerCase().replace(/[^a-zа-я0-9]/gi,"")}
-function tokens(s){return new Set(norm(s).split("-").filter(x=>x.length>2))}
+const SIZE_NAMES=new Set(["s","m","l","xl","xxl","xxxl","xs"]);
+function tokens(s){
+  return new Set(norm(s).split("-").filter(x=>x.length>2 && !["dlya","tian","ankar","sht","sm","mm"].includes(x)));
+}
 function similarity(a,b){
   const A=tokens(a),B=tokens(b); if(!A.size||!B.size)return 0;
   let inter=0; for(const x of A)if(B.has(x))inter++;
   return inter/Math.max(A.size,B.size);
+}
+function validProductName(name){
+  const n=norm(name);
+  return n.length>=4 && !SIZE_NAMES.has(n) && !/^\d+(?:-\d+)*$/.test(n);
 }
 const images=[];
 async function walk(dir){
@@ -62,39 +69,49 @@ for(const ch of book.chapters)for(const sec of ch.sections){
   for(const p of sec.products||[])products.push({section:sec.id,...p});
 }
 function scoreImage(img,p){
+  if(!validProductName(p.name))return {score:0,strong:false};
   const pn=norm(p.name||""), iname=img.norm;
-  let s=0;
-  if(pn&&iname===pn)s=100;
-  else if(pn&&(iname.includes(pn)||pn.includes(iname)))s=Math.max(s,86);
-  s=Math.max(s,similarity(p.name,iname)*72);
+  const hinted=folderHints[img.folder]||[];
+  const inHint=hinted.includes(p.section);
+  const exact=pn&&iname===pn;
+  const substring=pn.length>=7&&(iname.includes(pn)||pn.includes(iname));
+  const sim=similarity(p.name,iname);
   const art=articleNorm(p.article);
-  if(art.length>=4&&articleNorm(img.file).includes(art))s+=24;
-  if((folderHints[img.folder]||[]).includes(p.section))s+=18;
-  return Math.min(120,s);
+  const article=art.length>=4&&articleNorm(img.file).includes(art);
+  let s=0;
+  if(exact)s=100;
+  else if(article)s=94;
+  else if(substring)s=88;
+  else if(sim>=0.72)s=82;
+  else if(sim>=0.58)s=74;
+  if(inHint)s+=10;
+  else if(hinted.length&&s<95)s-=24;
+  return {score:Math.max(0,Math.min(110,s)),strong:exact||article||substring||sim>=0.58};
 }
 const productAssets={};
 const sectionAssets={};
 const imageAssignments={};
 const ambiguous=[];
 for(const img of images){
-  let scored=products.map(p=>({p,score:scoreImage(img,p)})).filter(x=>x.score>=58).sort((a,b)=>b.score-a.score);
+  const scored=products.map(p=>{
+    const e=scoreImage(img,p); return {p,...e};
+  }).filter(x=>x.strong&&x.score>=76).sort((a,b)=>b.score-a.score);
   if(scored.length){
-    const best=scored[0];
-    const close=scored.filter(x=>best.score-x.score<=4);
-    if(close.length>1)ambiguous.push({image:img.path,candidates:close.slice(0,5).map(x=>({id:x.p.candidateId,name:x.p.name,section:x.p.section,score:+x.score.toFixed(1)}))});
-    const p=best.p;
-    (productAssets[p.candidateId] ||= []).push(img.path);
-    imageAssignments[img.path]={type:"product",id:p.candidateId,section:p.section,score:+best.score.toFixed(1)};
-    continue;
+    const best=scored[0], second=scored[1];
+    const close=scored.filter(x=>best.score-x.score<7);
+    if(close.length>1){
+      ambiguous.push({image:img.path,candidates:close.slice(0,5).map(x=>({id:x.p.candidateId,name:x.p.name,section:x.p.section,score:+x.score.toFixed(1)}))});
+    }else{
+      const p=best.p;
+      (productAssets[p.candidateId] ||= []).push(img.path);
+      imageAssignments[img.path]={type:"product",id:p.candidateId,section:p.section,score:+best.score.toFixed(1)};
+      continue;
+    }
   }
   const hinted=(folderHints[img.folder]||[]);
-  if(hinted.length){
-    let bestSec=hinted.map(id=>{
-      const s=sectionTitles.find(x=>x.section===id);
-      return {id,title:s?.title||id,score:similarity(s?.title||"",img.file)};
-    }).sort((a,b)=>b.score-a.score)[0];
-    (sectionAssets[bestSec.id] ||= []).push(img.path);
-    imageAssignments[img.path]={type:"section",id:bestSec.id,score:+bestSec.score.toFixed(2)};
+  if(hinted.length===1){
+    (sectionAssets[hinted[0]] ||= []).push(img.path);
+    imageAssignments[img.path]={type:"section",id:hinted[0],score:1};
   }
 }
 const matchedImages=Object.keys(imageAssignments);
