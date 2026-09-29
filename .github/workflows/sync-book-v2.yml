@@ -16,8 +16,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-book-v2
-  cancel-in-progress: true
+  group: knowledge-data-v2
+  cancel-in-progress: false
 
 jobs:
   sync:
