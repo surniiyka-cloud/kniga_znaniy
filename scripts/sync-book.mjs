@@ -65,11 +65,14 @@ function parseStandardTable(rows,header){
   const strong=["article","type","purpose","features"].filter(k=>keys.includes(k)).length;
   if(strong<2)return null;
   const items=[];
+  const genericName=/^(наименование|название|категория|тип|артикул|назначение|характеристика|характеристики|особенности|преимущества|параметр|значение|комплектация|размер|размеры|общие свойства|общая норма|важно|примечание|источник)$/i;
   for(let i=header.i+1;i<rows.length;i++){
-    const r=rows[i];
+    const r=rows[i], count=nonemptyCount(r);
     const name=clean(r[nameIdx]);
     if(!name)continue;
-    if(/^(размеры|общие свойства|общая норма|важно|примечание|характеристика)$/i.test(name))continue;
+    const recognized=r.filter(Boolean).map(canonHeader).filter(k=>["name","article","type","purpose","features","value","parameter","manufacturer","country"].includes(k)).length;
+    if(items.length && (recognized>=2 || /^(размеры|общие свойства|общая норма|практическое значение|комплектация|варианты|принцип|интерпретация)/i.test(name))) break;
+    if(count<2 || genericName.test(name))continue;
     const obj={};
     keys.forEach((k,j)=>{if(r[j])obj[k]=clean(r[j])});
     obj.sourceRow=i+1;
