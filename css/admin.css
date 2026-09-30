@@ -54,3 +54,28 @@ body.kb-admin-open{overflow:hidden}
   .kb-hide{grid-column:1/4}
   .kb-admin-savebar{bottom:-20px;padding-bottom:20px}
 }
+
+.kb-table-section-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-end;flex-wrap:wrap}
+.kb-table-section-head h3{margin:0 0 4px}
+.kb-table-create{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kb-table-create select{border:1px solid var(--line,#d9e2dc);background:var(--panel-2,#fbfdfb);color:var(--text,#18251d);border-radius:12px;padding:10px 12px;font:inherit;min-width:200px}
+[data-table-editors]{display:grid;gap:14px}
+.kb-table-editor{border:1px solid var(--line,#dfe7e1);border-radius:15px;background:var(--panel-2,#fafcfb);overflow:hidden;transition:.2s box-shadow,.2s border-color}
+.kb-table-editor.kb-flash{border-color:var(--accent,#335d42);box-shadow:0 0 0 3px rgba(51,93,66,.12)}
+.kb-table-editor-head{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:13px 14px;border-bottom:1px solid var(--line,#dfe7e1);flex-wrap:wrap}
+.kb-table-editor-head>div:first-child{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.kb-table-editor-head code{font-size:11px;color:var(--muted,#748078)}
+.kb-table-actions{display:flex;gap:7px;flex-wrap:wrap}
+.kb-mini.danger{color:#a02828;border-color:#e7bbbb;background:#fff7f7}
+.kb-table-scroll{overflow:auto;max-width:100%}
+.kb-edit-table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;background:var(--panel,#fff)}
+.kb-edit-table th,.kb-edit-table td{border-right:1px solid var(--line,#e0e7e2);border-bottom:1px solid var(--line,#e0e7e2);padding:6px;min-width:155px;vertical-align:top}
+.kb-edit-table th{background:var(--panel-2,#f6f9f7)}
+.kb-edit-table tr:last-child td{border-bottom:0}
+.kb-edit-table th:last-child,.kb-edit-table td:last-child{border-right:0}
+.kb-edit-table input{width:100%;box-sizing:border-box;border:1px solid transparent;background:transparent;color:inherit;border-radius:8px;padding:8px;font:inherit;min-width:120px}
+.kb-edit-table input:focus{outline:none;border-color:var(--accent,#335d42);background:var(--panel,#fff);box-shadow:0 0 0 2px rgba(51,93,66,.08)}
+.kb-cell-head{display:grid;grid-template-columns:1fr 26px;gap:4px;align-items:center}
+.kb-col-remove,.kb-row-remove{border:0;background:transparent;color:var(--muted,#738078);font-size:20px;line-height:1;cursor:pointer;border-radius:7px;padding:3px}
+.kb-col-remove:hover,.kb-row-remove:hover{color:#a02828;background:#fff0f0}
+.kb-row-tools{min-width:38px!important;width:38px;text-align:center;background:var(--panel-2,#f7faf8)}
