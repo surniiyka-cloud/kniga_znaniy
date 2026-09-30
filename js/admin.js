@@ -178,12 +178,22 @@ function renderProductEditor(ctx){
     '<div class="kb-admin-savebar"><button type="submit" class="kb-admin-btn primary">Сохранить карточку</button><button type="button" class="kb-admin-btn danger" data-reset-product>Сбросить ручные правки</button></div></form>'
   ));
 }
+function sectionProductsEditor(ctx){
+  const cards=ctx.productCards||[];if(!cards.length)return "";
+  return '<section class="kb-admin-section"><div><h3>Карточки товаров</h3><p class="kb-admin-hint">Меняй порядок стрелками или перетаскиванием. «Скрыть с сайта» убирает карточку из раздела, поиска, избранного и сравнения, но не удаляет исходные данные.</p></div>'+
+    '<div class="kb-product-sort" data-section-product-list>'+cards.map((p,i)=>'<div class="kb-product-sort-row '+(p.hidden?"is-hidden":"")+'" draggable="true" data-section-product-row data-id="'+esc(p.id)+'">'+
+      '<span class="kb-drag" title="Перетащить">⋮⋮</span>'+
+      '<div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div>'+
+      '<button type="button" class="kb-mini" data-product-up title="Выше">↑</button><button type="button" class="kb-mini" data-product-down title="Ниже">↓</button>'+
+      '<label class="kb-product-hide"><input type="checkbox" data-product-hidden '+(p.hidden?"checked":"")+'> <span>Скрыть с сайта</span></label>'+
+    '</div>').join("")+'</div></section>';
+}
 function renderSectionEditor(ctx){
   const existing=deep(overrideCache.sections?.[ctx.id]||{});
   const sheet=ctx.spreadsheetId&&ctx.section?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(ctx.section.gid):"";
   setBody(shell(ctx.id+" · "+ctx.section.title,"Редактирование раздела",
     '<form data-admin-section data-id="'+esc(ctx.id)+'" class="kb-admin-form"><label>Название раздела<input name="title" value="'+esc(ctx.section.title||"")+'"></label>'+
-    (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть этот лист Google Sheets ↗</a></p>':"")+
+    (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть этот лист Google Sheets ↗</a></p>':"")+sectionProductsEditor(ctx)+
     '<details class="kb-admin-group" open><summary>Пары «название → значение» <small>'+((ctx.section.pairs||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b></span><textarea rows="10" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label></details>'+
     '<label class="kb-admin-field"><span>Дополнительные заметки — одна заметка на строку</span><textarea rows="8" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label>'+
     '<details class="kb-admin-group"><summary>Таблицы раздела <small>'+((ctx.section.tables||[]).length)+' таблиц</small></summary><label class="kb-admin-field"><span>Расширенный режим: JSON-массив объектов с title, headers и rows.</span><textarea rows="14" data-section-tables>'+esc(jsonText(ctx.section.tables||[]))+'</textarea></label></details>'+
@@ -255,7 +265,16 @@ function bindBody(){
   });
     body.querySelectorAll("[data-tab-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-tab-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r)});
-  body.querySelector("[data-admin-product]")?.addEventListener("submit",saveProduct);
+  body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.previousElementSibling?.before(r)});
+  body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.nextElementSibling?.after(r)});
+  body.querySelectorAll("[data-product-hidden]").forEach(ch=>ch.onchange=()=>ch.closest("[data-section-product-row]")?.classList.toggle("is-hidden",ch.checked));
+  let draggedProduct=null;
+  body.querySelectorAll("[data-section-product-row]").forEach(row=>{
+    row.addEventListener("dragstart",()=>{draggedProduct=row;row.classList.add("is-dragging")});
+    row.addEventListener("dragend",()=>{row.classList.remove("is-dragging");draggedProduct=null});
+    row.addEventListener("dragover",e=>{e.preventDefault();if(!draggedProduct||draggedProduct===row)return;const box=row.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;row.parentElement?.insertBefore(draggedProduct,after?row.nextSibling:row)});
+  });
+    body.querySelector("[data-admin-product]")?.addEventListener("submit",saveProduct);
   body.querySelector("[data-admin-section]")?.addEventListener("submit",saveSection);
   body.querySelector("[data-admin-chapter]")?.addEventListener("submit",saveChapter);
   body.querySelector("[data-reset-product]")?.addEventListener("click",()=>resetOverride("products",body.querySelector("[data-admin-product]")?.dataset.id));
@@ -304,6 +323,13 @@ async function saveSection(e){
     const tables=JSON.parse(form.querySelector("[data-section-tables]")?.value||"[]");
     if(!Array.isArray(tables))throw new Error("Таблицы раздела должны быть JSON-массивом.");
     putDiff(out,"tables",tables,src.tables||[]);
+    const productRows=[...form.querySelectorAll("[data-section-product-row]")];
+    if(productRows.length){
+      const productOrder=productRows.map(r=>r.dataset.id).filter(Boolean);
+      const hiddenProductIds=productRows.filter(r=>r.querySelector("[data-product-hidden]")?.checked).map(r=>r.dataset.id).filter(Boolean);
+      putDiff(out,"productOrder",productOrder,src.productOrder||[]);
+      putDiff(out,"hiddenProductIds",hiddenProductIds,src.hiddenProductIds||[]);
+    }
     const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
     await commitOverrides(o);showStatus("Раздел сохранён в тестовом редакторе.");location.reload();
   }catch(err){showError(err);btn.disabled=false}
