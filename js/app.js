@@ -140,6 +140,98 @@ function splitAdvantages(pairs){
   if(idx<0)return {fields:cleanPairs(arr),advantages:[]};
   return {fields:cleanPairs(arr.slice(0,idx)),advantages:uniquePairs(arr.slice(idx+1).map((p)=>[p.label,p.value]))};
 }
+
+function compactRowValue(r,start=1){
+  return (r||[]).slice(start).filter((v)=>String(v||"").trim()).map((v)=>String(v).trim()).join(" · ");
+}
+function parseAnalyzerRaw(section){
+  const rows=section.rawRows||section.rows||[];
+  const out={fields:[],indicators:[],options:[],variants:[],calibration:[],equipment:[],advantages:[]};
+  let mode="fields";
+  const headingMap=new Map([
+    ["измеряемые показатели","indicators"],["дополнительные опции","options"],["дополнительные параметры / опции","options"],
+    ["варианты исполнения","variants"],["возможные калибровки","calibration"],["калибровки","calibration"],
+    ["оснащение","equipment"],["особенности","advantages"],["особенности и практическое значение","advantages"],
+    ["преимущества и практическое значение","advantages"]
+  ]);
+  const headerRx=/^(Показатель|Дополнительный показатель|Исполнение|Канал|Функция|Особенность|Преимущество)$/i;
+  for(let i=0;i<rows.length;i++){
+    const r=rows[i]||[], vals=r.filter((v)=>String(v||"").trim()), first=String(r[0]||"").trim(), key=first.toLowerCase();
+    if(vals.length===1&&headingMap.has(key)){mode=headingMap.get(key);continue;}
+    if(i===0&&first.length>100)continue;
+    if(!first)continue;
+    const value=compactRowValue(r,1);
+    if(headerRx.test(first)&&/^(Диапазон измерения|Артикул|Калибровка по умолчанию|Описание|Практическое значение)$/i.test(String(r[1]||"").trim()))continue;
+    if(mode==="calibration"&&vals.length===1){out.calibration.push(["Вариант",first]);continue;}
+    if(!value)continue;
+    const pair=[first,value];
+    out[mode].push(pair);
+  }
+  for(const k of Object.keys(out))out[k]=uniquePairs(out[k]);
+  return out;
+}
+function unisensorImage(name){
+  const n=String(name||"").toLowerCase();
+  const imgs=state.assets.sectionImages?.["2.1.2"]||[];
+  const key=n.includes("aflasensor")?"aflasensor":n.includes("cowsensor")?"cowsensor":n.includes("aminosensor")?"aminosensor":n.includes("milksensor")?"milksensor":n.includes("quinosensor")?"quinosensor":n.includes("sulfasensor")?"sulfasensor":n.includes("tylosensor")?"tylosensor":"";
+  return key?(imgs.find((x)=>x.toLowerCase().includes(key))||""):"";
+}
+function parseUnisensorBlock(rows,start,end,name,initialGroup=""){
+  const block=rows.slice(start,end),fields=[],advantages=[],substances=[];let group=initialGroup;
+  for(const r of block){
+    const a=String(r[0]||"").trim(),b=String(r[1]||"").trim(),c=String(r[2]||"").trim(),d=String(r[3]||"").trim(),e=String(r[4]||"").trim(),f=String(r[5]||"").trim();
+    if(a&&b&&!/^(Характеристика|Наименование)$/i.test(a)&&b!=="Данные"&&b!=="-")fields.push([a,b]);
+    if(c&&d&&!/^(Преимущество)$/i.test(c)&&!/Практическое значение/i.test(d))advantages.push([c,d]);
+    if(e&&!f&&!/^(Антибиотик \/ вещество|Определяемый показатель)$/i.test(e)){group=e;continue;}
+    if(e&&f&&!/^(Антибиотик \/ вещество|Определяемый показатель)$/i.test(e))substances.push({group,substance:e,ppb:f});
+  }
+  return {name,fields:uniquePairs(fields),advantages:uniquePairs(advantages),substances};
+}
+function buildUnisensorCards(s){
+  const rows=s.rawRows||s.rows||[];
+
+  const twinFields=[
+    ["Артикул","1002.04.011"],["Производитель","Unisensor"],["Страна производства","Бельгия"],
+    ["Назначение","Экспресс-тест для определения остаточного содержания антибиотиков групп β-лактамов и тетрациклинов в молоке"],
+    ["Исследуемый материал","Молоко"],["Дополнительный исследуемый материал","Молочная сыворотка по ГОСТ"],
+    ["Определяемые группы","β-лактамы — пенициллины и цефалоспорины; тетрациклины"],["Время анализа","3 + 3 минуты"],
+    ["Валидация","Международная валидация ILVO"],["Стандарт","ГОСТ 32219-2013"],
+    ["Соответствие требованиям","ТР ТС 021 и ТР ТС 033"],["Норматив","ТР ТС 021, Решение ЕЭК №70"],
+    ["Интерпретация результата","На тест-полоске предусмотрены линии тетрациклинов, контрольная линия и β-лактамов"],
+    ["Контроль производства","Применение для контроля на всех этапах производства"],["Срок годности","24 месяца"]
+  ];
+  const twinAdv=[
+    ["Две группы за один анализ","Одновременно определяются β-лактамы и тетрациклины"],["Быстрый анализ","Результат за 3 + 3 минуты"],
+    ["Внесён в ГОСТ 32219-2013","Метод представлен в нормативной базе для иммунологических методов определения антибиотиков"],
+    ["Валидация ILVO","Сходимость, воспроизводимость и повторяемость подтверждены международной валидацией"],
+    ["Чувствительность соответствует ТР ТС 021 и ТР ТС 033","Пределы обнаружения ориентированы на нормативные требования"],
+    ["Широкий перечень β-лактамов","Определяются пенициллины и различные цефалоспорины"],
+    ["Визуальная интерпретация результата","Возможна визуальная оценка без обязательного отдельного ридера"],
+    ["Применение для молочной сыворотки","Метод используется не только для молока"],["Контроль на разных этапах производства","Подходит для входного и производственного контроля"],
+    ["Исследован на российском молоке","Проверена работа метода на российском молоке, в том числе повышенной жирности до 6 %"]
+  ];
+  const twinSubs=[
+    ["Пенициллины","Ампициллин","3–4"],["Пенициллины","Пенициллин G","2–3"],["Пенициллины","Амоксициллин","3–4"],["Пенициллины","Оксациллин","12–18"],["Пенициллины","Клоксациллин","6–8"],["Пенициллины","Диклоксациллин","6–8"],["Пенициллины","Нафциллин","30–50"],
+    ["Цефалоспорины","Цефтиофур","10–15"],["Цефалоспорины","Цефкином","20–30"],["Цефалоспорины","Цефазолин","18–22"],["Цефалоспорины","Цефапирин","6–8"],["Цефалоспорины","Цефацетрил","30–40"],["Цефалоспорины","Цефоперазон","3–4"],["Цефалоспорины","Цефалексин",">750"],["Цефалоспорины","Цефалониум","3–5"],
+    ["Тетрациклины","Тетрациклин","8–10"],["Тетрациклины","Окситетрациклин","7–9"],["Тетрациклины","Хлортетрациклин","5–7"],["Тетрациклины","Доксициклин","2–3"]
+  ].map(([group,substance,ppb])=>({group,substance,ppb}));
+  registerCatalog("2.1.2","TWINSENSOR KIT 034",twinFields,[],{advantages:twinAdv,substances:twinSubs});
+
+  const tetraRows=rows.slice(1,16);
+  const tetra=parseUnisensorBlock(tetraRows,0,tetraRows.length,"TETRASENSOR","Тетрациклины");
+  tetra.fields=uniquePairs([["Артикул","1003.001"],["Производитель","Unisensor"],["Страна производства","Бельгия"],...tetra.fields]);
+  tetra.advantages=uniquePairs([["Специализированный тест для мёда","Предназначен для контроля остаточного содержания тетрациклинов в мёде"],["Определение основных тетрациклинов","Контролируются тетрациклин, окситетрациклин, доксициклин и хлортетрациклин"],...tetra.advantages]);
+  tetra.substances=[{group:"Тетрациклины",substance:"Тетрациклин",ppb:"5–10"},...tetra.substances];
+  registerCatalog("2.1.2","TETRASENSOR",tetra.fields,[],{advantages:tetra.advantages,substances:tetra.substances});
+
+  const starts=[];
+  rows.forEach((r,i)=>{const a=String(r[0]||"").trim();if(["MEATSENSOR KIT 108","AFLASENSOR KIT 041","COWSENSOR"].includes(a))starts.push(i);});
+  starts.forEach((st,i)=>{
+    const name=String(rows[st][0]).trim(),en=starts[i+1]??rows.length,parsed=parseUnisensorBlock(rows,st+1,en,name);
+    const display=name==="AFLASENSOR KIT 041"?"AFLASENSOR KIT 041":name;
+    registerCatalog("2.1.2",display,parsed.fields,unisensorImage(name)?[unisensorImage(name)]:[],{advantages:parsed.advantages,substances:parsed.substances});
+  });
+}
 function buildAnalyzerParts(pairs){
   const a=splitAdvantages(pairs),fields=[],indicators=[],options=[],variants=[];
   let mode="fields";
@@ -270,9 +362,8 @@ function buildChapter2Catalog(){
     const parsed=parseRowBlock(fr.slice(sp.a,sp.b),sp);
     registerCatalog("2.1.1",sp.name,parsed.fields,[sp.img],{advantages:parsed.advantages,substances:parsed.substances});
   });
-  // 2.1.2 — визуальная линейка Unisensor
-  const us=sBy("2.1.2");
-  (state.assets.sectionImages?.["2.1.2"]||[]).forEach((im)=>registerCatalog("2.1.2",visualTitle(im),[["Категория","Экспресс-тест Unisensor"]],[im]));
+  // 2.1.2 — Unisensor: карточки собираются из всей страницы листа
+  const us=sBy("2.1.2");if(us)buildUnisensorCards(us);
 
   const g=sBy("2.1.3");if(g)buildGarantCards(g);
 
@@ -294,29 +385,31 @@ function buildChapter2Catalog(){
     blocks.forEach((b,i)=>registerCatalog("2.5",b.name,b.fields,i===0?["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-ankar-100.png"]:[],{advantages:b.advantages}));
   }
 
-  // объединённые разделы 2.6 и 2.7 — характеристики распределяем по смысловым вкладкам
+  // 2.6 и 2.7 — собираем все блоки листа: характеристики, показатели, опции, калибровки, оснащение, особенности
   const analyzerBase={
+    "2.6.1":[["Артикул","0704.05.001"],["Исследуемый материал","Молоко"]],
     "2.6.2":[["Артикул","0704.05.006"],["Исследуемый материал","Молоко и молочное сырьё"]],
     "2.6.5":[["Артикул","0704.05.022"],["Исследуемый материал","Молоко и молочное сырьё"]],
     "2.6.6":[["Артикул","0704.05.023"],["Исследуемый материал","Молоко и молочное сырьё"]],
     "2.6.7":[["Артикул","0704.05.024"],["Исследуемый материал","Молоко и молочное сырьё"]]
   };
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
-    const x=child.id==="2.6.2"?buildAnalyzerRows(child.rows):(child.pairs?.length?buildAnalyzerParts(child.pairs):buildAnalyzerRows(child.rows));
+    const x=parseAnalyzerRaw(child);
     const fields=uniquePairs([...(analyzerBase[child.id]||[]),...x.fields]);
-    const variants=child.id==="2.6.3"?[["Без принтера","0704.05.008"],["Со встроенным термопринтером","0704.05.007"]]:x.variants||[];
-    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{type:"Анализатор качества молока",indicators:x.indicators,options:x.options,variants,advantages:x.advantages});
+    const customTabs=x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[];
+    registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{
+      type:"Анализатор качества молока",indicators:x.indicators,options:x.options,variants:x.variants,
+      calibration:x.calibration,advantages:x.advantages,customTabs
+    });
   }
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
-    if(child.id==="2.7.1"){
-      const p=child.pairs||[],adv=uniquePairs(p.slice(15).map((x)=>[x.label,x.value]));
-      registerCatalog("2.7",child.title,[["Артикул","0704.04.002"],["Тип оборудования","Анализатор количества соматических клеток"],["Исследуемый материал","Молоко"],["Метод","Вискозиметрический"],["Диапазон измерения","90–1500 тыс. клеток/см³"],["Реагент","Мастоприм"],["Стандарт","ГОСТ 23453-2014"],["Госреестр СИ","№65516-16"],["Гарантия","2 года"],["Время анализа","4 минуты"],["Габариты","200 × 260 × 290 мм"],["Масса","4,5 кг"]],state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток",workflow:p.slice(1,5).map((x)=>["Шаг "+x.label,x.value]),indicators:p.slice(6,14).map((x)=>[x.label,x.value]),advantages:adv});
-    }else{
-      const p=child.pairs||[],adv=uniquePairs(p.slice(23).map((x)=>[x.label,x.value]));
-      registerCatalog("2.7",child.title,[["Артикул","0704.04.004"],["Тип оборудования","Анализатор количества соматических клеток"],["Исследуемый материал","Молоко"],["Метод","Флуоресцентный"],["Диапазон измерения","0–10 000 000 клеток/см³"],["Расходный материал","4-камерная одноразовая кассета"],["Госреестр СИ","№73649-18"],["Гарантия","2 года"],...cleanPairs(p.slice(1,7))],state.assets.sectionImages?.[child.id]||[],{type:"Анализатор соматических клеток",workflow:p.slice(8,14).map((x)=>["Шаг "+x.label,x.value]),options:cleanPairs(p.slice(15,22)),advantages:adv});
-    }
+    const x=parseAnalyzerRaw(child);
+    registerCatalog("2.7",child.title,x.fields,state.assets.sectionImages?.[child.id]||[],{
+      type:"Анализатор соматических клеток",indicators:x.indicators,options:x.options,variants:x.variants,
+      calibration:x.calibration,advantages:x.advantages,
+      customTabs:x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[]
+    });
   }
-
   // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
   const cons=sBy("2.8");if(cons){
     buildConsumableBlocks(cons).forEach((b)=>registerCatalog("2.8",b.name,b.fields,[],{advantages:b.advantages,workflow:b.workflow,complectation:b.complectation,washCycle:b.washCycle}));
