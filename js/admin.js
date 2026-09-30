@@ -99,11 +99,11 @@ function tableRowHtml(row,width){
   return '<tr data-table-row>'+Array.from({length:width},(_,i)=>'<td><input data-table-cell value="'+esc(row?.[i]||"")+'"></td>').join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
 }
 function tableEditorsHtml(ctx){
-  const tables=normalizedTabTables(ctx),seen=new Set(),editors=[];
-  for(const [id,table] of Object.entries(tables)){if(!table?.headers?.length)continue;seen.add(id);editors.push(tableEditorHtml(id,tableLabel(ctx,id),table));}
-  const ids=[...new Set(["specs",...(ctx.tabs||[]).map(t=>t.id),...Object.keys(TAB_TO_PAIR)])].filter(id=>id!=="substances");
+  const tables=normalizedTabTables(ctx),editors=[];
+  for(const [id,table] of Object.entries(tables)){if(!table?.headers?.length)continue;editors.push(tableEditorHtml(id,tableLabel(ctx,id),table));}
+  const ids=[...new Set([...(ctx.tabs||[]).map(t=>t.id),...Object.keys(tables)])].filter(id=>id!=="substances");
   const options=ids.map(id=>'<option value="'+esc(id)+'">'+esc(tableLabel(ctx,id))+'</option>').join("");
-  return '<section class="kb-admin-section"><div class="kb-table-section-head"><div><h3>Таблицы во вкладках</h3><p class="kb-admin-hint">Здесь можно создавать таблицы для любой вкладки и свободно добавлять строки и столбцы.</p></div><div class="kb-table-create"><select data-new-table-tab>'+options+'</select><button type="button" class="kb-admin-btn ghost" data-add-table>+ Добавить / преобразовать в таблицу</button></div></div><div data-table-editors>'+editors.join("")+'</div></section>';
+  return '<section class="kb-admin-section"><div class="kb-table-section-head"><div><h3>Таблицы во вкладках</h3><p class="kb-admin-hint">В списке только реальные вкладки этой карточки. Новая вкладка, добавленная ниже, появляется здесь сразу.</p></div><div class="kb-table-create"><select data-new-table-tab>'+options+'</select><button type="button" class="kb-admin-btn ghost" data-add-table>+ Добавить / преобразовать в таблицу</button></div></div><div data-table-editors>'+editors.join("")+'</div></section>';
 }
 function collectTabTables(form){
   const out={};
@@ -156,23 +156,70 @@ function defaultTabLabel(id,p){
   const map={specs:"Характеристики",indicators:"Измеряемые показатели",options:"Дополнительные опции",variants:"Варианты исполнения",advantages:/Анализатор/i.test(p?.type||"")?"Особенности":"Преимущества / особенности",complectation:"Комплектация",washCycle:"Рекомендуемый цикл мойки",workflow:"Порядок работы",calibration:"Калибровка",assortment:"Линейка",consumables:"Расходные материалы",testKits:"Тест-наборы",substances:"Вещества и ppb"};
   return map[id]||(p?.customTabs||[]).find(t=>t.id===id)?.label||id;
 }
+function customTabContentHtml(t){
+  const kind=t?.kind||"pairs",rows=t?.rows||[],id=t?.id||"",label=t?.label||id;
+  if(kind==="table"){
+    return '<details class="kb-admin-group kb-custom-tab-content" data-custom-content-id="'+esc(id)+'" data-custom-kind="'+esc(kind)+'"><summary><span>'+esc(label)+'</span><small>таблица</small></summary><div class="kb-custom-tab-note">Содержимое этой вкладки редактируется в блоке «Таблицы во вкладках» ниже.</div><div class="kb-custom-tab-actions"><button type="button" class="kb-mini danger" data-remove-custom-tab>Удалить вкладку</button></div></details>';
+  }
+  return '<details class="kb-admin-group kb-custom-tab-content" data-custom-content-id="'+esc(id)+'" data-custom-kind="'+esc(kind)+'"><summary><span>'+esc(label)+'</span><small>'+rows.length+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-custom-tab-rows>'+esc(pairText(rows))+'</textarea></label><div class="kb-custom-tab-actions"><button type="button" class="kb-mini danger" data-remove-custom-tab>Удалить вкладку</button></div></details>';
+}
 function productPairEditors(ctx){
-  return PAIR_FIELDS.map(([key,label])=>'<details class="kb-admin-group" '+((ctx.product?.[key]||[]).length?"":"")+'><summary>'+esc(label)+' <small>'+((ctx.product?.[key]||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-pair-key="'+key+'">'+esc(pairText(ctx.product?.[key]||[]))+'</textarea></label></details>').join("");
+  const standard=PAIR_FIELDS.filter(([key])=>(ctx.product?.[key]||[]).length>0).map(([key,label])=>'<details class="kb-admin-group"><summary>'+esc(label)+' <small>'+((ctx.product?.[key]||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-pair-key="'+key+'">'+esc(pairText(ctx.product?.[key]||[]))+'</textarea></label></details>');
+  const custom=(ctx.product?.customTabs||[]).map(customTabContentHtml);
+  return standard.concat(custom).join("")||'<p class="kb-admin-hint">Дополнительных заполненных характеристик пока нет. Новую вкладку можно добавить в блоке ниже.</p>';
+}
+function tabRowHtml(t,p,custom=false){
+  return '<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'" data-custom-tab="'+(custom?"1":"0")+'"><button type="button" class="kb-mini" data-tab-up>↑</button><button type="button" class="kb-mini" data-tab-down>↓</button><code>'+esc(t.id)+'</code><input value="'+esc(t.label)+'" data-tab-label><label class="kb-hide"><input type="checkbox" data-tab-hidden '+((p?.hiddenTabs||[]).includes(t.id)?"checked":"")+'> скрыть</label>'+(custom?'<button type="button" class="kb-mini danger kb-tab-delete" data-tab-delete title="Удалить вкладку">×</button>':'<span class="kb-tab-delete-slot"></span>')+'</div>';
+}
+function readCustomTabs(form){
+  const raw=form?.querySelector("[data-custom-tabs]")?.value||"[]";
+  const tabs=JSON.parse(raw||"[]");if(!Array.isArray(tabs))throw new Error("Пользовательские вкладки должны быть JSON-массивом.");
+  return tabs;
+}
+function writeCustomTabs(form,tabs){
+  const ta=form?.querySelector("[data-custom-tabs]");if(ta)ta.value=jsonText(tabs||[]);
+}
+function collectCustomTabs(form){
+  const raw=readCustomTabs(form),byId=new Map(raw.filter(t=>t&&t.id).map(t=>[String(t.id),deep(t)])),out=[],seen=new Set();
+  form.querySelectorAll('[data-admin-tab-row][data-custom-tab="1"]').forEach(r=>{
+    const id=r.dataset.id;if(!id)return;seen.add(id);
+    const t=byId.get(id)||{id,label:id,kind:"pairs",rows:[]};
+    t.id=id;t.label=r.querySelector("[data-tab-label]")?.value.trim()||t.label||id;t.kind=t.kind||"pairs";
+    const content=form.querySelector('[data-custom-content-id="'+CSS.escape(id)+'"]');
+    const ta=content?.querySelector("[data-custom-tab-rows]");
+    if(ta)t.rows=parsePairs(ta.value);
+    out.push(t);
+  });
+  raw.forEach(t=>{if(t?.id&&!seen.has(String(t.id)))out.push(t)});
+  return out;
+}
+function removeCustomTabUi(body,id){
+  if(!id)return;
+  const row=body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"]');
+  const label=row?.querySelector("[data-tab-label]")?.value.trim()||id;
+  if(!confirm('Удалить вкладку «'+label+'» из карточки?'))return;
+  row?.remove();
+  body.querySelector('[data-custom-content-id="'+CSS.escape(id)+'"]')?.remove();
+  body.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"]')?.remove();
+  body.querySelector('[data-new-table-tab] option[value="'+CSS.escape(id)+'"]')?.remove();
+  const form=body.querySelector("[data-admin-product]");
+  if(form){const tabs=readCustomTabs(form).filter(t=>String(t?.id||"")!==id);writeCustomTabs(form,tabs)}
 }
 function renderProductEditor(ctx){
   editorCtx=ctx;
   const existing=deep(overrideCache.products?.[ctx.id]||{});
-  const tabs=(ctx.tabs||[]).map((t,i)=>'<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'"><button type="button" class="kb-mini" data-tab-up>↑</button><button type="button" class="kb-mini" data-tab-down>↓</button><code>'+esc(t.id)+'</code><input value="'+esc(t.label)+'" data-tab-label><label class="kb-hide"><input type="checkbox" data-tab-hidden '+((ctx.product.hiddenTabs||[]).includes(t.id)?"checked":"")+'> скрыть</label></div>').join("");
+  const customIds=new Set((ctx.product.customTabs||[]).map(t=>t.id));
+  const tabs=(ctx.tabs||[]).map(t=>tabRowHtml(t,ctx.product,customIds.has(t.id))).join("");
   const sourceSheet=ctx.sourceSection||ctx.section;
   const sheet=ctx.spreadsheetId&&sourceSheet?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(sourceSheet.gid):"";
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
     '<div class="kb-admin-grid two"><label>Название<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
     (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть исходный лист Google Sheets ↗</a></p>':"")+
-    '<section class="kb-admin-section"><h3>Содержимое карточки</h3>'+productPairEditors(ctx)+'</section>'+tableEditorsHtml(ctx)+
+    '<section class="kb-admin-section"><h3>Содержимое карточки</h3><div data-card-content>'+productPairEditors(ctx)+'</div></section>'+tableEditorsHtml(ctx)+
     '<details class="kb-admin-group" open><summary>Вещества / группы / ppb <small>'+((ctx.product.substances||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Формат: <b>группа | вещество | ppb</b>. Именно поле «группа» создаёт заголовок перед таблицей.</span><textarea rows="10" data-substances>'+esc(substancesText(ctx.product.substances||[]))+'</textarea></label></details>'+
-    '<details class="kb-admin-group"><summary>Пользовательские вкладки</summary><label class="kb-admin-field"><span>JSON-массив вкладок: id, label, kind = pairs/steps/table; для table используются headers и rows.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
-    '<section class="kb-admin-section"><h3>Порядок и названия вкладок</h3><div data-tab-list>'+tabs+'</div><p class="kb-admin-hint">Стрелками меняй порядок, поле справа переименовывает вкладку, галочка скрывает её.</p></section>'+
+    '<details class="kb-admin-group"><summary>Расширенные настройки пользовательских вкладок</summary><label class="kb-admin-field"><span>JSON для редких случаев. Обычные вкладки удобнее добавлять кнопкой ниже.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
+    '<section class="kb-admin-section"><div class="kb-tab-section-head"><div><h3>Порядок и названия вкладок</h3><p class="kb-admin-hint">Добавленная вкладка сразу появляется здесь, в «Содержимом карточки» и в списке таблиц. Пользовательские вкладки можно удалить.</p></div><div class="kb-tab-create"><input type="text" data-new-tab-label placeholder="Название новой вкладки"><button type="button" class="kb-admin-btn ghost" data-add-tab>+ Добавить вкладку</button></div></div><div data-tab-list>'+tabs+'</div></section>'+
     '<section class="kb-admin-section"><h3>Фотографии</h3><label class="kb-admin-field"><span>Пока можно менять пути к фото и их порядок. Загрузку файлов прямо из редактора подключим вместе с постоянным хранилищем перед публикацией.</span><textarea rows="7" data-images>'+esc(linesText(ctx.images||[]))+'</textarea></label></section>'+
     '<details class="kb-admin-group"><summary>Расширенный JSON override</summary><label class="kb-admin-field"><span>Для редких полей, которых нет в форме. Поля формы при сохранении имеют приоритет.</span><textarea rows="14" data-advanced>'+esc(jsonText(existing))+'</textarea></label></details>'+
     '<div class="kb-admin-savebar"><button type="submit" class="kb-admin-btn primary">Сохранить карточку</button><button type="button" class="kb-admin-btn danger" data-reset-product>Сбросить ручные правки</button></div></form>'
@@ -243,7 +290,33 @@ function bindBody(){
     const wrap=body.querySelector("[data-table-editors]"),existing=wrap?.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"]');
     if(existing){existing.scrollIntoView({behavior:"smooth",block:"center"});existing.classList.add("kb-flash");setTimeout(()=>existing.classList.remove("kb-flash"),900);return}
     const source=sourceRowsForTab(editorCtx,id),table={headers:["Название","Значение"],rows:source.map(r=>[String(r?.[0]||""),String(r?.[1]||"")])};
-    wrap?.insertAdjacentHTML("beforeend",tableEditorHtml(id,tableLabel(editorCtx,id),table));
+    const label=body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"] [data-tab-label]')?.value.trim()||tableLabel(editorCtx,id);
+    wrap?.insertAdjacentHTML("beforeend",tableEditorHtml(id,label,table));
+  });
+  body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
+    const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
+    if(!form||!input)return;
+    const label=input.value.trim();if(!label)return showError(new Error("Введите название новой вкладки."));
+    const used=new Set([...form.querySelectorAll("[data-admin-tab-row]")].map(r=>r.dataset.id));
+    let base="custom-"+safe(label||"vkladka"),id=base,n=2;while(used.has(id)){id=base+"-"+n++}
+    const tab={id,label,kind:"pairs",rows:[]},custom=readCustomTabs(form);custom.push(tab);writeCustomTabs(form,custom);
+    body.querySelector("[data-tab-list]")?.insertAdjacentHTML("beforeend",tabRowHtml({id,label},{hiddenTabs:[]},true));
+    body.querySelector("[data-card-content]")?.insertAdjacentHTML("beforeend",customTabContentHtml(tab));
+    const sel=body.querySelector("[data-new-table-tab]");if(sel){const o=document.createElement("option");o.value=id;o.textContent=label;sel.appendChild(o);sel.value=id}
+    input.value="";body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"]')?.scrollIntoView({behavior:"smooth",block:"nearest"});
+  });
+  body.addEventListener("input",e=>{
+    const input=e.target.closest?.("[data-tab-label]");if(!input)return;
+    const row=input.closest("[data-admin-tab-row]"),id=row?.dataset.id,label=input.value.trim()||id;if(!id)return;
+    const opt=body.querySelector('[data-new-table-tab] option[value="'+CSS.escape(id)+'"]');if(opt)opt.textContent=label;
+    const strong=body.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"] .kb-table-editor-head strong');if(strong)strong.textContent=label;
+    const title=body.querySelector('[data-custom-content-id="'+CSS.escape(id)+'"] summary span');if(title)title.textContent=label;
+  });
+  body.addEventListener("click",e=>{
+    const up=e.target.closest?.("[data-tab-up]");if(up){const r=up.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r);return}
+    const down=e.target.closest?.("[data-tab-down]");if(down){const r=down.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r);return}
+    const del=e.target.closest?.("[data-tab-delete]");if(del){const r=del.closest("[data-admin-tab-row]");if(r?.dataset.customTab==="1")removeCustomTabUi(body,r.dataset.id);return}
+    const delContent=e.target.closest?.("[data-remove-custom-tab]");if(delContent){const box=delContent.closest("[data-custom-content-id]");removeCustomTabUi(body,box?.dataset.customContentId);return}
   });
   body.addEventListener("click",e=>{
     const ed=e.target.closest("[data-table-editor]");if(!ed)return;
@@ -263,8 +336,6 @@ function bindBody(){
     if(e.target.closest("[data-table-remove-row]")){e.target.closest("[data-table-row]")?.remove();return}
     if(e.target.closest("[data-table-delete]")){ed.remove();return}
   });
-    body.querySelectorAll("[data-tab-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r)});
-  body.querySelectorAll("[data-tab-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r)});
   body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.nextElementSibling?.after(r)});
   body.querySelectorAll("[data-product-hidden]").forEach(ch=>ch.onchange=()=>ch.closest("[data-section-product-row]")?.classList.toggle("is-hidden",ch.checked));
@@ -297,7 +368,7 @@ async function saveProduct(e){
     putDiff(out,"tabTables",collectTabTables(form),baseTables);
     delete out.indicatorTable;
     putDiff(out,"substances",parseSubstances(form.querySelector("[data-substances]")?.value||""),src.substances||[]);
-    const custom=JSON.parse(form.querySelector("[data-custom-tabs]")?.value||"[]");if(!Array.isArray(custom))throw new Error("Пользовательские вкладки должны быть JSON-массивом.");
+    const custom=collectCustomTabs(form);
     putDiff(out,"customTabs",custom,src.customTabs||[]);
     const tabRows=[...form.querySelectorAll("[data-admin-tab-row]")];
     const order=tabRows.map(r=>r.dataset.id),hidden=tabRows.filter(r=>r.querySelector("[data-tab-hidden]")?.checked).map(r=>r.dataset.id),labels={};
