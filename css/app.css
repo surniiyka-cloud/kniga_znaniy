@@ -1107,3 +1107,33 @@ body.modal-open{overflow:hidden}
 .rlu-band.warn{background:#f3ef26;color:#453f00}
 .rlu-band.bad{background:#f12620;color:#fff}
 @media(max-width:720px){.rlu-grid{grid-template-columns:1fr}.rlu-title{align-items:flex-start;flex-direction:column}}
+
+/* v2.2.4 — product photo framing is controlled by editor */
+.product-card .product-image{
+  padding:0 !important;
+  overflow:hidden !important;
+}
+.product-card .product-image img{
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  object-position:center !important;
+  transform-origin:center center !important;
+}
+.product-page .gallery-main{
+  padding:0 !important;
+  overflow:hidden !important;
+}
+.product-page .gallery-main img{
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  object-position:center !important;
+  transform-origin:center center !important;
+}
