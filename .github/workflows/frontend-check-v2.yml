@@ -2,7 +2,7 @@ name: Проверка фронтенда v2
 
 on:
   push:
-    branches: [site-v2]
+    branches: [main, site-v2]
     paths:
       - 'index.html'
       - 'css/**'
