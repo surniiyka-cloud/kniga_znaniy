@@ -790,9 +790,15 @@ function defaultHiddenProducts(sectionId,items){
   if(sectionId!=="2.11")return [];
   return (items||[]).filter(x=>!keepMycoDefault(x?.product?.name)).map(x=>x.product.id);
 }
+function defaultProductOrder(sectionId,items){
+  const base=(items||[]).map(x=>x.product.id);if(sectionId!=="2.11")return base;
+  const preferred=["agrastrip pro watex","ringbio technology","ифа","agrastrip gmo trait check"];
+  const rank=name=>{const n=String(name||"").trim().toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");const i=preferred.indexOf(n);return i<0?999:i;};
+  return [...items].sort((a,b)=>rank(a.product.name)-rank(b.product.name)).map(x=>x.product.id);
+}
 function sectionProductLayout(sectionId){
   const items=sectionBaseItems(sectionId),section=state.sections.get(sectionId)?.section||{};
-  const defaultOrder=items.map(x=>x.product.id);
+  const defaultOrder=defaultProductOrder(sectionId,items);
   const hidden=Array.isArray(section.hiddenProductIds)?section.hiddenProductIds:defaultHiddenProducts(sectionId,items);
   const order=Array.isArray(section.productOrder)&&section.productOrder.length?section.productOrder:defaultOrder;
   return {items,defaultOrder,hidden:[...new Set(hidden)],order:[...new Set([...order,...defaultOrder])]};
