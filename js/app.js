@@ -444,7 +444,7 @@ function classifySheetFields(p){
   const baseSkip=/^(Наименование|Название|Артикул)$/i;
   for(const [label,value] of source){
     if(baseSkip.test(label))continue;
-    if(/^(Преимущества?|Особенности?|Практическое значение)$/i.test(label)){
+    if(/(Преимуществ|Особенност|Характеристики?\s*(?:\/|и)\s*(?:особенност|преимуществ))/i.test(label)){
       splitFeatureText(value).forEach((x,i)=>advantages.push(["Пункт "+(i+1),x]));
       continue;
     }
@@ -457,7 +457,7 @@ function classifySheetFields(p){
     splitFeatureText(p.features).forEach((x,i)=>advantages.push(["Особенность "+(i+1),x]));
   }
   const standard=[
-    ["Тип",p.type],["Назначение",p.purpose],["Производитель",p.manufacturer],["Страна",p.country],
+    ["Артикул",article(p)||""],["Тип",p.type],["Назначение",p.purpose],["Производитель",p.manufacturer],["Страна",p.country],
     ["Размер",p.size],["Количество",p.quantity],["Рост",p.height],["Ширина",p.width],["Длина",p.length],["Толщина",p.thickness]
   ].filter((x)=>x[1]);
   return {
