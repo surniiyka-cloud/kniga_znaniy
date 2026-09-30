@@ -224,7 +224,8 @@ function applyPackedOverride(inputRows,meta){
     kind:"products",
     products,
     productBlocks:[{group:"",header:["Наименование","Тип","Артикул","Назначение","Особенности"],count:products.length}],
-    tables:tables.length?tables:undefined
+    tables:tables.length?tables:undefined,
+    rawRows:expandPackedRows(inputRows).filter(r=>r.some(v=>flat(v)))
   };
 }
 
@@ -235,16 +236,16 @@ function classify(inputRows,meta){
   const {products,productBlocks}=parseProductTables(rows);
   const tables=parseGenericTables(rows);
   const notes=collectNotes(rows);
-  if(products.length)return {kind:"products",products,productBlocks,tables:tables.length?tables:undefined,notes:notes.length?notes:undefined};
+  if(products.length)return {kind:"products",products,productBlocks,tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
   const twoCol=rows.filter(r=>nonemptyCount(r)===2).length;
   if(rows.length&&twoCol/rows.length>=0.55){
     return {kind:"keyValue",pairs:rows.filter(r=>nonemptyCount(r)>=2).map((r,i)=>({
       label:flat(r.find(Boolean)),
       value:flat(r.slice(r.findIndex(Boolean)+1).find(Boolean)||""),
       sourceRow:i+1
-    })),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined};
+    })),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
   }
-  return {kind:"richTable",rows:rows.map(r=>r.map(flat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined};
+  return {kind:"richTable",rows:rows.map(r=>r.map(flat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
 }
 async function fetchSheet(meta){
   const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${meta.gid}`;
@@ -276,7 +277,8 @@ const chapters=sections.chapters.map(ch=>({
       tables:src?.parsed.tables||undefined,
       notes:src?.parsed.notes||undefined,
       pairs:src?.parsed.pairs||undefined,
-      rows:src?.parsed.rows||undefined}
+      rows:src?.parsed.rows||undefined,
+      rawRows:src?.parsed.rawRows||undefined}
   })
 }));
 const previousBook=JSON.parse(await fs.readFile("data/book.json","utf8").catch(()=>"null"));
