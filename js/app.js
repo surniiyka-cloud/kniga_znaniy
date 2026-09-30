@@ -777,8 +777,35 @@ function renderSensitivitySection(ch,s){
     groups.filter((g)=>g.rows.length).map((g)=>'<section class="sensitivity-group"><div class="section-heading compact"><div><h2>'+esc(g.name)+'</h2></div><p>'+g.rows.length+' веществ</p></div><div class="sensitivity-wrap"><table class="sensitivity-table"><thead><tr><th>Вещество</th>'+tests.map((t)=>'<th>'+esc(t)+'</th>').join("")+'</tr></thead><tbody>'+g.rows.map((r)=>'<tr><td>'+esc(r[0])+'</td>'+r.slice(1).map((v)=>'<td class="'+(v==="—"?"empty":"")+'">'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>').join("")+
     '<p class="sensitivity-note">Знак «—» означает, что значение не приведено в использованной таблице чувствительности. Для полного перечня характеристик открывайте карточку конкретного теста.</p>'+rawTables(s);
 }
+function sectionBaseItems(sectionId){
+  if(state.sectionCatalog.has(sectionId))return [...(state.sectionCatalog.get(sectionId)||[])];
+  const x=state.sections.get(sectionId);if(!x)return [];
+  return (x.section.products||[]).map(p=>({chapter:x.chapter,section:x.section,product:p}));
+}
+function keepMycoDefault(name){
+  const n=String(name||"").trim().toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");
+  return n==="agrastrip pro watex"||n==="ringbio technology"||n==="ифа"||n==="agrastrip gmo trait check";
+}
+function defaultHiddenProducts(sectionId,items){
+  if(sectionId!=="2.11")return [];
+  return (items||[]).filter(x=>!keepMycoDefault(x?.product?.name)).map(x=>x.product.id);
+}
+function sectionProductLayout(sectionId){
+  const items=sectionBaseItems(sectionId),section=state.sections.get(sectionId)?.section||{};
+  const defaultOrder=items.map(x=>x.product.id);
+  const hidden=Array.isArray(section.hiddenProductIds)?section.hiddenProductIds:defaultHiddenProducts(sectionId,items);
+  const order=Array.isArray(section.productOrder)&&section.productOrder.length?section.productOrder:defaultOrder;
+  return {items,defaultOrder,hidden:[...new Set(hidden)],order:[...new Set([...order,...defaultOrder])]};
+}
+function orderedSectionItems(sectionId,{includeHidden=false}={}){
+  const l=sectionProductLayout(sectionId),byId=new Map(l.items.map(x=>[x.product.id,x])),hidden=new Set(l.hidden),out=[];
+  for(const id of l.order){const x=byId.get(id);if(!x)continue;if(includeHidden||!hidden.has(id))out.push(x);byId.delete(id);}
+  for(const x of byId.values())if(includeHidden||!hidden.has(x.product.id))out.push(x);
+  return out;
+}
+function isProductHidden(sectionId,productId){return sectionProductLayout(sectionId).hidden.includes(productId);}
 function renderCatalogSection(ch,s){
-  const items=state.sectionCatalog.get(s.id)||[];
+  const items=orderedSectionItems(s.id);
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+items.length+' карточек</p></div></div>'+
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>');
@@ -877,7 +904,7 @@ function mapData(){
 }
 function buildLiveSearchIndex(){
   const out=[];
-  for(const [id,x] of state.products){const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
+  for(const [id,x] of state.products){if(isProductHidden(x.section.id,id))continue;const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
   return out;
 }
 function installEditorApi(){
@@ -891,8 +918,10 @@ function installEditorApi(){
       }
       if(r.name==="section"){
         const x=state.sections.get(r.id);if(!x)return {kind:"none"};
-        const base=state.editorBase.sections.get(r.id)||{title:x.section.title};
-        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection:deepCopy(base),chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+        const base=state.editorBase.sections.get(r.id)||{title:x.section.title},layout=sectionProductLayout(r.id);
+        const currentCards=orderedSectionItems(r.id,{includeHidden:true}).map(item=>({id:item.product.id,name:item.product.name||item.product.id,article:article(item.product)||"",hidden:layout.hidden.includes(item.product.id)}));
+        const sourceSection={...deepCopy(base),productOrder:deepCopy(layout.defaultOrder),hiddenProductIds:deepCopy(defaultHiddenProducts(r.id,layout.items))};
+        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection,productCards:currentCards,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
       if(r.name==="chapter"){
         const ch=state.chapters.get(r.id);return ch?{kind:"chapter",id:r.id,chapter:deepCopy(ch),sourceChapter:deepCopy(state.editorBase.chapters.get(r.id)||{title:ch.title}),spreadsheetId:state.book.spreadsheetId}:{kind:"none"};
@@ -1068,7 +1097,7 @@ function renderSection(id){
   if(ch.id==="2" && (state.sectionCatalog.get(id)?.length))return renderCatalogSection(ch,s);
   if(id==="1.1")return renderTermsSection(ch,s);
   if(id==="1.2")return renderNormsSection(ch,s);
-  const items=(s.products||[]).map((p)=>({chapter:ch,section:s,product:p}));
+  const items=orderedSectionItems(id);
   const sectionImgs=state.assets.sectionImages?.[s.id]||[];
   const subtitle=items.length?items.length+" карточек":(sectionImgs.length?sectionImgs.length+" визуальных позиций":"Справочный материал");
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
@@ -1151,11 +1180,11 @@ function renderProduct(id){
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title,route:"section",id:s.id},{label:p.name}])+'<div class="product-page"><aside class="gallery-card"><div class="gallery-topline"><span>Фотографии товара</span><b>'+(imgs.length?imgs.length:"—")+'</b></div><div class="gallery-main '+(im?"":"product-image placeholder")+'" '+(im?'data-lightbox-product="'+esc(p.id)+'" data-lightbox-index="0"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" alt="'+esc(p.name)+'">':'<div class="gallery-empty"><img src="./assets/brand/favicon.svg" alt=""><strong>Фото пока не привязано</strong><span>Карточка уже работает; изображение появится после сопоставления в диагностике.</span></div>')+'</div>'+(imgs.length>1?'<div class="gallery-thumbs">'+imgs.map((v,i)=>'<button class="gallery-thumb '+(i===0?"active":"")+'" data-gallery-product="'+esc(p.id)+'" data-gallery-index="'+i+'"><img referrerpolicy="no-referrer" src="'+esc(imageSrc(v))+'" alt=""></button>').join("")+'</div>':"")+'</aside><article class="info-card"><span class="eyebrow">'+esc(s.id)+' · '+esc(s.title)+'</span><h1 class="product-title">'+esc(p.name)+'</h1><div class="product-meta">'+(article(p)?'<span class="badge article">Арт. '+esc(article(p))+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div>'+(p.purpose?'<p class="product-lead">'+esc(p.purpose)+'</p>':"")+'<div class="quick-actions"><button class="btn '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'">★ '+(favorites.has(p.id)?"В избранном":"В избранное")+'</button><button class="btn '+(comparison.has(p.id)?"active":"")+'" data-compare="'+esc(p.id)+'">⇄ '+(comparison.has(p.id)?"Добавлено":"Сравнить")+'</button><button class="btn ghost" data-copy>⌁ Скопировать ссылку</button></div><div class="tabs product-tabs">'+tabs.map((t,i)=>'<button class="tab '+(i===0?"active":"")+'" data-product-tab="'+esc(t.id)+'">'+esc(t.label)+'</button>').join("")+'</div><div class="product-tab-panels">'+tabs.map((t,i)=>'<div class="tab-panel" data-product-panel="'+esc(t.id)+'" '+(i===0?"":"hidden")+'>'+tabPanelHtml(p,t.id)+'</div>').join("")+'</div></article></div>';
 }
 function renderFavorites(){
-  const items=favorites.get().map(ctx).filter(Boolean);title("Избранное");
+  const items=favorites.get().map(ctx).filter(x=>x&&!isProductHidden(x.section.id,x.product.id));title("Избранное");
   app.innerHTML=crumb([{label:"Избранное"}])+'<div class="page-head"><div><span class="eyebrow">Персональная подборка</span><h1>Избранное</h1><p>'+items.length+' карточек</p></div>'+(items.length?'<div class="page-tools"><button class="btn ghost" data-clear-favorites>Очистить</button></div>':"")+'</div>'+(items.length?'<section class="product-grid">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Здесь пока пусто</strong><p>Нажимайте ★ на нужных товарах.</p></div>');
 }
 function renderCompare(){
-  const items=comparison.get().map(ctx).filter(Boolean);title("Сравнение");
+  const items=comparison.get().map(ctx).filter(x=>x&&!isProductHidden(x.section.id,x.product.id));title("Сравнение");
   const rows=[["Артикул",(x)=>article(x.product)||"—"],["Тип",(x)=>x.product.type||"—"],["Назначение",(x)=>x.product.purpose||"—"],["Характеристики",(x)=>x.product.features||"—"]];
   app.innerHTML=crumb([{label:"Сравнение"}])+'<div class="page-head"><div><span class="eyebrow">До 4 товаров</span><h1>Сравнение</h1><p>'+items.length+' выбрано</p></div>'+(items.length?'<div class="page-tools"><button class="btn ghost" data-clear-compare>Очистить</button></div>':"")+'</div>'+(items.length?'<div class="table-wrap"><table class="compare-table"><thead><tr><th>Параметр</th>'+items.map((x)=>'<th class="compare-product-head"><strong>'+esc(x.product.name)+'</strong><small>'+esc(x.section.id)+' · '+esc(x.section.title)+'</small><button class="btn ghost" data-compare="'+esc(x.product.id)+'">Убрать</button></th>').join("")+'</tr></thead><tbody>'+rows.map((r)=>{const vals=items.map(r[1]),diff=new Set(vals).size>1;return '<tr class="'+(diff?"compare-diff":"")+'"><td><strong>'+esc(r[0])+'</strong></td>'+vals.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>';}).join("")+'</tbody></table></div>':'<div class="empty-state"><strong>Выберите товары для сравнения</strong><p>На карточках нажимайте ⇄.</p></div>');
 }
