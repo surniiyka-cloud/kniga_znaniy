@@ -287,29 +287,42 @@ function photoPreviewSrc(v){
 }
 function photoSetting(v){
   const num=(x,d,min,max)=>{const n=Number(x);return Number.isFinite(n)?Math.min(max,Math.max(min,n)):d};
-  return {scale:num(v?.scale,1,.6,2.4),x:num(v?.x,0,-45,45),y:num(v?.y,0,-45,45),fit:v?.fit==="cover"?"cover":"contain"};
+  return {scale:num(v?.scale,1,.6,4),x:num(v?.x,0,-60,60),y:num(v?.y,0,-60,60),fit:v?.fit==="cover"?"cover":"contain"};
+}
+function photoContextSetting(view,context){
+  if(view&&("scale" in view||"x" in view||"y" in view||"fit" in view))return photoSetting(view);
+  return photoSetting(view?.[context]||{});
 }
 function photoPreviewStyle(v){
   const s=photoSetting(v);return "object-fit:"+s.fit+";transform:translate("+s.x+"%,"+s.y+"%) scale("+s.scale+");";
 }
+function photoContextHtml(path,context,title,view){
+  const v=photoContextSetting(view,context),scale=Math.round(v.scale*100),ratio=context==="card"?"16:9":"4:3";
+  return '<section class="kb-photo-context" data-photo-context="'+context+'">'+
+    '<div class="kb-photo-context-head"><div><strong>'+esc(title)+'</strong><span>'+ratio+'</span></div><button type="button" class="kb-mini primary" data-photo-auto>Автоподгон</button></div>'+
+    '<div class="kb-photo-preview kb-photo-preview-'+context+'"><img src="'+esc(photoPreviewSrc(path))+'" alt="" style="'+esc(photoPreviewStyle(v))+'"></div>'+
+    '<div class="kb-photo-controls">'+
+      '<label><span>Масштаб</span><div class="kb-photo-range"><input type="range" min="60" max="400" step="5" value="'+scale+'" data-photo-scale><output data-photo-scale-out>'+scale+'%</output></div></label>'+
+      '<label><span>Сдвиг X</span><div class="kb-photo-range"><input type="range" min="-60" max="60" step="1" value="'+v.x+'" data-photo-x><output data-photo-x-out>'+v.x+'</output></div></label>'+
+      '<label><span>Сдвиг Y</span><div class="kb-photo-range"><input type="range" min="-60" max="60" step="1" value="'+v.y+'" data-photo-y><output data-photo-y-out>'+v.y+'</output></div></label>'+
+      '<label><span>Режим</span><select data-photo-fit><option value="contain" '+(v.fit==="contain"?"selected":"")+'>Вписать целиком</option><option value="cover" '+(v.fit==="cover"?"selected":"")+'>Заполнить рамку</option></select></label>'+
+    '</div>'+
+    '<div class="kb-photo-quick"><button type="button" class="kb-mini" data-photo-preset-large>+ Крупнее</button><button type="button" class="kb-mini" data-photo-center>По центру</button><button type="button" class="kb-mini" data-photo-copy-context>Ко всем фото</button><button type="button" class="kb-mini" data-photo-reset-view>Сбросить</button></div>'+
+  '</section>';
+}
 function photoRowHtml(path,index,view={}){
-  const v=photoSetting(view),scale=Math.round(v.scale*100);
   return '<div class="kb-photo-row" data-photo-row data-path="'+esc(path)+'">'+
-    '<div class="kb-photo-preview-wrap"><div class="kb-photo-preview"><img src="'+esc(photoPreviewSrc(path))+'" alt="" style="'+esc(photoPreviewStyle(v))+'"></div><span>Предпросмотр карточки</span></div>'+
-    '<div class="kb-photo-editor-main"><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div>'+
-      '<div class="kb-photo-controls">'+
-        '<label><span>Масштаб</span><div class="kb-photo-range"><input type="range" min="60" max="240" step="5" value="'+scale+'" data-photo-scale><output data-photo-scale-out>'+scale+'%</output></div></label>'+
-        '<label><span>Сдвиг X</span><div class="kb-photo-range"><input type="range" min="-45" max="45" step="1" value="'+v.x+'" data-photo-x><output data-photo-x-out>'+v.x+'</output></div></label>'+
-        '<label><span>Сдвиг Y</span><div class="kb-photo-range"><input type="range" min="-45" max="45" step="1" value="'+v.y+'" data-photo-y><output data-photo-y-out>'+v.y+'</output></div></label>'+
-        '<label><span>Режим</span><select data-photo-fit><option value="contain" '+(v.fit==="contain"?"selected":"")+'>Вписать целиком</option><option value="cover" '+(v.fit==="cover"?"selected":"")+'>Заполнить область</option></select></label>'+
-      '</div>'+
-      '<div class="kb-photo-quick"><button type="button" class="kb-mini" data-photo-preset-large>Крупнее</button><button type="button" class="kb-mini" data-photo-center>По центру</button><button type="button" class="kb-mini" data-photo-apply-all>Ко всем фото</button><button type="button" class="kb-mini" data-photo-reset-view>Сбросить вид</button></div>'+
-      '<div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up title="Выше">↑ Выше</button><button type="button" class="kb-mini" data-photo-down title="Ниже">↓ Ниже</button><button type="button" class="kb-mini" data-photo-replace>Заменить файл</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div>'+
-    '</div></div>';
+    '<div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code><button type="button" class="kb-mini primary" data-photo-auto-both>Автоподогнать обе рамки</button></div>'+
+    '<div class="kb-photo-context-grid">'+
+      photoContextHtml(path,"card","Карточка раздела",view)+
+      photoContextHtml(path,"detail","Внутри товара",view)+
+    '</div>'+
+    '<div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up>↑ Выше</button><button type="button" class="kb-mini" data-photo-down>↓ Ниже</button><button type="button" class="kb-mini" data-photo-replace>Заменить файл</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div>'+
+  '</div>';
 }
 function photoEditorHtml(ctx){
   const images=ctx.images||[],settings=ctx.product?.imageSettings||{};
-  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Здесь можно не только менять файл, но и кадрировать его отображение без изменения исходника: увеличивать товар, двигать его внутри кадра и выбирать режим вписывания.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn ghost" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn primary" data-photo-save-view>Сохранить вид фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i,settings[p]||{})).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">У каждой фотографии теперь два независимых кадра: для плитки товара в разделе и для большой фотографии внутри карточки. «Автоподгон» старается убрать пустые поля вокруг товара, заполнить рамку и при этом оставить сам товар целиком.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn ghost" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn primary" data-photo-save-view>Сохранить вид фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i,settings[p]||{})).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
 }
 function syncPhotoState(body){
   const rows=[...body.querySelectorAll("[data-photo-row]")],paths=rows.map(r=>r.dataset.path).filter(Boolean);
@@ -317,32 +330,74 @@ function syncPhotoState(body){
   const ta=body.querySelector("[data-images]");if(ta)ta.value=paths.join("\n");
   return paths;
 }
+function settingFromContext(box){
+  return photoSetting({
+    scale:Number(box?.querySelector("[data-photo-scale]")?.value||100)/100,
+    x:Number(box?.querySelector("[data-photo-x]")?.value||0),
+    y:Number(box?.querySelector("[data-photo-y]")?.value||0),
+    fit:box?.querySelector("[data-photo-fit]")?.value||"contain"
+  });
+}
 function collectPhotoSettings(body){
   const out={};
   body.querySelectorAll("[data-photo-row]").forEach(row=>{
     const path=row.dataset.path;if(!path)return;
-    const v=photoSetting({
-      scale:Number(row.querySelector("[data-photo-scale]")?.value||100)/100,
-      x:Number(row.querySelector("[data-photo-x]")?.value||0),
-      y:Number(row.querySelector("[data-photo-y]")?.value||0),
-      fit:row.querySelector("[data-photo-fit]")?.value||"contain"
-    });
-    if(v.scale!==1||v.x!==0||v.y!==0||v.fit!=="contain")out[path]=v;
+    const item={};
+    for(const context of ["card","detail"]){
+      const box=row.querySelector('[data-photo-context="'+context+'"]'),v=settingFromContext(box);
+      if(v.scale!==1||v.x!==0||v.y!==0||v.fit!=="contain")item[context]=v;
+    }
+    if(Object.keys(item).length)out[path]=item;
   });
   return out;
 }
-function updatePhotoPreview(row){
-  if(!row)return;
-  const scale=Number(row.querySelector("[data-photo-scale]")?.value||100),x=Number(row.querySelector("[data-photo-x]")?.value||0),y=Number(row.querySelector("[data-photo-y]")?.value||0),fit=row.querySelector("[data-photo-fit]")?.value||"contain";
-  const img=row.querySelector(".kb-photo-preview img");if(img)img.style.cssText=photoPreviewStyle({scale:scale/100,x,y,fit});
-  const so=row.querySelector("[data-photo-scale-out]"),xo=row.querySelector("[data-photo-x-out]"),yo=row.querySelector("[data-photo-y-out]");
-  if(so)so.textContent=scale+"%";if(xo)xo.textContent=String(x);if(yo)yo.textContent=String(y);
-  row.classList.add("is-photo-dirty");
+function updatePhotoPreview(box){
+  if(!box)return;
+  const v=settingFromContext(box),img=box.querySelector(".kb-photo-preview img");
+  if(img)img.style.cssText=photoPreviewStyle(v);
+  const so=box.querySelector("[data-photo-scale-out]"),xo=box.querySelector("[data-photo-x-out]"),yo=box.querySelector("[data-photo-y-out]");
+  if(so)so.textContent=Math.round(v.scale*100)+"%";if(xo)xo.textContent=String(v.x);if(yo)yo.textContent=String(v.y);
+  box.closest("[data-photo-row]")?.classList.add("is-photo-dirty");
 }
-function setPhotoControls(row,{scale=1,x=0,y=0,fit="contain"}={}){
+function setPhotoControls(box,{scale=1,x=0,y=0,fit="contain"}={}){
   const v=photoSetting({scale,x,y,fit});
-  const sc=row?.querySelector("[data-photo-scale]"),xc=row?.querySelector("[data-photo-x]"),yc=row?.querySelector("[data-photo-y]"),fc=row?.querySelector("[data-photo-fit]");
-  if(sc)sc.value=String(Math.round(v.scale*100));if(xc)xc.value=String(v.x);if(yc)yc.value=String(v.y);if(fc)fc.value=v.fit;updatePhotoPreview(row);
+  const sc=box?.querySelector("[data-photo-scale]"),xc=box?.querySelector("[data-photo-x]"),yc=box?.querySelector("[data-photo-y]"),fc=box?.querySelector("[data-photo-fit]");
+  if(sc)sc.value=String(Math.round(v.scale*100));if(xc)xc.value=String(v.x);if(yc)yc.value=String(v.y);if(fc)fc.value=v.fit;updatePhotoPreview(box);
+}
+async function detectPhotoBounds(source){
+  let url=source,owned=false;
+  if(source instanceof File||source instanceof Blob){url=URL.createObjectURL(source);owned=true}
+  try{
+    const img=new Image();img.decoding="async";if(typeof url==="string"&&/^https?:\/\//i.test(url))img.crossOrigin="anonymous";
+    await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("Не удалось прочитать изображение для автоподгона."));img.src=typeof url==="string"?photoPreviewSrc(url):url});
+    const maxSide=640,k=Math.min(1,maxSide/Math.max(img.naturalWidth,img.naturalHeight)),w=Math.max(1,Math.round(img.naturalWidth*k)),h=Math.max(1,Math.round(img.naturalHeight*k));
+    const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d",{willReadFrequently:true});ctx.drawImage(img,0,0,w,h);
+    const data=ctx.getImageData(0,0,w,h).data,s=Math.max(3,Math.round(Math.min(w,h)*.025));
+    let br=0,bg=0,bb=0,ba=0,n=0;
+    const sample=(x0,y0)=>{for(let y=y0;y<Math.min(h,y0+s);y++)for(let x=x0;x<Math.min(w,x0+s);x++){const i=(y*w+x)*4;br+=data[i];bg+=data[i+1];bb+=data[i+2];ba+=data[i+3];n++}};
+    sample(0,0);sample(Math.max(0,w-s),0);sample(0,Math.max(0,h-s));sample(Math.max(0,w-s),Math.max(0,h-s));
+    br/=n;bg/=n;bb/=n;ba/=n;
+    let minX=w,minY=h,maxX=-1,maxY=-1;
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,a=data[i+3];let content=false;
+      if(ba<80)content=a>35;
+      else {const dr=data[i]-br,dg=data[i+1]-bg,db=data[i+2]-bb,dist=Math.sqrt(dr*dr+dg*dg+db*db);content=a>35&&dist>18}
+      if(content){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}
+    }
+    if(maxX<minX||maxY<minY)throw new Error("Не удалось уверенно определить границы товара. Используй ручные ползунки.");
+    const px=Math.round(w*.035),py=Math.round(h*.035);minX=Math.max(0,minX-px);maxX=Math.min(w-1,maxX+px);minY=Math.max(0,minY-py);maxY=Math.min(h-1,maxY+py);
+    return {imageAspect:img.naturalWidth/img.naturalHeight,x0:minX/w,x1:(maxX+1)/w,y0:minY/h,y1:(maxY+1)/h};
+  }finally{if(owned)URL.revokeObjectURL(url)}
+}
+function autoSettingFromBounds(b,context){
+  const target=context==="card"?16/9:4/3,fw=b.imageAspect>target?1:b.imageAspect/target,fh=b.imageAspect>target?target/b.imageAspect:1;
+  const bw=Math.max(.02,b.x1-b.x0),bh=Math.max(.02,b.y1-b.y0),cx=(b.x0+b.x1)/2-.5,cy=(b.y0+b.y1)/2-.5;
+  const scale=Math.min(.91/(fw*bw),.91/(fh*bh));
+  return photoSetting({scale,x:-cx*fw*scale*100,y:-cy*fh*scale*100,fit:"contain"});
+}
+async function autoFitRow(row,context=null,source=null){
+  const path=row?.dataset.path;if(!row||(!path&&!source))return;
+  const bounds=await detectPhotoBounds(source||path),contexts=context?[context]:["card","detail"];
+  for(const name of contexts){const box=row.querySelector('[data-photo-context="'+name+'"]');setPhotoControls(box,autoSettingFromBounds(bounds,name))}
 }
 function imageExt(file){
   const byName=(file?.name||"").split(".").pop().toLowerCase();
