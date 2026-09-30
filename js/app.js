@@ -177,7 +177,7 @@ function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
   const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
   const sourceSectionId=opts.sourceSectionId||sectionId,sourceRef=bookSectionById(sourceSectionId)?.section||null;
-  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],indicatorTable:opts.indicatorTable||null,options:opts.options||[],variants:opts.variants||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[],washCycle:opts.washCycle||[],customTabs:opts.customTabs||[],sourceSectionId,sourceGid:opts.sourceGid||sourceRef?.gid||null};
+  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],indicatorTable:opts.indicatorTable||null,tabTables:deepCopy(opts.tabTables||{}),options:opts.options||[],variants:opts.variants||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[],washCycle:opts.washCycle||[],customTabs:opts.customTabs||[],sourceSectionId,sourceGid:opts.sourceGid||sourceRef?.gid||null};
   const ctxObj={chapter:x.chapter,section:x.section,product:p};
   if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
   state.sectionCatalog.get(sectionId).push(ctxObj);
@@ -326,7 +326,7 @@ function compactRowValue(r,start=1){
 }
 function parseAnalyzerRaw(section){
   const rows=section.rawRows||section.rows||[];
-  const out={fields:[],indicators:[],indicatorTable:null,options:[],variants:[],calibration:[],equipment:[],advantages:[],customTabs:[]};
+  const out={fields:[],indicators:[],indicatorTable:null,tabTables:{},options:[],variants:[],calibration:[],equipment:[],advantages:[],customTabs:[]};
   let mode="fields",custom=null;
   const headingMap=new Map([
     ["измеряемые показатели","indicators"],["дополнительные опции","options"],["дополнительные параметры / опции","options"],
@@ -347,8 +347,12 @@ function parseAnalyzerRaw(section){
     if(i===0&&vals.length===1)continue;
     if(!first)continue;
     const value=compactRowValue(r,1);
-    if(mode==="indicators"&&/^Показатель$/i.test(first)&&vals.length>=2){
-      out.indicatorTable={headers:r.map(v=>String(v||"").trim()).filter(Boolean),rows:[]};
+    if(mode!=="fields"&&headerRx.test(first)&&vals.length>=2){
+      const headers=r.map(v=>String(v||"").trim()).filter(Boolean);
+      if(["indicators","options","variants","calibration","equipment"].includes(mode)){
+        out.tabTables[mode]={headers,rows:[]};
+        if(mode==="indicators")out.indicatorTable=out.tabTables[mode];
+      }
       continue;
     }
     if(headerRx.test(first)&&/^(Значение|Диапазон измерения|Артикул|Калибровка по умолчанию|Описание|Практическое значение)$/i.test(String(r[1]||"").trim()))continue;
@@ -365,12 +369,9 @@ function parseAnalyzerRaw(section){
       out.calibration.push(pair);continue;
     }
     if(mode==="custom"&&custom){custom.rows.push(pair);continue;}
-    if(mode==="indicators"){
-      if(out.indicatorTable?.headers?.length){
-        const width=out.indicatorTable.headers.length,row=Array.from({length:width},(_,j)=>String(r[j]||"").trim());
-        if(row.some(Boolean))out.indicatorTable.rows.push(row);
-      }
-      out.indicators.push(pair);continue;
+    if(out.tabTables?.[mode]?.headers?.length){
+      const width=out.tabTables[mode].headers.length,row=Array.from({length:width},(_,j)=>String(r[j]||"").trim());
+      if(row.some(Boolean))out.tabTables[mode].rows.push(row);
     }
     out[mode].push(pair);
   }
@@ -608,7 +609,7 @@ function buildChapter2Catalog(){
     const fields=withFallbackFields(x.fields,analyzerBase[child.id]||[]);
     const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{
-      type:"Анализатор качества молока",indicators:x.indicators,indicatorTable:x.indicatorTable,options:x.options,variants:x.variants,
+      type:"Анализатор качества молока",indicators:x.indicators,indicatorTable:x.indicatorTable,tabTables:x.tabTables,options:x.options,variants:x.variants,
       calibration:x.calibration,advantages:x.advantages,customTabs,sourceSectionId:child.id,sourceGid:child.gid
     });
   }
@@ -616,7 +617,7 @@ function buildChapter2Catalog(){
     const x=parseAnalyzerRaw(child),fields=uniquePairs(x.fields);
     const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.7",child.title,fields,state.assets.sectionImages?.[child.id]||[],{
-      type:"Анализатор соматических клеток",indicators:x.indicators,indicatorTable:x.indicatorTable,options:x.options,variants:x.variants,
+      type:"Анализатор соматических клеток",indicators:x.indicators,indicatorTable:x.indicatorTable,tabTables:x.tabTables,options:x.options,variants:x.variants,
       calibration:x.calibration,advantages:x.advantages,customTabs,sourceSectionId:child.id,sourceGid:child.gid
     });
   }
@@ -864,7 +865,7 @@ function mapData(){
 }
 function buildLiveSearchIndex(){
   const out=[];
-  for(const [id,x] of state.products){const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
+  for(const [id,x] of state.products){const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
   return out;
 }
 function installEditorApi(){
@@ -1068,44 +1069,43 @@ function fields(p){
   return [["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose],["Характеристики / особенности",p.features],["Производитель",p.manufacturer],["Страна",p.country]].filter((x)=>x[1]);
 }
 
+function tabTableFor(p,id){
+  if(p?.tabTables&&Object.prototype.hasOwnProperty.call(p.tabTables,id))return p.tabTables[id];
+  if(id==="indicators"&&p?.indicatorTable)return p.indicatorTable;
+  return null;
+}
+function hasTabContent(p,id,pairs=[]){return !!(tabTableFor(p,id)?.rows?.length||(pairs||[]).length)}
 function productTabs(p){
   let tabs=[{id:"specs",label:"Характеристики"}];
-  if(p.indicatorTable?.rows?.length||p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
-  if(p.options?.length)tabs.push({id:"options",label:"Дополнительные опции"});
-  if(p.variants?.length)tabs.push({id:"variants",label:"Варианты исполнения"});
-  if(p.advantages?.length)tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества / особенности"});
-  if(p.complectation?.length)tabs.push({id:"complectation",label:"Комплектация"});
-  if(p.washCycle?.length)tabs.push({id:"washCycle",label:"Рекомендуемый цикл мойки"});
-  if(p.workflow?.length)tabs.push({id:"workflow",label:"Порядок работы"});
-  if(p.calibration?.length)tabs.push({id:"calibration",label:"Калибровка"});
-  if(p.assortment?.length)tabs.push({id:"assortment",label:"Линейка"});
-  if(p.consumables?.length)tabs.push({id:"consumables",label:"Расходные материалы"});
-  if(p.testKits?.length)tabs.push({id:"testKits",label:"Тест-наборы"});
-  for(const t of p.customTabs||[])tabs.push({id:t.id,label:t.label});
+  if(hasTabContent(p,"indicators",p.indicators))tabs.push({id:"indicators",label:"Измеряемые показатели"});
+  if(hasTabContent(p,"options",p.options))tabs.push({id:"options",label:"Дополнительные опции"});
+  if(hasTabContent(p,"variants",p.variants))tabs.push({id:"variants",label:"Варианты исполнения"});
+  if(hasTabContent(p,"advantages",p.advantages))tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества / особенности"});
+  if(hasTabContent(p,"complectation",p.complectation))tabs.push({id:"complectation",label:"Комплектация"});
+  if(hasTabContent(p,"washCycle",p.washCycle))tabs.push({id:"washCycle",label:"Рекомендуемый цикл мойки"});
+  if(hasTabContent(p,"workflow",p.workflow))tabs.push({id:"workflow",label:"Порядок работы"});
+  if(hasTabContent(p,"calibration",p.calibration))tabs.push({id:"calibration",label:"Калибровка"});
+  if(hasTabContent(p,"assortment",p.assortment))tabs.push({id:"assortment",label:"Линейка"});
+  if(hasTabContent(p,"consumables",p.consumables))tabs.push({id:"consumables",label:"Расходные материалы"});
+  if(hasTabContent(p,"testKits",p.testKits))tabs.push({id:"testKits",label:"Тест-наборы"});
+  for(const t of p.customTabs||[])if(!tabs.some(x=>x.id===t.id))tabs.push({id:t.id,label:t.label||t.id});
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
-  const hidden=new Set(p.hiddenTabs||[]),labels=p.tabLabels||{},order=p.tabOrder||[];
-  tabs=tabs.filter(t=>!hidden.has(t.id)).map(t=>({...t,label:labels[t.id]||t.label}));
-  if(order.length){const rank=new Map(order.map((id,i)=>[id,i]));tabs.sort((a,b)=>(rank.has(a.id)?rank.get(a.id):999)-(rank.has(b.id)?rank.get(b.id):999));}
+  const hidden=new Set(p.hiddenTabs||[]);
+  tabs=tabs.filter(t=>!hidden.has(t.id));
+  if(p.tabLabels)tabs=tabs.map(t=>({...t,label:p.tabLabels[t.id]||t.label}));
+  if(Array.isArray(p.tabOrder)&&p.tabOrder.length){const pos=new Map(p.tabOrder.map((id,i)=>[id,i]));tabs.sort((a,b)=>(pos.has(a.id)?pos.get(a.id):999)-(pos.has(b.id)?pos.get(b.id):999));}
   return tabs;
-}
-function pairCards(rows,cls="feature-definition-list"){
-  return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
-}
-function stepCards(rows){
-  return '<dl class="feature-definition-list">'+(rows||[]).map((r,i)=>'<dt>'+esc(r[0]||("Шаг "+(i+1)))+'</dt><dd>'+esc(r[1]||"")+'</dd>').join("")+'</dl>';
-}
-function substanceTable(rows){
-  let last="";
-  return '<div class="substance-table-wrap"><table class="substance-table"><thead><tr><th>Вещество</th><th>ppb (мкг/кг)</th></tr></thead><tbody>'+(rows||[]).map((r)=>{const head=r.group&&r.group!==last?(last=r.group,'<tr class="substance-group"><td colspan="2">'+esc(r.group)+'</td></tr>'):"";return head+'<tr><td>'+esc(r.substance)+'</td><td>'+esc(r.ppb)+'</td></tr>';}).join("")+'</tbody></table></div>';
 }
 function tablePanel(headers,rows){
   const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
   return '<div class="table-wrap"><table class="data-table"><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map(r=>'<tr>'+Array.from({length:h.length},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
 }
 function tabPanelHtml(p,id){
+  const table=tabTableFor(p,id);
+  if(table?.headers?.length&&table?.rows?.length)return tablePanel(table.headers,table.rows);
   if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
   if(id==="advantages")return pairCards(p.advantages||[]);
-  if(id==="indicators")return p.indicatorTable?.rows?.length?tablePanel(p.indicatorTable.headers,p.indicatorTable.rows):pairCards(p.indicators||[]);
+  if(id==="indicators")return pairCards(p.indicators||[]);
   if(id==="options")return pairCards(p.options||[]);
   if(id==="variants")return pairCards(p.variants||[]);
   if(id==="complectation")return pairCards(p.complectation||[]);
