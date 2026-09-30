@@ -297,7 +297,7 @@ function photoPreviewStyle(v){
   const s=photoSetting(v);return "object-fit:"+s.fit+";transform:translate("+s.x+"%,"+s.y+"%) scale("+s.scale+");";
 }
 function photoContextHtml(path,context,title,view){
-  const v=photoContextSetting(view,context),scale=Math.round(v.scale*100),ratio=context==="card"?"16:9":"4:3";
+  const v=photoContextSetting(view,context),scale=Math.round(v.scale*100),ratio="4:3";
   return '<section class="kb-photo-context" data-photo-context="'+context+'">'+
     '<div class="kb-photo-context-head"><div><strong>'+esc(title)+'</strong><span>'+ratio+'</span></div><button type="button" class="kb-mini primary" data-photo-auto>Автоподгон</button></div>'+
     '<div class="kb-photo-preview kb-photo-preview-'+context+'"><img src="'+esc(photoPreviewSrc(path))+'" alt="" style="'+esc(photoPreviewStyle(v))+'"></div>'+
@@ -389,7 +389,7 @@ async function detectPhotoBounds(source){
   }finally{if(owned)URL.revokeObjectURL(url)}
 }
 function autoSettingFromBounds(b,context){
-  const target=context==="card"?16/9:4/3,fw=b.imageAspect>target?1:b.imageAspect/target,fh=b.imageAspect>target?target/b.imageAspect:1;
+  const target=4/3,fw=b.imageAspect>target?1:b.imageAspect/target,fh=b.imageAspect>target?target/b.imageAspect:1;
   const bw=Math.max(.02,b.x1-b.x0),bh=Math.max(.02,b.y1-b.y0),cx=(b.x0+b.x1)/2-.5,cy=(b.y0+b.y1)/2-.5;
   const scale=Math.min(.91/(fw*bw),.91/(fh*bh));
   return photoSetting({scale,x:-cx*fw*scale*100,y:-cy*fh*scale*100,fit:"contain"});
