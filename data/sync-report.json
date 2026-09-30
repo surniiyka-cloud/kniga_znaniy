@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T09:47:10.939Z",
+  "generatedAt": "2026-09-30T06:03:37.400Z",
   "sheets": 89,
   "sections": 88,
   "products": 776,
@@ -95,7 +95,7 @@
       "kind": "keyValue",
       "products": 0,
       "tables": 0,
-      "notes": 2
+      "notes": 1
     },
     {
       "id": "2.5",
@@ -254,8 +254,8 @@
       "title": "Подготовка вымени и вспомогательное оборудование",
       "kind": "products",
       "products": 4,
-      "tables": 0,
-      "notes": 9
+      "tables": 4,
+      "notes": 5
     },
     {
       "id": "3.2",
