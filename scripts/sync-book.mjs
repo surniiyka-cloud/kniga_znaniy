@@ -39,6 +39,14 @@ function parseCsv(text){
   return rows.map(r=>{while(r.length&&!r[r.length-1])r.pop();return r});
 }
 function nonemptyCount(r){return r.filter(v=>flat(v)).length}
+function packedRowsOf(inputRows){
+  const out=[];
+  for(let i=0;i<(inputRows||[]).length;i++){
+    const cells=(inputRows[i]||[]).map(v=>clean(v));
+    if(cells.some(v=>v.includes("\n")))out.push({sourceRow:i+1,cells});
+  }
+  return out;
+}
 function canonHeader(s){
   const x=flat(s).toLowerCase().replace(/[.:]+$/,"");
   if(/^(наименование|название)( товара| позиции)?$/.test(x)) return "name";
@@ -227,27 +235,29 @@ function applyPackedOverride(inputRows,meta){
     products,
     productBlocks:[{group:"",header:["Наименование","Тип","Артикул","Назначение","Особенности"],count:products.length}],
     tables:tables.length?tables:undefined,
-    rawRows:expandPackedRows(inputRows).filter(r=>r.some(v=>flat(v)))
+    rawRows:expandPackedRows(inputRows).filter(r=>r.some(v=>flat(v))),
+    packedRows:packedRowsOf(inputRows).length?packedRowsOf(inputRows):undefined
   };
 }
 
 function classify(inputRows,meta){
   const override=applyPackedOverride(inputRows,meta);
   if(override)return override;
+  const packedRows=packedRowsOf(inputRows);
   const rows=expandPackedRows(inputRows).filter(r=>r.some(v=>flat(v)));
   const {products,productBlocks}=parseProductTables(rows);
   const tables=parseGenericTables(rows);
   const notes=collectNotes(rows);
-  if(products.length)return {kind:"products",products,productBlocks,tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
+  if(products.length)return {kind:"products",products,productBlocks,tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows,packedRows:packedRows.length?packedRows:undefined};
   const twoCol=rows.filter(r=>nonemptyCount(r)===2).length;
   if(rows.length&&twoCol/rows.length>=0.55){
     return {kind:"keyValue",pairs:rows.filter(r=>nonemptyCount(r)>=2).map((r,i)=>({
       label:flat(r.find(Boolean)),
       value:flat(r.slice(r.findIndex(Boolean)+1).find(Boolean)||""),
       sourceRow:i+1
-    })),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
+    })),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows,packedRows:packedRows.length?packedRows:undefined};
   }
-  return {kind:"richTable",rows:rows.map(r=>r.map(flat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
+  return {kind:"richTable",rows:rows.map(r=>r.map(flat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows,packedRows:packedRows.length?packedRows:undefined};
 }
 async function fetchSheet(meta){
   const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${meta.gid}`;
@@ -280,7 +290,8 @@ const chapters=sections.chapters.map(ch=>({
       notes:src?.parsed.notes||undefined,
       pairs:src?.parsed.pairs||undefined,
       rows:src?.parsed.rows||undefined,
-      rawRows:src?.parsed.rawRows||undefined}
+      rawRows:src?.parsed.rawRows||undefined,
+      packedRows:src?.parsed.packedRows||undefined}
   })
 }));
 const previousBook=JSON.parse(await fs.readFile("data/book.json","utf8").catch(()=>"null"));
