@@ -1,0 +1,512 @@
+{
+  "version": 1,
+  "source": "Google Sheets / final knowledge-book structure",
+  "chapters": [
+    {
+      "id": "1",
+      "title": "ОСНОВЫ",
+      "sections": [
+        {
+          "section": "1.1",
+          "title": "Термины и определения",
+          "sourceOrder": 2
+        },
+        {
+          "section": "1.2",
+          "title": "Нормативы, сокращения и единицы измерения",
+          "sourceOrder": 3
+        },
+        {
+          "section": "1.3",
+          "title": "Как пользоваться Книгой знаний",
+          "sourceOrder": 4
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "ЛАБОРАТОРНЫЙ КОНТРОЛЬ КАЧЕСТВА И БЕЗОПАСНОСТИ",
+      "sections": [
+        {
+          "section": "2.1.1",
+          "title": "Тесты 4 групп",
+          "sourceOrder": 5
+        },
+        {
+          "section": "2.1.2",
+          "title": "Тесты Unisensor",
+          "sourceOrder": 6
+        },
+        {
+          "section": "2.1.3",
+          "title": "Тесты GARANT",
+          "sourceOrder": 7
+        },
+        {
+          "section": "2.1.4",
+          "title": "Delvotest / микробиологические ингибиторные тесты",
+          "sourceOrder": 8
+        },
+        {
+          "section": "2.2.1",
+          "title": "Какие тесты сравниваются",
+          "sourceOrder": 9
+        },
+        {
+          "section": "2.2.2",
+          "title": "Сводная таблица чувствительности, ppb (мкг/кг)",
+          "sourceOrder": 10
+        },
+        {
+          "section": "2.3",
+          "title": "Система EXTENSO",
+          "sourceOrder": 11
+        },
+        {
+          "section": "2.4",
+          "title": "Инкубаторы",
+          "sourceOrder": 12
+        },
+        {
+          "section": "2.5",
+          "title": "Считывающие устройства",
+          "sourceOrder": 13
+        },
+        {
+          "section": "2.6.1",
+          "title": "Ekomilk — 6 параметров",
+          "sourceOrder": 14
+        },
+        {
+          "section": "2.6.2",
+          "title": "Ekomilk — 9 параметров",
+          "sourceOrder": 15
+        },
+        {
+          "section": "2.6.3",
+          "title": "Ekomilk TOTAL (BOND) — версии с принтером и без принтера",
+          "sourceOrder": 16
+        },
+        {
+          "section": "2.6.4",
+          "title": "Ekomilk HORIZON",
+          "sourceOrder": 17
+        },
+        {
+          "section": "2.6.5",
+          "title": "TIAS AGRO",
+          "sourceOrder": 18
+        },
+        {
+          "section": "2.6.6",
+          "title": "TIAS AGRO PLUS",
+          "sourceOrder": 19
+        },
+        {
+          "section": "2.6.7",
+          "title": "TIAS FULLCHECK PLUS",
+          "sourceOrder": 20
+        },
+        {
+          "section": "2.7.1",
+          "title": "Ekomilk SCAN",
+          "sourceOrder": 21
+        },
+        {
+          "section": "2.7.2",
+          "title": "TIAS SomCell",
+          "sourceOrder": 22
+        },
+        {
+          "section": "2.8",
+          "title": "Расходные материалы и реагенты для анализаторов",
+          "sourceOrder": 23
+        },
+        {
+          "section": "2.9",
+          "title": "pH-метры и электроды",
+          "sourceOrder": 24
+        },
+        {
+          "section": "2.10",
+          "title": "Индикаторные полоски",
+          "sourceOrder": 25
+        },
+        {
+          "section": "2.11",
+          "title": "Микотоксины и ГМО",
+          "sourceOrder": 26
+        },
+        {
+          "section": "2.12",
+          "title": "Отбор проб и пробоподготовка",
+          "sourceOrder": 27
+        },
+        {
+          "section": "2.13",
+          "title": "Микробиологический контроль",
+          "sourceOrder": 28
+        },
+        {
+          "section": "2.14",
+          "title": "Питательные среды",
+          "sourceOrder": 29
+        },
+        {
+          "section": "2.15",
+          "title": "Турбидофлуориметр БиоТФ",
+          "sourceOrder": 30
+        },
+        {
+          "section": "2.16",
+          "title": "Санитарный мониторинг",
+          "sourceOrder": 31
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "КАЧЕСТВЕННЫЙ ПРОЦЕСС ДОЕНИЯ",
+      "sections": [
+        {
+          "section": "3.1",
+          "title": "Подготовка вымени и вспомогательное оборудование",
+          "sourceOrder": 32
+        },
+        {
+          "section": "3.2",
+          "title": "Стаканчики и кружки для доения",
+          "sourceOrder": 33
+        },
+        {
+          "section": "3.3",
+          "title": "Средства и инструменты для сосков",
+          "sourceOrder": 34
+        },
+        {
+          "section": "3.4",
+          "title": "Средства до доения",
+          "sourceOrder": 35
+        },
+        {
+          "section": "3.5",
+          "title": "Средства после доения",
+          "sourceOrder": 36
+        },
+        {
+          "section": "3.6",
+          "title": "Бумага и салфетки для вымени",
+          "sourceOrder": 37
+        },
+        {
+          "section": "3.7",
+          "title": "Молочные фильтры",
+          "sourceOrder": 38
+        },
+        {
+          "section": "3.8",
+          "title": "Отбор проб и учёт молока",
+          "sourceOrder": 39
+        },
+        {
+          "section": "3.9",
+          "title": "Измерительные приборы",
+          "sourceOrder": 40
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "title": "ВЕТЕРИНАРИЯ",
+      "sections": [
+        {
+          "section": "4.1",
+          "title": "Ветеринарное акушерство и гинекология",
+          "sourceOrder": 41
+        },
+        {
+          "section": "4.2",
+          "title": "Дренчеры",
+          "sourceOrder": 42
+        },
+        {
+          "section": "4.3",
+          "title": "Исследование качества кормов",
+          "sourceOrder": 43
+        },
+        {
+          "section": "4.4",
+          "title": "Шприцы и вакцинаторы",
+          "sourceOrder": 44
+        },
+        {
+          "section": "4.5",
+          "title": "Иглы многоразовые",
+          "sourceOrder": 45
+        },
+        {
+          "section": "4.6",
+          "title": "Вспомогательные специальные средства",
+          "sourceOrder": 46
+        },
+        {
+          "section": "4.7",
+          "title": "Средства фиксации животных",
+          "sourceOrder": 47
+        },
+        {
+          "section": "4.8",
+          "title": "Кастрация животных",
+          "sourceOrder": 48
+        },
+        {
+          "section": "4.9",
+          "title": "Ветеринарные экспресс-тесты",
+          "sourceOrder": 49
+        },
+        {
+          "section": "4.10",
+          "title": "Ветеринарные препараты",
+          "sourceOrder": 50
+        },
+        {
+          "section": "4.11",
+          "title": "Препараты «РубиконВ»",
+          "sourceOrder": 51
+        },
+        {
+          "section": "4.12",
+          "title": "Препараты «Экохимтех»",
+          "sourceOrder": 52
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "title": "УХОД И СОДЕРЖАНИЕ КРС",
+      "sections": [
+        {
+          "section": "5.1",
+          "title": "Уход за шкурой",
+          "sourceOrder": 53
+        },
+        {
+          "section": "5.2",
+          "title": "Уход за копытами",
+          "sourceOrder": 54
+        },
+        {
+          "section": "5.3",
+          "title": "Маркировка и идентификация животных",
+          "sourceOrder": 55
+        },
+        {
+          "section": "5.4",
+          "title": "Ошейники для содержания КРС",
+          "sourceOrder": 56
+        },
+        {
+          "section": "5.5",
+          "title": "Ушные бирки и инструменты для маркировки",
+          "sourceOrder": 57
+        },
+        {
+          "section": "5.6",
+          "title": "Усмирение и фиксация животных",
+          "sourceOrder": 58
+        },
+        {
+          "section": "5.7",
+          "title": "Электропастухи и системы ограждения",
+          "sourceOrder": 59
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "title": "СОДЕРЖАНИЕ МОЛОДНЯКА КРС",
+      "sections": [
+        {
+          "section": "6.1",
+          "title": "Домики для телят",
+          "sourceOrder": 60
+        },
+        {
+          "section": "6.2",
+          "title": "Выпойка молодняка КРС",
+          "sourceOrder": 61
+        },
+        {
+          "section": "6.3",
+          "title": "Вёдра для выпойки телят",
+          "sourceOrder": 62
+        },
+        {
+          "section": "6.4",
+          "title": "Поилки для телят",
+          "sourceOrder": 63
+        },
+        {
+          "section": "6.5",
+          "title": "Кормушки",
+          "sourceOrder": 64
+        },
+        {
+          "section": "6.6",
+          "title": "Отслеживание иммунного статуса телят",
+          "sourceOrder": 65
+        },
+        {
+          "section": "6.7",
+          "title": "Пакеты для молозива",
+          "sourceOrder": 66
+        },
+        {
+          "section": "6.8",
+          "title": "Подогреватели молока для телят",
+          "sourceOrder": 67
+        },
+        {
+          "section": "6.9",
+          "title": "Кольца от самовысасывания",
+          "sourceOrder": 68
+        },
+        {
+          "section": "6.10",
+          "title": "Средства обогрева молодняка",
+          "sourceOrder": 69
+        },
+        {
+          "section": "6.11",
+          "title": "Средства для обезроживания",
+          "sourceOrder": 70
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "title": "УХОД И СОДЕРЖАНИЕ МРС",
+      "sections": [
+        {
+          "section": "7.1",
+          "title": "Выпойка и кормление МРС",
+          "sourceOrder": 71
+        },
+        {
+          "section": "7.2",
+          "title": "Кастрация",
+          "sourceOrder": 72
+        },
+        {
+          "section": "7.3",
+          "title": "Обработка копыт",
+          "sourceOrder": 73
+        },
+        {
+          "section": "7.4",
+          "title": "Стрижка",
+          "sourceOrder": 74
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "title": "ГИГИЕНА ПРОИЗВОДСТВА",
+      "sections": [
+        {
+          "section": "8.1",
+          "title": "Оборудование для мойки ёмкостей и доильного оборудования",
+          "sourceOrder": 75
+        },
+        {
+          "section": "8.2",
+          "title": "Рабочий инвентарь",
+          "sourceOrder": 76
+        },
+        {
+          "section": "8.3",
+          "title": "Средства для мойки и дезинфекции оборудования и помещений",
+          "sourceOrder": 77
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "title": "ДЕЗИНФЕКЦИЯ И ДЕЗИНСЕКЦИЯ",
+      "sections": [
+        {
+          "section": "9.1",
+          "title": "Генераторы тумана и оборудование для обработки",
+          "sourceOrder": 78
+        },
+        {
+          "section": "9.2",
+          "title": "Дезковрики и дезбарьеры",
+          "sourceOrder": 79
+        },
+        {
+          "section": "9.3",
+          "title": "Сухая дезинфекция",
+          "sourceOrder": 80
+        },
+        {
+          "section": "9.4",
+          "title": "Ловушки для борьбы с летающими насекомыми",
+          "sourceOrder": 81
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "title": "ВЛАГОМЕРЫ И КОНТРОЛЬ КОРМОВ",
+      "sections": [
+        {
+          "section": "10.1",
+          "title": "Влагомеры зерна",
+          "sourceOrder": 82
+        },
+        {
+          "section": "10.2",
+          "title": "Влагомеры для зерен кофе и какао",
+          "sourceOrder": 83
+        },
+        {
+          "section": "10.3",
+          "title": "Плотномер почвы",
+          "sourceOrder": 84
+        },
+        {
+          "section": "10.4",
+          "title": "Влагомеры для сена, силоса и сенажа",
+          "sourceOrder": 85
+        },
+        {
+          "section": "10.5",
+          "title": "Датчики и аксессуары для контроля кормов",
+          "sourceOrder": 86
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "title": "СПЕЦОДЕЖДА И СРЕДСТВА ЗАЩИТЫ",
+      "sections": [
+        {
+          "section": "11.1",
+          "title": "Защитные перчатки",
+          "sourceOrder": 87
+        },
+        {
+          "section": "11.2",
+          "title": "Ветеринарные одноразовые средства защиты",
+          "sourceOrder": 88
+        },
+        {
+          "section": "11.3",
+          "title": "Одежда специального назначения",
+          "sourceOrder": 89
+        }
+      ]
+    }
+  ]
+}

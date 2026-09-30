@@ -1,0 +1,30 @@
+name: Аудит фотографий v2
+
+on:
+  push:
+    branches: [site-v2]
+    paths:
+      - 'img/photos/**'
+      - 'scripts/audit-images.mjs'
+      - '.github/workflows/image-audit-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Проверить фотографии
+        run: node scripts/audit-images.mjs
+      - name: Сохранить отчёт
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-audit-v2
+          path: data/image-audit.json
+          retention-days: 14

@@ -1,0 +1,44 @@
+name: Привязка фотографий v2
+
+on:
+  push:
+    branches: [site-v2]
+    paths:
+      - 'data/book.json'
+      - 'data/image-aliases.json'
+      - 'img/photos/**'
+      - 'scripts/match-images.mjs'
+      - '.github/workflows/match-images-v2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: knowledge-data-v2
+  cancel-in-progress: false
+
+jobs:
+  match:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Сопоставить фото товарам
+        run: node scripts/match-images.mjs
+      - name: Сохранить карту изображений
+        run: |
+          git config user.name "knowledge-book-bot"
+          git config user.email "knowledge-book-bot@users.noreply.github.com"
+          git add data/assets.json data/image-match-report.json
+          if git diff --cached --quiet; then
+            echo "Изменений нет"
+          else
+            git commit -m "data: match product images v2"
+            git pull --rebase origin ${{ github.ref_name }}
+            git push origin HEAD:${{ github.ref_name }}
+          fi

@@ -1,0 +1,841 @@
+{
+  "generatedAt": "2026-09-30T06:50:03.142Z",
+  "sheets": 89,
+  "sections": 88,
+  "products": 809,
+  "byKind": {
+    "richTable": 13,
+    "keyValue": 17,
+    "products": 59
+  },
+  "perSection": [
+    {
+      "id": "1.1",
+      "title": "Термины и определения",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 3
+    },
+    {
+      "id": "1.2",
+      "title": "Нормативы, сокращения и единицы измерения",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 5
+    },
+    {
+      "id": "1.3",
+      "title": "Как пользоваться Книгой знаний",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 1
+    },
+    {
+      "id": "2.1.1",
+      "title": "Тесты 4 групп",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 3,
+      "notes": 5
+    },
+    {
+      "id": "2.1.2",
+      "title": "Тесты Unisensor",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 1,
+      "notes": 2
+    },
+    {
+      "id": "2.1.3",
+      "title": "Тесты GARANT",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 10
+    },
+    {
+      "id": "2.1.4",
+      "title": "Delvotest / микробиологические ингибиторные тесты",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 1
+    },
+    {
+      "id": "2.2.1",
+      "title": "Какие тесты сравниваются",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 1
+    },
+    {
+      "id": "2.2.2",
+      "title": "Сводная таблица чувствительности, ppb (мкг/кг)",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 7
+    },
+    {
+      "id": "2.3",
+      "title": "Система EXTENSO",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 11
+    },
+    {
+      "id": "2.4",
+      "title": "Инкубаторы",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 2
+    },
+    {
+      "id": "2.5",
+      "title": "Считывающие устройства",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 6
+    },
+    {
+      "id": "2.6.1",
+      "title": "Ekomilk — 6 параметров",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 5
+    },
+    {
+      "id": "2.6.2",
+      "title": "Ekomilk — 9 параметров",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 11
+    },
+    {
+      "id": "2.6.3",
+      "title": "Ekomilk TOTAL (BOND) — версии с принтером и без принтера",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 4
+    },
+    {
+      "id": "2.6.4",
+      "title": "Ekomilk HORIZON",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 4
+    },
+    {
+      "id": "2.6.5",
+      "title": "TIAS AGRO",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 11
+    },
+    {
+      "id": "2.6.6",
+      "title": "TIAS AGRO PLUS",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 11
+    },
+    {
+      "id": "2.6.7",
+      "title": "TIAS FULLCHECK PLUS",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 5
+    },
+    {
+      "id": "2.7.1",
+      "title": "Ekomilk SCAN",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 5
+    },
+    {
+      "id": "2.7.2",
+      "title": "TIAS SomCell",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 5
+    },
+    {
+      "id": "2.8",
+      "title": "Расходные материалы и реагенты для анализаторов",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 13
+    },
+    {
+      "id": "2.9",
+      "title": "pH-метры и электроды",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 19
+    },
+    {
+      "id": "2.10",
+      "title": "Индикаторные полоски",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 3,
+      "notes": 6
+    },
+    {
+      "id": "2.11",
+      "title": "Микотоксины и ГМО",
+      "kind": "products",
+      "products": 9,
+      "tables": 2,
+      "notes": 7
+    },
+    {
+      "id": "2.12",
+      "title": "Отбор проб и пробоподготовка",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 8
+    },
+    {
+      "id": "2.13",
+      "title": "Микробиологический контроль",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 1,
+      "notes": 11
+    },
+    {
+      "id": "2.14",
+      "title": "Питательные среды",
+      "kind": "richTable",
+      "products": 0,
+      "tables": 0,
+      "notes": 10
+    },
+    {
+      "id": "2.15",
+      "title": "Турбидофлуориметр БиоТФ",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 8
+    },
+    {
+      "id": "2.16",
+      "title": "Санитарный мониторинг",
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 0,
+      "notes": 7
+    },
+    {
+      "id": "3.1",
+      "title": "Подготовка вымени и вспомогательное оборудование",
+      "kind": "products",
+      "products": 4,
+      "tables": 4,
+      "notes": 5
+    },
+    {
+      "id": "3.2",
+      "title": "Стаканчики и кружки для доения",
+      "kind": "products",
+      "products": 8,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "3.3",
+      "title": "Средства и инструменты для сосков",
+      "kind": "products",
+      "products": 7,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "3.4",
+      "title": "Средства до доения",
+      "kind": "products",
+      "products": 8,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "3.5",
+      "title": "Средства после доения",
+      "kind": "products",
+      "products": 14,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "3.6",
+      "title": "Бумага и салфетки для вымени",
+      "kind": "products",
+      "products": 21,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "3.7",
+      "title": "Молочные фильтры",
+      "kind": "products",
+      "products": 6,
+      "tables": 0,
+      "notes": 1
+    },
+    {
+      "id": "3.8",
+      "title": "Отбор проб и учёт молока",
+      "kind": "products",
+      "products": 5,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "3.9",
+      "title": "Измерительные приборы",
+      "kind": "products",
+      "products": 10,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "4.1",
+      "title": "Ветеринарное акушерство и гинекология",
+      "kind": "products",
+      "products": 7,
+      "tables": 0,
+      "notes": 1
+    },
+    {
+      "id": "4.2",
+      "title": "Дренчеры",
+      "kind": "products",
+      "products": 1,
+      "tables": 0,
+      "notes": 2
+    },
+    {
+      "id": "4.3",
+      "title": "Исследование качества кормов",
+      "kind": "products",
+      "products": 6,
+      "tables": 1,
+      "notes": 0
+    },
+    {
+      "id": "4.4",
+      "title": "Шприцы и вакцинаторы",
+      "kind": "products",
+      "products": 6,
+      "tables": 1,
+      "notes": 0
+    },
+    {
+      "id": "4.5",
+      "title": "Иглы многоразовые",
+      "kind": "products",
+      "products": 2,
+      "tables": 2,
+      "notes": 0
+    },
+    {
+      "id": "4.6",
+      "title": "Вспомогательные специальные средства",
+      "kind": "products",
+      "products": 10,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "4.7",
+      "title": "Средства фиксации животных",
+      "kind": "products",
+      "products": 9,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "4.8",
+      "title": "Кастрация животных",
+      "kind": "products",
+      "products": 4,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "4.9",
+      "title": "Ветеринарные экспресс-тесты",
+      "kind": "products",
+      "products": 11,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "4.10",
+      "title": "Ветеринарные препараты",
+      "kind": "products",
+      "products": 80,
+      "tables": 0,
+      "notes": 7
+    },
+    {
+      "id": "4.11",
+      "title": "Препараты «РубиконВ»",
+      "kind": "products",
+      "products": 92,
+      "tables": 0,
+      "notes": 7
+    },
+    {
+      "id": "4.12",
+      "title": "Препараты «Экохимтех»",
+      "kind": "products",
+      "products": 19,
+      "tables": 0,
+      "notes": 4
+    },
+    {
+      "id": "5.1",
+      "title": "Уход за шкурой",
+      "kind": "products",
+      "products": 5,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "5.2",
+      "title": "Уход за копытами",
+      "kind": "products",
+      "products": 30,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "5.3",
+      "title": "Маркировка и идентификация животных",
+      "kind": "products",
+      "products": 6,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "5.4",
+      "title": "Ошейники для содержания КРС",
+      "kind": "products",
+      "products": 21,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "5.5",
+      "title": "Ушные бирки и инструменты для маркировки",
+      "kind": "products",
+      "products": 17,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "5.6",
+      "title": "Усмирение и фиксация животных",
+      "kind": "products",
+      "products": 18,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "5.7",
+      "title": "Электропастухи и системы ограждения",
+      "kind": "products",
+      "products": 53,
+      "tables": 0,
+      "notes": 7
+    },
+    {
+      "id": "6.1",
+      "title": "Домики для телят",
+      "kind": "products",
+      "products": 3,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.2",
+      "title": "Выпойка молодняка КРС",
+      "kind": "products",
+      "products": 20,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.3",
+      "title": "Вёдра для выпойки телят",
+      "kind": "products",
+      "products": 19,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.4",
+      "title": "Поилки для телят",
+      "kind": "products",
+      "products": 3,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.5",
+      "title": "Кормушки",
+      "kind": "products",
+      "products": 4,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.6",
+      "title": "Отслеживание иммунного статуса телят",
+      "kind": "products",
+      "products": 4,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.7",
+      "title": "Пакеты для молозива",
+      "kind": "products",
+      "products": 2,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.8",
+      "title": "Подогреватели молока для телят",
+      "kind": "products",
+      "products": 5,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.9",
+      "title": "Кольца от самовысасывания",
+      "kind": "products",
+      "products": 3,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.10",
+      "title": "Средства обогрева молодняка",
+      "kind": "products",
+      "products": 3,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "6.11",
+      "title": "Средства для обезроживания",
+      "kind": "products",
+      "products": 8,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "7.1",
+      "title": "Выпойка и кормление МРС",
+      "kind": "products",
+      "products": 25,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "7.2",
+      "title": "Кастрация",
+      "kind": "products",
+      "products": 1,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "7.3",
+      "title": "Обработка копыт",
+      "kind": "products",
+      "products": 9,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "7.4",
+      "title": "Стрижка",
+      "kind": "products",
+      "products": 3,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "8.1",
+      "title": "Оборудование для мойки ёмкостей и доильного оборудования",
+      "kind": "products",
+      "products": 20,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "8.2",
+      "title": "Рабочий инвентарь",
+      "kind": "products",
+      "products": 28,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "8.3",
+      "title": "Средства для мойки и дезинфекции оборудования и помещений",
+      "kind": "products",
+      "products": 9,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "9.1",
+      "title": "Генераторы тумана и оборудование для обработки",
+      "kind": "products",
+      "products": 92,
+      "tables": 0,
+      "notes": 5
+    },
+    {
+      "id": "9.2",
+      "title": "Дезковрики и дезбарьеры",
+      "kind": "products",
+      "products": 6,
+      "tables": 1,
+      "notes": 4
+    },
+    {
+      "id": "9.3",
+      "title": "Сухая дезинфекция",
+      "kind": "products",
+      "products": 7,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "9.4",
+      "title": "Ловушки для борьбы с летающими насекомыми",
+      "kind": "products",
+      "products": 5,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "10.1",
+      "title": "Влагомеры зерна",
+      "kind": "products",
+      "products": 6,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "10.2",
+      "title": "Влагомеры для зерен кофе и какао",
+      "kind": "products",
+      "products": 1,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "10.3",
+      "title": "Плотномер почвы",
+      "kind": "products",
+      "products": 1,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "10.4",
+      "title": "Влагомеры для сена, силоса и сенажа",
+      "kind": "products",
+      "products": 4,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "10.5",
+      "title": "Датчики и аксессуары для контроля кормов",
+      "kind": "products",
+      "products": 3,
+      "tables": 0,
+      "notes": 0
+    },
+    {
+      "id": "11.1",
+      "title": "Защитные перчатки",
+      "kind": "products",
+      "products": 7,
+      "tables": 0,
+      "notes": 9
+    },
+    {
+      "id": "11.2",
+      "title": "Ветеринарные одноразовые средства защиты",
+      "kind": "products",
+      "products": 6,
+      "tables": 0,
+      "notes": 1
+    },
+    {
+      "id": "11.3",
+      "title": "Одежда специального назначения",
+      "kind": "products",
+      "products": 13,
+      "tables": 1,
+      "notes": 3
+    }
+  ],
+  "suspiciousProducts": [],
+  "duplicateIds": [],
+  "duplicateArticles": [
+    {
+      "article": "0202.012",
+      "count": 2
+    },
+    {
+      "article": "1105.061",
+      "count": 2
+    },
+    {
+      "article": "1105.051",
+      "count": 2
+    },
+    {
+      "article": "1105.048*",
+      "count": 2
+    },
+    {
+      "article": "1104.059 — 70 мл; 1104.056 — 200 мл; 1104.057 — 300 мл; 1104.058 — 500 мл",
+      "count": 2
+    },
+    {
+      "article": "0203.040",
+      "count": 2
+    },
+    {
+      "article": "0203.015*",
+      "count": 2
+    },
+    {
+      "article": "0207.064",
+      "count": 2
+    },
+    {
+      "article": "0207.040",
+      "count": 2
+    },
+    {
+      "article": "0207.041",
+      "count": 2
+    },
+    {
+      "article": "0207.207",
+      "count": 2
+    },
+    {
+      "article": "190030 / 190032",
+      "count": 2
+    },
+    {
+      "article": "0206.075",
+      "count": 2
+    },
+    {
+      "article": "0206.076",
+      "count": 2
+    },
+    {
+      "article": "0206.077",
+      "count": 2
+    },
+    {
+      "article": "0403.050",
+      "count": 2
+    },
+    {
+      "article": "0403.051",
+      "count": 2
+    },
+    {
+      "article": "0210.007",
+      "count": 2
+    },
+    {
+      "article": "0210.005",
+      "count": 2
+    },
+    {
+      "article": "0210.004",
+      "count": 2
+    },
+    {
+      "article": "0210.006",
+      "count": 2
+    },
+    {
+      "article": "0201.028*",
+      "count": 4
+    },
+    {
+      "article": "0206.081",
+      "count": 2
+    },
+    {
+      "article": "0210.011",
+      "count": 2
+    },
+    {
+      "article": "0210.002",
+      "count": 2
+    },
+    {
+      "article": "0210.021",
+      "count": 2
+    },
+    {
+      "article": "0210.020",
+      "count": 2
+    },
+    {
+      "article": "0210.022",
+      "count": 2
+    },
+    {
+      "article": "0210.023",
+      "count": 2
+    },
+    {
+      "article": "1101.03.016*",
+      "count": 2
+    }
+  ]
+}
