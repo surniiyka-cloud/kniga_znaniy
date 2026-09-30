@@ -96,19 +96,29 @@ function applyLiveParsed(section,parsed){
 function applyStoredLiveSnapshots(){
   const snaps=liveSnapshots();for(const [id,snap] of Object.entries(snaps)){const x=bookSectionById(id);if(x&&snap?.parsed)applyLiveParsed(x.section,snap.parsed)}
 }
-async function fetchLiveSection(sectionId){
-  const x=bookSectionById(sectionId);if(!x?.section?.gid)throw new Error("У этого раздела нет прямого листа Google Sheets. Открой конкретную карточку или подраздел.");
+async function fetchLiveSection(sectionId,{rebuild=true}={}){
+  const x=bookSectionById(sectionId);if(!x?.section?.gid)throw new Error("У раздела "+sectionId+" нет прямого листа Google Sheets.");
   const sid=state.book.spreadsheetId,gid=x.section.gid,base="https://docs.google.com/spreadsheets/d/"+encodeURIComponent(sid);
   const urls=[base+"/export?format=csv&gid="+encodeURIComponent(gid)+"&_="+Date.now(),base+"/gviz/tq?tqx=out:csv&gid="+encodeURIComponent(gid)+"&_="+Date.now()];
   let last=null;
   for(const url of urls){try{const res=await fetch(url,{cache:"no-store",redirect:"follow"}),text=await res.text();if(!res.ok||/<!doctype html|<html/i.test(text.slice(0,500)))throw new Error("Google Sheets HTTP "+res.status);const rows=liveCsv(text);if(!rows.length)throw new Error("Google Sheets вернул пустой лист");
       const parsed=liveClassify(rows),snaps=liveSnapshots();snaps[sectionId]={fetchedAt:new Date().toISOString(),gid:String(gid),parsed};saveLiveSnapshots(snaps);applyLiveParsed(x.section,parsed);
-      mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();counters();installEditorApi();
-      const r=route();if(r.name==="product"&&!ctx(r.id))go("section",sectionId);else render();
-      q("#syncState").textContent="Google Sheets · свежие данные "+fmtDate(new Date().toISOString());
+      if(rebuild)rebuildAfterLiveRefresh(sectionId);
       return {sectionId,rows:rows.length,fetchedAt:snaps[sectionId].fetchedAt};
     }catch(e){last=e}}
-  throw new Error("Не удалось забрать свежие данные напрямую из Google Sheets: "+(last?.message||"ошибка запроса"));
+  throw new Error("Не удалось забрать свежие данные из листа "+sectionId+": "+(last?.message||"ошибка запроса"));
+}
+function rebuildAfterLiveRefresh(fallbackSection=""){
+  const before=route(),productId=before.name==="product"?before.id:"";
+  mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();counters();installEditorApi();
+  if(productId&&!ctx(productId))go("section",fallbackSection||"home");else render();
+  q("#syncState").textContent="Google Sheets · свежие данные "+fmtDate(new Date().toISOString());
+}
+async function refreshLiveSections(ids){
+  const list=[...new Set((ids||[]).filter(Boolean))];if(!list.length)throw new Error("Не найден лист Google Sheets для обновления.");
+  const result=[];for(const id of list)result.push(await fetchLiveSection(id,{rebuild:false}));
+  rebuildAfterLiveRefresh(list[0]);
+  return {sectionId:list.length===1?list[0]:list.join(", "),rows:result.reduce((n,x)=>n+(x.rows||0),0),sections:list.length,items:result};
 }
 
 function displaySections(ch){
@@ -166,7 +176,8 @@ function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   const baseId="catalog-"+safeSlug(sectionId+"-"+name);let id=baseId,n=2;while(state.products.has(id))id=baseId+"-"+n++;
   const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
   const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
-  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],options:opts.options||[],variants:opts.variants||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[],washCycle:opts.washCycle||[],customTabs:opts.customTabs||[]};
+  const sourceSectionId=opts.sourceSectionId||sectionId,sourceRef=bookSectionById(sourceSectionId)?.section||null;
+  const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],indicatorTable:opts.indicatorTable||null,options:opts.options||[],variants:opts.variants||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[],washCycle:opts.washCycle||[],customTabs:opts.customTabs||[],sourceSectionId,sourceGid:opts.sourceGid||sourceRef?.gid||null};
   const ctxObj={chapter:x.chapter,section:x.section,product:p};
   if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
   state.sectionCatalog.get(sectionId).push(ctxObj);
@@ -315,7 +326,7 @@ function compactRowValue(r,start=1){
 }
 function parseAnalyzerRaw(section){
   const rows=section.rawRows||section.rows||[];
-  const out={fields:[],indicators:[],options:[],variants:[],calibration:[],equipment:[],advantages:[],customTabs:[]};
+  const out={fields:[],indicators:[],indicatorTable:null,options:[],variants:[],calibration:[],equipment:[],advantages:[],customTabs:[]};
   let mode="fields",custom=null;
   const headingMap=new Map([
     ["измеряемые показатели","indicators"],["дополнительные опции","options"],["дополнительные параметры / опции","options"],
@@ -336,6 +347,10 @@ function parseAnalyzerRaw(section){
     if(i===0&&vals.length===1)continue;
     if(!first)continue;
     const value=compactRowValue(r,1);
+    if(mode==="indicators"&&/^Показатель$/i.test(first)&&vals.length>=2){
+      out.indicatorTable={headers:r.map(v=>String(v||"").trim()).filter(Boolean),rows:[]};
+      continue;
+    }
     if(headerRx.test(first)&&/^(Значение|Диапазон измерения|Артикул|Калибровка по умолчанию|Описание|Практическое значение)$/i.test(String(r[1]||"").trim()))continue;
 
     if(vals.length===1){
@@ -350,6 +365,13 @@ function parseAnalyzerRaw(section){
       out.calibration.push(pair);continue;
     }
     if(mode==="custom"&&custom){custom.rows.push(pair);continue;}
+    if(mode==="indicators"){
+      if(out.indicatorTable?.headers?.length){
+        const width=out.indicatorTable.headers.length,row=Array.from({length:width},(_,j)=>String(r[j]||"").trim());
+        if(row.some(Boolean))out.indicatorTable.rows.push(row);
+      }
+      out.indicators.push(pair);continue;
+    }
     out[mode].push(pair);
   }
   for(const k of ["fields","indicators","options","variants","calibration","equipment","advantages"])out[k]=uniquePairs(out[k]);
@@ -450,14 +472,14 @@ function buildExtensoCard(ext){
     .filter(([l,v])=>l&&v&&!/^(СИСТЕМА EXTENSO|Характеристика)$/i.test(l)&&v!=="Значение"));
   const milk=pairRange("EXTENSO ДЛЯ МОЛОКА","EXTENSO ДЛЯ МЯСА");
   const meat=pairRange("EXTENSO ДЛЯ МЯСА","КОМПЛЕКТАЦИЯ");
-  const compMilk=[],compMeat=[],workMilk=[],workMeat=[],calibration=[],advantages=[],substances=[];let mode="",sub="";
+  const compMilk=[],compMeat=[],workMilk=[],workMeat=[],calibration=[],advantages=[];let mode="",sub="";
   for(const r of rows){
     const a=String(r[0]||"").trim(),v=String(r[1]||"").trim();
     if(a==="КОМПЛЕКТАЦИЯ"){mode="comp";sub="";continue}
     if(a==="ПОРЯДОК РАБОТЫ"){mode="workflow";sub="";continue}
     if(a==="КАЛИБРОВКА"){mode="cal";continue}
     if(a==="ПРЕИМУЩЕСТВА И ПРАКТИЧЕСКОЕ ЗНАЧЕНИЕ"){mode="adv";continue}
-    if(a.startsWith("ТАБЛИЦА ЧУВСТВИТЕЛЬНОСТИ EXTENSO")){mode="sens";continue}
+    if(a.startsWith("ТАБЛИЦА ЧУВСТВИТЕЛЬНОСТИ EXTENSO")){mode="";continue}
     if(mode==="comp"){
       if(["Молоко","Мясо"].includes(a)){sub=a;continue}
       if(a&&v&&!["Компонент","Количество"].includes(a))(sub==="Мясо"?compMeat:compMilk).push([a,v]);
@@ -468,20 +490,27 @@ function buildExtensoCard(ext){
       if(a&&v&&a!=="Вид калибровки")calibration.push([a,v]);
     }else if(mode==="adv"){
       if(a&&v&&a!=="Преимущество")advantages.push([a,v]);
-    }else if(mode==="sens"){
-      const group=String(r[1]||"").trim(),name=String(r[2]||"").trim(),ppb=String(r[3]||"").trim();
-      if(name&&ppb&&!/Определяемое вещество/i.test(name))substances.push({group,substance:name,ppb});
     }
   }
+  const sensTabs=[];
+  const sensStarts=rows.map((r,i)=>String(r?.[0]||"").trim().startsWith("ТАБЛИЦА ЧУВСТВИТЕЛЬНОСТИ EXTENSO")?i:-1).filter(i=>i>=0);
+  sensStarts.forEach((st,i)=>{
+    const title=String(rows[st]?.[0]||"").trim(),header=(rows[st+1]||[]).map(v=>String(v||"").trim()).filter(Boolean),en=sensStarts[i+1]??rows.length;
+    const body=rows.slice(st+2,en).map(r=>Array.from({length:header.length},(_,j)=>String(r?.[j]||"").trim())).filter(r=>r.some(Boolean));
+    if(!header.length||!body.length)return;
+    const isMeat=/МЯСО/i.test(title);
+    sensTabs.push({id:isMeat?"extSensitivityMeat":"extSensitivityMilk",label:isMeat?"Чувствительность · мясо":"Чувствительность · молоко",kind:"table",headers:header,rows:body});
+  });
   const customTabs=[
     {id:"extMilk",label:"EXTENSO для молока",kind:"pairs",rows:milk},
     {id:"extMeat",label:"EXTENSO для мяса",kind:"pairs",rows:meat},
     {id:"compMilk",label:"Комплектация · молоко",kind:"pairs",rows:compMilk},
     {id:"compMeat",label:"Комплектация · мясо",kind:"pairs",rows:compMeat},
     {id:"workMilk",label:"Порядок работы · молоко",kind:"steps",rows:workMilk},
-    {id:"workMeat",label:"Порядок работы · мясо",kind:"steps",rows:workMeat}
+    {id:"workMeat",label:"Порядок работы · мясо",kind:"steps",rows:workMeat},
+    ...sensTabs
   ];
-  return {fields,customTabs,calibration,advantages,substances};
+  return {fields,customTabs,calibration:uniquePairs(calibration),advantages:uniquePairs(advantages),substances:[]};
 }
 function buildConsumableBlocks(s){
   const rows=s.rawRows||s.rows||[],starts=[];
@@ -579,16 +608,16 @@ function buildChapter2Catalog(){
     const fields=withFallbackFields(x.fields,analyzerBase[child.id]||[]);
     const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{
-      type:"Анализатор качества молока",indicators:x.indicators,options:x.options,variants:x.variants,
-      calibration:x.calibration,advantages:x.advantages,customTabs
+      type:"Анализатор качества молока",indicators:x.indicators,indicatorTable:x.indicatorTable,options:x.options,variants:x.variants,
+      calibration:x.calibration,advantages:x.advantages,customTabs,sourceSectionId:child.id,sourceGid:child.gid
     });
   }
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
     const x=parseAnalyzerRaw(child),fields=uniquePairs(x.fields);
     const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.7",child.title,fields,state.assets.sectionImages?.[child.id]||[],{
-      type:"Анализатор соматических клеток",indicators:x.indicators,options:x.options,variants:x.variants,
-      calibration:x.calibration,advantages:x.advantages,customTabs
+      type:"Анализатор соматических клеток",indicators:x.indicators,indicatorTable:x.indicatorTable,options:x.options,variants:x.variants,
+      calibration:x.calibration,advantages:x.advantages,customTabs,sourceSectionId:child.id,sourceGid:child.gid
     });
   }
   // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
@@ -835,7 +864,7 @@ function mapData(){
 }
 function buildLiveSearchIndex(){
   const out=[];
-  for(const [id,x] of state.products){const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
+  for(const [id,x] of state.products){const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
   return out;
 }
 function installEditorApi(){
@@ -844,7 +873,8 @@ function installEditorApi(){
       const r=route();
       if(r.name==="product"){
         const x=ctx(r.id);if(!x)return {kind:"none"};
-        return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+        const sourceId=x.product.sourceSectionId||x.section.id,source=bookSectionById(sourceId)?.section||null;
+        return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
       if(r.name==="section"){
         const x=state.sections.get(r.id);if(!x)return {kind:"none"};
@@ -857,11 +887,19 @@ function installEditorApi(){
       return {kind:"dashboard",spreadsheetId:state.book.spreadsheetId};
     },
     async refreshCurrentSection(){
-      const r=route();let id="";
-      if(r.name==="product")id=ctx(r.id)?.section?.id||"";
-      else if(r.name==="section")id=r.id;
-      if(!id)throw new Error("Сначала открой нужный раздел или карточку товара.");
-      return fetchLiveSection(id);
+      const r=route();
+      if(r.name==="product"){
+        const x=ctx(r.id),id=x?.product?.sourceSectionId||x?.section?.id||"";
+        if(!id)throw new Error("Для этой карточки не найден исходный лист Google Sheets.");
+        return refreshLiveSections([id]);
+      }
+      if(r.name==="section"){
+        const direct=bookSectionById(r.id)?.section;
+        if(direct?.gid)return refreshLiveSections([r.id]);
+        const ch=state.sections.get(r.id)?.chapter,children=(ch?.sections||[]).filter(s=>s.id.startsWith(r.id+".")&&s.gid).map(s=>s.id);
+        if(children.length)return refreshLiveSections(children);
+      }
+      throw new Error("Сначала открой нужный раздел или карточку товара.");
     }
   };
   window.dispatchEvent(new CustomEvent("kb:ready"));
@@ -1032,7 +1070,7 @@ function fields(p){
 
 function productTabs(p){
   let tabs=[{id:"specs",label:"Характеристики"}];
-  if(p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
+  if(p.indicatorTable?.rows?.length||p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
   if(p.options?.length)tabs.push({id:"options",label:"Дополнительные опции"});
   if(p.variants?.length)tabs.push({id:"variants",label:"Варианты исполнения"});
   if(p.advantages?.length)tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества / особенности"});
@@ -1060,10 +1098,14 @@ function substanceTable(rows){
   let last="";
   return '<div class="substance-table-wrap"><table class="substance-table"><thead><tr><th>Вещество</th><th>ppb (мкг/кг)</th></tr></thead><tbody>'+(rows||[]).map((r)=>{const head=r.group&&r.group!==last?(last=r.group,'<tr class="substance-group"><td colspan="2">'+esc(r.group)+'</td></tr>'):"";return head+'<tr><td>'+esc(r.substance)+'</td><td>'+esc(r.ppb)+'</td></tr>';}).join("")+'</tbody></table></div>';
 }
+function tablePanel(headers,rows){
+  const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
+  return '<div class="table-wrap"><table class="data-table"><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map(r=>'<tr>'+Array.from({length:h.length},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
+}
 function tabPanelHtml(p,id){
   if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
   if(id==="advantages")return pairCards(p.advantages||[]);
-  if(id==="indicators")return pairCards(p.indicators||[]);
+  if(id==="indicators")return p.indicatorTable?.rows?.length?tablePanel(p.indicatorTable.headers,p.indicatorTable.rows):pairCards(p.indicators||[]);
   if(id==="options")return pairCards(p.options||[]);
   if(id==="variants")return pairCards(p.variants||[]);
   if(id==="complectation")return pairCards(p.complectation||[]);
@@ -1074,7 +1116,7 @@ function tabPanelHtml(p,id){
   if(id==="consumables")return pairCards(p.consumables||[]);
   if(id==="testKits")return pairCards(p.testKits||[]);
   const custom=(p.customTabs||[]).find((t)=>t.id===id);
-  if(custom)return custom.kind==="steps"?stepCards(custom.rows||[]):pairCards(custom.rows||[]);
+  if(custom)return custom.kind==="table"?tablePanel(custom.headers||[],custom.rows||[]):custom.kind==="steps"?stepCards(custom.rows||[]):pairCards(custom.rows||[]);
   if(id==="substances")return substanceTable(p.substances||[]);
   return "";
 }
