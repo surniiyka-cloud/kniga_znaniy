@@ -95,6 +95,19 @@ function uniquePairs(arr){
   for(const r of arr||[]){const k=String(r?.[0]||"").trim()+"\u0000"+String(r?.[1]||"").trim();if(!r?.[0]||!r?.[1]||seen.has(k))continue;seen.add(k);out.push([String(r[0]).trim(),String(r[1]).trim()]);}
   return out;
 }
+function withFallbackFields(fields,fallback=[]){
+  const source=uniquePairs(fields),labels=new Set(source.map(r=>String(r[0]).trim().toLowerCase()));
+  return uniquePairs([...source,...fallback.filter(r=>!labels.has(String(r?.[0]||"").trim().toLowerCase()))]);
+}
+function sourcePairs(rows,{keepSingles=false}={}){
+  const out=[];
+  for(const r of rows||[]){
+    const vals=(r||[]).map(v=>String(v||"").trim());
+    if(vals[0]&&vals.slice(1).some(Boolean))out.push([vals[0],vals.slice(1).filter(Boolean).join(" · ")]);
+    else if(keepSingles&&vals[0])out.push(["Дополнительная информация",vals[0]]);
+  }
+  return uniquePairs(out.filter(([l,v])=>l&&v&&!/^(Характеристика|Особенность|Преимущество|Этап)$/i.test(l)&&!/^(Значение|Практическое значение|Действие)$/i.test(v)));
+}
 function parseRowBlock(rows,config={}){
   const fields=[],advantages=[],substances=[];let group=config.initialGroup||"";
   const pairs=config.fieldPairs||[[0,1]];
@@ -434,8 +447,12 @@ function buildChapter2Catalog(){
   const ext=sBy("2.3");if(ext){const x=buildExtensoCard(ext);registerCatalog("2.3","Система EXTENSO · молоко и мясо",x.fields,state.assets.sectionImages?.["2.3"]||[],x);}
   const inc=sBy("2.4");if(inc){
     const x=splitAdvantages(inc.pairs);
-    const fields=[["Артикул","1001.01.006"],["Назначение","Инкубация экспресс-тестов для определения антибиотиков в молоке"],["Производство","Болгария"],["Количество тест-полосок","До 8 одновременно"],["Диапазон температуры","30–80 °C"],...x.fields.filter((r)=>!["Особенности","Источник","Режим","№1","№2","№3"].includes(r[0]))];
-    registerCatalog("2.4","Термостатическое устройство TIAS",uniquePairs(fields),["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"],{advantages:x.advantages,customTabs:[{id:"modes",label:"Режимы работы",kind:"pairs",rows:[["Режим №1","GARANT — 37 °C, 3+7 минут"],["Режим №2","TwinSensor — 40 °C, 3+3 минуты"],["Режим №3","4Sensor, ANKAR Milk, Sensitive — 40 °C, 5+5 минут"]]}]});
+    const modes=uniquePairs(x.fields.filter(r=>/^Режим работы №/i.test(String(r[0]||""))));
+    const fields=uniquePairs(x.fields.filter(r=>!/^Режим работы №/i.test(String(r[0]||""))&&!/^(Характеристика|Наименование)$/i.test(String(r[0]||""))));
+    const name=(inc.rawRows||[]).find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Термостатическое устройство TIAS";
+    registerCatalog("2.4",name,fields,["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"],{
+      advantages:x.advantages,customTabs:modes.length?[{id:"modes",label:"Режимы работы",kind:"pairs",rows:modes}]:[]
+    });
   }
 
   const readers=sBy("2.5");if(readers){
@@ -453,19 +470,15 @@ function buildChapter2Catalog(){
   };
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
     const x=parseAnalyzerRaw(child);
-    const fields=uniquePairs([...(analyzerBase[child.id]||[]),...x.fields]);
+    const fields=withFallbackFields(x.fields,analyzerBase[child.id]||[]);
     const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{
       type:"Анализатор качества молока",indicators:x.indicators,options:x.options,variants:x.variants,
       calibration:x.calibration,advantages:x.advantages,customTabs
     });
   }
-  const somaticBase={
-    "2.7.1":[["Артикул","0704.04.002"],["Исследуемый материал","Молоко"],["Метод","Вискозиметрический"],["Диапазон измерения","90–1500 тыс. клеток/см³"],["Гарантия","2 года"]],
-    "2.7.2":[["Артикул","0704.04.004"],["Исследуемый материал","Молоко"],["Метод","Флуоресцентный"],["Диапазон измерения","0–10 000 000 клеток/см³"],["Гарантия","2 года"]]
-  };
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
-    const x=parseAnalyzerRaw(child),fields=uniquePairs([...(somaticBase[child.id]||[]),...x.fields]);
+    const x=parseAnalyzerRaw(child),fields=uniquePairs(x.fields);
     const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.7",child.title,fields,state.assets.sectionImages?.[child.id]||[],{
       type:"Анализатор соматических клеток",indicators:x.indicators,options:x.options,variants:x.variants,
