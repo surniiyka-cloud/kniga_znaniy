@@ -31,6 +31,14 @@ jobs:
           node --check js/storage.js
           node --check js/router.js
           node --check service-worker.js
+      - name: Проверить обязательные функции рендера
+        run: |
+          grep -q "function pairCards" js/app.js
+          grep -q "function stepCards" js/app.js
+          grep -q "function substanceTable" js/app.js
+          grep -q "function tablePanel" js/app.js
+          grep -q "function productTabs" js/app.js
+          grep -q "function tabPanelHtml" js/app.js
       - name: Проверить данные
         run: |
           node -e "JSON.parse(require('fs').readFileSync('data/book.json','utf8')); JSON.parse(require('fs').readFileSync('data/assets.json','utf8')); JSON.parse(require('fs').readFileSync('data/search-index.json','utf8')); JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('JSON OK')"
