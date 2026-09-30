@@ -83,8 +83,8 @@ function tableLabel(ctx,id){
   return (ctx.tabs||[]).find(t=>t.id===id)?.label||defaultTabLabel(id,ctx.product)||id;
 }
 function normalizedTabTables(ctx){
-  const tables=deep(ctx.product?.tabTables||{});
-  if(!Object.prototype.hasOwnProperty.call(tables,"indicators")&&ctx.product?.indicatorTable)tables.indicators=deep(ctx.product.indicatorTable);
+  const hasTables=Object.prototype.hasOwnProperty.call(ctx.product||{},"tabTables"),tables=deep(ctx.product?.tabTables||{});
+  if(!hasTables&&ctx.product?.indicatorTable)tables.indicators=deep(ctx.product.indicatorTable);
   return tables;
 }
 function tableEditorHtml(id,label,table){
@@ -274,7 +274,7 @@ async function saveProduct(e){
     delete out.id;
     for(const key of ["name","article","type","purpose"])putDiff(out,key,String(fd.get(key)||""),String(src[key]||""));
     for(const [key] of PAIR_FIELDS){const value=parsePairs(form.querySelector('[data-pair-key="'+key+'"]')?.value||"");putDiff(out,key,value,src[key]||[])}
-    const baseTables=deep(src.tabTables||{});if(!Object.prototype.hasOwnProperty.call(baseTables,"indicators")&&src.indicatorTable)baseTables.indicators=deep(src.indicatorTable);
+    const baseHasTables=Object.prototype.hasOwnProperty.call(src||{},"tabTables"),baseTables=deep(src.tabTables||{});if(!baseHasTables&&src.indicatorTable)baseTables.indicators=deep(src.indicatorTable);
     putDiff(out,"tabTables",collectTabTables(form),baseTables);
     delete out.indicatorTable;
     putDiff(out,"substances",parseSubstances(form.querySelector("[data-substances]")?.value||""),src.substances||[]);
