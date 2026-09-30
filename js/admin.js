@@ -81,7 +81,7 @@ function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-sta
 
 function shell(title,subtitle,inner){
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Администратор</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-admin-refresh>↻ Обновить данные</button><button class="kb-admin-btn ghost" data-admin-export>↓ Экспорт правок</button><label class="kb-admin-btn ghost kb-admin-import">↑ Импорт правок<input type="file" accept="application/json,.json" data-admin-import hidden></label><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-admin-export>↓ Экспорт правок</button><label class="kb-admin-btn ghost kb-admin-import">↑ Импорт правок<input type="file" accept="application/json,.json" data-admin-import hidden></label><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function renderEditor(){
@@ -136,7 +136,14 @@ function renderChapterEditor(ctx){
 }
 function bindBody(){
   const body=modal?.querySelector("#kbAdminBody");if(!body)return;
-  body.querySelector("[data-admin-refresh]")?.addEventListener("click",()=>location.reload());
+  body.querySelector("[data-admin-refresh]")?.addEventListener("click",async e=>{
+    const b=e.currentTarget;b.disabled=true;showStatus("Забираю свежие данные из текущего листа Google Sheets…","warn");
+    try{
+      const r=await window.KB_EDITOR_API?.refreshCurrentSection?.();
+      showStatus("Готово: раздел "+(r?.sectionId||"")+" обновлён сразу из Google Sheets ("+(r?.rows||0)+" строк).");
+      await renderEditor();
+    }catch(err){showError(err)}finally{b.disabled=false}
+  });
   body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
     const data=await loadOverrides(true);
     const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
