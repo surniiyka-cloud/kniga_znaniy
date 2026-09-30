@@ -184,17 +184,23 @@ function parseParallelProduct(rows,st,en){
   return {name,fields:uniquePairs(fields),advantages:uniquePairs(advantages),complectation:uniquePairs(complectation),substances,customTabs};
 }
 function buildGarantCards(s){
-  const rows=s.rawRows||s.rows||[],starts=[];
-  rows.forEach((r,i)=>{const a=String(r[0]||"").trim();if(i===0&&/GARANT BTSC PLUS/i.test(a))starts.push(i);else if(a==="Наименование"&&/GARANT/i.test(String(r[1]||"")))starts.push(i);});
+  const rows=s.rawRows||s.rows||[],starts=parallelBlockStarts(rows),merged=new Map();
+  starts.forEach((st,i)=>{
+    const marker=String(rows[st]?.[0]||"").trim(),parsed=parseParallelProduct(rows,st,starts[i+1]??rows.length);
+    const key=marker.toLowerCase(),old=merged.get(key)||{name:parsed.name||marker,fields:[],advantages:[],complectation:[],substances:[],customTabs:[]};
+    old.fields=uniquePairs([...old.fields,...parsed.fields]);
+    old.advantages=uniquePairs([...old.advantages,...parsed.advantages]);
+    old.complectation=uniquePairs([...old.complectation,...parsed.complectation]);
+    old.customTabs=[...old.customTabs,...parsed.customTabs];
+    const seen=new Set(old.substances.map(x=>[x.group,x.substance,x.ppb].join("\u0000")));
+    for(const x of parsed.substances){const k=[x.group,x.substance,x.ppb].join("\u0000");if(!seen.has(k)){seen.add(k);old.substances.push(x)}}
+    merged.set(key,old);
+  });
   const img=state.assets.sectionImages?.[s.id]?.[0]||"";
-  starts.forEach((st,idx)=>{
-    const en=starts[idx+1]??rows.length, block=rows.slice(st,en);
-    const name=st===0?"Экспресс-тест GARANT BTSC PLUS":String(block[0]?.[1]||"").trim();
-    const parsed=parseRowBlock(block,{fieldPairs:[[0,1]],advCols:[2,3],substanceCols:[4,5]});
-    registerCatalog(s.id,name,parsed.fields,img?[img]:[],{advantages:parsed.advantages,substances:parsed.substances});
+  for(const parsed of merged.values())registerCatalog(s.id,parsed.name,parsed.fields,img?[img]:[],{
+    advantages:parsed.advantages,complectation:parsed.complectation,substances:parsed.substances,customTabs:parsed.customTabs
   });
 }
-
 function splitAdvantages(pairs){
   const arr=pairs||[],idx=arr.findIndex((p)=>/^(Преимущество|Особенность)$/i.test(String(p.label||"").trim())&&/Практическое значение/i.test(String(p.value||"")));
   if(idx<0)return {fields:cleanPairs(arr),advantages:[]};
@@ -330,16 +336,17 @@ function sectionRowsBetween(rows,startLabel,endLabel){
 }
 function buildExtensoCard(ext){
   const rows=ext.rawRows||ext.rows||[];
-  const fields=[
-    ["Производитель","Unisensor, Бельгия"],["Артикул","1002.03.003"],["Тип системы","Диагностическая мультиплексная платформа"],
-    ["Назначение","Скрининг ветеринарно-лекарственных средств и афлатоксина M1"],["Основная матрица","Молоко и мясо"],
-    ["Что определяет в молоке","103 вида антибиотиков + афлатоксин M1"],["Количество специфических групп в молоке","17 каналов"],
-    ["Время анализа молока","13 минут"],["Интерпретация","Автоматическая"],["Питание","От сети или встроенной батареи"],
-    ["Совместимость","Тест-полоски Unisensor"],["Масса","6 кг"],["Происхождение","Бельгия"],
-    ["Нормативная информация","ТР ТС 021, приложение 5.1 (Решение ЕЭК №70); ГОСТ Р 59507-2021"]
-  ];
-  const milk=[["Исследуемый материал","Молоко"],["Что определяет","103 вида антибиотиков + афлатоксин M1"],["Количество каналов","17 специфических групп"],["Время анализа","13 минут"],["Температура анализа","35 °C"],["Схема инкубации","3 минуты + 10 минут"],["Подогрев молока","Не требуется"],["Микролунки","Не используются"],["Реагент","В стеклянной ампуле"],["Дозирование","Индивидуальная одноразовая пипетка для каждой полоски"],["Интерпретация","Автоматическая"],["Повторность","Каждая проба / группа анализируется трижды одной тест-полоской"]];
-  const meat=[["Исследуемый материал","Мясо"],["Количество образца","2 г"],["Дополнительный компонент","Буфер из комплекта"],["Пробоподготовка","5 минут"],["Количество специфических групп антибиотиков","14"],["Время анализа после пробоподготовки","13 минут"],["Температура анализа","35 °C"],["Схема инкубации","3 минуты + 10 минут"],["Нормативная информация","Чувствительность метода соответствует ТР ТС 021/2011 и ТР ТС 034/2013"]];
+  const headingIndex=(label)=>rows.findIndex(r=>String(r?.[0]||"").trim()===label);
+  const pairRange=(a,b)=>{
+    const st=headingIndex(a),en=b?headingIndex(b):rows.length;if(st<0)return [];
+    return uniquePairs(rows.slice(st+1,en<0?rows.length:en).map(r=>[String(r?.[0]||"").trim(),compactRowValue(r,1)])
+      .filter(([l,v])=>l&&v&&!/^(Характеристика|Показатель|Этап|Компонент|Вид калибровки|Преимущество)$/i.test(l)));
+  };
+  const firstScenario=headingIndex("EXTENSO ДЛЯ МОЛОКА");
+  const fields=uniquePairs(rows.slice(0,firstScenario<0?rows.length:firstScenario).map(r=>[String(r?.[0]||"").trim(),compactRowValue(r,1)])
+    .filter(([l,v])=>l&&v&&!/^(СИСТЕМА EXTENSO|Характеристика)$/i.test(l)&&v!=="Значение"));
+  const milk=pairRange("EXTENSO ДЛЯ МОЛОКА","EXTENSO ДЛЯ МЯСА");
+  const meat=pairRange("EXTENSO ДЛЯ МЯСА","КОМПЛЕКТАЦИЯ");
   const compMilk=[],compMeat=[],workMilk=[],workMeat=[],calibration=[],advantages=[],substances=[];let mode="",sub="";
   for(const r of rows){
     const a=String(r[0]||"").trim(),v=String(r[1]||"").trim();
