@@ -1059,7 +1059,7 @@ function imageView(p,path,context="card"){
 }
 function imageViewStyle(p,path,context="card"){
   const v=imageView(p,path,context);
-  return "object-fit:"+v.fit+";transform:translate("+v.x+"%,"+v.y+"%) scale("+v.scale+");";
+  return "object-fit:"+v.fit+" !important;transform:translate("+v.x+"%,"+v.y+"%) scale("+v.scale+") !important;";
 }
 function card(x){
   const p=x.product, images=state.assets.productImages?.[p.id]||[], im=images[0]||"", a=article(p);
