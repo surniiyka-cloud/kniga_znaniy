@@ -564,20 +564,24 @@ function buildChapter2Catalog(){
   }
 }
 function renderSensitivitySection(ch,s){
-  const tests=["4SENSOR KIT 060","4SENSOR SENSITIVE","ANKAR MILK TEST 4","GARANT 4 ULTRA MILK"];
-  const groups=[];let current={name:"Пенициллины",rows:[
-    ["Пенициллин G","2–3","0,5–1","0,5–1","1–1,5"],
-    ["Пенициллин V","3–4","1–3","1–3","—"]
-  ]};groups.push(current);
-  for(const r of (s.rows||[]).slice(1)){
-    const a=String(r[0]||"").trim();
-    if(!a||a.startsWith("Примечание."))continue;
-    if(r.length===1){current={name:a,rows:[]};groups.push(current);continue;}
+  const rows=s.rawRows||s.rows||[];
+  const headerIndex=rows.findIndex(r=>String(r?.[0]||"").trim()==="Определяемое вещество"&&r.length>1);
+  const tests=headerIndex>=0?rows[headerIndex].slice(1).map(v=>String(v||"").trim()).filter(Boolean):[];
+  const groups=[];let current=null;
+  for(let i=0;i<rows.length;i++){
+    const r=rows[i]||[],vals=r.filter(v=>String(v||"").trim()),a=String(r[0]||"").trim();
+    if(!vals.length||a.startsWith("Примечание."))continue;
+    if(vals.length===1){
+      if(!/^Сводная таблица чувствительности тестов$/i.test(a)){current={name:a,rows:[]};groups.push(current)}
+      continue;
+    }
     if(a==="Определяемое вещество")continue;
-    if(r.length>=5)current.rows.push([a,r[1]||"—",r[2]||"—",r[3]||"—",r[4]||"—"]);
+    if(!current||!tests.length)continue;
+    const values=tests.map((_,j)=>String(r[j+1]||"").trim()||"—");
+    current.rows.push([a,...values]);
   }
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Сравнение чувствительности четырёх тестов по группам веществ. Все значения — ppb (мкг/кг).</p></div></div>'+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Сравнение чувствительности тестов по группам веществ. Все значения — ppb (мкг/кг).</p></div></div>'+
     '<div class="sensitivity-legend">'+tests.map((t,i)=>'<span><b>'+(i+1)+'</b>'+esc(t)+'</span>').join("")+'</div>'+
     groups.filter((g)=>g.rows.length).map((g)=>'<section class="sensitivity-group"><div class="section-heading compact"><div><h2>'+esc(g.name)+'</h2></div><p>'+g.rows.length+' веществ</p></div><div class="sensitivity-wrap"><table class="sensitivity-table"><thead><tr><th>Вещество</th>'+tests.map((t)=>'<th>'+esc(t)+'</th>').join("")+'</tr></thead><tbody>'+g.rows.map((r)=>'<tr><td>'+esc(r[0])+'</td>'+r.slice(1).map((v)=>'<td class="'+(v==="—"?"empty":"")+'">'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>').join("")+
     '<p class="sensitivity-note">Знак «—» означает, что значение не приведено в использованной таблице чувствительности. Для полного перечня характеристик открывайте карточку конкретного теста.</p>'+rawTables(s);
