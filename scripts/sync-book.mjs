@@ -111,11 +111,16 @@ function precedingTitle(rows,i){
   }
   return "";
 }
-function rowToObject(row,keys,sourceRow,group){
+function rowToObject(row,keys,sourceRow,group,headers=[]){
   const obj={};
+  const sheetFields=[];
   keys.forEach((k,j)=>{
-    if(k!=="field"&&row[j])obj[k]=flat(row[j]);
+    const value=flat(row[j]||"");
+    const label=flat(headers[j]||"");
+    if(k!=="field"&&value)obj[k]=value;
+    if(label&&value)sheetFields.push([label,value]);
   });
+  if(sheetFields.length)obj.sheetFields=sheetFields;
   if(group)obj.group=group;
   obj.sourceRow=sourceRow;
   const name=obj.name||"";
@@ -143,7 +148,7 @@ function parseProductTables(rows){
       const nameIdx=h.keys.indexOf("name");
       const name=flat(r[nameIdx]);
       if(!name||genericName.test(name))continue;
-      const obj=rowToObject(r,h.keys,j+1,group);
+      const obj=rowToObject(r,h.keys,j+1,group,rows[i]);
       if(!obj.name)continue;
       block.push(obj);
       products.push(obj);
@@ -200,7 +205,7 @@ function applyPackedOverride(inputRows,meta){
       const r=inputRows[i].map(flat);
       if(nonemptyCount(r)<2||!r[0]||!r[1])continue;
       if(headerInfo(r).any)continue;
-      const obj=rowToObject(r,keys,i+1,"");
+      const obj=rowToObject(r,keys,i+1,"",["Наименование","Тип","Артикул","Назначение","Особенности"]);
       if(obj.name)products.push(obj);
     }
   }
@@ -286,7 +291,7 @@ const search=[];
 for(const ch of chapters)for(const s of ch.sections){
   if(s.products)for(const p of s.products)search.push({
     id:p.id,section:s.id,chapter:ch.id,name:p.name||"",article:p.article||"",
-    text:clean([p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country].filter(Boolean).join(" "))
+    text:clean([p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,...(p.sheetFields||[]).flat()].filter(Boolean).join(" "))
   });
 }
 const allProducts=[];
