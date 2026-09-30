@@ -15,8 +15,11 @@ const safe=(v)=>String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9._-]+/gi
 function emptyOverrides(){return {version:1,updatedAt:null,products:{},sections:{},chapters:{}}}
 async function loadOverrides(force=false){
   if(overrideCache&&!force)return overrideCache;
-  try{overrideCache=JSON.parse(localStorage.getItem(LOCAL_KEY)||"null")||emptyOverrides()}
-  catch{overrideCache=emptyOverrides()}
+  const published=deep(window.KB_EDITOR_API?.overrides?.()||emptyOverrides());
+  let local=null;try{local=JSON.parse(localStorage.getItem(LOCAL_KEY)||"null")||null}catch{}
+  const pt=Date.parse(published.updatedAt||"")||0,lt=Date.parse(local?.updatedAt||"")||0;
+  overrideCache=lt>pt?local:published;
+  overrideCache ||= emptyOverrides();
   overrideCache.products ||= {};
   overrideCache.sections ||= {};
   overrideCache.chapters ||= {};
