@@ -1098,6 +1098,16 @@ function productTabs(p){
   if(Array.isArray(p.tabOrder)&&p.tabOrder.length){const pos=new Map(p.tabOrder.map((id,i)=>[id,i]));tabs.sort((a,b)=>(pos.has(a.id)?pos.get(a.id):999)-(pos.has(b.id)?pos.get(b.id):999));}
   return tabs;
 }
+function pairCards(rows,cls="feature-definition-list"){
+  return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r?.[0]||"")+'</dt><dd>'+esc(r?.[1]||"")+'</dd>').join("")+'</dl>';
+}
+function stepCards(rows){
+  return '<dl class="feature-definition-list">'+(rows||[]).map((r,i)=>'<dt>'+esc(r?.[0]||("Шаг "+(i+1)))+'</dt><dd>'+esc(r?.[1]||"")+'</dd>').join("")+'</dl>';
+}
+function substanceTable(rows){
+  let last="";
+  return '<div class="substance-table-wrap"><table class="substance-table"><thead><tr><th>Вещество</th><th>ppb (мкг/кг)</th></tr></thead><tbody>'+(rows||[]).map((r)=>{const head=r.group&&r.group!==last?(last=r.group,'<tr class="substance-group"><td colspan="2">'+esc(r.group)+'</td></tr>'):"";return head+'<tr><td>'+esc(r.substance||"")+'</td><td>'+esc(r.ppb||"")+'</td></tr>';}).join("")+'</tbody></table></div>';
+}
 function tablePanel(headers,rows){
   const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
   return '<div class="table-wrap"><table class="data-table"><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map(r=>'<tr>'+Array.from({length:h.length},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
