@@ -510,37 +510,38 @@ function buildChapter2Catalog(){
     else registerCatalog(id,s.title,cleanPairs(s.pairs),state.assets.sectionImages?.[id]||[]);
   }
 
-  // 2.15 — один БиоТФ; СТАРТ / ПАСТ / ПРО / ЩФ — отдельные вкладки
+  // 2.15 — БиоТФ и тест-наборы строятся из актуальных строк листа
   const bio=sBy("2.15");if(bio){
-    const start=[["Тип анализа","Количественный"],["Назначение","Экспресс-определение общего количества микроорганизмов в сыром молоке"],["Количество определений","100"],["Состав","4 фольгированных пакета по 25 тест-пробирок СТАРТ"],["Диапазон измерения","20 000–5 000 000 КОЕ/г"]];
-    const past=[["Тип анализа","Количественный"],["Назначение","Определение общего количества микроорганизмов в пастеризованном и ультрапастеризованном молоке"],["Диапазон измерения","10–500 000 КОЕ/г"],["Дополнительный реагент","Стерилизующий агент"],["Принцип","Тест-пробирка содержит смесь флуорогенных субстратов, участвующих в микробном метаболизме с образованием флуоресцентных продуктов"]];
-    const pro=[["Тип анализа","Качественный"],["Назначение","Экспресс-контроль остаточного белка"],["Объекты контроля","Поверхности, техническая вода, смывная вода"],["Количество определений","100"],["Состав","4 фольгированных пакета по 25 тест-пробирок ПРО"],["Принцип","Определение остаточного белка по интенсивности флуоресценции комплекса белка с флуорохромом"],["Практическое значение","Позволяет оценить качество очистки поверхностей и проводить санитарный контроль после мойки оборудования"]];
-    const shf=[["Тип анализа","Качественный"],["Назначение","Определение остаточной активности щелочной фосфатазы"],["Объекты исследования","Пастеризованное молоко и молочные продукты"],["Практическая задача","Оценка эффективности пастеризации"],["Количество определений","100"],["Состав","4 фольгированных пакета по 25 тест-пробирок ЩФ"],["Метод","Прямой флуориметрический кинетический анализ"],["Принцип","Скорость изменения флуоресценции пропорциональна активности щелочной фосфатазы"],["Интерпретация","После достаточной тепловой обработки активность щелочной фосфатазы должна быть инактивирована"]];
-    const fields=[["Назначение","Количественное определение общего микробного числа (ОМЧ) в молоке"],["Время исследования","20–30 минут"],["Метод","Турбидофлуориметрический / флуориметрический"],["Стандарт","ГОСТ 34472-2018"],["Госреестр СИ","№ 56270-14"],["Обработка результата","Автоматическая, программная"]];
-    registerCatalog("2.15","Турбидофлуориметр БиоТФ",fields,state.assets.sectionImages?.["2.15"]||[],{customTabs:[
-      {id:"bioStart",label:"СТАРТ",kind:"pairs",rows:start},{id:"bioPast",label:"ПАСТ",kind:"pairs",rows:past},
-      {id:"bioPro",label:"ПРО",kind:"pairs",rows:pro},{id:"bioShf",label:"ЩФ",kind:"pairs",rows:shf}
-    ]});
+    const rows=bio.rawRows||bio.rows||[];
+    const ix=(label,from=0)=>rows.findIndex((r,i)=>i>=from&&String(r?.[0]||"").trim()===label);
+    const practical=ix("Практическое значение"),kits=ix("Тест-наборы для БиоТФ");
+    const fields=sourcePairs(rows.slice(1,practical<0?rows.length:practical));
+    const advantages=sourcePairs(rows.slice(practical+1,kits<0?rows.length:kits));
+    const kitNames=["СТАРТ","ПАСТ","ПРО","ЩФ"],customTabs=[];
+    kitNames.forEach((name,i)=>{
+      const a=ix(name,kits<0?0:kits),b=i<kitNames.length-1?ix(kitNames[i+1],a+1):rows.length;
+      if(a<0)return;
+      const block=sourcePairs(rows.slice(a+1,b<0?rows.length:b),{keepSingles:true});
+      if(block.length)customTabs.push({id:"bio-"+safeSlug(name),label:name,kind:"pairs",rows:block});
+    });
+    const name=rows.find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Турбидофлуориметр БиоТФ";
+    registerCatalog("2.15",name,fields,state.assets.sectionImages?.["2.15"]||[],{advantages,customTabs});
   }
-  // 2.16 — Люминометр SMART; LuciPac и интерпретация внутри карточки
+  // 2.16 — Люминометр SMART, LuciPac и нормы RLU — также только из листа
   const san=sBy("2.16");if(san){
-    const ps=san.pairs||[];
-    const fields=[["Категория","Санитарный мониторинг"],["Артикул","0706.36.001"],["Тип","ATP/A3 люминометр"],["Назначение","Быстрый контроль гигиены производственных поверхностей, оборудования и воды"],["Результат измерения","RLU"],["Управление","Сенсорный экран"],["Беспроводная связь","Wi-Fi"],["Работа с результатами","Облачная база результатов"],["Расходные материалы","LuciPac A3 Water / Surface"]];
-    const advantages=uniquePairs(ps.slice(12,18).map((p)=>[p.label,p.value]));
-    const luci=[["Артикул","0706.36.007"],["Категория","Расходные материалы для люминометра"],["Совместимость","Люминометр SMART"],["Назначение","Контроль воды и поверхностей"],["Область применения","Санитарный мониторинг"],["Производственная поверхность","LuciPac A3 Surface"],["Вода","LuciPac A3 Water"]];
-    const interpretation=[
-      ["Поверхность · 0–99 RLU","Чисто / рекомендуемый уровень"],
-      ["Поверхность · 100–199 RLU","Пограничная зона — требуется внимание и повторный контроль"],
-      ["Поверхность · ≥200 RLU","Неудовлетворительный результат — требуется повторная санитарная обработка"],
-      ["Вода · 0–25 RLU","Чисто / рекомендуемый уровень"],
-      ["Вода · ≥26 RLU","Повышенный уровень — требуется дополнительный контроль"]
-    ];
-    registerCatalog("2.16","Люминометр SMART",fields,state.assets.sectionImages?.["2.16"]||[],{advantages,customTabs:[
-      {id:"luci",label:"LuciPac A3",kind:"pairs",rows:luci},
-      {id:"rlu",label:"Интерпретация RLU",kind:"pairs",rows:interpretation}
-    ]});
+    const rows=san.rawRows||san.rows||[];
+    const ix=(label,from=0)=>rows.findIndex((r,i)=>i>=from&&String(r?.[0]||"").trim()===label);
+    const practical=ix("Практическое значение"),luci=ix("LuciPac A3 Water / Surface"),norms=ix("Рекомендуемые нормы производителя");
+    const fields=sourcePairs(rows.slice(1,practical<0?rows.length:practical));
+    const advantages=sourcePairs(rows.slice(practical+1,luci<0?rows.length:luci));
+    const luciRows=luci>=0?sourcePairs(rows.slice(luci+1,norms<0?rows.length:norms),{keepSingles:true}):[];
+    const normRows=norms>=0?sourcePairs(rows.slice(norms+1),{keepSingles:true}):[];
+    const customTabs=[];
+    if(luciRows.length)customTabs.push({id:"luci",label:"LuciPac A3",kind:"pairs",rows:luciRows});
+    if(normRows.length)customTabs.push({id:"rlu",label:"Интерпретация RLU",kind:"pairs",rows:normRows});
+    const name=rows.find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Люминометр SMART";
+    registerCatalog("2.16",name,fields,state.assets.sectionImages?.["2.16"]||[],{advantages,customTabs});
   }
-
   // индикаторные полоски — строка таблицы = отдельная карточка
   const strips=sBy("2.10");if(strips){
     (strips.tables||[]).forEach((t)=>{
