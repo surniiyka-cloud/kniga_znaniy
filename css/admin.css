@@ -133,3 +133,38 @@ body.kb-admin-open{overflow:hidden}
   .kb-photo-preview{width:76px;height:66px}
   .kb-photo-actions{grid-column:1/3;justify-content:flex-start}
 }
+
+/* Visual photo framing editor */
+.kb-photo-head-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kb-photo-row{
+  grid-template-columns:minmax(240px,320px) minmax(0,1fr);
+  align-items:start;
+  padding:14px;
+  gap:16px;
+}
+.kb-photo-row.is-photo-dirty{border-color:color-mix(in srgb,var(--orange,#ef7b2d) 55%,var(--line,#dfe7e1));box-shadow:0 0 0 2px color-mix(in srgb,var(--orange,#ef7b2d) 8%,transparent)}
+.kb-photo-preview-wrap{display:grid;gap:6px}
+.kb-photo-preview-wrap>span{font-size:10px;color:var(--muted,#718078);text-align:center}
+.kb-photo-preview{
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  border-radius:12px;
+  overflow:hidden;
+  background:var(--surface-2,#f5f8f5);
+}
+.kb-photo-preview img{width:100%;height:100%;padding:8px;object-fit:contain;transform-origin:center center;transition:transform .08s linear}
+.kb-photo-editor-main{display:grid;gap:12px;min-width:0}
+.kb-photo-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.kb-photo-controls>label{display:grid;gap:5px;font-size:11px;font-weight:750;color:var(--muted,#657169)}
+.kb-photo-controls select{width:100%;min-height:34px;border:1px solid var(--line,#dfe7e1);border-radius:9px;background:var(--panel,#fff);color:inherit;padding:0 9px}
+.kb-photo-range{display:grid;grid-template-columns:minmax(0,1fr) 48px;gap:8px;align-items:center}
+.kb-photo-range input[type="range"]{width:100%;accent-color:var(--green,#335d42)}
+.kb-photo-range output{font-size:11px;font-weight:800;text-align:right;color:var(--text,#1f2a23);font-variant-numeric:tabular-nums}
+.kb-photo-quick,.kb-photo-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-start}
+.kb-photo-actions{padding-top:2px;border-top:1px solid var(--line,#e4e9e5)}
+@media(max-width:760px){
+  .kb-photo-row{grid-template-columns:1fr}
+  .kb-photo-controls{grid-template-columns:1fr}
+  .kb-photo-actions{grid-column:auto}
+}
