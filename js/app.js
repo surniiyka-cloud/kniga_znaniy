@@ -14,7 +14,11 @@ function article(p){const a=String(p.article||"").trim();return (!a||a==="-"||a=
 function imgSrc(p){return state.assets.productImages?.[p.id]?.[0]||"";}
 function ctx(id){return state.products.get(id)||null;}
 function toast(t){const el=q("#toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),1800);}
-function counters(){q("#favCount").textContent=favorites.get().length;q("#compareCount").textContent=comparison.get().length;}
+function counters(){
+  const visible=id=>{const x=ctx(id);return x&&!isProductExcluded(x.section.id,x.product.id)};
+  q("#favCount").textContent=favorites.get().filter(visible).length;
+  q("#compareCount").textContent=comparison.get().filter(visible).length;
+}
 function title(t){document.title=t?(t+" · Книга знаний TIAN-Трейд"):"Книга знаний · TIAN-Трейд";}
 function closeMenu(){document.body.classList.remove("sidebar-open");}
 function crumb(items){return '<div class="crumbs"><button data-route="home">Главная</button>'+items.map((x)=>'<span>›</span>'+(x.route?'<button data-route="'+esc(x.route)+'" data-id="'+esc(x.id||"")+'">'+esc(x.label)+'</button>':'<span>'+esc(x.label)+'</span>')).join("")+'</div>';}
@@ -807,16 +811,20 @@ function sectionProductLayout(sectionId){
   const items=sectionBaseItems(sectionId),section=state.sections.get(sectionId)?.section||{};
   const defaultOrder=defaultProductOrder(sectionId,items);
   const hidden=Array.isArray(section.hiddenProductIds)?section.hiddenProductIds:defaultHiddenProducts(sectionId,items);
+  const deleted=Array.isArray(section.deletedProductIds)?section.deletedProductIds:[];
   const order=Array.isArray(section.productOrder)&&section.productOrder.length?section.productOrder:defaultOrder;
-  return {items,defaultOrder,hidden:[...new Set(hidden)],order:[...new Set([...order,...defaultOrder])]};
+  return {items,defaultOrder,hidden:[...new Set(hidden)],deleted:[...new Set(deleted)],order:[...new Set([...order,...defaultOrder])]};
 }
-function orderedSectionItems(sectionId,{includeHidden=false}={}){
-  const l=sectionProductLayout(sectionId),byId=new Map(l.items.map(x=>[x.product.id,x])),hidden=new Set(l.hidden),out=[];
-  for(const id of l.order){const x=byId.get(id);if(!x)continue;if(includeHidden||!hidden.has(id))out.push(x);byId.delete(id);}
-  for(const x of byId.values())if(includeHidden||!hidden.has(x.product.id))out.push(x);
+function orderedSectionItems(sectionId,{includeHidden=false,includeDeleted=false}={}){
+  const l=sectionProductLayout(sectionId),byId=new Map(l.items.map(x=>[x.product.id,x])),hidden=new Set(l.hidden),deleted=new Set(l.deleted),out=[];
+  const keep=id=>includeDeleted||!deleted.has(id);
+  for(const id of l.order){const x=byId.get(id);if(!x)continue;if(keep(id)&&(includeHidden||!hidden.has(id)))out.push(x);byId.delete(id);}
+  for(const x of byId.values())if(keep(x.product.id)&&(includeHidden||!hidden.has(x.product.id)))out.push(x);
   return out;
 }
 function isProductHidden(sectionId,productId){return sectionProductLayout(sectionId).hidden.includes(productId);}
+function isProductDeleted(sectionId,productId){return sectionProductLayout(sectionId).deleted.includes(productId);}
+function isProductExcluded(sectionId,productId){return isProductHidden(sectionId,productId)||isProductDeleted(sectionId,productId);}
 function renderCatalogSection(ch,s){
   const items=orderedSectionItems(s.id);
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
@@ -952,8 +960,8 @@ function mapData(){
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
     if(ch.id==="2"){
-      state.sections.set("2.6",{chapter:ch,section:{id:"2.6",title:ov.sections?.["2.6"]?.title||"Анализаторы качества молока",composite:true}});
-      state.sections.set("2.7",{chapter:ch,section:{id:"2.7",title:ov.sections?.["2.7"]?.title||"Анализаторы соматических клеток",composite:true}});
+      state.sections.set("2.6",{chapter:ch,section:{id:"2.6",title:"Анализаторы качества молока",composite:true,...deepCopy(ov.sections?.["2.6"]||{})}});
+      state.sections.set("2.7",{chapter:ch,section:{id:"2.7",title:"Анализаторы соматических клеток",composite:true,...deepCopy(ov.sections?.["2.7"]||{})}});
     }
   });
   enrichRegularProducts();
@@ -968,7 +976,7 @@ function mapData(){
 }
 function buildLiveSearchIndex(){
   const out=[];
-  for(const [id,x] of state.products){if(isProductHidden(x.section.id,id))continue;const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
+  for(const [id,x] of state.products){if(isProductExcluded(x.section.id,id))continue;const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
   return out;
 }
 function installEditorApi(){
@@ -984,8 +992,10 @@ function installEditorApi(){
         const x=state.sections.get(r.id);if(!x)return {kind:"none"};
         const base=state.editorBase.sections.get(r.id)||{title:x.section.title},layout=sectionProductLayout(r.id);
         const currentCards=orderedSectionItems(r.id,{includeHidden:true}).map(item=>({id:item.product.id,name:item.product.name||item.product.id,article:article(item.product)||"",hidden:layout.hidden.includes(item.product.id)}));
-        const sourceSection={...deepCopy(base),productOrder:deepCopy(layout.defaultOrder),hiddenProductIds:deepCopy(defaultHiddenProducts(r.id,layout.items))};
-        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection,productCards:currentCards,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+        const deletedSet=new Set(layout.deleted);
+        const deletedProductCards=layout.items.filter(item=>deletedSet.has(item.product.id)).map(item=>({id:item.product.id,name:item.product.name||item.product.id,article:article(item.product)||""}));
+        const sourceSection={...deepCopy(base),productOrder:deepCopy(layout.defaultOrder),hiddenProductIds:deepCopy(defaultHiddenProducts(r.id,layout.items)),deletedProductIds:[]};
+        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection,productCards:currentCards,deletedProductCards,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
       if(r.name==="chapter"){
         const ch=state.chapters.get(r.id);return ch?{kind:"chapter",id:r.id,chapter:deepCopy(ch),sourceChapter:deepCopy(state.editorBase.chapters.get(r.id)||{title:ch.title}),spreadsheetId:state.book.spreadsheetId}:{kind:"none"};
@@ -1099,7 +1109,7 @@ function sectionContent(s){return knowledgeCards(s);}
 
 function renderHome(){
   title("");
-  const recentItems=recent.get().map(ctx).filter(Boolean).slice(0,6);
+  const recentItems=recent.get().map(ctx).filter(x=>x&&!isProductExcluded(x.section.id,x.product.id)).slice(0,6);
   const photoProducts=Object.keys(state.assets.productImages||{}).length;
   app.innerHTML='<section class="hero"><div class="hero-copy"><span class="eyebrow">TIAN-Трейд · внутренняя база знаний</span><h1>Вся продуктовая экспертиза — в одной системе</h1><p>Поиск по ассортименту, артикулам, назначению и характеристикам. Данные автоматически собираются из рабочей Книги знаний.</p><div class="hero-actions"><button class="btn hero-btn" data-focus-search>⌕ Найти товар</button><button class="btn hero-btn secondary" data-route="favorites">★ Избранное</button></div><div class="hero-meta"><span class="hero-chip">'+state.book.chapters.length+' глав</span><span class="hero-chip">'+state.sections.size+' подразделов</span><span class="hero-chip">'+state.products.size+' карточек</span><span class="hero-chip">Обновлено '+fmtDate(state.book.generatedAt)+'</span></div></div></section><section class="stats"><div class="stat"><strong>'+state.book.chapters.length+'</strong><span>глав</span></div><div class="stat"><strong>'+state.sections.size+'</strong><span>подразделов</span></div><div class="stat"><strong>'+state.products.size+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+photoProducts+'</strong><span>товаров с индивидуальными фото</span></div></section><section class="home-tools"><button type="button" class="home-tool" data-focus-search><span>⌕</span><strong>Глобальный поиск</strong><small>Название, артикул, назначение</small></button><button type="button" class="home-tool" data-route="compare"><span>⇄</span><strong>Сравнение товаров</strong><small>До четырёх карточек рядом</small></button><button type="button" class="home-tool" data-route="diagnostics"><span>✓</span><strong>Диагностика данных</strong><small>Фото, дубликаты и качество базы</small></button></section><div class="section-heading"><div><span class="eyebrow">Навигация</span><h2>Разделы Книги знаний</h2></div></div><section class="chapter-grid">'+state.book.chapters.map((ch)=>'<article class="chapter-card" data-num="'+esc(ch.id)+'" data-open-chapter="'+esc(ch.id)+'"><span class="chapter-num">'+esc(ch.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(ch.title)+'</h3><p>'+ch.sections.length+' подразделов</p></article>').join("")+'</section>'+(recentItems.length?'<div class="section-heading"><div><span class="eyebrow">История</span><h2>Недавно просмотренные</h2></div></div><section class="recent-grid">'+recentItems.map(card).join("")+'</section>':"");
 }
@@ -1251,16 +1261,16 @@ function tabPanelHtml(p,id){
   return "";
 }
 function renderProduct(id){
-  const x=ctx(id);if(!x)return notFound();const p=x.product,s=x.section,ch=x.chapter;recent.add(p.id);counters();title(p.name);
+  const x=ctx(id);if(!x||isProductDeleted(x.section.id,x.product.id))return notFound();const p=x.product,s=x.section,ch=x.chapter;recent.add(p.id);counters();title(p.name);
   const imgs=state.assets.productImages?.[p.id]||[],im=imgs[0]||"",tabs=productTabs(p);
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title,route:"section",id:s.id},{label:p.name}])+'<div class="product-page"><aside class="gallery-card"><div class="gallery-topline"><span>Фотографии товара</span><b>'+(imgs.length?imgs.length:"—")+'</b></div><div class="gallery-main '+(im?"":"product-image placeholder")+'" '+(im?'data-lightbox-product="'+esc(p.id)+'" data-lightbox-index="0"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" alt="'+esc(p.name)+'">':'<div class="gallery-empty"><img src="./assets/brand/favicon.svg" alt=""><strong>Фото пока не привязано</strong><span>Карточка уже работает; изображение появится после сопоставления в диагностике.</span></div>')+'</div>'+(imgs.length>1?'<div class="gallery-thumbs">'+imgs.map((v,i)=>'<button class="gallery-thumb '+(i===0?"active":"")+'" data-gallery-product="'+esc(p.id)+'" data-gallery-index="'+i+'"><img referrerpolicy="no-referrer" src="'+esc(imageSrc(v))+'" alt=""></button>').join("")+'</div>':"")+'</aside><article class="info-card"><span class="eyebrow">'+esc(s.id)+' · '+esc(s.title)+'</span><h1 class="product-title">'+esc(p.name)+'</h1><div class="product-meta">'+(article(p)?'<span class="badge article">Арт. '+esc(article(p))+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div>'+(p.purpose?'<p class="product-lead">'+esc(p.purpose)+'</p>':"")+'<div class="quick-actions"><button class="btn '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'">★ '+(favorites.has(p.id)?"В избранном":"В избранное")+'</button><button class="btn '+(comparison.has(p.id)?"active":"")+'" data-compare="'+esc(p.id)+'">⇄ '+(comparison.has(p.id)?"Добавлено":"Сравнить")+'</button><button class="btn ghost" data-copy>⌁ Скопировать ссылку</button></div><div class="tabs product-tabs">'+tabs.map((t,i)=>'<button class="tab '+(i===0?"active":"")+'" data-product-tab="'+esc(t.id)+'">'+esc(t.label)+'</button>').join("")+'</div><div class="product-tab-panels">'+tabs.map((t,i)=>'<div class="tab-panel" data-product-panel="'+esc(t.id)+'" '+(i===0?"":"hidden")+'>'+tabPanelHtml(p,t.id)+'</div>').join("")+'</div></article></div>';
 }
 function renderFavorites(){
-  const items=favorites.get().map(ctx).filter(x=>x&&!isProductHidden(x.section.id,x.product.id));title("Избранное");
+  const items=favorites.get().map(ctx).filter(x=>x&&!isProductExcluded(x.section.id,x.product.id));title("Избранное");
   app.innerHTML=crumb([{label:"Избранное"}])+'<div class="page-head"><div><span class="eyebrow">Персональная подборка</span><h1>Избранное</h1><p>'+items.length+' карточек</p></div>'+(items.length?'<div class="page-tools"><button class="btn ghost" data-clear-favorites>Очистить</button></div>':"")+'</div>'+(items.length?'<section class="product-grid">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Здесь пока пусто</strong><p>Нажимайте ★ на нужных товарах.</p></div>');
 }
 function renderCompare(){
-  const items=comparison.get().map(ctx).filter(x=>x&&!isProductHidden(x.section.id,x.product.id));title("Сравнение");
+  const items=comparison.get().map(ctx).filter(x=>x&&!isProductExcluded(x.section.id,x.product.id));title("Сравнение");
   const rows=[["Артикул",(x)=>article(x.product)||"—"],["Тип",(x)=>x.product.type||"—"],["Назначение",(x)=>x.product.purpose||"—"],["Характеристики",(x)=>x.product.features||"—"]];
   app.innerHTML=crumb([{label:"Сравнение"}])+'<div class="page-head"><div><span class="eyebrow">До 4 товаров</span><h1>Сравнение</h1><p>'+items.length+' выбрано</p></div>'+(items.length?'<div class="page-tools"><button class="btn ghost" data-clear-compare>Очистить</button></div>':"")+'</div>'+(items.length?'<div class="table-wrap"><table class="compare-table"><thead><tr><th>Параметр</th>'+items.map((x)=>'<th class="compare-product-head"><strong>'+esc(x.product.name)+'</strong><small>'+esc(x.section.id)+' · '+esc(x.section.title)+'</small><button class="btn ghost" data-compare="'+esc(x.product.id)+'">Убрать</button></th>').join("")+'</tr></thead><tbody>'+rows.map((r)=>{const vals=items.map(r[1]),diff=new Set(vals).size>1;return '<tr class="'+(diff?"compare-diff":"")+'"><td><strong>'+esc(r[0])+'</strong></td>'+vals.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>';}).join("")+'</tbody></table></div>':'<div class="empty-state"><strong>Выберите товары для сравнения</strong><p>На карточках нажимайте ⇄.</p></div>');
 }
