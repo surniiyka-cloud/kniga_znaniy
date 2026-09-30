@@ -802,7 +802,6 @@ function sectionSupplement(s){
   if(s.notes?.length){
     blocks.push('<section class="section-notes"><div class="section-heading compact"><div><span class="eyebrow">Справочно</span><h2>Дополнительная информация</h2></div></div><dl class="feature-definition-list">'+s.notes.map((n,i)=>'<dt>Материал '+(i+1)+'</dt><dd>'+esc(n)+'</dd>').join("")+'</dl></section>');
   }
-  const raw=rawTables(s);if(raw)blocks.push(raw);
   return blocks.join("");
 }
 function deepCopy(v){return v==null?v:JSON.parse(JSON.stringify(v));}
@@ -963,23 +962,8 @@ function knowledgeCards(s){
   }
   return out;
 }
-function rawTables(s){
-  let inner="";
-  (s.tables||[]).forEach((t)=>{
-    inner+='<section class="raw-table-block"><h3>'+esc(t.title||"Дополнительные данные")+'</h3><div class="table-wrap"><table class="data-table"><thead><tr>'+((t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join(""))+'</tr></thead><tbody>'+((t.rows||[]).map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join(""))+'</tbody></table></div></section>';
-  });
-  const sourceRows=(s.rawRows?.length?s.rawRows:s.rows)||[];
-  if(sourceRows.length){
-    const cols=Math.max(1,...sourceRows.map((r)=>r.length));
-    inner+='<section class="raw-table-block"><h3>Все строки Google Sheets</h3><div class="table-wrap"><table class="data-table"><tbody>'+sourceRows.map((r)=>'<tr>'+Array.from({length:cols},(_,i)=>'<td>'+esc(r[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
-  }
-  if(s.packedRows?.length){
-    inner+='<section class="raw-table-block"><h3>Исходные многострочные блоки</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.packedRows.map((x)=>'<tr><th>Строка '+esc(x.sourceRow)+'</th>'+(x.cells||[]).map((v)=>'<td class="multiline-source">'+esc(v).replace(/\n/g,"<br>")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
-  }
-  if(!inner)return "";
-  return '<details class="raw-details"><summary><span><strong>Полные табличные данные</strong><small>Открыть исходные таблицы и служебные материалы раздела</small></span><b>+</b></summary><div class="raw-details-body">'+inner+'</div></details>';
-}
-function sectionContent(s){return knowledgeCards(s)+rawTables(s);}
+function rawTables(){return "";}
+function sectionContent(s){return knowledgeCards(s);}
 
 function renderHome(){
   title("");
