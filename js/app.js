@@ -205,48 +205,19 @@ function parseUnisensorBlock(rows,start,end,name,initialGroup=""){
   return {name,fields:uniquePairs(fields),advantages:uniquePairs(advantages),substances};
 }
 function buildUnisensorCards(s){
-  const rows=s.rawRows||s.rows||[];
-
-  const twinFields=[
-    ["Артикул","1002.04.011"],["Производитель","Unisensor"],["Страна производства","Бельгия"],
-    ["Назначение","Экспресс-тест для определения остаточного содержания антибиотиков групп β-лактамов и тетрациклинов в молоке"],
-    ["Исследуемый материал","Молоко"],["Дополнительный исследуемый материал","Молочная сыворотка по ГОСТ"],
-    ["Определяемые группы","β-лактамы — пенициллины и цефалоспорины; тетрациклины"],["Время анализа","3 + 3 минуты"],
-    ["Валидация","Международная валидация ILVO"],["Стандарт","ГОСТ 32219-2013"],
-    ["Соответствие требованиям","ТР ТС 021 и ТР ТС 033"],["Норматив","ТР ТС 021, Решение ЕЭК №70"],
-    ["Интерпретация результата","На тест-полоске предусмотрены линии тетрациклинов, контрольная линия и β-лактамов"],
-    ["Контроль производства","Применение для контроля на всех этапах производства"],["Срок годности","24 месяца"]
-  ];
-  const twinAdv=[
-    ["Две группы за один анализ","Одновременно определяются β-лактамы и тетрациклины"],["Быстрый анализ","Результат за 3 + 3 минуты"],
-    ["Внесён в ГОСТ 32219-2013","Метод представлен в нормативной базе для иммунологических методов определения антибиотиков"],
-    ["Валидация ILVO","Сходимость, воспроизводимость и повторяемость подтверждены международной валидацией"],
-    ["Чувствительность соответствует ТР ТС 021 и ТР ТС 033","Пределы обнаружения ориентированы на нормативные требования"],
-    ["Широкий перечень β-лактамов","Определяются пенициллины и различные цефалоспорины"],
-    ["Визуальная интерпретация результата","Возможна визуальная оценка без обязательного отдельного ридера"],
-    ["Применение для молочной сыворотки","Метод используется не только для молока"],["Контроль на разных этапах производства","Подходит для входного и производственного контроля"],
-    ["Исследован на российском молоке","Проверена работа метода на российском молоке, в том числе повышенной жирности до 6 %"]
-  ];
-  const twinSubs=[
-    ["Пенициллины","Ампициллин","3–4"],["Пенициллины","Пенициллин G","2–3"],["Пенициллины","Амоксициллин","3–4"],["Пенициллины","Оксациллин","12–18"],["Пенициллины","Клоксациллин","6–8"],["Пенициллины","Диклоксациллин","6–8"],["Пенициллины","Нафциллин","30–50"],
-    ["Цефалоспорины","Цефтиофур","10–15"],["Цефалоспорины","Цефкином","20–30"],["Цефалоспорины","Цефазолин","18–22"],["Цефалоспорины","Цефапирин","6–8"],["Цефалоспорины","Цефацетрил","30–40"],["Цефалоспорины","Цефоперазон","3–4"],["Цефалоспорины","Цефалексин",">750"],["Цефалоспорины","Цефалониум","3–5"],
-    ["Тетрациклины","Тетрациклин","8–10"],["Тетрациклины","Окситетрациклин","7–9"],["Тетрациклины","Хлортетрациклин","5–7"],["Тетрациклины","Доксициклин","2–3"]
-  ].map(([group,substance,ppb])=>({group,substance,ppb}));
-  registerCatalog("2.1.2","TWINSENSOR KIT 034",twinFields,[],{advantages:twinAdv,substances:twinSubs});
-
-  const tetraRows=rows.slice(1,16);
-  const tetra=parseUnisensorBlock(tetraRows,0,tetraRows.length,"TETRASENSOR","Тетрациклины");
-  tetra.fields=uniquePairs([["Артикул","1003.001"],["Производитель","Unisensor"],["Страна производства","Бельгия"],...tetra.fields]);
-  tetra.advantages=uniquePairs([["Специализированный тест для мёда","Предназначен для контроля остаточного содержания тетрациклинов в мёде"],["Определение основных тетрациклинов","Контролируются тетрациклин, окситетрациклин, доксициклин и хлортетрациклин"],...tetra.advantages]);
-  tetra.substances=[{group:"Тетрациклины",substance:"Тетрациклин",ppb:"5–10"},...tetra.substances];
-  registerCatalog("2.1.2","TETRASENSOR",tetra.fields,[],{advantages:tetra.advantages,substances:tetra.substances});
-
-  const starts=[];
-  rows.forEach((r,i)=>{const a=String(r[0]||"").trim();if(["MEATSENSOR KIT 108","AFLASENSOR KIT 041","COWSENSOR"].includes(a))starts.push(i);});
+  const rows=s.rawRows||s.rows||[],starts=[];
+  rows.forEach((r,i)=>{
+    const a=String(r?.[0]||"").trim(),c=String(r?.[2]||"").trim(),e=String(r?.[4]||"").trim();
+    const next=String(rows[i+1]?.[0]||"").trim();
+    if(a&&next==="Характеристика"&&(a===c||a===e||(!c&&!e)))starts.push(i);
+  });
   starts.forEach((st,i)=>{
-    const name=String(rows[st][0]).trim(),en=starts[i+1]??rows.length,parsed=parseUnisensorBlock(rows,st+1,en,name);
-    const display=name==="AFLASENSOR KIT 041"?"AFLASENSOR KIT 041":name;
-    registerCatalog("2.1.2",display,parsed.fields,unisensorImage(name)?[unisensorImage(name)]:[],{advantages:parsed.advantages,substances:parsed.substances});
+    const marker=String(rows[st]?.[0]||"").trim(),en=starts[i+1]??rows.length;
+    const parsed=parseUnisensorBlock(rows,st+1,en,marker);
+    const display=parsed.fields.find(r=>r[0]==="Наименование")?.[1]||marker;
+    const cleanName=display.replace(/^Экспресс-тест\s+/i,"").trim()||marker;
+    const img=unisensorImage(marker);
+    registerCatalog("2.1.2",cleanName,parsed.fields,img?[img]:[],{advantages:parsed.advantages,substances:parsed.substances});
   });
 }
 function buildAnalyzerParts(pairs){
