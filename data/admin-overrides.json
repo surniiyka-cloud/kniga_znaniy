@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-30T13:23:10.235Z",
+  "updatedAt": "2026-09-30T13:33:23.490Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2531,15 +2531,15 @@
       "imageSettings": {
         "https://www.sinanson.com/idea/kd/83/myassets/products/673/unisensor-web-honey-tetrasensor-kit008-009.jpg?revision=1742303667": {
           "card": {
-            "scale": 1.4,
+            "scale": 1.6,
             "x": 0,
-            "y": 2,
+            "y": -2,
             "fit": "contain"
           },
           "detail": {
-            "scale": 1.25,
+            "scale": 1.45,
             "x": 0,
-            "y": 2,
+            "y": -4,
             "fit": "contain"
           }
         }
