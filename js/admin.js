@@ -82,7 +82,8 @@ async function deleteRepoFile(path,message){
   return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,sha:cur.sha,branch:GITHUB_BRANCH})});
 }
 async function publishLiveSnapshots(){
-  let snaps={};try{snaps=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{}
+  let snaps=window.KB_EDITOR_API?.liveSnapshots?.()||{};
+  if(!snaps||typeof snaps!=="object"||Array.isArray(snaps)){try{snaps=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{snaps={}}}
   await putRepoText("data/live-sheet-snapshots.json",JSON.stringify(snaps,null,2)+"\n","Admin: publish refreshed Google Sheets snapshots");
 }
 async function commitOverrides(data){
@@ -390,7 +391,7 @@ function bindBody(){
   });
   body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
     const editorOverrides=await loadOverrides(true);
-    let liveSheetSnapshots={};try{liveSheetSnapshots=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{}
+    let liveSheetSnapshots=window.KB_EDITOR_API?.liveSnapshots?.()||{};if(!liveSheetSnapshots||typeof liveSheetSnapshots!=="object"||Array.isArray(liveSheetSnapshots)){try{liveSheetSnapshots=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{liveSheetSnapshots={}}}
     const data={format:"tian-knowledge-book-local-backup",version:2,exportedAt:new Date().toISOString(),editorOverrides,liveSheetSnapshots};
     const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
     const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
