@@ -2,7 +2,7 @@ name: Сборка Книги знаний v2
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/5 * * * *'
   push:
     branches: [site-v2]
     paths:
