@@ -1010,6 +1010,7 @@ function installEditorApi(){
       }
       return {kind:"dashboard",spreadsheetId:state.book.spreadsheetId};
     },
+    liveSnapshots(){return deepCopy(liveSnapshots())},
     async refreshCurrentSection(){
       const r=route();
       if(r.name==="product"){
