@@ -1,5 +1,10 @@
 const LOCAL_KEY="kb_admin_overrides_local";
 const LIVE_KEY="kb_live_sheet_snapshots";
+const ADMIN_SESSION_KEY="kb_admin";
+const GITHUB_TOKEN_KEY="kb_github_token";
+const ADMIN_PASSWORD_HASH="f40616bfaf4c1e0631d206330ead19b861546d0400b3f9be0589dbadc985ad8e";
+const GITHUB_REPO="surniiyka-cloud/kniga_znaniy";
+const GITHUB_BRANCH="main";
 let overrideCache=null;
 
 const esc=(v)=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
@@ -17,8 +22,73 @@ async function loadOverrides(force=false){
   overrideCache.chapters ||= {};
   return overrideCache;
 }
+async function sha256(v){
+  const bytes=new TextEncoder().encode(String(v||"")),hash=await crypto.subtle.digest("SHA-256",bytes);
+  return [...new Uint8Array(hash)].map(x=>x.toString(16).padStart(2,"0")).join("");
+}
+function adminActive(){try{return sessionStorage.getItem(ADMIN_SESSION_KEY)==="1"}catch{return false}}
+async function requireAdmin(){
+  if(adminActive())return true;
+  const password=prompt("Введите пароль администратора");
+  if(password==null)return false;
+  if(await sha256(password)!==ADMIN_PASSWORD_HASH){alert("Неверный пароль.");return false}
+  sessionStorage.setItem(ADMIN_SESSION_KEY,"1");
+  window.dispatchEvent(new CustomEvent("kb:admin-change"));
+  return true;
+}
+function sessionToken(){try{return sessionStorage.getItem(GITHUB_TOKEN_KEY)||""}catch{return ""}}
+async function githubFetch(path,options={}){
+  const token=sessionToken();if(!token)throw new Error("Сначала подключите GitHub в панели редактора.");
+  const res=await fetch("https://api.github.com/repos/"+GITHUB_REPO+path,{
+    ...options,
+    headers:{Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28",Authorization:"Bearer "+token,...(options.headers||{})}
+  });
+  if(!res.ok){let msg="GitHub HTTP "+res.status;try{const j=await res.json();if(j?.message)msg+=" · "+j.message}catch{}throw new Error(msg)}
+  return res.status===204?null:res.json();
+}
+async function connectGithub(){
+  let token=sessionToken();
+  if(!token){
+    token=(prompt("GitHub token с доступом Contents: Read and write к репозиторию kniga_znaniy. Токен хранится только до закрытия этой вкладки.")||"").trim();
+    if(!token)return false;
+    sessionStorage.setItem(GITHUB_TOKEN_KEY,token);
+  }
+  try{await githubFetch("");return true}catch(e){sessionStorage.removeItem(GITHUB_TOKEN_KEY);throw e}
+}
+function utf8Base64(text){
+  const bytes=new TextEncoder().encode(text);let bin="";for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin);
+}
+function bytesBase64(buffer){
+  const bytes=new Uint8Array(buffer);let bin="";for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin);
+}
+async function repoFile(path){
+  try{return await githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/")+"?ref="+encodeURIComponent(GITHUB_BRANCH))}catch(e){if(/404/.test(e.message))return null;throw e}
+}
+async function putRepoText(path,text,message){
+  if(!sessionToken())await connectGithub();
+  const cur=await repoFile(path),body={message,content:utf8Base64(text),branch:GITHUB_BRANCH};
+  if(cur?.sha)body.sha=cur.sha;
+  return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+}
+async function putRepoBinary(path,buffer,message){
+  if(!sessionToken())await connectGithub();
+  const cur=await repoFile(path),body={message,content:bytesBase64(buffer),branch:GITHUB_BRANCH};
+  if(cur?.sha)body.sha=cur.sha;
+  return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+}
+async function deleteRepoFile(path,message){
+  if(!sessionToken())await connectGithub();
+  const cur=await repoFile(path);if(!cur?.sha)return;
+  return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,sha:cur.sha,branch:GITHUB_BRANCH})});
+}
+async function publishLiveSnapshots(){
+  let snaps={};try{snaps=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{}
+  await putRepoText("data/live-sheet-snapshots.json",JSON.stringify(snaps,null,2)+"\n","Admin: publish refreshed Google Sheets snapshots");
+}
 async function commitOverrides(data){
   data.version=1;data.updatedAt=new Date().toISOString();
+  if(!sessionToken())await connectGithub();
+  await putRepoText("data/admin-overrides.json",JSON.stringify(data,null,2)+"\n","Admin: update knowledge book");
   localStorage.setItem(LOCAL_KEY,JSON.stringify(data));
   overrideCache=deep(data);
   return data;
@@ -132,14 +202,17 @@ function ensureUI(){
   }
 }
 function setBody(html){ensureUI();modal.querySelector("#kbAdminBody").innerHTML=html;bindBody()}
-function openAdmin(){ensureUI();modal.hidden=false;document.body.classList.add("kb-admin-open");renderEditor().catch(showError)}
+async function openAdmin(){
+  ensureUI();if(!await requireAdmin())return;
+  modal.hidden=false;document.body.classList.add("kb-admin-open");renderEditor().catch(showError);
+}
 function closeAdmin(){if(modal)modal.hidden=true;document.body.classList.remove("kb-admin-open")}
 function showError(e){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status error";box.textContent=e?.message||String(e)}else alert(e?.message||e)}
 function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status "+kind;box.textContent=t}}
 
 function shell(title,subtitle,inner){
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Администратор</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать все правки книги</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить файл правок книги<input type="file" accept="application/json,.json" data-admin-import hidden></label><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать все правки книги</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить файл правок книги<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost" data-admin-logout>Выйти из админа</button><span class="kb-admin-devnote">Рабочий редактор · изменения публикуются в main</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function renderEditor(){
@@ -150,7 +223,7 @@ async function renderEditor(){
   if(ctx.kind==="chapter")return renderChapterEditor(ctx);
   const sheet=ctx.spreadsheetId?' <a class="kb-admin-link" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit">Открыть Google Sheets ↗</a>':"";
   setBody(shell("Панель управления","Открой карточку товара, раздел или главу — и нажми «Редактор».",
-    '<div class="kb-admin-dashboard"><h3>Что можно менять</h3><p>Карточки товаров, характеристики, преимущества, вкладки, группы ppb, заголовки разделов и глав. '+sheet+'</p><p><b>Сейчас это тестовый режим:</b> ручные правки сохраняются в этом браузере. Кнопка «Скачать все правки книги» делает один общий файл всей отредактированной версии — его потом можно передать для финальной публикации.</p></div>'));
+    '<div class="kb-admin-dashboard"><h3>Что можно менять</h3><p>Карточки товаров, характеристики, преимущества, вкладки, группы ppb, заголовки разделов и глав. '+sheet+'</p><p>Редактор работает с опубликованной версией. Для записи изменений и загрузки фотографий подключается GitHub-токен текущей сессии; он не сохраняется в репозитории или localStorage.</p></div>'));
 }
 function defaultTabLabel(id,p){
   const map={specs:"Характеристики",indicators:"Измеряемые показатели",options:"Дополнительные опции",variants:"Варианты исполнения",advantages:/Анализатор/i.test(p?.type||"")?"Особенности":"Преимущества / особенности",complectation:"Комплектация",washCycle:"Рекомендуемый цикл мойки",workflow:"Порядок работы",calibration:"Калибровка",assortment:"Линейка",consumables:"Расходные материалы",testKits:"Тест-наборы",substances:"Вещества и ppb"};
