@@ -180,7 +180,7 @@ body.kb-admin-open{overflow:hidden}
 .kb-photo-context-head strong{font-size:12px}
 .kb-photo-context-head span{font-size:10px;color:var(--muted,#718078)}
 .kb-photo-context .kb-photo-preview{width:100%;height:auto;border-radius:12px;background:#fff}
-.kb-photo-preview-card{aspect-ratio:16/9}
+.kb-photo-preview-card{aspect-ratio:4/3}
 .kb-photo-preview-detail{aspect-ratio:4/3}
 .kb-photo-context .kb-photo-preview img{width:100%;height:100%;padding:0;object-fit:contain;transform-origin:center center;transition:transform .07s linear}
 .kb-photo-context .kb-photo-controls{grid-template-columns:1fr 1fr}
