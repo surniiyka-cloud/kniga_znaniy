@@ -6,6 +6,7 @@ const ADMIN_PASSWORD_HASH="f40616bfaf4c1e0631d206330ead19b861546d0400b3f9be0589d
 const GITHUB_REPO="surniiyka-cloud/kniga_znaniy";
 const GITHUB_BRANCH="main";
 let overrideCache=null;
+let repoWriteQueue=Promise.resolve();
 
 const esc=(v)=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 const deep=(v)=>v==null?v:JSON.parse(JSON.stringify(v));
@@ -46,7 +47,11 @@ async function githubFetch(path,options={}){
     ...options,
     headers:{Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28",Authorization:"Bearer "+token,...(options.headers||{})}
   });
-  if(!res.ok){let msg="GitHub HTTP "+res.status;try{const j=await res.json();if(j?.message)msg+=" · "+j.message}catch{}throw new Error(msg)}
+  if(!res.ok){
+    let msg="GitHub HTTP "+res.status,details=null;
+    try{details=await res.json();if(details?.message)msg+=" · "+details.message}catch{}
+    const err=new Error(msg);err.status=res.status;err.github=details;throw err;
+  }
   return res.status===204?null:res.json();
 }
 async function connectGithub(){
@@ -67,22 +72,50 @@ function bytesBase64(buffer){
 async function repoFile(path){
   try{return await githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/")+"?ref="+encodeURIComponent(GITHUB_BRANCH))}catch(e){if(/404/.test(e.message))return null;throw e}
 }
-async function putRepoText(path,text,message){
+function queuedRepoWrite(fn){
+  const run=repoWriteQueue.then(fn,fn);
+  repoWriteQueue=run.catch(()=>{});
+  return run;
+}
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
+async function putRepoContent(path,content,message){
   if(!sessionToken())await connectGithub();
-  const cur=await repoFile(path),body={message,content:utf8Base64(text),branch:GITHUB_BRANCH};
-  if(cur?.sha)body.sha=cur.sha;
-  return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const endpoint="/contents/"+path.split("/").map(encodeURIComponent).join("/");
+  let lastErr=null;
+  for(let attempt=0;attempt<4;attempt++){
+    const cur=await repoFile(path),body={message,content,branch:GITHUB_BRANCH};
+    if(cur?.sha)body.sha=cur.sha;
+    try{
+      return await githubFetch(endpoint,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    }catch(err){
+      lastErr=err;
+      if(err?.status!==409)throw err;
+      await wait(180*(attempt+1));
+    }
+  }
+  throw lastErr||new Error("Не удалось сохранить файл после нескольких попыток.");
+}
+async function putRepoText(path,text,message){
+  return queuedRepoWrite(()=>putRepoContent(path,utf8Base64(text),message));
 }
 async function putRepoBinary(path,buffer,message){
-  if(!sessionToken())await connectGithub();
-  const cur=await repoFile(path),body={message,content:bytesBase64(buffer),branch:GITHUB_BRANCH};
-  if(cur?.sha)body.sha=cur.sha;
-  return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  return queuedRepoWrite(()=>putRepoContent(path,bytesBase64(buffer),message));
 }
 async function deleteRepoFile(path,message){
-  if(!sessionToken())await connectGithub();
-  const cur=await repoFile(path);if(!cur?.sha)return;
-  return githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/"),{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,sha:cur.sha,branch:GITHUB_BRANCH})});
+  return queuedRepoWrite(async()=>{
+    if(!sessionToken())await connectGithub();
+    const endpoint="/contents/"+path.split("/").map(encodeURIComponent).join("/");
+    let lastErr=null;
+    for(let attempt=0;attempt<4;attempt++){
+      const cur=await repoFile(path);if(!cur?.sha)return;
+      try{
+        return await githubFetch(endpoint,{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,sha:cur.sha,branch:GITHUB_BRANCH})});
+      }catch(err){
+        lastErr=err;if(err?.status!==409)throw err;await wait(180*(attempt+1));
+      }
+    }
+    throw lastErr||new Error("Не удалось удалить файл после нескольких попыток.");
+  });
 }
 async function publishLiveSnapshots(){
   let snaps=window.KB_EDITOR_API?.liveSnapshots?.()||{};
