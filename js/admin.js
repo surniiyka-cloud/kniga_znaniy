@@ -442,7 +442,7 @@ async function detectPhotoBounds(source){
 function autoSettingFromBounds(b,context){
   const target=4/3,fw=b.imageAspect>target?1:b.imageAspect/target,fh=b.imageAspect>target?target/b.imageAspect:1;
   const bw=Math.max(.02,b.x1-b.x0),bh=Math.max(.02,b.y1-b.y0),cx=(b.x0+b.x1)/2-.5,cy=(b.y0+b.y1)/2-.5;
-  const scale=Math.min(.91/(fw*bw),.91/(fh*bh));
+  const scale=Math.max(1,Math.min(.96/(fw*bw),.96/(fh*bh)));
   return photoSetting({scale,x:-cx*fw*scale*100,y:-cy*fh*scale*100,fit:"contain"});
 }
 async function autoFitRow(row,context=null,source=null){
