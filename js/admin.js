@@ -278,6 +278,47 @@ function removeCustomTabUi(body,id){
   const form=body.querySelector("[data-admin-product]");
   if(form){const tabs=readCustomTabs(form).filter(t=>String(t?.id||"")!==id);writeCustomTabs(form,tabs)}
 }
+function photoPreviewSrc(v){
+  const s=String(v||"");return /^https?:\/\//i.test(s)||s.startsWith("data:")||s.startsWith("./")?s:"./"+s;
+}
+function photoRowHtml(path,index){
+  return '<div class="kb-photo-row" data-photo-row data-path="'+esc(path)+'"><div class="kb-photo-preview"><img src="'+esc(photoPreviewSrc(path))+'" alt=""></div><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div><div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up title="Выше">↑</button><button type="button" class="kb-mini" data-photo-down title="Ниже">↓</button><button type="button" class="kb-mini" data-photo-replace>Заменить</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div></div>';
+}
+function photoEditorHtml(ctx){
+  const images=ctx.images||[];
+  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Загруженные здесь файлы сохраняются в репозитории в отдельной папке товара и автоматически привязываются к этой карточке. Можно менять порядок, заменять и удалять фото.</p></div><div><button type="button" class="kb-admin-btn ghost" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map(photoRowHtml).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+}
+function syncPhotoState(body){
+  const rows=[...body.querySelectorAll("[data-photo-row]")],paths=rows.map(r=>r.dataset.path).filter(Boolean);
+  rows.forEach((r,i)=>{const strong=r.querySelector(".kb-photo-meta strong");if(strong)strong.textContent="Фото "+(i+1)});
+  const ta=body.querySelector("[data-images]");if(ta)ta.value=paths.join("\n");
+  return paths;
+}
+function imageExt(file){
+  const byName=(file?.name||"").split(".").pop().toLowerCase();
+  if(["png","jpg","jpeg","webp"].includes(byName))return byName==="jpeg"?"jpg":byName;
+  const m={"image/png":"png","image/jpeg":"jpg","image/webp":"webp"};return m[file?.type]||"";
+}
+function nextPhotoPath(productId,files,ext){
+  const folder="img/photos/admin/"+safe(productId),base=safe(productId),used=new Set();
+  for(const p of files||[]){if(!String(p).startsWith(folder+"/"))continue;const m=String(p).match(/-(\d+)\.[^.]+$/);if(m)used.add(Number(m[1]))}
+  let n=1;while(used.has(n))n++;
+  return folder+"/"+base+"-"+String(n).padStart(2,"0")+"."+ext;
+}
+async function persistImagesOnly(body){
+  const form=body.querySelector("[data-admin-product]");if(!form||!editorCtx)return;
+  const id=form.dataset.id,images=syncPhotoState(body),o=await loadOverrides(true),out=deep(o.products?.[id]||{});
+  if(same(images,editorCtx.sourceImages||[]))delete out.images;else out.images=images;
+  if(emptyObject(out))delete o.products[id];else o.products[id]=out;
+  await commitOverrides(o);
+}
+async function uploadPhoto(file,path){
+  if(!file)throw new Error("Файл не выбран.");
+  const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
+  if(file.size>15*1024*1024)throw new Error("Фото больше 15 МБ. Сначала уменьшите файл.");
+  await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload photo for "+(editorCtx?.product?.name||editorCtx?.id||"product"));
+  return path;
+}
 function renderProductEditor(ctx){
   editorCtx=ctx;
   const existing=deep(overrideCache.products?.[ctx.id]||{});
@@ -293,7 +334,7 @@ function renderProductEditor(ctx){
     '<details class="kb-admin-group" open><summary>Вещества / группы / ppb <small>'+((ctx.product.substances||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Формат: <b>группа | вещество | ppb</b>. Именно поле «группа» создаёт заголовок перед таблицей.</span><textarea rows="10" data-substances>'+esc(substancesText(ctx.product.substances||[]))+'</textarea></label></details>'+
     '<details class="kb-admin-group"><summary>Расширенные настройки пользовательских вкладок</summary><label class="kb-admin-field"><span>JSON для редких случаев. Обычные вкладки удобнее добавлять кнопкой ниже.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
     '<section class="kb-admin-section"><div class="kb-tab-section-head"><div><h3>Порядок и названия вкладок</h3><p class="kb-admin-hint">Добавленная вкладка сразу появляется здесь, в «Содержимом карточки» и в списке таблиц. Пользовательские вкладки можно удалить.</p></div><div class="kb-tab-create"><input type="text" data-new-tab-label placeholder="Название новой вкладки"><button type="button" class="kb-admin-btn ghost" data-add-tab>+ Добавить вкладку</button></div></div><div data-tab-list>'+tabs+'</div></section>'+
-    '<section class="kb-admin-section"><h3>Фотографии</h3><label class="kb-admin-field"><span>Пока можно менять пути к фото и их порядок. Загрузку файлов прямо из редактора подключим вместе с постоянным хранилищем перед публикацией.</span><textarea rows="7" data-images>'+esc(linesText(ctx.images||[]))+'</textarea></label></section>'+
+    photoEditorHtml(ctx)+
     '<details class="kb-admin-group"><summary>Расширенный JSON override</summary><label class="kb-admin-field"><span>Для редких полей, которых нет в форме. Поля формы при сохранении имеют приоритет.</span><textarea rows="14" data-advanced>'+esc(jsonText(existing))+'</textarea></label></details>'+
     '<div class="kb-admin-savebar"><button type="submit" class="kb-admin-btn primary">Сохранить карточку</button><button type="button" class="kb-admin-btn danger" data-reset-product>Сбросить ручные правки</button></div></form>'
   ));
@@ -332,12 +373,19 @@ function renderChapterEditor(ctx){
 }
 function bindBody(){
   const body=modal?.querySelector("#kbAdminBody");if(!body)return;
+  body.querySelector("[data-github-connect]")?.addEventListener("click",async e=>{
+    try{await connectGithub();e.currentTarget.textContent="✓ GitHub подключен";showStatus("GitHub подключен на время этой вкладки.")}catch(err){showError(err)}
+  });
+  body.querySelector("[data-admin-logout]")?.addEventListener("click",()=>{
+    sessionStorage.removeItem(ADMIN_SESSION_KEY);sessionStorage.removeItem(GITHUB_TOKEN_KEY);closeAdmin();window.dispatchEvent(new CustomEvent("kb:admin-change"));
+  });
   body.querySelector("[data-admin-refresh]")?.addEventListener("click",async e=>{
     const b=e.currentTarget;b.disabled=true;showStatus("Забираю свежие данные из текущего листа Google Sheets…","warn");
     try{
       const r=await window.KB_EDITOR_API?.refreshCurrentSection?.();
+      await publishLiveSnapshots();
       await renderEditor();
-      showStatus("Готово: "+(r?.sections>1?(r.sections+" листов обновлено"):(("раздел "+(r?.sectionId||"")+" обновлён")))+" из Google Sheets ("+(r?.rows||0)+" строк).");
+      showStatus("Готово: "+(r?.sections>1?(r.sections+" листов обновлено"):(("раздел "+(r?.sectionId||"")+" обновлён")))+" из Google Sheets и опубликовано ("+(r?.rows||0)+" строк).");
     }catch(err){showError(err)}finally{b.disabled=false}
   });
   body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
@@ -359,8 +407,8 @@ function bindBody(){
       const editorOverrides=data.format==="tian-knowledge-book-local-backup"?(data.editorOverrides||emptyOverrides()):data;
       editorOverrides.products ||= {};editorOverrides.sections ||= {};editorOverrides.chapters ||= {};
       await commitOverrides(editorOverrides);
-      if(data.format==="tian-knowledge-book-local-backup")localStorage.setItem(LIVE_KEY,JSON.stringify(data.liveSheetSnapshots||{}));
-      showStatus("Все правки книги импортированы. Обновляю страницу…");
+      if(data.format==="tian-knowledge-book-local-backup"){localStorage.setItem(LIVE_KEY,JSON.stringify(data.liveSheetSnapshots||{}));await publishLiveSnapshots()}
+      showStatus("Все правки книги импортированы и опубликованы. Обновляю страницу…");
       location.reload();
     }catch(err){showError(err)}
   });
@@ -372,6 +420,50 @@ function bindBody(){
     const label=body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"] [data-tab-label]')?.value.trim()||tableLabel(editorCtx,id);
     wrap?.insertAdjacentHTML("beforeend",tableEditorHtml(id,label,table));
   });
+
+  body.querySelector("[data-photo-add]")?.addEventListener("click",()=>body.querySelector("[data-photo-file]")?.click());
+  body.querySelector("[data-photo-file]")?.addEventListener("change",async e=>{
+    const input=e.currentTarget,files=[...(input.files||[])];if(!files.length||!editorCtx)return;
+    const btn=body.querySelector("[data-photo-add]");if(btn)btn.disabled=true;showStatus("Загружаю фотографии в GitHub…","warn");
+    try{
+      let current=syncPhotoState(body);
+      for(const file of files){
+        const ext=imageExt(file);if(!ext)throw new Error("Файл «"+file.name+"» имеет неподдерживаемый формат.");
+        const path=nextPhotoPath(editorCtx.id,current,ext);await uploadPhoto(file,path);current.push(path);
+        body.querySelector("[data-photo-list]")?.insertAdjacentHTML("beforeend",photoRowHtml(path,current.length-1));
+      }
+      await persistImagesOnly(body);showStatus("Фотографии загружены, привязаны к товару и опубликованы.");
+    }catch(err){showError(err)}finally{input.value="";if(btn)btn.disabled=false}
+  });
+  body.querySelector("[data-photo-replace-file]")?.addEventListener("change",async e=>{
+    const input=e.currentTarget,file=input.files?.[0],old=input.dataset.replacePath||"";if(!file||!old)return;
+    const row=body.querySelector('[data-photo-row][data-path="'+CSS.escape(old)+'"]');if(!row)return;
+    showStatus("Заменяю фотографию…","warn");
+    try{
+      const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
+      let path=old;
+      if(!old.startsWith("img/photos/admin/"))path=nextPhotoPath(editorCtx.id,syncPhotoState(body),ext);
+      else path=old.replace(/\.[^.]+$/,"."+ext);
+      await uploadPhoto(file,path);
+      if(path!==old&&old.startsWith("img/photos/admin/"))await deleteRepoFile(old,"Admin: remove replaced product photo");
+      row.dataset.path=path;row.querySelector(".kb-photo-preview img").src=photoPreviewSrc(path);row.querySelector(".kb-photo-meta code").textContent=path;
+      await persistImagesOnly(body);showStatus("Фотография заменена и опубликована.");
+    }catch(err){showError(err)}finally{input.value="";input.dataset.replacePath=""}
+  });
+  body.addEventListener("click",async e=>{
+    const row=e.target.closest?.("[data-photo-row]");if(!row)return;
+    try{
+      if(e.target.closest("[data-photo-up]")){row.previousElementSibling?.before(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
+      if(e.target.closest("[data-photo-down]")){row.nextElementSibling?.after(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
+      if(e.target.closest("[data-photo-replace]")){const input=body.querySelector("[data-photo-replace-file]");if(input){input.dataset.replacePath=row.dataset.path;input.click()}return}
+      if(e.target.closest("[data-photo-remove]")){
+        const path=row.dataset.path;if(!confirm("Удалить это фото из карточки?"))return;
+        if(path.startsWith("img/photos/admin/"))await deleteRepoFile(path,"Admin: delete product photo");
+        row.remove();await persistImagesOnly(body);showStatus("Фото удалено из карточки.");return;
+      }
+    }catch(err){showError(err)}
+  });
+
   body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
     const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
     if(!form||!input)return;
