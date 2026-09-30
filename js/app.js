@@ -490,7 +490,7 @@ function sectionSupplement(s){
     blocks.push('<details class="section-reference"><summary><span><strong>'+esc(t.title||"Справочная таблица")+'</strong><small>'+t.rows.length+' строк</small></span><b>+</b></summary><div class="section-reference-body"><div class="table-wrap"><table class="data-table"><thead><tr>'+(t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+t.rows.map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></div></details>');
   }
   if(s.notes?.length){
-    blocks.push('<section class="section-notes"><div class="section-heading compact"><div><span class="eyebrow">Справочно</span><h2>Дополнительная информация</h2></div></div><div class="knowledge-grid">'+s.notes.map((n,i)=>'<article class="knowledge-card"><span>Материал '+(i+1)+'</span><p>'+esc(n)+'</p></article>').join("")+'</div></section>');
+    blocks.push('<section class="section-notes"><div class="section-heading compact"><div><span class="eyebrow">Справочно</span><h2>Дополнительная информация</h2></div></div><dl class="feature-definition-list">'+s.notes.map((n,i)=>'<dt>Материал '+(i+1)+'</dt><dd>'+esc(n)+'</dd>').join("")+'</dl></section>');
   }
   return blocks.join("");
 }
@@ -706,7 +706,7 @@ function pairCards(rows,cls="feature-definition-list"){
   return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
 }
 function stepCards(rows){
-  return '<div class="step-cards">'+(rows||[]).map((r,i)=>'<article class="step-card"><span>'+(i+1)+'</span><div><strong>'+esc(r[0])+'</strong><p>'+esc(r[1])+'</p></div></article>').join("")+'</div>';
+  return '<dl class="feature-definition-list">'+(rows||[]).map((r,i)=>'<dt>'+esc(r[0]||("Шаг "+(i+1)))+'</dt><dd>'+esc(r[1]||"")+'</dd>').join("")+'</dl>';
 }
 function substanceTable(rows){
   let last="";
