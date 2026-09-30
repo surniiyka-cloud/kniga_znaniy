@@ -948,8 +948,13 @@ function mergeOverrideLayer(base,extra){
   }
   return out;
 }
-function localEditorOverrides(){
-  try{return JSON.parse(localStorage.getItem("kb_admin_overrides_local")||"null")||null}catch{return null}
+function localEditorOverrides(published=null){
+  try{
+    const local=JSON.parse(localStorage.getItem("kb_admin_overrides_local")||"null")||null;
+    if(!local)return null;
+    const lt=Date.parse(local.updatedAt||"")||0,pt=Date.parse(published?.updatedAt||"")||0;
+    return lt>pt?local:null;
+  }catch{return null}
 }
 function mapData(){
   state.products.clear();state.sections.clear();state.chapters.clear();state.sectionCatalog.clear();
@@ -1010,6 +1015,7 @@ function installEditorApi(){
       }
       return {kind:"dashboard",spreadsheetId:state.book.spreadsheetId};
     },
+    overrides(){return deepCopy(state.overrides||{})},
     liveSnapshots(){return deepCopy(liveSnapshots())},
     async refreshCurrentSection(){
       const r=route();
@@ -1396,7 +1402,8 @@ async function init(){
   state.reports.sync=rs[3]?.ok?await rs[3].json():null;
   state.reports.images=rs[4]?.ok?await rs[4].json():null;
   state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
-  state.overrides=mergeOverrideLayer(rs[6]?.ok?await rs[6].json():state.overrides,localEditorOverrides());
+  const publishedOverrides=rs[6]?.ok?await rs[6].json():state.overrides;
+  state.overrides=mergeOverrideLayer(publishedOverrides,localEditorOverrides(publishedOverrides));
   state.publishedLiveSnapshots=rs[7]?.ok?await rs[7].json():{};
   applyStoredLiveSnapshots();
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
