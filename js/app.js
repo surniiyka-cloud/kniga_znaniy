@@ -433,15 +433,19 @@ function buildChapter2Catalog(){
   // 2.1.1 — границы карточек и смысловые колонки определяются по структуре листа, без номеров строк
   const fourS=sBy("2.1.1"),fr=fourS?.rawRows||fourS?.rows||[];
   const fourStarts=parallelBlockStarts(fr);
-  const fourImages={
-    "4SENSOR KIT 060":"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",
-    "4SENSOR SENSITIVE":"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",
-    "ANKAR MILK TEST 4":"img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",
-    "GARANT 4 ULTRA MILK":"img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png"
+  const fourGroupImage=(marker,name="")=>{
+    const n=(String(marker||"")+" "+String(name||"")).toLowerCase().replace(/[^a-zа-яё0-9]+/gi," ");
+    if(n.includes("4sensor sensitive"))return "img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png";
+    if(n.includes("dipsensor"))return "img/photos/02-testy-4-gruppy/02-dipsensor.png";
+    if(n.includes("4sensor"))return "img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png";
+    if(n.includes("ankar")&&n.includes("milk"))return "img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png";
+    if(n.includes("garant")&&n.includes("4"))return "img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png";
+    return "";
   };
   fourStarts.forEach((st,i)=>{
     const marker=String(fr[st]?.[0]||"").trim(),parsed=parseParallelProduct(fr,st,fourStarts[i+1]??fr.length);
-    registerCatalog("2.1.1",parsed.name||marker,parsed.fields,fourImages[marker]?[fourImages[marker]]:[],{
+    const image=fourGroupImage(marker,parsed.name);
+    registerCatalog("2.1.1",parsed.name||marker,parsed.fields,image?[image]:[],{
       advantages:parsed.advantages,substances:parsed.substances,complectation:parsed.complectation,customTabs:parsed.customTabs
     });
   });
