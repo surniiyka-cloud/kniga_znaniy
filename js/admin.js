@@ -364,29 +364,80 @@ function setPhotoControls(box,{scale=1,x=0,y=0,fit="contain"}={}){
   const sc=box?.querySelector("[data-photo-scale]"),xc=box?.querySelector("[data-photo-x]"),yc=box?.querySelector("[data-photo-y]"),fc=box?.querySelector("[data-photo-fit]");
   if(sc)sc.value=String(Math.round(v.scale*100));if(xc)xc.value=String(v.x);if(yc)yc.value=String(v.y);if(fc)fc.value=v.fit;updatePhotoPreview(box);
 }
-async function detectPhotoBounds(source){
-  let url=source,owned=false;
-  if(source instanceof File||source instanceof Blob){url=URL.createObjectURL(source);owned=true}
+function base64ToBlob(content,type="image/png"){
+  const clean=String(content||"").replace(/\s+/g,""),bin=atob(clean),bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+  return new Blob([bytes],{type});
+}
+async function adminRepoImageBlob(path){
+  if(!String(path||"").startsWith("img/photos/admin/"))return null;
   try{
-    const img=new Image();img.decoding="async";if(typeof url==="string"&&/^https?:\/\//i.test(url))img.crossOrigin="anonymous";
-    await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("Не удалось прочитать изображение для автоподгона."));img.src=typeof url==="string"?photoPreviewSrc(url):url});
-    const maxSide=640,k=Math.min(1,maxSide/Math.max(img.naturalWidth,img.naturalHeight)),w=Math.max(1,Math.round(img.naturalWidth*k)),h=Math.max(1,Math.round(img.naturalHeight*k));
-    const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d",{willReadFrequently:true});ctx.drawImage(img,0,0,w,h);
-    const data=ctx.getImageData(0,0,w,h).data,s=Math.max(3,Math.round(Math.min(w,h)*.025));
+    const file=await repoFile(path);
+    if(!file?.content)return null;
+    const ext=String(path).split(".").pop().toLowerCase(),type=ext==="png"?"image/png":ext==="webp"?"image/webp":"image/jpeg";
+    return base64ToBlob(file.content,type);
+  }catch{return null}
+}
+async function imageElementFromBlob(blob){
+  const dataUrl=await new Promise((resolve,reject)=>{
+    const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(new Error("Не удалось прочитать локальный файл."));r.readAsDataURL(blob);
+  });
+  const img=new Image();img.decoding="async";
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("Не удалось декодировать изображение."));img.src=dataUrl});
+  return img;
+}
+async function imageElementFromUrl(url){
+  const img=new Image();img.decoding="async";
+  if(/^https?:\/\//i.test(url)&&!url.startsWith(location.origin))img.crossOrigin="anonymous";
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("Не удалось прочитать изображение для автоподгона."));img.src=photoPreviewSrc(url)});
+  return img;
+}
+async function detectPhotoBounds(source){
+  let actual=source;
+  if(typeof source==="string"){
+    const repoBlob=await adminRepoImageBlob(source);
+    if(repoBlob)actual=repoBlob;
+  }
+  let img=null,bitmap=null,naturalWidth=0,naturalHeight=0;
+  try{
+    if(actual instanceof Blob){
+      if("createImageBitmap" in window){
+        try{bitmap=await createImageBitmap(actual);naturalWidth=bitmap.width;naturalHeight=bitmap.height}catch{}
+      }
+      if(!bitmap){img=await imageElementFromBlob(actual);naturalWidth=img.naturalWidth;naturalHeight=img.naturalHeight}
+    }else{
+      img=await imageElementFromUrl(String(actual||""));naturalWidth=img.naturalWidth;naturalHeight=img.naturalHeight;
+    }
+    if(!naturalWidth||!naturalHeight)throw new Error("Изображение не имеет читаемого размера.");
+    const maxSide=640,k=Math.min(1,maxSide/Math.max(naturalWidth,naturalHeight)),w=Math.max(1,Math.round(naturalWidth*k)),h=Math.max(1,Math.round(naturalHeight*k));
+    const canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;
+    const ctx=canvas.getContext("2d",{willReadFrequently:true});
+    ctx.drawImage(bitmap||img,0,0,w,h);
+    let data;
+    try{data=ctx.getImageData(0,0,w,h).data}
+    catch{throw new Error("Сайт-источник запрещает анализ этой внешней картинки. Сначала загрузи её через «Заменить файл», после чего автоподгон будет работать.")}
+    const sampleSize=Math.max(3,Math.round(Math.min(w,h)*.025));
     let br=0,bg=0,bb=0,ba=0,n=0;
-    const sample=(x0,y0)=>{for(let y=y0;y<Math.min(h,y0+s);y++)for(let x=x0;x<Math.min(w,x0+s);x++){const i=(y*w+x)*4;br+=data[i];bg+=data[i+1];bb+=data[i+2];ba+=data[i+3];n++}};
-    sample(0,0);sample(Math.max(0,w-s),0);sample(0,Math.max(0,h-s));sample(Math.max(0,w-s),Math.max(0,h-s));
+    const sample=(x0,y0)=>{for(let y=y0;y<Math.min(h,y0+sampleSize);y++)for(let x=x0;x<Math.min(w,x0+sampleSize);x++){const i=(y*w+x)*4;br+=data[i];bg+=data[i+1];bb+=data[i+2];ba+=data[i+3];n++}};
+    sample(0,0);sample(Math.max(0,w-sampleSize),0);sample(0,Math.max(0,h-sampleSize));sample(Math.max(0,w-sampleSize),Math.max(0,h-sampleSize));
     br/=n;bg/=n;bb/=n;ba/=n;
     let minX=w,minY=h,maxX=-1,maxY=-1;
-    for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4,a=data[i+3];let content=false;
+    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+      const i=(y*w+x)*4,a=data[i+3];let content=false;
       if(ba<80)content=a>35;
-      else {const dr=data[i]-br,dg=data[i+1]-bg,db=data[i+2]-bb,dist=Math.sqrt(dr*dr+dg*dg+db*db);content=a>35&&dist>18}
+      else{
+        const dr=data[i]-br,dg=data[i+1]-bg,db=data[i+2]-bb,dist=Math.sqrt(dr*dr+dg*dg+db*db);
+        content=a>35&&dist>16;
+      }
       if(content){if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y}
     }
     if(maxX<minX||maxY<minY)throw new Error("Не удалось уверенно определить границы товара. Используй ручные ползунки.");
-    const px=Math.round(w*.035),py=Math.round(h*.035);minX=Math.max(0,minX-px);maxX=Math.min(w-1,maxX+px);minY=Math.max(0,minY-py);maxY=Math.min(h-1,maxY+py);
-    return {imageAspect:img.naturalWidth/img.naturalHeight,x0:minX/w,x1:(maxX+1)/w,y0:minY/h,y1:(maxY+1)/h};
-  }finally{if(owned)URL.revokeObjectURL(url)}
+    const px=Math.round(w*.025),py=Math.round(h*.025);
+    minX=Math.max(0,minX-px);maxX=Math.min(w-1,maxX+px);minY=Math.max(0,minY-py);maxY=Math.min(h-1,maxY+py);
+    return {imageAspect:naturalWidth/naturalHeight,x0:minX/w,x1:(maxX+1)/w,y0:minY/h,y1:(maxY+1)/h};
+  }finally{
+    try{bitmap?.close?.()}catch{}
+  }
 }
 function autoSettingFromBounds(b,context){
   const target=4/3,fw=b.imageAspect>target?1:b.imageAspect/target,fh=b.imageAspect>target?target/b.imageAspect:1;
@@ -536,10 +587,11 @@ function bindBody(){
       let current=syncPhotoState(body);
       for(const file of files){
         const ext=imageExt(file);if(!ext)throw new Error("Файл «"+file.name+"» имеет неподдерживаемый формат.");
+        let bounds=null;try{bounds=await detectPhotoBounds(file)}catch{}
         const path=nextPhotoPath(editorCtx.id,current,ext);await uploadPhoto(file,path);current.push(path);
         body.querySelector("[data-photo-list]")?.insertAdjacentHTML("beforeend",photoRowHtml(path,current.length-1,{}));
         const row=[...body.querySelectorAll("[data-photo-row]")].at(-1);
-        try{await autoFitRow(row,null,file)}catch{}
+        if(bounds)for(const context of ["card","detail"]){const box=row.querySelector('[data-photo-context="'+context+'"]');setPhotoControls(box,autoSettingFromBounds(bounds,context))}
       }
       await persistImagesOnly(body);showStatus("Фотографии загружены, автоподгон рассчитан отдельно для карточки и внутреннего фото.");
     }catch(err){showError(err)}finally{input.value="";if(btn)btn.disabled=false}
@@ -557,11 +609,12 @@ function bindBody(){
       let path=old;
       if(!old.startsWith("img/photos/admin/"))path=nextPhotoPath(editorCtx.id,syncPhotoState(body),ext);
       else path=old.replace(/\.[^.]+$/,"."+ext);
+      let bounds=null;try{bounds=await detectPhotoBounds(file)}catch{}
       await uploadPhoto(file,path);
       if(path!==old&&old.startsWith("img/photos/admin/"))await deleteRepoFile(old,"Admin: remove replaced product photo");
       row.dataset.path=path;row.querySelectorAll(".kb-photo-preview img").forEach(img=>img.src=photoPreviewSrc(path));row.querySelector(".kb-photo-meta code").textContent=path;
-      try{await autoFitRow(row,null,file)}catch{}
-      await persistImagesOnly(body);showStatus("Фотография заменена; оба кадра пересчитаны и опубликованы.");
+      if(bounds)for(const context of ["card","detail"]){const box=row.querySelector('[data-photo-context="'+context+'"]');setPhotoControls(box,autoSettingFromBounds(bounds,context))}
+      await persistImagesOnly(body);showStatus(bounds?"Фотография заменена; оба кадра пересчитаны и опубликованы.":"Фотография заменена и опубликована. Автоподгон не сработал, но файл сохранён — можно настроить кадр вручную.");
     }catch(err){showError(err)}finally{input.value="";input.dataset.replacePath=""}
   });
   body.addEventListener("click",async e=>{
