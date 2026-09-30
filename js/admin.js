@@ -81,7 +81,7 @@ function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-sta
 
 function shell(title,subtitle,inner){
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Администратор</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-admin-refresh>↻ Обновить данные</button><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-admin-refresh>↻ Обновить данные</button><button class="kb-admin-btn ghost" data-admin-export>↓ Экспорт правок</button><label class="kb-admin-btn ghost kb-admin-import">↑ Импорт правок<input type="file" accept="application/json,.json" data-admin-import hidden></label><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function renderEditor(){
@@ -137,6 +137,26 @@ function renderChapterEditor(ctx){
 function bindBody(){
   const body=modal?.querySelector("#kbAdminBody");if(!body)return;
   body.querySelector("[data-admin-refresh]")?.addEventListener("click",()=>location.reload());
+  body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
+    const data=await loadOverrides(true);
+    const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
+    const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
+    const url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url;a.download="kniga-znaniy-pravki-"+stamp+".json";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    showStatus("Резервная копия правок сохранена файлом.");
+  });
+  body.querySelector("[data-admin-import]")?.addEventListener("change",async e=>{
+    const file=e.target.files?.[0];if(!file)return;
+    try{
+      const data=JSON.parse(await file.text());
+      if(!data||typeof data!=="object"||Array.isArray(data))throw new Error("Неверный файл правок.");
+      data.products ||= {};data.sections ||= {};data.chapters ||= {};
+      await commitOverrides(data);
+      showStatus("Правки импортированы. Обновляю страницу…");
+      location.reload();
+    }catch(err){showError(err)}
+  });
   body.querySelectorAll("[data-tab-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-tab-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r)});
   body.querySelector("[data-admin-product]")?.addEventListener("submit",saveProduct);
