@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-30T12:07:17.769Z",
+  "updatedAt": "2026-09-30T12:47:10.217Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2521,6 +2521,13 @@
       "tabLabels": {
         "custom-размеры": "Размеры"
       }
+    },
+    "catalog-2-1-2-tetrasensor": {
+      "tabOrder": [
+        "specs",
+        "advantages",
+        "substances"
+      ]
     }
   },
   "sections": {
