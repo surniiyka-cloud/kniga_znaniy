@@ -5,7 +5,7 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
-const isAdmin=(()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}})();
+const isAdmin=()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}};
 const state={book:null,assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
@@ -22,7 +22,7 @@ function crumb(items){return '<div class="crumbs"><button data-route="home">Гл
 
 function safeSlug(v){return String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9]+/gi,"-").replace(/^-|-$/g,"").slice(0,72)||"item";}
 function displaySections(ch){
-  const base=ch.sections.filter((s)=>isAdmin||!["1.3","2.2.1"].includes(s.id));
+  const base=ch.sections.filter((s)=>isAdmin()||!["1.3","2.2.1"].includes(s.id));
   if(ch.id!=="2")return base;
   const out=[];let six=false,seven=false;
   for(const s of base){
@@ -828,7 +828,7 @@ function renderChapter(id){
   app.innerHTML=crumb([{label:"Глава "+ch.id}])+'<div class="page-head"><div><span class="eyebrow">Глава '+esc(ch.id)+'</span><h1>'+esc(ch.title)+'</h1><p>'+sections.length+' подразделов</p></div></div><section class="chapter-grid">'+sections.map((s)=>'<article class="chapter-card" data-num="'+esc(s.id)+'" data-open-section="'+esc(s.id)+'"><span class="chapter-num">'+esc(s.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(s.title)+'</h3><p>'+((s.products||[]).length?((s.products||[]).length+" карточек"):"Справочный материал")+'</p></article>').join("")+'</section>';
 }
 function renderSection(id){
-  const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;if(["1.3","2.2.1"].includes(id)&&!isAdmin)return notFound();title(s.id+" "+s.title);
+  const x=state.sections.get(id);if(!x)return notFound();const ch=x.chapter,s=x.section;if(["1.3","2.2.1"].includes(id)&&!isAdmin())return notFound();title(s.id+" "+s.title);
   if(id==="2.2.2")return renderSensitivitySection(ch,s);
   if(ch.id==="2" && (state.sectionCatalog.get(id)?.length))return renderCatalogSection(ch,s);
   if(id==="1.1")return renderTermsSection(ch,s);
