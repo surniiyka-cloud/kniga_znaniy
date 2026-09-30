@@ -260,12 +260,23 @@ function classify(inputRows,meta){
   return {kind:"richTable",rows:rows.map(r=>r.map(flat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows,packedRows:packedRows.length?packedRows:undefined};
 }
 async function fetchSheet(meta){
-  const url=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${meta.gid}`;
-  const res=await fetch(url,{redirect:"follow",headers:{"user-agent":"TIAN-KnowledgeBook-Sync/2.0"}});
-  const body=await res.text();
-  if(!res.ok) throw new Error(`gid ${meta.gid}: HTTP ${res.status}`);
-  const rows=parseCsv(body);
-  return {meta,rows,parsed:classify(rows,meta)};
+  const urls=[
+    `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${meta.gid}`,
+    `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${meta.gid}`
+  ];
+  let lastError=null;
+  for(const url of urls){
+    try{
+      const res=await fetch(url,{redirect:"follow",headers:{"user-agent":"TIAN-KnowledgeBook-Sync/2.1"}});
+      const body=await res.text();
+      if(!res.ok)throw new Error(`HTTP ${res.status}`);
+      if(/<!doctype html|<html/i.test(body.slice(0,500)))throw new Error("Google returned HTML instead of CSV");
+      const rows=parseCsv(body);
+      if(!rows.length)throw new Error("empty CSV");
+      return {meta,rows,parsed:classify(rows,meta),sourceUrl:url};
+    }catch(e){lastError=e}
+  }
+  throw new Error(`gid ${meta.gid}: ${lastError?.message||"не удалось получить CSV"}`);
 }
 const fetched=[];
 for(const meta of manifest.sheets){
