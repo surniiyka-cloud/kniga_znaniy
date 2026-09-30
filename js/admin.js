@@ -350,7 +350,7 @@ function sectionProductsEditor(ctx){
       '<button type="button" class="kb-mini danger kb-product-delete" data-product-delete>Удалить</button>'+
     '</div>').join("");
   const removed=deleted.map(p=>'<div class="kb-deleted-product-row" data-section-deleted-row data-id="'+esc(p.id)+'"><div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div><label class="kb-product-restore"><input type="checkbox" data-product-restore> <span>Восстановить при сохранении</span></label></div>').join("");
-  return '<section class="kb-admin-section"><div><h3>Карточки товаров</h3><p class="kb-admin-hint"><b>Скрыть</b> — временно убрать карточку с сайта. <b>Удалить</b> — исключить её из структуры сайта, поиска, избранного и сравнения. Google Sheets при этом не меняется.</p></div>'+
+  return '<section class="kb-admin-section"><div><h3>Карточки товаров</h3><p class="kb-admin-hint"><b>Скрыть</b> — временно убрать карточку с сайта. <b>Удалить</b> — исключить её из структуры сайта, поиска и избранного. Google Sheets при этом не меняется.</p></div>'+
     '<div class="kb-product-sort" data-section-product-list>'+active+'</div>'+
     (deleted.length?'<details class="kb-admin-group kb-deleted-products"><summary>Удалённые карточки <small>'+deleted.length+'</small></summary><div class="kb-deleted-product-list">'+removed+'</div></details>':'')+
     '</section>';
