@@ -203,8 +203,10 @@ function renderSectionEditor(ctx){
   setBody(shell(ctx.id+" · "+ctx.section.title,"Редактирование раздела",
     '<form data-admin-section data-id="'+esc(ctx.id)+'" class="kb-admin-form"><label>Название раздела<input name="title" value="'+esc(ctx.section.title||"")+'"></label>'+
     (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть этот лист Google Sheets ↗</a></p>':"")+
+    '<details class="kb-admin-group" open><summary>Пары «название → значение» <small>'+((ctx.section.pairs||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b></span><textarea rows="10" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label></details>'+
     '<label class="kb-admin-field"><span>Дополнительные заметки — одна заметка на строку</span><textarea rows="8" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label>'+
-    '<details class="kb-admin-group"><summary>Расширенный JSON раздела</summary><textarea rows="14" data-section-json>'+esc(jsonText(existing))+'</textarea></details>'+
+    '<details class="kb-admin-group"><summary>Таблицы раздела <small>'+((ctx.section.tables||[]).length)+' таблиц</small></summary><label class="kb-admin-field"><span>Расширенный режим: JSON-массив объектов с title, headers и rows.</span><textarea rows="14" data-section-tables>'+esc(jsonText(ctx.section.tables||[]))+'</textarea></label></details>'+
+    '<details class="kb-admin-group"><summary>Расширенный JSON раздела</summary><label class="kb-admin-field"><span>Для редких полей. Обычные поля выше при сохранении имеют приоритет.</span><textarea rows="14" data-section-json>'+esc(jsonText(existing))+'</textarea></label></details>'+
     '<div class="kb-admin-savebar"><button class="kb-admin-btn primary" type="submit">Сохранить раздел</button><button class="kb-admin-btn danger" type="button" data-reset-section>Сбросить ручные правки</button></div></form>'));
 }
 function renderChapterEditor(ctx){
@@ -270,6 +272,11 @@ async function saveSection(e){
     let out={};const raw=form.querySelector("[data-section-json]")?.value.trim();if(raw){out=JSON.parse(raw);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("JSON раздела должен быть объектом.");}
     putDiff(out,"title",String(fd.get("title")||""),String(src.title||""));
     putDiff(out,"notes",parseLines(fd.get("notes")||""),src.notes||[]);
+    const pairs=parsePairs(form.querySelector("[data-section-pairs]")?.value||"").map(([label,value])=>({label,value}));
+    putDiff(out,"pairs",pairs,src.pairs||[]);
+    const tables=JSON.parse(form.querySelector("[data-section-tables]")?.value||"[]");
+    if(!Array.isArray(tables))throw new Error("Таблицы раздела должны быть JSON-массивом.");
+    putDiff(out,"tables",tables,src.tables||[]);
     const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
     await commitOverrides(o,"admin: edit section "+id);showStatus("Раздел сохранён.");location.reload();
   }catch(err){showError(err);btn.disabled=false}
