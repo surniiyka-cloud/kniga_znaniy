@@ -1070,7 +1070,9 @@ function fields(p){
 }
 
 function tabTableFor(p,id){
-  if(p?.tabTables&&Object.prototype.hasOwnProperty.call(p.tabTables,id))return p.tabTables[id];
+  if(p&&Object.prototype.hasOwnProperty.call(p,"tabTables")){
+    return Object.prototype.hasOwnProperty.call(p.tabTables||{},id)?p.tabTables[id]:null;
+  }
   if(id==="indicators"&&p?.indicatorTable)return p.indicatorTable;
   return null;
 }
