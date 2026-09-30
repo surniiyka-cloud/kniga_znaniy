@@ -6,7 +6,7 @@ import {favorites,recent,applyTheme,cycleTheme,getTheme} from "./storage.js";
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
 const isAdmin=()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}};
-const state={book:null,assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
+const state={book:null,assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},publishedLiveSnapshots:{},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -94,7 +94,10 @@ function liveClassify(rows){
   if(rows.length&&twoCol/rows.length>=.55)return {kind:"keyValue",pairs:rows.filter(r=>liveNonempty(r)>=2).map((r,i)=>({label:liveFlat(r.find(Boolean)),value:liveFlat(r.slice(r.findIndex(Boolean)+1).find(Boolean)||""),sourceRow:i+1})),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
   return {kind:"richTable",rows:rows.map(r=>r.map(liveFlat)),tables:tables.length?tables:undefined,notes:notes.length?notes:undefined,rawRows:rows};
 }
-function liveSnapshots(){try{return JSON.parse(localStorage.getItem(LIVE_SHEETS_KEY)||"{}")||{}}catch{return {}}}
+function liveSnapshots(){
+  let local={};try{local=JSON.parse(localStorage.getItem(LIVE_SHEETS_KEY)||"{}")||{}}catch{}
+  return {...deepCopy(state.publishedLiveSnapshots||{}),...local};
+}
 function saveLiveSnapshots(v){localStorage.setItem(LIVE_SHEETS_KEY,JSON.stringify(v||{}))}
 function bookSectionById(id){for(const ch of state.book?.chapters||[]){const s=(ch.sections||[]).find(x=>x.id===id);if(s)return {chapter:ch,section:s}}return null}
 function applyLiveParsed(section,parsed){
@@ -1116,7 +1119,7 @@ function renderHome(){
   title("");
   const recentItems=recent.get().map(ctx).filter(x=>x&&!isProductExcluded(x.section.id,x.product.id)).slice(0,6);
   const photoProducts=Object.keys(state.assets.productImages||{}).length;
-  app.innerHTML='<section class="hero"><div class="hero-copy"><span class="eyebrow">TIAN-Трейд · внутренняя база знаний</span><h1>Вся продуктовая экспертиза — в одной системе</h1><p>Поиск по ассортименту, артикулам, назначению и характеристикам. Данные автоматически собираются из рабочей Книги знаний.</p><div class="hero-actions"><button class="btn hero-btn" data-focus-search>⌕ Найти товар</button><button class="btn hero-btn secondary" data-route="favorites">★ Избранное</button></div><div class="hero-meta"><span class="hero-chip">'+state.book.chapters.length+' глав</span><span class="hero-chip">'+state.sections.size+' подразделов</span><span class="hero-chip">'+state.products.size+' карточек</span><span class="hero-chip">Обновлено '+fmtDate(state.book.generatedAt)+'</span></div></div></section><section class="stats"><div class="stat"><strong>'+state.book.chapters.length+'</strong><span>глав</span></div><div class="stat"><strong>'+state.sections.size+'</strong><span>подразделов</span></div><div class="stat"><strong>'+state.products.size+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+photoProducts+'</strong><span>товаров с индивидуальными фото</span></div></section><section class="home-tools"><button type="button" class="home-tool" data-focus-search><span>⌕</span><strong>Глобальный поиск</strong><small>Название, артикул, назначение</small></button><button type="button" class="home-tool" data-route="compare"><span>⇄</span><strong>Сравнение товаров</strong><small>До четырёх карточек рядом</small></button><button type="button" class="home-tool" data-route="diagnostics"><span>✓</span><strong>Диагностика данных</strong><small>Фото, дубликаты и качество базы</small></button></section><div class="section-heading"><div><span class="eyebrow">Навигация</span><h2>Разделы Книги знаний</h2></div></div><section class="chapter-grid">'+state.book.chapters.map((ch)=>'<article class="chapter-card" data-num="'+esc(ch.id)+'" data-open-chapter="'+esc(ch.id)+'"><span class="chapter-num">'+esc(ch.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(ch.title)+'</h3><p>'+ch.sections.length+' подразделов</p></article>').join("")+'</section>'+(recentItems.length?'<div class="section-heading"><div><span class="eyebrow">История</span><h2>Недавно просмотренные</h2></div></div><section class="recent-grid">'+recentItems.map(card).join("")+'</section>':"");
+  app.innerHTML='<section class="hero"><div class="hero-copy"><span class="eyebrow">TIAN-Трейд · внутренняя база знаний</span><h1>Вся продуктовая экспертиза — в одной системе</h1><p>Поиск по ассортименту, артикулам, назначению и характеристикам. Данные автоматически собираются из рабочей Книги знаний.</p><div class="hero-actions"><button class="btn hero-btn" data-focus-search>⌕ Найти товар</button><button class="btn hero-btn secondary" data-route="favorites">★ Избранное</button></div><div class="hero-meta"><span class="hero-chip">'+state.book.chapters.length+' глав</span><span class="hero-chip">'+state.sections.size+' подразделов</span><span class="hero-chip">'+state.products.size+' карточек</span><span class="hero-chip">Обновлено '+fmtDate(state.book.generatedAt)+'</span></div></div></section><section class="stats"><div class="stat"><strong>'+state.book.chapters.length+'</strong><span>глав</span></div><div class="stat"><strong>'+state.sections.size+'</strong><span>подразделов</span></div><div class="stat"><strong>'+state.products.size+'</strong><span>структурированных карточек</span></div><div class="stat"><strong>'+photoProducts+'</strong><span>товаров с индивидуальными фото</span></div></section><section class="home-tools"><button type="button" class="home-tool" data-focus-search><span>⌕</span><strong>Глобальный поиск</strong><small>Название, артикул, назначение</small></button>'+(isAdmin()?'<button type="button" class="home-tool" data-route="diagnostics"><span>✓</span><strong>Диагностика данных</strong><small>Фото, дубликаты и качество базы</small></button>':'')+'</section><div class="section-heading"><div><span class="eyebrow">Навигация</span><h2>Разделы Книги знаний</h2></div></div><section class="chapter-grid">'+state.book.chapters.map((ch)=>'<article class="chapter-card" data-num="'+esc(ch.id)+'" data-open-chapter="'+esc(ch.id)+'"><span class="chapter-num">'+esc(ch.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(ch.title)+'</h3><p>'+ch.sections.length+' подразделов</p></article>').join("")+'</section>'+(recentItems.length?'<div class="section-heading"><div><span class="eyebrow">История</span><h2>Недавно просмотренные</h2></div></div><section class="recent-grid">'+recentItems.map(card).join("")+'</section>':"");
 }
 function renderImportant(title,items,foot=""){
   return '<section class="important-panel"><div class="important-icon">!</div><div><h2>'+esc(title)+'</h2><ul>'+items.map((x)=>'<li><strong>'+esc(x[0])+'</strong> '+esc(x[1])+'</li>').join("")+'</ul>'+(foot?'<p class="important-foot">'+esc(foot)+'</p>':"")+'</div></section>';
@@ -1382,7 +1385,8 @@ async function init(){
     fetch("./data/sync-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/image-match-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/version-log.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
-    fetch("./data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null)
+    fetch("./data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
+    fetch("./data/live-sheet-snapshots.json?v="+stamp,{cache:"no-store"}).catch(()=>null)
   ]);
   if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
@@ -1392,6 +1396,7 @@ async function init(){
   state.reports.images=rs[4]?.ok?await rs[4].json():null;
   state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
   state.overrides=mergeOverrideLayer(rs[6]?.ok?await rs[6].json():state.overrides,localEditorOverrides());
+  state.publishedLiveSnapshots=rs[7]?.ok?await rs[7].json():{};
   applyStoredLiveSnapshots();
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Google Sheets · обновлено "+fmtDate(state.book.generatedAt);
