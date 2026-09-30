@@ -784,7 +784,7 @@ function sectionBaseItems(sectionId){
 }
 function keepMycoDefault(name){
   const n=String(name||"").trim().toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");
-  return n==="agrastrip pro watex"||n==="ringbio technology"||n==="ифа"||n==="agrastrip gmo trait check";
+  return n.includes("agrastrip pro watex")||n.startsWith("ringbio technology")||n==="ифа"||n.startsWith("ифа ")||n.includes("agrastrip gmo trait check");
 }
 function defaultHiddenProducts(sectionId,items){
   if(sectionId!=="2.11")return [];
@@ -792,8 +792,7 @@ function defaultHiddenProducts(sectionId,items){
 }
 function defaultProductOrder(sectionId,items){
   const base=(items||[]).map(x=>x.product.id);if(sectionId!=="2.11")return base;
-  const preferred=["agrastrip pro watex","ringbio technology","ифа","agrastrip gmo trait check"];
-  const rank=name=>{const n=String(name||"").trim().toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");const i=preferred.indexOf(n);return i<0?999:i;};
+  const rank=name=>{const n=String(name||"").trim().toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");if(n.includes("agrastrip pro watex"))return 0;if(n.startsWith("ringbio technology"))return 1;if(n==="ифа"||n.startsWith("ифа "))return 2;if(n.includes("agrastrip gmo trait check"))return 3;return 999;};
   return [...items].sort((a,b)=>rank(a.product.name)-rank(b.product.name)).map(x=>x.product.id);
 }
 function sectionProductLayout(sectionId){
