@@ -394,23 +394,35 @@ function buildExtensoCard(ext){
   return {fields,customTabs,calibration,advantages,substances};
 }
 function buildConsumableBlocks(s){
-  const pairs=s.pairs||[],starts=[0,19,51,70,98],names=["EKODAY","EKOWEEK","EKOPRIM","MASTOPRIM","LACTOCHIP"],out=[];
-  const washCycle=[["Шаг 1","Вода 20 ± 5 °C"],["Шаг 2","Вода 50 ± 5 °C"],["Шаг 3","EKODAY 2% ежедневно ИЛИ EKOWEEK 5% еженедельно, 50 ± 5 °C"],["Шаг 4","Вода 50 ± 5 °C"],["Шаг 5","Вода 20 ± 5 °C"],["Простой более 15 минут","Промыть систему дистиллированной водой"],["Простой после промывки","Входную и выходную трубки поместить в стакан с дистиллированной водой"],["Зачем","Предотвращение образования воздушных пузырьков в системе"]];
-  starts.forEach((st,i)=>{
-    const en=starts[i+1]??pairs.length,block=pairs.slice(st,en),name=names[i],advAt=block.findIndex((p)=>/^(Преимущество|Особенность)$/i.test(String(p.label||"").trim())&&/Практическое значение/i.test(String(p.value||"")));
-    const main=(advAt>=0?block.slice(0,advAt):block),advantages=(advAt>=0?block.slice(advAt+1):[]);
-    const fields=[],workflow=[],complectation=[];
-    if(name==="EKODAY")fields.push(["Категория","Моющее средство для анализаторов молока"],["Артикул","0704.01.012"],["Тип средства","Щелочное"],["Назначение","Ежедневная промывка анализаторов молока"],["Форма","Сухой реагент"],["Упаковка","2 пакета × 100 г"],["Общая масса","200 г"]);
-    for(const p of main){
-      const l=String(p.label||"").trim(),v=String(p.value||"").trim();
-      if(!l||!v||l==="Характеристика"||l==="Наименование"||l.length>100)continue;
-      if(/^\d+$/.test(l)||l==="Этап"){if(/^\d+$/.test(l))workflow.push(["Шаг "+l,v]);continue;}
-      if(name==="LACTOCHIP"&&["Компонент","Количество"].includes(l))continue;
-      if(name==="LACTOCHIP"&&["Тест-пластины LACTOCHIP","SOFIA GREEN","Наконечники автоматического дозатора"].includes(l)){complectation.push([l,v]);continue;}
-      if(!["Ситуация","Зачем это нужно"].includes(l))fields.push([l,v]);
+  const rows=s.rawRows||s.rows||[],starts=[];
+  rows.forEach((r,i)=>{if(String(r?.[0]||"").trim()==="Наименование"&&String(r?.[1]||"").trim())starts.push({i,name:String(r[1]).trim()})});
+  const out=[];
+  starts.forEach((item,n)=>{
+    const next=starts[n+1]?.i??rows.length,en=Math.max(item.i+1,next-1),block=rows.slice(item.i,en);
+    const fields=[],advantages=[],workflow=[],complectation=[],washCycle=[];let mode="fields";
+    for(const r of block){
+      const vals=(r||[]).map(v=>String(v||"").trim()),a=vals[0],v=vals.slice(1).filter(Boolean).join(" · ");
+      if(!a)continue;
+      if(!v){
+        if(/Преимуществ|Практическое значение/i.test(a)){mode="advantages";continue}
+        if(/Состав комплекта/i.test(a)){mode="complectation";continue}
+        if(/Рекомендуемый цикл мойки|При простое/i.test(a)){mode="wash";continue}
+        if(/Место в цикле мойки|Приготовление рабочего раствора|Как используется кассета/i.test(a)){mode="workflow";continue}
+        continue;
+      }
+      if(/^(Характеристика|Наименование|Особенность|Этап|Компонент|Шаг|Ситуация)$/i.test(a)&&/^(Значение|Практическое значение|Количество|Средство|Действие|Что делать|Зачем это нужно)/i.test(v))continue;
+      if(["-","—"].includes(v))continue;
+      const pair=[a,v];
+      if(mode==="advantages")advantages.push(pair);
+      else if(mode==="workflow")workflow.push(pair);
+      else if(mode==="complectation")complectation.push(pair);
+      else if(mode==="wash")washCycle.push(pair);
+      else if(a!=="Наименование")fields.push(pair);
     }
-    out.push({name,fields:uniquePairs(fields),advantages:uniquePairs(advantages.map((p)=>[p.label,p.value])),workflow:uniquePairs(workflow),complectation:uniquePairs(complectation),washCycle:["EKODAY","EKOWEEK"].includes(name)?washCycle:[]});
+    out.push({name:item.name,fields:uniquePairs(fields),advantages:uniquePairs(advantages),workflow:uniquePairs(workflow),complectation:uniquePairs(complectation),washCycle:uniquePairs(washCycle)});
   });
+  const shared=out.find(x=>x.name==="EKOWEEK")?.washCycle||[];
+  for(const x of out)if(x.name==="EKODAY"&&!x.washCycle.length&&shared.length)x.washCycle=deepCopy(shared);
   return out;
 }
 function buildChapter2Catalog(){
