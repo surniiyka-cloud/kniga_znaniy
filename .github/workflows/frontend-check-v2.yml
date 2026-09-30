@@ -26,6 +26,7 @@ jobs:
       - name: Проверить JavaScript
         run: |
           node --check js/app.js
+          node --check js/admin.js
           node --check js/search.js
           node --check js/storage.js
           node --check js/router.js
@@ -34,4 +35,4 @@ jobs:
         run: |
           node -e "JSON.parse(require('fs').readFileSync('data/book.json','utf8')); JSON.parse(require('fs').readFileSync('data/assets.json','utf8')); JSON.parse(require('fs').readFileSync('data/search-index.json','utf8')); JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('JSON OK')"
       - name: Проверить обязательные файлы
-        run: test -s index.html && test -s css/app.css && test -s js/app.js && test -s service-worker.js && test -s manifest.webmanifest
+        run: test -s index.html && test -s css/app.css && test -s css/admin.css && test -s js/app.js && test -s js/admin.js && test -s service-worker.js && test -s manifest.webmanifest
