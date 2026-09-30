@@ -531,17 +531,46 @@ function buildChapter2Catalog(){
     state.sectionCatalog.set("2.11",(myco.products||[]).map((p)=>state.products.get(p.id)).filter(Boolean));
   }
 
-  // 2.13 — одна главная карточка KangarooSci, линейка внутри
+  // 2.13 — оба продуктовых блока собираются прямо из листа
   const micro=sBy("2.13");if(micro){
-    const assortment=[
-      ["Молочнокислые микроорганизмы (МКБ)","KangarooSci Lactic Acid / KGR014"],["КМАФАнМ (ОМЧ)","KangarooSci KGR001"],
-      ["Дрожжи и плесневые грибы","KangarooSci KGR008"],["БГКП","KangarooSci KGR010"],["БГКП + E. coli","KangarooSci KGR011"],
-      ["Золотистый стафилококк","KangarooSci KGR002"],["Сальмонелла","KangarooSci KGR015"],["Listeria monocytogenes","KangarooSci KGR005"],
-      ["Bacillus cereus","KangarooSci KGR013"],["Энтеробактерии","KangarooSci KGR016"]
-    ];
-    registerCatalog("2.13","Тест-пластины KangarooSci",[["Назначение","Количественное определение микроорганизмов в готовой продукции, сырье и смывах с поверхностей"],["Формат","Готовая тест-пластина"],["Упаковка","12 тест-пластин"],["Объём вносимой суспензии","1 мл"],["Считывание","Визуальный количественный подсчёт колоний"]],state.assets.sectionImages?.["2.13"]||[],{assortment});
+    const rows=micro.rawRows||micro.rows||[];
+    const idx=(test)=>rows.findIndex(r=>test(String(r?.[0]||"").trim()));
+    const between=(a,b)=>{
+      const st=idx(a),en=idx(b);if(st<0)return [];
+      return rows.slice(st+1,en<0?rows.length:en);
+    };
+    const asPairs=(arr)=>uniquePairs(arr.map(r=>[String(r?.[0]||"").trim(),compactRowValue(r,1)])
+      .filter(([l,v])=>l&&v&&!/^(Характеристика|Этап|Особенность)$/i.test(l)&&!/^Значение$/i.test(v)));
+    const asLineup=(arr)=>{
+      if(!arr.length)return [];
+      const h=arr[0]||[];
+      return uniquePairs(arr.slice(1).map(r=>{
+        const name=String(r?.[0]||"").trim();
+        const info=h.slice(1).map((x,i)=>String(r?.[i+1]||"").trim()?[String(x||"").trim(),String(r[i+1]).trim()]:null).filter(Boolean).map(x=>x[0]+": "+x[1]).join(" · ");
+        return [name,info];
+      }).filter(r=>r[0]&&r[1]));
+    };
+    const compareRows=between(x=>x==="KangarooSci или HygieneChek Plus?",()=>false);
+    const comparison=compareRows.length>1?compareRows.slice(1).map(r=>[String(r[0]||"").trim(),["KangarooSci — "+String(r[1]||"").trim(),"HygieneChek Plus — "+String(r[2]||"").trim()].filter(x=>!/[—]\s*$/.test(x)).join(" · ")]).filter(r=>r[0]&&r[1]):[];
+    const kangFields=asPairs(between(x=>x==="Общие характеристики",x=>x==="Подготовка и проведение анализа"));
+    const kangWorkflow=asPairs(between(x=>x==="Подготовка и проведение анализа",x=>x==="Практическое значение"));
+    const kangAdv=asPairs(between(x=>x==="Практическое значение",x=>/^Romer Labs HygieneChek Plus/i.test(x)));
+    const kangLine=asLineup(between(x=>x==="Линейка тест-пластин",x=>x==="Общие характеристики"));
+    registerCatalog("2.13","Тест-пластины KangarooSci",kangFields,state.assets.sectionImages?.["2.13"]||[],{
+      advantages:kangAdv,assortment:kangLine,workflow:kangWorkflow,
+      customTabs:comparison.length?[{id:"comparison-kangaroo-hygiene",label:"Сравнение с HygieneChek Plus",kind:"pairs",rows:comparison}]:[]
+    });
+    const hDescIndex=idx(x=>/^Romer Labs HygieneChek Plus/i.test(x));
+    if(hDescIndex>=0){
+      const hFields=asPairs(between(x=>x==="Общие характеристики HygieneChek Plus",x=>x==="KangarooSci или HygieneChek Plus?"));
+      const hWorkflow=asPairs(between(x=>x==="Как используется HygieneChek Plus",x=>x==="Линейка HygieneChek Plus"));
+      const hLine=asLineup(between(x=>x==="Линейка HygieneChek Plus",x=>x==="Общие характеристики HygieneChek Plus"));
+      registerCatalog("2.13","Romer Labs HygieneChek Plus",hFields,[],{
+        assortment:hLine,workflow:hWorkflow,
+        customTabs:comparison.length?[{id:"comparison-hygiene-kangaroo",label:"Сравнение с KangarooSci",kind:"pairs",rows:comparison}]:[]
+      });
+    }
   }
-
   // питательные среды — каждая строка ассортимента отдельной карточкой; фото только при уверенном совпадении
   const media=sBy("2.14");if(media){
     const imgMap=[
