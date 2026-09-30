@@ -140,8 +140,8 @@ function bindBody(){
     const b=e.currentTarget;b.disabled=true;showStatus("Забираю свежие данные из текущего листа Google Sheets…","warn");
     try{
       const r=await window.KB_EDITOR_API?.refreshCurrentSection?.();
-      showStatus("Готово: раздел "+(r?.sectionId||"")+" обновлён сразу из Google Sheets ("+(r?.rows||0)+" строк).");
       await renderEditor();
+      showStatus("Готово: раздел "+(r?.sectionId||"")+" обновлён сразу из Google Sheets ("+(r?.rows||0)+" строк).");
     }catch(err){showError(err)}finally{b.disabled=false}
   });
   body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
