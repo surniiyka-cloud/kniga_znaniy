@@ -195,6 +195,8 @@ function applyPackedOverride(inputRows,meta){
   if(!spec)return null;
   const products=(spec.products||[]).map((p,i)=>{
     const obj={...p,sourceRow:1};
+    const labelMap={name:"Наименование",article:"Артикул",type:"Тип",purpose:"Назначение",features:"Особенности",manufacturer:"Производитель",country:"Страна",size:"Размер",quantity:"Количество",height:"Рост",width:"Ширина",length:"Длина",thickness:"Толщина"};
+    obj.sheetFields=Object.entries(labelMap).filter(([k])=>flat(obj[k]||"")).map(([k,label])=>[label,flat(obj[k])]);
     obj.candidateId=slug((obj.article&&obj.article!=="-"&&obj.article!=="—"?obj.article+"-":"")+obj.name)
       ||crypto.createHash("sha1").update(meta.section+"|"+i+"|"+obj.name).digest("hex").slice(0,10);
     return obj;
