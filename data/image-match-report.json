@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-09-30T06:50:07.313Z",
-  "imagesTotal": 338,
+  "imagesTotal": 341,
   "imagesMatched": 269,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
@@ -71,7 +71,10 @@
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallicheskaya-ovalnaya-s-naruchnoy-petley-s-3-ryadami-tonkih-volnistyh-zubev.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallitseskaya-aldus-11h12-5-1810.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
-    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png"
+    "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png",
+    "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png",
+    "img/photos/admin/catalog-2-1-2-tetrasensor/catalog-2-1-2-tetrasensor-01.png",
+    "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png"
   ],
   "unmatchedSuggestions": [
     {
@@ -1209,9 +1212,21 @@
           "score": 0.4
         }
       ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-1-2-tetrasensor/catalog-2-1-2-tetrasensor-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png",
+      "candidates": []
     }
   ],
-  "productsTotal": 809,
+  "productsTotal": 805,
   "productsWithImages": 120,
   "productsWithoutImages": [
     {
@@ -1267,30 +1282,6 @@
       "section": "2.11",
       "name": "AgraStrip Cry1Ab Seed and Leaf",
       "article": "10001318"
-    },
-    {
-      "id": "3.1-0202-012-reventa-1-5-m",
-      "section": "3.1",
-      "name": "Reventa 1.5 M",
-      "article": "0202.012"
-    },
-    {
-      "id": "3.1-0202-013-запасной-патрон-баллон",
-      "section": "3.1",
-      "name": "Запасной патрон (баллон)",
-      "article": "0202.013"
-    },
-    {
-      "id": "3.1-0202-012-reventa-3-m",
-      "section": "3.1",
-      "name": "Reventa 3 M",
-      "article": "0202.012"
-    },
-    {
-      "id": "3.1-0202-103-express-terra",
-      "section": "3.1",
-      "name": "Express Terra",
-      "article": "0202.103"
     },
     {
       "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
