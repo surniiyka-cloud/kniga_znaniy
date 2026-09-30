@@ -379,11 +379,20 @@ function parseAnalyzerRaw(section){
   out.customTabs=out.customTabs.map((t)=>({...t,rows:uniquePairs(t.rows)})).filter((t)=>t.rows.length);
   return out;
 }
-function unisensorImage(name){
-  const n=String(name||"").toLowerCase();
+function unisensorImage(...names){
+  const n=names.map(x=>String(x||"").toLowerCase()).join(" ");
+  const direct=[
+    ["aflasensor","img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png"],
+    ["aminosensor","img/photos/03-testy-dopolnitelnyh-grupp/03-aminosensor.png"],
+    ["cowsensor","img/photos/03-testy-dopolnitelnyh-grupp/03-cowsensor.png"],
+    ["milksensor","img/photos/03-testy-dopolnitelnyh-grupp/03-milksensor-ltse.png"],
+    ["quinosensor","img/photos/03-testy-dopolnitelnyh-grupp/03-quinosensor.png"],
+    ["sulfasensor","img/photos/03-testy-dopolnitelnyh-grupp/03-sulfasensor.png"],
+    ["tylosensor","img/photos/03-testy-dopolnitelnyh-grupp/03-tylosensor.png"]
+  ];
+  for(const [key,path] of direct)if(n.includes(key))return path;
   const imgs=state.assets.sectionImages?.["2.1.2"]||[];
-  const key=n.includes("aflasensor")?"aflasensor":n.includes("cowsensor")?"cowsensor":n.includes("aminosensor")?"aminosensor":n.includes("milksensor")?"milksensor":n.includes("quinosensor")?"quinosensor":n.includes("sulfasensor")?"sulfasensor":n.includes("tylosensor")?"tylosensor":"";
-  return key?(imgs.find((x)=>x.toLowerCase().includes(key))||""):"";
+  return imgs.find(path=>{const z=path.toLowerCase();return names.some(x=>{const k=safeSlug(x).replace(/-/g,"");return k&&z.replace(/[^a-zа-яё0-9]/gi,"").includes(k.slice(0,12));});})||"";
 }
 function parseUnisensorBlock(rows,start,end,name,initialGroup=""){
   const block=rows.slice(start,end),fields=[],advantages=[],substances=[];let group=initialGroup;
@@ -408,8 +417,8 @@ function buildUnisensorCards(s){
     const parsed=parseUnisensorBlock(rows,st+1,en,marker);
     const display=parsed.fields.find(r=>r[0]==="Наименование")?.[1]||marker;
     const cleanName=display.replace(/^Экспресс-тест\s+/i,"").trim()||marker;
-    const img=unisensorImage(marker);
-    registerCatalog("2.1.2",cleanName,parsed.fields,img?[img]:[],{advantages:parsed.advantages,substances:parsed.substances});
+    const img=unisensorImage(marker,display,cleanName);
+    registerCatalog("2.1.2",cleanName,parsed.fields,img?[img]:[],{advantages:parsed.advantages,substances:parsed.substances,sourceSectionId:s.id,sourceGid:s.gid});
   });
 }
 function buildAnalyzerParts(pairs){
