@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-30T13:49:09.961Z",
+  "updatedAt": "2026-09-30T13:54:07.356Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2561,6 +2561,27 @@
           "x": 0,
           "y": 0,
           "fit": "contain"
+        }
+      }
+    },
+    "catalog-2-1-2-twinsensor-kit-034": {
+      "images": [
+        "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png": {
+          "card": {
+            "scale": 1.3,
+            "x": 0,
+            "y": 2,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1.3,
+            "x": 0,
+            "y": 2,
+            "fit": "contain"
+          }
         }
       }
     }
