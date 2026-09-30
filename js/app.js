@@ -919,7 +919,7 @@ function installEditorApi(){
       if(r.name==="product"){
         const x=ctx(r.id);if(!x)return {kind:"none"};
         const sourceId=x.product.sourceSectionId||x.section.id,source=bookSectionById(sourceId)?.section||null;
-        return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+        return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
       if(r.name==="section"){
         const x=state.sections.get(r.id);if(!x)return {kind:"none"};
@@ -1124,7 +1124,7 @@ function tabTableFor(p,id){
   return null;
 }
 function hasTabContent(p,id,pairs=[]){return !!(tabTableFor(p,id)?.rows?.length||(pairs||[]).length)}
-function productTabs(p){
+function productTabs(p,{includeHidden=false}={}){
   let tabs=[{id:"specs",label:"Характеристики"}];
   if(hasTabContent(p,"indicators",p.indicators))tabs.push({id:"indicators",label:"Измеряемые показатели"});
   if(hasTabContent(p,"options",p.options))tabs.push({id:"options",label:"Дополнительные опции"});
@@ -1140,7 +1140,7 @@ function productTabs(p){
   for(const t of p.customTabs||[])if(!tabs.some(x=>x.id===t.id))tabs.push({id:t.id,label:t.label||t.id});
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
   const hidden=new Set(p.hiddenTabs||[]);
-  tabs=tabs.filter(t=>!hidden.has(t.id));
+  if(!includeHidden)tabs=tabs.filter(t=>!hidden.has(t.id));
   if(p.tabLabels)tabs=tabs.map(t=>({...t,label:p.tabLabels[t.id]||t.label}));
   if(Array.isArray(p.tabOrder)&&p.tabOrder.length){const pos=new Map(p.tabOrder.map((id,i)=>[id,i]));tabs.sort((a,b)=>(pos.has(a.id)?pos.get(a.id):999)-(pos.has(b.id)?pos.get(b.id):999));}
   return tabs;
