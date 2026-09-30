@@ -531,25 +531,27 @@ function bindBody(){
   body.querySelector("[data-photo-add]")?.addEventListener("click",()=>body.querySelector("[data-photo-file]")?.click());
   body.querySelector("[data-photo-file]")?.addEventListener("change",async e=>{
     const input=e.currentTarget,files=[...(input.files||[])];if(!files.length||!editorCtx)return;
-    const btn=body.querySelector("[data-photo-add]");if(btn)btn.disabled=true;showStatus("Загружаю фотографии в GitHub…","warn");
+    const btn=body.querySelector("[data-photo-add]");if(btn)btn.disabled=true;showStatus("Загружаю и автоматически кадрирую фотографии…","warn");
     try{
       let current=syncPhotoState(body);
       for(const file of files){
         const ext=imageExt(file);if(!ext)throw new Error("Файл «"+file.name+"» имеет неподдерживаемый формат.");
         const path=nextPhotoPath(editorCtx.id,current,ext);await uploadPhoto(file,path);current.push(path);
         body.querySelector("[data-photo-list]")?.insertAdjacentHTML("beforeend",photoRowHtml(path,current.length-1,{}));
+        const row=[...body.querySelectorAll("[data-photo-row]")].at(-1);
+        try{await autoFitRow(row,null,file)}catch{}
       }
-      await persistImagesOnly(body);showStatus("Фотографии загружены, привязаны к товару и опубликованы.");
+      await persistImagesOnly(body);showStatus("Фотографии загружены, автоподгон рассчитан отдельно для карточки и внутреннего фото.");
     }catch(err){showError(err)}finally{input.value="";if(btn)btn.disabled=false}
   });
   body.querySelector("[data-photo-save-view]")?.addEventListener("click",async e=>{
     const b=e.currentTarget;b.disabled=true;showStatus("Сохраняю отображение фотографий…","warn");
-    try{await persistImagesOnly(body);showStatus("Вид фотографий сохранён и опубликован.")}catch(err){showError(err)}finally{b.disabled=false}
+    try{await persistImagesOnly(body);showStatus("Оба варианта отображения фотографий сохранены и опубликованы.")}catch(err){showError(err)}finally{b.disabled=false}
   });
   body.querySelector("[data-photo-replace-file]")?.addEventListener("change",async e=>{
     const input=e.currentTarget,file=input.files?.[0],old=input.dataset.replacePath||"";if(!file||!old)return;
     const row=body.querySelector('[data-photo-row][data-path="'+CSS.escape(old)+'"]');if(!row)return;
-    showStatus("Заменяю фотографию…","warn");
+    showStatus("Заменяю фотографию и пересчитываю кадр…","warn");
     try{
       const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
       let path=old;
@@ -557,19 +559,32 @@ function bindBody(){
       else path=old.replace(/\.[^.]+$/,"."+ext);
       await uploadPhoto(file,path);
       if(path!==old&&old.startsWith("img/photos/admin/"))await deleteRepoFile(old,"Admin: remove replaced product photo");
-      row.dataset.path=path;row.querySelector(".kb-photo-preview img").src=photoPreviewSrc(path);row.querySelector(".kb-photo-meta code").textContent=path;
-      await persistImagesOnly(body);showStatus("Фотография заменена и опубликована.");
+      row.dataset.path=path;row.querySelectorAll(".kb-photo-preview img").forEach(img=>img.src=photoPreviewSrc(path));row.querySelector(".kb-photo-meta code").textContent=path;
+      try{await autoFitRow(row,null,file)}catch{}
+      await persistImagesOnly(body);showStatus("Фотография заменена; оба кадра пересчитаны и опубликованы.");
     }catch(err){showError(err)}finally{input.value="";input.dataset.replacePath=""}
   });
   body.addEventListener("click",async e=>{
     const row=e.target.closest?.("[data-photo-row]");if(!row)return;
+    const box=e.target.closest?.("[data-photo-context]");
     try{
-      if(e.target.closest("[data-photo-preset-large]")){setPhotoControls(row,{scale:1.35,x:0,y:0,fit:"contain"});return}
-      if(e.target.closest("[data-photo-center]")){const scale=Number(row.querySelector("[data-photo-scale]")?.value||100)/100,fit=row.querySelector("[data-photo-fit]")?.value||"contain";setPhotoControls(row,{scale,x:0,y:0,fit});return}
-      if(e.target.closest("[data-photo-reset-view]")){setPhotoControls(row,{scale:1,x:0,y:0,fit:"contain"});return}
-      if(e.target.closest("[data-photo-apply-all]")){
-        const setting={scale:Number(row.querySelector("[data-photo-scale]")?.value||100)/100,x:Number(row.querySelector("[data-photo-x]")?.value||0),y:Number(row.querySelector("[data-photo-y]")?.value||0),fit:row.querySelector("[data-photo-fit]")?.value||"contain"};
-        body.querySelectorAll("[data-photo-row]").forEach(r=>setPhotoControls(r,setting));showStatus("Настройки применены ко всем фото. Нажмите «Сохранить вид фото».","warn");return;
+      if(e.target.closest("[data-photo-auto]")&&box){
+        showStatus("Определяю границы товара на фотографии…","warn");
+        await autoFitRow(row,box.dataset.photoContext);showStatus("Автоподгон рассчитан. Проверь предпросмотр и нажми «Сохранить вид фото».","warn");return;
+      }
+      if(e.target.closest("[data-photo-auto-both]")){
+        showStatus("Подгоняю фото под обе рамки…","warn");
+        await autoFitRow(row);showStatus("Обе рамки рассчитаны. При необходимости подправь ползунками.","warn");return;
+      }
+      if(e.target.closest("[data-photo-preset-large]")&&box){
+        const v=settingFromContext(box);setPhotoControls(box,{...v,scale:Math.min(4,v.scale+.2)});return;
+      }
+      if(e.target.closest("[data-photo-center]")&&box){const v=settingFromContext(box);setPhotoControls(box,{...v,x:0,y:0});return}
+      if(e.target.closest("[data-photo-reset-view]")&&box){setPhotoControls(box,{scale:1,x:0,y:0,fit:"contain"});return}
+      if(e.target.closest("[data-photo-copy-context]")&&box){
+        const context=box.dataset.photoContext,v=settingFromContext(box);
+        body.querySelectorAll('[data-photo-context="'+context+'"]').forEach(x=>setPhotoControls(x,v));
+        showStatus("Настройка «"+(context==="card"?"Карточка раздела":"Внутри товара")+"» применена ко всем фото товара. Нажми «Сохранить вид фото».","warn");return;
       }
       if(e.target.closest("[data-photo-up]")){row.previousElementSibling?.before(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
       if(e.target.closest("[data-photo-down]")){row.nextElementSibling?.after(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
@@ -596,7 +611,7 @@ function bindBody(){
   });
   body.addEventListener("input",e=>{
     const photo=e.target.closest?.("[data-photo-scale],[data-photo-x],[data-photo-y],[data-photo-fit]");
-    if(photo){updatePhotoPreview(photo.closest("[data-photo-row]"));return}
+    if(photo){updatePhotoPreview(photo.closest("[data-photo-context]"));return}
     const input=e.target.closest?.("[data-tab-label]");if(!input)return;
     const row=input.closest("[data-admin-tab-row]"),id=row?.dataset.id,label=input.value.trim()||id;if(!id)return;
     const opt=body.querySelector('[data-new-table-tab] option[value="'+CSS.escape(id)+'"]');if(opt)opt.textContent=label;
