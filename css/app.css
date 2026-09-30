@@ -203,7 +203,7 @@ a{color:inherit}
   position:relative;aspect-ratio:16/9;background:var(--surface-2);overflow:hidden;
   display:grid;place-items:center;border-bottom:1px solid var(--line)
 }
-.product-image img{width:100%;height:100%;object-fit:contain;padding:10px}
+.product-image img{width:100%;height:100%;object-fit:contain;padding:10px;transform-origin:center center;transition:transform .16s ease}
 .product-image.placeholder::before{content:"TIAN";font-weight:900;font-size:28px;letter-spacing:.12em;color:color-mix(in srgb,var(--green) 24%,transparent)}
 .product-body{padding:16px;display:flex;flex-direction:column;gap:9px;flex:1}
 .product-meta{display:flex;gap:7px;flex-wrap:wrap}
@@ -226,11 +226,11 @@ a{color:inherit}
 }
 .gallery-card{padding:14px;align-self:start;position:sticky;top:94px}
 .gallery-main{aspect-ratio:4/3;border-radius:14px;background:var(--surface-2);overflow:hidden;display:grid;place-items:center;cursor:zoom-in}
-.gallery-main img{width:100%;height:100%;object-fit:contain;padding:12px}
+.gallery-main img{width:100%;height:100%;object-fit:contain;padding:12px;transform-origin:center center;transition:transform .16s ease}
 .gallery-thumbs{display:flex;gap:8px;margin-top:9px;overflow:auto}
-.gallery-thumb{flex:0 0 74px;height:58px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:3px;cursor:pointer}
+.gallery-thumb{flex:0 0 74px;height:58px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:3px;cursor:pointer;overflow:hidden}
 .gallery-thumb.active{border-color:var(--orange);box-shadow:0 0 0 2px color-mix(in srgb,var(--orange) 14%,transparent)}
-.gallery-thumb img{width:100%;height:100%;object-fit:contain}
+.gallery-thumb img{width:100%;height:100%;object-fit:contain;transform-origin:center center}
 .info-card{padding:25px}
 .product-title{font-size:clamp(25px,3vw,40px);line-height:1.08;margin:6px 0 14px;letter-spacing:-.035em}
 .product-lead{font-size:15px;color:var(--muted);margin:14px 0 0}
