@@ -791,17 +791,6 @@ function enrichRegularProducts(){
     }
   }
 }
-function sectionSupplement(s){
-  const blocks=[];
-  for(const t of s.tables||[]){
-    if(!t?.rows?.length)continue;
-    blocks.push('<details class="section-reference"><summary><span><strong>'+esc(t.title||"Справочная таблица")+'</strong><small>'+t.rows.length+' строк</small></span><b>+</b></summary><div class="section-reference-body"><div class="table-wrap"><table class="data-table"><thead><tr>'+(t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+t.rows.map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></div></details>');
-  }
-  if(s.notes?.length){
-    blocks.push('<section class="section-notes"><div class="section-heading compact"><div><span class="eyebrow">Справочно</span><h2>Дополнительная информация</h2></div></div><dl class="feature-definition-list">'+s.notes.map((n,i)=>'<dt>Материал '+(i+1)+'</dt><dd>'+esc(n)+'</dd>').join("")+'</dl></section>');
-  }
-  return blocks.join("");
-}
 function deepCopy(v){return v==null?v:JSON.parse(JSON.stringify(v));}
 function mergeOverrideLayer(base,extra){
   const out=deepCopy(base||{version:1,products:{},sections:{},chapters:{}});
