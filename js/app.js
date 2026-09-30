@@ -6,7 +6,7 @@ import {favorites,comparison,recent,applyTheme,cycleTheme,getTheme} from "./stor
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
 const isAdmin=(()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}})();
-const state={book:null,assets:{productImages:{},sectionImages:{}},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
+const state={book:null,assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -539,13 +539,15 @@ function renderSensitivitySection(ch,s){
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Сравнение чувствительности четырёх тестов по группам веществ. Все значения — ppb (мкг/кг).</p></div></div>'+
     '<div class="sensitivity-legend">'+tests.map((t,i)=>'<span><b>'+(i+1)+'</b>'+esc(t)+'</span>').join("")+'</div>'+
     groups.filter((g)=>g.rows.length).map((g)=>'<section class="sensitivity-group"><div class="section-heading compact"><div><h2>'+esc(g.name)+'</h2></div><p>'+g.rows.length+' веществ</p></div><div class="sensitivity-wrap"><table class="sensitivity-table"><thead><tr><th>Вещество</th>'+tests.map((t)=>'<th>'+esc(t)+'</th>').join("")+'</tr></thead><tbody>'+g.rows.map((r)=>'<tr><td>'+esc(r[0])+'</td>'+r.slice(1).map((v)=>'<td class="'+(v==="—"?"empty":"")+'">'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>').join("")+
-    '<p class="sensitivity-note">Знак «—» означает, что значение не приведено в использованной таблице чувствительности. Для полного перечня характеристик открывайте карточку конкретного теста.</p>';
+    '<p class="sensitivity-note">Знак «—» означает, что значение не приведено в использованной таблице чувствительности. Для полного перечня характеристик открывайте карточку конкретного теста.</p>'+rawTables(s);
 }
 function renderCatalogSection(ch,s){
   const items=state.sectionCatalog.get(s.id)||[];
+  const sourceSections=s.composite?ch.sections.filter(x=>x.id.startsWith(s.id+".")):[ch.sections.find(x=>x.id===s.id)||s];
+  const sourceHtml=sourceSections.map(x=>'<section class="catalog-source"><div class="section-heading compact"><div><span class="eyebrow">'+esc(x.id)+'</span><h2>'+esc(x.title)+'</h2></div></div>'+sectionSupplement(x)+'</section>').join("");
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+items.length+' карточек</p></div></div>'+
-    (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>');
+    (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>')+sourceHtml;
   if(items.length)q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
 }
 
@@ -606,23 +608,65 @@ function sectionSupplement(s){
   if(s.notes?.length){
     blocks.push('<section class="section-notes"><div class="section-heading compact"><div><span class="eyebrow">Справочно</span><h2>Дополнительная информация</h2></div></div><dl class="feature-definition-list">'+s.notes.map((n,i)=>'<dt>Материал '+(i+1)+'</dt><dd>'+esc(n)+'</dd>').join("")+'</dl></section>');
   }
+  const raw=rawTables(s);if(raw)blocks.push(raw);
   return blocks.join("");
 }
+function deepCopy(v){return v==null?v:JSON.parse(JSON.stringify(v));}
 function mapData(){
   state.products.clear();state.sections.clear();state.chapters.clear();state.sectionCatalog.clear();
+  state.editorBase={products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()};
+  const ov=state.overrides||{};
   state.book.chapters.forEach((ch)=>{
+    state.editorBase.chapters.set(ch.id,{title:ch.title});
+    if(ov.chapters?.[ch.id]?.title!==undefined)ch.title=String(ov.chapters[ch.id].title||"");
     state.chapters.set(ch.id,ch);
     ch.sections.forEach((s)=>{
+      state.editorBase.sections.set(s.id,{title:s.title,notes:deepCopy(s.notes||[]),pairs:deepCopy(s.pairs||[]),tables:deepCopy(s.tables||[])});
+      const sov=ov.sections?.[s.id];
+      if(sov){for(const [k,v] of Object.entries(sov)){if(!["id","gid","products","rawRows","packedRows"].includes(k))s[k]=deepCopy(v);}}
       state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:"Тест-пластины KangarooSci"}:s)});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
     if(ch.id==="2"){
-      state.sections.set("2.6",{chapter:ch,section:{id:"2.6",title:"Анализаторы качества молока",composite:true}});
-      state.sections.set("2.7",{chapter:ch,section:{id:"2.7",title:"Анализаторы соматических клеток",composite:true}});
+      state.sections.set("2.6",{chapter:ch,section:{id:"2.6",title:ov.sections?.["2.6"]?.title||"Анализаторы качества молока",composite:true}});
+      state.sections.set("2.7",{chapter:ch,section:{id:"2.7",title:ov.sections?.["2.7"]?.title||"Анализаторы соматических клеток",composite:true}});
     }
   });
   enrichRegularProducts();
   buildChapter2Catalog();
+  for(const [id,x] of state.products){
+    state.editorBase.products.set(id,deepCopy(x.product));
+    state.editorBase.images.set(id,deepCopy(state.assets.productImages?.[id]||[]));
+    const pov=ov.products?.[id];if(!pov)continue;
+    for(const [k,v] of Object.entries(pov)){if(!["id","images"].includes(k))x.product[k]=deepCopy(v);}
+    if(Array.isArray(pov.images))state.assets.productImages[id]=deepCopy(pov.images);
+  }
+}
+function buildLiveSearchIndex(){
+  const out=[];
+  for(const [id,x] of state.products){const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
+  return out;
+}
+function installEditorApi(){
+  window.KB_EDITOR_API={
+    current(){
+      const r=route();
+      if(r.name==="product"){
+        const x=ctx(r.id);if(!x)return {kind:"none"};
+        return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+      }
+      if(r.name==="section"){
+        const x=state.sections.get(r.id);if(!x)return {kind:"none"};
+        const base=state.editorBase.sections.get(r.id)||{title:x.section.title};
+        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection:deepCopy(base),chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+      }
+      if(r.name==="chapter"){
+        const ch=state.chapters.get(r.id);return ch?{kind:"chapter",id:r.id,chapter:deepCopy(ch),sourceChapter:deepCopy(state.editorBase.chapters.get(r.id)||{title:ch.title}),spreadsheetId:state.book.spreadsheetId}:{kind:"none"};
+      }
+      return {kind:"dashboard",spreadsheetId:state.book.spreadsheetId};
+    }
+  };
+  window.dispatchEvent(new CustomEvent("kb:ready"));
 }
 function renderNav(){
   nav.innerHTML=state.book.chapters.map((ch)=>{
@@ -712,9 +756,13 @@ function rawTables(s){
   (s.tables||[]).forEach((t)=>{
     inner+='<section class="raw-table-block"><h3>'+esc(t.title||"Дополнительные данные")+'</h3><div class="table-wrap"><table class="data-table"><thead><tr>'+((t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join(""))+'</tr></thead><tbody>'+((t.rows||[]).map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join(""))+'</tbody></table></div></section>';
   });
-  if(s.rows?.length){
-    const cols=Math.max(1,...s.rows.map((r)=>r.length));
-    inner+='<section class="raw-table-block"><h3>Исходные материалы раздела</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.rows.map((r)=>'<tr>'+Array.from({length:cols},(_,i)=>'<td>'+esc(r[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+  const sourceRows=(s.rawRows?.length?s.rawRows:s.rows)||[];
+  if(sourceRows.length){
+    const cols=Math.max(1,...sourceRows.map((r)=>r.length));
+    inner+='<section class="raw-table-block"><h3>Все строки Google Sheets</h3><div class="table-wrap"><table class="data-table"><tbody>'+sourceRows.map((r)=>'<tr>'+Array.from({length:cols},(_,i)=>'<td>'+esc(r[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+  }
+  if(s.packedRows?.length){
+    inner+='<section class="raw-table-block"><h3>Исходные многострочные блоки</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.packedRows.map((x)=>'<tr><th>Строка '+esc(x.sourceRow)+'</th>'+(x.cells||[]).map((v)=>'<td class="multiline-source">'+esc(v).replace(/\\n/g,"<br>")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
   }
   if(!inner)return "";
   return '<details class="raw-details"><summary><span><strong>Полные табличные данные</strong><small>Открыть исходные таблицы и служебные материалы раздела</small></span><b>+</b></summary><div class="raw-details-body">'+inner+'</div></details>';
@@ -741,7 +789,7 @@ function renderTermsSection(ch,s){
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Словарь ключевых документов, метрологических процедур и рабочих понятий.</p></div></div>'+
     '<section class="term-grid">'+(s.pairs||[]).map((x,i)=>'<article class="term-card"><div class="term-no">'+String(i+1).padStart(2,"0")+'</div><div><span class="term-label">Термин</span><h3>'+esc(x.label)+'</h3><span class="definition-label">Определение</span><p>'+esc(x.value)+'</p></div></article>').join("")+'</section>'+
-    renderImportant("Важно знать перед началом оформления документов:",important);
+    renderImportant("Важно знать перед началом оформления документов:",important)+rawTables(s);
 }
 function renderNormsSection(ch,s){
   const rows=(s.rows||[]);
@@ -772,7 +820,7 @@ function renderNormsSection(ch,s){
     '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Сокращения</span><h2>Обозначения и единицы измерения</h2></div><p>'+units.length+' терминов</p></div>'+cards(units,"Обозначение")+'</section>'+
     '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Практика</span><h2>Как читать показатели</h2></div><p>'+reading.length+' пояснений</p></div>'+cards(reading,"Показатель")+'</section>'+
     (steps.length?'<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Алгоритм</span><h2>Порядок подбора товара</h2></div></div><div class="step-list">'+steps.map((r,i)=>'<article><b>'+esc(r[0]||String(i+1))+'</b><p>'+esc(r[1]||"")+'</p></article>').join("")+'</div></section>':"")+
-    renderImportant("Важно знать перед подбором тестов и оборудования:",important,"Обратите внимание: опции, например измерение лактозы, и комплектации — 96/112/480 тестов — могут различаться. Уточняйте артикулы при заказе.");
+    renderImportant("Важно знать перед подбором тестов и оборудования:",important,"Обратите внимание: опции, например измерение лактозы, и комплектации — 96/112/480 тестов — могут различаться. Уточняйте артикулы при заказе.")+rawTables(s);
 }
 function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
@@ -800,7 +848,7 @@ function fields(p){
 }
 
 function productTabs(p){
-  const tabs=[{id:"specs",label:"Характеристики"}];
+  let tabs=[{id:"specs",label:"Характеристики"}];
   if(p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
   if(p.options?.length)tabs.push({id:"options",label:"Дополнительные опции"});
   if(p.variants?.length)tabs.push({id:"variants",label:"Варианты исполнения"});
@@ -814,6 +862,9 @@ function productTabs(p){
   if(p.testKits?.length)tabs.push({id:"testKits",label:"Тест-наборы"});
   for(const t of p.customTabs||[])tabs.push({id:t.id,label:t.label});
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
+  const hidden=new Set(p.hiddenTabs||[]),labels=p.tabLabels||{},order=p.tabOrder||[];
+  tabs=tabs.filter(t=>!hidden.has(t.id)).map(t=>({...t,label:labels[t.id]||t.label}));
+  if(order.length){const rank=new Map(order.map((id,i)=>[id,i]));tabs.sort((a,b)=>(rank.has(a.id)?rank.get(a.id):999)-(rank.has(b.id)?rank.get(b.id):999));}
   return tabs;
 }
 function pairCards(rows,cls="feature-definition-list"){
@@ -959,24 +1010,26 @@ function openLightbox(id,i){
 }
 async function init(){
   applyTheme();
+  const stamp=Date.now();
   const rs=await Promise.all([
-    fetch("./data/book.json",{cache:"no-store"}),
-    fetch("./data/assets.json",{cache:"no-store"}),
-    fetch("./data/search-index.json",{cache:"no-store"}),
-    fetch("./data/sync-report.json",{cache:"no-store"}).catch(()=>null),
-    fetch("./data/image-match-report.json",{cache:"no-store"}).catch(()=>null),
-    fetch("./data/version-log.json",{cache:"no-store"}).catch(()=>null)
+    fetch("./data/book.json?v="+stamp,{cache:"no-store"}),
+    fetch("./data/assets.json?v="+stamp,{cache:"no-store"}),
+    fetch("./data/search-index.json?v="+stamp,{cache:"no-store"}),
+    fetch("./data/sync-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
+    fetch("./data/image-match-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
+    fetch("./data/version-log.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
+    fetch("./data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null)
   ]);
-  if(!rs[0].ok||!rs[2].ok)throw new Error("Не удалось загрузить данные.");
+  if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
-  state.assets=rs[1].ok?await rs[1].json():state.assets;
-  state.index=await rs[2].json();
+  state.assets=rs[1]?.ok?await rs[1].json():state.assets;
+  state.index=rs[2]?.ok?await rs[2].json():[];
   state.reports.sync=rs[3]?.ok?await rs[3].json():null;
   state.reports.images=rs[4]?.ok?await rs[4].json():null;
   state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
+  state.overrides=rs[6]?.ok?await rs[6].json():state.overrides;
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
-  state.search=makeSearch(state.index);
-  mapData();renderNav();bind();counters();q("#syncState").textContent="Данные обновлены "+fmtDate(state.book.generatedAt);
+  mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();q("#syncState").textContent="Google Sheets · обновлено "+fmtDate(state.book.generatedAt);
   if(!location.hash)go("home");else render();
 }
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}
