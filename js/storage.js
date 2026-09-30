@@ -12,18 +12,6 @@ export const favorites={
   toggle(id){const a=this.get();const i=a.indexOf(id);if(i>=0)a.splice(i,1);else a.unshift(id);return write("favorites",a)},
   clear:()=>write("favorites",[])
 };
-export const comparison={
-  get:()=>read("compare",[]),
-  has:id=>read("compare",[]).includes(id),
-  toggle(id){
-    const a=this.get(),i=a.indexOf(id);
-    if(i>=0)a.splice(i,1);
-    else if(a.length<4)a.push(id);
-    else return {items:a,limit:true};
-    return {items:write("compare",a),limit:false};
-  },
-  clear:()=>write("compare",[])
-};
 export const recent={
   get:()=>read("recent",[]),
   add(id){const a=this.get().filter(x=>x!==id);a.unshift(id);return write("recent",a.slice(0,12))}
