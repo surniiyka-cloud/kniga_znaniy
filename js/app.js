@@ -73,7 +73,7 @@ function splitPairBlocks(s){
 }
 function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   const x=state.sections.get(sectionId);if(!x)return null;
-  const id="catalog-"+safeSlug(sectionId+"-"+name+"-"+(state.sectionCatalog.get(sectionId)?.length||0));
+  const baseId="catalog-"+safeSlug(sectionId+"-"+name);let id=baseId,n=2;while(state.products.has(id))id=baseId+"-"+n++;
   const f=(fields||[]).filter((r)=>r?.[0]&&r?.[1]);
   const find=(rx)=>f.find((r)=>rx.test(r[0]))?.[1]||"";
   const p={id,name,article:opts.article||find(/^Артикул$/i),type:opts.type||find(/^(Тип|Тип оборудования|Категория)$/i),purpose:opts.purpose||find(/^Назначение$/i),detailFields:f,advantages:opts.advantages||[],substances:opts.substances||[],indicators:opts.indicators||[],options:opts.options||[],variants:opts.variants||[],complectation:opts.complectation||[],workflow:opts.workflow||[],calibration:opts.calibration||[],assortment:opts.assortment||[],consumables:opts.consumables||[],testKits:opts.testKits||[],washCycle:opts.washCycle||[],customTabs:opts.customTabs||[]};
