@@ -68,7 +68,54 @@ const PAIR_FIELDS=[
   ["washCycle","Цикл мойки"]
 ];
 
-let modal=null;
+const TAB_TO_PAIR={
+  specs:"detailFields",advantages:"advantages",indicators:"indicators",options:"options",variants:"variants",
+  complectation:"complectation",calibration:"calibration",assortment:"assortment",consumables:"consumables",
+  testKits:"testKits",workflow:"workflow",washCycle:"washCycle"
+};
+function sourceRowsForTab(ctx,id){
+  const key=TAB_TO_PAIR[id];
+  if(key)return deep(ctx.product?.[key]||[]);
+  const custom=(ctx.product?.customTabs||[]).find(t=>t.id===id);
+  return deep(custom?.rows||[]);
+}
+function tableLabel(ctx,id){
+  return (ctx.tabs||[]).find(t=>t.id===id)?.label||defaultTabLabel(id,ctx.product)||id;
+}
+function normalizedTabTables(ctx){
+  const tables=deep(ctx.product?.tabTables||{});
+  if(!Object.prototype.hasOwnProperty.call(tables,"indicators")&&ctx.product?.indicatorTable)tables.indicators=deep(ctx.product.indicatorTable);
+  return tables;
+}
+function tableEditorHtml(id,label,table){
+  const headers=(table?.headers?.length?table.headers:["Название","Значение"]).map(x=>String(x||""));
+  const width=Math.max(1,headers.length),rows=(table?.rows||[]).map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||"")));
+  return '<article class="kb-table-editor" data-table-editor data-table-id="'+esc(id)+'">'+
+    '<div class="kb-table-editor-head"><div><strong>'+esc(label)+'</strong><code>'+esc(id)+'</code></div><div class="kb-table-actions"><button type="button" class="kb-mini" data-table-add-col>+ столбец</button><button type="button" class="kb-mini" data-table-add-row>+ строка</button><button type="button" class="kb-mini danger" data-table-delete>Удалить таблицу</button></div></div>'+
+    '<div class="kb-table-scroll"><table class="kb-edit-table"><thead><tr>'+headers.map((h,i)=>'<th><div class="kb-cell-head"><input data-table-header value="'+esc(h)+'"><button type="button" class="kb-col-remove" data-table-remove-col="'+i+'" title="Удалить столбец">×</button></div></th>').join("")+'<th class="kb-row-tools"></th></tr></thead>'+
+    '<tbody>'+rows.map(r=>tableRowHtml(r,width)).join("")+'</tbody></table></div></article>';
+}
+function tableRowHtml(row,width){
+  return '<tr data-table-row>'+Array.from({length:width},(_,i)=>'<td><input data-table-cell value="'+esc(row?.[i]||"")+'"></td>').join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
+}
+function tableEditorsHtml(ctx){
+  const tables=normalizedTabTables(ctx),seen=new Set(),editors=[];
+  for(const [id,table] of Object.entries(tables)){if(!table?.headers?.length)continue;seen.add(id);editors.push(tableEditorHtml(id,tableLabel(ctx,id),table));}
+  const ids=[...new Set(["specs",...(ctx.tabs||[]).map(t=>t.id),...Object.keys(TAB_TO_PAIR)])].filter(id=>id!=="substances");
+  const options=ids.map(id=>'<option value="'+esc(id)+'">'+esc(tableLabel(ctx,id))+'</option>').join("");
+  return '<section class="kb-admin-section"><div class="kb-table-section-head"><div><h3>Таблицы во вкладках</h3><p class="kb-admin-hint">Здесь можно создавать таблицы для любой вкладки и свободно добавлять строки и столбцы.</p></div><div class="kb-table-create"><select data-new-table-tab>'+options+'</select><button type="button" class="kb-admin-btn ghost" data-add-table>+ Добавить / преобразовать в таблицу</button></div></div><div data-table-editors>'+editors.join("")+'</div></section>';
+}
+function collectTabTables(form){
+  const out={};
+  form.querySelectorAll("[data-table-editor]").forEach(ed=>{
+    const id=ed.dataset.tableId,headers=[...ed.querySelectorAll("[data-table-header]")].map(x=>x.value.trim());
+    const width=headers.length,rows=[...ed.querySelectorAll("[data-table-row]")].map(tr=>Array.from({length:width},(_,i)=>tr.querySelectorAll("[data-table-cell]")[i]?.value.trim()||"")).filter(r=>r.some(Boolean));
+    if(id&&headers.some(Boolean))out[id]={headers,rows};
+  });
+  return out;
+}
+
+let modal=null,editorCtx=null;
 function ensureUI(){
   if(!document.querySelector("#kbAdminBtn")){
     const actions=document.querySelector(".top-actions");
@@ -113,6 +160,7 @@ function productPairEditors(ctx){
   return PAIR_FIELDS.map(([key,label])=>'<details class="kb-admin-group" '+((ctx.product?.[key]||[]).length?"":"")+'><summary>'+esc(label)+' <small>'+((ctx.product?.[key]||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-pair-key="'+key+'">'+esc(pairText(ctx.product?.[key]||[]))+'</textarea></label></details>').join("");
 }
 function renderProductEditor(ctx){
+  editorCtx=ctx;
   const existing=deep(overrideCache.products?.[ctx.id]||{});
   const tabs=(ctx.tabs||[]).map((t,i)=>'<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'"><button type="button" class="kb-mini" data-tab-up>↑</button><button type="button" class="kb-mini" data-tab-down>↓</button><code>'+esc(t.id)+'</code><input value="'+esc(t.label)+'" data-tab-label><label class="kb-hide"><input type="checkbox" data-tab-hidden '+((ctx.product.hiddenTabs||[]).includes(t.id)?"checked":"")+'> скрыть</label></div>').join("");
   const sourceSheet=ctx.sourceSection||ctx.section;
@@ -121,7 +169,7 @@ function renderProductEditor(ctx){
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
     '<div class="kb-admin-grid two"><label>Название<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
     (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть исходный лист Google Sheets ↗</a></p>':"")+
-    '<section class="kb-admin-section"><h3>Содержимое карточки</h3>'+productPairEditors(ctx)+(ctx.product.indicatorTable?.headers?.length?'<details class="kb-admin-group" open><summary>Таблица измеряемых показателей <small>'+((ctx.product.indicatorTable.rows||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Первая строка — заголовки столбцов. Формат через <b>|</b>.</span><textarea rows="10" data-indicator-table>'+esc(tableText(ctx.product.indicatorTable))+'</textarea></label></details>':'')+'</section>'+
+    '<section class="kb-admin-section"><h3>Содержимое карточки</h3>'+productPairEditors(ctx)+'</section>'+tableEditorsHtml(ctx)+
     '<details class="kb-admin-group" open><summary>Вещества / группы / ppb <small>'+((ctx.product.substances||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Формат: <b>группа | вещество | ppb</b>. Именно поле «группа» создаёт заголовок перед таблицей.</span><textarea rows="10" data-substances>'+esc(substancesText(ctx.product.substances||[]))+'</textarea></label></details>'+
     '<details class="kb-admin-group"><summary>Пользовательские вкладки</summary><label class="kb-admin-field"><span>JSON-массив вкладок: id, label, kind = pairs/steps/table; для table используются headers и rows.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
     '<section class="kb-admin-section"><h3>Порядок и названия вкладок</h3><div data-tab-list>'+tabs+'</div><p class="kb-admin-hint">Стрелками меняй порядок, поле справа переименовывает вкладку, галочка скрывает её.</p></section>'+
@@ -180,7 +228,32 @@ function bindBody(){
       location.reload();
     }catch(err){showError(err)}
   });
-  body.querySelectorAll("[data-tab-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r)});
+  body.querySelector("[data-add-table]")?.addEventListener("click",()=>{
+    const id=body.querySelector("[data-new-table-tab]")?.value||"";if(!id||!editorCtx)return;
+    const wrap=body.querySelector("[data-table-editors]"),existing=wrap?.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"]');
+    if(existing){existing.scrollIntoView({behavior:"smooth",block:"center"});existing.classList.add("kb-flash");setTimeout(()=>existing.classList.remove("kb-flash"),900);return}
+    const source=sourceRowsForTab(editorCtx,id),table={headers:["Название","Значение"],rows:source.map(r=>[String(r?.[0]||""),String(r?.[1]||"")])};
+    wrap?.insertAdjacentHTML("beforeend",tableEditorHtml(id,tableLabel(editorCtx,id),table));
+  });
+  body.addEventListener("click",e=>{
+    const ed=e.target.closest("[data-table-editor]");if(!ed)return;
+    if(e.target.closest("[data-table-add-row]")){
+      const width=ed.querySelectorAll("[data-table-header]").length;ed.querySelector("tbody")?.insertAdjacentHTML("beforeend",tableRowHtml([],width));return;
+    }
+    if(e.target.closest("[data-table-add-col]")){
+      const head=ed.querySelector("thead tr"),idx=ed.querySelectorAll("[data-table-header]").length;
+      head?.querySelector(".kb-row-tools")?.insertAdjacentHTML("beforebegin",'<th><div class="kb-cell-head"><input data-table-header value="Новый столбец"><button type="button" class="kb-col-remove" data-table-remove-col="'+idx+'" title="Удалить столбец">×</button></div></th>');
+      ed.querySelectorAll("[data-table-row]").forEach(tr=>tr.querySelector(".kb-row-tools")?.insertAdjacentHTML("beforebegin",'<td><input data-table-cell value=""></td>'));return;
+    }
+    const col=e.target.closest("[data-table-remove-col]");if(col){
+      const headers=[...ed.querySelectorAll("[data-table-header]")];if(headers.length<=1)return showError(new Error("В таблице должен остаться хотя бы один столбец."));
+      const index=headers.indexOf(col.closest("th")?.querySelector("[data-table-header]"));col.closest("th")?.remove();
+      ed.querySelectorAll("[data-table-row]").forEach(tr=>tr.querySelectorAll("td:not(.kb-row-tools)")[index]?.remove());return;
+    }
+    if(e.target.closest("[data-table-remove-row]")){e.target.closest("[data-table-row]")?.remove();return}
+    if(e.target.closest("[data-table-delete]")){ed.remove();return}
+  });
+    body.querySelectorAll("[data-tab-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-tab-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r)});
   body.querySelector("[data-admin-product]")?.addEventListener("submit",saveProduct);
   body.querySelector("[data-admin-section]")?.addEventListener("submit",saveSection);
@@ -201,7 +274,9 @@ async function saveProduct(e){
     delete out.id;
     for(const key of ["name","article","type","purpose"])putDiff(out,key,String(fd.get(key)||""),String(src[key]||""));
     for(const [key] of PAIR_FIELDS){const value=parsePairs(form.querySelector('[data-pair-key="'+key+'"]')?.value||"");putDiff(out,key,value,src[key]||[])}
-    if(form.querySelector("[data-indicator-table]"))putDiff(out,"indicatorTable",parseTableText(form.querySelector("[data-indicator-table]")?.value||""),src.indicatorTable||null);
+    const baseTables=deep(src.tabTables||{});if(!Object.prototype.hasOwnProperty.call(baseTables,"indicators")&&src.indicatorTable)baseTables.indicators=deep(src.indicatorTable);
+    putDiff(out,"tabTables",collectTabTables(form),baseTables);
+    delete out.indicatorTable;
     putDiff(out,"substances",parseSubstances(form.querySelector("[data-substances]")?.value||""),src.substances||[]);
     const custom=JSON.parse(form.querySelector("[data-custom-tabs]")?.value||"[]");if(!Array.isArray(custom))throw new Error("Пользовательские вкладки должны быть JSON-массивом.");
     putDiff(out,"customTabs",custom,src.customTabs||[]);
