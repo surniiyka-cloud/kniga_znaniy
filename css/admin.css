@@ -92,9 +92,17 @@ body.kb-admin-open{overflow:hidden}
 .kb-row-tools{min-width:38px!important;width:38px;text-align:center;background:var(--panel-2,#f7faf8)}
 
 .kb-product-sort{display:grid;gap:8px}
-.kb-product-sort-row{display:grid;grid-template-columns:28px minmax(0,1fr) 36px 36px auto;gap:8px;align-items:center;border:1px solid var(--line,#dfe7e1);border-radius:12px;padding:10px 11px;background:var(--panel,#fff);transition:.16s opacity,.16s background,.16s border-color}
+.kb-product-sort-row{display:grid;grid-template-columns:28px minmax(0,1fr) 36px 36px auto auto;gap:8px;align-items:center;border:1px solid var(--line,#dfe7e1);border-radius:12px;padding:10px 11px;background:var(--panel,#fff);transition:.16s opacity,.16s background,.16s border-color}
 .kb-product-sort-row.is-hidden{opacity:.58;background:var(--panel-2,#f6f8f7);border-style:dashed}
 .kb-product-sort-row.is-dragging{opacity:.45}
+.kb-product-sort-row.is-deleting{opacity:.55;border-color:#e3aaaa;background:#fff4f4}
+.kb-product-sort-row.is-deleting .kb-product-sort-name strong{text-decoration:line-through}
+.kb-product-delete{white-space:nowrap}
+.kb-deleted-products{margin-top:6px}
+.kb-deleted-product-list{display:grid;gap:8px;padding:0 14px 14px}
+.kb-deleted-product-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;border:1px dashed #d5aaa9;border-radius:11px;background:#fff8f8}
+.kb-product-restore{display:flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px;font-weight:750;color:var(--muted,#657169)}
+.kb-product-restore input{width:auto!important}
 .kb-drag{cursor:grab;font-weight:900;color:var(--muted,#7b877f);text-align:center;letter-spacing:-2px;user-select:none}
 .kb-product-sort-name{display:grid;gap:3px;min-width:0}
 .kb-product-sort-name strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -103,5 +111,7 @@ body.kb-admin-open{overflow:hidden}
 .kb-product-hide input{width:auto!important}
 @media(max-width:760px){
   .kb-product-sort-row{grid-template-columns:24px minmax(0,1fr) 34px 34px}
-  .kb-product-hide{grid-column:2/5}
+  .kb-product-hide{grid-column:2/4}
+  .kb-product-delete{grid-column:4}
+  .kb-deleted-product-row{grid-template-columns:1fr}
 }
