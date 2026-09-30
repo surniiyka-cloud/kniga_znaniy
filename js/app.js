@@ -382,7 +382,7 @@ function parseAnalyzerRaw(section){
 function unisensorImage(...names){
   const n=names.map(x=>String(x||"").toLowerCase()).join(" ");
   const direct=[
-    ["twinsensor","https://www.astuteoperation.com/804362.png"],
+    ["twinsensor","https://unisensor.be/assets/c5f73568-bc5e-46da-8bb5-455af1bd6b48/500x500/unisensor-web-dairy-twinsensor-kit020.jpg"],
     ["tetrasensor","https://www.sinanson.com/idea/kd/83/myassets/products/673/unisensor-web-honey-tetrasensor-kit008-009.jpg?revision=1742303667"],
     ["meatsensor","https://labware.saccosystem.com/public/ImgProd/Big/L029689.jpg"],
     ["aflasensor","img/photos/03-testy-dopolnitelnyh-grupp/03-aflasensor.png"],
