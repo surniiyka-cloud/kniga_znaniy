@@ -123,8 +123,68 @@ function parseRowBlock(rows,config={}){
   }
   return {fields:uniquePairs(fields),advantages:uniquePairs(advantages),substances};
 }
+function parallelBlockStarts(rows){
+  const out=[];
+  for(let i=0;i<(rows||[]).length-1;i++){
+    const vals=(rows[i]||[]).map(v=>String(v||"").trim()).filter(Boolean);
+    const next=(rows[i+1]||[]).map(v=>String(v||"").trim());
+    if(vals.length>=2&&new Set(vals).size===1&&next.includes("Характеристика"))out.push(i);
+  }
+  return out;
+}
+function parseParallelProduct(rows,st,en){
+  const marker=String(rows[st]?.[0]||"").trim(),block=rows.slice(st+1,en);
+  const hi=block.findIndex(r=>(r||[]).some(v=>String(v||"").trim()==="Характеристика"));
+  if(hi<0)return {name:marker,fields:[],advantages:[],complectation:[],substances:[],customTabs:[]};
+  const head=block[hi]||[],data=block.slice(hi+1);
+  const col=(rx)=>head.findIndex(v=>rx.test(String(v||"").trim()));
+  const charCol=col(/^Характеристика$/i),compCol=col(/^Комплектация$/i),advCol=col(/^Преимущество$/i);
+  const reqCol=col(/^Показатель$/i);
+  let subCol=-1,groupCol=-1,initialGroup="";
+  const scan=block.slice(hi,Math.min(block.length,hi+5));
+  outer:for(const r of scan){
+    for(let j=0;j<r.length-1;j++){
+      if(/^(Антибиотик \/ вещество|Определяемый показатель)$/i.test(String(r[j]||"").trim())&&/(ppb|предел обнаружения)/i.test(String(r[j+1]||"").trim())){
+        subCol=j;groupCol=/^Группа$/i.test(String(head[j-1]||"").trim())?j-1:-1;
+        const h=String(head[j]||"").trim();
+        if(groupCol<0&&h&&!/^(Антибиотик \/ вещество|Определяемый показатель)$/i.test(h))initialGroup=h;
+        break outer;
+      }
+    }
+  }
+  const fields=[],advantages=[],complectation=[],requirements=[],substances=[];let group=initialGroup,name=marker;
+  for(const r of data){
+    if(charCol>=0){
+      const l=String(r[charCol]||"").trim(),v=String(r[charCol+1]||"").trim();
+      if(/^Наименование$/i.test(l)&&v){name=v.replace(/^Экспресс-тест\s+/i,"").trim()||marker}
+      else if(l&&v&&!/^(Характеристика|Данные)$/i.test(l)&&!["-","—"].includes(v))fields.push([l,v]);
+    }
+    if(compCol>=0){
+      const l=String(r[compCol]||"").trim(),v=String(r[compCol+1]||"").trim();
+      if(l&&v&&!/^(Комплектация|Количество)$/i.test(l)&&!["-","—"].includes(v))complectation.push([l,v]);
+    }
+    if(advCol>=0){
+      const l=String(r[advCol]||"").trim(),v=String(r[advCol+1]||"").trim();
+      if(l&&v&&!/^Преимущество$/i.test(l)&&!/Практическое значение|Что это даёт/i.test(l)&&!["-","—"].includes(v))advantages.push([l,v]);
+    }
+    if(reqCol>=0&&reqCol!==advCol){
+      const l=String(r[reqCol]||"").trim(),v=String(r[reqCol+1]||"").trim();
+      if(l&&v&&!/^Показатель$/i.test(l)&&!/Требование/i.test(l)&&!["-","—"].includes(v))requirements.push([l,v]);
+    }
+    if(subCol>=0){
+      if(groupCol>=0){
+        const g=String(r[groupCol]||"").trim();if(g&&!/^Группа$/i.test(g))group=g;
+      }
+      const s=String(r[subCol]||"").trim(),v=String(r[subCol+1]||"").trim();
+      if(groupCol<0&&s&&!v&&!/^(Антибиотик \/ вещество|Определяемый показатель)$/i.test(s)){group=s;continue}
+      if(s&&v&&!/^(Антибиотик \/ вещество|Определяемый показатель)$/i.test(s)&&!/(ppb|предел обнаружения)/i.test(s))substances.push({group,substance:s,ppb:v});
+    }
+  }
+  const customTabs=requirements.length?[{id:"requirements-"+safeSlug(marker),label:"Требования / показатели",kind:"pairs",rows:uniquePairs(requirements)}]:[];
+  return {name,fields:uniquePairs(fields),advantages:uniquePairs(advantages),complectation:uniquePairs(complectation),substances,customTabs};
+}
 function buildGarantCards(s){
-  const rows=s.rows||[],starts=[];
+  const rows=s.rawRows||s.rows||[],starts=[];
   rows.forEach((r,i)=>{const a=String(r[0]||"").trim();if(i===0&&/GARANT BTSC PLUS/i.test(a))starts.push(i);else if(a==="Наименование"&&/GARANT/i.test(String(r[1]||"")))starts.push(i);});
   const img=state.assets.sectionImages?.[s.id]?.[0]||"";
   starts.forEach((st,idx)=>{
@@ -269,7 +329,7 @@ function sectionRowsBetween(rows,startLabel,endLabel){
   return rows.slice(a+1,b<0?rows.length:b);
 }
 function buildExtensoCard(ext){
-  const rows=ext.rows||[];
+  const rows=ext.rawRows||ext.rows||[];
   const fields=[
     ["Производитель","Unisensor, Бельгия"],["Артикул","1002.03.003"],["Тип системы","Диагностическая мультиплексная платформа"],
     ["Назначение","Скрининг ветеринарно-лекарственных средств и афлатоксина M1"],["Основная матрица","Молоко и мясо"],
@@ -338,17 +398,20 @@ function buildChapter2Catalog(){
   const ch=state.chapters.get("2");if(!ch)return;
   const sBy=(id)=>ch.sections.find((s)=>s.id===id);
 
-  // 2.1.1 — ровно четыре теста, все данные раскладываем по вкладкам
-  const fourS=sBy("2.1.1"),fr=fourS?.rows||[];
-  const specs=[
-    {name:"4SENSOR KIT 060",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",a:1,b:35,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[7,8],groupCol:6,initialGroup:"Пенициллины"},
-    {name:"4SENSOR SENSITIVE",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",a:37,b:84,fieldPairs:[[0,1],[2,3],[4,5]],advCols:[6,7],substanceCols:[8,9],initialGroup:"Пенициллины"},
-    {name:"ANKAR MILK TEST 4",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",a:86,b:131,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7],initialGroup:"Пенициллины"},
-    {name:"GARANT 4 ULTRA MILK",img:"img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png",a:133,b:fr.length,fieldPairs:[[0,1],[2,3]],advCols:[4,5],substanceCols:[6,7],initialGroup:"Пенициллины"}
-  ];
-  specs.forEach((sp)=>{
-    const parsed=parseRowBlock(fr.slice(sp.a,sp.b),sp);
-    registerCatalog("2.1.1",sp.name,parsed.fields,[sp.img],{advantages:parsed.advantages,substances:parsed.substances});
+  // 2.1.1 — границы карточек и смысловые колонки определяются по структуре листа, без номеров строк
+  const fourS=sBy("2.1.1"),fr=fourS?.rawRows||fourS?.rows||[];
+  const fourStarts=parallelBlockStarts(fr);
+  const fourImages={
+    "4SENSOR KIT 060":"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor.png",
+    "4SENSOR SENSITIVE":"img/photos/02-testy-4-gruppy/02-ekspress-test-4sensor-sensitive.png",
+    "ANKAR MILK TEST 4":"img/photos/02-testy-4-gruppy/02-ekspress-test-ankar-milk-test.png",
+    "GARANT 4 ULTRA MILK":"img/photos/02-testy-4-gruppy/02-ekspress-test-garant-4-utra-milk.png"
+  };
+  fourStarts.forEach((st,i)=>{
+    const marker=String(fr[st]?.[0]||"").trim(),parsed=parseParallelProduct(fr,st,fourStarts[i+1]??fr.length);
+    registerCatalog("2.1.1",parsed.name||marker,parsed.fields,fourImages[marker]?[fourImages[marker]]:[],{
+      advantages:parsed.advantages,substances:parsed.substances,complectation:parsed.complectation,customTabs:parsed.customTabs
+    });
   });
   // 2.1.2 — Unisensor: карточки собираются из всей страницы листа
   const us=sBy("2.1.2");if(us)buildUnisensorCards(us);
@@ -484,7 +547,7 @@ function buildChapter2Catalog(){
       [/термофильного.*b\s*19/i,"11-termofilnyy-streptokokk-b19.png"]
     ];
     const folder="img/photos/11-pitatelnye-sredy-uglich/";
-    for(const r of media.rows||[]){
+    for(const r of media.rawRows||media.rows||[]){
       const name=String(r[1]||"").trim(),purpose=String(r[3]||"").trim();
       if(!name||!purpose||name===name.toUpperCase())continue;
       const fs=[["Назначение",purpose],["Фасовка",r[4]||""],["ТУ / стандарт",r[5]||""]].filter((x)=>x[1]);
@@ -763,7 +826,7 @@ function renderTermsSection(ch,s){
     renderImportant("Важно знать перед началом оформления документов:",important)+rawTables(s);
 }
 function renderNormsSection(ch,s){
-  const rows=(s.rows||[]);
+  const rows=(s.rawRows||s.rows||[]);
   const docs=[],units=[],reading=[],steps=[];
   let mode="";
   for(const r of rows){
