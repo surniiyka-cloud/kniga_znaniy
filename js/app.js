@@ -434,6 +434,66 @@ function renderCatalogSection(ch,s){
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>');
   if(items.length)q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
 }
+
+function splitFeatureText(text){
+  return String(text||"").split(/;|\.\s+(?=[А-ЯA-ZЁ])/).map((x)=>x.trim().replace(/[.;]+$/,"")).filter((x)=>x.length>2);
+}
+function classifySheetFields(p){
+  const source=(p.sheetFields||[]).map((r)=>[String(r[0]||"").trim(),String(r[1]||"").trim()]).filter((r)=>r[0]&&r[1]);
+  const characteristics=[],advantages=[],complectation=[],options=[],variants=[];
+  const baseSkip=/^(Наименование|Название|Артикул)$/i;
+  for(const [label,value] of source){
+    if(baseSkip.test(label))continue;
+    if(/^(Преимущества?|Особенности?|Практическое значение)$/i.test(label)){
+      splitFeatureText(value).forEach((x,i)=>advantages.push(["Пункт "+(i+1),x]));
+      continue;
+    }
+    if(/^(Комплектация|Комплект|Состав комплекта|Состав упаковки)$/i.test(label)){complectation.push([label,value]);continue;}
+    if(/^(Опции?|Дополнительные опции|Доп\. ?опции|Дополнительная комплектация)$/i.test(label)){options.push([label,value]);continue;}
+    if(/^(Варианты?|Исполнение|Размерный ряд|Модификации?)$/i.test(label)){variants.push([label,value]);continue;}
+    characteristics.push([label,value]);
+  }
+  if(!advantages.length&&p.features){
+    splitFeatureText(p.features).forEach((x,i)=>advantages.push(["Особенность "+(i+1),x]));
+  }
+  const standard=[
+    ["Тип",p.type],["Назначение",p.purpose],["Производитель",p.manufacturer],["Страна",p.country],
+    ["Размер",p.size],["Количество",p.quantity],["Рост",p.height],["Ширина",p.width],["Длина",p.length],["Толщина",p.thickness]
+  ].filter((x)=>x[1]);
+  return {
+    characteristics:uniquePairs([...standard,...characteristics]),
+    advantages:uniquePairs(advantages),
+    complectation:uniquePairs(complectation),
+    options:uniquePairs(options),
+    variants:uniquePairs(variants)
+  };
+}
+function enrichRegularProducts(){
+  for(const [id,x] of state.products){
+    const p=x.product;
+    if(String(id).startsWith("catalog-"))continue;
+    const z=classifySheetFields(p);
+    p.detailFields=z.characteristics.length?z.characteristics:[["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose]].filter((r)=>r[1]);
+    if(z.advantages.length)p.advantages=z.advantages;
+    if(z.complectation.length)p.complectation=z.complectation;
+    if(z.options.length)p.options=z.options;
+    if(z.variants.length)p.variants=z.variants;
+    if(!p.advantages?.length&&p.features){
+      p.advantages=splitFeatureText(p.features).map((x,i)=>["Особенность "+(i+1),x]);
+    }
+  }
+}
+function sectionSupplement(s){
+  const blocks=[];
+  for(const t of s.tables||[]){
+    if(!t?.rows?.length)continue;
+    blocks.push('<details class="section-reference"><summary><span><strong>'+esc(t.title||"Справочная таблица")+'</strong><small>'+t.rows.length+' строк</small></span><b>+</b></summary><div class="section-reference-body"><div class="table-wrap"><table class="data-table"><thead><tr>'+(t.headers||[]).map((h)=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+t.rows.map((r)=>'<tr>'+r.map((v)=>'<td>'+esc(v)+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></div></details>');
+  }
+  if(s.notes?.length){
+    blocks.push('<section class="section-notes"><div class="section-heading compact"><div><span class="eyebrow">Справочно</span><h2>Дополнительная информация</h2></div></div><div class="knowledge-grid">'+s.notes.map((n,i)=>'<article class="knowledge-card"><span>Материал '+(i+1)+'</span><p>'+esc(n)+'</p></article>').join("")+'</div></section>');
+  }
+  return blocks.join("");
+}
 function mapData(){
   state.products.clear();state.sections.clear();state.chapters.clear();state.sectionCatalog.clear();
   state.book.chapters.forEach((ch)=>{
@@ -447,6 +507,7 @@ function mapData(){
       state.sections.set("2.7",{chapter:ch,section:{id:"2.7",title:"Анализаторы соматических клеток",composite:true}});
     }
   });
+  enrichRegularProducts();
   buildChapter2Catalog();
 }
 function renderNav(){
@@ -616,7 +677,7 @@ function renderSection(id){
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+subtitle+'</p></div></div>'+
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':visualCatalog(s,sectionImgs))+
-    sectionContent(s);
+    (items.length?sectionSupplement(s):sectionContent(s));
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function fields(p){
@@ -629,7 +690,7 @@ function productTabs(p){
   if(p.indicators?.length)tabs.push({id:"indicators",label:"Измеряемые показатели"});
   if(p.options?.length)tabs.push({id:"options",label:"Дополнительные опции"});
   if(p.variants?.length)tabs.push({id:"variants",label:"Варианты исполнения"});
-  if(p.advantages?.length)tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества"});
+  if(p.advantages?.length)tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества / особенности"});
   if(p.complectation?.length)tabs.push({id:"complectation",label:"Комплектация"});
   if(p.washCycle?.length)tabs.push({id:"washCycle",label:"Рекомендуемый цикл мойки"});
   if(p.workflow?.length)tabs.push({id:"workflow",label:"Порядок работы"});
@@ -641,8 +702,8 @@ function productTabs(p){
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
   return tabs;
 }
-function pairCards(rows,cls="feature-tab-grid"){
-  return '<div class="'+cls+'">'+(rows||[]).map((r)=>'<article class="feature-tab-card"><strong>'+esc(r[0])+'</strong><p>'+esc(r[1])+'</p></article>').join("")+'</div>';
+function pairCards(rows,cls="feature-definition-list"){
+  return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
 }
 function stepCards(rows){
   return '<div class="step-cards">'+(rows||[]).map((r,i)=>'<article class="step-card"><span>'+(i+1)+'</span><div><strong>'+esc(r[0])+'</strong><p>'+esc(r[1])+'</p></div></article>').join("")+'</div>';
