@@ -146,31 +146,45 @@ function compactRowValue(r,start=1){
 }
 function parseAnalyzerRaw(section){
   const rows=section.rawRows||section.rows||[];
-  const out={fields:[],indicators:[],options:[],variants:[],calibration:[],equipment:[],advantages:[]};
-  let mode="fields";
+  const out={fields:[],indicators:[],options:[],variants:[],calibration:[],equipment:[],advantages:[],customTabs:[]};
+  let mode="fields",custom=null;
   const headingMap=new Map([
     ["измеряемые показатели","indicators"],["дополнительные опции","options"],["дополнительные параметры / опции","options"],
-    ["варианты исполнения","variants"],["возможные калибровки","calibration"],["калибровки","calibration"],
-    ["оснащение","equipment"],["особенности","advantages"],["особенности и практическое значение","advantages"],
-    ["преимущества и практическое значение","advantages"]
+    ["дополнительная комплектация","options"],["варианты исполнения","variants"],["возможные калибровки","calibration"],
+    ["калибровки","calibration"],["оснащение","equipment"],["особенности","advantages"],
+    ["особенности и практическое значение","advantages"],["преимущества и практическое значение","advantages"]
   ]);
-  const headerRx=/^(Показатель|Дополнительный показатель|Исполнение|Канал|Функция|Особенность|Преимущество)$/i;
+  const headerRx=/^(Характеристика|Показатель|Дополнительный показатель|Исполнение|Канал|Функция|Особенность|Преимущество|Этап|Вариант работы)$/i;
+  const customHeadingRx=/^(Принцип исследования|Интерпретация по .+|4-камерная кассета|Программное обеспечение и интерпретация)$/i;
+  const pushCustom=(label)=>{custom={id:"raw-"+safeSlug(section.id+"-"+label),label,kind:"pairs",rows:[]};out.customTabs.push(custom);mode="custom";};
   for(let i=0;i<rows.length;i++){
     const r=rows[i]||[], vals=r.filter((v)=>String(v||"").trim()), first=String(r[0]||"").trim(), key=first.toLowerCase();
-    if(vals.length===1&&headingMap.has(key)){mode=headingMap.get(key);continue;}
+    const next=(rows[i+1]||[]).filter((v)=>String(v||"").trim());
+    if(!vals.length)continue;
+    if(vals.length===1&&headingMap.has(key)){mode=headingMap.get(key);custom=null;continue;}
+    if(vals.length===1&&customHeadingRx.test(first)){pushCustom(first);continue;}
     if(i===0&&first.length>100)continue;
+    if(i===0&&vals.length===1)continue;
     if(!first)continue;
     const value=compactRowValue(r,1);
-    if(headerRx.test(first)&&/^(Диапазон измерения|Артикул|Калибровка по умолчанию|Описание|Практическое значение)$/i.test(String(r[1]||"").trim()))continue;
-    if(mode==="calibration"&&vals.length===1){out.calibration.push(["Вариант",first]);continue;}
-    if(!value)continue;
+    if(headerRx.test(first)&&/^(Значение|Диапазон измерения|Артикул|Калибровка по умолчанию|Описание|Практическое значение)$/i.test(String(r[1]||"").trim()))continue;
+
+    if(vals.length===1){
+      if(mode==="calibration"){out.calibration.push(["Вариант",first]);continue;}
+      if(mode==="options"){out.options.push(["Опция",first]);continue;}
+      if(mode==="custom"&&custom){custom.rows.push(["Пункт",first]);continue;}
+      if(next.length>=2){pushCustom(first);continue;}
+      out.advantages.push(["Дополнительная информация",first]);continue;
+    }
     const pair=[first,value];
-    if(mode==="fields"&&/^(Калибровки по умолчанию|Дополнительная калибровка|Калибровка канала \d+|Индивидуальная калибровка)$/i.test(first)){
+    if(mode==="fields"&&/^(Калибровки по умолчанию|Дополнительная калибровка|Калибровка канала \d+|Индивидуальная калибровка|Калибровка)$/i.test(first)){
       out.calibration.push(pair);continue;
     }
+    if(mode==="custom"&&custom){custom.rows.push(pair);continue;}
     out[mode].push(pair);
   }
-  for(const k of Object.keys(out))out[k]=uniquePairs(out[k]);
+  for(const k of ["fields","indicators","options","variants","calibration","equipment","advantages"])out[k]=uniquePairs(out[k]);
+  out.customTabs=out.customTabs.map((t)=>({...t,rows:uniquePairs(t.rows)})).filter((t)=>t.rows.length);
   return out;
 }
 function unisensorImage(name){
@@ -399,18 +413,22 @@ function buildChapter2Catalog(){
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.6."))){
     const x=parseAnalyzerRaw(child);
     const fields=uniquePairs([...(analyzerBase[child.id]||[]),...x.fields]);
-    const customTabs=x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[];
+    const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
     registerCatalog("2.6",child.title.replace(/^Ekomilk — /,"Ekomilk "),fields,state.assets.sectionImages?.[child.id]||[],{
       type:"Анализатор качества молока",indicators:x.indicators,options:x.options,variants:x.variants,
       calibration:x.calibration,advantages:x.advantages,customTabs
     });
   }
+  const somaticBase={
+    "2.7.1":[["Артикул","0704.04.002"],["Исследуемый материал","Молоко"],["Метод","Вискозиметрический"],["Диапазон измерения","90–1500 тыс. клеток/см³"],["Гарантия","2 года"]],
+    "2.7.2":[["Артикул","0704.04.004"],["Исследуемый материал","Молоко"],["Метод","Флуоресцентный"],["Диапазон измерения","0–10 000 000 клеток/см³"],["Гарантия","2 года"]]
+  };
   for(const child of ch.sections.filter((s)=>s.id.startsWith("2.7."))){
-    const x=parseAnalyzerRaw(child);
-    registerCatalog("2.7",child.title,x.fields,state.assets.sectionImages?.[child.id]||[],{
+    const x=parseAnalyzerRaw(child),fields=uniquePairs([...(somaticBase[child.id]||[]),...x.fields]);
+    const customTabs=[...(x.customTabs||[]),...(x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[])];
+    registerCatalog("2.7",child.title,fields,state.assets.sectionImages?.[child.id]||[],{
       type:"Анализатор соматических клеток",indicators:x.indicators,options:x.options,variants:x.variants,
-      calibration:x.calibration,advantages:x.advantages,
-      customTabs:x.equipment.length?[{id:"equipment-"+safeSlug(child.id),label:"Оснащение",kind:"pairs",rows:x.equipment}]:[]
+      calibration:x.calibration,advantages:x.advantages,customTabs
     });
   }
   // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
