@@ -165,6 +165,9 @@ function parseAnalyzerRaw(section){
     if(mode==="calibration"&&vals.length===1){out.calibration.push(["Вариант",first]);continue;}
     if(!value)continue;
     const pair=[first,value];
+    if(mode==="fields"&&/^(Калибровки по умолчанию|Дополнительная калибровка|Калибровка канала \d+|Индивидуальная калибровка)$/i.test(first)){
+      out.calibration.push(pair);continue;
+    }
     out[mode].push(pair);
   }
   for(const k of Object.keys(out))out[k]=uniquePairs(out[k]);
