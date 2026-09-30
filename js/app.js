@@ -671,10 +671,18 @@ function buildChapter2Catalog(){
     const fields=sourcePairs(rows.slice(1,practical<0?rows.length:practical));
     const advantages=sourcePairs(rows.slice(practical+1,luci<0?rows.length:luci));
     const luciRows=luci>=0?sourcePairs(rows.slice(luci+1,norms<0?rows.length:norms),{keepSingles:true}):[];
-    const normRows=norms>=0?sourcePairs(rows.slice(norms+1),{keepSingles:true}):[];
+    const normRows=[];
+    if(norms>=0){
+      for(const r of rows.slice(norms+1)){
+        const obj=String(r?.[0]||"").trim(),result=String(r?.[1]||"").trim(),interpretation=String(r?.[2]||"").trim();
+        if(!/^(Поверхность|Вода)$/i.test(obj)||!/RLU/i.test(result)||!interpretation)continue;
+        normRows.push([obj,result,interpretation]);
+        if(normRows.length>=5)break;
+      }
+    }
     const customTabs=[];
     if(luciRows.length)customTabs.push({id:"luci",label:"LuciPac A3",kind:"pairs",rows:luciRows});
-    if(normRows.length)customTabs.push({id:"rlu",label:"Интерпретация RLU",kind:"pairs",rows:normRows});
+    if(normRows.length)customTabs.push({id:"rlu",label:"Интерпретация RLU",kind:"rlu",rows:normRows});
     const name=rows.find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Люминометр SMART";
     registerCatalog("2.16",name,fields,state.assets.sectionImages?.["2.16"]||[],{advantages,customTabs});
   }
@@ -850,6 +858,56 @@ function classifySheetFields(p){
     variants:uniquePairs(variants)
   };
 }
+
+function normProductName(v){
+  return String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
+}
+function applyProductBlock(section,name,pairs,advantages){
+  if(!name)return;
+  const want=normProductName(name);
+  let p=(section.products||[]).find(x=>normProductName(x.name)===want);
+  const articlePair=(pairs||[]).find(r=>/^Артикул$/i.test(r?.[0]||""));
+  if(!p&&articlePair?.[1])p=(section.products||[]).find(x=>String(x.article||"").trim()===String(articlePair[1]).trim()&&(!want||normProductName(x.name).includes(want)||want.includes(normProductName(x.name))));
+  if(!p){
+    p={id:section.id+"-"+safeSlug(articlePair?.[1]||name),name,sourceRow:0,sheetFields:[]};
+    section.products=section.products||[];section.products.push(p);
+  }
+  p.sheetFields=uniquePairs([...(p.sheetFields||[]),...(pairs||[])]);
+  const val=(label)=>p.sheetFields.find(r=>new RegExp("^"+label+"$","i").test(String(r?.[0]||"")))?.[1]||"";
+  p.article=p.article||val("Артикул");
+  p.type=p.type||val("Тип");
+  p.purpose=p.purpose||val("Назначение");
+  p.manufacturer=p.manufacturer||val("Производитель");
+  p.country=p.country||val("Страна");
+  if((advantages||[]).length)p.advantages=uniquePairs([...(p.advantages||[]),...advantages]);
+}
+function enrichVerticalProductBlocks(section){
+  if(!section||section.kind!=="products"||!/^(3)(\.|$)/.test(section.id||""))return;
+  const rows=section.rawRows||[];if(!rows.length)return;
+  for(let i=0;i<rows.length;i++){
+    const row=rows[i]||[];
+    for(let c=0;c<row.length-1;c++){
+      if(!/^Наименование$/i.test(String(row[c]||"").trim()))continue;
+      const name=String(row[c+1]||"").trim();if(!name)continue;
+      const pairs=[["Наименование",name]],advantages=[];let adv=false;
+      for(let j=i+1;j<rows.length;j++){
+        const r=rows[j]||[],label=String(r[c]||"").trim(),value=String(r[c+1]||"").trim();
+        if(/^Наименование$/i.test(label)&&value)break;
+        if(label&& !value && !/^Практическое значение$/i.test(label)){
+          const next=rows[j+1]||[],nl=String(next[c]||"").trim(),nv=String(next[c+1]||"").trim();
+          if(nl&&nv)break;
+        }
+        if(/^Практическое значение$/i.test(label)&&!value){adv=true;continue}
+        if(/^Особенность$/i.test(label)&&/^Практическое значение$/i.test(value)){adv=true;continue}
+        if(!label||!value)continue;
+        if(/^(Характеристика|Показатель)$/i.test(label)&&/^(Значение|Практическое значение)$/i.test(value))continue;
+        if(adv)advantages.push([label,value]);else pairs.push([label,value]);
+      }
+      if(pairs.length>1||advantages.length)applyProductBlock(section,name,pairs,advantages);
+    }
+  }
+}
+
 function enrichRegularProducts(){
   for(const [id,x] of state.products){
     const p=x.product;
@@ -886,6 +944,7 @@ function mapData(){
     if(ov.chapters?.[ch.id]?.title!==undefined)ch.title=String(ov.chapters[ch.id].title||"");
     state.chapters.set(ch.id,ch);
     ch.sections.forEach((s)=>{
+      enrichVerticalProductBlocks(s);
       state.editorBase.sections.set(s.id,{title:s.title,notes:deepCopy(s.notes||[]),pairs:deepCopy(s.pairs||[]),tables:deepCopy(s.tables||[])});
       const sov=ov.sections?.[s.id];
       if(sov){for(const [k,v] of Object.entries(sov)){if(!["id","gid","products","rawRows","packedRows"].includes(k))s[k]=deepCopy(v);}}
@@ -1159,8 +1218,20 @@ function tablePanel(headers,rows){
   const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
   return '<div class="table-wrap"><table class="data-table"><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map(r=>'<tr>'+Array.from({length:h.length},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div>';
 }
+function rluPanel(rows){
+  const list=(rows||[]).map(r=>({object:String(r?.[0]||""),result:String(r?.[1]||""),interpretation:String(r?.[2]||"")})).filter(x=>x.object&&x.result);
+  const group=(name)=>list.filter(x=>x.object.toLowerCase()===name.toLowerCase());
+  const cls=(x)=>/неудовлетвор/i.test(x.interpretation)?"bad":/предупреж/i.test(x.interpretation)?"warn":"good";
+  const card=(name)=>'<section class="rlu-card"><div class="rlu-card-head">'+esc(name)+'</div><div class="rlu-bands">'+group(name).map(x=>'<div class="rlu-band '+cls(x)+'"><strong>'+esc(x.result)+'</strong><span>'+esc(x.interpretation)+'</span></div>').join("")+'</div></section>';
+  return '<div class="rlu-panel"><div class="rlu-title"><strong>Рекомендуемые нормы производителя</strong><span>Цветовая интерпретация результатов RLU</span></div><div class="rlu-grid">'+card("Поверхность")+card("Вода")+'</div></div>';
+}
 function tabPanelHtml(p,id){
   const table=tabTableFor(p,id);
+  if(id==="rlu"&&/Люминометр\s+SMART/i.test(p?.name||"")){
+    const custom=(p.customTabs||[]).find(t=>t.id===id);
+    const rows=table?.rows?.length?table.rows:(custom?.rows||[]);
+    return rluPanel(rows);
+  }
   if(table?.headers?.length&&table?.rows?.length)return tablePanel(table.headers,table.rows);
   if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
   if(id==="advantages")return pairCards(p.advantages||[]);
