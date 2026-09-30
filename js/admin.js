@@ -1,4 +1,5 @@
 const LOCAL_KEY="kb_admin_overrides_local";
+const LIVE_KEY="kb_live_sheet_snapshots";
 let overrideCache=null;
 
 const esc=(v)=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
@@ -40,6 +41,16 @@ function parseSubstances(text){
 function linesText(arr){return (arr||[]).join("\n")}
 function parseLines(text){return String(text||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean)}
 function jsonText(v){return JSON.stringify(v??{},null,2)}
+function tableText(table){
+  if(!table?.headers?.length)return "";
+  return [table.headers,...(table.rows||[])].map(r=>(r||[]).join(" | ")).join("\n");
+}
+function parseTableText(text){
+  const rows=String(text||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(line=>line.split("|").map(x=>x.trim()));
+  if(!rows.length)return null;
+  const headers=rows.shift(),width=headers.length;
+  return {headers,rows:rows.map(r=>Array.from({length:width},(_,i)=>r[i]||"")).filter(r=>r.some(Boolean))};
+}
 function emptyObject(o){return !o||Object.keys(o).length===0}
 
 const PAIR_FIELDS=[
@@ -81,7 +92,7 @@ function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-sta
 
 function shell(title,subtitle,inner){
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Администратор</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-admin-export>↓ Экспорт правок</button><label class="kb-admin-btn ghost kb-admin-import">↑ Импорт правок<input type="file" accept="application/json,.json" data-admin-import hidden></label><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать все правки книги</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить файл правок книги<input type="file" accept="application/json,.json" data-admin-import hidden></label><span class="kb-admin-devnote">Тестовый редактор · без входа</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function renderEditor(){
@@ -92,7 +103,7 @@ async function renderEditor(){
   if(ctx.kind==="chapter")return renderChapterEditor(ctx);
   const sheet=ctx.spreadsheetId?' <a class="kb-admin-link" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit">Открыть Google Sheets ↗</a>':"";
   setBody(shell("Панель управления","Открой карточку товара, раздел или главу — и нажми «Редактор».",
-    '<div class="kb-admin-dashboard"><h3>Что можно менять</h3><p>Карточки товаров, характеристики, преимущества, вкладки, группы ppb, заголовки разделов и глав. '+sheet+'</p><p><b>Сейчас это тестовый режим:</b> ручные правки сохраняются в этом браузере. Постоянное хранение и отдельный вход подключим перед публикацией сайта.</p></div>'));
+    '<div class="kb-admin-dashboard"><h3>Что можно менять</h3><p>Карточки товаров, характеристики, преимущества, вкладки, группы ppb, заголовки разделов и глав. '+sheet+'</p><p><b>Сейчас это тестовый режим:</b> ручные правки сохраняются в этом браузере. Кнопка «Скачать все правки книги» делает один общий файл всей отредактированной версии — его потом можно передать для финальной публикации.</p></div>'));
 }
 function defaultTabLabel(id,p){
   const map={specs:"Характеристики",indicators:"Измеряемые показатели",options:"Дополнительные опции",variants:"Варианты исполнения",advantages:/Анализатор/i.test(p?.type||"")?"Особенности":"Преимущества / особенности",complectation:"Комплектация",washCycle:"Рекомендуемый цикл мойки",workflow:"Порядок работы",calibration:"Калибровка",assortment:"Линейка",consumables:"Расходные материалы",testKits:"Тест-наборы",substances:"Вещества и ppb"};
@@ -104,14 +115,15 @@ function productPairEditors(ctx){
 function renderProductEditor(ctx){
   const existing=deep(overrideCache.products?.[ctx.id]||{});
   const tabs=(ctx.tabs||[]).map((t,i)=>'<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'"><button type="button" class="kb-mini" data-tab-up>↑</button><button type="button" class="kb-mini" data-tab-down>↓</button><code>'+esc(t.id)+'</code><input value="'+esc(t.label)+'" data-tab-label><label class="kb-hide"><input type="checkbox" data-tab-hidden '+((ctx.product.hiddenTabs||[]).includes(t.id)?"checked":"")+'> скрыть</label></div>').join("");
-  const sheet=ctx.spreadsheetId&&ctx.section?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(ctx.section.gid):"";
+  const sourceSheet=ctx.sourceSection||ctx.section;
+  const sheet=ctx.spreadsheetId&&sourceSheet?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(sourceSheet.gid):"";
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
     '<div class="kb-admin-grid two"><label>Название<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
     (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть исходный лист Google Sheets ↗</a></p>':"")+
-    '<section class="kb-admin-section"><h3>Содержимое карточки</h3>'+productPairEditors(ctx)+'</section>'+
+    '<section class="kb-admin-section"><h3>Содержимое карточки</h3>'+productPairEditors(ctx)+(ctx.product.indicatorTable?.headers?.length?'<details class="kb-admin-group" open><summary>Таблица измеряемых показателей <small>'+((ctx.product.indicatorTable.rows||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Первая строка — заголовки столбцов. Формат через <b>|</b>.</span><textarea rows="10" data-indicator-table>'+esc(tableText(ctx.product.indicatorTable))+'</textarea></label></details>':'')+'</section>'+
     '<details class="kb-admin-group" open><summary>Вещества / группы / ppb <small>'+((ctx.product.substances||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Формат: <b>группа | вещество | ppb</b>. Именно поле «группа» создаёт заголовок перед таблицей.</span><textarea rows="10" data-substances>'+esc(substancesText(ctx.product.substances||[]))+'</textarea></label></details>'+
-    '<details class="kb-admin-group"><summary>Пользовательские вкладки</summary><label class="kb-admin-field"><span>JSON-массив вкладок: id, label, kind = pairs/steps, rows.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
+    '<details class="kb-admin-group"><summary>Пользовательские вкладки</summary><label class="kb-admin-field"><span>JSON-массив вкладок: id, label, kind = pairs/steps/table; для table используются headers и rows.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
     '<section class="kb-admin-section"><h3>Порядок и названия вкладок</h3><div data-tab-list>'+tabs+'</div><p class="kb-admin-hint">Стрелками меняй порядок, поле справа переименовывает вкладку, галочка скрывает её.</p></section>'+
     '<section class="kb-admin-section"><h3>Фотографии</h3><label class="kb-admin-field"><span>Пока можно менять пути к фото и их порядок. Загрузку файлов прямо из редактора подключим вместе с постоянным хранилищем перед публикацией.</span><textarea rows="7" data-images>'+esc(linesText(ctx.images||[]))+'</textarea></label></section>'+
     '<details class="kb-admin-group"><summary>Расширенный JSON override</summary><label class="kb-admin-field"><span>Для редких полей, которых нет в форме. Поля формы при сохранении имеют приоритет.</span><textarea rows="14" data-advanced>'+esc(jsonText(existing))+'</textarea></label></details>'+
@@ -141,26 +153,30 @@ function bindBody(){
     try{
       const r=await window.KB_EDITOR_API?.refreshCurrentSection?.();
       await renderEditor();
-      showStatus("Готово: раздел "+(r?.sectionId||"")+" обновлён сразу из Google Sheets ("+(r?.rows||0)+" строк).");
+      showStatus("Готово: "+(r?.sections>1?(r.sections+" листов обновлено"):(("раздел "+(r?.sectionId||"")+" обновлён")))+" из Google Sheets ("+(r?.rows||0)+" строк).");
     }catch(err){showError(err)}finally{b.disabled=false}
   });
   body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
-    const data=await loadOverrides(true);
+    const editorOverrides=await loadOverrides(true);
+    let liveSheetSnapshots={};try{liveSheetSnapshots=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{}
+    const data={format:"tian-knowledge-book-local-backup",version:2,exportedAt:new Date().toISOString(),editorOverrides,liveSheetSnapshots};
     const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
     const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
     const url=URL.createObjectURL(blob),a=document.createElement("a");
-    a.href=url;a.download="kniga-znaniy-pravki-"+stamp+".json";document.body.appendChild(a);a.click();a.remove();
+    a.href=url;a.download="kniga-znaniy-VSE-pravki-"+stamp+".json";document.body.appendChild(a);a.click();a.remove();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
-    showStatus("Резервная копия правок сохранена файлом.");
+    showStatus("Сохранён один файл со всеми ручными правками книги и локально обновлёнными листами Google Sheets.");
   });
   body.querySelector("[data-admin-import]")?.addEventListener("change",async e=>{
     const file=e.target.files?.[0];if(!file)return;
     try{
       const data=JSON.parse(await file.text());
       if(!data||typeof data!=="object"||Array.isArray(data))throw new Error("Неверный файл правок.");
-      data.products ||= {};data.sections ||= {};data.chapters ||= {};
-      await commitOverrides(data);
-      showStatus("Правки импортированы. Обновляю страницу…");
+      const editorOverrides=data.format==="tian-knowledge-book-local-backup"?(data.editorOverrides||emptyOverrides()):data;
+      editorOverrides.products ||= {};editorOverrides.sections ||= {};editorOverrides.chapters ||= {};
+      await commitOverrides(editorOverrides);
+      if(data.format==="tian-knowledge-book-local-backup")localStorage.setItem(LIVE_KEY,JSON.stringify(data.liveSheetSnapshots||{}));
+      showStatus("Все правки книги импортированы. Обновляю страницу…");
       location.reload();
     }catch(err){showError(err)}
   });
@@ -185,6 +201,7 @@ async function saveProduct(e){
     delete out.id;
     for(const key of ["name","article","type","purpose"])putDiff(out,key,String(fd.get(key)||""),String(src[key]||""));
     for(const [key] of PAIR_FIELDS){const value=parsePairs(form.querySelector('[data-pair-key="'+key+'"]')?.value||"");putDiff(out,key,value,src[key]||[])}
+    if(form.querySelector("[data-indicator-table]"))putDiff(out,"indicatorTable",parseTableText(form.querySelector("[data-indicator-table]")?.value||""),src.indicatorTable||null);
     putDiff(out,"substances",parseSubstances(form.querySelector("[data-substances]")?.value||""),src.substances||[]);
     const custom=JSON.parse(form.querySelector("[data-custom-tabs]")?.value||"[]");if(!Array.isArray(custom))throw new Error("Пользовательские вкладки должны быть JSON-массивом.");
     putDiff(out,"customTabs",custom,src.customTabs||[]);
