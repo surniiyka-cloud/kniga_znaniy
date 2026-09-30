@@ -712,6 +712,17 @@ function sectionSupplement(s){
   return blocks.join("");
 }
 function deepCopy(v){return v==null?v:JSON.parse(JSON.stringify(v));}
+function mergeOverrideLayer(base,extra){
+  const out=deepCopy(base||{version:1,products:{},sections:{},chapters:{}});
+  for(const key of ["products","sections","chapters"]){
+    out[key] ||= {};
+    for(const [id,val] of Object.entries(extra?.[key]||{}))out[key][id]={...(out[key][id]||{}),...deepCopy(val)};
+  }
+  return out;
+}
+function localEditorOverrides(){
+  try{return JSON.parse(localStorage.getItem("kb_admin_overrides_local")||"null")||null}catch{return null}
+}
 function mapData(){
   state.products.clear();state.sections.clear();state.chapters.clear();state.sectionCatalog.clear();
   state.editorBase={products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()};
@@ -1127,7 +1138,7 @@ async function init(){
   state.reports.sync=rs[3]?.ok?await rs[3].json():null;
   state.reports.images=rs[4]?.ok?await rs[4].json():null;
   state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
-  state.overrides=rs[6]?.ok?await rs[6].json():state.overrides;
+  state.overrides=mergeOverrideLayer(rs[6]?.ok?await rs[6].json():state.overrides,localEditorOverrides());
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();q("#syncState").textContent="Google Sheets · обновлено "+fmtDate(state.book.generatedAt);
   if(!location.hash)go("home");else render();
