@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-30T14:01:02.091Z",
+  "updatedAt": "2026-09-30T14:03:21.556Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2589,6 +2589,27 @@
         "advantages",
         "substances"
       ]
+    },
+    "catalog-2-1-2-meatsensor-kit-108": {
+      "images": [
+        "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png": {
+          "card": {
+            "scale": 1.2,
+            "x": -1,
+            "y": -3,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1.2,
+            "x": -1,
+            "y": -3,
+            "fit": "contain"
+          }
+        }
+      }
     }
   },
   "sections": {
