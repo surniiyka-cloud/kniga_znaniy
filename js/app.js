@@ -28,7 +28,7 @@ function displaySections(ch){
   for(const s of base){
     if(s.id.startsWith("2.6.")){if(!six){out.push({id:"2.6",title:"Анализаторы качества молока",composite:true});six=true;}continue;}
     if(s.id.startsWith("2.7.")){if(!seven){out.push({id:"2.7",title:"Анализаторы соматических клеток",composite:true});seven=true;}continue;}
-    out.push(s.id==="2.13"?{...s,title:"Тест-пластины KangarooSci"}:s);
+    out.push(s.id==="2.13"?{...s,title:state.overrides?.sections?.["2.13"]?.title||"Тест-пластины KangarooSci"}:s);
   }
   return out;
 }
@@ -624,7 +624,7 @@ function mapData(){
       state.editorBase.sections.set(s.id,{title:s.title,notes:deepCopy(s.notes||[]),pairs:deepCopy(s.pairs||[]),tables:deepCopy(s.tables||[])});
       const sov=ov.sections?.[s.id];
       if(sov){for(const [k,v] of Object.entries(sov)){if(!["id","gid","products","rawRows","packedRows"].includes(k))s[k]=deepCopy(v);}}
-      state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:"Тест-пластины KangarooSci"}:s)});
+      state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:state.overrides?.sections?.["2.13"]?.title||"Тест-пластины KangarooSci"}:s)});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
     if(ch.id==="2"){
@@ -762,7 +762,7 @@ function rawTables(s){
     inner+='<section class="raw-table-block"><h3>Все строки Google Sheets</h3><div class="table-wrap"><table class="data-table"><tbody>'+sourceRows.map((r)=>'<tr>'+Array.from({length:cols},(_,i)=>'<td>'+esc(r[i]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
   }
   if(s.packedRows?.length){
-    inner+='<section class="raw-table-block"><h3>Исходные многострочные блоки</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.packedRows.map((x)=>'<tr><th>Строка '+esc(x.sourceRow)+'</th>'+(x.cells||[]).map((v)=>'<td class="multiline-source">'+esc(v).replace(/\\n/g,"<br>")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+    inner+='<section class="raw-table-block"><h3>Исходные многострочные блоки</h3><div class="table-wrap"><table class="data-table"><tbody>'+s.packedRows.map((x)=>'<tr><th>Строка '+esc(x.sourceRow)+'</th>'+(x.cells||[]).map((v)=>'<td class="multiline-source">'+esc(v).replace(/\n/g,"<br>")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
   }
   if(!inner)return "";
   return '<details class="raw-details"><summary><span><strong>Полные табличные данные</strong><small>Открыть исходные таблицы и служебные материалы раздела</small></span><b>+</b></summary><div class="raw-details-body">'+inner+'</div></details>';
