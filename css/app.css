@@ -1020,3 +1020,72 @@ body.modal-open{overflow:hidden}
   .product-page .gallery-main{padding:20px}
   .product-page .gallery-main img{max-width:92% !important;max-height:92% !important}
 }
+
+
+/* v2.0.12 unified product data layout */
+.feature-definition-list{
+  display:grid;
+  grid-template-columns:minmax(150px,.38fr) 1fr;
+  gap:0;
+  border:1px solid var(--line);
+  border-radius:14px;
+  overflow:hidden;
+  background:var(--surface);
+}
+.feature-definition-list dt,
+.feature-definition-list dd{
+  margin:0;
+  padding:12px 14px;
+  border-bottom:1px solid var(--line);
+}
+.feature-definition-list dt{
+  background:var(--surface-2);
+  color:var(--green);
+  font-size:11px;
+  line-height:1.4;
+  font-weight:800;
+}
+.feature-definition-list dd{
+  color:var(--text);
+  font-size:12.5px;
+  line-height:1.58;
+}
+.feature-definition-list dt:last-of-type,
+.feature-definition-list dd:last-of-type{
+  border-bottom:0;
+}
+
+.section-reference{
+  margin-top:16px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  background:var(--surface);
+}
+.section-reference>summary{
+  list-style:none;
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  align-items:center;
+  padding:15px 17px;
+  cursor:pointer;
+  background:var(--surface-2);
+}
+.section-reference>summary::-webkit-details-marker{display:none}
+.section-reference>summary span{display:grid;gap:2px}
+.section-reference>summary strong{font-size:12px;color:var(--text)}
+.section-reference>summary small{font-size:10px;color:var(--muted)}
+.section-reference>summary b{
+  width:28px;height:28px;display:grid;place-items:center;border-radius:9px;
+  background:var(--surface);color:var(--green);font-size:18px;transition:.18s
+}
+.section-reference[open]>summary b{transform:rotate(45deg)}
+.section-reference-body{padding:14px}
+.section-notes{margin-top:22px}
+
+@media(max-width:700px){
+  .feature-definition-list{grid-template-columns:1fr}
+  .feature-definition-list dt{border-bottom:0;padding-bottom:5px}
+  .feature-definition-list dd{padding-top:5px}
+}
