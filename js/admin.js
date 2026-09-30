@@ -285,18 +285,64 @@ function removeCustomTabUi(body,id){
 function photoPreviewSrc(v){
   const s=String(v||"");return /^https?:\/\//i.test(s)||s.startsWith("data:")||s.startsWith("./")?s:"./"+s;
 }
-function photoRowHtml(path,index){
-  return '<div class="kb-photo-row" data-photo-row data-path="'+esc(path)+'"><div class="kb-photo-preview"><img src="'+esc(photoPreviewSrc(path))+'" alt=""></div><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div><div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up title="Выше">↑</button><button type="button" class="kb-mini" data-photo-down title="Ниже">↓</button><button type="button" class="kb-mini" data-photo-replace>Заменить</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div></div>';
+function photoSetting(v){
+  const num=(x,d,min,max)=>{const n=Number(x);return Number.isFinite(n)?Math.min(max,Math.max(min,n)):d};
+  return {scale:num(v?.scale,1,.6,2.4),x:num(v?.x,0,-45,45),y:num(v?.y,0,-45,45),fit:v?.fit==="cover"?"cover":"contain"};
+}
+function photoPreviewStyle(v){
+  const s=photoSetting(v);return "object-fit:"+s.fit+";transform:translate("+s.x+"%,"+s.y+"%) scale("+s.scale+");";
+}
+function photoRowHtml(path,index,view={}){
+  const v=photoSetting(view),scale=Math.round(v.scale*100);
+  return '<div class="kb-photo-row" data-photo-row data-path="'+esc(path)+'">'+
+    '<div class="kb-photo-preview-wrap"><div class="kb-photo-preview"><img src="'+esc(photoPreviewSrc(path))+'" alt="" style="'+esc(photoPreviewStyle(v))+'"></div><span>Предпросмотр карточки</span></div>'+
+    '<div class="kb-photo-editor-main"><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div>'+
+      '<div class="kb-photo-controls">'+
+        '<label><span>Масштаб</span><div class="kb-photo-range"><input type="range" min="60" max="240" step="5" value="'+scale+'" data-photo-scale><output data-photo-scale-out>'+scale+'%</output></div></label>'+
+        '<label><span>Сдвиг X</span><div class="kb-photo-range"><input type="range" min="-45" max="45" step="1" value="'+v.x+'" data-photo-x><output data-photo-x-out>'+v.x+'</output></div></label>'+
+        '<label><span>Сдвиг Y</span><div class="kb-photo-range"><input type="range" min="-45" max="45" step="1" value="'+v.y+'" data-photo-y><output data-photo-y-out>'+v.y+'</output></div></label>'+
+        '<label><span>Режим</span><select data-photo-fit><option value="contain" '+(v.fit==="contain"?"selected":"")+'>Вписать целиком</option><option value="cover" '+(v.fit==="cover"?"selected":"")+'>Заполнить область</option></select></label>'+
+      '</div>'+
+      '<div class="kb-photo-quick"><button type="button" class="kb-mini" data-photo-preset-large>Крупнее</button><button type="button" class="kb-mini" data-photo-center>По центру</button><button type="button" class="kb-mini" data-photo-apply-all>Ко всем фото</button><button type="button" class="kb-mini" data-photo-reset-view>Сбросить вид</button></div>'+
+      '<div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up title="Выше">↑ Выше</button><button type="button" class="kb-mini" data-photo-down title="Ниже">↓ Ниже</button><button type="button" class="kb-mini" data-photo-replace>Заменить файл</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div>'+
+    '</div></div>';
 }
 function photoEditorHtml(ctx){
-  const images=ctx.images||[];
-  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Загруженные здесь файлы сохраняются в репозитории в отдельной папке товара и автоматически привязываются к этой карточке. Можно менять порядок, заменять и удалять фото.</p></div><div><button type="button" class="kb-admin-btn ghost" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map(photoRowHtml).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  const images=ctx.images||[],settings=ctx.product?.imageSettings||{};
+  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Здесь можно не только менять файл, но и кадрировать его отображение без изменения исходника: увеличивать товар, двигать его внутри кадра и выбирать режим вписывания.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn ghost" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn primary" data-photo-save-view>Сохранить вид фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i,settings[p]||{})).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
 }
 function syncPhotoState(body){
   const rows=[...body.querySelectorAll("[data-photo-row]")],paths=rows.map(r=>r.dataset.path).filter(Boolean);
   rows.forEach((r,i)=>{const strong=r.querySelector(".kb-photo-meta strong");if(strong)strong.textContent="Фото "+(i+1)});
   const ta=body.querySelector("[data-images]");if(ta)ta.value=paths.join("\n");
   return paths;
+}
+function collectPhotoSettings(body){
+  const out={};
+  body.querySelectorAll("[data-photo-row]").forEach(row=>{
+    const path=row.dataset.path;if(!path)return;
+    const v=photoSetting({
+      scale:Number(row.querySelector("[data-photo-scale]")?.value||100)/100,
+      x:Number(row.querySelector("[data-photo-x]")?.value||0),
+      y:Number(row.querySelector("[data-photo-y]")?.value||0),
+      fit:row.querySelector("[data-photo-fit]")?.value||"contain"
+    });
+    if(v.scale!==1||v.x!==0||v.y!==0||v.fit!=="contain")out[path]=v;
+  });
+  return out;
+}
+function updatePhotoPreview(row){
+  if(!row)return;
+  const scale=Number(row.querySelector("[data-photo-scale]")?.value||100),x=Number(row.querySelector("[data-photo-x]")?.value||0),y=Number(row.querySelector("[data-photo-y]")?.value||0),fit=row.querySelector("[data-photo-fit]")?.value||"contain";
+  const img=row.querySelector(".kb-photo-preview img");if(img)img.style.cssText=photoPreviewStyle({scale:scale/100,x,y,fit});
+  const so=row.querySelector("[data-photo-scale-out]"),xo=row.querySelector("[data-photo-x-out]"),yo=row.querySelector("[data-photo-y-out]");
+  if(so)so.textContent=scale+"%";if(xo)xo.textContent=String(x);if(yo)yo.textContent=String(y);
+  row.classList.add("is-photo-dirty");
+}
+function setPhotoControls(row,{scale=1,x=0,y=0,fit="contain"}={}){
+  const v=photoSetting({scale,x,y,fit});
+  const sc=row?.querySelector("[data-photo-scale]"),xc=row?.querySelector("[data-photo-x]"),yc=row?.querySelector("[data-photo-y]"),fc=row?.querySelector("[data-photo-fit]");
+  if(sc)sc.value=String(Math.round(v.scale*100));if(xc)xc.value=String(v.x);if(yc)yc.value=String(v.y);if(fc)fc.value=v.fit;updatePhotoPreview(row);
 }
 function imageExt(file){
   const byName=(file?.name||"").split(".").pop().toLowerCase();
@@ -311,10 +357,12 @@ function nextPhotoPath(productId,files,ext){
 }
 async function persistImagesOnly(body){
   const form=body.querySelector("[data-admin-product]");if(!form||!editorCtx)return;
-  const id=form.dataset.id,images=syncPhotoState(body),o=await loadOverrides(true),out=deep(o.products?.[id]||{});
+  const id=form.dataset.id,images=syncPhotoState(body),settings=collectPhotoSettings(body),o=await loadOverrides(true),out=deep(o.products?.[id]||{});
   if(same(images,editorCtx.sourceImages||[]))delete out.images;else out.images=images;
+  if(same(settings,editorCtx.sourceProduct?.imageSettings||{}))delete out.imageSettings;else out.imageSettings=settings;
   if(emptyObject(out))delete o.products[id];else o.products[id]=out;
   await commitOverrides(o);
+  body.querySelectorAll("[data-photo-row]").forEach(r=>r.classList.remove("is-photo-dirty"));
 }
 async function uploadPhoto(file,path){
   if(!file)throw new Error("Файл не выбран.");
@@ -434,10 +482,14 @@ function bindBody(){
       for(const file of files){
         const ext=imageExt(file);if(!ext)throw new Error("Файл «"+file.name+"» имеет неподдерживаемый формат.");
         const path=nextPhotoPath(editorCtx.id,current,ext);await uploadPhoto(file,path);current.push(path);
-        body.querySelector("[data-photo-list]")?.insertAdjacentHTML("beforeend",photoRowHtml(path,current.length-1));
+        body.querySelector("[data-photo-list]")?.insertAdjacentHTML("beforeend",photoRowHtml(path,current.length-1,{}));
       }
       await persistImagesOnly(body);showStatus("Фотографии загружены, привязаны к товару и опубликованы.");
     }catch(err){showError(err)}finally{input.value="";if(btn)btn.disabled=false}
+  });
+  body.querySelector("[data-photo-save-view]")?.addEventListener("click",async e=>{
+    const b=e.currentTarget;b.disabled=true;showStatus("Сохраняю отображение фотографий…","warn");
+    try{await persistImagesOnly(body);showStatus("Вид фотографий сохранён и опубликован.")}catch(err){showError(err)}finally{b.disabled=false}
   });
   body.querySelector("[data-photo-replace-file]")?.addEventListener("change",async e=>{
     const input=e.currentTarget,file=input.files?.[0],old=input.dataset.replacePath||"";if(!file||!old)return;
@@ -457,6 +509,13 @@ function bindBody(){
   body.addEventListener("click",async e=>{
     const row=e.target.closest?.("[data-photo-row]");if(!row)return;
     try{
+      if(e.target.closest("[data-photo-preset-large]")){setPhotoControls(row,{scale:1.35,x:0,y:0,fit:"contain"});return}
+      if(e.target.closest("[data-photo-center]")){const scale=Number(row.querySelector("[data-photo-scale]")?.value||100)/100,fit=row.querySelector("[data-photo-fit]")?.value||"contain";setPhotoControls(row,{scale,x:0,y:0,fit});return}
+      if(e.target.closest("[data-photo-reset-view]")){setPhotoControls(row,{scale:1,x:0,y:0,fit:"contain"});return}
+      if(e.target.closest("[data-photo-apply-all]")){
+        const setting={scale:Number(row.querySelector("[data-photo-scale]")?.value||100)/100,x:Number(row.querySelector("[data-photo-x]")?.value||0),y:Number(row.querySelector("[data-photo-y]")?.value||0),fit:row.querySelector("[data-photo-fit]")?.value||"contain"};
+        body.querySelectorAll("[data-photo-row]").forEach(r=>setPhotoControls(r,setting));showStatus("Настройки применены ко всем фото. Нажмите «Сохранить вид фото».","warn");return;
+      }
       if(e.target.closest("[data-photo-up]")){row.previousElementSibling?.before(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
       if(e.target.closest("[data-photo-down]")){row.nextElementSibling?.after(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
       if(e.target.closest("[data-photo-replace]")){const input=body.querySelector("[data-photo-replace-file]");if(input){input.dataset.replacePath=row.dataset.path;input.click()}return}
@@ -481,6 +540,8 @@ function bindBody(){
     input.value="";body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"]')?.scrollIntoView({behavior:"smooth",block:"nearest"});
   });
   body.addEventListener("input",e=>{
+    const photo=e.target.closest?.("[data-photo-scale],[data-photo-x],[data-photo-y],[data-photo-fit]");
+    if(photo){updatePhotoPreview(photo.closest("[data-photo-row]"));return}
     const input=e.target.closest?.("[data-tab-label]");if(!input)return;
     const row=input.closest("[data-admin-tab-row]"),id=row?.dataset.id,label=input.value.trim()||id;if(!id)return;
     const opt=body.querySelector('[data-new-table-tab] option[value="'+CSS.escape(id)+'"]');if(opt)opt.textContent=label;
@@ -564,8 +625,9 @@ async function saveProduct(e){
     if(Object.keys(labels).length)out.tabLabels=labels;else delete out.tabLabels;
     let images=parseLines(form.querySelector("[data-images]")?.value||"");
     putDiff(out,"images",images,ctx.sourceImages||[]);
+    putDiff(out,"imageSettings",collectPhotoSettings(form),src.imageSettings||{});
     const o=await loadOverrides();if(emptyObject(out))delete o.products[id];else o.products[id]=out;
-    await commitOverrides(o);showStatus("Карточка сохранена в тестовом редакторе. Обновляю страницу…");location.reload();
+    await commitOverrides(o);showStatus("Карточка сохранена и опубликована. Обновляю страницу…");location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveSection(e){
@@ -594,7 +656,7 @@ async function saveSection(e){
       putDiff(out,"deletedProductIds",deletedProductIds,src.deletedProductIds||[]);
     }
     const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
-    await commitOverrides(o);showStatus("Раздел сохранён в тестовом редакторе.");location.reload();
+    await commitOverrides(o);showStatus("Раздел сохранён и опубликован.");location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveChapter(e){
@@ -602,7 +664,7 @@ async function saveChapter(e){
   try{
     const ctx=window.KB_EDITOR_API.current(),src=ctx.sourceChapter||{},title=String(new FormData(form).get("title")||""),out={};putDiff(out,"title",title,String(src.title||""));
     const o=await loadOverrides();if(emptyObject(out))delete o.chapters[id];else o.chapters[id]=out;
-    await commitOverrides(o);showStatus("Глава сохранена в тестовом редакторе.");location.reload();
+    await commitOverrides(o);showStatus("Глава сохранена и опубликована.");location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function resetOverride(kind,id){
