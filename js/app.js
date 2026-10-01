@@ -1307,7 +1307,6 @@ function renderTermsSection(ch,s){
     if(!target)return;
     const group=target.closest("[data-foundation-group]");
     if(group)group.hidden=false;
-    target.open?.();
     scrollFoundationTo(target);
     target.classList.add("term-focus");
     setTimeout(()=>target.classList.remove("term-focus"),1100);
