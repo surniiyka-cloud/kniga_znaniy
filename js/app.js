@@ -6,7 +6,7 @@ import {favorites,recent,applyTheme,cycleTheme,getTheme} from "./storage.js";
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
 const isAdmin=()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}};
-const state={book:null,assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},publishedLiveSnapshots:{},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
+const state={book:null,terms11:[],assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},publishedLiveSnapshots:{},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -1181,17 +1181,60 @@ function renderImportant(title,items,foot=""){
   return '<section class="important-panel"><div class="important-icon">!</div><div><h2>'+esc(title)+'</h2><ul>'+items.map((x)=>'<li><strong>'+esc(x[0])+'</strong> '+esc(x[1])+'</li>').join("")+'</ul>'+(foot?'<p class="important-foot">'+esc(foot)+'</p>':"")+'</div></section>';
 }
 function renderTermsSection(ch,s){
-  const important=[
-    ["Сертификат или Декларация?","Не все товары требуют обязательного сертификата. Для многих достаточно декларации о соответствии. Однако именно сертификат выдается на бланке и заверяется органом по сертификации, тогда как за достоверность декларации отвечает сам заявитель. Мы поможем подобрать оптимальную схему."],
-    ["Сроки действия не вечны.","Сертификаты и декларации ТР ТС/ЕАЭС обычно выдаются на срок до 5 лет. А вот свидетельства о поверке средств измерений (СИ) имеют свой межповерочный интервал — от 1 года до нескольких лет. Просроченный документ приравнивается к его отсутствию."],
-    ["Территориальность.","Документы, оформленные по техническим регламентам ЕАЭС (ТР ТС), действуют на всей территории Союза: Россия, Беларусь, Казахстан, Армения, Кыргызстан. Национальные ГОСТы, например ГОСТ Р, действуют только в пределах РФ."],
-    ["Метрология — это отдельный мир.","Не путайте поверку — обязательную процедуру для СИ, применяемых в сфере госрегулирования, и калибровку — добровольную процедуру для внутренних нужд. Аккредитация лаборатории подтверждает её право проводить официальные испытания."],
-    ["Валидация и верификация.","Это не просто «проверки». Верификация подтверждает, что лаборатория корректно применяет методику, а валидация — что сама методика подходит для поставленной задачи и условий применения."]
-  ];
+  const fallback=(s.pairs||[]).map((x,i)=>({number:i+1,title:String(x.label||"").trim(),body:[String(x.value||"").trim()],resources:[],related:[]}));
+  const terms=(Array.isArray(state.terms11)&&state.terms11.length?state.terms11:fallback).filter(x=>x&&x.title);
+  const termByNumber=new Map(terms.map(x=>[Number(x.number),x]));
+  const resourceHref=(href)=>{
+    const v=String(href||"").trim();
+    if(!v)return "";
+    if(/^https?:\\/\\//i.test(v))return v;
+    return "./"+v.split("/").map(encodeURIComponent).join("/");
+  };
+  const resourceHtml=(r)=>{
+    const href=resourceHref(r?.href);
+    if(!href)return "";
+    const external=/^https?:\\/\\//i.test(String(r.href||""));
+    return '<a class="glossary-chip" href="'+esc(href)+'"'+(external?' target="_blank" rel="noopener"':"")+'>'+esc(r.label||r.href)+'</a>';
+  };
+  const itemHtml=(t)=>{
+    const search=[t.title,...(t.body||[]),(t.resources||[]).map(r=>r.label),(t.related||[]).map(r=>r.label)].flat().filter(Boolean).join(" ").toLowerCase();
+    const body=(t.body||[]).filter(Boolean).map(p=>'<p class="glossary-definition">'+esc(p)+'</p>').join("");
+    const resources=(t.resources||[]).map(resourceHtml).filter(Boolean).join("");
+    const related=(t.related||[]).map(r=>{
+      const target=termByNumber.get(Number(r.term));
+      return target?'<button type="button" class="glossary-chip" data-term-target="'+esc(String(r.term))+'">'+esc(r.label||target.title)+'</button>':"";
+    }).join("");
+    const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="glossary-detail-block glossary-detail-important"><span>Материалы к добавлению</span><p>'+esc((t.pendingResources||[]).join(" · "))+'</p></div>':"";
+    const detail=(resources||related||pending)?'<details class="glossary-details"><summary>Документы и связи</summary><div class="glossary-detail-grid">'+
+      (resources?'<div class="glossary-detail-block glossary-products"><span>Документы и ссылки</span><div class="glossary-chip-row">'+resources+'</div></div>':"")+
+      (related?'<div class="glossary-detail-block"><span>Связанные термины</span><div class="glossary-chip-row">'+related+'</div></div>':"")+
+      pending+'</div></details>':"";
+    return '<article class="glossary-card" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="glossary-card-head"><div><span class="glossary-kind">Термин</span><h3>'+esc(t.title)+'</h3></div><span class="glossary-index">'+String(t.number).padStart(2,"0")+'</span></div><div class="glossary-summary">'+body+'</div>'+detail+'</article>';
+  };
+  const termsHtml=terms.map(itemHtml).join("");
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Словарь ключевых документов, метрологических процедур и рабочих понятий.</p></div></div>'+
-    '<section class="term-grid">'+(s.pairs||[]).map((x,i)=>'<article class="term-card"><div class="term-no">'+String(i+1).padStart(2,"0")+'</div><div><span class="term-label">Термин</span><h3>'+esc(x.label)+'</h3><span class="definition-label">Определение</span><p>'+esc(x.value)+'</p></div></article>').join("")+'</section>'+
-    renderImportant("Важно знать перед началом оформления документов:",important)+rawTables(s);
+    '<div class="page-head glossary-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>22 термина из рабочего документа «Коррективы по разделу 1», с прямыми ссылками на доступные нормативные материалы.</p></div></div>'+
+    '<section class="glossary-browser"><div class="glossary-toolbar"><div class="glossary-search"><span>⌕</span><input id="terms11Search" type="search" placeholder="Найти термин, обозначение или слово…" autocomplete="off"><button type="button" id="terms11SearchClear" hidden>×</button></div></div><div class="glossary-result-line"><strong id="terms11ResultCount">'+terms.length+'</strong><span>терминов</span><span class="glossary-result-hint">Связанные термины и документы раскрываются только при необходимости.</span></div><div class="glossary-grid" id="terms11Grid">'+termsHtml+'</div><div class="glossary-no-results" id="terms11NoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или название термина.</span></div></section>';
+  const items=[...document.querySelectorAll("[data-term-item]")];
+  const input=q("#terms11Search"),clear=q("#terms11SearchClear"),empty=q("#terms11NoResults"),count=q("#terms11ResultCount");
+  const apply=()=>{
+    const query=(input?.value||"").trim().toLowerCase();
+    if(clear)clear.hidden=!query;
+    let shown=0;
+    items.forEach(item=>{const ok=!query||String(item.dataset.termSearch||"").includes(query);item.hidden=!ok;if(ok)shown++;});
+    if(count)count.textContent=String(shown);
+    if(empty)empty.hidden=shown>0;
+  };
+  input?.addEventListener("input",apply);
+  clear?.addEventListener("click",()=>{if(input){input.value="";input.focus();}apply();});
+  document.querySelectorAll("[data-term-target]").forEach(btn=>btn.addEventListener("click",()=>{
+    const target=document.querySelector('[data-term-number="'+CSS.escape(btn.dataset.termTarget||"")+'"]');
+    if(!target)return;
+    target.hidden=false;
+    target.scrollIntoView({behavior:"smooth",block:"start"});
+    target.classList.add("term-focus");
+    setTimeout(()=>target.classList.remove("term-focus"),900);
+  }));
 }
 function renderNormsSection(ch,s){
   const sectionTitle="Сокращения, обозначения и единицы измерения";
@@ -1549,6 +1592,7 @@ async function init(){
   const stamp=Date.now();
   const rs=await Promise.all([
     fetch("./data/book.json?v="+stamp,{cache:"no-store"}),
+    fetch("./data/terms-1-1.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/assets.json?v="+stamp,{cache:"no-store"}),
     fetch("./data/search-index.json?v="+stamp,{cache:"no-store"}),
     fetch("./data/sync-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
@@ -1559,14 +1603,15 @@ async function init(){
   ]);
   if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
-  state.assets=rs[1]?.ok?await rs[1].json():state.assets;
-  state.index=rs[2]?.ok?await rs[2].json():[];
-  state.reports.sync=rs[3]?.ok?await rs[3].json():null;
-  state.reports.images=rs[4]?.ok?await rs[4].json():null;
-  state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
-  const publishedOverrides=rs[6]?.ok?await rs[6].json():state.overrides;
+  state.terms11=rs[1]?.ok?await rs[1].json():[];
+  state.assets=rs[2]?.ok?await rs[2].json():state.assets;
+  state.index=rs[3]?.ok?await rs[3].json():[];
+  state.reports.sync=rs[4]?.ok?await rs[4].json():null;
+  state.reports.images=rs[5]?.ok?await rs[5].json():null;
+  state.versionLog=rs[6]?.ok?await rs[6].json():state.versionLog;
+  const publishedOverrides=rs[7]?.ok?await rs[7].json():state.overrides;
   state.overrides=mergeOverrideLayer(publishedOverrides,localEditorOverrides(publishedOverrides));
-  state.publishedLiveSnapshots=rs[7]?.ok?await rs[7].json():{};
+  state.publishedLiveSnapshots=rs[8]?.ok?await rs[8].json():{};
   applyStoredLiveSnapshots();
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Google Sheets · обновлено "+fmtDate(state.book.generatedAt);
