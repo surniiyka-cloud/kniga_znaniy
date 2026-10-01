@@ -1587,12 +1587,23 @@ function openLightbox(id,i){
   const x=ctx(id),imgs=x?state.assets.productImages?.[x.product.id]||[]:[];if(!imgs.length)return;
   showLightbox(imgs,i,x.product.name);
 }
+async function loadTerms11(){
+  try{
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),10000);
+    try{
+      const res=await fetch("./data/terms-1-1.json?v="+Date.now(),{cache:"no-store",signal:controller.signal});
+      if(!res.ok)throw new Error("HTTP "+res.status);
+      state.terms11=await res.json();
+      const r=route();
+      if(r.name==="section"&&r.id==="1.1")render();
+    }finally{clearTimeout(timer)}
+  }catch(e){console.warn("Раздел 1.1: не удалось загрузить отдельный источник терминов.",e)}
+}
 async function init(){
   applyTheme();
   const stamp=Date.now();
   const rs=await Promise.all([
     fetch("./data/book.json?v="+stamp,{cache:"no-store"}),
-    fetch("./data/terms-1-1.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/assets.json?v="+stamp,{cache:"no-store"}),
     fetch("./data/search-index.json?v="+stamp,{cache:"no-store"}),
     fetch("./data/sync-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
@@ -1603,20 +1614,20 @@ async function init(){
   ]);
   if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
-  state.terms11=rs[1]?.ok?await rs[1].json():[];
-  state.assets=rs[2]?.ok?await rs[2].json():state.assets;
-  state.index=rs[3]?.ok?await rs[3].json():[];
-  state.reports.sync=rs[4]?.ok?await rs[4].json():null;
-  state.reports.images=rs[5]?.ok?await rs[5].json():null;
-  state.versionLog=rs[6]?.ok?await rs[6].json():state.versionLog;
-  const publishedOverrides=rs[7]?.ok?await rs[7].json():state.overrides;
+  state.assets=rs[1]?.ok?await rs[1].json():state.assets;
+  state.index=rs[2]?.ok?await rs[2].json():[];
+  state.reports.sync=rs[3]?.ok?await rs[3].json():null;
+  state.reports.images=rs[4]?.ok?await rs[4].json():null;
+  state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
+  const publishedOverrides=rs[6]?.ok?await rs[6].json():state.overrides;
   state.overrides=mergeOverrideLayer(publishedOverrides,localEditorOverrides(publishedOverrides));
-  state.publishedLiveSnapshots=rs[8]?.ok?await rs[8].json():{};
+  state.publishedLiveSnapshots=rs[7]?.ok?await rs[7].json():{};
   applyStoredLiveSnapshots();
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Google Sheets · обновлено "+fmtDate(state.book.generatedAt);
   window.addEventListener("kb:admin-change",()=>{applyAdminVisibility();renderNav();const r=route();if(r.name==="diagnostics"&&!isAdmin())go("home");else render();});
   if(!location.hash)go("home");else render();
+  loadTerms11();
 }
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));}
 init().catch((e)=>{console.error(e);app.innerHTML='<div class="empty-state"><strong>Ошибка загрузки</strong><p>'+esc(e.message)+'</p><button class="btn primary" onclick="location.reload()">Повторить</button></div>';});
