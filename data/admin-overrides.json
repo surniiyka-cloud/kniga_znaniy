@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T08:07:13.375Z",
+  "updatedAt": "2026-10-01T08:10:09.650Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3356,6 +3356,27 @@
       "images": [
         "img/photos/admin/5.2-0208-067-клещи-копытные-knipex/5.2-0208-067-клещи-копытные-knipex-01.png"
       ]
+    },
+    "5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap": {
+      "images": [
+        "img/photos/admin/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap-01.png": {
+          "card": {
+            "scale": 1,
+            "x": 1,
+            "y": -1,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": 1,
+            "y": -1,
+            "fit": "contain"
+          }
+        }
+      }
     }
   },
   "sections": {
