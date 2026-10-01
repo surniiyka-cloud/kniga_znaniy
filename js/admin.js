@@ -70,7 +70,11 @@ function bytesBase64(buffer){
   const bytes=new Uint8Array(buffer);let bin="";for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin);
 }
 async function repoFile(path){
-  try{return await githubFetch("/contents/"+path.split("/").map(encodeURIComponent).join("/")+"?ref="+encodeURIComponent(GITHUB_BRANCH))}catch(e){if(/404/.test(e.message))return null;throw e}
+  try{
+    const cacheBust=Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8);
+    const endpoint="/contents/"+path.split("/").map(encodeURIComponent).join("/")+"?ref="+encodeURIComponent(GITHUB_BRANCH)+"&cb="+cacheBust;
+    return await githubFetch(endpoint,{headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
+  }catch(e){if(/404/.test(e.message))return null;throw e}
 }
 function queuedRepoWrite(fn){
   const run=repoWriteQueue.then(fn,fn);
@@ -90,7 +94,7 @@ async function putRepoContent(path,content,message){
     }catch(err){
       lastErr=err;
       if(err?.status!==409)throw err;
-      await wait(180*(attempt+1));
+      await wait(250*(attempt+1));
     }
   }
   throw lastErr||new Error("Не удалось сохранить файл после нескольких попыток.");
