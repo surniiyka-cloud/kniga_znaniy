@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T05:22:29.176Z",
+  "updatedAt": "2026-10-01T05:24:37.559Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -430,6 +430,25 @@
       ],
       "tabLabels": {
         "washCycle": "Место в цикле мойки"
+      },
+      "images": [
+        "img/photos/admin/catalog-2-8-ekoday/catalog-2-8-ekoday-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-8-ekoday/catalog-2-8-ekoday-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -1,
+            "y": 0,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -1,
+            "y": 0,
+            "fit": "contain"
+          }
+        }
       }
     },
     "catalog-2-8-ekoweek": {
