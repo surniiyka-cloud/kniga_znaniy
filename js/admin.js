@@ -640,6 +640,11 @@ function sectionProductsEditor(ctx){
     (deleted.length?'<details class="kb-admin-group kb-deleted-products"><summary>Удалённые карточки <small>'+deleted.length+'</small></summary><div class="kb-deleted-product-list">'+removed+'</div></details>':'')+
     '</section>';
 }
+
+function nextContentImagePath(sectionId,file){
+  const ext=imageExt(file)||"png",base=safe("section-"+sectionId),stamp=Date.now().toString(36);
+  return "img/content/"+base+"/"+base+"-"+stamp+"."+ext;
+}
 function renderSectionEditor(ctx){
   const existing=deep(overrideCache.sections?.[ctx.id]||{});
   const sheet=ctx.spreadsheetId&&ctx.section?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(ctx.section.gid):"";
@@ -661,6 +666,95 @@ function renderChapterEditor(ctx){
 }
 function bindBody(){
   const body=modal?.querySelector("#kbAdminBody");if(!body)return;
+
+  body.querySelectorAll("[data-rich-editor]"); // keep focus selector warm for delegated formatting
+  body.addEventListener("mousedown",e=>{
+    const btn=e.target.closest?.("[data-rich-cmd]");if(btn)e.preventDefault();
+  });
+  body.addEventListener("click",async e=>{
+    const cmd=e.target.closest?.("[data-rich-cmd]");
+    if(cmd){
+      const command=cmd.dataset.richCmd,value=cmd.dataset.richValue||null;
+      if(command==="createLink"){
+        const url=prompt("Ссылка:", "https://");if(!url)return;
+        document.execCommand("createLink",false,url);
+      }else document.execCommand(command,false,value);
+      return;
+    }
+    const add=e.target.closest?.("[data-content-add]");
+    if(add){
+      const type=add.dataset.contentAdd,wrap=body.querySelector("[data-content-builder]");
+      if(!wrap)return;
+      const id="block-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
+      const defaults={
+        text:{id,type,html:"<p>Введите текст…</p>"},
+        heading:{id,type,text:"Новый заголовок"},
+        list:{id,type,items:["Новый пункт"]},
+        quote:{id,type,html:"<p>Выделенная информация…</p>"},
+        table:{id,type,headers:["Название","Значение"],rows:[["",""]]},
+        image:{id,type,src:"",width:100,align:"center",alt:"",caption:""}
+      };
+      wrap.insertAdjacentHTML("beforeend",contentBlockEditorHtml(defaults[type]||defaults.text,wrap.children.length));
+      const block=wrap.lastElementChild;block?.scrollIntoView({behavior:"smooth",block:"center"});return;
+    }
+    if(e.target.closest("[data-content-delete]")){e.target.closest("[data-content-block]")?.remove();return}
+    if(e.target.closest("[data-content-duplicate]")){
+      const block=e.target.closest("[data-content-block]"),wrap=body.querySelector("[data-content-builder]");
+      if(!block||!wrap)return;
+      const clone=block.cloneNode(true);clone.dataset.blockId="block-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
+      block.after(clone);return;
+    }
+    const upload=e.target.closest("[data-content-image-upload]");
+    if(upload){
+      const block=upload.closest("[data-content-block]"),input=body.querySelector("[data-content-image-file]");
+      if(input&&block){input.dataset.contentTarget=block.dataset.blockId;input.click()}return;
+    }
+    const addRow=e.target.closest("[data-content-add-row]");
+    if(addRow){
+      const table=addRow.closest("[data-content-table]"),w=table?.querySelectorAll("[data-content-table-header]").length||1;
+      table?.querySelector("tbody")?.insertAdjacentHTML("beforeend",'<tr data-content-table-row>'+Array.from({length:w},()=>'<td><input data-content-table-cell value=""></td>').join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-remove" data-content-remove-row>×</button></td></tr>');return;
+    }
+    const addCol=e.target.closest("[data-content-add-col]");
+    if(addCol){
+      const table=addCol.closest("[data-content-table]"),head=table?.querySelector("thead tr"),idx=table?.querySelectorAll("[data-content-table-header]").length||0;
+      head?.insertAdjacentHTML("beforeend",'<th><div class="kb-cell-head"><input data-content-table-header value="Новый столбец"><button type="button" class="kb-col-remove" data-content-remove-col="'+idx+'">×</button></div></th>');
+      table?.querySelectorAll("[data-content-table-row]").forEach(tr=>tr.insertAdjacentHTML("beforeend",'<td><input data-content-table-cell value=""></td>'));return;
+    }
+    const removeCol=e.target.closest("[data-content-remove-col]");
+    if(removeCol){
+      const table=removeCol.closest("[data-content-table]"),heads=[...table.querySelectorAll("[data-content-table-header]")];if(heads.length<=1)return;
+      const idx=heads.indexOf(removeCol.closest("th")?.querySelector("[data-content-table-header]"));removeCol.closest("th")?.remove();
+      table.querySelectorAll("[data-content-table-row]").forEach(tr=>tr.querySelectorAll("td:not(.kb-row-tools)")[idx]?.remove());return;
+    }
+    if(e.target.closest("[data-content-remove-row]")){e.target.closest("[data-content-table-row]")?.remove();return}
+  });
+  body.addEventListener("input",e=>{
+    const w=e.target.closest("[data-block-image-width]");
+    if(w){const o=w.closest("[data-content-block]")?.querySelector("[data-block-image-width-out]");if(o)o.textContent=w.value+"%";return}
+  });
+  body.querySelector("[data-content-image-file]")?.addEventListener("change",async e=>{
+    const input=e.currentTarget,file=input.files?.[0],target=input.dataset.contentTarget||"",form=body.querySelector("[data-admin-section]");
+    if(!file||!target||!form)return;
+    try{
+      const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
+      if(file.size>15*1024*1024)throw new Error("Изображение больше 15 МБ.");
+      showStatus("Загружаю изображение в раздел…","warn");
+      const path=nextContentImagePath(form.dataset.id,file);
+      await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload section content image");
+      const block=body.querySelector('[data-content-block][data-block-id="'+CSS.escape(target)+'"]');
+      if(block){
+        const hidden=block.querySelector("[data-block-image-src]");if(hidden)hidden.value=path;
+        const preview=block.querySelector(".kb-content-image-preview");if(preview)preview.innerHTML='<img src="'+esc(photoPreviewSrc(path))+'" alt="">';
+      }
+      showStatus("Изображение загружено в репозиторий. Нажми «Сохранить раздел».","ok");
+    }catch(err){showError(err)}finally{input.value="";input.dataset.contentTarget=""}
+  });
+  let draggedContent=null;
+  body.querySelectorAll("[data-content-block]").forEach(block=>{
+    block.addEventListener("dragstart",()=>{draggedContent=block;block.classList.add("is-dragging")});
+    block.addEventListener("dragend",()=>{block.classList.remove("is-dragging");draggedContent=null});
+    block.addEventListener("dragover",e=>{e.preventDefault();if(!draggedContent||draggedContent===block)return;const box=block.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;block.parentElement?.insertBefore(draggedContent,after?block.nextSibling:block)});
+  });
   body.querySelector("[data-github-connect]")?.addEventListener("click",async e=>{
     try{await connectGithub();e.currentTarget.textContent="✓ GitHub подключен";showStatus("GitHub подключен на время этой вкладки.")}catch(err){showError(err)}
   });
