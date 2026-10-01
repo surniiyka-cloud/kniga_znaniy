@@ -151,6 +151,28 @@ function parseSubstances(text){
 }
 function linesText(arr){return (arr||[]).join("\n")}
 function parseLines(text){return String(text||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean)}
+function foundationBodyText(arr){return (arr||[]).join("\n\n")}
+function parseFoundationBody(text){return String(text||"").split(/\n\s*\n/).map(x=>x.replace(/\s*\n\s*/g," ").trim()).filter(Boolean)}
+function foundationResourcesText(arr){return (arr||[]).map(r=>[r?.label||"",r?.href||""].join(" | ")).join("\n")}
+function parseFoundationResources(text){
+  const out=[];
+  for(const line of String(text||"").split(/\r?\n/)){
+    const s=line.trim();if(!s)continue;
+    const i=s.indexOf("|");const label=i>=0?s.slice(0,i).trim():s;const href=i>=0?s.slice(i+1).trim():"";
+    if(label&&href)out.push({label,href});
+  }
+  return out;
+}
+function foundationRelatedText(arr){return (arr||[]).map(r=>[r?.term||"",r?.label||""].join(" | ")).join("\n")}
+function parseFoundationRelated(text){
+  const out=[];
+  for(const line of String(text||"").split(/\r?\n/)){
+    const s=line.trim();if(!s)continue;
+    const p=s.split("|").map(x=>x.trim()),term=Number(p[0]||0),label=p.slice(1).join(" | ").trim();
+    if(term&&label)out.push({label,term});
+  }
+  return out;
+}
 function jsonText(v){return JSON.stringify(v??{},null,2)}
 function tableText(table){
   if(!table?.headers?.length)return "";
@@ -649,19 +671,34 @@ function nextContentImagePath(sectionId,file){
   const ext=imageExt(file)||"png",base=safe("section-"+sectionId),stamp=Date.now().toString(36);
   return "img/content/"+base+"/"+base+"-"+stamp+"."+ext;
 }
+function foundationTermsEditorHtml(ctx){
+  const terms=Array.isArray(ctx.terms11)?ctx.terms11:[];
+  if(!terms.length)return '<section class="kb-admin-section"><p class="kb-admin-hint">Источник терминов 1.1 пока не загружен. Обнови страницу и попробуй снова.</p></section>';
+  return '<section class="kb-admin-section kb-foundation-admin"><div class="kb-foundation-admin-head"><div><h3>Термины 1.1</h3><p class="kb-admin-hint">Первый уровень — короткое определение. Ниже редактируется расширение, ссылки, PDF и связи. Пустая строка в поле «Расширение» разделяет абзацы.</p></div><span class="kb-foundation-admin-count">'+terms.length+' терминов</span></div>'+
+    '<div class="kb-foundation-admin-list">'+terms.map(t=>'<details class="kb-admin-group kb-foundation-term-editor" data-foundation-edit-term data-term-number="'+esc(String(t.number))+'"><summary><span class="kb-foundation-term-no">'+String(t.number).padStart(2,"0")+'</span><strong>'+esc(t.title||"Без названия")+'</strong><small>редактировать</small></summary><div class="kb-foundation-term-form">'+
+      '<label class="kb-admin-field"><span>Термин</span><input data-foundation-title value="'+esc(t.title||"")+'"></label>'+
+      '<label class="kb-admin-field"><span>Краткое определение</span><textarea rows="3" data-foundation-definition>'+esc(t.definition||t.summary||"")+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Расширение</span><textarea rows="8" data-foundation-body>'+esc(foundationBodyText(t.body||[]))+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Материалы: одна строка = <b>название | ссылка</b></span><textarea rows="4" data-foundation-resources>'+esc(foundationResourcesText(t.resources||[]))+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Связанные термины: одна строка = <b>номер | название</b></span><textarea rows="3" data-foundation-related>'+esc(foundationRelatedText(t.related||[]))+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Ожидают добавления — одна строка</span><textarea rows="3" data-foundation-pending>'+esc((t.pendingResources||[]).join("\n"))+'</textarea></label>'+
+    '</div></details>').join("")+'</div></section>';
+}
 function renderSectionEditor(ctx){
   const existing=deep(overrideCache.sections?.[ctx.id]||{});
   const sheet=ctx.spreadsheetId&&ctx.section?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(ctx.section.gid):"";
+  const content=ctx.id==="1.1"
+    ?foundationTermsEditorHtml(ctx)
+    :sectionProductsEditor(ctx)+sectionBuilderHtml(ctx)+
+      '<details class="kb-admin-group"><summary>Старые структурированные данные <small>резерв</small></summary><p class="kb-admin-hint">Оставлены для совместимости со старыми разделами. Новое содержимое редактируй выше — визуальным конструктором.</p>'+
+      '<label class="kb-admin-field"><span>Пары «название → значение»</span><textarea rows="7" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Заметки — одна на строку</span><textarea rows="5" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label></details>';
   setBody(shell(ctx.id+" · "+ctx.section.title,"Редактирование раздела",
     '<form data-admin-section data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
     '<label>Название раздела<input name="title" value="'+esc(ctx.section.title||"")+'"></label>'+
     (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть этот лист Google Sheets ↗</a></p>':"")+
-    sectionProductsEditor(ctx)+
-    sectionBuilderHtml(ctx)+
-    '<details class="kb-admin-group"><summary>Старые структурированные данные <small>резерв</small></summary><p class="kb-admin-hint">Оставлены для совместимости со старыми разделами. Новое содержимое редактируй выше — визуальным конструктором.</p>'+
-    '<label class="kb-admin-field"><span>Пары «название → значение»</span><textarea rows="7" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label>'+
-    '<label class="kb-admin-field"><span>Заметки — одна на строку</span><textarea rows="5" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label></details>'+
-    '<details class="kb-admin-group"><summary>Расширенный JSON раздела</summary><label class="kb-admin-field"><span>Для редких полей. Основной редактор выше сохраняется в contentBlocks.</span><textarea rows="14" data-section-json>'+esc(jsonText(existing))+'</textarea></label></details>'+
+    content+
+    '<details class="kb-admin-group"><summary>Расширенный JSON раздела</summary><label class="kb-admin-field"><span>Для редких полей. Основной редактор выше сохраняется в ручных правках.</span><textarea rows="14" data-section-json>'+esc(jsonText(existing))+'</textarea></label></details>'+
     '<div class="kb-admin-savebar"><button class="kb-admin-btn primary" type="submit">Сохранить раздел</button><button class="kb-admin-btn danger" type="button" data-reset-section>Сбросить ручные правки</button></div></form>'));
 }
 function renderChapterEditor(ctx){
@@ -985,8 +1022,27 @@ async function saveSection(e){
   e.preventDefault();const form=e.currentTarget,id=form.dataset.id,btn=e.submitter;btn.disabled=true;
   try{
     const ctx=window.KB_EDITOR_API.current(),src=ctx.sourceSection||{},fd=new FormData(form);
-    let out={};const raw=form.querySelector("[data-section-json]")?.value.trim();if(raw){out=JSON.parse(raw);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("JSON раздела должен быть объектом.");}
+    let out={};const raw=form.querySelector("[data-section-json]")?.value.trim();
+    if(raw){out=JSON.parse(raw);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("JSON раздела должен быть объектом.");}
     putDiff(out,"title",String(fd.get("title")||""),String(src.title||""));
+    if(id==="1.1"){
+      const terms=[...form.querySelectorAll("[data-foundation-edit-term]")].map(el=>{
+        const number=Number(el.dataset.termNumber||0);
+        const base=(ctx.sourceTerms11||[]).find(t=>Number(t.number)===number)||{};
+        return {
+          number,
+          title:el.querySelector("[data-foundation-title]")?.value.trim()||String(base.title||"").trim(),
+          definition:el.querySelector("[data-foundation-definition]")?.value.trim()||String(base.definition||"").trim(),
+          body:parseFoundationBody(el.querySelector("[data-foundation-body]")?.value||""),
+          resources:parseFoundationResources(el.querySelector("[data-foundation-resources]")?.value||""),
+          related:parseFoundationRelated(el.querySelector("[data-foundation-related]")?.value||""),
+          pendingResources:parseLines(el.querySelector("[data-foundation-pending]")?.value||"")
+        };
+      }).filter(t=>t.number&&t.title);
+      putDiff(out,"terms11",terms,ctx.sourceTerms11||[]);
+      const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
+      await commitOverrides(o);showStatus("Термины 1.1 сохранены и опубликованы. Обновляю страницу…");location.reload();return;
+    }
     const blocks=collectSectionContentBlocks(form);
     putDiff(out,"contentBlocks",blocks,src.contentBlocks||[]);
     const productRows=[...form.querySelectorAll("[data-section-product-row]")];
