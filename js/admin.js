@@ -73,7 +73,7 @@ async function repoFile(path){
   try{
     const cacheBust=Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8);
     const endpoint="/contents/"+path.split("/").map(encodeURIComponent).join("/")+"?ref="+encodeURIComponent(GITHUB_BRANCH)+"&cb="+cacheBust;
-    return await githubFetch(endpoint,{headers:{"Cache-Control":"no-cache","Pragma":"no-cache"}});
+    return await githubFetch(endpoint,{cache:"no-store"});
   }catch(e){if(/404/.test(e.message))return null;throw e}
 }
 function queuedRepoWrite(fn){
