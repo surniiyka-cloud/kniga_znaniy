@@ -1278,7 +1278,7 @@ function renderTermsSection(ch,s){
     setTimeout(()=>target.classList.remove("term-focus"),900);
   }));
 }
-function renderNormsSectionfunction renderNormsSection(ch,s){
+function renderNormsSection(ch,s){
   const sectionTitle="Сокращения, обозначения и единицы измерения";
   const rows=(s.rawRows||s.rows||[]);
   const units=[],reading=[],steps=[];
