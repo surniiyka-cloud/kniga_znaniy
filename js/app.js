@@ -1242,15 +1242,10 @@ function renderNormsSection(ch,s){
     '</article>';
   }).join("");
 
-  const metric=(value,label)=>'<div class="norms-metric"><strong>'+esc(value)+'</strong><span>'+esc(label)+'</span></div>';
   const quickHtml=quick.map(r=>'<button type="button" class="norms-quick" data-norm-quick="'+esc(r?.[0]||"")+'"><strong>'+esc(r?.[0]||"")+'</strong><span>'+esc(r?.[1]||"")+'</span></button>').join("");
 
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head norms-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Рабочая шпаргалка для менеджера: быстро найти норматив, расшифровать обозначение и понять, как читать показатель.</p></div></div>'+
-    '<section class="norms-hero">'+
-      '<div class="norms-hero-copy"><span class="eyebrow">Как ориентироваться</span><h2>Не таблица на 3 экрана — а понятная система навигации</h2><p>Сначала — быстрый обзор. Ниже — четыре логических блока: нормативы, обозначения, чтение показателей и алгоритм подбора. В каждом блоке информация разбита на короткие карточки.</p></div>'+
-      '<div class="norms-metrics">'+metric(docs.length,"нормативных документов")+metric(units.length,"обозначений и единиц")+metric(reading.length,"показателей и правил")+metric(steps.length,"шагов подбора")+'</div>'+
-    '</section>'+
     (quickHtml?'<section class="norms-quick-wrap"><div class="norms-subhead"><div><span class="eyebrow">Быстрая шпаргалка</span><h2>Часто встречается в карточках товаров</h2></div><p>Нажмите на обозначение — ниже откроется соответствующая запись.</p></div><div class="norms-quick-grid">'+quickHtml+'</div></section>':"")+
     '<section class="norms-browser">'+
       '<div class="norms-browser-head"><div><span class="eyebrow">Навигация</span><h2>Выберите, что нужно сейчас</h2></div><div class="norms-search"><span>⌕</span><input id="normsSearch" type="search" placeholder="Поиск по этому разделу…" autocomplete="off"><button type="button" id="normsSearchClear" hidden>×</button></div></div>'+
@@ -1270,7 +1265,6 @@ function renderNormsSection(ch,s){
       '<div class="norms-no-results" id="normsNoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или очистите поиск.</span></div>'+
     '</section>'+
     (warning?'<section class="norms-warning"><div class="norms-warning-icon">!</div><div><span class="eyebrow">Главное правило</span><h2>Товар нельзя подбирать только по одному показателю</h2><p>'+esc(warning)+'</p></div></section>':"")+
-    '<section class="norms-manager-note"><div><span class="eyebrow">Для работы менеджера</span><h2>Логика раздела</h2></div><div class="norms-manager-flow"><span><b>1</b> Найти норматив</span><i>→</i><span><b>2</b> Расшифровать обозначение</span><i>→</i><span><b>3</b> Проверить показатель</span><i>→</i><span><b>4</b> Сопоставить с задачей клиента</span></div></section>'+
     rawTables(s);
 
   const panels=[...document.querySelectorAll("[data-norm-panel]")];
