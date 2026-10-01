@@ -1220,12 +1220,6 @@ function renderTermsSection(ch,s){
     }
     return '<a class="foundation-link" href="'+esc(href)+'"'+(external?' target="_blank" rel="noopener"':"")+'><span>'+esc(label)+'</span><span>↗</span></a>';
   };
-  const pdfTitleHtml=(t)=>{
-    const pdf=(t.resources||[]).find(isPdf);
-    if(!pdf)return "";
-    const href=resourceHref(pdf.href),label=String(pdf.label||"PDF").trim();
-    return '<button type="button" class="foundation-pdf-trigger" data-doc-preview data-doc-href="'+esc(href)+'" data-doc-label="'+esc(label)+'" title="Открыть PDF: '+esc(label)+'"><span class="foundation-pdf-badge">PDF</span><span class="foundation-pdf-label">'+esc(label.replace(/\s*—\s*PDF\s*$/i,""))+'</span></button>';
-  };
   const relatedHtml=(r)=>{
     const target=termByNumber.get(Number(r?.term));
     return target?'<button type="button" class="foundation-related" data-term-target="'+esc(String(r.term))+'"><span>→</span>'+esc(r.label||target.title)+'</button>':"";
@@ -1242,8 +1236,7 @@ function renderTermsSection(ch,s){
       :"";
     const details=detailBlocks?'<details class="foundation-details"><summary>Подробнее</summary>'+detailBlocks+'</details>':"";
     const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="foundation-pending"><span>Ожидают добавления</span>'+esc((t.pendingResources||[]).join(" · "))+'</div>':"";
-    const pdfTitle=pdfTitleHtml(t);
-    const titleRow='<div class="foundation-title-row">'+pdfTitle+'<div class="foundation-title-copy"><span class="foundation-kicker">ТЕРМИН</span><h3>'+esc(t.title)+'</h3></div></div>';
+    const titleRow='<div class="foundation-title-row"><div class="foundation-title-copy"><span class="foundation-kicker">ТЕРМИН</span><h3>'+esc(t.title)+'</h3></div></div>';
     const search=[t.title,definition,...(t.body||[]),(t.resources||[]).map(r=>r.label),(t.related||[]).map(r=>r.label)].flat().filter(Boolean).join(" ").toLowerCase();
     return '<article class="foundation-term" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="foundation-term-rail"><span class="foundation-term-no">'+String(t.number).padStart(2,"0")+'</span><span class="foundation-term-kind">ТЕРМИН</span></div><div class="foundation-term-content"><div class="foundation-term-heading">'+titleRow+'<span class="foundation-term-mark">§</span></div><div class="foundation-summary"><p class="foundation-definition">'+foundationInlineText(definition)+'</p></div>'+details+pending+'</div></article>';
   };
