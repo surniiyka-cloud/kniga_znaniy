@@ -1180,6 +1180,17 @@ function renderHome(){
 function renderImportant(title,items,foot=""){
   return '<section class="important-panel"><div class="important-icon">!</div><div><h2>'+esc(title)+'</h2><ul>'+items.map((x)=>'<li><strong>'+esc(x[0])+'</strong> '+esc(x[1])+'</li>').join("")+'</ul>'+(foot?'<p class="important-foot">'+esc(foot)+'</p>':"")+'</div></section>';
 }
+function foundationInlineText(text){
+  let s=esc(String(text||"").trim());
+  s=s.replace(/\b(Важно|То есть|Например|Примеры|Обратите внимание)\s*[—–:-]?/gi,'<span class="foundation-note-label">$1</span> ');
+  s=s.replace(/\b(ОТМЕНЕНО|ВСЕГДА|ОБЯЗАТЕЛЬНО|НЕ ПУТАТЬ|НЕВОЗМОЖНО)\b/gi,'<mark class="foundation-key foundation-key-alert">$1</mark>');
+  s=s.replace(/\b(предел чувствительности|арбитражный метод|количественный метод|качественный метод|валидация|верификация|ВЭЖХ|ИФА|ИХА|ВЛС|СИ|ИО)\b/gi,'<mark class="foundation-key">$1</mark>');
+  s=s.replace(/«([^»]{2,90})»/g,'<span class="foundation-quoted">«$1»</span>');
+  return s;
+}
+function foundationBodyHtml(body){
+  return (body||[]).filter(Boolean).map((p,i)=>'<p class="'+(i===0?"foundation-lead":"foundation-paragraph")+'">'+foundationInlineText(p)+'</p>').join("");
+}
 function renderTermsSection(ch,s){
   const fallback=(s.pairs||[]).map((x,i)=>({number:i+1,title:String(x.label||"").trim(),body:[String(x.value||"").trim()],resources:[],related:[]}));
   const terms=(Array.isArray(state.terms11)&&state.terms11.length?state.terms11:fallback).filter(x=>x&&x.title);
@@ -1190,9 +1201,6 @@ function renderTermsSection(ch,s){
     {id:"methods",number:"03",title:"Методы исследования",range:"13—20",from:13,to:20,desc:"Количественные и качественные методы, чувствительность и основные лабораторные подходы."},
     {id:"quality",number:"04",title:"Валидация и внедрение",range:"21—22",from:21,to:22,desc:"Как подтверждается пригодность методики и её применение в конкретной лаборатории."}
   ];
-  const totalResources=terms.reduce((n,t)=>n+(t.resources||[]).length,0);
-  const totalPdfs=terms.reduce((n,t)=>n+(t.resources||[]).filter(r=>/\.pdf(?:$|[?#])/i.test(String(r.href||""))).length,0);
-  const totalRelated=terms.reduce((n,t)=>n+(t.related||[]).length,0);
   const resourceHref=(href)=>{
     const v=String(href||"").trim();
     if(!v)return "";
@@ -1216,11 +1224,11 @@ function renderTermsSection(ch,s){
   };
   const itemHtml=(t)=>{
     const search=[t.title,...(t.body||[]),(t.resources||[]).map(r=>r.label),(t.related||[]).map(r=>r.label)].flat().filter(Boolean).join(" ").toLowerCase();
-    const body=(t.body||[]).filter(Boolean).map((p,i)=>'<p class="'+(i===0?"foundation-lead":"foundation-paragraph")+'">'+esc(p)+'</p>').join("");
+    const body=foundationBodyHtml(t.body);
     const resources=(t.resources||[]).map(resourceHtml).filter(Boolean).join("");
     const related=(t.related||[]).map(relatedHtml).filter(Boolean).join("");
     const docsBlock=resources?'<section class="foundation-assets"><div class="foundation-assets-head"><span>Нормативные материалы</span><b>'+String((t.resources||[]).length).padStart(2,"0")+'</b></div><div class="foundation-resource-list">'+resources+'</div></section>':"";
-    const relatedBlock=related?'<section class="foundation-assets foundation-related-assets"><div class="foundation-assets-head"><span>Связанные термины</span><b>'+String((t.related||[]).length).padStart(2,"0")+'</b></div><div class="foundation-related-list">'+related+'</div></section>':"";
+    const relatedBlock=related?'<section class="foundation-assets foundation-related-assets"><div class="foundation-assets-head"><span>Связанные термины</span></div><div class="foundation-related-list">'+related+'</div></section>':"";
     const detail=(docsBlock||relatedBlock)?'<div class="foundation-card-footer">'+docsBlock+relatedBlock+'</div>':"";
     const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="foundation-pending"><span>Ожидают добавления</span>'+esc((t.pendingResources||[]).join(" · "))+'</div>':"";
     return '<article class="foundation-term" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="foundation-term-rail"><span class="foundation-term-no">'+String(t.number).padStart(2,"0")+'</span><span class="foundation-term-kind">ТЕРМИН</span></div><div class="foundation-term-content"><div class="foundation-term-heading"><div><span class="foundation-kicker">ОПРЕДЕЛЕНИЕ</span><h3>'+esc(t.title)+'</h3></div><span class="foundation-term-mark">§</span></div><div class="foundation-summary">'+body+'</div>'+detail+pending+'</div></article>';
@@ -1230,10 +1238,10 @@ function renderTermsSection(ch,s){
     return '<section class="foundation-group" id="foundation-'+esc(g.id)+'" data-foundation-group="'+esc(g.id)+'"><div class="foundation-group-head"><div><span class="foundation-group-index">'+esc(g.number)+' / '+esc(g.range)+'</span><h2>'+esc(g.title)+'</h2><p>'+esc(g.desc)+'</p></div><span class="foundation-group-count">'+groupTerms.length+' терм.</span></div><div class="foundation-list">'+groupTerms.map(itemHtml).join("")+'</div></section>';
   }).join("");
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="foundation-head"><div class="foundation-intro"><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>Термины и определения</h1><p>Базовая терминология Книги знаний: от нормативной базы и метрологии до методов исследования, валидации и верификации.</p></div><div class="foundation-metrics"><div class="foundation-metric"><strong>'+terms.length+'</strong><span>терминов</span></div><div class="foundation-metric"><strong>'+totalResources+'</strong><span>материалов</span></div><div class="foundation-metric"><strong>'+totalPdfs+'</strong><span>PDF в базе</span></div><div class="foundation-metric"><strong>'+totalRelated+'</strong><span>связей</span></div></div></div>'+
-    '<section class="foundation-browser"><div class="foundation-toolbar"><div class="foundation-search"><span>⌕</span><input id="terms11Search" type="search" placeholder="Найти термин, определение или обозначение…" autocomplete="off"><button type="button" id="terms11SearchClear" hidden>×</button></div><div class="foundation-filters" role="group" aria-label="Фильтр терминов"><button type="button" class="foundation-filter active" data-foundation-filter="all">Все</button><button type="button" class="foundation-filter" data-foundation-filter="docs">С документами</button><button type="button" class="foundation-filter" data-foundation-filter="related">Со связями</button></div></div><div class="foundation-overview"><div><strong id="terms11ResultCount">'+terms.length+'</strong><span> терминов в разделе</span></div><div class="foundation-jumps">'+groups.map(g=>'<button type="button" data-foundation-jump="'+esc(g.id)+'"><span>'+esc(g.number)+'</span>'+esc(g.title)+'</button>').join("")+'</div></div><div class="foundation-groups">'+groupHtml+'</div><div class="foundation-no-results" id="terms11NoResults" hidden><strong>Ничего не найдено</strong><span>Измените запрос или снимите фильтр.</span></div></section>';
+    '<div class="foundation-head"><div class="foundation-intro"><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>Термины и определения</h1><p>Рабочая опора для понимания нормативной базы, оборудования и методов исследования. Здесь удобно быстро сверить значение термина, увидеть важные оговорки и перейти к связанному понятию.</p></div></div>'+
+    '<section class="foundation-browser"><div class="foundation-toolbar"><div class="foundation-search"><span>⌕</span><input id="terms11Search" type="search" placeholder="Найти термин, определение или обозначение…" autocomplete="off"><button type="button" id="terms11SearchClear" hidden>×</button></div><div class="foundation-filters" role="group" aria-label="Фильтр терминов"><button type="button" class="foundation-filter active" data-foundation-filter="all">Все</button><button type="button" class="foundation-filter" data-foundation-filter="docs">С документами</button><button type="button" class="foundation-filter" data-foundation-filter="related">Со связями</button></div></div><div class="foundation-overview"><div class="foundation-jumps">'+groups.map(g=>'<button type="button" data-foundation-jump="'+esc(g.id)+'"><span>'+esc(g.number)+'</span>'+esc(g.title)+'</button>').join("")+'</div></div><div class="foundation-groups">'+groupHtml+'</div><div class="foundation-no-results" id="terms11NoResults" hidden><strong>Ничего не найдено</strong><span>Измените запрос или снимите фильтр.</span></div></section>';
   const items=[...document.querySelectorAll("[data-term-item]")];
-  const input=q("#terms11Search"),clear=q("#terms11SearchClear"),empty=q("#terms11NoResults"),count=q("#terms11ResultCount");
+  const input=q("#terms11Search"),clear=q("#terms11SearchClear"),empty=q("#terms11NoResults");
   const filterBtns=[...document.querySelectorAll("[data-foundation-filter]")];
   let activeFilter="all";
   const apply=()=>{
@@ -1253,7 +1261,6 @@ function renderTermsSection(ch,s){
       const visible=group.querySelectorAll("[data-term-item]:not([hidden])").length;
       group.hidden=visible===0;
     });
-    if(count)count.textContent=String(shown);
     if(empty)empty.hidden=shown>0;
   };
   input?.addEventListener("input",apply);
@@ -1263,19 +1270,32 @@ function renderTermsSection(ch,s){
     filterBtns.forEach(x=>x.classList.toggle("active",x===btn));
     apply();
   }));
+  const scrollFoundationTo=(target)=>{
+    if(!target)return;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      const toolbar=q(".foundation-toolbar");
+      const offset=(toolbar?.getBoundingClientRect().bottom||90)+18;
+      const y=target.getBoundingClientRect().top+window.scrollY-offset;
+      window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+    }));
+  };
   document.querySelectorAll("[data-foundation-jump]").forEach(btn=>btn.addEventListener("click",()=>{
     const target=q("#foundation-"+CSS.escape(btn.dataset.foundationJump||""));
-    target?.scrollIntoView({behavior:"smooth",block:"start"});
+    scrollFoundationTo(target);
   }));
   document.querySelectorAll("[data-term-target]").forEach(btn=>btn.addEventListener("click",()=>{
-    const target=document.querySelector('[data-term-number="'+CSS.escape(btn.dataset.termTarget||"")+'"]');
+    const termNumber=btn.dataset.termTarget||"";
+    if(input){input.value="";input.blur();}
+    activeFilter="all";
+    filterBtns.forEach(x=>x.classList.toggle("active",x.dataset.foundationFilter==="all"));
+    apply();
+    const target=document.querySelector('[data-term-number="'+CSS.escape(termNumber)+'"]');
     if(!target)return;
-    target.hidden=false;
     const group=target.closest("[data-foundation-group]");
     if(group)group.hidden=false;
-    target.scrollIntoView({behavior:"smooth",block:"start"});
+    scrollFoundationTo(target);
     target.classList.add("term-focus");
-    setTimeout(()=>target.classList.remove("term-focus"),900);
+    setTimeout(()=>target.classList.remove("term-focus"),1100);
   }));
 }
 function renderNormsSection(ch,s){
@@ -1395,8 +1415,7 @@ function renderNormsSection(ch,s){
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+sectionTitle}])+
     '<div class="page-head glossary-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+sectionTitle+'</h1><p>Быстрый словарь для менеджера: сначала понятный ответ, затем контекст и подробности — только если они нужны.</p></div></div>'+
     '<section class="glossary-browser"><div class="glossary-toolbar"><div class="glossary-search"><span>⌕</span><input id="glossarySearch" type="search" placeholder="Найти сокращение, слово или понятие…" autocomplete="off"><button type="button" id="glossarySearchClear" hidden>×</button></div></div><div class="glossary-topics" role="tablist">'+topicButtons+'</div><div class="glossary-result-line"><strong id="glossaryResultCount">'+terms.length+'</strong><span>записей</span><span class="glossary-result-hint">Наведите взгляд на первый уровень — остальное раскрывается по необходимости.</span></div><div class="glossary-grid" id="glossaryGrid">'+termsHtml+'</div><div class="glossary-no-results" id="glossaryNoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или другую тему.</span></div></section>'+
-    (stepsHtml?'<details class="glossary-manager-guide"><summary><span>Памятка менеджера</span><small>Порядок подбора товара — раскрывается только при необходимости</small></summary><div class="glossary-steps">'+stepsHtml+'</div></details>':"")+
-    '<div class="glossary-normative-note"><strong>Нормативные документы</strong><span>ГОСТ, технические регламенты и другие нормативные материалы собраны в разделе 1.1, поэтому здесь они не дублируются.</span></div>';
+    (stepsHtml?'<details class="glossary-manager-guide"><summary><span>Памятка менеджера</span><small>Порядок подбора товара — раскрывается только при необходимости</small></summary><div class="glossary-steps">'+stepsHtml+'</div></details>':"")
   const items=[...document.querySelectorAll("[data-glossary-item]")];
   const topicBtns=[...document.querySelectorAll("[data-glossary-topic]")];
   const input=q("#glossarySearch"),clear=q("#glossarySearchClear"),empty=q("#glossaryNoResults"),count=q("#glossaryResultCount");
