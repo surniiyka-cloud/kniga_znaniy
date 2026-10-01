@@ -139,7 +139,7 @@ async function refreshLiveSections(ids){
 }
 
 function displaySections(ch){
-  const base=ch.sections.filter((s)=>isAdmin()||!["1.3","2.2.1"].includes(s.id));
+  const base=ch.sections.filter((s)=>isAdmin()||!["1.3","2.2.1"].includes(s.id)).map((s)=>s.id==="1.2"&&!state.overrides?.sections?.["1.2"]?.title?{...s,title:"Сокращения, обозначения и единицы измерения"}:s);
   if(ch.id!=="2")return base;
   const out=[];let six=false,seven=false;
   for(const s of base){
@@ -974,6 +974,7 @@ function mapData(){
       state.editorBase.sections.set(s.id,{title:s.title,notes:deepCopy(s.notes||[]),pairs:deepCopy(s.pairs||[]),tables:deepCopy(s.tables||[])});
       const sov=ov.sections?.[s.id];
       if(sov){for(const [k,v] of Object.entries(sov)){if(!["id","gid","products","rawRows","packedRows"].includes(k))s[k]=deepCopy(v);}}
+      if(s.id==="1.2"&&!sov?.title)s.title="Сокращения, обозначения и единицы измерения";
       state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:state.overrides?.sections?.["2.13"]?.title||"Тест-пластины KangarooSci"}:s)});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
@@ -1193,117 +1194,151 @@ function renderTermsSection(ch,s){
     renderImportant("Важно знать перед началом оформления документов:",important)+rawTables(s);
 }
 function renderNormsSection(ch,s){
+  const sectionTitle="Сокращения, обозначения и единицы измерения";
   const rows=(s.rawRows||s.rows||[]);
-  const docs=[],units=[],reading=[],steps=[];
-  let mode="",warning="";
+  const units=[],reading=[],steps=[];
+  let mode="";
   const sectionHeads={
     "1. Нормативные документы":"docs",
     "2. Обозначения и единицы измерения":"units",
     "3. Как читать показатели и таблицы":"reading",
     "Порядок подбора товара":"steps"
   };
-  const tableHeads=new Set(["Документ","Обозначение","Показатель / обозначение","Шаг"]);
+  const skipHeads=new Set(["Документ","Обозначение","Показатель / обозначение","Шаг"]);
   for(const r of rows){
     const a=String(r?.[0]||"").trim();
     if(!a)continue;
     if(sectionHeads[a]){mode=sectionHeads[a];continue}
-    if(a.startsWith("Важно:")){warning=a.replace(/^Важно:\s*/i,"").trim();continue}
-    if(tableHeads.has(a))continue;
-    const target=mode==="docs"?docs:mode==="units"?units:mode==="reading"?reading:mode==="steps"?steps:null;
-    if(target)target.push(r);
+    if(/^Важно:/i.test(a))continue;
+    if(skipHeads.has(a))continue;
+    if(mode==="units")units.push(r);
+    else if(mode==="reading")reading.push(r);
+    else if(mode==="steps")steps.push(r);
   }
 
-  const normText=(r)=>[r?.[0],r?.[1],r?.[2],r?.[3]].filter(Boolean).map(x=>String(x)).join(" ");
-  const cardSearch=(r)=>esc(normText(r).toLowerCase());
-  const quickNames=["ppb","мкг/кг","RLU","pH","SCC"];
-  const quick=quickNames.map((name)=>units.find(r=>String(r?.[0]||"").trim().toLowerCase()===name.toLowerCase())).filter(Boolean);
-
-  const docsHtml=docs.map((r,i)=>'<article class="norms-item norms-doc" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
-    '<div class="norms-item-top"><span class="norms-index">'+String(i+1).padStart(2,"0")+'</span><span class="norms-kind">Норматив</span></div>'+
-    '<h3>'+esc(r?.[0]||"—")+'</h3>'+
-    '<div class="norms-doc-body"><div><span>Что это</span><p>'+esc(r?.[1]||"—")+'</p></div><div><span>Где применяется</span><p>'+esc(r?.[2]||"—")+'</p></div></div>'+
-  '</article>').join("");
-
-  const unitsHtml=units.map((r,i)=>'<article class="norms-item norms-unit" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
-    '<div class="norms-unit-head"><span class="norms-unit-symbol">'+esc(r?.[0]||"—")+'</span><span class="norms-index">'+String(i+1).padStart(2,"0")+'</span></div>'+
-    '<h3>'+esc(r?.[1]||"—")+'</h3>'+
-    '<div class="norms-reading-line"><span>Как читать</span><p>'+esc(r?.[2]||"—")+'</p></div>'+
-  '</article>').join("");
-
-  const readingHtml=reading.map((r,i)=>'<article class="norms-item norms-reading-card" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
-    '<div class="norms-item-top"><span class="norms-index">'+String(i+1).padStart(2,"0")+'</span><span class="norms-kind">Показатель</span></div>'+
-    '<h3>'+esc(r?.[0]||"—")+'</h3>'+
-    '<div class="norms-reading-grid">'+
-      '<div><span>Как читать</span><p>'+esc(r?.[1]||"—")+'</p></div>'+
-      (r?.[2]?'<div class="norms-example"><span>Пример</span><p>'+esc(r[2])+'</p></div>':"")+
-      (r?.[3]?'<div class="norms-important-mini"><span>Важно</span><p>'+esc(r[3])+'</p></div>':"")+
-    '</div>'+
-  '</article>').join("");
-
+  const norm=(v)=>String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
+  const topicDefs=[
+    {id:"micro",label:"Микробиология",where:"микробиология, лабораторный контроль, посевы и тест-пластины",rx:/(кое|омч|микроб|инкубац|посев|тест[- ]?пласт|биотф|питательн|колони)/i,prefixes:["2.13","2.14","2.15"]},
+    {id:"analyzers",label:"Анализаторы",where:"анализаторы качества молока, измерительные приборы",rx:/(сомо|scc|анализатор|диапазон измерения|погрешн|опци|комплектац|измеряем|показател)/i,prefixes:["2.6.","2.7.","2.15"]},
+    {id:"strips",label:"Индикаторные полоски",where:"индикаторные полоски, экспресс-контроль, растворы",rx:/(полос|индикатор|нку|час|остаточн|мг\/л)/i,prefixes:["2.10"]},
+    {id:"methods",label:"Методы",where:"лабораторные методы, тест-системы, пробоподготовка",rx:/(предел обнаружения|диапазон чувствительност|время анализа|пробоподготовк|температура инкубац|время инкубац|сравнительн|группа антибиотик|метод)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.13","2.15"]},
+    {id:"measure",label:"Измерения",where:"измерения, характеристики приборов и таблицы чувствительности",rx:/(ppb|мкг\/кг|мг\/л|rlu|ph|диапазон измерения|погрешн|<|>|не более|не менее|измерен)/i,prefixes:["2.6.","2.7.","2.10","2.15"]},
+    {id:"disinfection",label:"Дезинфекция",where:"мойка, дезинфекция, контроль рабочих растворов",rx:/(нку|час|cip|дезинфек|мойк|мг\/л)/i,prefixes:["2.10","8.3","9.3"]},
+    {id:"milk",label:"Молоко",where:"молоко и молочная продукция",rx:/(молок|сомо|scc|ph|кое\/мл|ppb|антибиотик)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.6.","2.7."]},
+    {id:"express",label:"Экспресс-тесты",where:"экспресс-тесты и быстрый контроль",rx:/(ppb|предел обнаружения|полос|тест|время анализа|пробоподготовк|чувствительност)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.10","2.11","4.9"]},
+    {id:"selection",label:"Подбор товара",where:"подбор товара и сравнение характеристик",rx:/(диапазон|погрешн|предел|чувствительност|время|пробоподготовк|комплектац|опци|показател)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.6.","2.7.","2.10","2.15"]}
+  ];
+  const topicById=new Map(topicDefs.map(x=>[x.id,x]));
+  const records=[];
+  const findRecord=(label)=>{
+    const key=norm(label);
+    return records.find(x=>x.aliases.some(a=>a===key))||null;
+  };
+  for(const r of units){
+    const label=String(r?.[0]||"").trim(),meaning=String(r?.[1]||"").trim(),where=String(r?.[2]||"").trim();
+    if(!label)continue;
+    const aliases=[norm(label)];
+    if(/[,/]/.test(label))label.split(/,\s*/).map(norm).filter(Boolean).forEach(x=>aliases.push(x));
+    records.push({label,meaning,definition:meaning,whereSource:where,example:"",important:"",aliases:[...new Set(aliases)],type:"abbreviation"});
+  }
+  for(const r of reading){
+    const label=String(r?.[0]||"").trim(),definition=String(r?.[1]||"").trim(),example=String(r?.[2]||"").trim(),important=String(r?.[3]||"").trim();
+    if(!label)continue;
+    const existing=findRecord(label);
+    if(existing){
+      if(definition)existing.definition=definition;
+      if(example)existing.example=example;
+      if(important)existing.important=important;
+      continue;
+    }
+    records.push({label,meaning:"",definition,whereSource:"",example,important,aliases:[norm(label)],type:"concept"});
+  }
+  const uniqueProducts=(arr)=>{
+    const seen=new Set(),out=[];
+    for(const x of arr){
+      if(!x||seen.has(x.product.id)||isProductExcluded(x.section.id,x.product.id))continue;
+      seen.add(x.product.id);out.push(x);
+      if(out.length>=4)break;
+    }
+    return out;
+  };
+  const products=[...state.products.values()];
+  const buildRecord=(r)=>{
+    const hay=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important].filter(Boolean).join(" ");
+    const topics=topicDefs.filter(t=>t.rx.test(hay)).map(t=>t.id);
+    if(!topics.length)topics.push("selection");
+    const topicObjects=topics.map(id=>topicById.get(id)).filter(Boolean);
+    const where=[r.whereSource,...topicObjects.map(t=>t.where)].filter(Boolean).join(" · ");
+    const searchTerms=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important,...topicObjects.map(t=>t.label)].filter(Boolean);
+    const exact=[];
+    const normalizedNeedles=[r.label,r.meaning].filter(x=>norm(x).length>=3).map(norm);
+    for(const x of products){
+      const hayProduct=norm(JSON.stringify(x.product));
+      if(normalizedNeedles.some(n=>hayProduct.includes(n)))exact.push(x);
+    }
+    const topicCandidates=[];
+    for(const t of topicObjects){
+      for(const x of products){
+        if(t.prefixes.some(prefix=>x.section.id===prefix||x.section.id.startsWith(prefix)))topicCandidates.push(x);
+      }
+    }
+    const related=uniqueProducts([...exact,...topicCandidates]);
+    return {...r,topics,topicLabels:topicObjects.map(t=>t.label),where:[...new Set(where.split(" · ").map(x=>x.trim()).filter(Boolean))].slice(0,4),products:related,search:searchTerms.concat(related.map(x=>x.product.name)).join(" ").toLowerCase()};
+  };
+  const terms=records.map(buildRecord);
+  const topicCounts=new Map(topicDefs.map(t=>[t.id,0]));
+  terms.forEach(t=>t.topics.forEach(id=>topicCounts.set(id,(topicCounts.get(id)||0)+1)));
+  const topicButtons='<button type="button" class="glossary-topic active" data-glossary-topic="all">Все <b>'+terms.length+'</b></button>'+topicDefs.filter(t=>(topicCounts.get(t.id)||0)>0).map(t=>'<button type="button" class="glossary-topic" data-glossary-topic="'+esc(t.id)+'">'+esc(t.label)+' <b>'+topicCounts.get(t.id)+'</b></button>').join("");
+  const itemHtml=(r,i)=>{
+    const where=r.where.slice(0,3).join(" · ");
+    const chips=r.topicLabels.slice(0,3).map(label=>'<button type="button" class="glossary-chip" data-glossary-topic="'+esc(topicDefs.find(t=>t.label===label)?.id||"all")+'">'+esc(label)+'</button>').join("");
+    const productsHtml=r.products.length?r.products.map(x=>'<button type="button" class="glossary-product-link" data-open-product="'+esc(x.product.id)+'"><strong>'+esc(x.product.name)+'</strong>'+(article(x.product)?'<span>Арт. '+esc(article(x.product))+'</span>':"")+'</button>').join(""):'<span class="glossary-empty-link">Связанных карточек пока не привязано</span>';
+    const example=r.example?'<div class="glossary-detail-block"><span>Пример</span><p>'+esc(r.example)+'</p></div>':"";
+    const important=r.important?'<div class="glossary-detail-block glossary-detail-important"><span>Важно</span><p>'+esc(r.important)+'</p></div>':"";
+    const details=(example||important||r.products.length||r.topicLabels.length)?'<details class="glossary-details"><summary>Подробнее</summary><div class="glossary-detail-grid"><div class="glossary-detail-block"><span>Где встречается</span><p>'+esc(where||"В рабочем справочнике Книги знаний")+'</p></div><div class="glossary-detail-block"><span>Связанные темы</span><div class="glossary-chip-row">'+chips+'</div></div><div class="glossary-detail-block glossary-products"><span>В каких товарах и карточках</span><div class="glossary-product-list">'+productsHtml+'</div></div>'+example+important+'</div></details>':"";
+    const kind=r.type==="abbreviation"?"Сокращение / обозначение":"Термин";
+    const secondary=r.meaning?'<p class="glossary-expansion">'+esc(r.meaning)+'</p>':"";
+    const body=r.meaning&&r.definition&&norm(r.meaning)!==norm(r.definition)?'<p class="glossary-definition">'+esc(r.definition)+'</p>':(!r.meaning&&r.definition?'<p class="glossary-definition">'+esc(r.definition)+'</p>':"");
+    const quick=r.type==="abbreviation"&&r.whereSource?'<p class="glossary-where-line"><b>Где встречается:</b> '+esc(r.whereSource)+'</p>':"";
+    return '<article class="glossary-card" data-glossary-item data-glossary-topics="'+esc(r.topics.join(" "))+'" data-glossary-search="'+esc(r.search)+'"><div class="glossary-card-head"><div><span class="glossary-kind">'+kind+'</span><h3>'+esc(r.label)+'</h3>'+secondary+'</div><span class="glossary-index">'+String(i+1).padStart(2,"0")+'</span></div>'+(body||quick?'<div class="glossary-summary">'+body+quick+'</div>':"")+'<div class="glossary-topic-row">'+r.topicLabels.slice(0,3).map(label=>'<button type="button" class="glossary-chip" data-glossary-topic="'+esc(topicDefs.find(t=>t.label===label)?.id||"all")+'">'+esc(label)+'</button>').join("")+'</div>'+details+'</article>';
+  };
+  const termsHtml=terms.map(itemHtml).join("");
   const stepsHtml=steps.map((r,i)=>{
-    const raw=String(r?.[0]||"").trim(),m=raw.match(/^(\d+)\.\s*(.*)$/),num=m?.[1]||String(i+1),label=m?.[2]||raw;
-    return '<article class="norms-step" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
-      '<div class="norms-step-no">'+esc(num)+'</div><div><span>Шаг '+esc(num)+'</span><h3>'+esc(label)+'</h3><p>'+esc(r?.[1]||"—")+'</p></div>'+
-    '</article>';
+    const label=String(r?.[0]||"").trim(),value=String(r?.[1]||"").trim();
+    if(!label&&!value)return "";
+    return '<div class="glossary-step"><span>'+String(i+1).padStart(2,"0")+'</span><div><strong>'+esc(label.replace(/^\d+\.\s*/,""))+'</strong><p>'+esc(value)+'</p></div></div>';
   }).join("");
-
-  const quickHtml=quick.map(r=>'<button type="button" class="norms-quick" data-norm-quick="'+esc(r?.[0]||"")+'"><strong>'+esc(r?.[0]||"")+'</strong><span>'+esc(r?.[1]||"")+'</span></button>').join("");
-
-  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="page-head norms-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Рабочая шпаргалка для менеджера: быстро найти норматив, расшифровать обозначение и понять, как читать показатель.</p></div></div>'+
-    (quickHtml?'<section class="norms-quick-wrap"><div class="norms-subhead"><div><span class="eyebrow">Быстрая шпаргалка</span><h2>Часто встречается в карточках товаров</h2></div><p>Нажмите на обозначение — ниже откроется соответствующая запись.</p></div><div class="norms-quick-grid">'+quickHtml+'</div></section>':"")+
-    '<section class="norms-browser">'+
-      '<div class="norms-browser-head"><div><span class="eyebrow">Навигация</span><h2>Выберите, что нужно сейчас</h2></div><div class="norms-search"><span>⌕</span><input id="normsSearch" type="search" placeholder="Поиск по этому разделу…" autocomplete="off"><button type="button" id="normsSearchClear" hidden>×</button></div></div>'+
-      '<div class="norms-tabs" role="tablist">'+
-        '<button type="button" class="norms-tab active" data-norm-tab="all">Все</button>'+
-        '<button type="button" class="norms-tab" data-norm-tab="docs">Нормативы <b>'+docs.length+'</b></button>'+
-        '<button type="button" class="norms-tab" data-norm-tab="units">Обозначения <b>'+units.length+'</b></button>'+
-        '<button type="button" class="norms-tab" data-norm-tab="reading">Как читать <b>'+reading.length+'</b></button>'+
-        '<button type="button" class="norms-tab" data-norm-tab="steps">Подбор товара <b>'+steps.length+'</b></button>'+
-      '</div>'+
-      '<div class="norms-panels">'+
-        '<section class="norms-panel" data-norm-panel="docs"><div class="norms-panel-head"><div><span class="eyebrow">01 · Нормативы</span><h2>Какие документы встречаются в Книге знаний</h2></div><p>'+docs.length+' позиций</p></div><div class="norms-doc-grid">'+docsHtml+'</div></section>'+
-        '<section class="norms-panel" data-norm-panel="units"><div class="norms-panel-head"><div><span class="eyebrow">02 · Обозначения</span><h2>Единицы и сокращения без расшифровки «в уме»</h2></div><p>'+units.length+' позиций</p></div><div class="norms-unit-grid">'+unitsHtml+'</div></section>'+
-        '<section class="norms-panel" data-norm-panel="reading"><div class="norms-panel-head"><div><span class="eyebrow">03 · Как читать</span><h2>Показатели, примеры и важные оговорки</h2></div><p>'+reading.length+' пояснений</p></div><div class="norms-reading-grid-list">'+readingHtml+'</div></section>'+
-        '<section class="norms-panel" data-norm-panel="steps"><div class="norms-panel-head"><div><span class="eyebrow">04 · Алгоритм</span><h2>Как подбирать товар без выбора по одному числу</h2></div><p>'+steps.length+' шагов</p></div><div class="norms-steps-grid">'+stepsHtml+'</div></section>'+
-      '</div>'+
-      '<div class="norms-no-results" id="normsNoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или очистите поиск.</span></div>'+
-    '</section>'+
-    (warning?'<section class="norms-warning"><div class="norms-warning-icon">!</div><div><span class="eyebrow">Главное правило</span><h2>Товар нельзя подбирать только по одному показателю</h2><p>'+esc(warning)+'</p></div></section>':"")+
-    rawTables(s);
-
-  const panels=[...document.querySelectorAll("[data-norm-panel]")];
-  const tabs=[...document.querySelectorAll("[data-norm-tab]")];
-  const items=[...document.querySelectorAll("[data-norm-item]")];
-  const input=q("#normsSearch"),clear=q("#normsSearchClear"),empty=q("#normsNoResults");
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+sectionTitle}])+
+    '<div class="page-head glossary-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+sectionTitle+'</h1><p>Быстрый словарь для менеджера: сначала понятный ответ, затем контекст и подробности — только если они нужны.</p></div></div>'+
+    '<section class="glossary-browser"><div class="glossary-toolbar"><div class="glossary-search"><span>⌕</span><input id="glossarySearch" type="search" placeholder="Найти сокращение, слово или понятие…" autocomplete="off"><button type="button" id="glossarySearchClear" hidden>×</button></div></div><div class="glossary-topics" role="tablist">'+topicButtons+'</div><div class="glossary-result-line"><strong id="glossaryResultCount">'+terms.length+'</strong><span>записей</span><span class="glossary-result-hint">Наведите взгляд на первый уровень — остальное раскрывается по необходимости.</span></div><div class="glossary-grid" id="glossaryGrid">'+termsHtml+'</div><div class="glossary-no-results" id="glossaryNoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или другую тему.</span></div></section>'+
+    (stepsHtml?'<details class="glossary-manager-guide"><summary><span>Памятка менеджера</span><small>Порядок подбора товара — раскрывается только при необходимости</small></summary><div class="glossary-steps">'+stepsHtml+'</div></details>':"")+
+    '<div class="glossary-normative-note"><strong>Нормативные документы</strong><span>ГОСТ, технические регламенты и другие нормативные материалы собраны в разделе 1.1, поэтому здесь они не дублируются.</span></div>';
+  const items=[...document.querySelectorAll("[data-glossary-item]")];
+  const topicBtns=[...document.querySelectorAll("[data-glossary-topic]")];
+  const input=q("#glossarySearch"),clear=q("#glossarySearchClear"),empty=q("#glossaryNoResults"),count=q("#glossaryResultCount");
   let active="all";
   const apply=()=>{
     const query=(input?.value||"").trim().toLowerCase();
     if(clear)clear.hidden=!query;
-    const visiblePanels=active==="all"?panels:panels.filter(p=>p.dataset.normPanel===active);
-    panels.forEach(p=>p.hidden=!visiblePanels.includes(p));
     let shown=0;
-    visiblePanels.forEach(panel=>{
-      let panelShown=0;
-      panel.querySelectorAll("[data-norm-item]").forEach(item=>{
-        const ok=!query||String(item.dataset.normSearch||"").includes(query);
-        item.hidden=!ok;if(ok){shown++;panelShown++}
-      });
-      const head=panel.querySelector(".norms-panel-head");if(head)head.hidden=!!query&&!panelShown;
+    items.forEach(item=>{
+      const topicOk=active==="all"||String(item.dataset.glossaryTopics||"").split(" ").includes(active);
+      const textOk=!query||String(item.dataset.glossarySearch||"").includes(query);
+      const ok=topicOk&&textOk;
+      item.hidden=!ok;if(ok)shown++;
     });
+    if(count)count.textContent=String(shown);
     if(empty)empty.hidden=shown>0;
   };
-  tabs.forEach(tab=>tab.addEventListener("click",()=>{active=tab.dataset.normTab||"all";tabs.forEach(x=>x.classList.toggle("active",x===tab));apply();}));
+  topicBtns.forEach(btn=>btn.addEventListener("click",()=>{
+    active=btn.dataset.glossaryTopic||"all";
+    topicBtns.forEach(x=>x.classList.toggle("active",x===btn));
+    apply();
+    q("#glossaryGrid")?.scrollIntoView({behavior:"smooth",block:"start"});
+  }));
   input?.addEventListener("input",apply);
   clear?.addEventListener("click",()=>{if(input){input.value="";input.focus();}apply();});
-  document.querySelectorAll("[data-norm-quick]").forEach(btn=>btn.addEventListener("click",()=>{
-    active="units";tabs.forEach(x=>x.classList.toggle("active",x.dataset.normTab==="units"));apply();
-    const target=[...document.querySelectorAll(".norms-unit")].find(x=>x.querySelector(".norms-unit-symbol")?.textContent?.trim().toLowerCase()===String(btn.dataset.normQuick||"").trim().toLowerCase());
-    target?.scrollIntoView({behavior:"smooth",block:"center"});
-    target?.classList.add("norms-highlight");setTimeout(()=>target?.classList.remove("norms-highlight"),1200);
-  }));
-}
-function renderChapter(id){
+}function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
   const sections=displaySections(ch);
   app.innerHTML=crumb([{label:"Глава "+ch.id}])+'<div class="page-head"><div><span class="eyebrow">Глава '+esc(ch.id)+'</span><h1>'+esc(ch.title)+'</h1><p>'+sections.length+' подразделов</p></div></div><section class="chapter-grid">'+sections.map((s)=>'<article class="chapter-card" data-num="'+esc(s.id)+'" data-open-section="'+esc(s.id)+'"><span class="chapter-num">'+esc(s.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(s.title)+'</h3><p>'+((s.products||[]).length?((s.products||[]).length+" карточек"):"Справочный материал")+'</p></article>').join("")+'</section>';
