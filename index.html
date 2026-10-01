@@ -8,7 +8,7 @@
   <title>Книга знаний · ТИАН-Трейд</title>
   <link rel="icon" type="image/svg+xml" href="./assets/brand/favicon.svg">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./css/app.css?v=2.2.20">
+  <link rel="stylesheet" href="./css/app.css?v=2.2.21">
   <link rel="stylesheet" href="./css/admin.css?v=2.2.20">
 </head>
 <body>
@@ -86,6 +86,26 @@
     <img alt="">
     <button class="lightbox-next" type="button" aria-label="Следующее изображение">›</button>
   </div>
+
+  <dialog id="docPreviewModal" class="doc-preview-modal" aria-labelledby="docPreviewTitle">
+    <section class="doc-preview-shell">
+      <header class="doc-preview-head">
+        <div class="doc-preview-title-wrap">
+          <span class="eyebrow">PDF · ПРЕДПРОСМОТР</span>
+          <h2 id="docPreviewTitle">Документ</h2>
+          <p id="docPreviewMeta">Встроенный просмотр нормативного документа</p>
+        </div>
+        <div class="doc-preview-actions">
+          <a id="docPreviewDownload" class="btn primary" href="#" download>↓ Скачать PDF</a>
+          <a id="docPreviewExternal" class="btn ghost" href="#" target="_blank" rel="noopener">↗ Открыть отдельно</a>
+          <button id="docPreviewClose" class="icon-btn" type="button" aria-label="Закрыть предпросмотр">×</button>
+        </div>
+      </header>
+      <div class="doc-preview-frame">
+        <iframe id="docPreviewFrame" title="Предпросмотр PDF-документа" loading="lazy"></iframe>
+      </div>
+    </section>
+  </dialog>
 
   <script type="module" src="./js/app.js?v=2.2.20"></script>
   <script type="module" src="./js/admin.js?v=2.2.20"></script>
