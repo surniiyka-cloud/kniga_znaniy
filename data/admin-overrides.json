@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:11:46.186Z",
+  "updatedAt": "2026-10-01T07:16:22.612Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3130,6 +3130,27 @@
     "6.1": {
       "hiddenProductIds": [
         "6.1-190030-190032-пластиковый-домик-для-теленка-ergo-малый-ergo-2"
+      ]
+    },
+    "3.5": {
+      "productOrder": [
+        "3.5-0301-031-ankar-profi-panthenol",
+        "3.5-0301-032-ankar-profi-aloe",
+        "3.5-0301-036-ankar-profi-lavander",
+        "3.5-0301-010-ankar-profi-25",
+        "3.5-0301-010-ankar-profi-50",
+        "3.5-0301-006-ankar-extra-25",
+        "3.5-0301-007-ankar-extra-50",
+        "3.5-0301-009-ankar-green-fito",
+        "3.5-0301-008-ankar-green-eco",
+        "3.5-0301-033-ankar-extra-gel",
+        "3.5-0301-029-tian-green",
+        "3.5-0301-026-tian-blue",
+        "3.5-0301-028-tian-jod",
+        "3.5-0301-027-tian-propolis"
+      ],
+      "deletedProductIds": [
+        "3.5-тип"
       ]
     }
   },
