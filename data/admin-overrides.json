@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T05:24:37.559Z",
+  "updatedAt": "2026-10-01T05:34:17.565Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -548,6 +548,25 @@
       ],
       "tabLabels": {
         "options": "При простое анализатора"
+      },
+      "images": [
+        "img/photos/admin/catalog-2-8-ekoweek/catalog-2-8-ekoweek-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-8-ekoweek/catalog-2-8-ekoweek-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -4,
+            "y": 0,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -4,
+            "y": 0,
+            "fit": "contain"
+          }
+        }
       }
     },
     "catalog-2-8-ekoprim": {
