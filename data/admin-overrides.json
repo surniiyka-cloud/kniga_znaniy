@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:27:49.574Z",
+  "updatedAt": "2026-10-01T07:28:49.863Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3173,6 +3173,27 @@
       "images": [
         "img/photos/admin/3.6-сумка-для-бумаги-uddero-clean-с-логотипом-тиан-трейд/3.6-сумка-для-бумаги-uddero-clean-с-логотипом-тиан-трейд-01.png"
       ]
+    },
+    "3.6-салфетка-многоразовая-мф": {
+      "images": [
+        "img/photos/admin/3.6-салфетка-многоразовая-мф/3.6-салфетка-многоразовая-мф-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/3.6-салфетка-многоразовая-мф/3.6-салфетка-многоразовая-мф-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -2,
+            "y": 0,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -2,
+            "y": 0,
+            "fit": "contain"
+          }
+        }
+      }
     }
   },
   "sections": {
