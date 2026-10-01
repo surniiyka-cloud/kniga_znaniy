@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:20:39.455Z",
+  "updatedAt": "2026-10-01T07:21:37.208Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3103,6 +3103,31 @@
       "images": [
         "img/photos/admin/3.6-0302-014-бумага-для-вымени-кр206/3.6-0302-014-бумага-для-вымени-кр206-01.png"
       ]
+    },
+    "3.6-кр112-полотенца-бумажные-кр112": {
+      "tabOrder": [
+        "specs",
+        "advantages"
+      ],
+      "images": [
+        "img/photos/admin/3.6-кр112-полотенца-бумажные-кр112/3.6-кр112-полотенца-бумажные-кр112-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/3.6-кр112-полотенца-бумажные-кр112/3.6-кр112-полотенца-бумажные-кр112-01.png": {
+          "card": {
+            "scale": 1,
+            "x": 0,
+            "y": -1,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": 0,
+            "y": -1,
+            "fit": "contain"
+          }
+        }
+      }
     }
   },
   "sections": {
