@@ -1241,7 +1241,7 @@ function renderTermsSection(ch,s){
     if(clear)clear.hidden=!query;
     let shown=0;
     items.forEach(item=>{
-      const hasDocs=!!item.querySelector(".foundation-assets");
+      const hasDocs=!!item.querySelector(".foundation-resource-list");
       const hasRelated=!!item.querySelector(".foundation-related-assets");
       const filterOk=activeFilter==="all"||(activeFilter==="docs"&&hasDocs)||(activeFilter==="related"&&hasRelated);
       const textOk=!query||String(item.dataset.termSearch||"").includes(query);
