@@ -1184,6 +1184,15 @@ function renderTermsSection(ch,s){
   const fallback=(s.pairs||[]).map((x,i)=>({number:i+1,title:String(x.label||"").trim(),body:[String(x.value||"").trim()],resources:[],related:[]}));
   const terms=(Array.isArray(state.terms11)&&state.terms11.length?state.terms11:fallback).filter(x=>x&&x.title);
   const termByNumber=new Map(terms.map(x=>[Number(x.number),x]));
+  const groups=[
+    {id:"normative",number:"01",title:"Нормативная база и подтверждение соответствия",range:"01—08",from:1,to:8,desc:"Регламенты, стандарты, перечни и документы, на которые опирается работа с продукцией."},
+    {id:"metrology",number:"02",title:"Оборудование и метрология",range:"09—12",from:9,to:12,desc:"Испытательное оборудование, средства измерений и процедуры подтверждения пригодности."},
+    {id:"methods",number:"03",title:"Методы исследования",range:"13—20",from:13,to:20,desc:"Количественные и качественные методы, чувствительность и основные лабораторные подходы."},
+    {id:"quality",number:"04",title:"Валидация и внедрение",range:"21—22",from:21,to:22,desc:"Как подтверждается пригодность методики и её применение в конкретной лаборатории."}
+  ];
+  const totalResources=terms.reduce((n,t)=>n+(t.resources||[]).length,0);
+  const totalPdfs=terms.reduce((n,t)=>n+(t.resources||[]).filter(r=>/\.pdf(?:$|[?#])/i.test(String(r.href||""))).length,0);
+  const totalRelated=terms.reduce((n,t)=>n+(t.related||[]).length,0);
   const resourceHref=(href)=>{
     const v=String(href||"").trim();
     if(!v)return "";
@@ -1193,50 +1202,83 @@ function renderTermsSection(ch,s){
   const resourceHtml=(r)=>{
     const href=resourceHref(r?.href);
     if(!href)return "";
+    const label=String(r?.label||r?.href||"Документ").trim();
     const external=/^https?:\/\//i.test(String(r.href||""));
-    return '<a class="glossary-chip" href="'+esc(href)+'"'+(external?' target="_blank" rel="noopener"':"")+'>'+esc(r.label||r.href)+'</a>';
+    const pdf=/\.pdf(?:$|[?#])/i.test(String(r.href||""));
+    if(pdf){
+      return '<button type="button" class="foundation-doc" data-doc-preview data-doc-href="'+esc(href)+'" data-doc-label="'+esc(label)+'"><span class="foundation-doc-type">PDF</span><span class="foundation-doc-name">'+esc(label)+'</span><span class="foundation-doc-action">Предпросмотр&nbsp;↗</span></button>';
+    }
+    return '<a class="foundation-link" href="'+esc(href)+'"'+(external?' target="_blank" rel="noopener"':"")+'><span>'+esc(label)+'</span><span>↗</span></a>';
+  };
+  const relatedHtml=(r)=>{
+    const target=termByNumber.get(Number(r?.term));
+    return target?'<button type="button" class="foundation-related" data-term-target="'+esc(String(r.term))+'"><span>→</span>'+esc(r.label||target.title)+'</button>':"";
   };
   const itemHtml=(t)=>{
     const search=[t.title,...(t.body||[]),(t.resources||[]).map(r=>r.label),(t.related||[]).map(r=>r.label)].flat().filter(Boolean).join(" ").toLowerCase();
-    const body=(t.body||[]).filter(Boolean).map(p=>'<p class="glossary-definition">'+esc(p)+'</p>').join("");
+    const body=(t.body||[]).filter(Boolean).map((p,i)=>'<p class="'+(i===0?"foundation-lead":"foundation-paragraph")+'">'+esc(p)+'</p>').join("");
     const resources=(t.resources||[]).map(resourceHtml).filter(Boolean).join("");
-    const related=(t.related||[]).map(r=>{
-      const target=termByNumber.get(Number(r.term));
-      return target?'<button type="button" class="glossary-chip" data-term-target="'+esc(String(r.term))+'">'+esc(r.label||target.title)+'</button>':"";
-    }).join("");
-    const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="glossary-detail-block glossary-detail-important"><span>Материалы к добавлению</span><p>'+esc((t.pendingResources||[]).join(" · "))+'</p></div>':"";
-    const detail=(resources||related||pending)?'<details class="glossary-details"><summary>Документы и связи</summary><div class="glossary-detail-grid">'+
-      (resources?'<div class="glossary-detail-block glossary-products"><span>Документы и ссылки</span><div class="glossary-chip-row">'+resources+'</div></div>':"")+
-      (related?'<div class="glossary-detail-block"><span>Связанные термины</span><div class="glossary-chip-row">'+related+'</div></div>':"")+
-      pending+'</div></details>':"";
-    return '<article class="glossary-card" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="glossary-card-head"><div><span class="glossary-kind">Термин</span><h3>'+esc(t.title)+'</h3></div><span class="glossary-index">'+String(t.number).padStart(2,"0")+'</span></div><div class="glossary-summary">'+body+'</div>'+detail+'</article>';
+    const related=(t.related||[]).map(relatedHtml).filter(Boolean).join("");
+    const docsBlock=resources?'<section class="foundation-assets"><div class="foundation-assets-head"><span>Нормативные материалы</span><b>'+String((t.resources||[]).length).padStart(2,"0")+'</b></div><div class="foundation-resource-list">'+resources+'</div></section>':"";
+    const relatedBlock=related?'<section class="foundation-assets foundation-related-assets"><div class="foundation-assets-head"><span>Связанные термины</span><b>'+String((t.related||[]).length).padStart(2,"0")+'</b></div><div class="foundation-related-list">'+related+'</div></section>':"";
+    const detail=(docsBlock||relatedBlock)?'<div class="foundation-card-footer">'+docsBlock+relatedBlock+'</div>':"";
+    const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="foundation-pending"><span>Ожидают добавления</span>'+esc((t.pendingResources||[]).join(" · "))+'</div>':"";
+    return '<article class="foundation-term" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="foundation-term-rail"><span class="foundation-term-no">'+String(t.number).padStart(2,"0")+'</span><span class="foundation-term-kind">ТЕРМИН</span></div><div class="foundation-term-content"><div class="foundation-term-heading"><div><span class="foundation-kicker">ОПРЕДЕЛЕНИЕ</span><h3>'+esc(t.title)+'</h3></div><span class="foundation-term-mark">§</span></div><div class="foundation-summary">'+body+'</div>'+detail+pending+'</div></article>';
   };
-  const termsHtml=terms.map(itemHtml).join("");
+  const groupHtml=groups.map(g=>{
+    const groupTerms=terms.filter(t=>Number(t.number)>=g.from&&Number(t.number)<=g.to);
+    return '<section class="foundation-group" id="foundation-'+esc(g.id)+'" data-foundation-group="'+esc(g.id)+'"><div class="foundation-group-head"><div><span class="foundation-group-index">'+esc(g.number)+' / '+esc(g.range)+'</span><h2>'+esc(g.title)+'</h2><p>'+esc(g.desc)+'</p></div><span class="foundation-group-count">'+groupTerms.length+' терм.</span></div><div class="foundation-list">'+groupTerms.map(itemHtml).join("")+'</div></section>';
+  }).join("");
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="page-head glossary-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>22 термина из рабочего документа «Коррективы по разделу 1», с прямыми ссылками на доступные нормативные материалы.</p></div></div>'+
-    '<section class="glossary-browser"><div class="glossary-toolbar"><div class="glossary-search"><span>⌕</span><input id="terms11Search" type="search" placeholder="Найти термин, обозначение или слово…" autocomplete="off"><button type="button" id="terms11SearchClear" hidden>×</button></div></div><div class="glossary-result-line"><strong id="terms11ResultCount">'+terms.length+'</strong><span>терминов</span><span class="glossary-result-hint">Связанные термины и документы раскрываются только при необходимости.</span></div><div class="glossary-grid" id="terms11Grid">'+termsHtml+'</div><div class="glossary-no-results" id="terms11NoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или название термина.</span></div></section>';
+    '<div class="foundation-head"><div class="foundation-intro"><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>Термины и определения</h1><p>Базовая терминология Книги знаний: от нормативной базы и метрологии до методов исследования, валидации и верификации.</p></div><div class="foundation-metrics"><div class="foundation-metric"><strong>'+terms.length+'</strong><span>терминов</span></div><div class="foundation-metric"><strong>'+totalResources+'</strong><span>материалов</span></div><div class="foundation-metric"><strong>'+totalPdfs+'</strong><span>PDF в базе</span></div><div class="foundation-metric"><strong>'+totalRelated+'</strong><span>связей</span></div></div></div>'+
+    '<section class="foundation-browser"><div class="foundation-toolbar"><div class="foundation-search"><span>⌕</span><input id="terms11Search" type="search" placeholder="Найти термин, определение или обозначение…" autocomplete="off"><button type="button" id="terms11SearchClear" hidden>×</button></div><div class="foundation-filters" role="group" aria-label="Фильтр терминов"><button type="button" class="foundation-filter active" data-foundation-filter="all">Все</button><button type="button" class="foundation-filter" data-foundation-filter="docs">С документами</button><button type="button" class="foundation-filter" data-foundation-filter="related">Со связями</button></div></div><div class="foundation-overview"><div><strong id="terms11ResultCount">'+terms.length+'</strong><span> терминов в разделе</span></div><div class="foundation-jumps">'+groups.map(g=>'<button type="button" data-foundation-jump="'+esc(g.id)+'"><span>'+esc(g.number)+'</span>'+esc(g.title)+'</button>').join("")+'</div></div><div class="foundation-groups">'+groupHtml+'</div><div class="foundation-no-results" id="terms11NoResults" hidden><strong>Ничего не найдено</strong><span>Измените запрос или снимите фильтр.</span></div></section>';
   const items=[...document.querySelectorAll("[data-term-item]")];
   const input=q("#terms11Search"),clear=q("#terms11SearchClear"),empty=q("#terms11NoResults"),count=q("#terms11ResultCount");
+  const filterBtns=[...document.querySelectorAll("[data-foundation-filter]")];
+  let activeFilter="all";
   const apply=()=>{
     const query=(input?.value||"").trim().toLowerCase();
     if(clear)clear.hidden=!query;
     let shown=0;
-    items.forEach(item=>{const ok=!query||String(item.dataset.termSearch||"").includes(query);item.hidden=!ok;if(ok)shown++;});
+    items.forEach(item=>{
+      const hasDocs=!!item.querySelector(".foundation-assets");
+      const hasRelated=!!item.querySelector(".foundation-related-assets");
+      const filterOk=activeFilter==="all"||(activeFilter==="docs"&&hasDocs)||(activeFilter==="related"&&hasRelated);
+      const textOk=!query||String(item.dataset.termSearch||"").includes(query);
+      const ok=filterOk&&textOk;
+      item.hidden=!ok;
+      if(ok)shown++;
+    });
+    document.querySelectorAll("[data-foundation-group]").forEach(group=>{
+      const visible=group.querySelectorAll("[data-term-item]:not([hidden])").length;
+      group.hidden=visible===0;
+    });
     if(count)count.textContent=String(shown);
     if(empty)empty.hidden=shown>0;
   };
   input?.addEventListener("input",apply);
   clear?.addEventListener("click",()=>{if(input){input.value="";input.focus();}apply();});
+  filterBtns.forEach(btn=>btn.addEventListener("click",()=>{
+    activeFilter=btn.dataset.foundationFilter||"all";
+    filterBtns.forEach(x=>x.classList.toggle("active",x===btn));
+    apply();
+  }));
+  document.querySelectorAll("[data-foundation-jump]").forEach(btn=>btn.addEventListener("click",()=>{
+    const target=q("#foundation-"+CSS.escape(btn.dataset.foundationJump||""));
+    target?.scrollIntoView({behavior:"smooth",block:"start"});
+  }));
   document.querySelectorAll("[data-term-target]").forEach(btn=>btn.addEventListener("click",()=>{
     const target=document.querySelector('[data-term-number="'+CSS.escape(btn.dataset.termTarget||"")+'"]');
     if(!target)return;
     target.hidden=false;
+    const group=target.closest("[data-foundation-group]");
+    if(group)group.hidden=false;
     target.scrollIntoView({behavior:"smooth",block:"start"});
     target.classList.add("term-focus");
     setTimeout(()=>target.classList.remove("term-focus"),900);
   }));
 }
-function renderNormsSection(ch,s){
+function renderNormsSectionfunction renderNormsSection(ch,s){
   const sectionTitle="Сокращения, обозначения и единицы измерения";
   const rows=(s.rawRows||s.rows||[]);
   const units=[],reading=[],steps=[];
@@ -1555,12 +1597,46 @@ function bind(){
     const direct=e.target.closest("[data-lightbox-src]");
     if(direct){showLightbox([direct.dataset.lightboxSrc],0,direct.querySelector("img")?.alt||"");return;}
     const l=e.target.closest("[data-lightbox-product]");if(l)openLightbox(l.dataset.lightboxProduct,Number(l.dataset.lightboxIndex||0));
+    const doc=e.target.closest("[data-doc-preview]");if(doc){openDocPreview(doc.dataset.docHref||"",doc.dataset.docLabel||"Документ");return;}
   });
-  document.addEventListener("keydown",(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();}if(e.key==="Escape"){searchPanel.hidden=true;q("#lightbox").hidden=true;closeVersionLog();closeMenu();}if(!q("#lightbox").hidden&&e.key==="ArrowLeft")stepLightbox(-1);if(!q("#lightbox").hidden&&e.key==="ArrowRight")stepLightbox(1);});
+  document.addEventListener("keydown",(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();}if(e.key==="Escape"){searchPanel.hidden=true;q("#lightbox").hidden=true;closeVersionLog();closeDocPreview();closeMenu();}if(!q("#lightbox").hidden&&e.key==="ArrowLeft")stepLightbox(-1);if(!q("#lightbox").hidden&&e.key==="ArrowRight")stepLightbox(1);});
   q("#lightbox .lightbox-close").onclick=()=>q("#lightbox").hidden=true;
   q("#lightbox .lightbox-prev").onclick=()=>stepLightbox(-1);
   q("#lightbox .lightbox-next").onclick=()=>stepLightbox(1);
   q("#lightbox").onclick=(e)=>{if(e.target===q("#lightbox"))q("#lightbox").hidden=true;};
+  const docModal=q("#docPreviewModal");
+  q("#docPreviewClose").onclick=()=>closeDocPreview();
+  docModal?.addEventListener("close",()=>{q("#docPreviewFrame").src="about:blank";});
+  docModal?.addEventListener("click",(e)=>{if(e.target===docModal)closeDocPreview();});
+}
+function openDocPreview(href,label="Документ"){
+  const modal=q("#docPreviewModal"),frame=q("#docPreviewFrame"),title=q("#docPreviewTitle"),meta=q("#docPreviewMeta"),download=q("#docPreviewDownload"),external=q("#docPreviewExternal");
+  if(!modal||!frame||!href)return;
+  const v=String(href||"").trim();
+  const name=(()=>{try{return decodeURIComponent(v.split("/").pop().split("?")[0].split("#")[0]||"document.pdf");}catch{return "document.pdf";}})();
+  const cleanName=/\.pdf$/i.test(name)?name:name+".pdf";
+  if(title)title.textContent=label||cleanName;
+  if(meta)meta.textContent="PDF · встроенный просмотр · "+cleanName;
+  frame.src=v;
+  frame.title="Предпросмотр: "+(label||cleanName);
+  if(download){
+    download.href=v;
+    if(/^https?:\/\//i.test(v))download.removeAttribute("download");
+    else download.download=cleanName;
+  }
+  if(external)external.href=v;
+  if(typeof modal.showModal==="function"){
+    if(modal.open)modal.close();
+    modal.showModal();
+  }else{
+    modal.setAttribute("open","");
+  }
+}
+function closeDocPreview(){
+  const modal=q("#docPreviewModal");
+  if(!modal)return;
+  if(typeof modal.close==="function"&&modal.open)modal.close();
+  else modal.removeAttribute("open");
 }
 function openVersionLog(){
   if(!isAdmin())return;
