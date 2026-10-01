@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T06:36:01.040Z",
+  "updatedAt": "2026-10-01T06:45:24.846Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2950,6 +2950,27 @@
           "detail": {
             "scale": 1.05,
             "x": 0,
+            "y": 1,
+            "fit": "contain"
+          }
+        }
+      }
+    },
+    "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar": {
+      "images": [
+        "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -1,
+            "y": 1,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -1,
             "y": 1,
             "fit": "contain"
           }
