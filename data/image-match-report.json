@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-30T06:50:07.313Z",
-  "imagesTotal": 341,
-  "imagesMatched": 269,
+  "generatedAt": "2026-10-01T07:23:27.867Z",
+  "imagesTotal": 362,
+  "imagesMatched": 275,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -72,9 +72,24 @@
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebnitsa-metallitseskaya-aldus-11h12-5-1810.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png",
+    "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png",
+    "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png",
+    "img/photos/admin/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити-01.png",
     "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png",
     "img/photos/admin/catalog-2-1-2-tetrasensor/catalog-2-1-2-tetrasensor-01.png",
-    "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png"
+    "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png",
+    "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png",
+    "img/photos/admin/catalog-2-14-кода/catalog-2-14-кода-01.png",
+    "img/photos/admin/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий-01.png",
+    "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png",
+    "img/photos/admin/catalog-2-8-ekoday/catalog-2-8-ekoday-01.png",
+    "img/photos/admin/catalog-2-8-ekoprim/catalog-2-8-ekoprim-01.png",
+    "img/photos/admin/catalog-2-8-ekoweek/catalog-2-8-ekoweek-01.png",
+    "img/photos/admin/catalog-2-8-lactochip/catalog-2-8-lactochip-01.png",
+    "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png",
+    "img/photos/admin/catalog-2-9-ph-метр-pht004-ta/catalog-2-9-ph-метр-pht004-ta-01.png",
+    "img/photos/admin/catalog-2-9-электрод-для-жидких-продуктов-sensorex/catalog-2-9-электрод-для-жидких-продуктов-sensorex-01.png",
+    "img/photos/admin/catalog-2-9-электрод-для-плотных-продуктов-sensorex/catalog-2-9-электрод-для-плотных-продуктов-sensorex-01.png"
   ],
   "unmatchedSuggestions": [
     {
@@ -1214,6 +1229,112 @@
       ]
     },
     {
+      "image": "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
+          "name": "Стаканчик для пенного средства PREMIUM KERBL",
+          "article": "0303.007",
+          "section": "3.2",
+          "score": 0.667
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.667
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.667
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
+          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
+          "article": "0303.014",
+          "section": "3.2",
+          "score": 0.286
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl",
+          "name": "Стаканчик для пенного средства PREMIUM KERBL",
+          "article": "0303.007",
+          "section": "3.2",
+          "score": 0.667
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.005",
+          "section": "3.2",
+          "score": 0.667
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "article": "0303.004",
+          "section": "3.2",
+          "score": 0.667
+        },
+        {
+          "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
+          "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+          "article": "0303.012",
+          "section": "3.2",
+          "score": 0.333
+        },
+        {
+          "id": "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl",
+          "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
+          "article": "0303.014",
+          "section": "3.2",
+          "score": 0.286
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити-01.png",
+      "candidates": [
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити",
+          "name": "Штифты для сосков из усиленной шерстяной нити",
+          "article": "0303.051*",
+          "section": "3.3",
+          "score": 0.714
+        },
+        {
+          "id": "3.3-0303-052-штифты-для-сосков-с-изгибом-на-ручке",
+          "name": "Штифты для сосков с изгибом на ручке",
+          "article": "0303.052",
+          "section": "3.3",
+          "score": 0.286
+        },
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке",
+          "name": "Штифты для сосков с жемчужиной на ручке",
+          "article": "0303.051",
+          "section": "3.3",
+          "score": 0.286
+        }
+      ]
+    },
+    {
       "image": "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png",
       "candidates": []
     },
@@ -1224,10 +1345,95 @@
     {
       "image": "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png",
       "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-14-кода/catalog-2-14-кода-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-8-ekoday/catalog-2-8-ekoday-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-8-ekoprim/catalog-2-8-ekoprim-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-8-ekoweek/catalog-2-8-ekoweek-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-8-lactochip/catalog-2-8-lactochip-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png",
+      "candidates": [
+        {
+          "id": "9.2-дезмат-эко-маст",
+          "name": "Дезмат ЭКО-МАСТ",
+          "article": "-",
+          "section": "9.2",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-9-ph-метр-pht004-ta/catalog-2-9-ph-метр-pht004-ta-01.png",
+      "candidates": [
+        {
+          "id": "4.10-метримаст-звс",
+          "name": "МетриМаст ЗВС",
+          "article": "-",
+          "section": "4.10",
+          "score": 0.333
+        },
+        {
+          "id": "4.10-метримаст-звс-упаковка-20-шт",
+          "name": "МетриМаст ЗВС, упаковка 20 шт.",
+          "article": "-",
+          "section": "4.10",
+          "score": 0.333
+        },
+        {
+          "id": "4.10-метриприм",
+          "name": "Метриприм",
+          "article": "-",
+          "section": "4.10",
+          "score": 0.333
+        },
+        {
+          "id": "4.10-метростимовит-звс",
+          "name": "МетростимоВит ЗВС",
+          "article": "-",
+          "section": "4.10",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-9-электрод-для-жидких-продуктов-sensorex/catalog-2-9-электрод-для-жидких-продуктов-sensorex-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-9-электрод-для-плотных-продуктов-sensorex/catalog-2-9-электрод-для-плотных-продуктов-sensorex-01.png",
+      "candidates": []
     }
   ],
   "productsTotal": 805,
-  "productsWithImages": 120,
+  "productsWithImages": 125,
   "productsWithoutImages": [
     {
       "id": "2.11-10006320-agrastrip-watex-дезоксиниваленол",
@@ -1296,24 +1502,6 @@
       "article": "0303.004"
     },
     {
-      "id": "3.2-0303-012-стаканчик-пенный-ankar-premium-foam",
-      "section": "3.2",
-      "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
-      "article": "0303.012"
-    },
-    {
-      "id": "3.2-0303-022-кружка-для-сдаивания-первых-струек-молока-premium",
-      "section": "3.2",
-      "name": "Кружка для сдаивания первых струек молока PREMIUM",
-      "article": "0303.022"
-    },
-    {
-      "id": "3.3-0303-052-штифты-для-сосков-с-изгибом-на-ручке",
-      "section": "3.3",
-      "name": "Штифты для сосков с изгибом на ручке",
-      "article": "0303.052"
-    },
-    {
       "id": "3.4-0301-037-tian-pre-foam",
       "section": "3.4",
       "name": "TIAN PRE FOAM",
@@ -1354,18 +1542,6 @@
       "section": "3.5",
       "name": "TIAN PROPOLIS",
       "article": "0301.027"
-    },
-    {
-      "id": "3.6-0302-014-бумага-для-вымени-кр206",
-      "section": "3.6",
-      "name": "Бумага для вымени КР206",
-      "article": "0302.014"
-    },
-    {
-      "id": "3.6-кр112-полотенца-бумажные-кр112",
-      "section": "3.6",
-      "name": "Полотенца бумажные КР112",
-      "article": "КР112"
     },
     {
       "id": "3.6-0302-019-бумага-для-вымени-ankar",
@@ -5533,6 +5709,57 @@
           "name": "Ванна для обработки копыт",
           "section": "5.2",
           "score": 92
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "section": "3.2",
+          "score": 94
+        },
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "section": "3.2",
+          "score": 88
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png",
+      "candidates": [
+        {
+          "id": "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "section": "3.2",
+          "score": 94
+        },
+        {
+          "id": "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar",
+          "name": "Стаканчик для пенного средства PREMIUM ANKAR",
+          "section": "3.2",
+          "score": 88
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити-01.png",
+      "candidates": [
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке",
+          "name": "Штифты для сосков с жемчужиной на ручке",
+          "section": "3.3",
+          "score": 94
+        },
+        {
+          "id": "3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити",
+          "name": "Штифты для сосков из усиленной шерстяной нити",
+          "section": "3.3",
+          "score": 94
         }
       ]
     }
