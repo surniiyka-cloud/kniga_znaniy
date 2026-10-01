@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T05:12:02.398Z",
+  "updatedAt": "2026-10-01T05:22:29.176Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -426,8 +426,7 @@
       "tabOrder": [
         "specs",
         "advantages",
-        "washCycle",
-        "workflow"
+        "washCycle"
       ],
       "tabLabels": {
         "washCycle": "Место в цикле мойки"
