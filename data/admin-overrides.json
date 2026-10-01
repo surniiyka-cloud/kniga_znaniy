@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-30T14:03:21.556Z",
+  "updatedAt": "2026-10-01T05:12:02.398Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2606,6 +2606,27 @@
             "scale": 1.2,
             "x": -1,
             "y": -3,
+            "fit": "contain"
+          }
+        }
+      }
+    },
+    "catalog-2-5-test-strip-reader-gic-q1": {
+      "images": [
+        "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -1,
+            "y": 0,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -1,
+            "y": 0,
             "fit": "contain"
           }
         }
