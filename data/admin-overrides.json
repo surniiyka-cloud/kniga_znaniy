@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T05:59:31.366Z",
+  "updatedAt": "2026-10-01T06:04:31.181Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -998,7 +998,9 @@
       },
       "tabOrder": [
         "specs",
-        "advantages"
+        "advantages",
+        "indicators",
+        "complectation"
       ],
       "images": [
         "img/photos/admin/catalog-2-9-ph-метр-pht004-ta/catalog-2-9-ph-метр-pht004-ta-01.png"
@@ -1054,7 +1056,26 @@
       "tabOrder": [
         "specs",
         "advantages"
-      ]
+      ],
+      "images": [
+        "img/photos/admin/catalog-2-9-электрод-для-жидких-продуктов-sensorex/catalog-2-9-электрод-для-жидких-продуктов-sensorex-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-9-электрод-для-жидких-продуктов-sensorex/catalog-2-9-электрод-для-жидких-продуктов-sensorex-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -2,
+            "y": 1,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -2,
+            "y": 1,
+            "fit": "contain"
+          }
+        }
+      }
     },
     "catalog-2-9-электрод-для-плотных-продуктов-sensorex": {
       "tabTables": {
