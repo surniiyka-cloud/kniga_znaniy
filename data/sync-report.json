@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-30T18:08:10.100Z",
+  "generatedAt": "2026-10-01T14:40:55.147Z",
   "sheets": 89,
   "sections": 88,
-  "products": 805,
+  "products": 806,
   "byKind": {
     "richTable": 13,
     "keyValue": 18,
@@ -19,7 +19,7 @@
     },
     {
       "id": "1.2",
-      "title": "Нормативы, сокращения и единицы измерения",
+      "title": "Сокращения, обозначения и единицы измерения",
       "kind": "richTable",
       "products": 0,
       "tables": 0,
@@ -95,7 +95,7 @@
       "kind": "keyValue",
       "products": 0,
       "tables": 0,
-      "notes": 2
+      "notes": 12
     },
     {
       "id": "2.5",
@@ -429,7 +429,7 @@
       "id": "5.2",
       "title": "Уход за копытами",
       "kind": "products",
-      "products": 30,
+      "products": 31,
       "tables": 0,
       "notes": 0
     },
