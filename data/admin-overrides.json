@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:19:22.215Z",
+  "updatedAt": "2026-10-01T07:20:39.455Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3094,6 +3094,15 @@
           }
         }
       }
+    },
+    "3.6-0302-014-бумага-для-вымени-кр206": {
+      "tabOrder": [
+        "specs",
+        "advantages"
+      ],
+      "images": [
+        "img/photos/admin/3.6-0302-014-бумага-для-вымени-кр206/3.6-0302-014-бумага-для-вымени-кр206-01.png"
+      ]
     }
   },
   "sections": {
