@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T05:35:13.216Z",
+  "updatedAt": "2026-10-01T05:38:53.819Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -607,7 +607,26 @@
       "tabOrder": [
         "specs",
         "advantages"
-      ]
+      ],
+      "images": [
+        "img/photos/admin/catalog-2-8-ekoprim/catalog-2-8-ekoprim-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-8-ekoprim/catalog-2-8-ekoprim-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -5,
+            "y": -1,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -5,
+            "y": -1,
+            "fit": "contain"
+          }
+        }
+      }
     },
     "catalog-2-8-mastoprim": {
       "tabTables": {
