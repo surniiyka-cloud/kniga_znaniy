@@ -1187,13 +1187,13 @@ function renderTermsSection(ch,s){
   const resourceHref=(href)=>{
     const v=String(href||"").trim();
     if(!v)return "";
-    if(/^https?:\\/\\//i.test(v))return v;
+    if(/^https?:\/\//i.test(v))return v;
     return "./"+v.split("/").map(encodeURIComponent).join("/");
   };
   const resourceHtml=(r)=>{
     const href=resourceHref(r?.href);
     if(!href)return "";
-    const external=/^https?:\\/\\//i.test(String(r.href||""));
+    const external=/^https?:\/\//i.test(String(r.href||""));
     return '<a class="glossary-chip" href="'+esc(href)+'"'+(external?' target="_blank" rel="noopener"':"")+'>'+esc(r.label||r.href)+'</a>';
   };
   const itemHtml=(t)=>{
