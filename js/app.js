@@ -898,7 +898,7 @@ function applyProductBlock(section,name,pairs,advantages){
   if((advantages||[]).length)p.advantages=uniquePairs([...(p.advantages||[]),...advantages]);
 }
 function enrichVerticalProductBlocks(section){
-  if(!section||section.kind!=="products"||!/^(3)(\.|$)/.test(section.id||""))return;
+  if(!section||!/^(3)(\.|$)/.test(section.id||""))return;
   const rows=section.rawRows||[];if(!rows.length)return;
   for(let i=0;i<rows.length;i++){
     const row=rows[i]||[];
@@ -1129,7 +1129,40 @@ function knowledgeCards(s){
   return out;
 }
 function rawTables(){return "";}
-function sectionContent(s){return knowledgeCards(s);}
+function safeRichHtml(html){
+  let out=String(html||"");
+  out=out.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|link|meta)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi,"");
+  out=out.replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|link|meta)[^>]*\/?>/gi,"");
+  out=out.replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi,"");
+  out=out.replace(/\s(href|src)\s*=\s*(['"])\s*javascript:[^'"]*\2/gi,"");
+  return out;
+}
+function contentBlockHtml(b,i){
+  const type=b?.type||"text";
+  if(type==="heading")return '<section class="content-block content-heading"><h2>'+esc(b.html||b.text||"")+'</h2></section>';
+  if(type==="quote")return '<section class="content-block content-quote"><blockquote>'+safeRichHtml(b.html||"")+'</blockquote></section>';
+  if(type==="list"){
+    const items=Array.isArray(b.items)?b.items:[];
+    return '<section class="content-block content-list"><ul>'+items.map(x=>'<li>'+safeRichHtml(x)+'</li>').join("")+'</ul></section>';
+  }
+  if(type==="table"){
+    const h=Array.isArray(b.headers)?b.headers:[],rows=Array.isArray(b.rows)?b.rows:[];
+    if(!h.length)return "";
+    return '<section class="content-block content-table"><div class="content-table-wrap"><table><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+h.map((_,j)=>'<td>'+esc(r?.[j]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+  }
+  if(type==="image"){
+    const src=String(b.src||"");if(!src)return "";
+    const width=Math.min(100,Math.max(20,Number(b.width)||100)),align=b.align==="left"||b.align==="right"?b.align:"center";
+    return '<figure class="content-block content-image align-'+align+'" style="--content-image-width:'+width+'%"><img src="'+esc(photoSrc(src))+'" alt="'+esc(b.alt||"")+'">'+(b.caption?'<figcaption>'+esc(b.caption)+'</figcaption>':"")+'</figure>';
+  }
+  return '<section class="content-block content-text">'+safeRichHtml(b.html||"")+'</section>';
+}
+function sectionContent(s){
+  if(Array.isArray(s.contentBlocks)&&s.contentBlocks.length){
+    return '<section class="section-content-builder">'+s.contentBlocks.map(contentBlockHtml).join("")+'</section>';
+  }
+  return knowledgeCards(s);
+}
 
 function renderHome(){
   title("");
@@ -1201,7 +1234,7 @@ function renderSection(id){
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+subtitle+'</p></div></div>'+
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':visualCatalog(s,sectionImgs))+
-    (items.length?"":sectionContent(s));
+    sectionContent(s);
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function fields(p){
