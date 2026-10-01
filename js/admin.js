@@ -530,6 +530,100 @@ function renderProductEditor(ctx){
     '<div class="kb-admin-savebar"><button type="submit" class="kb-admin-btn primary">Сохранить карточку</button><button type="button" class="kb-admin-btn danger" data-reset-product>Сбросить ручные правки</button></div></form>'
   ));
 }
+
+function sectionContentBlocks(ctx){
+  const s=ctx.section||{};
+  if(Array.isArray(s.contentBlocks))return deep(s.contentBlocks);
+  const out=[];
+  if(Array.isArray(s.pairs)&&s.pairs.length){
+    out.push({id:"legacy-pairs",type:"table",headers:["Параметр","Значение"],rows:s.pairs.map(x=>[String(x.label||""),String(x.value||"")])});
+  }
+  if(Array.isArray(s.notes)&&s.notes.length){
+    out.push({id:"legacy-notes",type:"list",items:s.notes.map(x=>String(x||"")).filter(Boolean)});
+  }
+  for(const t of s.tables||[]){
+    if(t?.headers?.length)out.push({id:"legacy-table-"+out.length,type:"table",title:t.title||"",headers:t.headers.map(x=>String(x||"")),rows:(t.rows||[]).map(r=>(r||[]).map(x=>String(x||"")))});
+  }
+  return out;
+}
+function richToolbar(){
+  return '<div class="kb-rich-toolbar">'+
+    '<button type="button" data-rich-cmd="bold"><b>B</b></button><button type="button" data-rich-cmd="italic"><i>I</i></button>'+
+    '<button type="button" data-rich-cmd="underline"><u>U</u></button><span class="kb-rich-sep"></span>'+
+    '<button type="button" data-rich-cmd="formatBlock" data-rich-value="h3">Заголовок</button>'+
+    '<button type="button" data-rich-cmd="formatBlock" data-rich-value="p">Абзац</button>'+
+    '<button type="button" data-rich-cmd="insertUnorderedList">• Список</button>'+
+    '<button type="button" data-rich-cmd="createLink">Ссылка</button>'+
+  '</div>';
+}
+function contentTableHtml(b){
+  const headers=Array.isArray(b?.headers)&&b.headers.length?b.headers:["Название","Значение"],width=headers.length;
+  const rows=Array.isArray(b?.rows)?b.rows:[];
+  return '<div class="kb-content-table" data-content-table>'+
+    '<div class="kb-content-table-title"><input data-block-table-title placeholder="Заголовок таблицы (необязательно)" value="'+esc(b?.title||"")+'">'+
+    '<button type="button" class="kb-mini" data-content-add-col>+ столбец</button><button type="button" class="kb-mini" data-content-add-row>+ строка</button></div>'+
+    '<div class="kb-table-scroll"><table><thead><tr>'+headers.map((h,i)=>'<th><div class="kb-cell-head"><input data-content-table-header value="'+esc(h)+'"><button type="button" class="kb-col-remove" data-content-remove-col="'+i+'">×</button></div></th>').join("")+'</tr></thead>'+
+    '<tbody>'+rows.map(r=>'<tr data-content-table-row>'+Array.from({length:width},(_,i)=>'<td><input data-content-table-cell value="'+esc(r?.[i]||"")+'"></td>').join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-remove" data-content-remove-row>×</button></td></tr>').join("")+'</tbody></table></div></div>';
+}
+function contentBlockEditorHtml(b,index){
+  const id=b?.id||("block-"+Date.now()+"-"+index),type=b?.type||"text";
+  let body="";
+  if(type==="heading")body='<label class="kb-admin-field"><span>Заголовок</span><input data-block-heading value="'+esc(b?.text||b?.html||"")+'"></label>';
+  else if(type==="list")body='<label class="kb-admin-field"><span>Одна строка — один пункт</span><textarea rows="6" data-block-list>'+esc((b?.items||[]).join("\n"))+'</textarea></label>';
+  else if(type==="quote")body=richToolbar()+'<div class="kb-rich-editor" contenteditable="true" data-block-html>'+safeAdminHtml(b?.html||"")+'</div>';
+  else if(type==="table")body=contentTableHtml(b);
+  else if(type==="image"){
+    const src=String(b?.src||"");
+    body='<div class="kb-content-image-editor">'+
+      '<div class="kb-content-image-preview">'+(src?'<img src="'+esc(photoPreviewSrc(src))+'" alt="">':'<span>Изображение ещё не загружено</span>')+'</div>'+
+      '<div class="kb-content-image-tools"><button type="button" class="kb-admin-btn ghost" data-content-image-upload>Загрузить / заменить</button>'+
+      '<label>Ширина <input type="range" min="20" max="100" step="5" value="'+Math.min(100,Math.max(20,Number(b?.width)||100))+'" data-block-image-width><output data-block-image-width-out>'+Math.min(100,Math.max(20,Number(b?.width)||100))+'%</output></label>'+
+      '<label>Выравнивание <select data-block-image-align><option value="left" '+(b?.align==="left"?"selected":"")+'>Слева</option><option value="center" '+(!b?.align||b.align==="center"?"selected":"")+'>По центру</option><option value="right" '+(b?.align==="right"?"selected":"")+'>Справа</option></select></label>'+
+      '<input data-block-image-src type="hidden" value="'+esc(src)+'">'+
+      '<label>Подпись<input data-block-image-caption value="'+esc(b?.caption||"")+'"></label>'+
+      '<label>Описание изображения<input data-block-image-alt value="'+esc(b?.alt||"")+'"></label></div></div>';
+  } else body=richToolbar()+'<div class="kb-rich-editor" contenteditable="true" data-block-html>'+safeAdminHtml(b?.html||"<p>Введите текст…</p>")+'</div>';
+  return '<article class="kb-content-block" draggable="true" data-content-block data-block-id="'+esc(id)+'" data-block-type="'+esc(type)+'">'+
+    '<header><span class="kb-block-drag">⋮⋮</span><strong>'+({text:"Текст",heading:"Заголовок",list:"Список",quote:"Цитата",table:"Таблица",image:"Изображение"}[type]||"Блок")+'</strong>'+
+    '<div><button type="button" class="kb-mini" data-content-duplicate>Дублировать</button><button type="button" class="kb-mini danger" data-content-delete>Удалить</button></div></header>'+
+    '<div class="kb-content-block-body">'+body+'</div></article>';
+}
+function safeAdminHtml(html){
+  return String(html||"").replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|link|meta)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi,"").replace(/<\s*(script|style|iframe|object|embed|form|input|button|textarea|select|link|meta)[^>]*\/?>/gi,"").replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi,"");
+}
+function sectionBuilderHtml(ctx){
+  const blocks=sectionContentBlocks(ctx);
+  return '<section class="kb-admin-section kb-content-builder-section">'+
+    '<div class="kb-content-builder-head"><div><h3>Конструктор содержимого</h3><p class="kb-admin-hint">Собирай раздел как страницу: текст, заголовки, списки, таблицы и изображения. Блоки можно перетаскивать мышкой.</p></div>'+
+    '<div class="kb-content-add"><button type="button" class="kb-admin-btn ghost" data-content-add="text">+ Текст</button><button type="button" class="kb-admin-btn ghost" data-content-add="heading">+ Заголовок</button><button type="button" class="kb-admin-btn ghost" data-content-add="list">+ Список</button><button type="button" class="kb-admin-btn ghost" data-content-add="table">+ Таблица</button><button type="button" class="kb-admin-btn ghost" data-content-add="image">+ Изображение</button></div></div>'+
+    '<div class="kb-content-builder" data-content-builder>'+blocks.map(contentBlockEditorHtml).join("")+'</div>'+
+    '<input type="file" accept="image/png,image/jpeg,image/webp" data-content-image-file hidden></section>';
+}
+function collectSectionContentBlocks(form){
+  const out=[];
+  form.querySelectorAll("[data-content-block]").forEach((el,i)=>{
+    const type=el.dataset.blockType,id=el.dataset.blockId||("block-"+i),b={id,type};
+    if(type==="heading")b.text=el.querySelector("[data-block-heading]")?.value.trim()||"";
+    else if(type==="list")b.items=String(el.querySelector("[data-block-list]")?.value||"").split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+    else if(type==="image"){
+      b.src=el.querySelector("[data-block-image-src]")?.value.trim()||"";
+      b.width=Number(el.querySelector("[data-block-image-width]")?.value||100);
+      b.align=el.querySelector("[data-block-image-align]")?.value||"center";
+      b.caption=el.querySelector("[data-block-image-caption]")?.value.trim()||"";
+      b.alt=el.querySelector("[data-block-image-alt]")?.value.trim()||"";
+    }else if(type==="table"){
+      b.title=el.querySelector("[data-block-table-title]")?.value.trim()||"";
+      b.headers=[...el.querySelectorAll("[data-content-table-header]")].map(x=>x.value.trim());
+      const w=b.headers.length;
+      b.rows=[...el.querySelectorAll("[data-content-table-row]")].map(tr=>Array.from({length:w},(_,j)=>tr.querySelectorAll("[data-content-table-cell]")[j]?.value.trim()||"")).filter(r=>r.some(Boolean));
+    }else b.html=safeAdminHtml(el.querySelector("[data-block-html]")?.innerHTML||"");
+    if(type==="image"&&!b.src)return;
+    if(type==="heading"&&!b.text)return;
+    if(type==="table"&&!b.headers.some(Boolean))return;
+    out.push(b);
+  });
+  return out;
+}
 function sectionProductsEditor(ctx){
   const cards=ctx.productCards||[],deleted=ctx.deletedProductCards||[];
   if(!cards.length&&!deleted.length)return "";
@@ -550,12 +644,15 @@ function renderSectionEditor(ctx){
   const existing=deep(overrideCache.sections?.[ctx.id]||{});
   const sheet=ctx.spreadsheetId&&ctx.section?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(ctx.section.gid):"";
   setBody(shell(ctx.id+" · "+ctx.section.title,"Редактирование раздела",
-    '<form data-admin-section data-id="'+esc(ctx.id)+'" class="kb-admin-form"><label>Название раздела<input name="title" value="'+esc(ctx.section.title||"")+'"></label>'+
-    (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть этот лист Google Sheets ↗</a></p>':"")+sectionProductsEditor(ctx)+
-    '<details class="kb-admin-group" open><summary>Пары «название → значение» <small>'+((ctx.section.pairs||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b></span><textarea rows="10" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label></details>'+
-    '<label class="kb-admin-field"><span>Дополнительные заметки — одна заметка на строку</span><textarea rows="8" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label>'+
-    '<details class="kb-admin-group"><summary>Таблицы раздела <small>'+((ctx.section.tables||[]).length)+' таблиц</small></summary><label class="kb-admin-field"><span>Расширенный режим: JSON-массив объектов с title, headers и rows.</span><textarea rows="14" data-section-tables>'+esc(jsonText(ctx.section.tables||[]))+'</textarea></label></details>'+
-    '<details class="kb-admin-group"><summary>Расширенный JSON раздела</summary><label class="kb-admin-field"><span>Для редких полей. Обычные поля выше при сохранении имеют приоритет.</span><textarea rows="14" data-section-json>'+esc(jsonText(existing))+'</textarea></label></details>'+
+    '<form data-admin-section data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
+    '<label>Название раздела<input name="title" value="'+esc(ctx.section.title||"")+'"></label>'+
+    (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть этот лист Google Sheets ↗</a></p>':"")+
+    sectionProductsEditor(ctx)+
+    sectionBuilderHtml(ctx)+
+    '<details class="kb-admin-group"><summary>Старые структурированные данные <small>резерв</small></summary><p class="kb-admin-hint">Оставлены для совместимости со старыми разделами. Новое содержимое редактируй выше — визуальным конструктором.</p>'+
+    '<label class="kb-admin-field"><span>Пары «название → значение»</span><textarea rows="7" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label>'+
+    '<label class="kb-admin-field"><span>Заметки — одна на строку</span><textarea rows="5" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label></details>'+
+    '<details class="kb-admin-group"><summary>Расширенный JSON раздела</summary><label class="kb-admin-field"><span>Для редких полей. Основной редактор выше сохраняется в contentBlocks.</span><textarea rows="14" data-section-json>'+esc(jsonText(existing))+'</textarea></label></details>'+
     '<div class="kb-admin-savebar"><button class="kb-admin-btn primary" type="submit">Сохранить раздел</button><button class="kb-admin-btn danger" type="button" data-reset-section>Сбросить ручные правки</button></div></form>'));
 }
 function renderChapterEditor(ctx){
@@ -792,12 +889,8 @@ async function saveSection(e){
     const ctx=window.KB_EDITOR_API.current(),src=ctx.sourceSection||{},fd=new FormData(form);
     let out={};const raw=form.querySelector("[data-section-json]")?.value.trim();if(raw){out=JSON.parse(raw);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("JSON раздела должен быть объектом.");}
     putDiff(out,"title",String(fd.get("title")||""),String(src.title||""));
-    putDiff(out,"notes",parseLines(fd.get("notes")||""),src.notes||[]);
-    const pairs=parsePairs(form.querySelector("[data-section-pairs]")?.value||"").map(([label,value])=>({label,value}));
-    putDiff(out,"pairs",pairs,src.pairs||[]);
-    const tables=JSON.parse(form.querySelector("[data-section-tables]")?.value||"[]");
-    if(!Array.isArray(tables))throw new Error("Таблицы раздела должны быть JSON-массивом.");
-    putDiff(out,"tables",tables,src.tables||[]);
+    const blocks=collectSectionContentBlocks(form);
+    putDiff(out,"contentBlocks",blocks,src.contentBlocks||[]);
     const productRows=[...form.querySelectorAll("[data-section-product-row]")];
     const deletedRows=[...form.querySelectorAll("[data-section-deleted-row]")];
     if(productRows.length||deletedRows.length){
