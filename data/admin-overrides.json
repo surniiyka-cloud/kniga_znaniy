@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:23:16.960Z",
+  "updatedAt": "2026-10-01T07:24:13.506Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3133,6 +3133,27 @@
       "images": [
         "img/photos/admin/3.6-w202-бумага-для-вымени-w202/3.6-w202-бумага-для-вымени-w202-01.png"
       ]
+    },
+    "3.6-w202-бумага-для-вымени-w203": {
+      "images": [
+        "img/photos/admin/3.6-w202-бумага-для-вымени-w203/3.6-w202-бумага-для-вымени-w203-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/3.6-w202-бумага-для-вымени-w203/3.6-w202-бумага-для-вымени-w203-01.png": {
+          "card": {
+            "scale": 1,
+            "x": 0,
+            "y": -2,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": 0,
+            "y": -2,
+            "fit": "contain"
+          }
+        }
+      }
     }
   },
   "sections": {
