@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T06:32:10.905Z",
+  "updatedAt": "2026-10-01T06:34:35.241Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2929,6 +2929,11 @@
           }
         }
       }
+    },
+    "catalog-2-14-кода": {
+      "images": [
+        "img/photos/admin/catalog-2-14-кода/catalog-2-14-кода-01.png"
+      ]
     }
   },
   "sections": {
