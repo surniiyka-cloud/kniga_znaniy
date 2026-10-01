@@ -103,7 +103,26 @@ function liveSnapshots(){
   let local={};try{local=JSON.parse(localStorage.getItem(LIVE_SHEETS_KEY)||"{}")||{}}catch{}
   return {...deepCopy(state.publishedLiveSnapshots||{}),...local};
 }
-function saveLiveSnapshots(v){localStorage.setItem(LIVE_SHEETS_KEY,JSON.stringify(v||{}))}
+function saveLiveSnapshots(v){
+  const payload=JSON.stringify(v||{});
+  try{
+    localStorage.setItem(LIVE_SHEETS_KEY,payload);
+    return true;
+  }catch(e){
+    // Большие листы Google Sheets могут превысить квоту localStorage.
+    // Свежие данные уже применены в памяти, поэтому ошибка хранения кэша
+    // не должна превращаться в ошибку загрузки самого листа.
+    try{
+      localStorage.removeItem(LIVE_SHEETS_KEY);
+      localStorage.setItem(LIVE_SHEETS_KEY,payload);
+      return true;
+    }catch(e2){
+      console.warn("Не удалось сохранить локальный кэш Google Sheets; продолжаем без него.",e2);
+      try{localStorage.removeItem(LIVE_SHEETS_KEY)}catch{}
+      return false;
+    }
+  }
+}
 function bookSectionById(id){for(const ch of state.book?.chapters||[]){const s=(ch.sections||[]).find(x=>x.id===id);if(s)return {chapter:ch,section:s}}return null}
 function applyLiveParsed(section,parsed){
   for(const k of ["products","productBlocks","tables","notes","pairs","rows","rawRows","packedRows"])delete section[k];
