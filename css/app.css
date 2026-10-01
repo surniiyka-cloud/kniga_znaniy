@@ -1137,3 +1137,76 @@ body.modal-open{overflow:hidden}
   object-position:center !important;
   transform-origin:center center !important;
 }
+
+
+/* v2.2.8 — manager-first product detail layout */
+.product-page{
+  grid-template-columns:minmax(250px,300px) minmax(0,1fr);
+  gap:18px;
+  align-items:start;
+}
+.gallery-card{
+  width:100%;
+  max-width:300px;
+  box-sizing:border-box;
+  padding:10px;
+  border-radius:16px;
+}
+.gallery-topline{
+  padding:2px 4px 9px;
+  font-size:10px;
+}
+.gallery-main{
+  aspect-ratio:4/3;
+  border-radius:11px;
+}
+.gallery-thumbs{
+  margin-top:7px;
+  gap:6px;
+}
+.gallery-thumb{
+  flex-basis:62px;
+  height:48px;
+  border-radius:8px;
+  padding:3px;
+}
+.info-card{
+  min-width:0;
+  padding:20px 22px 22px;
+  border-radius:16px;
+}
+.product-title{
+  font-size:clamp(24px,2.35vw,34px);
+  margin:4px 0 10px;
+}
+.product-lead{
+  max-width:900px;
+  font-size:14px;
+  line-height:1.55;
+  margin-top:10px;
+}
+.quick-actions{
+  margin:14px 0 16px;
+}
+.product-tabs{
+  margin-top:14px;
+}
+.tab-panel{
+  padding-top:14px;
+}
+.product-tab-panels{
+  min-height:180px;
+}
+@media(max-width:900px){
+  .product-page{
+    grid-template-columns:1fr;
+  }
+  .gallery-card{
+    max-width:none;
+  }
+}
+@media(max-width:620px){
+  .info-card{
+    padding:16px;
+  }
+}
