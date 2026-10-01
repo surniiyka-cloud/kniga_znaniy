@@ -1153,7 +1153,8 @@ function contentBlockHtml(b,i){
   if(type==="image"){
     const src=String(b.src||"");if(!src)return "";
     const width=Math.min(100,Math.max(20,Number(b.width)||100)),align=b.align==="left"||b.align==="right"?b.align:"center";
-    return '<figure class="content-block content-image align-'+align+'" style="--content-image-width:'+width+'%"><img src="'+esc(photoSrc(src))+'" alt="'+esc(b.alt||"")+'">'+(b.caption?'<figcaption>'+esc(b.caption)+'</figcaption>':"")+'</figure>';
+    const imageSrc=/^(https?:|data:|\\.\\/)/i.test(src)?src:"./"+src;
+    return '<figure class="content-block content-image align-'+align+'" style="--content-image-width:'+width+'%"><img src="'+esc(imageSrc)+'" alt="'+esc(b.alt||"")+'">'+(b.caption?'<figcaption>'+esc(b.caption)+'</figcaption>':"")+'</figure>';
   }
   return '<section class="content-block content-text">'+safeRichHtml(b.html||"")+'</section>';
 }
