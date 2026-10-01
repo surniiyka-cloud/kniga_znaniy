@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T13:54:05.900Z",
+  "updatedAt": "2026-10-01T13:54:28.853Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3452,8 +3452,8 @@
       "tabTables": {
         "advantages": {
           "headers": [
-            "Название",
-            "Значение"
+            "Преимущество",
+            "Описание"
           ],
           "rows": [
             [
