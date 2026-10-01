@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T06:04:31.181Z",
+  "updatedAt": "2026-10-01T06:07:03.175Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -1115,7 +1115,26 @@
       "tabOrder": [
         "specs",
         "advantages"
-      ]
+      ],
+      "images": [
+        "img/photos/admin/catalog-2-9-электрод-для-плотных-продуктов-sensorex/catalog-2-9-электрод-для-плотных-продуктов-sensorex-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-9-электрод-для-плотных-продуктов-sensorex/catalog-2-9-электрод-для-плотных-продуктов-sensorex-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -1,
+            "y": -3,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -1,
+            "y": -3,
+            "fit": "contain"
+          }
+        }
+      }
     },
     "2.11-10006320-agrastrip-watex-дезоксиниваленол": {
       "name": "AgraStrip Pro Watex ",
