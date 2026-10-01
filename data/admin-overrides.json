@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:51:23.992Z",
+  "updatedAt": "2026-10-01T07:59:27.344Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3299,6 +3299,27 @@
           "detail": {
             "scale": 1,
             "x": -1,
+            "y": 0,
+            "fit": "contain"
+          }
+        }
+      }
+    },
+    "5.1-скребок-спиральный-для-шкуры-4-рядный-tian": {
+      "images": [
+        "img/photos/admin/5.1-скребок-спиральный-для-шкуры-4-рядный-tian/5.1-скребок-спиральный-для-шкуры-4-рядный-tian-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/5.1-скребок-спиральный-для-шкуры-4-рядный-tian/5.1-скребок-спиральный-для-шкуры-4-рядный-tian-01.png": {
+          "card": {
+            "scale": 1,
+            "x": 1,
+            "y": 0,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": 1,
             "y": 0,
             "fit": "contain"
           }
