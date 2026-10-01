@@ -1423,3 +1423,6 @@ body.modal-open{overflow:hidden}
   .norms-manager-flow{display:grid;grid-template-columns:1fr}
   .norms-manager-flow i{display:none}
 }
+
+.version-link:disabled{cursor:default;opacity:.72}
+.version-link:disabled:hover{color:rgba(255,255,255,.72)}
