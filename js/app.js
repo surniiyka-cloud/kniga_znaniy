@@ -22,7 +22,12 @@ function applyAdminVisibility(){
   const admin=isAdmin();
   const diag=document.querySelector(".diag-link"),ver=q("#versionLogBtn");
   if(diag)diag.hidden=!admin;
-  if(ver)ver.hidden=!admin;
+  if(ver){
+    ver.hidden=false;
+    ver.disabled=!admin;
+    ver.title=admin?"Открыть историю обновлений":"Версия сайта. История обновлений доступна администратору.";
+    ver.setAttribute("aria-disabled",String(!admin));
+  }
 }
 function title(t){document.title=t?(t+" · Книга знаний TIAN-Трейд"):"Книга знаний · TIAN-Трейд";}
 function closeMenu(){document.body.classList.remove("sidebar-open");}
