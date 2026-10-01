@@ -1190,33 +1190,119 @@ function renderTermsSection(ch,s){
 function renderNormsSection(ch,s){
   const rows=(s.rawRows||s.rows||[]);
   const docs=[],units=[],reading=[],steps=[];
-  let mode="";
+  let mode="",warning="";
+  const sectionHeads={
+    "1. Нормативные документы":"docs",
+    "2. Обозначения и единицы измерения":"units",
+    "3. Как читать показатели и таблицы":"reading",
+    "Порядок подбора товара":"steps"
+  };
+  const tableHeads=new Set(["Документ","Обозначение","Показатель / обозначение","Шаг"]);
   for(const r of rows){
-    const a=String(r[0]||"").trim();
-    if(a.startsWith("1.")){mode="docs";continue}
-    if(a.startsWith("2.")){mode="units";continue}
-    if(a.startsWith("3.")){mode="reading";continue}
-    if(a==="Порядок подбора товара"){mode="steps";continue}
-    if(["Документ","Обозначение","Показатель / обозначение","Шаг"].includes(a))continue;
-    if(!a||a.startsWith("Важно:"))continue;
+    const a=String(r?.[0]||"").trim();
+    if(!a)continue;
+    if(sectionHeads[a]){mode=sectionHeads[a];continue}
+    if(a.startsWith("Важно:")){warning=a.replace(/^Важно:\s*/i,"").trim();continue}
+    if(tableHeads.has(a))continue;
     const target=mode==="docs"?docs:mode==="units"?units:mode==="reading"?reading:mode==="steps"?steps:null;
     if(target)target.push(r);
   }
-  const important=[
-    ["Не путайте характеристики с нормативами.","Диапазон измерения и предел обнаружения (ppb) — это возможности прибора. «Не более» и «Не менее» — это требования закона: ТР ТС, ГОСТ."],
-    ["ppb = мкг/кг.","Символы < и > обозначают границы, а не точные значения."],
-    ["Минимальный ppb — не панацея.","Низкий предел обнаружения по одному веществу не делает тест лучшим. Оценивайте весь спектр определяемых соединений и диапазон чувствительности."],
-    ["Учитывайте матрицу и время.","Методы для молока, мяса и поверхностей различаются. Время анализа, например 5+5 мин, не включает пробоподготовку."],
-    ["Комплексный подход.","Нельзя выбрать товар только по одному параметру. Учитывайте задачу, образец, норматив, методику, время и комплектацию: количество тестов и опции."]
-  ];
-  const cards=(arr,kind)=>'<div class="norm-grid">'+arr.map((r)=>'<article class="norm-card"><span>'+esc(kind)+'</span><h3>'+esc(r[0])+'</h3><p>'+esc(r[1]||"")+'</p>'+(r[2]?'<small>'+esc(r[2])+'</small>':"")+(r[3]?'<em>'+esc(r[3])+'</em>':"")+'</article>').join("")+'</div>';
+
+  const normText=(r)=>[r?.[0],r?.[1],r?.[2],r?.[3]].filter(Boolean).map(x=>String(x)).join(" ");
+  const cardSearch=(r)=>esc(normText(r).toLowerCase());
+  const quickNames=["ppb","мкг/кг","RLU","pH","SCC"];
+  const quick=quickNames.map((name)=>units.find(r=>String(r?.[0]||"").trim().toLowerCase()===name.toLowerCase())).filter(Boolean);
+
+  const docsHtml=docs.map((r,i)=>'<article class="norms-item norms-doc" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
+    '<div class="norms-item-top"><span class="norms-index">'+String(i+1).padStart(2,"0")+'</span><span class="norms-kind">Норматив</span></div>'+
+    '<h3>'+esc(r?.[0]||"—")+'</h3>'+
+    '<div class="norms-doc-body"><div><span>Что это</span><p>'+esc(r?.[1]||"—")+'</p></div><div><span>Где применяется</span><p>'+esc(r?.[2]||"—")+'</p></div></div>'+
+  '</article>').join("");
+
+  const unitsHtml=units.map((r,i)=>'<article class="norms-item norms-unit" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
+    '<div class="norms-unit-head"><span class="norms-unit-symbol">'+esc(r?.[0]||"—")+'</span><span class="norms-index">'+String(i+1).padStart(2,"0")+'</span></div>'+
+    '<h3>'+esc(r?.[1]||"—")+'</h3>'+
+    '<div class="norms-reading-line"><span>Как читать</span><p>'+esc(r?.[2]||"—")+'</p></div>'+
+  '</article>').join("");
+
+  const readingHtml=reading.map((r,i)=>'<article class="norms-item norms-reading-card" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
+    '<div class="norms-item-top"><span class="norms-index">'+String(i+1).padStart(2,"0")+'</span><span class="norms-kind">Показатель</span></div>'+
+    '<h3>'+esc(r?.[0]||"—")+'</h3>'+
+    '<div class="norms-reading-grid">'+
+      '<div><span>Как читать</span><p>'+esc(r?.[1]||"—")+'</p></div>'+
+      (r?.[2]?'<div class="norms-example"><span>Пример</span><p>'+esc(r[2])+'</p></div>':"")+
+      (r?.[3]?'<div class="norms-important-mini"><span>Важно</span><p>'+esc(r[3])+'</p></div>':"")+
+    '</div>'+
+  '</article>').join("");
+
+  const stepsHtml=steps.map((r,i)=>{
+    const raw=String(r?.[0]||"").trim(),m=raw.match(/^(\d+)\.\s*(.*)$/),num=m?.[1]||String(i+1),label=m?.[2]||raw;
+    return '<article class="norms-step" data-norm-item data-norm-search="'+cardSearch(r)+'">'+
+      '<div class="norms-step-no">'+esc(num)+'</div><div><span>Шаг '+esc(num)+'</span><h3>'+esc(label)+'</h3><p>'+esc(r?.[1]||"—")+'</p></div>'+
+    '</article>';
+  }).join("");
+
+  const metric=(value,label)=>'<div class="norms-metric"><strong>'+esc(value)+'</strong><span>'+esc(label)+'</span></div>';
+  const quickHtml=quick.map(r=>'<button type="button" class="norms-quick" data-norm-quick="'+esc(r?.[0]||"")+'"><strong>'+esc(r?.[0]||"")+'</strong><span>'+esc(r?.[1]||"")+'</span></button>').join("");
+
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Нормативные документы, единицы измерения и правила чтения характеристик — без табличной каши.</p></div></div>'+
-    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Документы</span><h2>Нормативы</h2></div><p>'+docs.length+' позиций</p></div>'+cards(docs,"Норматив")+'</section>'+
-    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Сокращения</span><h2>Обозначения и единицы измерения</h2></div><p>'+units.length+' терминов</p></div>'+cards(units,"Обозначение")+'</section>'+
-    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Практика</span><h2>Как читать показатели</h2></div><p>'+reading.length+' пояснений</p></div>'+cards(reading,"Показатель")+'</section>'+
-    (steps.length?'<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Алгоритм</span><h2>Порядок подбора товара</h2></div></div><div class="step-list">'+steps.map((r,i)=>'<article><b>'+esc(r[0]||String(i+1))+'</b><p>'+esc(r[1]||"")+'</p></article>').join("")+'</div></section>':"")+
-    renderImportant("Важно знать перед подбором тестов и оборудования:",important,"Обратите внимание: опции, например измерение лактозы, и комплектации — 96/112/480 тестов — могут различаться. Уточняйте артикулы при заказе.")+rawTables(s);
+    '<div class="page-head norms-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Рабочая шпаргалка для менеджера: быстро найти норматив, расшифровать обозначение и понять, как читать показатель.</p></div></div>'+
+    '<section class="norms-hero">'+
+      '<div class="norms-hero-copy"><span class="eyebrow">Как ориентироваться</span><h2>Не таблица на 3 экрана — а понятная система навигации</h2><p>Сначала — быстрый обзор. Ниже — четыре логических блока: нормативы, обозначения, чтение показателей и алгоритм подбора. В каждом блоке информация разбита на короткие карточки.</p></div>'+
+      '<div class="norms-metrics">'+metric(docs.length,"нормативных документов")+metric(units.length,"обозначений и единиц")+metric(reading.length,"показателей и правил")+metric(steps.length,"шагов подбора")+'</div>'+
+    '</section>'+
+    (quickHtml?'<section class="norms-quick-wrap"><div class="norms-subhead"><div><span class="eyebrow">Быстрая шпаргалка</span><h2>Часто встречается в карточках товаров</h2></div><p>Нажмите на обозначение — ниже откроется соответствующая запись.</p></div><div class="norms-quick-grid">'+quickHtml+'</div></section>':"")+
+    '<section class="norms-browser">'+
+      '<div class="norms-browser-head"><div><span class="eyebrow">Навигация</span><h2>Выберите, что нужно сейчас</h2></div><div class="norms-search"><span>⌕</span><input id="normsSearch" type="search" placeholder="Поиск по этому разделу…" autocomplete="off"><button type="button" id="normsSearchClear" hidden>×</button></div></div>'+
+      '<div class="norms-tabs" role="tablist">'+
+        '<button type="button" class="norms-tab active" data-norm-tab="all">Все</button>'+
+        '<button type="button" class="norms-tab" data-norm-tab="docs">Нормативы <b>'+docs.length+'</b></button>'+
+        '<button type="button" class="norms-tab" data-norm-tab="units">Обозначения <b>'+units.length+'</b></button>'+
+        '<button type="button" class="norms-tab" data-norm-tab="reading">Как читать <b>'+reading.length+'</b></button>'+
+        '<button type="button" class="norms-tab" data-norm-tab="steps">Подбор товара <b>'+steps.length+'</b></button>'+
+      '</div>'+
+      '<div class="norms-panels">'+
+        '<section class="norms-panel" data-norm-panel="docs"><div class="norms-panel-head"><div><span class="eyebrow">01 · Нормативы</span><h2>Какие документы встречаются в Книге знаний</h2></div><p>'+docs.length+' позиций</p></div><div class="norms-doc-grid">'+docsHtml+'</div></section>'+
+        '<section class="norms-panel" data-norm-panel="units"><div class="norms-panel-head"><div><span class="eyebrow">02 · Обозначения</span><h2>Единицы и сокращения без расшифровки «в уме»</h2></div><p>'+units.length+' позиций</p></div><div class="norms-unit-grid">'+unitsHtml+'</div></section>'+
+        '<section class="norms-panel" data-norm-panel="reading"><div class="norms-panel-head"><div><span class="eyebrow">03 · Как читать</span><h2>Показатели, примеры и важные оговорки</h2></div><p>'+reading.length+' пояснений</p></div><div class="norms-reading-grid-list">'+readingHtml+'</div></section>'+
+        '<section class="norms-panel" data-norm-panel="steps"><div class="norms-panel-head"><div><span class="eyebrow">04 · Алгоритм</span><h2>Как подбирать товар без выбора по одному числу</h2></div><p>'+steps.length+' шагов</p></div><div class="norms-steps-grid">'+stepsHtml+'</div></section>'+
+      '</div>'+
+      '<div class="norms-no-results" id="normsNoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или очистите поиск.</span></div>'+
+    '</section>'+
+    (warning?'<section class="norms-warning"><div class="norms-warning-icon">!</div><div><span class="eyebrow">Главное правило</span><h2>Товар нельзя подбирать только по одному показателю</h2><p>'+esc(warning)+'</p></div></section>':"")+
+    '<section class="norms-manager-note"><div><span class="eyebrow">Для работы менеджера</span><h2>Логика раздела</h2></div><div class="norms-manager-flow"><span><b>1</b> Найти норматив</span><i>→</i><span><b>2</b> Расшифровать обозначение</span><i>→</i><span><b>3</b> Проверить показатель</span><i>→</i><span><b>4</b> Сопоставить с задачей клиента</span></div></section>'+
+    rawTables(s);
+
+  const panels=[...document.querySelectorAll("[data-norm-panel]")];
+  const tabs=[...document.querySelectorAll("[data-norm-tab]")];
+  const items=[...document.querySelectorAll("[data-norm-item]")];
+  const input=q("#normsSearch"),clear=q("#normsSearchClear"),empty=q("#normsNoResults");
+  let active="all";
+  const apply=()=>{
+    const query=(input?.value||"").trim().toLowerCase();
+    if(clear)clear.hidden=!query;
+    const visiblePanels=active==="all"?panels:panels.filter(p=>p.dataset.normPanel===active);
+    panels.forEach(p=>p.hidden=!visiblePanels.includes(p));
+    let shown=0;
+    visiblePanels.forEach(panel=>{
+      let panelShown=0;
+      panel.querySelectorAll("[data-norm-item]").forEach(item=>{
+        const ok=!query||String(item.dataset.normSearch||"").includes(query);
+        item.hidden=!ok;if(ok){shown++;panelShown++}
+      });
+      const head=panel.querySelector(".norms-panel-head");if(head)head.hidden=!!query&&!panelShown;
+    });
+    if(empty)empty.hidden=shown>0;
+  };
+  tabs.forEach(tab=>tab.addEventListener("click",()=>{active=tab.dataset.normTab||"all";tabs.forEach(x=>x.classList.toggle("active",x===tab));apply();}));
+  input?.addEventListener("input",apply);
+  clear?.addEventListener("click",()=>{if(input){input.value="";input.focus();}apply();});
+  document.querySelectorAll("[data-norm-quick]").forEach(btn=>btn.addEventListener("click",()=>{
+    active="units";tabs.forEach(x=>x.classList.toggle("active",x.dataset.normTab==="units"));apply();
+    const target=[...document.querySelectorAll(".norms-unit")].find(x=>x.querySelector(".norms-unit-symbol")?.textContent?.trim().toLowerCase()===String(btn.dataset.normQuick||"").trim().toLowerCase());
+    target?.scrollIntoView({behavior:"smooth",block:"center"});
+    target?.classList.add("norms-highlight");setTimeout(()=>target?.classList.remove("norms-highlight"),1200);
+  }));
 }
 function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
