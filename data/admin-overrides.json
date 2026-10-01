@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T07:21:37.208Z",
+  "updatedAt": "2026-10-01T07:23:16.960Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3128,6 +3128,11 @@
           }
         }
       }
+    },
+    "3.6-w202-бумага-для-вымени-w202": {
+      "images": [
+        "img/photos/admin/3.6-w202-бумага-для-вымени-w202/3.6-w202-бумага-для-вымени-w202-01.png"
+      ]
     }
   },
   "sections": {
