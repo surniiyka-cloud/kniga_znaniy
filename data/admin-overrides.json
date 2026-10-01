@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T06:07:03.175Z",
+  "updatedAt": "2026-10-01T06:28:10.950Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -1770,7 +1770,26 @@
         "workflow",
         "assortment",
         "comparison-hygiene-kangaroo"
-      ]
+      ],
+      "images": [
+        "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png": {
+          "card": {
+            "scale": 1,
+            "x": 0,
+            "y": -3,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": 0,
+            "y": -3,
+            "fit": "contain"
+          }
+        }
+      }
     },
     "catalog-2-15-турбидофлуориметр-биотф": {
       "indicators": [
