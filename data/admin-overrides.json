@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-01T09:04:42.136Z",
+  "updatedAt": "2026-10-01T12:13:26.797Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3562,6 +3562,11 @@
     },
     "2.13": {
       "title": "Тест-пластины KangarooSci и Romer Labs HygieneChek Plus"
+    },
+    "5.2": {
+      "hiddenProductIds": [
+        "5.2-0208-048-стандартный-диск-для-обработки-копыт-super"
+      ]
     }
   },
   "chapters": {}
