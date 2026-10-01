@@ -1,4 +1,4 @@
-const CACHE="tian-kb-v2-23";
+const CACHE="tian-kb-v2-24";
 const CORE=["./","./index.html","./css/app.css","./css/admin.css","./js/app.js","./js/admin.js","./js/router.js","./js/search.js","./js/storage.js","./assets/brand/favicon.svg"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
