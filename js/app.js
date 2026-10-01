@@ -899,7 +899,7 @@ function applyProductBlock(section,name,pairs,advantages){
 }
 function enrichVerticalProductBlocks(section){
   if(!section||!/^(3)(\.|$)/.test(section.id||""))return;
-  const rows=section.rawRows||[];if(!rows.length)return;
+  const rows=section.rawRows||section.packedRows||[];if(!rows.length)return;
   for(let i=0;i<rows.length;i++){
     const row=rows[i]||[];
     for(let c=0;c<row.length-1;c++){
