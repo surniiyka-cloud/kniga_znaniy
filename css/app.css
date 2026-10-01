@@ -1607,3 +1607,38 @@ body.modal-open{overflow:hidden}
   .doc-preview-modal{width:100vw;height:100vh;border-radius:0}.doc-preview-head{align-items:flex-start;flex-direction:column}.doc-preview-actions{width:100%;flex-wrap:wrap}
   .doc-preview-actions .btn{flex:1}.doc-preview-actions .icon-btn{flex:0 0 42px}
 }
+
+/* 1.1 refinement — cleaner hierarchy and readable definitions */
+.foundation-head{display:block}
+.foundation-intro p{max-width:900px;font-size:13px;line-height:1.72}
+.foundation-overview{justify-content:flex-start;margin:0 0 18px}
+.foundation-overview .foundation-jumps{justify-content:flex-start}
+.foundation-note-label{
+  display:inline-block;margin-right:4px;color:var(--orange);font-size:.88em;font-weight:900;letter-spacing:.02em
+}
+.foundation-key{
+  display:inline;padding:.08em .32em;border-radius:.38em;background:var(--green-3);color:var(--green);
+  font-weight:800;box-decoration-break:clone;-webkit-box-decoration-break:clone
+}
+.foundation-key-alert{background:var(--orange-2);color:var(--orange)}
+.foundation-quoted{font-weight:650;color:var(--text)}
+.foundation-lead{max-width:1000px;font-size:14px;line-height:1.78;letter-spacing:-.005em}
+.foundation-paragraph{max-width:1000px;margin-top:10px;font-size:12.5px;line-height:1.76}
+.foundation-summary{margin-top:14px}
+.foundation-term-content{padding:20px 22px}
+.foundation-term-heading{align-items:center}
+.foundation-term-mark{width:30px;height:30px;border-radius:9px;background:var(--surface-2)}
+.foundation-related-assets .foundation-assets-head{margin-bottom:7px}
+.foundation-related-assets .foundation-assets-head b{display:none}
+.foundation-related{
+  padding:7px 10px;border-radius:9px;background:var(--surface-2);font-size:10px;font-weight:800
+}
+.foundation-related span{
+  font-size:0;width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block
+}
+.foundation-term.term-focus{animation:foundationFocus 1.1s ease}
+@media(max-width:720px){
+  .foundation-term-content{padding:17px 16px}
+  .foundation-lead{font-size:13.5px;line-height:1.72}
+  .foundation-paragraph{font-size:12px;line-height:1.7}
+}
