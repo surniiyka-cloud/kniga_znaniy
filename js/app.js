@@ -6,7 +6,7 @@ import {favorites,recent,applyTheme,cycleTheme,getTheme} from "./storage.js";
 const q=(s)=>document.querySelector(s);
 const app=q("#app"), nav=q("#nav"), searchInput=q("#globalSearch"), searchPanel=q("#searchPanel");
 const isAdmin=()=>{try{return sessionStorage.getItem("kb_admin")==="1"}catch{return false}};
-const state={book:null,terms11:[],assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},publishedLiveSnapshots:{},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
+const state={book:null,terms11:[],terms11Base:[],assets:{productImages:{},sectionImages:{}},overrides:{version:1,products:{},sections:{},chapters:{}},publishedLiveSnapshots:{},editorBase:{products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()},index:[],reports:{sync:null,images:null},versionLog:{current:"2.0",entries:[]},products:new Map(),sections:new Map(),chapters:new Map(),sectionCatalog:new Map(),search:()=>[],lightbox:{images:[],index:0,alt:""}};
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,(c)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
 function fmtDate(v){try{return new Intl.DateTimeFormat("ru-RU",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(v));}catch{return v||"—";}}
@@ -1014,7 +1014,9 @@ function installEditorApi(){
         const deletedSet=new Set(layout.deleted);
         const deletedProductCards=layout.items.filter(item=>deletedSet.has(item.product.id)).map(item=>({id:item.product.id,name:item.product.name||item.product.id,article:article(item.product)||""}));
         const sourceSection={...deepCopy(base),productOrder:deepCopy(layout.defaultOrder),hiddenProductIds:deepCopy(defaultHiddenProducts(r.id,layout.items)),deletedProductIds:[]};
-        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection,productCards:currentCards,deletedProductCards,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
+        const terms11=Array.isArray(state.terms11)?deepCopy(state.terms11):[];
+        const sourceTerms11=Array.isArray(state.terms11Base)&&state.terms11Base.length?deepCopy(state.terms11Base):terms11;
+        return {kind:"section",id:r.id,section:deepCopy(x.section),sourceSection,terms11,sourceTerms11,productCards:currentCards,deletedProductCards,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
       if(r.name==="chapter"){
         const ch=state.chapters.get(r.id);return ch?{kind:"chapter",id:r.id,chapter:deepCopy(ch),sourceChapter:deepCopy(state.editorBase.chapters.get(r.id)||{title:ch.title}),spreadsheetId:state.book.spreadsheetId}:{kind:"none"};
@@ -1192,7 +1194,7 @@ function foundationBodyHtml(body){
   return (body||[]).filter(Boolean).map((p,i)=>'<p class="'+(i===0?"foundation-lead":"foundation-paragraph")+'">'+foundationInlineText(p)+'</p>').join("");
 }
 function renderTermsSection(ch,s){
-  const fallback=(s.pairs||[]).map((x,i)=>({number:i+1,title:String(x.label||"").trim(),body:[String(x.value||"").trim()],resources:[],related:[]}));
+  const fallback=(s.pairs||[]).map((x,i)=>({number:i+1,title:String(x.label||"").trim(),definition:String(x.value||"").trim(),body:[],resources:[],related:[]}));
   const terms=(Array.isArray(state.terms11)&&state.terms11.length?state.terms11:fallback).filter(x=>x&&x.title);
   const termByNumber=new Map(terms.map(x=>[Number(x.number),x]));
   const groups=[
@@ -1207,38 +1209,50 @@ function renderTermsSection(ch,s){
     if(/^https?:\/\//i.test(v))return v;
     return "./"+v.split("/").map(encodeURIComponent).join("/");
   };
+  const isPdf=(r)=>/\.pdf(?:$|[?#])/i.test(String(r?.href||""));
   const resourceHtml=(r)=>{
     const href=resourceHref(r?.href);
     if(!href)return "";
     const label=String(r?.label||r?.href||"Документ").trim();
     const external=/^https?:\/\//i.test(String(r.href||""));
-    const pdf=/\.pdf(?:$|[?#])/i.test(String(r.href||""));
-    if(pdf){
+    if(isPdf(r)){
       return '<button type="button" class="foundation-doc" data-doc-preview data-doc-href="'+esc(href)+'" data-doc-label="'+esc(label)+'"><span class="foundation-doc-type">PDF</span><span class="foundation-doc-name">'+esc(label)+'</span><span class="foundation-doc-action">Предпросмотр&nbsp;↗</span></button>';
     }
     return '<a class="foundation-link" href="'+esc(href)+'"'+(external?' target="_blank" rel="noopener"':"")+'><span>'+esc(label)+'</span><span>↗</span></a>';
+  };
+  const pdfTitleHtml=(t)=>{
+    const pdf=(t.resources||[]).find(isPdf);
+    if(!pdf)return "";
+    const href=resourceHref(pdf.href),label=String(pdf.label||"PDF").trim();
+    return '<button type="button" class="foundation-pdf-trigger" data-doc-preview data-doc-href="'+esc(href)+'" data-doc-label="'+esc(label)+'" title="Открыть PDF: '+esc(label)+'"><span class="foundation-pdf-badge">PDF</span><span class="foundation-pdf-label">'+esc(label.replace(/\s*—\s*PDF\s*$/i,""))+'</span></button>';
   };
   const relatedHtml=(r)=>{
     const target=termByNumber.get(Number(r?.term));
     return target?'<button type="button" class="foundation-related" data-term-target="'+esc(String(r.term))+'"><span>→</span>'+esc(r.label||target.title)+'</button>':"";
   };
   const itemHtml=(t)=>{
-    const search=[t.title,...(t.body||[]),(t.resources||[]).map(r=>r.label),(t.related||[]).map(r=>r.label)].flat().filter(Boolean).join(" ").toLowerCase();
-    const body=foundationBodyHtml(t.body);
+    const definition=String(t.definition||t.summary||(t.body||[])[0]||"").trim();
+    const detailBody=foundationBodyHtml(t.body||[]);
     const resources=(t.resources||[]).map(resourceHtml).filter(Boolean).join("");
     const related=(t.related||[]).map(relatedHtml).filter(Boolean).join("");
-    const docsBlock=resources?'<section class="foundation-assets"><div class="foundation-assets-head"><span>Нормативные материалы</span><b>'+String((t.resources||[]).length).padStart(2,"0")+'</b></div><div class="foundation-resource-list">'+resources+'</div></section>':"";
+    const docsBlock=resources?'<section class="foundation-assets"><div class="foundation-assets-head"><span>Нормативные материалы</span></div><div class="foundation-resource-list">'+resources+'</div></section>':"";
     const relatedBlock=related?'<section class="foundation-assets foundation-related-assets"><div class="foundation-assets-head"><span>Связанные термины</span></div><div class="foundation-related-list">'+related+'</div></section>':"";
-    const detail=(docsBlock||relatedBlock)?'<div class="foundation-card-footer">'+docsBlock+relatedBlock+'</div>':"";
+    const detailBlocks=(detailBody||docsBlock||relatedBlock)
+      ?'<div class="foundation-detail-grid">'+(detailBody?'<section class="foundation-detail-copy"><span class="foundation-detail-label">Расширение</span>'+detailBody+'</section>':"")+(docsBlock||"")+(relatedBlock||"")+'</div>'
+      :"";
+    const details=detailBlocks?'<details class="foundation-details"><summary>Подробнее</summary>'+detailBlocks+'</details>':"";
     const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="foundation-pending"><span>Ожидают добавления</span>'+esc((t.pendingResources||[]).join(" · "))+'</div>':"";
-    return '<article class="foundation-term" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="foundation-term-rail"><span class="foundation-term-no">'+String(t.number).padStart(2,"0")+'</span><span class="foundation-term-kind">ТЕРМИН</span></div><div class="foundation-term-content"><div class="foundation-term-heading"><div><span class="foundation-kicker">ОПРЕДЕЛЕНИЕ</span><h3>'+esc(t.title)+'</h3></div><span class="foundation-term-mark">§</span></div><div class="foundation-summary">'+body+'</div>'+detail+pending+'</div></article>';
+    const pdfTitle=pdfTitleHtml(t);
+    const titleRow='<div class="foundation-title-row">'+pdfTitle+'<div class="foundation-title-copy"><span class="foundation-kicker">ТЕРМИН</span><h3>'+esc(t.title)+'</h3></div></div>';
+    const search=[t.title,definition,...(t.body||[]),(t.resources||[]).map(r=>r.label),(t.related||[]).map(r=>r.label)].flat().filter(Boolean).join(" ").toLowerCase();
+    return '<article class="foundation-term" data-term-item data-term-number="'+esc(String(t.number))+'" data-term-search="'+esc(search)+'"><div class="foundation-term-rail"><span class="foundation-term-no">'+String(t.number).padStart(2,"0")+'</span><span class="foundation-term-kind">ТЕРМИН</span></div><div class="foundation-term-content"><div class="foundation-term-heading">'+titleRow+'<span class="foundation-term-mark">§</span></div><div class="foundation-summary"><p class="foundation-definition">'+foundationInlineText(definition)+'</p></div>'+details+pending+'</div></article>';
   };
   const groupHtml=groups.map(g=>{
     const groupTerms=terms.filter(t=>Number(t.number)>=g.from&&Number(t.number)<=g.to);
     return '<section class="foundation-group" id="foundation-'+esc(g.id)+'" data-foundation-group="'+esc(g.id)+'"><div class="foundation-group-head"><div><span class="foundation-group-index">'+esc(g.number)+' / '+esc(g.range)+'</span><h2>'+esc(g.title)+'</h2><p>'+esc(g.desc)+'</p></div><span class="foundation-group-count">'+groupTerms.length+' терм.</span></div><div class="foundation-list">'+groupTerms.map(itemHtml).join("")+'</div></section>';
   }).join("");
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
-    '<div class="foundation-head"><div class="foundation-intro"><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>Термины и определения</h1><p>Рабочая опора для понимания нормативной базы, оборудования и методов исследования. Здесь удобно быстро сверить значение термина, увидеть важные оговорки и перейти к связанному понятию.</p></div></div>'+
+    '<div class="foundation-head"><div class="foundation-intro"><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>Термины и определения</h1><p>Сначала — короткое рабочее определение. Если нужно разобраться глубже, откройте «Подробнее»: там собран смысловой контекст, нормативные материалы и связанные термины.</p></div></div>'+
     '<section class="foundation-browser"><div class="foundation-toolbar"><div class="foundation-search"><span>⌕</span><input id="terms11Search" type="search" placeholder="Найти термин, определение или обозначение…" autocomplete="off"><button type="button" id="terms11SearchClear" hidden>×</button></div><div class="foundation-filters" role="group" aria-label="Фильтр терминов"><button type="button" class="foundation-filter active" data-foundation-filter="all">Все</button><button type="button" class="foundation-filter" data-foundation-filter="docs">С документами</button><button type="button" class="foundation-filter" data-foundation-filter="related">Со связями</button></div></div><div class="foundation-overview"><div class="foundation-jumps">'+groups.map(g=>'<button type="button" data-foundation-jump="'+esc(g.id)+'"><span>'+esc(g.number)+'</span>'+esc(g.title)+'</button>').join("")+'</div></div><div class="foundation-groups">'+groupHtml+'</div><div class="foundation-no-results" id="terms11NoResults" hidden><strong>Ничего не найдено</strong><span>Измените запрос или снимите фильтр.</span></div></section>';
   const items=[...document.querySelectorAll("[data-term-item]")];
   const input=q("#terms11Search"),clear=q("#terms11SearchClear"),empty=q("#terms11NoResults");
@@ -1293,155 +1307,13 @@ function renderTermsSection(ch,s){
     if(!target)return;
     const group=target.closest("[data-foundation-group]");
     if(group)group.hidden=false;
+    target.open?.();
     scrollFoundationTo(target);
     target.classList.add("term-focus");
     setTimeout(()=>target.classList.remove("term-focus"),1100);
   }));
 }
-function renderNormsSection(ch,s){
-  const sectionTitle="Сокращения, обозначения и единицы измерения";
-  const rows=(s.rawRows||s.rows||[]);
-  const units=[],reading=[],steps=[];
-  let mode="";
-  const sectionHeads={
-    "1. Нормативные документы":"docs",
-    "2. Обозначения и единицы измерения":"units",
-    "3. Как читать показатели и таблицы":"reading",
-    "Порядок подбора товара":"steps"
-  };
-  const skipHeads=new Set(["Документ","Обозначение","Показатель / обозначение","Шаг"]);
-  for(const r of rows){
-    const a=String(r?.[0]||"").trim();
-    if(!a)continue;
-    if(sectionHeads[a]){mode=sectionHeads[a];continue}
-    if(/^Важно:/i.test(a))continue;
-    if(skipHeads.has(a))continue;
-    if(mode==="units")units.push(r);
-    else if(mode==="reading")reading.push(r);
-    else if(mode==="steps")steps.push(r);
-  }
-
-  const norm=(v)=>String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
-  const topicDefs=[
-    {id:"micro",label:"Микробиология",where:"микробиология, лабораторный контроль, посевы и тест-пластины",rx:/(кое|омч|микроб|инкубац|посев|тест[- ]?пласт|биотф|питательн|колони)/i,prefixes:["2.13","2.14","2.15"]},
-    {id:"analyzers",label:"Анализаторы",where:"анализаторы качества молока, измерительные приборы",rx:/(сомо|scc|анализатор|диапазон измерения|погрешн|опци|комплектац|измеряем|показател)/i,prefixes:["2.6.","2.7.","2.15"]},
-    {id:"strips",label:"Индикаторные полоски",where:"индикаторные полоски, экспресс-контроль, растворы",rx:/(полос|индикатор|нку|час|остаточн|мг\/л)/i,prefixes:["2.10"]},
-    {id:"methods",label:"Методы",where:"лабораторные методы, тест-системы, пробоподготовка",rx:/(предел обнаружения|диапазон чувствительност|время анализа|пробоподготовк|температура инкубац|время инкубац|сравнительн|группа антибиотик|метод)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.13","2.15"]},
-    {id:"measure",label:"Измерения",where:"измерения, характеристики приборов и таблицы чувствительности",rx:/(ppb|мкг\/кг|мг\/л|rlu|ph|диапазон измерения|погрешн|<|>|не более|не менее|измерен)/i,prefixes:["2.6.","2.7.","2.10","2.15"]},
-    {id:"disinfection",label:"Дезинфекция",where:"мойка, дезинфекция, контроль рабочих растворов",rx:/(нку|час|cip|дезинфек|мойк|мг\/л)/i,prefixes:["2.10","8.3","9.3"]},
-    {id:"milk",label:"Молоко",where:"молоко и молочная продукция",rx:/(молок|сомо|scc|ph|кое\/мл|ppb|антибиотик)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.6.","2.7."]},
-    {id:"express",label:"Экспресс-тесты",where:"экспресс-тесты и быстрый контроль",rx:/(ppb|предел обнаружения|полос|тест|время анализа|пробоподготовк|чувствительност)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.10","2.11","4.9"]},
-    {id:"selection",label:"Подбор товара",where:"подбор товара и сравнение характеристик",rx:/(диапазон|погрешн|предел|чувствительност|время|пробоподготовк|комплектац|опци|показател)/i,prefixes:["2.1.1","2.1.2","2.1.3","2.1.4","2.6.","2.7.","2.10","2.15"]}
-  ];
-  const topicById=new Map(topicDefs.map(x=>[x.id,x]));
-  const records=[];
-  const findRecord=(label)=>{
-    const key=norm(label);
-    return records.find(x=>x.aliases.some(a=>a===key))||null;
-  };
-  for(const r of units){
-    const label=String(r?.[0]||"").trim(),meaning=String(r?.[1]||"").trim(),where=String(r?.[2]||"").trim();
-    if(!label)continue;
-    const aliases=[norm(label)];
-    if(/[,/]/.test(label))label.split(/,\s*/).map(norm).filter(Boolean).forEach(x=>aliases.push(x));
-    records.push({label,meaning,definition:meaning,whereSource:where,example:"",important:"",aliases:[...new Set(aliases)],type:"abbreviation"});
-  }
-  for(const r of reading){
-    const label=String(r?.[0]||"").trim(),definition=String(r?.[1]||"").trim(),example=String(r?.[2]||"").trim(),important=String(r?.[3]||"").trim();
-    if(!label)continue;
-    const existing=findRecord(label);
-    if(existing){
-      if(definition)existing.definition=definition;
-      if(example)existing.example=example;
-      if(important)existing.important=important;
-      continue;
-    }
-    records.push({label,meaning:"",definition,whereSource:"",example,important,aliases:[norm(label)],type:"concept"});
-  }
-  const uniqueProducts=(arr)=>{
-    const seen=new Set(),out=[];
-    for(const x of arr){
-      if(!x||seen.has(x.product.id)||isProductExcluded(x.section.id,x.product.id))continue;
-      seen.add(x.product.id);out.push(x);
-      if(out.length>=4)break;
-    }
-    return out;
-  };
-  const products=[...state.products.values()];
-  const buildRecord=(r)=>{
-    const hay=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important].filter(Boolean).join(" ");
-    const topics=topicDefs.filter(t=>t.rx.test(hay)).map(t=>t.id);
-    if(!topics.length)topics.push("selection");
-    const topicObjects=topics.map(id=>topicById.get(id)).filter(Boolean);
-    const where=[r.whereSource,...topicObjects.map(t=>t.where)].filter(Boolean).join(" · ");
-    const searchTerms=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important,...topicObjects.map(t=>t.label)].filter(Boolean);
-    const exact=[];
-    const normalizedNeedles=[r.label,r.meaning].filter(x=>norm(x).length>=3).map(norm);
-    for(const x of products){
-      const hayProduct=norm(JSON.stringify(x.product));
-      if(normalizedNeedles.some(n=>hayProduct.includes(n)))exact.push(x);
-    }
-    const topicCandidates=[];
-    for(const t of topicObjects){
-      for(const x of products){
-        if(t.prefixes.some(prefix=>x.section.id===prefix||x.section.id.startsWith(prefix)))topicCandidates.push(x);
-      }
-    }
-    const related=uniqueProducts([...exact,...topicCandidates]);
-    return {...r,topics,topicLabels:topicObjects.map(t=>t.label),where:[...new Set(where.split(" · ").map(x=>x.trim()).filter(Boolean))].slice(0,4),products:related,search:searchTerms.concat(related.map(x=>x.product.name)).join(" ").toLowerCase()};
-  };
-  const terms=records.map(buildRecord);
-  const topicCounts=new Map(topicDefs.map(t=>[t.id,0]));
-  terms.forEach(t=>t.topics.forEach(id=>topicCounts.set(id,(topicCounts.get(id)||0)+1)));
-  const topicButtons='<button type="button" class="glossary-topic active" data-glossary-topic="all">Все <b>'+terms.length+'</b></button>'+topicDefs.filter(t=>(topicCounts.get(t.id)||0)>0).map(t=>'<button type="button" class="glossary-topic" data-glossary-topic="'+esc(t.id)+'">'+esc(t.label)+' <b>'+topicCounts.get(t.id)+'</b></button>').join("");
-  const itemHtml=(r,i)=>{
-    const chips=r.topicLabels.slice(0,3).map(label=>'<button type="button" class="glossary-chip" data-glossary-topic="'+esc(topicDefs.find(t=>t.label===label)?.id||"all")+'">'+esc(label)+'</button>').join("");
-    const productsHtml=r.products.length?r.products.map(x=>'<button type="button" class="glossary-product-link" data-open-product="'+esc(x.product.id)+'"><strong>'+esc(x.product.name)+'</strong>'+(article(x.product)?'<span>Арт. '+esc(article(x.product))+'</span>':"")+'</button>').join(""):'<span class="glossary-empty-link">Связанных карточек пока не привязано</span>';
-    const example=r.example?'<div class="glossary-detail-block"><span>Пример</span><p>'+esc(r.example)+'</p></div>':"";
-    const important=r.important?'<div class="glossary-detail-block glossary-detail-important"><span>Важно</span><p>'+esc(r.important)+'</p></div>':"";
-    const details=(example||important||r.products.length||r.topicLabels.length)?'<details class="glossary-details"><summary>Подробнее</summary><div class="glossary-detail-grid"><div class="glossary-detail-block"><span>Связанные темы</span><div class="glossary-chip-row">'+chips+'</div></div><div class="glossary-detail-block glossary-products"><span>В каких товарах и карточках</span><div class="glossary-product-list">'+productsHtml+'</div></div>'+example+important+'</div></details>':"";
-    const kind=r.type==="abbreviation"?"Сокращение / обозначение":"Термин";
-    const secondary=r.meaning?'<p class="glossary-expansion">'+esc(r.meaning)+'</p>':"";
-    const body=r.meaning&&r.definition&&norm(r.meaning)!==norm(r.definition)?'<p class="glossary-definition">'+esc(r.definition)+'</p>':(!r.meaning&&r.definition?'<p class="glossary-definition">'+esc(r.definition)+'</p>':"");
-    const quick="";
-    return '<article class="glossary-card" data-glossary-item data-glossary-topics="'+esc(r.topics.join(" "))+'" data-glossary-search="'+esc(r.search)+'"><div class="glossary-card-head"><div><span class="glossary-kind">'+kind+'</span><h3>'+esc(r.label)+'</h3>'+secondary+'</div><span class="glossary-index">'+String(i+1).padStart(2,"0")+'</span></div>'+(body||quick?'<div class="glossary-summary">'+body+quick+'</div>':"")+'<div class="glossary-topic-row">'+r.topicLabels.slice(0,3).map(label=>'<button type="button" class="glossary-chip" data-glossary-topic="'+esc(topicDefs.find(t=>t.label===label)?.id||"all")+'">'+esc(label)+'</button>').join("")+'</div>'+details+'</article>';
-  };
-  const termsHtml=terms.map(itemHtml).join("");
-  const stepsHtml=steps.map((r,i)=>{
-    const label=String(r?.[0]||"").trim(),value=String(r?.[1]||"").trim();
-    if(!label&&!value)return "";
-    return '<div class="glossary-step"><span>'+String(i+1).padStart(2,"0")+'</span><div><strong>'+esc(label.replace(/^\d+\.\s*/,""))+'</strong><p>'+esc(value)+'</p></div></div>';
-  }).join("");
-  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+sectionTitle}])+
-    '<div class="page-head glossary-page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+sectionTitle+'</h1><p>Быстрый словарь для менеджера: сначала понятный ответ, затем контекст и подробности — только если они нужны.</p></div></div>'+
-    '<section class="glossary-browser"><div class="glossary-toolbar"><div class="glossary-search"><span>⌕</span><input id="glossarySearch" type="search" placeholder="Найти сокращение, слово или понятие…" autocomplete="off"><button type="button" id="glossarySearchClear" hidden>×</button></div></div><div class="glossary-topics" role="tablist">'+topicButtons+'</div><div class="glossary-result-line"><strong id="glossaryResultCount">'+terms.length+'</strong><span>записей</span><span class="glossary-result-hint">Наведите взгляд на первый уровень — остальное раскрывается по необходимости.</span></div><div class="glossary-grid" id="glossaryGrid">'+termsHtml+'</div><div class="glossary-no-results" id="glossaryNoResults" hidden><strong>Ничего не найдено</strong><span>Попробуйте другое слово или другую тему.</span></div></section>'+
-    (stepsHtml?'<details class="glossary-manager-guide"><summary><span>Памятка менеджера</span><small>Порядок подбора товара — раскрывается только при необходимости</small></summary><div class="glossary-steps">'+stepsHtml+'</div></details>':"")
-  const items=[...document.querySelectorAll("[data-glossary-item]")];
-  const topicBtns=[...document.querySelectorAll("[data-glossary-topic]")];
-  const input=q("#glossarySearch"),clear=q("#glossarySearchClear"),empty=q("#glossaryNoResults"),count=q("#glossaryResultCount");
-  let active="all";
-  const apply=()=>{
-    const query=(input?.value||"").trim().toLowerCase();
-    if(clear)clear.hidden=!query;
-    let shown=0;
-    items.forEach(item=>{
-      const topicOk=active==="all"||String(item.dataset.glossaryTopics||"").split(" ").includes(active);
-      const textOk=!query||String(item.dataset.glossarySearch||"").includes(query);
-      const ok=topicOk&&textOk;
-      item.hidden=!ok;if(ok)shown++;
-    });
-    if(count)count.textContent=String(shown);
-    if(empty)empty.hidden=shown>0;
-  };
-  topicBtns.forEach(btn=>btn.addEventListener("click",()=>{
-    active=btn.dataset.glossaryTopic||"all";
-    topicBtns.forEach(x=>x.classList.toggle("active",x===btn));
-    apply();
-    q("#glossaryGrid")?.scrollIntoView({behavior:"smooth",block:"start"});
-  }));
-  input?.addEventListener("input",apply);
-  clear?.addEventListener("click",()=>{if(input){input.value="";input.focus();}apply();});
-}function renderChapter(id){
+function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
   const sections=displaySections(ch);
   app.innerHTML=crumb([{label:"Глава "+ch.id}])+'<div class="page-head"><div><span class="eyebrow">Глава '+esc(ch.id)+'</span><h1>'+esc(ch.title)+'</h1><p>'+sections.length+' подразделов</p></div></div><section class="chapter-grid">'+sections.map((s)=>'<article class="chapter-card" data-num="'+esc(s.id)+'" data-open-section="'+esc(s.id)+'"><span class="chapter-num">'+esc(s.id)+'</span><span class="chapter-arrow">↗</span><h3>'+esc(s.title)+'</h3><p>'+((s.products||[]).length?((s.products||[]).length+" карточек"):"Справочный материал")+'</p></article>').join("")+'</section>';
@@ -1688,7 +1560,9 @@ async function loadTerms11(){
     try{
       const res=await fetch("./data/terms-1-1.json?v="+Date.now(),{cache:"no-store",signal:controller.signal});
       if(!res.ok)throw new Error("HTTP "+res.status);
-      state.terms11=await res.json();
+      state.terms11Base=await res.json();
+      const overrideTerms=state.overrides?.sections?.["1.1"]?.terms11;
+      state.terms11=Array.isArray(overrideTerms)&&overrideTerms.length?deepCopy(overrideTerms):deepCopy(state.terms11Base);
       const r=route();
       if(r.name==="section"&&r.id==="1.1")render();
     }finally{clearTimeout(timer)}
