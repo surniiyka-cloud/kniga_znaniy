@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T10:54:01.817Z",
+  "updatedAt": "2026-10-02T11:09:09.471Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4547,6 +4547,32 @@
           "pendingResources": []
         }
       ]
+    },
+    "10.1": {
+      "manualProducts": {
+        "manual-10.1-влагомер-тест": {
+          "id": "manual-10.1-влагомер-тест",
+          "name": "Влагомер Тест",
+          "article": "",
+          "type": "",
+          "purpose": "",
+          "detailFields": [],
+          "advantages": [],
+          "substances": [],
+          "indicators": [],
+          "tabTables": {},
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "washCycle": [],
+          "customTabs": []
+        }
+      }
     }
   },
   "chapters": {}
