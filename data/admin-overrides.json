@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T09:41:42.684Z",
+  "updatedAt": "2026-10-02T09:41:52.043Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3919,6 +3919,17 @@
       }
     },
     "catalog-2-6-tias-agro": {
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "advantages",
+        "calibration"
+      ],
+      "hiddenTabs": [
+        "advantages"
+      ]
+    },
+    "catalog-2-6-tias-agro-plus": {
       "tabOrder": [
         "specs",
         "indicators",
