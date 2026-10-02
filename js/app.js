@@ -919,7 +919,7 @@ function compareValue(p,sectionKey){
   if(sectionKey==="consumables")return pairs("consumables");
   if(sectionKey==="testKits")return pairs("testKits");
   const custom=(p?.customTabs||[]).find(t=>t.id===sectionKey);
-  return custom?.kind==="table"?tablePanelRows(custom):pairs(sectionKey);
+  return custom?.kind==="table"?tablePanelRows(custom):(custom?.rows||[]).filter(r=>r?.[0]&&r?.[1]).map(r=>[String(r[0]).trim(),String(r[1]).trim()]);
 }
 function tablePanelRows(t){
   if(!t?.headers?.length||!t?.rows?.length)return [];
@@ -978,6 +978,7 @@ function renderCatalogSection(ch,s){
       const bar=q("[data-analyzer-compare-bar]");
       bar?.querySelector("[data-compare-all]")?.addEventListener("click",()=>{bar.querySelectorAll("[data-compare-check]").forEach(x=>x.checked=true);updateAnalyzerCompareBar(items)});
       bar?.querySelector("[data-compare-open]")?.addEventListener("click",()=>{const selected=items.filter(x=>bar.querySelector('[data-compare-check][value="'+CSS.escape(x.product.id)+'"]')?.checked);if(selected.length>=2)renderAnalyzerCompare(selected);});
+      bar?.querySelectorAll("[data-compare-check]").forEach(x=>x.addEventListener("change",()=>updateAnalyzerCompareBar(items)));
       items.forEach(x=>{const cardEl=[...document.querySelectorAll("[data-open-product]")].find(b=>b.dataset.openProduct===x.product.id)?.closest(".product-card");if(cardEl){const action=cardEl.querySelector(".product-actions");action?.insertAdjacentHTML("afterbegin",'<label class="compare-check"><input type="checkbox" value="'+esc(x.product.id)+'" data-compare-check><span>Сравнить</span></label>');}});
     }
   }
