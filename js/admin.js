@@ -800,7 +800,7 @@ function bindBody(){
     const add=e.target.closest?.("[data-pair-add]");
     if(add){
       const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
-      if(list)list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');
+      if(list){list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');bindPairDrag(list.lastElementChild);}
       return;
     }
     const remove=e.target.closest?.("[data-pair-remove]");
@@ -1086,15 +1086,18 @@ function bindBody(){
     if(e.target.closest("[data-table-delete]")){ed.remove();return}
   });
   let draggedPairRow=null;
-  body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(row=>{
-    const handle=row.querySelector("[data-pair-drag]");
-    handle?.addEventListener("dragstart",e=>{
+  const bindPairDrag=row=>{
+    if(!row||row.dataset.pairDragBound==="1")return;
+    row.dataset.pairDragBound="1";
+    row.setAttribute("draggable","true");
+    row.addEventListener("dragstart",e=>{
+      if(e.target.closest?.("[data-pair-remove]")){e.preventDefault();return}
       draggedPairRow=row;
-      e.dataTransfer?.setData("text/plain",row.dataset.pairRow||"pair");
+      e.dataTransfer?.setData("text/plain","pair");
       if(e.dataTransfer)e.dataTransfer.effectAllowed="move";
       row.classList.add("is-dragging");
     });
-    handle?.addEventListener("dragend",()=>{
+    row.addEventListener("dragend",()=>{
       row.classList.remove("is-dragging");
       draggedPairRow=null;
     });
@@ -1106,7 +1109,8 @@ function bindBody(){
       const after=e.clientY>box.top+box.height/2;
       row.parentElement?.insertBefore(draggedPairRow,after?row.nextSibling:row);
     });
-  });
+  };
+  body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(bindPairDrag);
   body.addEventListener("click",e=>{
     const add=e.target.closest?.("[data-pair-add]");
     if(add){
