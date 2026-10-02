@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T08:47:08.748Z",
+  "updatedAt": "2026-10-02T08:57:58.070Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3790,6 +3790,27 @@
         "advantages",
         "calibration"
       ]
+    },
+    "5.1-ножницы-для-стрижки-овец-ankar": {
+      "images": [
+        "img/photos/admin/5.1-ножницы-для-стрижки-овец-ankar/5.1-ножницы-для-стрижки-овец-ankar-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/5.1-ножницы-для-стрижки-овец-ankar/5.1-ножницы-для-стрижки-овец-ankar-01.png": {
+          "card": {
+            "scale": 1,
+            "x": 0,
+            "y": 2,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": 0,
+            "y": 2,
+            "fit": "contain"
+          }
+        }
+      }
     }
   },
   "sections": {
