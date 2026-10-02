@@ -276,11 +276,14 @@ function ensureUI(){
     modal.addEventListener("click",e=>{if(e.target.closest("[data-admin-close]"))closeAdmin()});
   }
 }
-function setBody(html){ensureUI();modal.querySelector("#kbAdminBody").innerHTML=html;bindBody()}
-async function openAdmin(){
-  ensureUI();if(!await requireAdmin())return;
-  modal.hidden=false;document.body.classList.add("kb-admin-open");renderEditor().catch(showError);
+function setBody(html){
+  const isPage=["account","accountProduct","accountSection"].includes(window.KB_EDITOR_API?.route?.()?.name||"");
+  if(isPage){
+    const app=document.querySelector("#app");if(app){app.innerHTML='<div class="kb-admin-page">'+html+"</div>";bindBody();return}
+  }
+  ensureUI();modal.querySelector("#kbAdminBody").innerHTML=html;bindBody()
 }
+function openAdmin(){location.hash="#/account"}
 function closeAdmin(){if(modal)modal.hidden=true;document.body.classList.remove("kb-admin-open")}
 function showError(e){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status error";box.textContent=e?.message||String(e)}else alert(e?.message||e)}
 function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status "+kind;box.textContent=t}}
@@ -289,6 +292,22 @@ function shell(title,subtitle,inner){
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Администратор</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
   '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать все правки книги</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить файл правок книги<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost" data-admin-logout>Выйти из админа</button><span class="kb-admin-devnote">Рабочий редактор · изменения публикуются в main</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
+}
+async function renderAccountPage(){
+  const r=window.KB_EDITOR_API?.route?.()||{name:"account"};
+  if(!adminActive()){
+    setBody('<div class="kb-account-login"><div class="kb-account-login-card"><span class="kb-admin-kicker">Личный кабинет</span><h1>Вход в редактор</h1><p>Здесь управляется каталог товаров и содержимое Книги знаний.</p><form data-account-login><label>Пароль<input type="password" name="password" autocomplete="current-password" autofocus></label><button class="kb-admin-btn primary" type="submit">Войти</button><p class="kb-admin-login-error" data-account-login-error></p></form></div></div>');
+    return;
+  }
+  if(r.name==="accountProduct"||r.name==="accountSection"){renderEditor().catch(showError);return;}
+  const catalog=window.KB_EDITOR_API.catalog?.()||[];
+  const sections=catalog.flatMap(ch=>ch.sections.filter(s=>s.products.length).map(sec=>({...sec,chapterId:ch.id,chapterTitle:ch.title})));
+  const html=shell("Личный кабинет","Управление каталогом без Google Sheets",
+    '<div class="kb-account-head"><div><h3>Каталог товаров</h3><p class="kb-admin-hint">Теперь это основная база сайта. Google Sheets больше не используется для повседневного редактирования.</p></div><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button></div>'+
+    sections.map(sec=>'<section class="kb-account-section"><div class="kb-account-section-head"><div><span class="eyebrow">Глава '+esc(sec.chapterId)+'</span><h2>'+esc(sec.id+" "+sec.title)+'</h2></div><button class="kb-mini" data-account-section="'+esc(sec.id)+'">Редактировать раздел</button></div>'+
+      '<div class="kb-account-products">'+sec.products.map(p=>'<article class="kb-account-product"><div><strong>'+esc(p.name)+'</strong><small>'+esc(p.article||"Без артикула")+'</small></div><button class="kb-admin-btn ghost" data-account-edit-product="'+esc(p.id)+'">✎</button></article>').join("")+'</div></section>').join("")+
+    '<div class="kb-account-empty">'+(sections.length?"":"Каталог пока пуст.")+'</div>');
+  setBody(html);
 }
 async function renderEditor(){
   await loadOverrides(true);
@@ -927,7 +946,8 @@ function bindBody(){
   });
 
   body.querySelector("[data-add-product]")?.addEventListener("click",async()=>{
-    if(!editorCtx?.id)return;
+    const sectionId=body.querySelector("[data-admin-section]")?.dataset.id||editorCtx?.sourceSection?.id||editorCtx?.section?.id||"";
+    if(!sectionId)return showError(new Error("Не удалось определить раздел товара."));
     const name=(prompt("Название нового товара:")||"").trim();
     if(!name)return;
     const article=(prompt("Артикул (можно оставить пустым):")||"").trim();
@@ -936,10 +956,10 @@ function bindBody(){
     section.manualProducts=section.manualProducts&&typeof section.manualProducts==="object"&&!Array.isArray(section.manualProducts)?section.manualProducts:{};
     let id=base,n=2;while(section.manualProducts[id]||o.products?.[id])id=base+"-"+n++;
     section.manualProducts[id]={id,name,article,type:"",purpose:"",detailFields:[],advantages:[],substances:[],indicators:[],tabTables:{},options:[],variants:[],complectation:[],workflow:[],calibration:[],assortment:[],consumables:[],testKits:[],washCycle:[],customTabs:[]};
-    o.sections[editorCtx.id]=section;
+    o.sections[sectionId]=section;
     await commitOverrides(o);
     showStatus("Карточка создана. Открываю редактор…");
-    location.hash="#/product/"+encodeURIComponent(id);
+    location.hash="#/account/product/"+encodeURIComponent(id);
   });
   body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
     const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
