@@ -1030,7 +1030,7 @@ function bindBody(){
     await commitOverrides(o);
     overrideCache=deep(o);
     showStatus("Карточка создана. Открываю редактор…");
-    location.hash="#/account/product/"+encodeURIComponent(id);
+    location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
   });
   body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
     const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
@@ -1148,7 +1148,7 @@ async function saveProduct(e){
     await commitOverrides(o);
     overrideCache=deep(o);
     showStatus("Карточка сохранена и опубликована.");
-    location.hash="#/account";
+    location.hash="#/account";location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveSection(e){
@@ -1174,7 +1174,7 @@ async function saveSection(e){
       }).filter(t=>t.number&&t.title);
       putDiff(out,"terms11",terms,ctx.sourceTerms11||[]);
       const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
-      await commitOverrides(o);overrideCache=deep(o);showStatus("Термины 1.1 сохранены и опубликованы.");location.hash="#/account";return;
+      await commitOverrides(o);overrideCache=deep(o);showStatus("Термины 1.1 сохранены и опубликованы.");location.hash="#/account";location.reload();return;
     }
     const blocks=collectSectionContentBlocks(form);
     putDiff(out,"contentBlocks",blocks,src.contentBlocks||[]);
@@ -1197,7 +1197,7 @@ async function saveSection(e){
       putDiff(out,"deletedProductIds",deletedProductIds,src.deletedProductIds||[]);
     }
     const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
-    await commitOverrides(o);overrideCache=deep(o);showStatus("Раздел сохранён и опубликован.");location.hash="#/account";
+    await commitOverrides(o);overrideCache=deep(o);showStatus("Раздел сохранён и опубликован.");location.hash="#/account";location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveChapter(e){
@@ -1205,7 +1205,7 @@ async function saveChapter(e){
   try{
     const ctx=window.KB_EDITOR_API.current(),src=ctx.sourceChapter||{},title=String(new FormData(form).get("title")||""),out={};putDiff(out,"title",title,String(src.title||""));
     const o=await loadOverrides();if(emptyObject(out))delete o.chapters[id];else o.chapters[id]=out;
-    await commitOverrides(o);overrideCache=deep(o);showStatus("Глава сохранена и опубликована.");location.hash="#/account";
+    await commitOverrides(o);overrideCache=deep(o);showStatus("Глава сохранена и опубликована.");location.hash="#/account";location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function resetOverride(kind,id){
