@@ -897,12 +897,90 @@ function orderedSectionItems(sectionId,{includeHidden=false,includeDeleted=false
 function isProductHidden(sectionId,productId){return sectionProductLayout(sectionId).hidden.includes(productId);}
 function isProductDeleted(sectionId,productId){return sectionProductLayout(sectionId).deleted.includes(productId);}
 function isProductExcluded(sectionId,productId){return isProductHidden(sectionId,productId)||isProductDeleted(sectionId,productId);}
+function compareValue(p,sectionKey){
+  const pairs=(key)=>{
+    const rows=p?.[key];
+    return Array.isArray(rows)?rows.filter(r=>r?.[0]&&r?.[1]).map(r=>[String(r[0]).trim(),String(r[1]).trim()]):[];
+  };
+  const table=(key)=>{
+    const t=tabTableFor(p,key); if(!t?.headers?.length||!t?.rows?.length)return [];
+    return t.rows.map((row)=>[String(row?.[0]||"Показатель").trim(),t.headers.slice(1).map((h,i)=>String(h||"")+": "+String(row?.[i+1]||"")).filter(x=>!/: $/.test(x)).join(" · ")||String(row?.[1]||"")]).filter(r=>r[1]);
+  };
+  if(sectionKey==="specs")return fields(p);
+  if(sectionKey==="indicators")return table("indicators").length?table("indicators"):pairs("indicators");
+  if(sectionKey==="options")return table("options").length?table("options"):pairs("options");
+  if(sectionKey==="variants")return table("variants").length?table("variants"):pairs("variants");
+  if(sectionKey==="advantages")return pairs("advantages");
+  if(sectionKey==="complectation")return pairs("complectation");
+  if(sectionKey==="washCycle")return pairs("washCycle");
+  if(sectionKey==="workflow")return pairs("workflow");
+  if(sectionKey==="calibration")return pairs("calibration");
+  if(sectionKey==="assortment")return pairs("assortment");
+  if(sectionKey==="consumables")return pairs("consumables");
+  if(sectionKey==="testKits")return pairs("testKits");
+  const custom=(p?.customTabs||[]).find(t=>t.id===sectionKey);
+  return custom?.kind==="table"?tablePanelRows(custom):pairs(sectionKey);
+}
+function tablePanelRows(t){
+  if(!t?.headers?.length||!t?.rows?.length)return [];
+  return t.rows.map((row)=>[String(row?.[0]||"Показатель").trim(),t.headers.slice(1).map((h,i)=>String(h||"")+": "+String(row?.[i+1]||"")).filter(x=>!/: $/.test(x)).join(" · ")||String(row?.[1]||"")]).filter(r=>r[1]);
+}
+function compareSectionsFor(items){
+  const order=[["specs","Характеристики"],["indicators","Измеряемые показатели"],["options","Дополнительные опции"],["variants","Варианты исполнения"],["advantages","Особенности / преимущества"],["complectation","Комплектация"],["washCycle","Рекомендуемый цикл мойки"],["workflow","Порядок работы"],["calibration","Калибровка"],["assortment","Линейка"],["consumables","Расходные материалы"],["testKits","Тест-наборы"]];
+  const custom=new Map();
+  items.forEach(x=>(x.product.customTabs||[]).forEach(t=>{if(!custom.has(t.id))custom.set(t.id,t.label||t.id)}));
+  return order.concat([...custom.entries()].map(x=>[x[0],x[1]]));
+}
+function normCompare(v){return String(v??"").replace(/\\s+/g," ").replace(/[—–]/g,"-").trim().toLowerCase();}
+function renderAnalyzerCompare(items){
+  const selected=items.filter(Boolean),sections=compareSectionsFor(selected);
+  const allRows=[];
+  sections.forEach(([key,label])=>{
+    const maps=selected.map(x=>new Map(compareValue(x.product,key).map(([a,b])=>[normCompare(a),[a,b]])));
+    const keys=[...new Set(maps.flatMap(m=>[...m.keys()]))];
+    keys.forEach(k=>{
+      const vals=maps.map(m=>m.get(k)?.[1]||"—");
+      if(vals.some(v=>v!=="—"))allRows.push({key,label,name:maps.find(m=>m.has(k))?.get(k)?.[0]||k,vals});
+    });
+  });
+  const differences=allRows.filter(r=>new Set(r.vals.map(normCompare)).size>1);
+  const body=(rows)=>rows.map(r=>'<tr><th><span>'+esc(r.label)+'</span>'+esc(r.name)+'</th>'+r.vals.map(v=>'<td class="'+(v==="—"?"empty":"")+'">'+esc(v)+'</td>').join("")+'</tr>').join("");
+  const cards=selected.map((x,i)=>{const p=x.product,im=(state.assets.productImages?.[p.id]||[])[0];return '<div class="compare-product"><div class="compare-product-image '+(im?"":"placeholder")+'">'+(im?'<img src="'+esc(imageSrc(im))+'" alt="'+esc(p.name)+'">':'<span>Фото нет</span>')+'</div><div><strong>'+esc(p.name)+'</strong>'+(article(p)?'<small>Арт. '+esc(article(p))+'</small>':"")+'</div><button type="button" class="compare-remove" data-compare-remove="'+esc(p.id)+'" aria-label="Убрать">×</button></div>'}).join("");
+  app.insertAdjacentHTML("beforeend",'<div class="compare-modal" data-compare-modal><div class="compare-backdrop" data-compare-close></div><section class="compare-dialog" role="dialog" aria-modal="true" aria-labelledby="compareTitle"><header class="compare-head"><div><span class="eyebrow">Сравнение анализаторов</span><h2 id="compareTitle">Сравнение характеристик</h2><p>'+selected.length+' позиции · одинаковые параметры объединены в одну строку</p></div><button type="button" class="icon-btn" data-compare-close aria-label="Закрыть">×</button></header><div class="compare-products">'+cards+'</div><div class="compare-toolbar"><button type="button" class="btn ghost active" data-compare-filter="all">Все характеристики</button><button type="button" class="btn ghost" data-compare-filter="diff">Только различия</button></div><div class="compare-table-wrap"><table class="compare-table"><thead><tr><th>Параметр</th>'+selected.map(x=>'<th>'+esc(x.product.name)+'</th>').join("")+'</tr></thead><tbody data-compare-body>'+body(allRows)+'</tbody></table><div class="compare-empty" data-compare-empty hidden>Для выбранных анализаторов различий по заполненным параметрам не найдено.</div></div></section></div>');
+  const modal=q("[data-compare-modal]"),tbody=modal.querySelector("[data-compare-body]"),empty=modal.querySelector("[data-compare-empty]");
+  const draw=(mode)=>{const rows=mode==="diff"?differences:allRows;tbody.innerHTML=body(rows);empty.hidden=rows.length>0};
+  modal.querySelectorAll("[data-compare-filter]").forEach(b=>b.onclick=()=>{modal.querySelectorAll("[data-compare-filter]").forEach(x=>x.classList.toggle("active",x===b));draw(b.dataset.compareFilter)});
+  modal.querySelectorAll("[data-compare-remove]").forEach(b=>b.onclick=()=>{const id=b.dataset.compareRemove;modal.remove();const next=selected.filter(x=>x.product.id!==id);if(next.length>=2)renderAnalyzerCompare(next);else updateAnalyzerCompareBar(items)});
+  modal.querySelectorAll("[data-compare-close]").forEach(b=>b.onclick=()=>modal.remove());
+}
+function updateAnalyzerCompareBar(items){
+  const bar=q("[data-analyzer-compare-bar]");if(!bar)return;
+  const checked=[...bar.querySelectorAll("[data-compare-check]:checked")].map(x=>x.value),count=checked.length;
+  bar.querySelector("[data-compare-count]").textContent=count;
+  const btn=bar.querySelector("[data-compare-open]");
+  btn.disabled=count<2;
+  btn.textContent=count<2?"Сравнить (выберите 2+)":"Сравнить выбранные";
+}
+function setupAnalyzerCompare(items){
+  if(items.length<2)return "";
+  return '<section class="analyzer-compare-bar" data-analyzer-compare-bar><div><span class="eyebrow">Сравнение</span><strong><span data-compare-count>0</span> из '+items.length+' анализаторов выбрано</strong></div><div class="analyzer-compare-actions"><button type="button" class="btn ghost" data-compare-all>Выбрать все</button><button type="button" class="btn primary" data-compare-open disabled>Сравнить (выберите 2+)</button></div></section>';
+}
 function renderCatalogSection(ch,s){
   const items=orderedSectionItems(s.id);
+  const isAnalyzerCompare=s.id==="2.6";
   app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+items.length+' карточек</p></div></div>'+
+    (isAnalyzerCompare?setupAnalyzerCompare(items):"")+
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>');
-  if(items.length)q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
+  if(items.length){
+    q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
+    if(isAnalyzerCompare){
+      const bar=q("[data-analyzer-compare-bar]");
+      bar?.querySelector("[data-compare-all]")?.addEventListener("click",()=>{bar.querySelectorAll("[data-compare-check]").forEach(x=>x.checked=true);updateAnalyzerCompareBar(items)});
+      bar?.querySelector("[data-compare-open]")?.addEventListener("click",()=>{const selected=items.filter(x=>bar.querySelector('[data-compare-check][value="'+CSS.escape(x.product.id)+'"]')?.checked);if(selected.length>=2)renderAnalyzerCompare(selected);});
+      items.forEach(x=>{const cardEl=[...document.querySelectorAll("[data-open-product]")].find(b=>b.dataset.openProduct===x.product.id)?.closest(".product-card");if(cardEl){const action=cardEl.querySelector(".product-actions");action?.insertAdjacentHTML("afterbegin",'<label class="compare-check"><input type="checkbox" value="'+esc(x.product.id)+'" data-compare-check><span>Сравнить</span></label>');}});
+    }
+  }
 }
 
 function splitFeatureText(text){
