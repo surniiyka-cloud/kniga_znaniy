@@ -1071,6 +1071,11 @@ async function saveSection(e){
     }
     const blocks=collectSectionContentBlocks(form);
     putDiff(out,"contentBlocks",blocks,src.contentBlocks||[]);
+    // Keep manually created marketplace cards when saving the section itself.
+    const existingSectionOverrides=(await loadOverrides()).sections?.[id]||{};
+    if(existingSectionOverrides.manualProducts&&typeof existingSectionOverrides.manualProducts==="object"&&!Array.isArray(existingSectionOverrides.manualProducts)){
+      out.manualProducts=deep(existingSectionOverrides.manualProducts);
+    }
     const productRows=[...form.querySelectorAll("[data-section-product-row]")];
     const deletedRows=[...form.querySelectorAll("[data-section-deleted-row]")];
     if(productRows.length||deletedRows.length){
