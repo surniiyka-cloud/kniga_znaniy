@@ -310,6 +310,7 @@ function shell(title,subtitle,inner){
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function renderAccountPage(){
+  syncAccountEntry();
   const r=window.KB_EDITOR_API?.route?.()||{name:"account"};
   if(!adminActive()){
     setBody('<div class="kb-account-login"><div class="kb-account-login-card"><span class="kb-admin-kicker">Личный кабинет</span><h1>Вход в редактор</h1><p>Здесь управляется каталог товаров и содержимое Книги знаний.</p><form data-account-login><label>Пароль<input type="password" name="password" autocomplete="current-password" autofocus></label><button class="kb-admin-btn primary" type="submit">Войти</button><p class="kb-admin-login-error" data-account-login-error></p></form></div></div>');
@@ -328,6 +329,7 @@ async function renderAccountPage(){
   setBody(html);
 }
 window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
+window.addEventListener("hashchange",syncAccountEntry);
 async function renderEditor(){
   await loadOverrides(true);
   const ctx=window.KB_EDITOR_API?.current?.()||{kind:"dashboard"};
