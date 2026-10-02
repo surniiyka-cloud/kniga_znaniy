@@ -3678,7 +3678,12 @@
           "body": [
             "Сейчас в союз входят: Россия, Беларусь, Армения, Казахстан и Киргизия."
           ],
-          "resources": [],
+          "resources": [
+            {
+              "label": "ТР ТС 021 (с прил 5_1) — PDF",
+              "href": "docs/normative/gost/ТР ТС 021 (с прил 5_1).pdf"
+            }
+          ],
           "related": [],
           "pendingResources": [
             "В этот раздел добавить ПДФки ТР ТС и ТР ЕАЭС. Пришлю отдельно."
@@ -3701,6 +3706,30 @@
             {
               "label": "Росстандарт — актуальная информация о ГОСТ",
               "href": "https://www.rst.gov.ru/portal/gost/home/standarts"
+            },
+            {
+              "label": "ГОСТ 10444.15 КМАФАнМ — PDF",
+              "href": "docs/normative/gost/ГОСТ 10444.15 КМАФАнМ.pdf"
+            },
+            {
+              "label": "ГОСТ 23453 — соматические клетки — PDF",
+              "href": "docs/normative/gost/ГОСТ 23453 соматические клетки.pdf"
+            },
+            {
+              "label": "ГОСТ 31449 — сырое молоко — PDF",
+              "href": "docs/normative/gost/ГОСТ 31449 сырое молоко.pdf"
+            },
+            {
+              "label": "ГОСТ 32219 — PDF",
+              "href": "docs/normative/gost/ГОСТ 32219.pdf"
+            },
+            {
+              "label": "ГОСТ Р 52054 — сырое молоко — PDF",
+              "href": "docs/normative/gost/ГОСТ Р 52054 сырое молоко.pdf"
+            },
+            {
+              "label": "ГОСТ Р 52054 — сырое молоко, изменения — PDF",
+              "href": "docs/normative/gost/ГОСТ Р 52054 сырое молоко изменения.pdf"
             }
           ],
           "related": [],
@@ -3827,7 +3856,12 @@
           "body": [
             "Решение 70 отменило действие Решения 28."
           ],
-          "resources": [],
+          "resources": [
+            {
+              "label": "Решение 70 — PDF",
+              "href": "docs/normative/gost/Решение 70.pdf"
+            }
+          ],
           "related": [
             {
               "label": "Ветеринарные лекарственные средства (ВЛС)",
