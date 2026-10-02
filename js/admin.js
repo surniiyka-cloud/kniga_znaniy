@@ -316,7 +316,7 @@ async function renderEditor(){
   if(ctx.kind==="product")return renderProductEditor(ctx);
   if(ctx.kind==="section")return renderSectionEditor(ctx);
   if(ctx.kind==="chapter")return renderChapterEditor(ctx);
-  const sheet=ctx.spreadsheetId?' <a class="kb-admin-link" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit">Открыть Google Sheets ↗</a>':"";
+  const sheet="";
   setBody(shell("Панель управления","Открой карточку товара, раздел или главу — и нажми «Редактор».",
     '<div class="kb-admin-dashboard"><h3>Что можно менять</h3><p>Карточки товаров, характеристики, преимущества, вкладки, группы ppb, заголовки разделов и глав. '+sheet+'</p><p>Редактор работает с опубликованной версией. Для записи изменений и загрузки фотографий подключается GitHub-токен текущей сессии; он не сохраняется в репозитории или localStorage.</p></div>'));
 }
