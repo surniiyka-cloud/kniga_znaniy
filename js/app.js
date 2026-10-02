@@ -616,10 +616,10 @@ function buildIncubatorCards(s){
   const imageFor=(name)=>{
     const n=String(name||"").toLowerCase();
     if(n.includes("tias"))return "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png";
-    if(n.includes("hs 00647")||n.includes("hs-00647"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-heatsensor-hs-00647.png";
-    if(n.includes("duo"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-heatsensor-duo.png";
-    if(n.includes("octo"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-heatsensor-octo.png";
-    if(n.includes("delvotest"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-delvotest.png";
+    if(n.includes("hs 00647")||n.includes("hs-00647"))return "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-hs-00647.png";
+    if(n.includes("duo"))return "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-duo.png";
+    if(n.includes("octo"))return "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-heatsensor-octo.png";
+    if(n.includes("delvotest"))return "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-delvotest.png";
     return "";
   };
   starts.forEach((st,i)=>{
