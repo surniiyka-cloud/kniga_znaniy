@@ -101,7 +101,16 @@ function liveClassify(rows){
 }
 function liveSnapshots(){
   let local={};try{local=JSON.parse(localStorage.getItem(LIVE_SHEETS_KEY)||"{}")||{}}catch{}
-  return {...deepCopy(state.publishedLiveSnapshots||{}),...local};
+  const merged={...deepCopy(state.publishedLiveSnapshots||{}),...local};
+  for(const [id,snap] of Object.entries(merged)){
+    const base=bookSectionById(id)?.section;
+    const hasBaseProducts=Array.isArray(base?.products)&&base.products.length>0;
+    const parsedProducts=Array.isArray(snap?.parsed?.products)?snap.parsed.products:[];
+    // A malformed/empty cached snapshot must never turn an existing product section
+    // into a raw "canvas". A valid refresh for a product section must contain products.
+    if(hasBaseProducts && (snap?.parsed?.kind!=="products" || !parsedProducts.length))delete merged[id];
+  }
+  return merged;
 }
 function saveLiveSnapshots(v){
   const payload=JSON.stringify(v||{});
