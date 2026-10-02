@@ -349,10 +349,21 @@ function customTabContentHtml(t){
   }
   return '<details class="kb-admin-group kb-custom-tab-content" data-custom-content-id="'+esc(id)+'" data-custom-kind="'+esc(kind)+'"><summary><span>'+esc(label)+'</span><small>'+rows.length+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-custom-tab-rows>'+esc(pairText(rows))+'</textarea></label><div class="kb-custom-tab-actions"><button type="button" class="kb-mini danger" data-remove-custom-tab>Удалить вкладку</button></div></details>';
 }
+function pairRowsEditorHtml(key,label,rows){
+  const list=Array.isArray(rows)&&rows.length?rows:[["",""]];
+  return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'"><summary>'+esc(label)+' <small>'+list.filter(r=>r?.[0]||r?.[1]).length+' строк</small></summary><div class="kb-pair-list" data-pair-list>'+list.map((r,i)=>'<div class="kb-pair-row" data-pair-row><input data-pair-label placeholder="Название характеристики" value="'+esc(r?.[0]||"")+'"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение" value="'+esc(r?.[1]||"")+'"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+'</div><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить характеристику</button></details>';
+}
+function collectPairRows(form,key){
+  return [...form.querySelectorAll('[data-pair-editor="'+CSS.escape(key)+'"] [data-pair-row]')].map(r=>[
+    r.querySelector("[data-pair-label]")?.value.trim()||"",
+    r.querySelector("[data-pair-value]")?.value.trim()||""
+  ]).filter(r=>r[0]||r[1]);
+}
 function productPairEditors(ctx){
-  const standard=PAIR_FIELDS.filter(([key])=>(ctx.product?.[key]||[]).length>0).map(([key,label])=>'<details class="kb-admin-group"><summary>'+esc(label)+' <small>'+((ctx.product?.[key]||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-pair-key="'+key+'">'+esc(pairText(ctx.product?.[key]||[]))+'</textarea></label></details>');
+  const standard=PAIR_FIELDS.filter(([key])=>(ctx.product?.[key]||[]).length>0&&key!=="detailFields").map(([key,label])=>'<details class="kb-admin-group"><summary>'+esc(label)+' <small>'+((ctx.product?.[key]||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-pair-key="'+key+'">'+esc(pairText(ctx.product?.[key]||[]))+'</textarea></label></details>');
+  const characteristics=pairRowsEditorHtml("detailFields","Характеристики",ctx.product?.detailFields||[]);
   const custom=(ctx.product?.customTabs||[]).map(customTabContentHtml);
-  return standard.concat(custom).join("")||'<p class="kb-admin-hint">Дополнительных заполненных характеристик пока нет. Новую вкладку можно добавить в блоке ниже.</p>';
+  return [characteristics,...standard, ...custom].join("");
 }
 function tabRowHtml(t,p,custom=false){
   return '<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'" data-custom-tab="'+(custom?"1":"0")+'"><button type="button" class="kb-mini" data-tab-up>↑</button><button type="button" class="kb-mini" data-tab-down>↓</button><code>'+esc(t.id)+'</code><input value="'+esc(t.label)+'" data-tab-label><label class="kb-hide"><input type="checkbox" data-tab-hidden '+((p?.hiddenTabs||[]).includes(t.id)?"checked":"")+'> скрыть</label>'+(custom?'<button type="button" class="kb-mini danger kb-tab-delete" data-tab-delete title="Удалить вкладку">×</button>':'<span class="kb-tab-delete-slot"></span>')+'</div>';
@@ -777,6 +788,22 @@ function bindBody(){
     const empty=body.querySelector("[data-account-empty]");if(empty)empty.hidden=shown>0;
   });
   body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
+  body.addEventListener("click",e=>{
+    const add=e.target.closest?.("[data-pair-add]");
+    if(add){
+      const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
+      if(list)list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');
+      return;
+    }
+    const remove=e.target.closest?.("[data-pair-remove]");
+    if(remove){
+      const row=remove.closest("[data-pair-row]"),list=row?.parentElement;
+      if(row&&list){
+        if(list.querySelectorAll("[data-pair-row]").length<=1){row.querySelectorAll("input").forEach(x=>x.value="");}
+        else row.remove();
+      }
+    }
+  });
   body.querySelectorAll("[data-account-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountSection)));
 
 
@@ -1088,7 +1115,10 @@ async function saveProduct(e){
     if(adv){out=JSON.parse(adv);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("Расширенный JSON должен быть объектом.");}
     delete out.id;
     for(const key of ["name","article","type","purpose"])putDiff(out,key,String(fd.get(key)||""),String(src[key]||""));
-    for(const [key] of PAIR_FIELDS){const value=parsePairs(form.querySelector('[data-pair-key="'+key+'"]')?.value||"");putDiff(out,key,value,src[key]||[])}
+    for(const [key] of PAIR_FIELDS){
+      const value=key==="detailFields"?collectPairRows(form,key):parsePairs(form.querySelector('[data-pair-key="'+key+'"]')?.value||"");
+      putDiff(out,key,value,src[key]||[]);
+    }
     const baseHasTables=Object.prototype.hasOwnProperty.call(src||{},"tabTables"),baseTables=deep(src.tabTables||{});if(!baseHasTables&&src.indicatorTable)baseTables.indicators=deep(src.indicatorTable);
     putDiff(out,"tabTables",collectTabTables(form),baseTables);
     delete out.indicatorTable;
