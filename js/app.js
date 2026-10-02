@@ -1053,6 +1053,15 @@ function mapData(){
       const sov=ov.sections?.[s.id];
       if(sov){for(const [k,v] of Object.entries(sov)){if(!["id","gid","products","rawRows","packedRows"].includes(k))s[k]=deepCopy(v);}}
       if(s.id==="1.2"&&!sov?.title)s.title="Сокращения, обозначения и единицы измерения";
+      // Manual marketplace-style products live in the override layer, not in Google Sheets.
+      // Therefore a Sheets refresh can replace imported products without deleting hand-created cards.
+      const manualProducts=sov?.manualProducts&&typeof sov.manualProducts==="object"&&!Array.isArray(sov.manualProducts)?sov.manualProducts:{};
+      for(const [manualId,manualSource] of Object.entries(manualProducts)){
+        if(!manualSource||typeof manualSource!=="object")continue;
+        const manual={...deepCopy(manualSource),id:manualId,manual:true,sourceSectionId:s.id,sourceGid:s.gid||null};
+        s.products=Array.isArray(s.products)?s.products:[];
+        s.products.push(manual);
+      }
       state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:state.overrides?.sections?.["2.13"]?.title||"Тест-пластины KangarooSci"}:s)});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
     });
