@@ -246,3 +246,35 @@ body.kb-admin-open{overflow:hidden}
   .kb-foundation-term-editor summary{grid-template-columns:34px minmax(0,1fr)}
   .kb-foundation-term-editor summary small{display:none}
 }
+
+/* Personal cabinet mode */
+body.kb-account-mode .sidebar,
+body.kb-account-mode .sidebar-backdrop,
+body.kb-account-mode .brand-banner,
+body.kb-account-mode .search-wrap,
+body.kb-account-mode #favoritesBtn,
+body.kb-account-mode #themeBtn,
+body.kb-account-mode #versionLogBtn,
+body.kb-account-mode .diag-link{display:none!important}
+body.kb-account-mode .workspace{margin-left:0!important;width:100%!important}
+body.kb-account-mode .topbar{justify-content:flex-end;padding-right:28px}
+body.kb-account-mode .top-actions{margin-left:auto}
+body.kb-account-mode .kb-admin-top{display:inline-flex}
+.kb-account-search{display:flex;align-items:center;gap:10px;margin:18px 0 24px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);max-width:760px}
+.kb-account-search span{font-size:20px;color:var(--muted)}
+.kb-account-search input{border:0;outline:0;background:transparent;color:var(--text);width:100%;font:inherit}
+.kb-account-product[hidden],.kb-account-section[hidden]{display:none!important}
+.kb-admin-back{border:1px solid var(--line);background:var(--surface-2);color:var(--text);border-radius:12px;padding:10px 14px;font:inherit;font-weight:750;cursor:pointer;white-space:nowrap}
+.kb-pair-editor>summary{background:var(--surface-2)}
+.kb-pair-list{display:grid;gap:8px;padding:12px 14px 8px}
+.kb-pair-row{display:grid;grid-template-columns:minmax(180px,.8fr) 28px minmax(220px,1.2fr) 36px;gap:8px;align-items:center}
+.kb-pair-row input{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 11px;font:inherit}
+.kb-pair-arrow{text-align:center;color:var(--muted);font-weight:800}
+.kb-pair-add{margin:4px 14px 14px}
+@media(max-width:760px){
+  .kb-account-page{}
+  .kb-account-search{max-width:none}
+  .kb-pair-row{grid-template-columns:1fr 28px 1fr 34px}
+  .kb-pair-arrow{font-size:0}
+  .kb-pair-arrow:after{content:"→";font-size:14px}
+}
