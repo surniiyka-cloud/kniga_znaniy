@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T08:57:58.070Z",
+  "updatedAt": "2026-10-02T08:58:27.008Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3792,6 +3792,10 @@
       ]
     },
     "5.1-ножницы-для-стрижки-овец-ankar": {
+      "tabOrder": [
+        "specs",
+        "advantages"
+      ],
       "images": [
         "img/photos/admin/5.1-ножницы-для-стрижки-овец-ankar/5.1-ножницы-для-стрижки-овец-ankar-01.png"
       ],
