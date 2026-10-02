@@ -955,7 +955,7 @@ function renderAnalyzerCompare(items){
 }
 function updateAnalyzerCompareBar(items){
   const bar=q("[data-analyzer-compare-bar]");if(!bar)return;
-  const checked=[...bar.querySelectorAll("[data-compare-check]:checked")].map(x=>x.value),count=checked.length;
+  const checked=[...document.querySelectorAll("[data-compare-check]:checked")].map(x=>x.value),count=checked.length;
   bar.querySelector("[data-compare-count]").textContent=count;
   const btn=bar.querySelector("[data-compare-open]");
   btn.disabled=count<2;
@@ -976,8 +976,8 @@ function renderCatalogSection(ch,s){
     q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
     if(isAnalyzerCompare){
       const bar=q("[data-analyzer-compare-bar]");
-      bar?.querySelector("[data-compare-all]")?.addEventListener("click",()=>{bar.querySelectorAll("[data-compare-check]").forEach(x=>x.checked=true);updateAnalyzerCompareBar(items)});
-      bar?.querySelector("[data-compare-open]")?.addEventListener("click",()=>{const selected=items.filter(x=>bar.querySelector('[data-compare-check][value="'+CSS.escape(x.product.id)+'"]')?.checked);if(selected.length>=2)renderAnalyzerCompare(selected);});
+      bar?.querySelector("[data-compare-all]")?.addEventListener("click",()=>{document.querySelectorAll("[data-compare-check]").forEach(x=>x.checked=true);updateAnalyzerCompareBar(items)});
+      bar?.querySelector("[data-compare-open]")?.addEventListener("click",()=>{const selected=items.filter(x=>document.querySelector('[data-compare-check][value="'+CSS.escape(x.product.id)+'"]')?.checked);if(selected.length>=2)renderAnalyzerCompare(selected);});
       bar?.querySelectorAll("[data-compare-check]").forEach(x=>x.addEventListener("change",()=>updateAnalyzerCompareBar(items)));
       items.forEach(x=>{const cardEl=[...document.querySelectorAll("[data-open-product]")].find(b=>b.dataset.openProduct===x.product.id)?.closest(".product-card");if(cardEl){const action=cardEl.querySelector(".product-actions");action?.insertAdjacentHTML("afterbegin",'<label class="compare-check"><input type="checkbox" value="'+esc(x.product.id)+'" data-compare-check><span>Сравнить</span></label>');}});
     }
