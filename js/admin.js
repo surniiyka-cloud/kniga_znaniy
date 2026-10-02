@@ -664,7 +664,6 @@ function collectSectionContentBlocks(form){
 }
 function sectionProductsEditor(ctx){
   const cards=ctx.productCards||[],deleted=ctx.deletedProductCards||[];
-  if(!cards.length&&!deleted.length)return "";
   const active=cards.map(p=>'<div class="kb-product-sort-row '+(p.hidden?"is-hidden":"")+'" draggable="true" data-section-product-row data-id="'+esc(p.id)+'">'+
       '<span class="kb-drag" title="Перетащить">⋮⋮</span>'+
       '<div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div>'+
@@ -673,8 +672,8 @@ function sectionProductsEditor(ctx){
       '<button type="button" class="kb-mini danger kb-product-delete" data-product-delete>Удалить</button>'+
     '</div>').join("");
   const removed=deleted.map(p=>'<div class="kb-deleted-product-row" data-section-deleted-row data-id="'+esc(p.id)+'"><div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div><label class="kb-product-restore"><input type="checkbox" data-product-restore> <span>Восстановить при сохранении</span></label></div>').join("");
-  return '<section class="kb-admin-section"><div><h3>Карточки товаров</h3><p class="kb-admin-hint"><b>Скрыть</b> — временно убрать карточку с сайта. <b>Удалить</b> — исключить её из структуры сайта, поиска и избранного. Google Sheets при этом не меняется.</p></div>'+
-    '<div class="kb-product-sort" data-section-product-list>'+active+'</div>'+
+  return '<section class="kb-admin-section"><div class="kb-product-section-head"><div><h3>Карточки товаров</h3><p class="kb-admin-hint"><b>Скрыть</b> — временно убрать карточку с сайта. <b>Удалить</b> — исключить её из структуры сайта, поиска и избранного. Google Sheets при этом не меняется.</p></div><button type="button" class="kb-admin-btn primary" data-add-product>+ Добавить карточку товара</button></div>'+
+    (cards.length?'<div class="kb-product-sort" data-section-product-list>'+active+'</div>':'<div class="kb-admin-empty">В этом разделе пока нет карточек. Создай первую вручную.</div>')+
     (deleted.length?'<details class="kb-admin-group kb-deleted-products"><summary>Удалённые карточки <small>'+deleted.length+'</small></summary><div class="kb-deleted-product-list">'+removed+'</div></details>':'')+
     '</section>';
 }
@@ -927,6 +926,21 @@ function bindBody(){
     }catch(err){showError(err)}
   });
 
+  body.querySelector("[data-add-product]")?.addEventListener("click",async()=>{
+    if(!editorCtx?.id)return;
+    const name=(prompt("Название нового товара:")||"").trim();
+    if(!name)return;
+    const article=(prompt("Артикул (можно оставить пустым):")||"").trim();
+    const base=safe("manual-"+editorCtx.id+"-"+name),o=await loadOverrides();
+    const section=o.sections?.[editorCtx.id]||{};
+    section.manualProducts=section.manualProducts&&typeof section.manualProducts==="object"&&!Array.isArray(section.manualProducts)?section.manualProducts:{};
+    let id=base,n=2;while(section.manualProducts[id]||o.products?.[id])id=base+"-"+n++;
+    section.manualProducts[id]={id,name,article,type:"",purpose:"",detailFields:[],advantages:[],substances:[],indicators:[],tabTables:{},options:[],variants:[],complectation:[],workflow:[],calibration:[],assortment:[],consumables:[],testKits:[],washCycle:[],customTabs:[]};
+    o.sections[editorCtx.id]=section;
+    await commitOverrides(o);
+    showStatus("Карточка создана. Открываю редактор…");
+    location.href=href("product",id);
+  });
   body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
     const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
     if(!form||!input)return;
