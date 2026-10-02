@@ -1251,7 +1251,7 @@ function renderTermsSection(ch,s){
     const docsBlock=resources?'<section class="foundation-assets"><div class="foundation-assets-head"><span>Нормативные материалы</span></div><div class="foundation-resource-list">'+resources+'</div></section>':"";
     const relatedBlock=related?'<section class="foundation-assets foundation-related-assets"><div class="foundation-assets-head"><span>Связанные термины</span></div><div class="foundation-related-list">'+related+'</div></section>':"";
     const detailBlocks=(detailBody||docsBlock||relatedBlock)
-      ?'<div class="foundation-detail-grid">'+(detailBody?'<section class="foundation-detail-copy"><span class="foundation-detail-label">Расширение</span>'+detailBody+'</section>':"")+(docsBlock||"")+(relatedBlock||"")+'</div>'
+      ?'<div class="foundation-detail-grid">'+(detailBody?'<section class="foundation-detail-copy">'+detailBody+'</section>':"")+(docsBlock||"")+(relatedBlock||"")+'</div>'
       :"";
     const details=detailBlocks?'<details class="foundation-details"><summary>Подробнее</summary>'+detailBlocks+'</details>':"";
     const pending=isAdmin()&&(t.pendingResources||[]).length?'<div class="foundation-pending"><span>Ожидают добавления</span>'+esc((t.pendingResources||[]).join(" · "))+'</div>':"";
