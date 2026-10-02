@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T09:13:21.556Z",
+  "updatedAt": "2026-10-02T09:30:48.489Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -245,6 +245,9 @@
           "Массовая доля лактозы, %",
           "0,5–7,0 | ±0,2"
         ]
+      ],
+      "hiddenTabs": [
+        "advantages"
       ]
     },
     "catalog-2-7-tias-somcell": {
