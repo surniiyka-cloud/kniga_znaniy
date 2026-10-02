@@ -572,8 +572,7 @@ function renderProductEditor(ctx){
   const existing=deep(overrideCache.products?.[ctx.id]||{});
   const customIds=new Set((ctx.product.customTabs||[]).map(t=>t.id));
   const tabs=(ctx.tabs||[]).map(t=>tabRowHtml(t,ctx.product,customIds.has(t.id))).join("");
-  const sourceSheet=ctx.sourceSection||ctx.section;
-  const sheet=ctx.spreadsheetId&&sourceSheet?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(sourceSheet.gid):"";
+  const sheet="";
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
     '<div class="kb-admin-grid two"><label>Название<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
@@ -716,7 +715,7 @@ function foundationTermsEditorHtml(ctx){
 }
 function renderSectionEditor(ctx){
   const existing=deep(overrideCache.sections?.[ctx.id]||{});
-  const sheet=ctx.spreadsheetId&&ctx.section?.gid!=null?'https://docs.google.com/spreadsheets/d/'+encodeURIComponent(ctx.spreadsheetId)+'/edit#gid='+encodeURIComponent(ctx.section.gid):"";
+  const sheet="";
   const content=ctx.id==="1.1"
     ?foundationTermsEditorHtml(ctx)
     :sectionProductsEditor(ctx)+sectionBuilderHtml(ctx)+
@@ -838,8 +837,9 @@ function bindBody(){
     try{await connectGithub();e.currentTarget.textContent="✓ GitHub подключен";showStatus("GitHub подключен на время этой вкладки.")}catch(err){showError(err)}
   });
   body.querySelector("[data-admin-logout]")?.addEventListener("click",()=>{
-    sessionStorage.removeItem(ADMIN_SESSION_KEY);sessionStorage.removeItem(GITHUB_TOKEN_KEY);closeAdmin();window.dispatchEvent(new CustomEvent("kb:admin-change"));
+    sessionStorage.removeItem(ADMIN_SESSION_KEY);sessionStorage.removeItem(GITHUB_TOKEN_KEY);location.hash="#/home";closeAdmin();window.dispatchEvent(new CustomEvent("kb:admin-change"));
   });
+  body.querySelector("[data-admin-close]")?.addEventListener("click",()=>{location.hash="#/home";closeAdmin()});
   body.querySelector("[data-admin-refresh]")?.addEventListener("click",async e=>{
     const b=e.currentTarget;b.disabled=true;showStatus("Забираю свежие данные из текущего листа Google Sheets…","warn");
     try{
