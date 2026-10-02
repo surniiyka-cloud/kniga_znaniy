@@ -1110,6 +1110,9 @@ function installEditorApi(){
       }
       return {kind:"dashboard",spreadsheetId:state.book.spreadsheetId};
     },
+    catalog(){
+      return state.book.chapters.map(ch=>({id:ch.id,title:ch.title,sections:ch.sections.map(sec=>({id:sec.id,title:sec.title,products:orderedSectionItems(sec.id,{includeHidden:true,includeDeleted:false}).map(x=>({id:x.product.id,name:x.product.name||x.product.id,article:article(x.product)||""}))}))}));
+    },
     overrides(){return deepCopy(state.overrides||{})},
     liveSnapshots(){return deepCopy(liveSnapshots())},
     async refreshCurrentSection(){
