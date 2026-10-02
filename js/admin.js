@@ -309,6 +309,7 @@ async function renderAccountPage(){
     '<div class="kb-account-empty">'+(sections.length?"":"Каталог пока пуст.")+'</div>');
   setBody(html);
 }
+window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
 async function renderEditor(){
   await loadOverrides(true);
   const ctx=window.KB_EDITOR_API?.current?.()||{kind:"dashboard"};
