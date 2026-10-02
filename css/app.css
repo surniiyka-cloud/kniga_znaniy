@@ -1665,3 +1665,20 @@ body.modal-open{overflow:hidden}
   .foundation-title-row{align-items:flex-start;gap:8px}
   .foundation-definition{font-size:13.5px;line-height:1.7}
 }
+
+/* Улучшенная читаемость текста в «Подробнее» раздела 1.1 */
+.foundation-detail-copy{
+  background:var(--surface);
+}
+.foundation-detail-copy .foundation-lead,
+.foundation-detail-copy .foundation-paragraph{
+  color:var(--text);
+}
+.foundation-detail-copy .foundation-key{
+  color:var(--green-2);
+  background:var(--green-3);
+}
+.foundation-detail-copy .foundation-key-alert{
+  color:#8F3510;
+  background:var(--orange-2);
+}
