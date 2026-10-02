@@ -1222,9 +1222,6 @@ function knowledgeCards(s){
   if(s.pairs?.length){
     out+='<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Ключевая информация</span><h2>Характеристики и сведения</h2></div><p>'+s.pairs.length+' пунктов</p></div><div class="knowledge-grid">'+s.pairs.map((x)=>'<article class="knowledge-card"><span>'+esc(x.label)+'</span><p>'+esc(x.value)+'</p></article>').join("")+'</div></section>';
   }
-  if(s.notes?.length){
-    out+='<section class="knowledge-section"><div class="section-heading compact"><div><h2>Что важно знать</h2></div></div><div class="note-cards">'+s.notes.map((n)=>'<article class="note-card">'+esc(n)+'</article>').join("")+'</div></section>';
-  }
   return out;
 }
 function rawTables(){return "";}
