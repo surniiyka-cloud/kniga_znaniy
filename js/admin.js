@@ -939,7 +939,7 @@ function bindBody(){
     o.sections[editorCtx.id]=section;
     await commitOverrides(o);
     showStatus("Карточка создана. Открываю редактор…");
-    location.href=href("product",id);
+    location.hash="#/product/"+encodeURIComponent(id);
   });
   body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
     const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
