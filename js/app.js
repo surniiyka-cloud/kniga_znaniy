@@ -1811,7 +1811,6 @@ async function init(){
     fetch("./data/image-match-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/version-log.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
-    fetch("./data/live-sheet-snapshots.json?v="+stamp,{cache:"no-store"}).catch(()=>null)
   ]);
   if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
@@ -1822,10 +1821,9 @@ async function init(){
   state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
   const publishedOverrides=rs[6]?.ok?await rs[6].json():state.overrides;
   state.overrides=mergeOverrideLayer(publishedOverrides,localEditorOverrides(publishedOverrides));
-  state.publishedLiveSnapshots=rs[7]?.ok?await rs[7].json():{};
-  applyStoredLiveSnapshots();
+  state.publishedLiveSnapshots={};
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
-  mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Google Sheets · обновлено "+fmtDate(state.book.generatedAt);
+  mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Каталог · обновлено "+fmtDate(state.book.generatedAt);
   window.addEventListener("kb:admin-change",()=>{applyAdminVisibility();renderNav();const r=route();if(r.name==="diagnostics"&&!isAdmin())go("home");else render();});
   if(!location.hash)go("home");else render();
   loadTerms11();
