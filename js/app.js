@@ -950,7 +950,7 @@ function renderAnalyzerCompare(items){
   const modal=q("[data-compare-modal]"),tbody=modal.querySelector("[data-compare-body]"),empty=modal.querySelector("[data-compare-empty]");
   const draw=(mode)=>{const rows=mode==="diff"?differences:allRows;tbody.innerHTML=body(rows);empty.hidden=rows.length>0};
   modal.querySelectorAll("[data-compare-filter]").forEach(b=>b.onclick=()=>{modal.querySelectorAll("[data-compare-filter]").forEach(x=>x.classList.toggle("active",x===b));draw(b.dataset.compareFilter)});
-  modal.querySelectorAll("[data-compare-remove]").forEach(b=>b.onclick=()=>{const id=b.dataset.compareRemove;modal.remove();const next=selected.filter(x=>x.product.id!==id);if(next.length>=2)renderAnalyzerCompare(next);else updateAnalyzerCompareBar(items)});
+  modal.querySelectorAll("[data-compare-remove]").forEach(b=>b.onclick=()=>{const id=b.dataset.compareRemove;document.querySelector('[data-compare-check][value="'+CSS.escape(id)+'"]')?.removeAttribute("checked");const check=document.querySelector('[data-compare-check][value="'+CSS.escape(id)+'"]');if(check)check.checked=false;modal.remove();const next=selected.filter(x=>x.product.id!==id);if(next.length>=2)renderAnalyzerCompare(next);else updateAnalyzerCompareBar(items)});
   modal.querySelectorAll("[data-compare-close]").forEach(b=>b.onclick=()=>modal.remove());
 }
 function updateAnalyzerCompareBar(items){
