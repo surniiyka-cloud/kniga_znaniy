@@ -1089,12 +1089,12 @@ function installEditorApi(){
   window.KB_EDITOR_API={
     current(){
       const r=route();
-      if(r.name==="product"){
+      if(r.name==="product"||r.name==="accountProduct"){
         const x=ctx(r.id);if(!x)return {kind:"none"};
         const sourceId=x.product.sourceSectionId||x.section.id,source=bookSectionById(sourceId)?.section||null;
         return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
-      if(r.name==="section"){
+      if(r.name==="section"||r.name==="accountSection"){
         const x=state.sections.get(r.id);if(!x)return {kind:"none"};
         const base=state.editorBase.sections.get(r.id)||{title:x.section.title},layout=sectionProductLayout(r.id);
         const currentCards=orderedSectionItems(r.id,{includeHidden:true}).map(item=>({id:item.product.id,name:item.product.name||item.product.id,article:article(item.product)||"",hidden:layout.hidden.includes(item.product.id)}));
