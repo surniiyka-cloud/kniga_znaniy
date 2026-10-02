@@ -47,3 +47,5 @@ jobs:
             git pull --rebase origin ${{ github.ref_name }}
             git push origin HEAD:${{ github.ref_name }}
           fi
+
+# touch: trigger sync for current Google Sheets data
