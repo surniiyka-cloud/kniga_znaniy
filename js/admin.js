@@ -232,8 +232,12 @@ function normalizedTabTables(ctx){
   if(!hasTables&&ctx.product?.indicatorTable)tables.indicators=deep(ctx.product.indicatorTable);
   return tables;
 }
+function tableHeadersForTab(id,table){
+  if(String(id)==="advantages")return ["Преимущества","Описание"];
+  return (table?.headers?.length?table.headers:["Название","Значение"]).map(x=>String(x||""));
+}
 function tableEditorHtml(id,label,table){
-  const headers=(table?.headers?.length?table.headers:["Название","Значение"]).map(x=>String(x||""));
+  const headers=tableHeadersForTab(id,table);
   const width=Math.max(1,headers.length),rows=(table?.rows||[]).map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||"")));
   return '<article class="kb-table-editor" data-table-editor data-table-id="'+esc(id)+'">'+
     '<div class="kb-table-editor-head"><div><strong>'+esc(label)+'</strong><code>'+esc(id)+'</code></div><div class="kb-table-actions"><button type="button" class="kb-mini" data-table-add-col>+ столбец</button><button type="button" class="kb-mini" data-table-add-row>+ строка</button><button type="button" class="kb-mini danger" data-table-delete>Удалить таблицу</button></div></div>'+
@@ -943,7 +947,7 @@ function bindBody(){
     const id=body.querySelector("[data-new-table-tab]")?.value||"";if(!id||!editorCtx)return;
     const wrap=body.querySelector("[data-table-editors]"),existing=wrap?.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"]');
     if(existing){existing.scrollIntoView({behavior:"smooth",block:"center"});existing.classList.add("kb-flash");setTimeout(()=>existing.classList.remove("kb-flash"),900);return}
-    const source=sourceRowsForTab(editorCtx,id),table={headers:["Название","Значение"],rows:source.map(r=>[String(r?.[0]||""),String(r?.[1]||"")])};
+    const source=sourceRowsForTab(editorCtx,id),table={headers:tableHeadersForTab(id,null),rows:source.map(r=>[String(r?.[0]||""),String(r?.[1]||"")])};
     const label=body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"] [data-tab-label]')?.value.trim()||tableLabel(editorCtx,id);
     wrap?.insertAdjacentHTML("beforeend",tableEditorHtml(id,label,table));
   });
