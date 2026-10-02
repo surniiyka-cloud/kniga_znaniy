@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T05:34:16.047Z",
+  "updatedAt": "2026-10-02T05:35:13.280Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3838,7 +3838,7 @@
         {
           "number": 7,
           "title": "Решение 28",
-          "definition": "ОТМЕНЕНО! См. Решение №70 (вставить ссылку из Книги знаний)",
+          "definition": "ОТМЕНЕНО! См. Решение №70",
           "body": [],
           "resources": [],
           "related": [
