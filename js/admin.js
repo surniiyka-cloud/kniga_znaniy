@@ -121,10 +121,18 @@ async function deleteRepoFile(path,message){
     throw lastErr||new Error("Не удалось удалить файл после нескольких попыток.");
   });
 }
-async function publishLiveSnapshots(){
-  let snaps=window.KB_EDITOR_API?.liveSnapshots?.()||{};
-  if(!snaps||typeof snaps!=="object"||Array.isArray(snaps)){try{snaps=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{snaps={}}}
-  await putRepoText("data/live-sheet-snapshots.json",JSON.stringify(snaps,null,2)+"\n","Admin: publish refreshed Google Sheets snapshots");
+async function publishLiveSnapshots(sectionIds=null){
+  let local=window.KB_EDITOR_API?.liveSnapshots?.()||{};
+  if(!local||typeof local!=="object"||Array.isArray(local)){try{local=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{local={}}}
+  const path="data/live-sheet-snapshots.json";
+  const cur=await repoFile(path);
+  let remote={};
+  if(cur?.content){
+    try{remote=JSON.parse(base64Utf8(cur.content))||{}}catch{remote={}}
+  }
+  const ids=[...(Array.isArray(sectionIds)?sectionIds:String(sectionIds||"").split(",")).map(x=>String(x).trim()).filter(Boolean)];
+  const merged=ids.length?{...remote,...Object.fromEntries(ids.filter(id=>local[id]).map(id=>[id,local[id]]))}:local;
+  await putRepoText(path,JSON.stringify(merged,null,2)+"\n","Admin: publish refreshed Google Sheets snapshots");
 }
 async function commitOverrides(data){
   data.version=1;data.updatedAt=new Date().toISOString();
@@ -806,7 +814,7 @@ function bindBody(){
     const b=e.currentTarget;b.disabled=true;showStatus("Забираю свежие данные из текущего листа Google Sheets…","warn");
     try{
       const r=await window.KB_EDITOR_API?.refreshCurrentSection?.();
-      await publishLiveSnapshots();
+      await publishLiveSnapshots((r?.sectionId||"").split(","));
       await renderEditor();
       showStatus("Готово: "+(r?.sections>1?(r.sections+" листов обновлено"):(("раздел "+(r?.sectionId||"")+" обновлён")))+" из Google Sheets и опубликовано ("+(r?.rows||0)+" строк).");
     }catch(err){showError(err)}finally{b.disabled=false}
