@@ -1679,6 +1679,11 @@ function renderDiagnostics(){
 function notFound(){title("Не найдено");app.innerHTML='<div class="empty-state"><strong>Страница не найдена</strong><p>Возможно, ссылка относится к старой версии книги.</p><button class="btn primary" data-route="home">На главную</button></div>';}
 function render(){
   closeMenu();const r=route();
+  if(r.name==="account"||r.name==="accountProduct"||r.name==="accountSection"){
+    if(window.KB_ADMIN_PAGE?.render)window.KB_ADMIN_PAGE.render();
+    else app.innerHTML='<div class="loading-screen"><div class="loader"></div><p>Открываем личный кабинет…</p></div>';
+    return;
+  }
   if(r.name==="home")renderHome();else if(r.name==="chapter")renderChapter(r.id);else if(r.name==="section")renderSection(r.id);else if(r.name==="product")renderProduct(r.id);else if(r.name==="favorites")renderFavorites();else if(r.name==="diagnostics"&&isAdmin())renderDiagnostics();else notFound();
   activeNav();counters();window.scrollTo(0,0);
 }
