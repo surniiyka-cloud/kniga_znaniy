@@ -267,11 +267,11 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
 .kb-admin-back{border:1px solid var(--line);background:var(--surface-2);color:var(--text);border-radius:12px;padding:10px 14px;font:inherit;font-weight:750;cursor:pointer;white-space:nowrap}
 .kb-pair-editor>summary{background:var(--surface-2)}
 .kb-pair-list{display:grid;gap:8px;padding:12px 14px 8px}
-.kb-pair-row{display:grid;grid-template-columns:28px minmax(180px,.8fr) 28px minmax(220px,1.2fr) 36px;gap:8px;align-items:center}
+.kb-pair-row{display:grid;grid-template-columns:30px minmax(0,.8fr) 24px minmax(0,1.2fr) 36px;gap:8px;align-items:center;width:100%;max-width:100%;box-sizing:border-box}
 .kb-pair-drag{width:28px;height:36px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);border-radius:9px;cursor:grab;font-size:16px;font-weight:900;line-height:1}
 .kb-pair-drag:active{cursor:grabbing}
 .kb-pair-row.is-dragging{opacity:.45}
-.kb-pair-row input{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 11px;font:inherit}
+.kb-pair-row input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:10px 11px;font:inherit}
 .kb-pair-arrow{text-align:center;color:var(--muted);font-weight:800}
 .kb-pair-add{margin:4px 14px 14px}
 @media(max-width:760px){
