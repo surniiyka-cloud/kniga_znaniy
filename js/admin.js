@@ -771,7 +771,9 @@ function bindBody(){
   body.querySelector("[data-account-login]")?.addEventListener("submit",async e=>{
     e.preventDefault();const password=new FormData(e.currentTarget).get("password")||"";
     if(await sha256(password)!==ADMIN_PASSWORD_HASH){e.currentTarget.querySelector("[data-account-login-error]").textContent="Неверный пароль.";return}
-    sessionStorage.setItem(ADMIN_SESSION_KEY,"1");location.hash="#/account";
+    sessionStorage.setItem(ADMIN_SESSION_KEY,"1");
+    if(window.KB_ADMIN_PAGE?.render)await window.KB_ADMIN_PAGE.render();
+    else location.hash="#/account";
   });
   body.querySelector("[data-account-back]")?.addEventListener("click",()=>location.hash="#/account");
   body.querySelector("[data-account-search]")?.addEventListener("input",e=>{
