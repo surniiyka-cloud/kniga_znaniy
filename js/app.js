@@ -1119,7 +1119,7 @@ function installEditorApi(){
           title:ch.title,
           sections:visibleSections.map(sec=>{
             const items=sec.composite
-              ? ch.sections.filter(child=>child.id.startsWith(sec.id+".")).flatMap(child=>orderedSectionItems(child.id,{includeHidden:true,includeDeleted:false}))
+              ? (state.sectionCatalog.get(sec.id)||[])
               : orderedSectionItems(sec.id,{includeHidden:true,includeDeleted:false});
             return {id:sec.id,title:sec.title,products:items.map(x=>({id:x.product.id,name:x.product.name||x.product.id,article:article(x.product)||""}))};
           })
