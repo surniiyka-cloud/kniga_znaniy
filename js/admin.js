@@ -736,7 +736,15 @@ function renderChapterEditor(ctx){
     '<form data-admin-chapter data-id="'+esc(ctx.id)+'" class="kb-admin-form"><label>Название главы<input name="title" value="'+esc(ctx.chapter.title||"")+'"></label><div class="kb-admin-savebar"><button class="kb-admin-btn primary" type="submit">Сохранить главу</button><button class="kb-admin-btn danger" type="button" data-reset-chapter>Сбросить ручные правки</button></div></form>'));
 }
 function bindBody(){
-  const body=modal?.querySelector("#kbAdminBody");if(!body)return;
+  const body=document.querySelector(".kb-admin-page")||modal?.querySelector("#kbAdminBody");if(!body)return;
+  body.querySelector("[data-account-login]")?.addEventListener("submit",async e=>{
+    e.preventDefault();const password=new FormData(e.currentTarget).get("password")||"";
+    if(await sha256(password)!==ADMIN_PASSWORD_HASH){e.currentTarget.querySelector("[data-account-login-error]").textContent="Неверный пароль.";return}
+    sessionStorage.setItem(ADMIN_SESSION_KEY,"1");location.hash="#/account";
+  });
+  body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
+  body.querySelectorAll("[data-account-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountSection)));
+
 
   body.querySelectorAll("[data-rich-editor]"); // keep focus selector warm for delegated formatting
   body.addEventListener("mousedown",e=>{
