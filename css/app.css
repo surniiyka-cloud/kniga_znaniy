@@ -1668,7 +1668,7 @@ body.modal-open{overflow:hidden}
 
 /* Улучшенная читаемость текста в «Подробнее» раздела 1.1 */
 .foundation-detail-copy{
-  background:var(--surface);
+  background:var(--surface-2);
 }
 .foundation-detail-copy .foundation-lead,
 .foundation-detail-copy .foundation-paragraph{
