@@ -91,6 +91,7 @@ body.kb-admin-open{overflow:hidden}
 .kb-col-remove:hover,.kb-row-remove:hover{color:#a02828;background:#fff0f0}
 .kb-row-tools{min-width:38px!important;width:38px;text-align:center;background:var(--panel-2,#f7faf8)}
 
+.kb-product-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}.kb-admin-empty{padding:22px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);background:var(--surface-2)}
 .kb-product-sort{display:grid;gap:8px}
 .kb-product-sort-row{display:grid;grid-template-columns:28px minmax(0,1fr) 36px 36px auto auto;gap:8px;align-items:center;border:1px solid var(--line,#dfe7e1);border-radius:12px;padding:10px 11px;background:var(--panel,#fff);transition:.16s opacity,.16s background,.16s border-color}
 .kb-product-sort-row.is-hidden{opacity:.58;background:var(--panel-2,#f6f8f7);border-style:dashed}
