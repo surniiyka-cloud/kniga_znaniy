@@ -266,7 +266,7 @@ function ensureUI(){
     const actions=document.querySelector(".top-actions");
     if(actions){
       const b=document.createElement("button");b.id="kbAdminBtn";b.className="text-btn kb-admin-top";b.type="button";
-      b.innerHTML="✎ <span>Редактор</span>";b.onclick=openAdmin;actions.prepend(b);
+      b.innerHTML="♙ <span>Личный кабинет</span>";b.onclick=openAdmin;actions.prepend(b);
     }
   }
   if(!modal){
