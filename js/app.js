@@ -1112,7 +1112,19 @@ function installEditorApi(){
       return {kind:"dashboard",spreadsheetId:state.book.spreadsheetId};
     },
     catalog(){
-      return state.book.chapters.map(ch=>({id:ch.id,title:ch.title,sections:ch.sections.map(sec=>({id:sec.id,title:sec.title,products:orderedSectionItems(sec.id,{includeHidden:true,includeDeleted:false}).map(x=>({id:x.product.id,name:x.product.name||x.product.id,article:article(x.product)||""}))}))}));
+      return state.book.chapters.map(ch=>{
+        const visibleSections=displaySections(ch);
+        return {
+          id:ch.id,
+          title:ch.title,
+          sections:visibleSections.map(sec=>{
+            const items=sec.composite
+              ? ch.sections.filter(child=>child.id.startsWith(sec.id+".")).flatMap(child=>orderedSectionItems(child.id,{includeHidden:true,includeDeleted:false}))
+              : orderedSectionItems(sec.id,{includeHidden:true,includeDeleted:false});
+            return {id:sec.id,title:sec.title,products:items.map(x=>({id:x.product.id,name:x.product.name||x.product.id,article:article(x.product)||""}))};
+          })
+        };
+      });
     },
     overrides(){return deepCopy(state.overrides||{})},
     liveSnapshots(){return deepCopy(liveSnapshots())},
