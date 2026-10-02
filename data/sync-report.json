@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-01T14:40:55.147Z",
+  "generatedAt": "2026-10-02T09:00:32.132Z",
   "sheets": 89,
   "sections": 88,
-  "products": 806,
+  "products": 809,
   "byKind": {
     "richTable": 13,
     "keyValue": 18,
@@ -87,7 +87,7 @@
       "kind": "richTable",
       "products": 0,
       "tables": 0,
-      "notes": 11
+      "notes": 8
     },
     {
       "id": "2.4",
@@ -95,7 +95,7 @@
       "kind": "keyValue",
       "products": 0,
       "tables": 0,
-      "notes": 12
+      "notes": 8
     },
     {
       "id": "2.5",
@@ -421,7 +421,7 @@
       "id": "5.1",
       "title": "Уход за шкурой",
       "kind": "products",
-      "products": 5,
+      "products": 8,
       "tables": 0,
       "notes": 0
     },
