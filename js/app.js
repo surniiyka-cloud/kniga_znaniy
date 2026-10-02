@@ -1683,7 +1683,9 @@ function renderDiagnostics(){
 function notFound(){title("Не найдено");app.innerHTML='<div class="empty-state"><strong>Страница не найдена</strong><p>Возможно, ссылка относится к старой версии книги.</p><button class="btn primary" data-route="home">На главную</button></div>';}
 function render(){
   closeMenu();const r=route();
-  if(r.name==="account"||r.name==="accountProduct"||r.name==="accountSection"){
+  const accountMode=r.name==="account"||r.name==="accountProduct"||r.name==="accountSection";
+  document.body.classList.toggle("kb-account-mode",accountMode);
+  if(accountMode){
     if(window.KB_ADMIN_PAGE?.render)window.KB_ADMIN_PAGE.render();
     else app.innerHTML='<div class="loading-screen"><div class="loader"></div><p>Открываем личный кабинет…</p></div>';
     return;
