@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-02T09:00:32.132Z",
+  "generatedAt": "2026-10-02T15:44:34.065Z",
   "sheets": 89,
   "sections": 88,
-  "products": 809,
+  "products": 705,
   "byKind": {
     "richTable": 13,
-    "keyValue": 18,
-    "products": 58
+    "keyValue": 24,
+    "products": 52
   },
   "perSection": [
     {
@@ -605,7 +605,7 @@
       "id": "8.2",
       "title": "Рабочий инвентарь",
       "kind": "products",
-      "products": 28,
+      "products": 31,
       "tables": 0,
       "notes": 0
     },
@@ -620,10 +620,10 @@
     {
       "id": "9.1",
       "title": "Генераторы тумана и оборудование для обработки",
-      "kind": "products",
-      "products": 92,
-      "tables": 0,
-      "notes": 5
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 91,
+      "notes": 97
     },
     {
       "id": "9.2",
@@ -652,42 +652,42 @@
     {
       "id": "10.1",
       "title": "Влагомеры зерна",
-      "kind": "products",
-      "products": 6,
-      "tables": 0,
-      "notes": 0
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 6,
+      "notes": 6
     },
     {
       "id": "10.2",
       "title": "Влагомеры для зерен кофе и какао",
-      "kind": "products",
-      "products": 1,
-      "tables": 0,
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 1,
       "notes": 0
     },
     {
       "id": "10.3",
       "title": "Плотномер почвы",
-      "kind": "products",
-      "products": 1,
-      "tables": 0,
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 1,
       "notes": 0
     },
     {
       "id": "10.4",
       "title": "Влагомеры для сена, силоса и сенажа",
-      "kind": "products",
-      "products": 4,
-      "tables": 0,
-      "notes": 0
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 4,
+      "notes": 4
     },
     {
       "id": "10.5",
       "title": "Датчики и аксессуары для контроля кормов",
-      "kind": "products",
-      "products": 3,
-      "tables": 0,
-      "notes": 0
+      "kind": "keyValue",
+      "products": 0,
+      "tables": 3,
+      "notes": 3
     },
     {
       "id": "11.1",

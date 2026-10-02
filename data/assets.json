@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T14:41:00.392Z",
+  "generatedAt": "2026-10-02T15:44:38.093Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -134,45 +134,6 @@
     ],
     "8.3-0405-002-ankar-superacid-hw": [
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/ANKAR-superacid-HW.png"
-    ],
-    "9.1-генератор-горячего-тумана-аирофог-ae35": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ae35.png"
-    ],
-    "9.1-генератор-горячего-тумана-аирофог-ar35e": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ar35e.png"
-    ],
-    "9.1-генератор-горячего-тумана-bd-400": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-bd-400.png"
-    ],
-    "9.1-дезинфекционная-установка-ds-160-бензиновый-двигатель": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-benzin.png"
-    ],
-    "9.1-дезинфекционная-установка-ds-50-50-литров-с-бензиновым-двигателем": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-50.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-good-fog": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-good-fog.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-jp-s20": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png"
-    ],
-    "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png"
-    ],
-    "9.1-мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-moo-gun": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-moo-gun.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-swg2020": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-swg2020.png"
-    ],
-    "9.1-генератор-горячего-тумана-tf15-ffg-10": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-tf15-ffg-10.png"
-    ],
-    "9.1-генератор-горячего-тумана-th-180": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png"
     ],
     "8.1-0404-001-ерш-для-коллектора-дпр-7": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png"
@@ -550,13 +511,26 @@
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kompomol-dz-chas-v.png"
     ],
     "9.1": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ae35.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ar35e.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-bd-400.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-bf-150.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-benzin.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-elektro.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-50.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-dvs.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-elektro.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-750.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-good-fog.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-moo-gun.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-sf-720.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-strim-a.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-swg2020.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-tf15-ffg-10.png",
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-th-250-h400.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-tn-fog-130.png"
     ],
