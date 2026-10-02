@@ -1364,6 +1364,37 @@ function renderTermsSection(ch,s){
     setTimeout(()=>target.classList.remove("term-focus"),1100);
   }));
 }
+function renderNormsSection(ch,s){
+  const rows=(s.rawRows||s.rows||[]);
+  const docs=[],units=[],reading=[],steps=[];
+  let mode="";
+  for(const r of rows){
+    const a=String(r[0]||"").trim();
+    if(a.startsWith("1.")){mode="docs";continue}
+    if(a.startsWith("2.")){mode="units";continue}
+    if(a.startsWith("3.")){mode="reading";continue}
+    if(a==="Порядок подбора товара"){mode="steps";continue}
+    if(["Документ","Обозначение","Показатель / обозначение","Шаг"].includes(a))continue;
+    if(!a||a.startsWith("Важно:"))continue;
+    const target=mode==="docs"?docs:mode==="units"?units:mode==="reading"?reading:mode==="steps"?steps:null;
+    if(target)target.push(r);
+  }
+  const important=[
+    ["Не путайте характеристики с нормативами.","Диапазон измерения и предел обнаружения (ppb) — это возможности прибора. «Не более» и «Не менее» — это требования закона: ТР ТС, ГОСТ."],
+    ["ppb = мкг/кг.","Символы < и > обозначают границы, а не точные значения."],
+    ["Минимальный ppb — не панацея.","Низкий предел обнаружения по одному веществу не делает тест лучшим. Оценивайте весь спектр определяемых соединений и диапазон чувствительности."],
+    ["Учитывайте матрицу и время.","Методы для молока, мяса и поверхностей различаются. Время анализа, например 5+5 мин, не включает пробоподготовку."],
+    ["Комплексный подход.","Нельзя выбрать товар только по одному параметру. Учитывайте задачу, образец, норматив, методику, время и комплектацию: количество тестов и опции."]
+  ];
+  const cards=(arr,kind)=>'<div class="norm-grid">'+arr.map((r)=>'<article class="norm-card"><span>'+esc(kind)+'</span><h3>'+esc(r[0])+'</h3><p>'+esc(r[1]||"")+'</p>'+(r[2]?'<small>'+esc(r[2])+'</small>':"")+(r[3]?'<em>'+esc(r[3])+'</em>':"")+'</article>').join("")+'</div>';
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title}])+
+    '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>Нормативные документы, единицы измерения и правила чтения характеристик — без табличной каши.</p></div></div>'+
+    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Документы</span><h2>Нормативы</h2></div><p>'+docs.length+' позиций</p></div>'+cards(docs,"Норматив")+'</section>'+
+    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Сокращения</span><h2>Обозначения и единицы измерения</h2></div><p>'+units.length+' терминов</p></div>'+cards(units,"Обозначение")+'</section>'+
+    '<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Практика</span><h2>Как читать показатели</h2></div><p>'+reading.length+' пояснений</p></div>'+cards(reading,"Показатель")+'</section>'+
+    (steps.length?'<section class="knowledge-section"><div class="section-heading compact"><div><span class="eyebrow">Алгоритм</span><h2>Порядок подбора товара</h2></div></div><div class="step-list">'+steps.map((r,i)=>'<article><b>'+esc(r[0]||String(i+1))+'</b><p>'+esc(r[1]||"")+'</p></article>').join("")+'</div></section>':"")+
+    renderImportant("Важно знать перед подбором тестов и оборудования:",important,"Обратите внимание: опции, например измерение лактозы, и комплектации — 96/112/480 тестов — могут различаться. Уточняйте артикулы при заказе.")+rawTables(s);
+}
 function renderChapter(id){
   const ch=state.chapters.get(id);if(!ch)return notFound();title(ch.title);
   const sections=displaySections(ch);
