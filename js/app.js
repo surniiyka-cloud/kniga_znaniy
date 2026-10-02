@@ -605,15 +605,55 @@ function buildChapter2Catalog(){
   ]);
 
   const ext=sBy("2.3");if(ext){const x=buildExtensoCard(ext);registerCatalog("2.3","Система EXTENSO · молоко и мясо",x.fields,state.assets.sectionImages?.["2.3"]||[],x);}
-  const inc=sBy("2.4");if(inc){
-    const x=splitAdvantages(inc.pairs);
-    const modes=uniquePairs(x.fields.filter(r=>/^Режим работы №/i.test(String(r[0]||""))));
-    const fields=uniquePairs(x.fields.filter(r=>!/^Режим работы №/i.test(String(r[0]||""))&&!/^(Характеристика|Наименование)$/i.test(String(r[0]||""))));
-    const name=(inc.rawRows||[]).find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Термостатическое устройство TIAS";
-    registerCatalog("2.4",name,fields,["img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png"],{
-      advantages:x.advantages,customTabs:modes.length?[{id:"modes",label:"Режимы работы",kind:"pairs",rows:modes}]:[]
-    });
+function buildIncubatorCards(s){
+  const rows=s.rawRows||s.rows||[];
+  const starts=[];
+  for(let i=0;i<rows.length-1;i++){
+    const vals=(rows[i]||[]).map(v=>String(v||"").trim()).filter(Boolean);
+    const next=(rows[i+1]||[]).map(v=>String(v||"").trim()).filter(Boolean);
+    if(vals.length===1&&/^(Характеристика|Страна производства)$/i.test(next[0]||""))starts.push(i);
   }
+  const imageFor=(name)=>{
+    const n=String(name||"").toLowerCase();
+    if(n.includes("tias"))return "img/photos/12-inkubatory-i-schityvayuschie-ustroystva/12-tias.png";
+    if(n.includes("hs 00647")||n.includes("hs-00647"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-heatsensor-hs-00647.png";
+    if(n.includes("duo"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-heatsensor-duo.png";
+    if(n.includes("octo"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-heatsensor-octo.png";
+    if(n.includes("delvotest"))return "img/photos/12-inkubatory-i-schityvayuschие-ustroystva/12-delvotest.png";
+    return "";
+  };
+  starts.forEach((st,i)=>{
+    const end=starts[i+1]??rows.length;
+    const name=String(rows[st]?.[0]||"").trim().replace(/^\*+|\*+$/g,"").trim();
+    const fields=[],advantages=[],modes=[];
+    let mode="fields";
+    for(const r of rows.slice(st+1,end)){
+      const vals=(r||[]).map(v=>String(v||"").trim()).filter(Boolean);
+      if(!vals.length)continue;
+      if(vals.length===1){
+        const heading=vals[0].replace(/^\*+|\*+$/g,"").trim();
+        if(/^(Преимущества|Преимущества и практическое значение)$/i.test(heading))mode="advantages";
+        continue;
+      }
+      const label=String(vals[0]).replace(/^\*+|\*+$/g,"").trim();
+      const value=vals.slice(1).join(" · ").trim();
+      if(!label||!value||/^(Характеристика|Наименование)$/i.test(label))continue;
+      if(mode==="advantages"){
+        if(!/^(Преимущество|Практическое значение)$/i.test(label))advantages.push([label,value]);
+      }else{
+        if(/^Режим работы №/i.test(label))modes.push([label,value]);
+        else fields.push([label,value]);
+      }
+    }
+    const image=imageFor(name);
+    registerCatalog("2.4",name,fields,image?[image]:[],{
+      advantages:uniquePairs(advantages),
+      customTabs:modes.length?[{id:"modes-"+safeSlug(name),label:"Режимы работы",kind:"pairs",rows:uniquePairs(modes)}]:[]
+    });
+  });
+}
+
+  const inc=sBy("2.4");if(inc)buildIncubatorCards(inc);
 
   const readers=sBy("2.5");if(readers){
     const blocks=splitPairBlocks(readers);
