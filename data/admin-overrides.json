@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T09:35:08.618Z",
+  "updatedAt": "2026-10-02T09:41:30.309Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -165,6 +165,9 @@
         "variants",
         "advantages",
         "calibration"
+      ],
+      "hiddenTabs": [
+        "advantages"
       ]
     },
     "catalog-2-6-ekomilk-6-параметров": {
