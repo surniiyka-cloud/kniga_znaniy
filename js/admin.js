@@ -289,8 +289,8 @@ function showError(e){const box=modal?.querySelector("[data-admin-status]");if(b
 function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status "+kind;box.textContent=t}}
 
 function shell(title,subtitle,inner){
-  return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Администратор</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn primary" data-admin-refresh>⚡ Забрать свежие данные из Google Sheets</button><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать все правки книги</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить файл правок книги<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost" data-admin-logout>Выйти из админа</button><span class="kb-admin-devnote">Рабочий редактор · изменения публикуются в main</span></div>'+
+  return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Личный кабинет</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div><button class="kb-admin-x" type="button" data-admin-close>×</button></header>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать резервную копию</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить резервную копию<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button><span class="kb-admin-devnote">Каталог хранится на сайте</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function renderAccountPage(){
