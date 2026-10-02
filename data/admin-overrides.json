@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-02T09:42:03.361Z",
+  "updatedAt": "2026-10-02T10:52:16.894Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -3955,8 +3955,30 @@
   },
   "sections": {
     "2.1.1": {
-      "notes": [],
-      "tables": []
+      "manualProducts": {
+        "manual-10.1-0601-002-влагомер-зерна-wile-55-тест": {
+          "id": "manual-10.1-0601-002-влагомер-зерна-wile-55-тест",
+          "name": "Тест",
+          "article": "",
+          "type": "",
+          "purpose": "",
+          "detailFields": [],
+          "advantages": [],
+          "substances": [],
+          "indicators": [],
+          "tabTables": {},
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "washCycle": [],
+          "customTabs": []
+        }
+      }
     },
     "2.1.3": {
       "notes": []
