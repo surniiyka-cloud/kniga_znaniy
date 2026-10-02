@@ -34,6 +34,30 @@
       {
         "label": "Росстандарт — актуальная информация о ГОСТ",
         "href": "https://www.rst.gov.ru/portal/gost/home/standarts"
+      },
+      {
+        "label": "ГОСТ 10444.15 КМАФАнМ — PDF",
+        "href": "docs/normative/gost/ГОСТ 10444.15 КМАФАнМ.pdf"
+      },
+      {
+        "label": "ГОСТ 23453 — соматические клетки — PDF",
+        "href": "docs/normative/gost/ГОСТ 23453 соматические клетки.pdf"
+      },
+      {
+        "label": "ГОСТ 31449 — сырое молоко — PDF",
+        "href": "docs/normative/gost/ГОСТ 31449 сырое молоко.pdf"
+      },
+      {
+        "label": "ГОСТ 32219 — PDF",
+        "href": "docs/normative/gost/ГОСТ 32219.pdf"
+      },
+      {
+        "label": "ГОСТ Р 52054 — сырое молоко — PDF",
+        "href": "docs/normative/gost/ГОСТ Р 52054 сырое молоко.pdf"
+      },
+      {
+        "label": "ГОСТ Р 52054 — сырое молоко, изменения — PDF",
+        "href": "docs/normative/gost/ГОСТ Р 52054 сырое молоко изменения.pdf"
       }
     ],
     "related": [],
