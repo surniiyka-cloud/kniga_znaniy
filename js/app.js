@@ -1087,6 +1087,7 @@ function buildLiveSearchIndex(){
 }
 function installEditorApi(){
   window.KB_EDITOR_API={
+    route(){return route()},
     current(){
       const r=route();
       if(r.name==="product"||r.name==="accountProduct"){
