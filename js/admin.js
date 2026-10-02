@@ -357,7 +357,7 @@ function customTabContentHtml(t){
 }
 function pairRowsEditorHtml(key,label,rows){
   const list=Array.isArray(rows)&&rows.length?rows:[["",""]];
-  return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'"><summary>'+esc(label)+' <small>'+list.filter(r=>r?.[0]||r?.[1]).length+' строк</small></summary><div class="kb-pair-list" data-pair-list>'+list.map((r,i)=>'<div class="kb-pair-row" data-pair-row><input data-pair-label placeholder="Название характеристики" value="'+esc(r?.[0]||"")+'"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение" value="'+esc(r?.[1]||"")+'"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+'</div><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить характеристику</button></details>';
+  return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'"><summary>'+esc(label)+' <small>'+list.filter(r=>r?.[0]||r?.[1]).length+' строк</small></summary><div class="kb-pair-list" data-pair-list>'+list.map((r,i)=>'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики" value="'+esc(r?.[0]||"")+'"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение" value="'+esc(r?.[1]||"")+'"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+'</div><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить характеристику</button></details>';
 }
 function collectPairRows(form,key){
   return [...form.querySelectorAll('[data-pair-editor="'+CSS.escape(key)+'"] [data-pair-row]')].map(r=>[
@@ -1084,6 +1084,58 @@ function bindBody(){
     }
     if(e.target.closest("[data-table-remove-row]")){e.target.closest("[data-table-row]")?.remove();return}
     if(e.target.closest("[data-table-delete]")){ed.remove();return}
+  });
+  let draggedPairRow=null;
+  body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(row=>{
+    const handle=row.querySelector("[data-pair-drag]");
+    handle?.addEventListener("dragstart",e=>{
+      draggedPairRow=row;
+      e.dataTransfer?.setData("text/plain",row.dataset.pairRow||"pair");
+      if(e.dataTransfer)e.dataTransfer.effectAllowed="move";
+      row.classList.add("is-dragging");
+    });
+    handle?.addEventListener("dragend",()=>{
+      row.classList.remove("is-dragging");
+      draggedPairRow=null;
+    });
+    row.addEventListener("dragover",e=>{
+      if(!draggedPairRow||draggedPairRow===row)return;
+      e.preventDefault();
+      if(e.dataTransfer)e.dataTransfer.dropEffect="move";
+      const box=row.getBoundingClientRect();
+      const after=e.clientY>box.top+box.height/2;
+      row.parentElement?.insertBefore(draggedPairRow,after?row.nextSibling:row);
+    });
+  });
+  body.addEventListener("click",e=>{
+    const add=e.target.closest?.("[data-pair-add]");
+    if(add){
+      const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
+      if(!ed||!list)return;
+      list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');
+      const row=list.lastElementChild,handle=row?.querySelector("[data-pair-drag]");
+      handle?.addEventListener("dragstart",e=>{
+        draggedPairRow=row;
+        e.dataTransfer?.setData("text/plain","pair");
+        if(e.dataTransfer)e.dataTransfer.effectAllowed="move";
+        row.classList.add("is-dragging");
+      });
+      handle?.addEventListener("dragend",()=>{row.classList.remove("is-dragging");draggedPairRow=null});
+      row?.addEventListener("dragover",e=>{
+        if(!draggedPairRow||draggedPairRow===row)return;
+        e.preventDefault();
+        const box=row.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;
+        row.parentElement?.insertBefore(draggedPairRow,after?row.nextSibling:row);
+      });
+      row?.querySelector("[data-pair-label]")?.focus();
+      return;
+    }
+    const remove=e.target.closest?.("[data-pair-remove]");
+    if(remove){
+      const rows=remove.closest("[data-pair-list]")?.querySelectorAll("[data-pair-row]")||[];
+      if(rows.length<=1){remove.closest("[data-pair-row]")?.querySelectorAll("input").forEach(x=>x.value="");return}
+      remove.closest("[data-pair-row]")?.remove();
+    }
   });
   body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.nextElementSibling?.after(r)});
