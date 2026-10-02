@@ -66,6 +66,10 @@ async function connectGithub(){
 function utf8Base64(text){
   const bytes=new TextEncoder().encode(text);let bin="";for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin);
 }
+function base64Utf8(value){
+  const bin=atob(String(value||"").replace(/\\s+/g,"")),bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
 function bytesBase64(buffer){
   const bytes=new Uint8Array(buffer);let bin="";for(let i=0;i<bytes.length;i+=0x8000)bin+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(bin);
 }
