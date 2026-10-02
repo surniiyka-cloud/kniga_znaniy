@@ -322,7 +322,7 @@ async function renderAccountPage(){
   }
   if(r.name==="accountProduct"||r.name==="accountSection"){renderEditor().catch(showError);return;}
   const catalog=window.KB_EDITOR_API.catalog?.()||[];
-  const sections=catalog.flatMap(ch=>ch.sections.filter(s=>s.products.length).map(sec=>({...sec,chapterId:ch.id,chapterTitle:ch.title})));
+  const sections=catalog.flatMap(ch=>ch.sections.map(sec=>({...sec,chapterId:ch.id,chapterTitle:ch.title})));
   const html=shell("Личный кабинет","Управление каталогом без Google Sheets",
     '<div class="kb-account-head"><div><h3>Каталог товаров</h3><p class="kb-admin-hint">Теперь это основная база сайта. Google Sheets больше не используется для повседневного редактирования.</p></div></div>'+
     '<div class="kb-account-search"><span>⌕</span><input type="search" data-account-search placeholder="Поиск по личному кабинету: товар, артикул, раздел…" autocomplete="off"></div>'+
