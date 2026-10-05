@@ -445,7 +445,7 @@ function pairRowsEditorHtml(key,label,rows,headers=[]){
     '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Столбцы можно дополнять.</span><button type="button" class="kb-mini" data-pair-add-col>+ столбец</button></div>'+
     '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'" style="--pair-width:"+width+">'+
     '<div class="kb-pair-header" data-pair-header-row><span class="kb-pair-header-handle"></span>'+defaultHeaders.map((h,i)=>'<div class="kb-pair-header-cell"><input data-pair-header value="'+esc(h)+'" placeholder="Название столбца">'+(i>=2?'<button type="button" class="kb-pair-col-remove" data-pair-remove-col title="Удалить столбец">×</button>':"")+'</div>').join("")+'<span></span></div>'+
-    normalized.map((r)=>'<div class="kb-pair-row" data-pair-row draggable="false" style="grid-template-columns:30px repeat("+width+",minmax(120px,1fr)) 36px">'+
+    normalized.map((r)=>'<div class="kb-pair-row" data-pair-row draggable="false" style="--pair-width:'+width+'">'+
       '<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
       r.map((v,i)=>'<input data-pair-cell="'+i+'" placeholder="'+esc(defaultHeaders[i]||("Столбец "+(i+1)))+'" value="'+esc(v)+'">').join("")+
       '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+
