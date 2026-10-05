@@ -1230,16 +1230,14 @@ function bindBody(){
   body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.nextElementSibling?.after(r)});
   body.querySelectorAll("[data-product-hidden]").forEach(ch=>ch.onchange=()=>ch.closest("[data-section-product-row]")?.classList.toggle("is-hidden",ch.checked));
-  body.querySelectorAll("[data-product-delete]").forEach(b=>b.onclick=()=>{
+  body.querySelectorAll("[data-product-delete]").forEach(b=>b.onclick=async()=>{
     const r=b.closest("[data-section-product-row]");if(!r)return;
-    if(r.dataset.deletePending==="1"){
-      r.dataset.deletePending="";r.classList.remove("is-deleting");b.textContent="Удалить";
-      r.querySelectorAll("button,input").forEach(x=>{if(x!==b)x.disabled=false});return;
-    }
-    const name=r.querySelector(".kb-product-sort-name strong")?.textContent||"эту карточку";
-    if(!confirm('Удалить «'+name+'» с сайта? Исходная строка в Google Sheets останется.'))return;
-    r.dataset.deletePending="1";r.classList.add("is-deleting");b.textContent="Отменить";
-    r.querySelectorAll("button,input").forEach(x=>{if(x!==b)x.disabled=true});
+    const id=r.dataset.id,name=r.querySelector(".kb-product-sort-name strong")?.textContent||"эту карточку";
+    if(!id||!confirm('Удалить «'+name+'» с сайта?'))return;
+    try{
+      b.disabled=true;showStatus("Удаляем карточку…");
+      await deleteProductById(id);
+    }catch(err){b.disabled=false;showError(err)}
   });
   let draggedProduct=null;
   body.querySelectorAll("[data-section-product-row]").forEach(row=>{
@@ -1347,12 +1345,11 @@ async function saveSection(e){
     const productRows=[...form.querySelectorAll("[data-section-product-row]")];
     const deletedRows=[...form.querySelectorAll("[data-section-deleted-row]")];
     if(productRows.length||deletedRows.length){
-      const pendingDeleted=productRows.filter(r=>r.dataset.deletePending==="1").map(r=>r.dataset.id).filter(Boolean);
-      const activeRows=productRows.filter(r=>r.dataset.deletePending!=="1");
+      const activeRows=productRows;
       const productOrder=activeRows.map(r=>r.dataset.id).filter(Boolean);
       const hiddenProductIds=activeRows.filter(r=>r.querySelector("[data-product-hidden]")?.checked).map(r=>r.dataset.id).filter(Boolean);
       const stillDeleted=deletedRows.filter(r=>!r.querySelector("[data-product-restore]")?.checked).map(r=>r.dataset.id).filter(Boolean);
-      const deletedProductIds=[...new Set([...stillDeleted,...pendingDeleted])];
+      const deletedProductIds=[...new Set(stillDeleted)];
       putDiff(out,"productOrder",productOrder,src.productOrder||[]);
       putDiff(out,"hiddenProductIds",hiddenProductIds,src.hiddenProductIds||[]);
       putDiff(out,"deletedProductIds",deletedProductIds,src.deletedProductIds||[]);
