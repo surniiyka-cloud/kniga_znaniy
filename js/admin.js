@@ -237,16 +237,92 @@ function tableHeadersForTab(id,table,label=""){
   if(String(id)==="advantages"||/преимуществ/i.test(String(label)))return ["Преимущества","Описание"];
   return (table?.headers?.length?table.headers:["Название","Значение"]).map(x=>String(x||""));
 }
+function normalizeTableMergesForEditor(table,width,height){
+  const out=[];
+  for(const raw of Array.isArray(table?.merges)?table.merges:[]){
+    const row=Math.max(0,Number(raw?.row)||0),col=Math.max(0,Number(raw?.col)||0);
+    const rowspan=Math.max(1,Number(raw?.rowspan)||1),colspan=Math.max(1,Number(raw?.colspan)||1);
+    if(row>=height||col>=width)continue;
+    const rs=Math.min(rowspan,height-row),cs=Math.min(colspan,width-col);
+    const overlaps=out.some(m=>!(row+rs<=m.row||m.row+m.rowspan<=row||col+cs<=m.col||m.col+m.colspan<=col));
+    if(!overlaps&&(rs>1||cs>1))out.push({row,col,rowspan:rs,colspan:cs});
+  }
+  return out.sort((a,b)=>a.row-b.row||a.col-b.col);
+}
+function tableMergeAt(merges,row,col){
+  return (merges||[]).find(m=>row>=m.row&&row<m.row+m.rowspan&&col>=m.col&&col<m.col+m.colspan)||null;
+}
+function tableRowHtml(row,width,rowIndex=0,merges=[]){
+  const cells=[];
+  for(let col=0;col<width;col++){
+    const merge=tableMergeAt(merges,rowIndex,col);
+    if(merge&&!(merge.row===rowIndex&&merge.col===col))continue;
+    const attrs=merge?(' rowspan="'+merge.rowspan+'" colspan="'+merge.colspan+'"'):"";
+    cells.push('<td data-table-cell-pos="'+rowIndex+':'+col+'"'+attrs+'><input data-table-cell value="'+esc(row?.[col]||"")+'"></td>');
+  }
+  return '<tr data-table-row data-table-row-index="'+rowIndex+'">'+cells.join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-merge" data-table-merge-row title="Объединить всю строку" aria-label="Объединить всю строку">↔</button><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
+}
+function tableEditorGridHtml(headers,rows,merges){
+  const width=Math.max(1,headers.length);
+  return '<table class="kb-edit-table"><thead><tr>'+headers.map((h,i)=>'<th><div class="kb-cell-head"><input data-table-header value="'+esc(h)+'"><button type="button" class="kb-col-remove" data-table-remove-col="'+i+'" title="Удалить столбец">×</button></div></th>').join("")+'<th class="kb-row-tools"></th></tr></thead><tbody>'+rows.map((r,i)=>tableRowHtml(r,width,i,merges)).join("")+'</tbody></table>';
+}
 function tableEditorHtml(id,label,table){
   const headers=tableHeadersForTab(id,table,label);
   const width=Math.max(1,headers.length),rows=(table?.rows||[]).map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||"")));
+  const merges=normalizeTableMergesForEditor(table,width,rows.length);
   return '<article class="kb-table-editor" data-table-editor data-table-id="'+esc(id)+'">'+
-    '<div class="kb-table-editor-head"><div><strong>'+esc(label)+'</strong><code>'+esc(id)+'</code></div><div class="kb-table-actions"><button type="button" class="kb-mini" data-table-add-col>+ столбец</button><button type="button" class="kb-mini" data-table-add-row>+ строка</button><button type="button" class="kb-mini danger" data-table-delete>Удалить таблицу</button></div></div>'+
-    '<div class="kb-table-scroll"><table class="kb-edit-table"><thead><tr>'+headers.map((h,i)=>'<th><div class="kb-cell-head"><input data-table-header value="'+esc(h)+'"><button type="button" class="kb-col-remove" data-table-remove-col="'+i+'" title="Удалить столбец">×</button></div></th>').join("")+'<th class="kb-row-tools"></th></tr></thead>'+
-    '<tbody>'+rows.map(r=>tableRowHtml(r,width)).join("")+'</tbody></table></div></article>';
+    '<div class="kb-table-editor-head"><div><strong>'+esc(label)+'</strong><code>'+esc(id)+'</code></div><div class="kb-table-actions"><button type="button" class="kb-mini" data-table-add-col>+ столбец</button><button type="button" class="kb-mini" data-table-add-row>+ строка</button><button type="button" class="kb-mini" data-table-merge>Объединить выбранные</button><button type="button" class="kb-mini" data-table-unmerge>Разъединить</button><button type="button" class="kb-mini danger" data-table-delete>Удалить таблицу</button></div></div>'+
+    '<p class="kb-table-merge-hint">Ctrl/⌘ + клик по ячейкам — выбрать несколько. Для примечания под таблицей нажмите ↔ в нужной строке.</p>'+
+    '<div class="kb-table-scroll">'+tableEditorGridHtml(headers,rows,merges)+'</div></article>';
 }
-function tableRowHtml(row,width){
-  return '<tr data-table-row>'+Array.from({length:width},(_,i)=>'<td><input data-table-cell value="'+esc(row?.[i]||"")+'"></td>').join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
+function readTableEditor(ed){
+  const headers=[...ed.querySelectorAll("[data-table-header]")].map(x=>x.value.trim());
+  const width=headers.length;
+  const rows=Array.from(ed.querySelectorAll("[data-table-row]")).map(tr=>{
+    const row=Array(width).fill("");
+    tr.querySelectorAll("[data-table-cell-pos]").forEach(td=>{
+      const [r,c]=td.dataset.tableCellPos.split(":").map(Number);
+      if(Number.isFinite(c)&&c<width)row[c]=td.querySelector("[data-table-cell]")?.value.trim()||"";
+    });
+    return row;
+  });
+  const merges=Array.from(ed.querySelectorAll("[data-table-cell-pos][rowspan],[data-table-cell-pos][colspan]")).map(td=>{
+    const [row,col]=td.dataset.tableCellPos.split(":").map(Number);
+    return {row,col,rowspan:Number(td.getAttribute("rowspan")||1),colspan:Number(td.getAttribute("colspan")||1)};
+  }).filter(m=>m.rowspan>1||m.colspan>1);
+  return {headers,rows,merges:normalizeTableMergesForEditor({merges},width,rows.length)};
+}
+function refreshTableEditor(ed,data){
+  ed.querySelector(".kb-table-scroll").innerHTML=tableEditorGridHtml(data.headers,data.rows,normalizeTableMergesForEditor(data,data.headers.length,data.rows.length));
+}
+function selectedTableCells(ed){
+  return [...ed.querySelectorAll("[data-table-cell-pos].is-selected")].map(td=>{
+    const [row,col]=td.dataset.tableCellPos.split(":").map(Number);return {td,row,col};
+  });
+}
+function mergeSelectedTableCells(ed){
+  const selected=selectedTableCells(ed);
+  if(selected.length<2)return showError(new Error("Выберите минимум две ячейки через Ctrl/⌘ + клик."));
+  const minRow=Math.min(...selected.map(x=>x.row)),maxRow=Math.max(...selected.map(x=>x.row)),minCol=Math.min(...selected.map(x=>x.col)),maxCol=Math.max(...selected.map(x=>x.col));
+  if(selected.length!==(maxRow-minRow+1)*(maxCol-minCol+1))return showError(new Error("Для объединения нужно выбрать цельный прямоугольник ячеек."));
+  const current=readTableEditor(ed);
+  if(current.merges.some(m=>!(maxRow+1<=m.row||m.row+m.rowspan<=minRow||maxCol+1<=m.col||m.col+m.colspan<=minCol)))return showError(new Error("В выбранной области уже есть объединённые ячейки. Сначала разъедините их."));
+  current.merges.push({row:minRow,col:minCol,rowspan:maxRow-minRow+1,colspan:maxCol-minCol+1});
+  refreshTableEditor(ed,current);
+  ed.querySelector('[data-table-cell-pos="'+minRow+':'+minCol+'"]')?.classList.add("is-selected");
+}
+function unmergeSelectedTableCells(ed){
+  const selected=selectedTableCells(ed);if(!selected.length)return showError(new Error("Выберите объединённую ячейку."));
+  const current=readTableEditor(ed),targets=current.merges.filter(m=>selected.some(s=>s.row>=m.row&&s.row<m.row+m.rowspan&&s.col>=m.col&&s.col<m.col+m.colspan));
+  if(!targets.length)return showError(new Error("В выбранной области нет объединённых ячеек."));
+  current.merges=current.merges.filter(m=>!targets.includes(m));refreshTableEditor(ed,current);
+}
+function mergeWholeTableRow(ed,rowIndex){
+  const current=readTableEditor(ed),width=current.headers.length;
+  current.merges=current.merges.filter(m=>m.row!==rowIndex);
+  if(width>1)current.merges.push({row:rowIndex,col:0,rowspan:1,colspan:width});
+  refreshTableEditor(ed,current);
+  ed.querySelector('[data-table-cell-pos="'+rowIndex+':0"]')?.classList.add("is-selected");
 }
 function tableEditorsHtml(ctx){
   const tables=normalizedTabTables(ctx),editors=[];
@@ -258,9 +334,8 @@ function tableEditorsHtml(ctx){
 function collectTabTables(form){
   const out={};
   form.querySelectorAll("[data-table-editor]").forEach(ed=>{
-    const id=ed.dataset.tableId,headers=[...ed.querySelectorAll("[data-table-header]")].map(x=>x.value.trim());
-    const width=headers.length,rows=[...ed.querySelectorAll("[data-table-row]")].map(tr=>Array.from({length:width},(_,i)=>tr.querySelectorAll("[data-table-cell]")[i]?.value.trim()||"")).filter(r=>r.some(Boolean));
-    if(id&&headers.some(Boolean))out[id]={headers,rows};
+    const id=ed.dataset.tableId,data=readTableEditor(ed);
+    if(id&&data.headers.some(Boolean))out[id]=data;
   });
   return out;
 }
@@ -798,292 +873,25 @@ function bindBody(){
   });
   body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
   body.addEventListener("click",e=>{
-    const add=e.target.closest?.("[data-pair-add]");
-    if(add){
-      const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
-      if(list){list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');bindPairDrag(list.lastElementChild);}
-      return;
-    }
-    const remove=e.target.closest?.("[data-pair-remove]");
-    if(remove){
-      const row=remove.closest("[data-pair-row]"),list=row?.parentElement;
-      if(row&&list){
-        if(list.querySelectorAll("[data-pair-row]").length<=1){row.querySelectorAll("input").forEach(x=>x.value="");}
-        else row.remove();
-      }
-    }
-  });
-  body.querySelectorAll("[data-account-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountSection)));
-
-
-  body.querySelectorAll("[data-rich-editor]"); // keep focus selector warm for delegated formatting
-  body.addEventListener("mousedown",e=>{
-    const btn=e.target.closest?.("[data-rich-cmd]");if(btn)e.preventDefault();
-  });
-  body.addEventListener("click",async e=>{
-    const cmd=e.target.closest?.("[data-rich-cmd]");
-    if(cmd){
-      const command=cmd.dataset.richCmd,value=cmd.dataset.richValue||null;
-      if(command==="createLink"){
-        const url=prompt("Ссылка:", "https://");if(!url)return;
-        document.execCommand("createLink",false,url);
-      }else document.execCommand(command,false,value);
-      return;
-    }
-    const add=e.target.closest?.("[data-content-add]");
-    if(add){
-      const type=add.dataset.contentAdd,wrap=body.querySelector("[data-content-builder]");
-      if(!wrap)return;
-      const id="block-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
-      const defaults={
-        text:{id,type,html:"<p>Введите текст…</p>"},
-        heading:{id,type,text:"Новый заголовок"},
-        list:{id,type,items:["Новый пункт"]},
-        quote:{id,type,html:"<p>Выделенная информация…</p>"},
-        table:{id,type,headers:["Название","Значение"],rows:[["",""]]},
-        image:{id,type,src:"",width:100,align:"center",alt:"",caption:""}
-      };
-      wrap.insertAdjacentHTML("beforeend",contentBlockEditorHtml(defaults[type]||defaults.text,wrap.children.length));
-      const block=wrap.lastElementChild;block?.scrollIntoView({behavior:"smooth",block:"center"});return;
-    }
-    if(e.target.closest("[data-content-delete]")){e.target.closest("[data-content-block]")?.remove();return}
-    if(e.target.closest("[data-content-duplicate]")){
-      const block=e.target.closest("[data-content-block]"),wrap=body.querySelector("[data-content-builder]");
-      if(!block||!wrap)return;
-      const clone=block.cloneNode(true);clone.dataset.blockId="block-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
-      block.after(clone);return;
-    }
-    const upload=e.target.closest("[data-content-image-upload]");
-    if(upload){
-      const block=upload.closest("[data-content-block]"),input=body.querySelector("[data-content-image-file]");
-      if(input&&block){input.dataset.contentTarget=block.dataset.blockId;input.click()}return;
-    }
-    const addRow=e.target.closest("[data-content-add-row]");
-    if(addRow){
-      const table=addRow.closest("[data-content-table]"),w=table?.querySelectorAll("[data-content-table-header]").length||1;
-      table?.querySelector("tbody")?.insertAdjacentHTML("beforeend",'<tr data-content-table-row>'+Array.from({length:w},()=>'<td><input data-content-table-cell value=""></td>').join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-remove" data-content-remove-row>×</button></td></tr>');return;
-    }
-    const addCol=e.target.closest("[data-content-add-col]");
-    if(addCol){
-      const table=addCol.closest("[data-content-table]"),head=table?.querySelector("thead tr"),idx=table?.querySelectorAll("[data-content-table-header]").length||0;
-      head?.insertAdjacentHTML("beforeend",'<th><div class="kb-cell-head"><input data-content-table-header value="Новый столбец"><button type="button" class="kb-col-remove" data-content-remove-col="'+idx+'">×</button></div></th>');
-      table?.querySelectorAll("[data-content-table-row]").forEach(tr=>tr.insertAdjacentHTML("beforeend",'<td><input data-content-table-cell value=""></td>'));return;
-    }
-    const removeCol=e.target.closest("[data-content-remove-col]");
-    if(removeCol){
-      const table=removeCol.closest("[data-content-table]"),heads=[...table.querySelectorAll("[data-content-table-header]")];if(heads.length<=1)return;
-      const idx=heads.indexOf(removeCol.closest("th")?.querySelector("[data-content-table-header]"));removeCol.closest("th")?.remove();
-      table.querySelectorAll("[data-content-table-row]").forEach(tr=>tr.querySelectorAll("td:not(.kb-row-tools)")[idx]?.remove());return;
-    }
-    if(e.target.closest("[data-content-remove-row]")){e.target.closest("[data-content-table-row]")?.remove();return}
-  });
-  body.addEventListener("input",e=>{
-    const w=e.target.closest("[data-block-image-width]");
-    if(w){const o=w.closest("[data-content-block]")?.querySelector("[data-block-image-width-out]");if(o)o.textContent=w.value+"%";return}
-  });
-  body.querySelector("[data-content-image-file]")?.addEventListener("change",async e=>{
-    const input=e.currentTarget,file=input.files?.[0],target=input.dataset.contentTarget||"",form=body.querySelector("[data-admin-section]");
-    if(!file||!target||!form)return;
-    try{
-      const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
-      if(file.size>15*1024*1024)throw new Error("Изображение больше 15 МБ.");
-      showStatus("Загружаю изображение в раздел…","warn");
-      const path=nextContentImagePath(form.dataset.id,file);
-      await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload section content image");
-      const block=body.querySelector('[data-content-block][data-block-id="'+CSS.escape(target)+'"]');
-      if(block){
-        const hidden=block.querySelector("[data-block-image-src]");if(hidden)hidden.value=path;
-        const preview=block.querySelector(".kb-content-image-preview");if(preview)preview.innerHTML='<img src="'+esc(photoPreviewSrc(path))+'" alt="">';
-      }
-      showStatus("Изображение загружено в репозиторий. Нажми «Сохранить раздел».","ok");
-    }catch(err){showError(err)}finally{input.value="";input.dataset.contentTarget=""}
-  });
-  let draggedContent=null;
-  body.querySelectorAll("[data-content-block]").forEach(block=>{
-    block.addEventListener("dragstart",()=>{draggedContent=block;block.classList.add("is-dragging")});
-    block.addEventListener("dragend",()=>{block.classList.remove("is-dragging");draggedContent=null});
-    block.addEventListener("dragover",e=>{e.preventDefault();if(!draggedContent||draggedContent===block)return;const box=block.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;block.parentElement?.insertBefore(draggedContent,after?block.nextSibling:block)});
-  });
-  body.querySelector("[data-github-connect]")?.addEventListener("click",async e=>{
-    try{await connectGithub();e.currentTarget.textContent="✓ GitHub подключен";showStatus("GitHub подключен на время этой вкладки.")}catch(err){showError(err)}
-  });
-  body.querySelector("[data-admin-logout]")?.addEventListener("click",()=>{
-    sessionStorage.removeItem(ADMIN_SESSION_KEY);sessionStorage.removeItem(GITHUB_TOKEN_KEY);location.hash="#/home";closeAdmin();window.dispatchEvent(new CustomEvent("kb:admin-change"));
-  });
-  body.querySelector("[data-admin-close]")?.addEventListener("click",()=>{location.hash="#/home";closeAdmin()});
-  body.querySelector("[data-admin-refresh]")?.addEventListener("click",async e=>{
-    const b=e.currentTarget;b.disabled=true;showStatus("Забираю свежие данные из текущего листа Google Sheets…","warn");
-    try{
-      const r=await window.KB_EDITOR_API?.refreshCurrentSection?.();
-      await publishLiveSnapshots((r?.sectionId||"").split(","));
-      await renderEditor();
-      showStatus("Готово: "+(r?.sections>1?(r.sections+" листов обновлено"):(("раздел "+(r?.sectionId||"")+" обновлён")))+" из Google Sheets и опубликовано ("+(r?.rows||0)+" строк).");
-    }catch(err){showError(err)}finally{b.disabled=false}
-  });
-  body.querySelector("[data-admin-export]")?.addEventListener("click",async()=>{
-    const editorOverrides=await loadOverrides(true);
-    let liveSheetSnapshots=window.KB_EDITOR_API?.liveSnapshots?.()||{};if(!liveSheetSnapshots||typeof liveSheetSnapshots!=="object"||Array.isArray(liveSheetSnapshots)){try{liveSheetSnapshots=JSON.parse(localStorage.getItem(LIVE_KEY)||"{}")||{}}catch{liveSheetSnapshots={}}}
-    const data={format:"tian-knowledge-book-local-backup",version:2,exportedAt:new Date().toISOString(),editorOverrides,liveSheetSnapshots};
-    const stamp=new Date().toISOString().slice(0,19).replace(/[:T]/g,"-");
-    const blob=new Blob([JSON.stringify(data,null,2)+"\n"],{type:"application/json"});
-    const url=URL.createObjectURL(blob),a=document.createElement("a");
-    a.href=url;a.download="kniga-znaniy-VSE-pravki-"+stamp+".json";document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);
-    showStatus("Сохранён один файл со всеми ручными правками книги и локально обновлёнными листами Google Sheets.");
-  });
-  body.querySelector("[data-admin-import]")?.addEventListener("change",async e=>{
-    const file=e.target.files?.[0];if(!file)return;
-    try{
-      const data=JSON.parse(await file.text());
-      if(!data||typeof data!=="object"||Array.isArray(data))throw new Error("Неверный файл правок.");
-      const editorOverrides=data.format==="tian-knowledge-book-local-backup"?(data.editorOverrides||emptyOverrides()):data;
-      editorOverrides.products ||= {};editorOverrides.sections ||= {};editorOverrides.chapters ||= {};
-      await commitOverrides(editorOverrides);
-      if(data.format==="tian-knowledge-book-local-backup"){localStorage.setItem(LIVE_KEY,JSON.stringify(data.liveSheetSnapshots||{}));await publishLiveSnapshots()}
-      showStatus("Все правки книги импортированы и опубликованы. Обновляю страницу…");
-      location.reload();
-    }catch(err){showError(err)}
-  });
-  body.querySelector("[data-add-table]")?.addEventListener("click",()=>{
-    const id=body.querySelector("[data-new-table-tab]")?.value||"";if(!id||!editorCtx)return;
-    const wrap=body.querySelector("[data-table-editors]"),existing=wrap?.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"]');
-    if(existing){existing.scrollIntoView({behavior:"smooth",block:"center"});existing.classList.add("kb-flash");setTimeout(()=>existing.classList.remove("kb-flash"),900);return}
-    const source=sourceRowsForTab(editorCtx,id),table={headers:tableHeadersForTab(id,null,tableLabel(editorCtx,id)),rows:source.map(r=>[String(r?.[0]||""),String(r?.[1]||"")])};
-    const label=body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"] [data-tab-label]')?.value.trim()||tableLabel(editorCtx,id);
-    wrap?.insertAdjacentHTML("beforeend",tableEditorHtml(id,label,table));
-  });
-
-  body.querySelector("[data-photo-add]")?.addEventListener("click",()=>body.querySelector("[data-photo-file]")?.click());
-  body.querySelector("[data-photo-file]")?.addEventListener("change",async e=>{
-    const input=e.currentTarget,files=[...(input.files||[])];if(!files.length||!editorCtx)return;
-    const btn=body.querySelector("[data-photo-add]");if(btn)btn.disabled=true;showStatus("Загружаю и автоматически кадрирую фотографии…","warn");
-    try{
-      let current=syncPhotoState(body);
-      for(const file of files){
-        const ext=imageExt(file);if(!ext)throw new Error("Файл «"+file.name+"» имеет неподдерживаемый формат.");
-        let bounds=null;try{bounds=await detectPhotoBounds(file)}catch{}
-        const path=nextPhotoPath(editorCtx.id,current,ext);await uploadPhoto(file,path);current.push(path);
-        body.querySelector("[data-photo-list]")?.insertAdjacentHTML("beforeend",photoRowHtml(path,current.length-1,{}));
-        const row=[...body.querySelectorAll("[data-photo-row]")].at(-1);
-        if(bounds)for(const context of ["card","detail"]){const box=row.querySelector('[data-photo-context="'+context+'"]');setPhotoControls(box,autoSettingFromBounds(bounds,context))}
-      }
-      await persistImagesOnly(body);showStatus("Фотографии загружены, автоподгон рассчитан отдельно для карточки и внутреннего фото.");
-    }catch(err){showError(err)}finally{input.value="";if(btn)btn.disabled=false}
-  });
-  body.querySelector("[data-photo-save-view]")?.addEventListener("click",async e=>{
-    const b=e.currentTarget;b.disabled=true;showStatus("Сохраняю отображение фотографий…","warn");
-    try{await persistImagesOnly(body);showStatus("Оба варианта отображения фотографий сохранены и опубликованы.")}catch(err){showError(err)}finally{b.disabled=false}
-  });
-  body.querySelector("[data-photo-replace-file]")?.addEventListener("change",async e=>{
-    const input=e.currentTarget,file=input.files?.[0],old=input.dataset.replacePath||"";if(!file||!old)return;
-    const row=body.querySelector('[data-photo-row][data-path="'+CSS.escape(old)+'"]');if(!row)return;
-    showStatus("Заменяю фотографию и пересчитываю кадр…","warn");
-    try{
-      const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
-      let path=old;
-      if(!old.startsWith("img/photos/admin/"))path=nextPhotoPath(editorCtx.id,syncPhotoState(body),ext);
-      else path=old.replace(/\.[^.]+$/,"."+ext);
-      let bounds=null;try{bounds=await detectPhotoBounds(file)}catch{}
-      await uploadPhoto(file,path);
-      if(path!==old&&old.startsWith("img/photos/admin/"))await deleteRepoFile(old,"Admin: remove replaced product photo");
-      row.dataset.path=path;row.querySelectorAll(".kb-photo-preview img").forEach(img=>img.src=photoPreviewSrc(path));row.querySelector(".kb-photo-meta code").textContent=path;
-      if(bounds)for(const context of ["card","detail"]){const box=row.querySelector('[data-photo-context="'+context+'"]');setPhotoControls(box,autoSettingFromBounds(bounds,context))}
-      await persistImagesOnly(body);showStatus(bounds?"Фотография заменена; оба кадра пересчитаны и опубликованы.":"Фотография заменена и опубликована. Автоподгон не сработал, но файл сохранён — можно настроить кадр вручную.");
-    }catch(err){showError(err)}finally{input.value="";input.dataset.replacePath=""}
-  });
-  body.addEventListener("click",async e=>{
-    const row=e.target.closest?.("[data-photo-row]");if(!row)return;
-    const box=e.target.closest?.("[data-photo-context]");
-    try{
-      if(e.target.closest("[data-photo-auto]")&&box){
-        showStatus("Определяю границы товара на фотографии…","warn");
-        await autoFitRow(row,box.dataset.photoContext);showStatus("Автоподгон рассчитан. Проверь предпросмотр и нажми «Сохранить вид фото».","warn");return;
-      }
-      if(e.target.closest("[data-photo-auto-both]")){
-        showStatus("Подгоняю фото под обе рамки…","warn");
-        await autoFitRow(row);showStatus("Обе рамки рассчитаны. При необходимости подправь ползунками.","warn");return;
-      }
-      if(e.target.closest("[data-photo-preset-large]")&&box){
-        const v=settingFromContext(box);setPhotoControls(box,{...v,scale:Math.min(4,v.scale+.2)});return;
-      }
-      if(e.target.closest("[data-photo-center]")&&box){const v=settingFromContext(box);setPhotoControls(box,{...v,x:0,y:0});return}
-      if(e.target.closest("[data-photo-reset-view]")&&box){setPhotoControls(box,{scale:1,x:0,y:0,fit:"contain"});return}
-      if(e.target.closest("[data-photo-copy-context]")&&box){
-        const context=box.dataset.photoContext,v=settingFromContext(box);
-        body.querySelectorAll('[data-photo-context="'+context+'"]').forEach(x=>setPhotoControls(x,v));
-        showStatus("Настройка «"+(context==="card"?"Карточка раздела":"Внутри товара")+"» применена ко всем фото товара. Нажми «Сохранить вид фото».","warn");return;
-      }
-      if(e.target.closest("[data-photo-up]")){row.previousElementSibling?.before(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
-      if(e.target.closest("[data-photo-down]")){row.nextElementSibling?.after(row);await persistImagesOnly(body);showStatus("Порядок фотографий сохранён.");return}
-      if(e.target.closest("[data-photo-replace]")){const input=body.querySelector("[data-photo-replace-file]");if(input){input.dataset.replacePath=row.dataset.path;input.click()}return}
-      if(e.target.closest("[data-photo-remove]")){
-        const path=row.dataset.path;if(!confirm("Удалить это фото из карточки?"))return;
-        if(path.startsWith("img/photos/admin/"))await deleteRepoFile(path,"Admin: delete product photo");
-        row.remove();await persistImagesOnly(body);showStatus("Фото удалено из карточки.");return;
-      }
-    }catch(err){showError(err)}
-  });
-
-  body.querySelector("[data-add-product]")?.addEventListener("click",async()=>{
-    const sectionId=body.querySelector("[data-admin-section]")?.dataset.id||editorCtx?.sourceSection?.id||editorCtx?.section?.id||"";
-    if(!sectionId)return showError(new Error("Не удалось определить раздел товара."));
-    const name=(prompt("Название нового товара:")||"").trim();
-    if(!name)return;
-    const article=(prompt("Артикул (можно оставить пустым):")||"").trim();
-    const base=safe("manual-"+sectionId+"-"+name),o=await loadOverrides(true);
-    const section=o.sections?.[sectionId]&&typeof o.sections[sectionId]==="object"?o.sections[sectionId]:{};
-    section.manualProducts=section.manualProducts&&typeof section.manualProducts==="object"&&!Array.isArray(section.manualProducts)?section.manualProducts:{};
-    let id=base,n=2;while(section.manualProducts[id]||o.products?.[id])id=base+"-"+n++;
-    section.manualProducts[id]={id,name,article,type:"",purpose:"",detailFields:[],advantages:[],substances:[],indicators:[],tabTables:{},options:[],variants:[],complectation:[],workflow:[],calibration:[],assortment:[],consumables:[],testKits:[],washCycle:[],customTabs:[]};
-    o.sections[sectionId]=section;
-    await commitOverrides(o);
-    overrideCache=deep(o);
-    showStatus("Карточка создана. Открываю редактор…");
-    location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
-  });
-  body.querySelector("[data-add-tab]")?.addEventListener("click",()=>{
-    const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
-    if(!form||!input)return;
-    const label=input.value.trim();if(!label)return showError(new Error("Введите название новой вкладки."));
-    const used=new Set([...form.querySelectorAll("[data-admin-tab-row]")].map(r=>r.dataset.id));
-    let base="custom-"+safe(label||"vkladka"),id=base,n=2;while(used.has(id)){id=base+"-"+n++}
-    const tab={id,label,kind:"pairs",rows:[]},custom=readCustomTabs(form);custom.push(tab);writeCustomTabs(form,custom);
-    body.querySelector("[data-tab-list]")?.insertAdjacentHTML("beforeend",tabRowHtml({id,label},{hiddenTabs:[]},true));
-    body.querySelector("[data-card-content]")?.insertAdjacentHTML("beforeend",customTabContentHtml(tab));
-    const sel=body.querySelector("[data-new-table-tab]");if(sel){const o=document.createElement("option");o.value=id;o.textContent=label;sel.appendChild(o);sel.value=id}
-    input.value="";body.querySelector('[data-admin-tab-row][data-id="'+CSS.escape(id)+'"]')?.scrollIntoView({behavior:"smooth",block:"nearest"});
-  });
-  body.addEventListener("input",e=>{
-    const photo=e.target.closest?.("[data-photo-scale],[data-photo-x],[data-photo-y],[data-photo-fit]");
-    if(photo){updatePhotoPreview(photo.closest("[data-photo-context]"));return}
-    const input=e.target.closest?.("[data-tab-label]");if(!input)return;
-    const row=input.closest("[data-admin-tab-row]"),id=row?.dataset.id,label=input.value.trim()||id;if(!id)return;
-    const opt=body.querySelector('[data-new-table-tab] option[value="'+CSS.escape(id)+'"]');if(opt)opt.textContent=label;
-    const strong=body.querySelector('[data-table-editor][data-table-id="'+CSS.escape(id)+'"] .kb-table-editor-head strong');if(strong)strong.textContent=label;
-    const title=body.querySelector('[data-custom-content-id="'+CSS.escape(id)+'"] summary span');if(title)title.textContent=label;
-  });
-  body.addEventListener("click",e=>{
-    const up=e.target.closest?.("[data-tab-up]");if(up){const r=up.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r);return}
-    const down=e.target.closest?.("[data-tab-down]");if(down){const r=down.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r);return}
-    const del=e.target.closest?.("[data-tab-delete]");if(del){const r=del.closest("[data-admin-tab-row]");if(r?.dataset.customTab==="1")removeCustomTabUi(body,r.dataset.id);return}
-    const delContent=e.target.closest?.("[data-remove-custom-tab]");if(delContent){const box=delContent.closest("[data-custom-content-id]");removeCustomTabUi(body,box?.dataset.customContentId);return}
-  });
-  body.addEventListener("click",e=>{
     const ed=e.target.closest("[data-table-editor]");if(!ed)return;
-    if(e.target.closest("[data-table-add-row]")){
-      const width=ed.querySelectorAll("[data-table-header]").length;ed.querySelector("tbody")?.insertAdjacentHTML("beforeend",tableRowHtml([],width));return;
-    }
-    if(e.target.closest("[data-table-add-col]")){
-      const head=ed.querySelector("thead tr"),idx=ed.querySelectorAll("[data-table-header]").length;
-      head?.querySelector(".kb-row-tools")?.insertAdjacentHTML("beforebegin",'<th><div class="kb-cell-head"><input data-table-header value="Новый столбец"><button type="button" class="kb-col-remove" data-table-remove-col="'+idx+'" title="Удалить столбец">×</button></div></th>');
-      ed.querySelectorAll("[data-table-row]").forEach(tr=>tr.querySelector(".kb-row-tools")?.insertAdjacentHTML("beforebegin",'<td><input data-table-cell value=""></td>'));return;
-    }
+    const cell=e.target.closest("[data-table-cell-pos]");
+    if(cell&&!e.target.closest("input,button")&&(e.ctrlKey||e.metaKey)){cell.classList.toggle("is-selected");return}
+    if(e.target.closest("[data-table-add-row]")){const data=readTableEditor(ed);data.rows.push(Array(data.headers.length).fill(""));refreshTableEditor(ed,data);return}
+    if(e.target.closest("[data-table-add-col]")){const data=readTableEditor(ed);data.headers.push("Новый столбец");data.rows.forEach(r=>r.push(""));refreshTableEditor(ed,data);return}
+    if(e.target.closest("[data-table-merge]")){mergeSelectedTableCells(ed);return}
+    if(e.target.closest("[data-table-unmerge]")){unmergeSelectedTableCells(ed);return}
+    if(e.target.closest("[data-table-merge-row]")){const tr=e.target.closest("[data-table-row]");mergeWholeTableRow(ed,Number(tr?.dataset.tableRowIndex||0));return}
     const col=e.target.closest("[data-table-remove-col]");if(col){
-      const headers=[...ed.querySelectorAll("[data-table-header]")];if(headers.length<=1)return showError(new Error("В таблице должен остаться хотя бы один столбец."));
-      const index=headers.indexOf(col.closest("th")?.querySelector("[data-table-header]"));col.closest("th")?.remove();
-      ed.querySelectorAll("[data-table-row]").forEach(tr=>tr.querySelectorAll("td:not(.kb-row-tools)")[index]?.remove());return;
+      const data=readTableEditor(ed);if(data.headers.length<=1)return showError(new Error("В таблице должен остаться хотя бы один столбец."));
+      const index=Number(col.dataset.tableRemoveCol);data.headers.splice(index,1);data.rows.forEach(r=>r.splice(index,1));
+      data.merges=data.merges.flatMap(m=>{if(m.col>index){m.col--;return[m]}if(m.col+m.colspan-1<index)return[m];if(m.col===index&&m.colspan>1){m.colspan--;return m.colspan>1?[m]:[]}if(m.col<index&&m.col+m.colspan-1>=index){m.colspan--;return m.colspan>1?[m]:[]}return[]});
+      refreshTableEditor(ed,data);return;
     }
-    if(e.target.closest("[data-table-remove-row]")){e.target.closest("[data-table-row]")?.remove();return}
+    if(e.target.closest("[data-table-remove-row]")){
+      const tr=e.target.closest("[data-table-row]"),index=Number(tr?.dataset.tableRowIndex||0),data=readTableEditor(ed);data.rows.splice(index,1);
+      data.merges=data.merges.flatMap(m=>{if(m.row>index){m.row--;return[m]}if(m.row+m.rowspan-1<index)return[m];if(m.row===index&&m.rowspan>1){m.rowspan--;return m.rowspan>1?[m]:[]}if(m.row<index&&m.row+m.rowspan-1>=index){m.rowspan--;return m.rowspan>1?[m]:[]}return[]});
+      refreshTableEditor(ed,data);return;
+    }
     if(e.target.closest("[data-table-delete]")){ed.remove();return}
   });
   let draggedPairRow=null;
