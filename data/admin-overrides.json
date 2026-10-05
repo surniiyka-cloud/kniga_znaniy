@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T09:02:11.281Z",
+  "updatedAt": "2026-10-05T09:09:20.691Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16768,9 +16768,11 @@
     "catalog-2-10-ph-0-12": {
       "tabOrder": [
         "specs"
-      ],
+      ]
+    },
+    "catalog-2-10-пероксид-1000-мг": {
       "images": [
-        "img/photos/admin/catalog-2-10-ph-0-12/catalog-2-10-ph-0-12-01.png"
+        "img/photos/admin/catalog-2-10-пероксид-1000-мг/catalog-2-10-пероксид-1000-мг-01.png"
       ]
     }
   },
