@@ -462,18 +462,6 @@ function productPairEditors(ctx){
   const custom=(ctx.product?.customTabs||[]).map(customTabContentHtml);
   return [...standard,...custom].join("");
 }
-function collectPairRows(form,key){
-  return [...form.querySelectorAll('[data-pair-editor="'+CSS.escape(key)+'"] [data-pair-row]')].map(r=>[
-    r.querySelector("[data-pair-label]")?.value.trim()||"",
-    r.querySelector("[data-pair-value]")?.value.trim()||""
-  ]).filter(r=>r[0]||r[1]);
-}
-function productPairEditors(ctx){
-  const standard=PAIR_FIELDS.filter(([key])=>(ctx.product?.[key]||[]).length>0&&key!=="detailFields").map(([key,label])=>'<details class="kb-admin-group"><summary>'+esc(label)+' <small>'+((ctx.product?.[key]||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-pair-key="'+key+'">'+esc(pairText(ctx.product?.[key]||[]))+'</textarea></label></details>');
-  const characteristics=pairRowsEditorHtml("detailFields","Характеристики",ctx.product?.detailFields||[]);
-  const custom=(ctx.product?.customTabs||[]).map(customTabContentHtml);
-  return [characteristics,...standard, ...custom].join("");
-}
 function tabRowHtml(t,p,custom=false){
   return '<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'" data-custom-tab="'+(custom?"1":"0")+'"><button type="button" class="kb-mini" data-tab-up>↑</button><button type="button" class="kb-mini" data-tab-down>↓</button><code>'+esc(t.id)+'</code><input value="'+esc(t.label)+'" data-tab-label><label class="kb-hide"><input type="checkbox" data-tab-hidden '+((p?.hiddenTabs||[]).includes(t.id)?"checked":"")+'> скрыть</label>'+(custom?'<button type="button" class="kb-mini danger kb-tab-delete" data-tab-delete title="Удалить вкладку">×</button>':'<span class="kb-tab-delete-slot"></span>')+'</div>';
 }
