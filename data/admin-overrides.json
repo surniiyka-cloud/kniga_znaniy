@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T08:48:07.842Z",
+  "updatedAt": "2026-10-05T08:48:14.113Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16758,6 +16758,9 @@
       ]
     },
     "catalog-2-10-маститное-молоко": {
+      "tabOrder": [
+        "specs"
+      ],
       "images": [
         "img/photos/admin/catalog-2-10-маститное-молоко/catalog-2-10-маститное-молоко-01.png"
       ]
