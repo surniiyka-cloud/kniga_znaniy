@@ -1652,7 +1652,7 @@ function tabPanelHtml(p,id){
     return rluPanel(rows);
   }
   if(table?.headers?.length&&table?.rows?.length)return tablePanel(table.headers,table.rows,table);
-  if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
+  if(id==="specs"){const rows=fields(p),width=Math.max(2,...rows.map(r=>Array.isArray(r)?r.length:0));if(width>2)return pairTable(rows,p,"detailFields","definition-pair-table");return '<dl class="definition-list">'+rows.map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';}
   if(id==="advantages")return pairCards(p.advantages||[],"feature-definition-list",p,"advantages");
   if(id==="indicators")return pairCards(p.indicators||[],"feature-definition-list",p,"indicators");
   if(id==="options")return pairCards(p.options||[],"feature-definition-list",p,"options");
