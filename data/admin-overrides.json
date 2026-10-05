@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T09:21:51.484Z",
+  "updatedAt": "2026-10-05T09:22:56.599Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16768,22 +16768,22 @@
     "catalog-2-10-ph-0-12": {
       "tabOrder": [
         "specs"
+      ],
+      "images": [
+        "img/photos/admin/catalog-2-10-ph-0-12/catalog-2-10-ph-0-12-01.png"
       ]
     },
-    "catalog-2-10-пероксид-1000-мг": {
+    "catalog-2-10-мочевина-в-молоке": {
       "tabOrder": [
         "specs"
       ],
       "images": [
-        "img/photos/admin/catalog-2-10-пероксид-1000-мг/catalog-2-10-пероксид-1000-мг-01.png"
+        "img/photos/admin/catalog-2-10-мочевина-в-молоке/catalog-2-10-мочевина-в-молоке-01.png"
       ]
     },
-    "catalog-2-10-нейтрализующие-вещества": {
-      "tabOrder": [
-        "specs"
-      ],
+    "catalog-2-10-ph-5-9": {
       "images": [
-        "img/photos/admin/catalog-2-10-нейтрализующие-вещества/catalog-2-10-нейтрализующие-вещества-01.png"
+        "img/photos/admin/catalog-2-10-ph-5-9/catalog-2-10-ph-5-9-01.png"
       ]
     }
   },
