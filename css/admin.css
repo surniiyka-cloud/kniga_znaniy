@@ -769,3 +769,76 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
   .kb-wb-panel{padding:16px!important}
   .kb-wb-basic{padding:10px}
 }
+
+
+/* v2.2.75 — full-width table editor and row reordering */
+.kb-table-scroll{
+  width:100%;
+  overflow:auto;
+}
+.kb-edit-table{
+  width:100%!important;
+  min-width:100%!important;
+  table-layout:auto!important;
+}
+.kb-edit-table th:first-child,
+.kb-edit-table td:first-child{
+  width:1%!important;
+  white-space:nowrap;
+}
+.kb-edit-table th:not(:first-child):not(.kb-row-tools),
+.kb-edit-table td:not(:first-child):not(.kb-row-tools){
+  width:auto!important;
+}
+.kb-edit-table input{
+  width:100%!important;
+  max-width:none!important;
+}
+.kb-edit-table th:first-child input,
+.kb-edit-table td:first-child input{
+  width:auto!important;
+  min-width:7ch!important;
+  max-width:22ch!important;
+}
+.kb-edit-table .kb-row-tools{
+  width:76px!important;
+  min-width:76px!important;
+  max-width:76px!important;
+  white-space:nowrap;
+}
+.kb-row-tools{
+  padding:5px!important;
+}
+.kb-row-order{
+  display:flex;
+  gap:3px;
+  justify-content:center;
+  margin-bottom:4px;
+}
+.kb-row-move,
+.kb-row-merge,
+.kb-row-remove{
+  width:26px;
+  height:26px;
+  display:inline-grid;
+  place-items:center;
+  border:1px solid var(--line,#dfe7e1);
+  background:#fff;
+  color:var(--muted,#657169);
+  border-radius:7px;
+  cursor:pointer;
+  padding:0;
+  font-size:13px;
+}
+.kb-row-move:hover{
+  color:var(--kb-market-accent,#7c3aed);
+  border-color:#cbb7f5;
+  background:#faf7ff;
+}
+.kb-row-merge:hover{color:#0f766e;background:#f0fdfa}
+.kb-row-remove:hover{color:#b42318;background:#fff1f0}
+.kb-table-merge-hint{
+  text-align:left;
+  padding:10px 14px!important;
+  margin:0!important;
+}
