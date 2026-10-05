@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T09:57:05.746Z",
+  "updatedAt": "2026-10-05T10:11:04.560Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16803,6 +16803,11 @@
       ],
       "images": [
         "img/photos/admin/catalog-2-10-час-100-мг/catalog-2-10-час-100-мг-01.png"
+      ]
+    },
+    "catalog-2-10-нейтрализующие-вещества": {
+      "images": [
+        "img/photos/admin/catalog-2-10-нейтрализующие-вещества/catalog-2-10-нейтрализующие-вещества-01.png"
       ]
     }
   },
