@@ -351,3 +351,6 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
 @media(max-width:760px){
   .kb-pair-header,.kb-pair-row{min-width:560px}
 }
+
+/* v2.2.58 — simplified photo editor */
+.kb-photo-row-simple{display:grid!important;grid-template-columns:160px minmax(0,1fr)!important;gap:16px!important;align-items:center!important;padding:14px!important}.kb-photo-preview-simple{width:160px!important;height:120px!important;aspect-ratio:auto!important;padding:8px;box-sizing:border-box;background:#fff}.kb-photo-preview-simple img{width:100%!important;height:100%!important;padding:0!important;object-fit:contain!important;transform:none!important}.kb-photo-simple-main{display:grid;gap:12px;min-width:0}.kb-photo-row-simple .kb-photo-meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}.kb-photo-row-simple .kb-photo-actions{border-top:0;padding-top:0}@media(max-width:760px){.kb-photo-row-simple{grid-template-columns:1fr!important}.kb-photo-preview-simple{width:100%!important;height:220px!important}.kb-photo-row-simple .kb-photo-meta{grid-template-columns:1fr}}
