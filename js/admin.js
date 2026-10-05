@@ -594,7 +594,25 @@ async function uploadDocument(file,path){
   if(!file)throw new Error("Файл не выбран.");
   if(file.size>40*1024*1024)throw new Error("Файл больше 40 МБ. Для сайта лучше использовать более компактную версию.");
   await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload product document for "+(editorCtx?.product?.name||editorCtx?.id||"product"));
+  const check=await repoFile(path);
+  if(!check?.sha)throw new Error("GitHub не подтвердил сохранение файла. Привязка к карточке не добавлена.");
+  if(Number(check.size||0)!==Number(file.size||0))throw new Error("Размер файла в GitHub не совпал с загруженным. Повторите загрузку.");
   return path;
+}
+async function persistDocumentsOnly(body){
+  const form=body.querySelector("[data-admin-product]");if(!form||!editorCtx)return;
+  const id=form.dataset.id,documents=collectDocuments(form),o=await loadOverrides(),out=deep(o.products?.[id]||{});
+  if(documents.length)out.documents=deep(documents);else delete out.documents;
+  o.products[id]=out;
+  for(const sec of Object.values(o.sections||{})){
+    if(!sec?.manualProducts||!Object.prototype.hasOwnProperty.call(sec.manualProducts,id))continue;
+    const manual=deep(sec.manualProducts[id]||{});
+    if(documents.length)manual.documents=deep(documents);else delete manual.documents;
+    sec.manualProducts[id]=manual;
+  }
+  await commitOverrides(o);
+  overrideCache=deep(o);
+  editorCtx.product={...deep(editorCtx.product||{}),documents:deep(documents)};
 }
 function photoEditorHtml(ctx){
   const images=ctx.images||[];
@@ -1272,7 +1290,8 @@ function bindBody(){
         await uploadDocument(file,path);
         list?.insertAdjacentHTML("beforeend",documentRowHtml({name:file.name,path},rows.length));
       }
-      showStatus("Документы загружены. Сохраните карточку, чтобы закрепить список.");
+      await persistDocumentsOnly(body);
+      showStatus("Документы загружены и привязаны к карточке.");
     }catch(err){showError(err)}
   });
   const photoAddInput=body.querySelector("[data-photo-file]"),photoReplaceInput=body.querySelector("[data-photo-replace-file]");
@@ -1286,11 +1305,14 @@ function bindBody(){
   });
   body.addEventListener("click",async e=>{
     const docRemove=e.target.closest?.("[data-document-remove]");
-    if(docRemove){docRemove.closest("[data-document-row]")?.remove();return}
+    if(docRemove){
+      const row=docRemove.closest("[data-document-row]");if(!row||!confirm("Убрать этот файл из карточки?"))return;
+      row.remove();try{await persistDocumentsOnly(body);showStatus("Файл убран из карточки.")}catch(err){showError(err)}return;
+    }
     const docUp=e.target.closest?.("[data-document-up]");
-    if(docUp){const r=docUp.closest("[data-document-row]");r?.previousElementSibling?.before(r);return}
+    if(docUp){const r=docUp.closest("[data-document-row]");r?.previousElementSibling?.before(r);try{await persistDocumentsOnly(body)}catch(err){showError(err)}return}
     const docDown=e.target.closest?.("[data-document-down]");
-    if(docDown){const r=docDown.closest("[data-document-row]");r?.nextElementSibling?.after(r);return}
+    if(docDown){const r=docDown.closest("[data-document-row]");r?.nextElementSibling?.after(r);try{await persistDocumentsOnly(body)}catch(err){showError(err)}return}
     const replace=e.target.closest?.("[data-photo-replace]");if(replace){photoReplaceRow=replace.closest("[data-photo-row]");if(photoReplaceInput){photoReplaceInput.value="";photoReplaceInput.click()}return}
     const remove=e.target.closest?.("[data-photo-remove]");if(remove){const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;row.remove();syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Фото удалено из карточки.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить удаление фото.");showError(err)}return}
     const up=e.target.closest?.("[data-photo-up]");if(up){const row=up.closest("[data-photo-row]");row?.previousElementSibling?.before(row);syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить порядок фото.");showError(err)}return}
@@ -1400,7 +1422,7 @@ async function saveProduct(e){
     // больше не являются базой, относительно которой считаются diff-правки.
     let out=deep(ctx.product||{});
     delete out.id;delete out.manual;delete out.sourceSectionId;delete out.sourceGid;
-    delete out.sheetFields;delete out.rawRows;delete out.packedRows;
+    delete out.sheetFields;delete out.rawRows;delete out.packedRows;delete out.appendDetailFields;
 
     const adv=form.querySelector("[data-advanced]")?.value.trim();
     if(adv){
