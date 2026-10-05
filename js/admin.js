@@ -1,3 +1,5 @@
+window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
+
 const LOCAL_KEY="kb_admin_overrides_local";
 const LIVE_KEY="kb_live_sheet_snapshots";
 const ADMIN_SESSION_KEY="kb_admin";
@@ -408,7 +410,6 @@ async function renderAccountPage(){
     '</div><div class="kb-account-empty" data-account-empty hidden>По вашему запросу ничего не найдено.</div>');
   setBody(html);
 }
-window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
 window.dispatchEvent(new CustomEvent("kb:admin-ready"));
 window.addEventListener("hashchange",syncAccountEntry);
 async function renderEditor(){
