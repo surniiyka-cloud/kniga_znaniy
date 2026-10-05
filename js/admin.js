@@ -1333,52 +1333,77 @@ async function saveProduct(e){
   if(photoState==="error")return showError(new Error("Последнее изменение фото не сохранилось. Исправьте ошибку загрузки фото перед сохранением карточки."));
   btn.disabled=true;
   try{
-    const ctx=window.KB_EDITOR_API.current();const src=ctx.sourceProduct||{},fd=new FormData(form);
-    let out={};const adv=form.querySelector("[data-advanced]")?.value.trim();
-    if(adv){out=JSON.parse(adv);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("Расширенный JSON должен быть объектом.");}
+    const ctx=window.KB_EDITOR_API.current(),fd=new FormData(form);
+
+    // Карточка хранится как самостоятельный опубликованный снимок.
+    // Google Sheets / book.json остаются только историческим импортным источником и
+    // больше не являются базой, относительно которой считаются diff-правки.
+    let out=deep(ctx.product||{});
+    delete out.id;delete out.manual;delete out.sourceSectionId;delete out.sourceGid;
+    delete out.sheetFields;delete out.rawRows;delete out.packedRows;
+
+    const adv=form.querySelector("[data-advanced]")?.value.trim();
+    if(adv){
+      const extra=JSON.parse(adv);
+      if(!extra||Array.isArray(extra)||typeof extra!=="object")throw new Error("Расширенный JSON должен быть объектом.");
+      out={...out,...deep(extra)};
+    }
     delete out.id;
-    for(const key of ["name","article","type","purpose"])putDiff(out,key,String(fd.get(key)||""),String(src[key]||""));
+    out.__frozen=true;
+
+    for(const key of ["name","article","type","purpose"])out[key]=String(fd.get(key)||"");
+
+    out.pairHeaders=deep(out.pairHeaders||{});
     for(const [key] of PAIR_FIELDS){
       const pair=collectPairRows(form,key);
-      putDiff(out,key,pair.rows,src[key]||[]);
-      const pairHeaders={...(src.pairHeaders||{})};
+      out[key]=deep(pair.rows);
       const defaultHeaders=key==="advantages"?["Преимущество","Описание"]:["Название характеристики","Значение"];
-      if(pair.headers.some((h,i)=>h&&h!==defaultHeaders[i])||pair.headers.length>2)pairHeaders[key]=pair.headers;
-      else delete pairHeaders[key];
-      putDiff(out,"pairHeaders",pairHeaders,src.pairHeaders||{});
+      if(pair.headers.some((h,i)=>h&&h!==defaultHeaders[i])||pair.headers.length>2)out.pairHeaders[key]=deep(pair.headers);
+      else delete out.pairHeaders[key];
     }
-    const baseHasTables=Object.prototype.hasOwnProperty.call(src||{},"tabTables"),baseTables=deep(src.tabTables||{});if(!baseHasTables&&src.indicatorTable)baseTables.indicators=deep(src.indicatorTable);
-    putDiff(out,"tabTables",collectTabTables(form),baseTables);
+    if(emptyObject(out.pairHeaders))delete out.pairHeaders;
+
+    out.tabTables=collectTabTables(form);
     delete out.indicatorTable;
-    putDiff(out,"substances",parseSubstances(form.querySelector("[data-substances]")?.value||""),src.substances||[]);
-    const custom=collectCustomTabs(form);
-    putDiff(out,"customTabs",custom,src.customTabs||[]);
+    out.substances=parseSubstances(form.querySelector("[data-substances]")?.value||"");
+    out.customTabs=collectCustomTabs(form);
+
     const tabRows=[...form.querySelectorAll("[data-admin-tab-row]")];
-    const order=tabRows.map(r=>r.dataset.id),hidden=tabRows.filter(r=>r.querySelector("[data-tab-hidden]")?.checked).map(r=>r.dataset.id),labels={};
-    for(const r of tabRows){const id2=r.dataset.id,val=r.querySelector("[data-tab-label]")?.value.trim()||id2,def=defaultTabLabel(id2,src);if(val!==def)labels[id2]=val}
-    if(order.length)out.tabOrder=order;else delete out.tabOrder;
-    if(hidden.length)out.hiddenTabs=hidden;else delete out.hiddenTabs;
-    if(Object.keys(labels).length)out.tabLabels=labels;else delete out.tabLabels;
-    let images=parseLines(form.querySelector("[data-images]")?.value||"");
-    putDiff(out,"images",images,ctx.sourceImages||[]);
-    putDiff(out,"imageSettings",collectPhotoSettings(form),src.imageSettings||{});
-    // Используем актуальный кэш этой сессии. force-read здесь мог вернуть состояние,
-    // с которым редактор был открыт, и стереть только что сохранённую привязку фотографий.
+    out.tabOrder=tabRows.map(r=>r.dataset.id);
+    out.hiddenTabs=tabRows.filter(r=>r.querySelector("[data-tab-hidden]")?.checked).map(r=>r.dataset.id);
+    const labels={};
+    for(const r of tabRows){
+      const id2=r.dataset.id,val=r.querySelector("[data-tab-label]")?.value.trim()||id2;
+      const def=defaultTabLabel(id2,ctx.product||{});
+      if(val!==def)labels[id2]=val;
+    }
+    out.tabLabels=labels;
+    if(!out.tabOrder.length)delete out.tabOrder;
+    if(!out.hiddenTabs.length)delete out.hiddenTabs;
+    if(emptyObject(out.tabLabels))delete out.tabLabels;
+
+    const images=parseLines(form.querySelector("[data-images]")?.value||"");
+    if(images.length)out.images=deep(images);else delete out.images;
+    const imageSettings=collectPhotoSettings(form);
+    if(!emptyObject(imageSettings))out.imageSettings=imageSettings;else delete out.imageSettings;
+
     const o=await loadOverrides();
     const isManual=Object.values(o.sections||{}).some(sec=>sec?.manualProducts&&Object.prototype.hasOwnProperty.call(sec.manualProducts,id));
-    if(emptyObject(out))delete o.products[id];else o.products[id]=out;
+    o.products[id]=deep(out);
+
     if(isManual){
       for(const sec of Object.values(o.sections||{})){
         if(sec?.manualProducts?.[id]){
-          const merged={...deep(sec.manualProducts[id]),...deep(out),id};
-          sec.manualProducts[id]=merged;
+          sec.manualProducts[id]={...deep(out),id,manual:true,sourceSectionId:sec.manualProducts[id].sourceSectionId||ctx.section?.id||""};
         }
       }
     }
+
     await commitOverrides(o);
     overrideCache=deep(o);
-    showStatus("Карточка сохранена и опубликована.");
-    location.hash="#/account";location.reload();
+    editorCtx={...ctx,product:{...deep(ctx.product),...deep(out)},images:deep(images)};
+    showStatus("Карточка закреплена на сайте и сохранена. Данные из таблиц больше не восстановят старый текст.");
+    location.hash="#/account";
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveSection(e){
