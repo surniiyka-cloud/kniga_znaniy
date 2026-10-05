@@ -898,15 +898,17 @@ function bindBody(){
   const bindPairDrag=row=>{
     if(!row||row.dataset.pairDragBound==="1")return;
     row.dataset.pairDragBound="1";
-    row.setAttribute("draggable","true");
-    row.addEventListener("dragstart",e=>{
-      if(e.target.closest?.("[data-pair-remove]")){e.preventDefault();return}
+    const handle=row.querySelector("[data-pair-drag]");
+    if(!handle)return;
+    row.setAttribute("draggable","false");
+    handle.setAttribute("draggable","true");
+    handle.addEventListener("dragstart",e=>{
       draggedPairRow=row;
       e.dataTransfer?.setData("text/plain","pair");
       if(e.dataTransfer)e.dataTransfer.effectAllowed="move";
       row.classList.add("is-dragging");
     });
-    row.addEventListener("dragend",()=>{
+    handle.addEventListener("dragend",()=>{
       row.classList.remove("is-dragging");
       draggedPairRow=null;
     });
@@ -926,20 +928,8 @@ function bindBody(){
       const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
       if(!ed||!list)return;
       list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');
-      const row=list.lastElementChild,handle=row?.querySelector("[data-pair-drag]");
-      handle?.addEventListener("dragstart",e=>{
-        draggedPairRow=row;
-        e.dataTransfer?.setData("text/plain","pair");
-        if(e.dataTransfer)e.dataTransfer.effectAllowed="move";
-        row.classList.add("is-dragging");
-      });
-      handle?.addEventListener("dragend",()=>{row.classList.remove("is-dragging");draggedPairRow=null});
-      row?.addEventListener("dragover",e=>{
-        if(!draggedPairRow||draggedPairRow===row)return;
-        e.preventDefault();
-        const box=row.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;
-        row.parentElement?.insertBefore(draggedPairRow,after?row.nextSibling:row);
-      });
+      const row=list.lastElementChild;
+      bindPairDrag(row);
       row?.querySelector("[data-pair-label]")?.focus();
       return;
     }
