@@ -1845,3 +1845,16 @@ body.modal-open{overflow:hidden}
 .product-document-copy b{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .product-document-copy small{font-size:9px;color:var(--muted,#758078)}
 .product-document-arrow{color:#7d8981;font-size:15px}
+
+
+/* v2.2.78 — Ekomilk SCAN tab intro notes */
+.tab-intro-note{
+  margin:0 0 12px;
+  padding:11px 13px;
+  border:1px solid #e1e6e2;
+  border-radius:10px;
+  background:#f7f9f7;
+  color:#465149;
+  line-height:1.5;
+  font-size:13px;
+}
