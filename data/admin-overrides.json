@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T09:47:24.613Z",
+  "updatedAt": "2026-10-05T09:50:07.663Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16789,12 +16789,9 @@
         "img/photos/admin/catalog-2-10-пероксид-25-мг/catalog-2-10-пероксид-25-мг-01.png"
       ]
     },
-    "catalog-2-10-остаточная-щелочность": {
-      "tabOrder": [
-        "specs"
-      ],
+    "catalog-2-10-остаточная-кислотность": {
       "images": [
-        "img/photos/admin/catalog-2-10-остаточная-щелочность/catalog-2-10-остаточная-щелочность-01.png"
+        "img/photos/admin/catalog-2-10-остаточная-кислотность/catalog-2-10-остаточная-кислотность-01.png"
       ]
     }
   },
