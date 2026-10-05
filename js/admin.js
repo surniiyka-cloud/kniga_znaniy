@@ -399,12 +399,38 @@ async function renderAccountPage(){
   if(r.name==="accountProduct"||r.name==="accountSection"){renderEditor().catch(showError);return;}
   const catalog=window.KB_EDITOR_API.catalog?.()||[];
   const sections=catalog.flatMap(ch=>ch.sections.map(sec=>({...sec,chapterId:ch.id,chapterTitle:ch.title})));
-  const html=shell("Личный кабинет","Управление каталогом без Google Sheets",
-    '<div class="kb-account-head"><div><h3>Каталог товаров</h3><p class="kb-admin-hint">Теперь это основная база сайта. Google Sheets больше не используется для повседневного редактирования.</p></div></div>'+
-    '<div class="kb-account-search"><span>⌕</span><input type="search" data-account-search placeholder="Поиск по личному кабинету: товар, артикул, раздел…" autocomplete="off"></div>'+
-    '<div class="kb-account-catalog">'+
-    sections.map(sec=>'<section class="kb-account-section" data-account-section-card data-section-id="'+esc(sec.id)+'" data-account-search-text="'+esc([sec.id,sec.title,sec.chapterTitle,...sec.products.flatMap(p=>[p.name,p.article])].join(" "))+'"><div class="kb-account-section-head"><div><span class="eyebrow">Глава '+esc(sec.chapterId)+'</span><h2>'+esc(sec.id+" "+sec.title)+'</h2></div><div class="kb-account-section-actions"><button type="button" class="kb-admin-btn ghost" data-account-manage-section="'+esc(sec.id)+'">Порядок и удаление</button><button type="button" class="kb-admin-btn primary" data-account-add-product="'+esc(sec.id)+'">+ Карточка</button></div></div>'+
-      '<div class="kb-account-products">'+sec.products.map(p=>'<article class="kb-account-product" data-account-product-card data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'"><div><strong>'+esc(p.name)+'</strong><small>'+esc(p.article||"Без артикула")+'</small></div><div class="kb-account-product-actions"><button class="kb-admin-btn ghost" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger" data-account-delete-product="'+esc(p.id)+'">×</button></div></article>').join("")+'</div></section>').join("")+
+  const allProducts=sections.flatMap(sec=>sec.products.map(p=>{
+    const ctx=window.KB_EDITOR_API?.product?.(p.id)||null;
+    return {...p,sectionId:sec.id,sectionTitle:sec.title,chapterId:sec.chapterId,ctx,quality:ctx?productQuality(ctx):0,image:ctx?.images?.[0]||""};
+  }));
+  const improve=allProducts.filter(p=>p.quality<75).length;
+  const withPhoto=allProducts.filter(p=>p.image).length;
+  const html=shell("Товары","Управление карточками каталога",
+    '<div class="kb-market-dashboard">'+
+      '<div class="kb-market-tabs"><button type="button" class="active" data-account-filter="all">Все товары <b>'+allProducts.length+'</b></button><button type="button" data-account-filter="improve">Можно улучшить <b>'+improve+'</b></button><button type="button" data-account-filter="photo">С фото <b>'+withPhoto+'</b></button></div>'+
+      '<div class="kb-market-actions"><button type="button" class="kb-admin-btn primary" data-account-add-first>+ Создать карточку</button></div>'+
+    '</div>'+
+    '<div class="kb-market-summary"><div><strong>'+allProducts.length+'</strong><span>карточек</span></div><div><strong>'+withPhoto+'</strong><span>с фотографиями</span></div><div><strong>'+improve+'</strong><span>можно улучшить</span></div></div>'+
+    '<div class="kb-account-search kb-market-search"><span>⌕</span><input type="search" data-account-search placeholder="Название, артикул или раздел…" autocomplete="off"><button type="button" class="kb-admin-btn ghost" data-account-clear>Сбросить</button></div>'+
+    '<div class="kb-account-catalog kb-market-catalog">'+
+    sections.map(sec=>{
+      const rows=sec.products.map(p=>{
+        const ctx=window.KB_EDITOR_API?.product?.(p.id)||null,q=ctx?productQuality(ctx):0,img=ctx?.images?.[0]||"";
+        return '<article class="kb-account-product kb-market-row" data-account-product-card data-quality="'+q+'" data-has-photo="'+(img?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
+          '<label class="kb-market-check"><input type="checkbox" data-account-select-product value="'+esc(p.id)+'"></label>'+
+          '<div class="kb-market-thumb '+(img?"":"empty")+'">'+(img?'<img src="'+esc(photoPreviewSrc(img))+'" loading="lazy" alt="">':'<span>TIAN</span>')+'</div>'+
+          '<div class="kb-market-product-main"><strong>'+esc(p.name)+'</strong><small>'+esc(p.article?("Арт. "+p.article):"Без артикула")+'</small></div>'+
+          '<div class="kb-market-section">'+esc(sec.id)+'<small>'+esc(sec.title)+'</small></div>'+
+          '<div class="kb-market-quality '+(q>=80?"good":q>=55?"mid":"low")+'"><b>'+q+'%</b><span>качество</span></div>'+
+          '<div class="kb-account-product-actions"><button class="kb-admin-btn ghost" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost" title="Дублировать" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger" title="Удалить" data-account-delete-product="'+esc(p.id)+'">×</button></div>'+
+        '</article>';
+      }).join("");
+      return '<section class="kb-account-section kb-market-section-block" data-account-section-card data-section-id="'+esc(sec.id)+'" data-account-search-text="'+esc([sec.id,sec.title,sec.chapterTitle,...sec.products.flatMap(p=>[p.name,p.article])].join(" "))+'">'+
+        '<div class="kb-account-section-head"><div><span class="eyebrow">Глава '+esc(sec.chapterId)+'</span><h2>'+esc(sec.id+" "+sec.title)+'</h2><small>'+sec.products.length+' карточек</small></div>'+
+        '<div class="kb-account-section-actions"><button type="button" class="kb-admin-btn ghost" data-account-manage-section="'+esc(sec.id)+'">Управление разделом</button><button type="button" class="kb-admin-btn primary" data-account-add-product="'+esc(sec.id)+'">+ Карточка</button></div></div>'+
+        '<div class="kb-market-table-head"><span></span><span>Фото</span><span>Товар</span><span>Раздел</span><span>Качество</span><span>Действия</span></div>'+
+        '<div class="kb-account-products">'+rows+'</div></section>';
+    }).join("")+
     '</div><div class="kb-account-empty" data-account-empty hidden>По вашему запросу ничего не найдено.</div>');
   setBody(html);
 }
@@ -816,19 +842,27 @@ function renderProductEditor(ctx){
   const existing=deep(overrideCache.products?.[ctx.id]||{});
   const customIds=new Set((ctx.product.customTabs||[]).map(t=>t.id));
   const tabs=(ctx.tabs||[]).map(t=>tabRowHtml(t,ctx.product,customIds.has(t.id))).join("");
-  const sheet="";
+  const quality=productQuality(ctx);
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
     productManagementHtml(ctx)+
-    '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
-    '<div class="kb-admin-grid two"><label>Название<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
-    (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть исходный лист Google Sheets ↗</a></p>':"")+
-    '<section class="kb-admin-section"><h3>Содержимое карточки</h3><div data-card-content>'+productPairEditors(ctx)+'</div></section>'+tableEditorsHtml(ctx)+
-    '<details class="kb-admin-group" open><summary>Вещества / группы / ppb <small>'+((ctx.product.substances||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Формат: <b>группа | вещество | ppb</b>. Именно поле «группа» создаёт заголовок перед таблицей.</span><textarea rows="10" data-substances>'+esc(substancesText(ctx.product.substances||[]))+'</textarea></label></details>'+
-    '<details class="kb-admin-group"><summary>Расширенные настройки пользовательских вкладок</summary><label class="kb-admin-field"><span>JSON для редких случаев. Обычные вкладки удобнее добавлять кнопкой ниже.</span><textarea rows="12" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label></details>'+
-    '<section class="kb-admin-section"><div class="kb-tab-section-head"><div><h3>Порядок и названия вкладок</h3><p class="kb-admin-hint">Добавленная вкладка сразу появляется здесь, в «Содержимом карточки» и в списке таблиц. Пользовательские вкладки можно удалить.</p></div><div class="kb-tab-create"><input type="text" data-new-tab-label placeholder="Название новой вкладки"><button type="button" class="kb-admin-btn ghost" data-add-tab>+ Добавить вкладку</button></div></div><div data-tab-list>'+tabs+'</div></section>'+
-    photoEditorHtml(ctx)+
-    '<details class="kb-admin-group"><summary>Расширенный JSON override</summary><label class="kb-admin-field"><span>Для редких полей, которых нет в форме. Поля формы при сохранении имеют приоритет.</span><textarea rows="14" data-advanced>'+esc(jsonText(existing))+'</textarea></label></details>'+
-    '<div class="kb-admin-savebar"><button type="submit" class="kb-admin-btn primary">Сохранить карточку</button><button type="button" class="kb-admin-btn danger" data-reset-product>Сбросить ручные правки</button></div></form>'
+    '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form kb-wb-editor">'+
+      '<aside class="kb-wb-media">'+
+        '<div class="kb-wb-side-title"><span class="kb-admin-kicker">Медиа</span><h3>Фото товара</h3><p>Перетащи, замени или добавь изображения. Первая фотография используется на карточке.</p></div>'+
+        photoEditorHtml(ctx)+
+        '<div class="kb-wb-quality-card"><div><strong>'+quality+'%</strong><span>качество карточки</span></div><progress max="100" value="'+quality+'"></progress><small>'+(quality>=80?"Карточка хорошо заполнена.":quality>=55?"Есть несколько полей, которые можно улучшить.":"Заполни основные данные, фото и характеристики.")+'</small></div>'+
+      '</aside>'+
+      '<main class="kb-wb-content">'+
+        '<section class="kb-wb-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Основная информация</span><h3>Карточка товара</h3></div><span class="kb-wb-quality-pill">'+quality+'%</span></div>'+
+          '<div class="kb-admin-grid two kb-wb-basic"><label>Наименование<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип / категория<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label class="wide">Описание / назначение<textarea name="purpose" rows="5">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
+        '</section>'+
+        '<section class="kb-wb-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Контент</span><h3>Характеристики и преимущества</h3></div></div><div data-card-content>'+productPairEditors(ctx)+'</div></section>'+
+        '<section class="kb-wb-panel">'+tableEditorsHtml(ctx)+'</section>'+
+        '<section class="kb-wb-panel"><details class="kb-admin-group" open><summary>Вещества / группы / ppb <small>'+((ctx.product.substances||[]).length)+' строк</small></summary><label class="kb-admin-field"><span>Формат: <b>группа | вещество | ppb</b>.</span><textarea rows="10" data-substances>'+esc(substancesText(ctx.product.substances||[]))+'</textarea></label></details></section>'+
+        '<section class="kb-wb-panel"><div class="kb-tab-section-head"><div><span class="kb-admin-kicker">Структура</span><h3>Вкладки карточки</h3><p class="kb-admin-hint">Меняй порядок, подписи и видимость вкладок.</p></div><div class="kb-tab-create"><input type="text" data-new-tab-label placeholder="Название новой вкладки"><button type="button" class="kb-admin-btn ghost" data-add-tab>+ Добавить вкладку</button></div></div><div data-tab-list>'+tabs+'</div></section>'+
+        '<details class="kb-admin-group kb-wb-advanced"><summary>Расширенные настройки <small>для редких случаев</small></summary><label class="kb-admin-field"><span>Пользовательские вкладки JSON</span><textarea rows="10" data-custom-tabs>'+esc(jsonText(ctx.product.customTabs||[]))+'</textarea></label><label class="kb-admin-field"><span>Расширенный JSON override</span><textarea rows="12" data-advanced>'+esc(jsonText(existing))+'</textarea></label></details>'+
+      '</main>'+
+      '<div class="kb-wb-savebar"><div><strong>Редактирование карточки</strong><span data-wb-save-note>Проверь фото и данные перед публикацией.</span></div><button type="button" class="kb-admin-btn ghost" data-account-back>К списку товаров</button><button type="submit" class="kb-admin-btn primary">Сохранить и опубликовать</button></div>'+
+    '</form>'
   ));
 }
 
