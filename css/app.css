@@ -1682,3 +1682,76 @@ body.modal-open{overflow:hidden}
   color:#8F3510;
   background:var(--orange-2);
 }
+
+
+/* v2.2.72 — adaptive table widths and unified primary column */
+.table-wrap,.pair-table-wrap,.content-table-wrap,.substance-table-wrap,.sensitivity-wrap{overflow:auto}
+.data-table,
+.pair-data-table,
+.definition-pair-table,
+.feature-definition-list-table,
+.content-table table,
+.substance-table,
+.sensitivity-table{
+  width:max-content;
+  max-width:none;
+  min-width:0;
+  table-layout:auto;
+  border-collapse:collapse;
+}
+.data-table th,.data-table td,
+.pair-data-table th,.pair-data-table td,
+.definition-pair-table th,.definition-pair-table td,
+.feature-definition-list-table th,.feature-definition-list-table td,
+.content-table th,.content-table td,
+.substance-table th,.substance-table td,
+.sensitivity-table th,.sensitivity-table td{
+  min-width:0;
+  max-width:48ch;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  vertical-align:top;
+}
+.data-table col.table-col-compact,
+.pair-data-table col.table-col-compact,
+.definition-pair-table col.table-col-compact,
+.feature-definition-list-table col.table-col-compact,
+.content-table col.table-col-compact{width:auto!important}
+.data-table td:nth-child(1),
+.pair-data-table td:nth-child(1),
+.definition-pair-table td:nth-child(1),
+.feature-definition-list-table td:nth-child(1),
+.content-table td:nth-child(1),
+.substance-table td:nth-child(1),
+.sensitivity-table td:nth-child(1){
+  font-weight:800;
+  color:var(--text,#263229);
+  background:color-mix(in srgb,var(--surface-2,#f5f8f5) 72%,transparent);
+}
+.data-table th:nth-child(1),
+.pair-data-table th:nth-child(1),
+.definition-pair-table th:nth-child(1),
+.feature-definition-list-table th:nth-child(1),
+.content-table th:nth-child(1),
+.substance-table th:nth-child(1),
+.sensitivity-table th:nth-child(1){
+  font-weight:900;
+  color:var(--text,#263229);
+  background:color-mix(in srgb,var(--surface-2,#f5f8f5) 92%,var(--accent,#335d42) 8%);
+}
+.data-table td:not(:first-child),
+.pair-data-table td:not(:first-child),
+.definition-pair-table td:not(:first-child),
+.feature-definition-list-table td:not(:first-child),
+.content-table td:not(:first-child){
+  font-weight:500;
+}
+.substance-table th:nth-child(2),.substance-table td:nth-child(2){
+  width:1%;
+  white-space:nowrap;
+}
+.sensitivity-table th:not(:first-child),.sensitivity-table td:not(:first-child){
+  width:1%;
+  white-space:nowrap;
+  text-align:center;
+}
