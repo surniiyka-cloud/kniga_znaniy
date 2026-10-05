@@ -1855,7 +1855,8 @@ async function init(){
   state.publishedLiveSnapshots={};
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Каталог · обновлено "+fmtDate(state.book.generatedAt);
-  window.addEventListener("kb:admin-change",()=>{applyAdminVisibility();renderNav();const r=route();if(r.name==="diagnostics"&&!isAdmin())go("home");else render();});\n  window.addEventListener("kb:admin-ready",()=>{const r=route();if(r.name==="account"||r.name==="accountProduct"||r.name==="accountSection")render();});
+  window.addEventListener("kb:admin-change",()=>{applyAdminVisibility();renderNav();const r=route();if(r.name==="diagnostics"&&!isAdmin())go("home");else render();});
+  window.addEventListener("kb:admin-ready",()=>{const r=route();if(r.name==="account"||r.name==="accountProduct"||r.name==="accountSection")render();});
   if(!location.hash)go("home");else render();
   loadTerms11();
 }
