@@ -1005,6 +1005,21 @@ function bindBody(){
     const empty=body.querySelector("[data-account-empty]");if(empty)empty.hidden=shown>0;
   });
   body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
+  body.querySelectorAll("[data-account-manage-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountManageSection)));
+  body.querySelectorAll("[data-account-add-product]").forEach(b=>b.addEventListener("click",async()=>{
+    const name=prompt("Название новой карточки","Новая карточка");if(name==null)return;
+    try{showStatus("Создаём карточку…");await createManualProduct(b.dataset.accountAddProduct,name)}catch(err){showError(err)}
+  }));
+  body.querySelectorAll("[data-account-duplicate-product]").forEach(b=>b.addEventListener("click",async()=>{
+    const id=b.dataset.accountDuplicateProduct,ctx=window.KB_EDITOR_API?.product?.(id);if(!ctx)return;
+    if(!confirm('Создать копию «'+(ctx.product?.name||id)+'» в этом же разделе?'))return;
+    try{showStatus("Создаём копию…");await duplicateProductTo(id,ctx.section.id)}catch(err){showError(err)}
+  }));
+  body.querySelectorAll("[data-account-delete-product]").forEach(b=>b.addEventListener("click",async()=>{
+    const id=b.dataset.accountDeleteProduct,ctx=window.KB_EDITOR_API?.product?.(id);if(!ctx)return;
+    if(!confirm('Удалить карточку «'+(ctx.product?.name||id)+'» с сайта?'))return;
+    try{showStatus("Удаляем карточку…");await deleteProductById(id)}catch(err){showError(err)}
+  }));
   body.addEventListener("click",e=>{
     const tabDelete=e.target.closest?.("[data-tab-delete], [data-remove-custom-tab]");
     if(tabDelete){
@@ -1061,6 +1076,30 @@ function bindBody(){
     });
   };
   body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(bindPairDrag);
+
+  body.querySelector("[data-duplicate-here]")?.addEventListener("click",async()=>{
+    const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;if(!id)return;
+    if(!confirm("Создать полную копию этой карточки в текущем разделе?"))return;
+    try{showStatus("Создаём копию карточки…");await duplicateProductTo(id,editorCtx?.section?.id)}catch(err){showError(err)}
+  });
+  body.querySelector("[data-copy-to-section]")?.addEventListener("click",async()=>{
+    const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,target=body.querySelector("[data-product-target-section]")?.value;
+    if(!id||!target)return;
+    if(!confirm("Скопировать карточку в раздел "+target+"? Исходная карточка останется на месте."))return;
+    try{showStatus("Копируем карточку…");await duplicateProductTo(id,target)}catch(err){showError(err)}
+  });
+  body.querySelector("[data-move-to-section]")?.addEventListener("click",async()=>{
+    const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,target=body.querySelector("[data-product-target-section]")?.value;
+    if(!id||!target)return;
+    if(target===editorCtx?.section?.id)return showError(new Error("Для переноса выберите другой раздел."));
+    if(!confirm("Перенести карточку в раздел "+target+"? В текущем разделе она будет удалена."))return;
+    try{showStatus("Переносим карточку…");await duplicateProductTo(id,target,{move:true})}catch(err){showError(err)}
+  });
+  body.querySelector("[data-delete-current-product]")?.addEventListener("click",async()=>{
+    const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;if(!id)return;
+    if(!confirm('Удалить карточку «'+(editorCtx?.product?.name||id)+'» с сайта?'))return;
+    try{showStatus("Удаляем карточку…");await deleteProductById(id)}catch(err){showError(err)}
+  });
   let photoReplaceRow=null;
   const photoAddInput=body.querySelector("[data-photo-file]"),photoReplaceInput=body.querySelector("[data-photo-replace-file]");
   body.querySelector("[data-photo-add]")?.addEventListener("click",()=>{if(photoAddInput){photoAddInput.value="";photoAddInput.click()}});
@@ -1128,6 +1167,14 @@ function bindBody(){
       if(rows.length<=1){remove.closest("[data-pair-row]")?.querySelectorAll("input").forEach(x=>x.value="");return}
       remove.closest("[data-pair-row]")?.remove();
     }
+  });
+  body.querySelector("[data-add-product]")?.addEventListener("click",async()=>{
+    const sectionId=body.querySelector("[data-admin-section]")?.dataset.id;if(!sectionId)return;
+    const name=prompt("Название новой карточки","Новая карточка");if(name==null)return;
+    try{showStatus("Создаём карточку…");await createManualProduct(sectionId,name)}catch(err){showError(err)}
+  });
+  body.querySelectorAll("[data-open-section-product]").forEach(b=>b.onclick=()=>{
+    const id=b.closest("[data-section-product-row]")?.dataset.id;if(id)location.hash="#/account/product/"+encodeURIComponent(id);
   });
   body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.previousElementSibling?.before(r)});
   body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.nextElementSibling?.after(r)});
