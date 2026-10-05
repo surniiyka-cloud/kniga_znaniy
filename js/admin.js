@@ -518,7 +518,27 @@ function photoRowHtml(path,index){
 }
 function photoEditorHtml(ctx){
   const images=ctx.images||[];
-  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+}
+function setPhotoSaveState(body,state,message=""){
+  const section=body?.querySelector("[data-photo-section]"),box=body?.querySelector("[data-photo-save-state]");
+  if(!section||!box)return;
+  const states={
+    idle:{icon:"○",title:"Фото без изменений",detail:"Карточку можно сохранять."},
+    saving:{icon:"…",title:"Сохраняем фото…",detail:"Дождитесь окончания загрузки. Сохранение карточки временно заблокировано."},
+    saved:{icon:"✓",title:"Фото сохранены",detail:"Фото записаны и опубликованы. Карточку можно сохранять."},
+    error:{icon:"!",title:"Фото не сохранены",detail:"Исправьте ошибку загрузки фото перед сохранением карточки."}
+  };
+  const x=states[state]||states.idle;
+  section.dataset.photoState=state;
+  box.className="kb-photo-save-state "+state;
+  box.innerHTML='<span class="kb-photo-save-icon">'+x.icon+'</span><div><strong>'+esc(x.title)+'</strong><small>'+esc(message||x.detail)+'</small></div>';
+  const save=body.querySelector('[data-admin-product] button[type="submit"]');
+  if(save){
+    const blocked=state==="saving"||state==="error";
+    save.disabled=blocked;
+    save.title=blocked?"Сначала дождитесь успешного сохранения фото.":"";
+  }
 }
 function syncPhotoState(body){
   const rows=[...body.querySelectorAll("[data-photo-row]")],paths=rows.map(r=>r.dataset.path).filter(Boolean);
@@ -647,6 +667,7 @@ function nextPhotoPath(productId,files,ext){
 }
 async function persistImagesOnly(body){
   const form=body.querySelector("[data-admin-product]");if(!form||!editorCtx)return;
+  setPhotoSaveState(body,"saving");
   const id=form.dataset.id,images=syncPhotoState(body),settings=collectPhotoSettings(body);
   // Берём уже актуальный кэш текущей сессии. Повторный force-read возвращал состояние,
   // с которым страница была открыта, и мог откатывать предыдущую замену/добавление фото.
@@ -669,6 +690,7 @@ async function persistImagesOnly(body){
   await commitOverrides(o);
   editorCtx.images=deep(images);
   body.querySelectorAll("[data-photo-row]").forEach(r=>r.classList.remove("is-photo-dirty"));
+  setPhotoSaveState(body,"saved");
 }
 async function uploadPhoto(file,path){
   if(!file)throw new Error("Файл не выбран.");
@@ -931,20 +953,20 @@ function bindBody(){
   body.querySelector("[data-photo-add]")?.addEventListener("click",()=>{if(photoAddInput){photoAddInput.value="";photoAddInput.click()}});
   photoAddInput?.addEventListener("change",async()=>{
     const files=[...(photoAddInput.files||[])];if(!files.length)return;
-    try{showStatus("Загружаем фото…");const list=body.querySelector("[data-photo-list]"),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
+    try{setPhotoSaveState(body,"saving");showStatus("Загружаем фото…");const list=body.querySelector("[data-photo-list]"),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
       for(const file of files){const path=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,path);list?.insertAdjacentHTML("beforeend",photoRowHtml(path,list.querySelectorAll("[data-photo-row]").length))}
       syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото добавлено и опубликовано.");
-    }catch(err){showError(err)}
+    }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить фото.");showError(err)}
   });
   body.addEventListener("click",async e=>{
     const replace=e.target.closest?.("[data-photo-replace]");if(replace){photoReplaceRow=replace.closest("[data-photo-row]");if(photoReplaceInput){photoReplaceInput.value="";photoReplaceInput.click()}return}
-    const remove=e.target.closest?.("[data-photo-remove]");if(remove){const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;row.remove();syncPhotoState(body);try{await persistImagesOnly(body);showStatus("Фото удалено из карточки.")}catch(err){showError(err)}return}
-    const up=e.target.closest?.("[data-photo-up]");if(up){const row=up.closest("[data-photo-row]");row?.previousElementSibling?.before(row);syncPhotoState(body);try{await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){showError(err)}return}
-    const down=e.target.closest?.("[data-photo-down]");if(down){const row=down.closest("[data-photo-row]");row?.nextElementSibling?.after(row);syncPhotoState(body);try{await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){showError(err)}return}
+    const remove=e.target.closest?.("[data-photo-remove]");if(remove){const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;row.remove();syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Фото удалено из карточки.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить удаление фото.");showError(err)}return}
+    const up=e.target.closest?.("[data-photo-up]");if(up){const row=up.closest("[data-photo-row]");row?.previousElementSibling?.before(row);syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить порядок фото.");showError(err)}return}
+    const down=e.target.closest?.("[data-photo-down]");if(down){const row=down.closest("[data-photo-row]");row?.nextElementSibling?.after(row);syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить порядок фото.");showError(err)}return}
   });
   photoReplaceInput?.addEventListener("change",async()=>{
     const file=photoReplaceInput.files?.[0],row=photoReplaceRow;photoReplaceRow=null;if(!file||!row)return;
-    try{showStatus("Заменяем фото…");const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,newPath);row.dataset.path=newPath;const img=row.querySelector("img");if(img)img.src=photoPreviewSrc(newPath)+"?v="+Date.now();const code=row.querySelector("code");if(code)code.textContent=newPath;syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");}catch(err){showError(err)}
+    try{setPhotoSaveState(body,"saving");showStatus("Заменяем фото…");const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,newPath);row.dataset.path=newPath;const img=row.querySelector("img");if(img)img.src=photoPreviewSrc(newPath)+"?v="+Date.now();const code=row.querySelector("code");if(code)code.textContent=newPath;syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось заменить фото.");showError(err)}
   });
 
   body.addEventListener("click",e=>{
@@ -1025,7 +1047,11 @@ function putDiff(out,key,value,base){
   if(same(value,base))delete out[key];else out[key]=deep(value);
 }
 async function saveProduct(e){
-  e.preventDefault();const form=e.currentTarget,id=form.dataset.id,btn=e.submitter;btn.disabled=true;
+  e.preventDefault();const form=e.currentTarget,id=form.dataset.id,btn=e.submitter;
+  const photoState=form.querySelector("[data-photo-section]")?.dataset.photoState||"idle";
+  if(photoState==="saving")return showError(new Error("Фото ещё сохраняется. Дождитесь зелёного подтверждения под блоком фотографий."));
+  if(photoState==="error")return showError(new Error("Последнее изменение фото не сохранилось. Исправьте ошибку загрузки фото перед сохранением карточки."));
+  btn.disabled=true;
   try{
     const ctx=window.KB_EDITOR_API.current();const src=ctx.sourceProduct||{},fd=new FormData(form);
     let out={};const adv=form.querySelector("[data-advanced]")?.value.trim();
