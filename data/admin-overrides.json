@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T08:00:43.417Z",
+  "updatedAt": "2026-10-05T08:18:02.300Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -5350,7 +5350,10 @@
             }
           ]
         }
-      }
+      },
+      "images": [
+        "img/photos/admin/catalog-2-6-ekomilk-9-параметров/catalog-2-6-ekomilk-9-параметров-01.png"
+      ]
     },
     "5.1-ножницы-для-стрижки-овец-ankar": {
       "tabOrder": [
