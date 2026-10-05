@@ -354,3 +354,22 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
 
 /* v2.2.58 — simplified photo editor */
 .kb-photo-row-simple{display:grid!important;grid-template-columns:160px minmax(0,1fr)!important;gap:16px!important;align-items:center!important;padding:14px!important}.kb-photo-preview-simple{width:160px!important;height:120px!important;aspect-ratio:auto!important;padding:8px;box-sizing:border-box;background:#fff}.kb-photo-preview-simple img{width:100%!important;height:100%!important;padding:0!important;object-fit:contain!important;transform:none!important}.kb-photo-simple-main{display:grid;gap:12px;min-width:0}.kb-photo-row-simple .kb-photo-meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}.kb-photo-row-simple .kb-photo-actions{border-top:0;padding-top:0}@media(max-width:760px){.kb-photo-row-simple{grid-template-columns:1fr!important}.kb-photo-preview-simple{width:100%!important;height:220px!important}.kb-photo-row-simple .kb-photo-meta{grid-template-columns:1fr}}
+
+
+/* v2.2.63 — photo save confirmation */
+.kb-photo-save-state{
+  display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:12px;
+  border:1px solid var(--line,#d9e1dc);background:var(--surface-2,#f7faf8);
+}
+.kb-photo-save-state .kb-photo-save-icon{
+  display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;border-radius:999px;
+  font-weight:900;font-size:14px;background:#e8ece9;
+}
+.kb-photo-save-state div{display:grid;gap:2px}
+.kb-photo-save-state strong{font-size:14px}
+.kb-photo-save-state small{font-size:12px;line-height:1.4;color:var(--muted,#66706a)}
+.kb-photo-save-state.saving{background:#fff8e8;border-color:#e9cf8a}
+.kb-photo-save-state.saved{background:#edf8f0;border-color:#9dcca8}
+.kb-photo-save-state.error{background:#fff0f0;border-color:#e2aaaa}
+.kb-photo-save-state.saved .kb-photo-save-icon{background:#d7efdd}
+.kb-photo-save-state.error .kb-photo-save-icon{background:#f4d1d1}
