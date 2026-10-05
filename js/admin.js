@@ -260,7 +260,7 @@ function tableRowHtml(row,width,rowIndex=0,merges=[]){
     const attrs=merge?(' rowspan="'+merge.rowspan+'" colspan="'+merge.colspan+'"'):"";
     cells.push('<td data-table-cell-pos="'+rowIndex+':'+col+'"'+attrs+'><input data-table-cell value="'+esc(row?.[col]||"")+'"></td>');
   }
-  return '<tr data-table-row data-table-row-index="'+rowIndex+'">'+cells.join("")+'<td class="kb-row-tools"><button type="button" class="kb-row-merge" data-table-merge-row title="Объединить всю строку" aria-label="Объединить всю строку">↔</button><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
+  return '<tr data-table-row data-table-row-index="'+rowIndex+'">'+cells.join("")+'<td class="kb-row-tools"><div class="kb-row-order"><button type="button" class="kb-row-move" data-table-row-up title="Строкой выше" aria-label="Строкой выше">↑</button><button type="button" class="kb-row-move" data-table-row-down title="Строкой ниже" aria-label="Строкой ниже">↓</button></div><button type="button" class="kb-row-merge" data-table-merge-row title="Объединить всю строку" aria-label="Объединить всю строку">↔</button><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
 }
 function tableEditorGridHtml(headers,rows,merges){
   const width=Math.max(1,headers.length);
@@ -272,7 +272,7 @@ function tableEditorHtml(id,label,table){
   const merges=normalizeTableMergesForEditor(table,width,rows.length);
   return '<article class="kb-table-editor" data-table-editor data-table-id="'+esc(id)+'">'+
     '<div class="kb-table-editor-head"><div><strong>'+esc(label)+'</strong><code>'+esc(id)+'</code></div><div class="kb-table-actions"><button type="button" class="kb-mini" data-table-add-col>+ столбец</button><button type="button" class="kb-mini" data-table-add-row>+ строка</button><button type="button" class="kb-mini" data-table-merge>Объединить выбранные</button><button type="button" class="kb-mini" data-table-unmerge>Разъединить</button><button type="button" class="kb-mini danger" data-table-delete>Удалить таблицу</button></div></div>'+
-    '<p class="kb-table-merge-hint">Ctrl/⌘ + клик по ячейкам — выбрать несколько. Для примечания под таблицей нажмите ↔ в нужной строке.</p>'+
+    '<p class="kb-table-merge-hint">Ctrl/⌘ + клик — выбрать ячейки. ↑ ↓ меняют порядок строк. ↔ объединяет строку в примечание.</p>'+
     '<div class="kb-table-scroll">'+tableEditorGridHtml(headers,rows,merges)+'</div></article>';
 }
 function readTableEditor(ed){
@@ -1139,6 +1139,16 @@ function bindBody(){
     if(e.target.closest("[data-table-merge]")){mergeSelectedTableCells(ed);return}
     if(e.target.closest("[data-table-unmerge]")){unmergeSelectedTableCells(ed);return}
     if(e.target.closest("[data-table-merge-row]")){const tr=e.target.closest("[data-table-row]");mergeWholeTableRow(ed,Number(tr?.dataset.tableRowIndex||0));return}
+    const rowMove=e.target.closest("[data-table-row-up],[data-table-row-down]");
+    if(rowMove){
+      const tr=rowMove.closest("[data-table-row]"),index=Number(tr?.dataset.tableRowIndex||0),data=readTableEditor(ed);
+      const delta=rowMove.matches("[data-table-row-up]")?-1:1,next=index+delta;
+      if(next<0||next>=data.rows.length)return;
+      if((data.merges||[]).some(m=>m.rowspan>1))return showError(new Error("Сначала разъедините вертикально объединённые ячейки, затем меняйте порядок строк."));
+      [data.rows[index],data.rows[next]]=[data.rows[next],data.rows[index]];
+      data.merges=(data.merges||[]).map(m=>m.row===index?{...m,row:next}:m.row===next?{...m,row:index}:m);
+      refreshTableEditor(ed,data);return;
+    }
     const col=e.target.closest("[data-table-remove-col]");if(col){
       const data=readTableEditor(ed);if(data.headers.length<=1)return showError(new Error("В таблице должен остаться хотя бы один столбец."));
       const index=Number(col.dataset.tableRemoveCol);data.headers.splice(index,1);data.rows.forEach(r=>r.splice(index,1));
