@@ -1142,7 +1142,10 @@ function mapData(){
     state.editorBase.products.set(id,deepCopy(x.product));
     state.editorBase.images.set(id,deepCopy(state.assets.productImages?.[id]||[]));
     const pov=ov.products?.[id];if(!pov)continue;
-    for(const [k,v] of Object.entries(pov)){if(!["id","images"].includes(k))x.product[k]=deepCopy(v);}
+    for(const [k,v] of Object.entries(pov)){
+      if(["id","images","__frozen"].includes(k))continue;
+      x.product[k]=deepCopy(v);
+    }
     if(Array.isArray(pov.images))state.assets.productImages[id]=deepCopy(pov.images);
   }
 }
