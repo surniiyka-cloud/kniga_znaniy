@@ -692,6 +692,34 @@ async function persistImagesOnly(body){
   body.querySelectorAll("[data-photo-row]").forEach(r=>r.classList.remove("is-photo-dirty"));
   setPhotoSaveState(body,"saved");
 }
+async function optimizePhotoFile(file){
+  if(!file)return file;
+  const maxSide=1600,quality=.86;
+  let bitmap=null,img=null,w=0,h=0;
+  try{
+    if("createImageBitmap" in window){
+      try{bitmap=await createImageBitmap(file);w=bitmap.width;h=bitmap.height}catch{}
+    }
+    if(!bitmap){
+      img=await imageElementFromBlob(file);w=img.naturalWidth;h=img.naturalHeight;
+    }
+    if(!w||!h)return file;
+    const scale=Math.min(1,maxSide/Math.max(w,h)),tw=Math.max(1,Math.round(w*scale)),th=Math.max(1,Math.round(h*scale));
+    // Маленькие WEBP уже достаточно компактны — не перекодируем их повторно.
+    if(scale===1&&file.type==="image/webp"&&file.size<450*1024)return file;
+    const canvas=document.createElement("canvas");canvas.width=tw;canvas.height=th;
+    const ctx=canvas.getContext("2d");ctx.drawImage(bitmap||img,0,0,tw,th);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/webp",quality));
+    if(!blob)return file;
+    // Не заменяем исходник, если перекодирование внезапно сделало файл больше.
+    if(scale===1&&blob.size>=file.size)return file;
+    return new File([blob],safe((file.name||"photo").replace(/\.[^.]+$/,""))+".webp",{type:"image/webp",lastModified:Date.now()});
+  }catch{
+    return file;
+  }finally{
+    try{bitmap?.close?.()}catch{}
+  }
+}
 async function uploadPhoto(file,path){
   if(!file)throw new Error("Файл не выбран.");
   const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
@@ -954,7 +982,7 @@ function bindBody(){
   photoAddInput?.addEventListener("change",async()=>{
     const files=[...(photoAddInput.files||[])];if(!files.length)return;
     try{setPhotoSaveState(body,"saving");showStatus("Загружаем фото…");const list=body.querySelector("[data-photo-list]"),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
-      for(const file of files){const path=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,path);list?.insertAdjacentHTML("beforeend",photoRowHtml(path,list.querySelectorAll("[data-photo-row]").length))}
+      for(const file of files){const prepared=await optimizePhotoFile(file),path=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));await uploadPhoto(prepared,path);list?.insertAdjacentHTML("beforeend",photoRowHtml(path,list.querySelectorAll("[data-photo-row]").length))}
       syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото добавлено и опубликовано.");
     }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить фото.");showError(err)}
   });
@@ -966,7 +994,7 @@ function bindBody(){
   });
   photoReplaceInput?.addEventListener("change",async()=>{
     const file=photoReplaceInput.files?.[0],row=photoReplaceRow;photoReplaceRow=null;if(!file||!row)return;
-    try{setPhotoSaveState(body,"saving");showStatus("Заменяем фото…");const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,newPath);row.dataset.path=newPath;const img=row.querySelector("img");if(img)img.src=photoPreviewSrc(newPath)+"?v="+Date.now();const code=row.querySelector("code");if(code)code.textContent=newPath;syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось заменить фото.");showError(err)}
+    try{setPhotoSaveState(body,"saving");showStatus("Заменяем фото…");const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,prepared=await optimizePhotoFile(file),newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));await uploadPhoto(prepared,newPath);row.dataset.path=newPath;const img=row.querySelector("img");if(img)img.src=photoPreviewSrc(newPath)+"?v="+Date.now();const code=row.querySelector("code");if(code)code.textContent=newPath;syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось заменить фото.");showError(err)}
   });
 
   body.addEventListener("click",e=>{
