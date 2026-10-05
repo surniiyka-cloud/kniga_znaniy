@@ -1099,6 +1099,28 @@ function bindBody(){
     }catch(err){showError(err)}
   }));
   body.addEventListener("click",e=>{
+    const addTab=e.target.closest?.("[data-add-tab]");
+    if(addTab){
+      const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
+      if(!form||!input)return;
+      const label=input.value.trim();
+      if(!label)return showError(new Error("Введите название новой вкладки."));
+      const existingIds=new Set([
+        ...body.querySelectorAll("[data-admin-tab-row]"),
+        ...readCustomTabs(form).map(t=>({dataset:{id:String(t?.id||"")}}))
+      ].map(x=>String(x.dataset.id||"")).filter(Boolean));
+      const base="custom-"+safe(label),root=base==="custom-"?"custom-tab":base;
+      let id=root,n=2;while(existingIds.has(id))id=root+"-"+n++;
+      const tab={id,label,kind:"pairs",rows:[]};
+      const tabs=readCustomTabs(form);tabs.push(tab);writeCustomTabs(form,tabs);
+      body.querySelector("[data-tab-list]")?.insertAdjacentHTML("beforeend",tabRowHtml({id,label},editorCtx?.product||{},true));
+      body.querySelector("[data-card-content]")?.insertAdjacentHTML("beforeend",customTabContentHtml(tab));
+      const select=body.querySelector("[data-new-table-tab]");
+      if(select&&!select.querySelector('option[value="'+CSS.escape(id)+'"]'))select.insertAdjacentHTML("beforeend",'<option value="'+esc(id)+'">'+esc(label)+'</option>');
+      input.value="";
+      showStatus("Вкладка «"+label+"» добавлена. Сохраните карточку, чтобы опубликовать её.");
+      return;
+    }
     const tabDelete=e.target.closest?.("[data-tab-delete], [data-remove-custom-tab]");
     if(tabDelete){
       const row=tabDelete.closest("[data-admin-tab-row]");
@@ -1107,7 +1129,11 @@ function bindBody(){
     }
     const ed=e.target.closest("[data-table-editor]");if(!ed)return;
     const cell=e.target.closest("[data-table-cell-pos]");
-    if(cell&&!e.target.closest("input,button")&&(e.ctrlKey||e.metaKey)){cell.classList.toggle("is-selected");return}
+    if(cell&&(e.ctrlKey||e.metaKey)){
+      e.preventDefault();
+      cell.classList.toggle("is-selected");
+      return;
+    }
     if(e.target.closest("[data-table-add-row]")){const data=readTableEditor(ed);data.rows.push(Array(data.headers.length).fill(""));refreshTableEditor(ed,data);return}
     if(e.target.closest("[data-table-add-col]")){const data=readTableEditor(ed);data.headers.push("Новый столбец");data.rows.forEach(r=>r.push(""));refreshTableEditor(ed,data);return}
     if(e.target.closest("[data-table-merge]")){mergeSelectedTableCells(ed);return}
@@ -1154,6 +1180,9 @@ function bindBody(){
     });
   };
   body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(bindPairDrag);
+
+  body.querySelectorAll("[data-tab-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.previousElementSibling?.before(r)});
+  body.querySelectorAll("[data-tab-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-admin-tab-row]");r?.nextElementSibling?.after(r)});
 
   body.querySelector("[data-duplicate-here]")?.addEventListener("click",async()=>{
     const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;if(!id)return;
