@@ -1570,8 +1570,22 @@ function renderSection(id){
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function fields(p){
-  if(p.detailFields?.length)return p.detailFields.filter((x)=>x?.[0]&&x?.[1]);
+  if(p.detailFields?.length)return p.detailFields.filter((x)=>x?.[0]&&x?.some?.(v=>String(v||"").trim()));
   return [["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose],["Характеристики / особенности",p.features],["Производитель",p.manufacturer],["Страна",p.country]].filter((x)=>x[1]);
+}
+function pairHeaders(p,key,width){
+  const saved=Array.isArray(p?.pairHeaders?.[key])?p.pairHeaders[key]:[];
+  const defaults=key==="advantages"?["Преимущество","Описание"]:key==="detailFields"?["Название характеристики","Значение"]:[];
+  return Array.from({length:width},(_,i)=>String(saved[i]||defaults[i]||("Столбец "+(i+1))));
+}
+function pairTable(rows,p,key,cls="pair-data-table"){
+  const body=(rows||[]).filter(r=>(r||[]).some(v=>String(v||"").trim()));
+  const width=Math.max(2,...body.map(r=>Array.isArray(r)?r.length:0));
+  const headers=pairHeaders(p,key,width);
+  if(!body.length)return "";
+  return '<div class="pair-table-wrap"><table class="'+cls+'"><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+
+    body.map(r=>'<tr>'+Array.from({length:width},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+
+    '</tbody></table></div>';
 }
 
 function tabTableFor(p,id){
@@ -1603,7 +1617,9 @@ function productTabs(p,{includeHidden=false}={}){
   if(Array.isArray(p.tabOrder)&&p.tabOrder.length){const pos=new Map(p.tabOrder.map((id,i)=>[id,i]));tabs.sort((a,b)=>(pos.has(a.id)?pos.get(a.id):999)-(pos.has(b.id)?pos.get(b.id):999));}
   return tabs;
 }
-function pairCards(rows,cls="feature-definition-list"){
+function pairCards(rows,cls="feature-definition-list",p=null,key=""){
+  const width=Math.max(2,...(rows||[]).map(r=>Array.isArray(r)?r.length:0));
+  if(width>2&&p)return pairTable(rows,p,key,cls+"-table");
   return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r?.[0]||"")+'</dt><dd>'+esc(r?.[1]||"")+'</dd>').join("")+'</dl>';
 }
 function stepCards(rows){
@@ -1637,17 +1653,17 @@ function tabPanelHtml(p,id){
   }
   if(table?.headers?.length&&table?.rows?.length)return tablePanel(table.headers,table.rows,table);
   if(id==="specs")return '<dl class="definition-list">'+fields(p).map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';
-  if(id==="advantages")return pairCards(p.advantages||[]);
-  if(id==="indicators")return pairCards(p.indicators||[]);
-  if(id==="options")return pairCards(p.options||[]);
-  if(id==="variants")return pairCards(p.variants||[]);
-  if(id==="complectation")return pairCards(p.complectation||[]);
+  if(id==="advantages")return pairCards(p.advantages||[],"feature-definition-list",p,"advantages");
+  if(id==="indicators")return pairCards(p.indicators||[],"feature-definition-list",p,"indicators");
+  if(id==="options")return pairCards(p.options||[],"feature-definition-list",p,"options");
+  if(id==="variants")return pairCards(p.variants||[],"feature-definition-list",p,"variants");
+  if(id==="complectation")return pairCards(p.complectation||[],"feature-definition-list",p,"complectation");
   if(id==="washCycle")return stepCards(p.washCycle||[]);
   if(id==="workflow")return stepCards(p.workflow||[]);
-  if(id==="calibration")return pairCards(p.calibration||[]);
-  if(id==="assortment")return pairCards(p.assortment||[]);
-  if(id==="consumables")return pairCards(p.consumables||[]);
-  if(id==="testKits")return pairCards(p.testKits||[]);
+  if(id==="calibration")return pairCards(p.calibration||[],"feature-definition-list",p,"calibration");
+  if(id==="assortment")return pairCards(p.assortment||[],"feature-definition-list",p,"assortment");
+  if(id==="consumables")return pairCards(p.consumables||[],"feature-definition-list",p,"consumables");
+  if(id==="testKits")return pairCards(p.testKits||[],"feature-definition-list",p,"testKits");
   const custom=(p.customTabs||[]).find((t)=>t.id===id);
   if(custom)return custom.kind==="table"?tablePanel(custom.headers||[],custom.rows||[]):custom.kind==="steps"?stepCards(custom.rows||[]):pairCards(custom.rows||[]);
   if(id==="substances")return substanceTable(p.substances||[]);
