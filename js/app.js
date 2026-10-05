@@ -1752,7 +1752,10 @@ function pairCards(rows,cls="feature-definition-list",p=null,key=""){
   return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r?.[0]||"")+'</dt><dd>'+esc(r?.[1]||"")+'</dd>').join("")+'</dl>';
 }
 function stepCards(rows){
-  return '<dl class="feature-definition-list">'+(rows||[]).map((r,i)=>'<dt>'+esc(r?.[0]||("Шаг "+(i+1)))+'</dt><dd>'+esc(r?.[1]||"")+'</dd>').join("")+'</dl>';
+  return '<div class="step-instruction-list">'+(rows||[]).map((r,i)=>{
+    const label=String(r?.[0]||("Шаг "+(i+1))),text=String(r?.[1]||""),warning=/внимание|важно/i.test(label);
+    return '<div class="step-instruction-row '+(warning?"is-warning":"")+'"><div class="step-instruction-index">'+esc(label)+'</div><div class="step-instruction-text">'+esc(text)+'</div></div>';
+  }).join("")+'</div>';
 }
 function productDocumentsHtml(p){
   const docs=Array.isArray(p?.documents)?p.documents:[];
