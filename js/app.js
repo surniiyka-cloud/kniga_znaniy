@@ -1171,6 +1171,15 @@ function mapData(){
         const re=rx(rr?.match);if(!re)continue;
         out=out.map(r=>re.test(String(r?.[0]||""))?[String(rr?.label||r?.[0]||""),...r.slice(1)]:r);
       }
+      for(const rr of patch?.replaceCells||[]){
+        const re=rx(rr?.match);if(!re)continue;
+        const col=Math.max(0,Number(rr?.col||1));
+        out=out.map(r=>{
+          if(!re.test(String(r?.[0]||"")))return r;
+          const row=[...(r||[])];while(row.length<=col)row.push("");
+          row[col]=String(rr?.value??row[col]??"");return row;
+        });
+      }
       const drop=Math.max(0,Number(patch?.dropLast||0));if(drop)out=out.slice(0,Math.max(0,out.length-drop));
       return out;
     };
