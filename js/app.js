@@ -1866,7 +1866,7 @@ function bind(){
     const direct=e.target.closest("[data-lightbox-src]");
     if(direct){showLightbox([direct.dataset.lightboxSrc],0,direct.querySelector("img")?.alt||"");return;}
     const l=e.target.closest("[data-lightbox-product]");if(l)openLightbox(l.dataset.lightboxProduct,Number(l.dataset.lightboxIndex||0));
-    const doc=e.target.closest("[data-doc-preview]");if(doc){openDocPreview(doc.dataset.docHref||"",doc.dataset.docLabel||"Документ");return;}
+    const doc=e.target.closest("[data-doc-preview]");if(doc){e.preventDefault();openDocPreview(doc.dataset.docHref||"",doc.dataset.docLabel||"Документ");return;}
   });
   document.addEventListener("keydown",(e)=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();}if(e.key==="Escape"){searchPanel.hidden=true;q("#lightbox").hidden=true;closeVersionLog();closeDocPreview();closeMenu();}if(!q("#lightbox").hidden&&e.key==="ArrowLeft")stepLightbox(-1);if(!q("#lightbox").hidden&&e.key==="ArrowRight")stepLightbox(1);});
   q("#lightbox .lightbox-close").onclick=()=>q("#lightbox").hidden=true;
