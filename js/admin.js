@@ -647,11 +647,27 @@ function nextPhotoPath(productId,files,ext){
 }
 async function persistImagesOnly(body){
   const form=body.querySelector("[data-admin-product]");if(!form||!editorCtx)return;
-  const id=form.dataset.id,images=syncPhotoState(body),settings=collectPhotoSettings(body),o=await loadOverrides(true),out=deep(o.products?.[id]||{});
+  const id=form.dataset.id,images=syncPhotoState(body),settings=collectPhotoSettings(body);
+  // Берём уже актуальный кэш текущей сессии. Повторный force-read возвращал состояние,
+  // с которым страница была открыта, и мог откатывать предыдущую замену/добавление фото.
+  const o=await loadOverrides(),out=deep(o.products?.[id]||{});
   if(same(images,editorCtx.sourceImages||[]))delete out.images;else out.images=images;
   if(same(settings,editorCtx.sourceProduct?.imageSettings||{}))delete out.imageSettings;else out.imageSettings=settings;
   if(emptyObject(out))delete o.products[id];else o.products[id]=out;
+
+  // Ручные карточки живут ещё и внутри sections.*.manualProducts.
+  // Синхронизируем туда именно фото, иначе после успешной загрузки карточка могла
+  // продолжать показывать старое изображение из manualProducts.
+  for(const sec of Object.values(o.sections||{})){
+    if(!sec?.manualProducts||!Object.prototype.hasOwnProperty.call(sec.manualProducts,id))continue;
+    const manual=deep(sec.manualProducts[id]||{});
+    if(same(images,editorCtx.sourceImages||[]))delete manual.images;else manual.images=deep(images);
+    delete manual.imageSettings;
+    sec.manualProducts[id]=manual;
+  }
+
   await commitOverrides(o);
+  editorCtx.images=deep(images);
   body.querySelectorAll("[data-photo-row]").forEach(r=>r.classList.remove("is-photo-dirty"));
 }
 async function uploadPhoto(file,path){
