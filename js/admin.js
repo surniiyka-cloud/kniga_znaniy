@@ -403,8 +403,8 @@ async function renderAccountPage(){
     '<div class="kb-account-head"><div><h3>Каталог товаров</h3><p class="kb-admin-hint">Теперь это основная база сайта. Google Sheets больше не используется для повседневного редактирования.</p></div></div>'+
     '<div class="kb-account-search"><span>⌕</span><input type="search" data-account-search placeholder="Поиск по личному кабинету: товар, артикул, раздел…" autocomplete="off"></div>'+
     '<div class="kb-account-catalog">'+
-    sections.map(sec=>'<section class="kb-account-section" data-account-section-card data-account-search-text="'+esc([sec.id,sec.title,sec.chapterTitle,...sec.products.flatMap(p=>[p.name,p.article])].join(" "))+'"><div class="kb-account-section-head"><div><span class="eyebrow">Глава '+esc(sec.chapterId)+'</span><h2>'+esc(sec.id+" "+sec.title)+'</h2></div></div>'+
-      '<div class="kb-account-products">'+sec.products.map(p=>'<article class="kb-account-product" data-account-product-card data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'"><div><strong>'+esc(p.name)+'</strong><small>'+esc(p.article||"Без артикула")+'</small></div><button class="kb-admin-btn ghost" data-account-edit-product="'+esc(p.id)+'">✎</button></article>').join("")+'</div></section>').join("")+
+    sections.map(sec=>'<section class="kb-account-section" data-account-section-card data-section-id="'+esc(sec.id)+'" data-account-search-text="'+esc([sec.id,sec.title,sec.chapterTitle,...sec.products.flatMap(p=>[p.name,p.article])].join(" "))+'"><div class="kb-account-section-head"><div><span class="eyebrow">Глава '+esc(sec.chapterId)+'</span><h2>'+esc(sec.id+" "+sec.title)+'</h2></div><div class="kb-account-section-actions"><button type="button" class="kb-admin-btn ghost" data-account-manage-section="'+esc(sec.id)+'">Порядок и удаление</button><button type="button" class="kb-admin-btn primary" data-account-add-product="'+esc(sec.id)+'">+ Карточка</button></div></div>'+
+      '<div class="kb-account-products">'+sec.products.map(p=>'<article class="kb-account-product" data-account-product-card data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'"><div><strong>'+esc(p.name)+'</strong><small>'+esc(p.article||"Без артикула")+'</small></div><div class="kb-account-product-actions"><button class="kb-admin-btn ghost" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger" data-account-delete-product="'+esc(p.id)+'">×</button></div></article>').join("")+'</div></section>').join("")+
     '</div><div class="kb-account-empty" data-account-empty hidden>По вашему запросу ничего не найдено.</div>');
   setBody(html);
 }
@@ -682,7 +682,7 @@ async function persistImagesOnly(body){
   for(const sec of Object.values(o.sections||{})){
     if(!sec?.manualProducts||!Object.prototype.hasOwnProperty.call(sec.manualProducts,id))continue;
     const manual=deep(sec.manualProducts[id]||{});
-    if(same(images,editorCtx.sourceImages||[]))delete manual.images;else manual.images=deep(images);
+    if(images.length)manual.images=deep(images);else delete manual.images;
     delete manual.imageSettings;
     sec.manualProducts[id]=manual;
   }
@@ -727,6 +727,90 @@ async function uploadPhoto(file,path){
   await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload photo for "+(editorCtx?.product?.name||editorCtx?.id||"product"));
   return path;
 }
+function editorSectionList(){
+  return (window.KB_EDITOR_API?.catalog?.()||[]).flatMap(ch=>(ch.sections||[]).map(sec=>({id:sec.id,title:sec.title,chapterId:ch.id,chapterTitle:ch.title})));
+}
+function editorSectionOptions(selected=""){
+  return editorSectionList().map(s=>'<option value="'+esc(s.id)+'" '+(s.id===selected?"selected":"")+'>'+esc(s.id+" · "+s.title)+'</option>').join("");
+}
+function productQuality(ctx){
+  const p=ctx?.product||{},checks=[
+    !!String(p.name||"").trim(),!!String(p.article||"").trim(),!!String(p.type||"").trim(),!!String(p.purpose||"").trim(),
+    (ctx?.images||[]).length>0,(p.detailFields||[]).length>=3,(p.advantages||[]).length>0,
+    (p.indicators||[]).length>0||Object.keys(p.tabTables||{}).length>0||(p.customTabs||[]).length>0
+  ];
+  return Math.round(checks.filter(Boolean).length/checks.length*100);
+}
+function cleanProductForManual(ctx,targetSection){
+  const p=deep(ctx?.product||{});
+  delete p.id;delete p.manual;delete p.sourceGid;delete p.sourceSectionId;
+  p.sourceSectionId=targetSection;
+  if((ctx?.images||[]).length)p.images=deep(ctx.images);else delete p.images;
+  return p;
+}
+function nextManualProductId(targetSection,name,o){
+  const root="manual-"+safe(targetSection)+"-"+safe(name||"product"),used=new Set([
+    ...Object.keys(o.products||{}),
+    ...Object.values(o.sections||{}).flatMap(sec=>Object.keys(sec?.manualProducts||{}))
+  ]);
+  let id=root+"-"+Date.now().toString(36),n=2;while(used.has(id))id=root+"-"+Date.now().toString(36)+"-"+n++;
+  return id;
+}
+async function createManualProduct(sectionId,name="Новая карточка"){
+  const o=await loadOverrides(),section=o.sections[sectionId]||(o.sections[sectionId]={}),manualProducts=section.manualProducts||(section.manualProducts={});
+  const id=nextManualProductId(sectionId,name,o);
+  manualProducts[id]={name:String(name||"Новая карточка").trim()||"Новая карточка",article:"",type:"",purpose:"",detailFields:[],advantages:[],sourceSectionId:sectionId};
+  await commitOverrides(o);
+  location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
+}
+async function duplicateProductTo(productId,targetSection,{move=false}={}){
+  const ctx=window.KB_EDITOR_API?.product?.(productId);if(!ctx)throw new Error("Карточка не найдена.");
+  const o=await loadOverrides(),target=o.sections[targetSection]||(o.sections[targetSection]={}),manualProducts=target.manualProducts||(target.manualProducts={});
+  const copy=cleanProductForManual(ctx,targetSection),id=nextManualProductId(targetSection,copy.name||ctx.product?.name,o);
+  manualProducts[id]=copy;
+  if((ctx.images||[]).length){o.products[id]={...(o.products[id]||{}),images:deep(ctx.images)}}
+  if(move){
+    const sourceSection=ctx.section?.id||ctx.sourceSection?.id;
+    let removedManual=false;
+    for(const sec of Object.values(o.sections||{})){
+      if(sec?.manualProducts&&Object.prototype.hasOwnProperty.call(sec.manualProducts,productId)){delete sec.manualProducts[productId];removedManual=true}
+    }
+    if(removedManual)delete o.products[productId];
+    else if(sourceSection){
+      const src=o.sections[sourceSection]||(o.sections[sourceSection]={});
+      src.deletedProductIds=[...new Set([...(src.deletedProductIds||[]),productId])];
+    }
+  }
+  await commitOverrides(o);
+  location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
+}
+async function deleteProductById(productId){
+  const ctx=window.KB_EDITOR_API?.product?.(productId);if(!ctx)throw new Error("Карточка не найдена.");
+  const o=await loadOverrides();let removedManual=false;
+  for(const sec of Object.values(o.sections||{})){
+    if(sec?.manualProducts&&Object.prototype.hasOwnProperty.call(sec.manualProducts,productId)){
+      delete sec.manualProducts[productId];removedManual=true;
+      if(Array.isArray(sec.productOrder))sec.productOrder=sec.productOrder.filter(x=>x!==productId);
+      if(Array.isArray(sec.hiddenProductIds))sec.hiddenProductIds=sec.hiddenProductIds.filter(x=>x!==productId);
+      if(Array.isArray(sec.deletedProductIds))sec.deletedProductIds=sec.deletedProductIds.filter(x=>x!==productId);
+    }
+  }
+  if(removedManual)delete o.products[productId];
+  else{
+    const sectionId=ctx.section?.id||ctx.sourceSection?.id;if(!sectionId)throw new Error("Не найден раздел карточки.");
+    const sec=o.sections[sectionId]||(o.sections[sectionId]={});
+    sec.deletedProductIds=[...new Set([...(sec.deletedProductIds||[]),productId])];
+  }
+  await commitOverrides(o);
+  location.hash="#/account";location.reload();
+}
+function productManagementHtml(ctx){
+  const quality=productQuality(ctx);
+  return '<section class="kb-product-command"><div class="kb-product-command-summary"><div><span class="kb-admin-kicker">Управление карточкой</span><h3>'+esc(ctx.product?.name||ctx.id)+'</h3><p>'+esc(ctx.section?.id+" · "+ctx.section?.title)+'</p></div><div class="kb-card-quality"><strong>'+quality+'%</strong><span>Заполненность</span></div></div>'+
+    '<div class="kb-product-command-actions"><button type="button" class="kb-admin-btn ghost" data-duplicate-here>⧉ Дублировать здесь</button>'+
+    '<div class="kb-copy-target"><select data-product-target-section>'+editorSectionOptions(ctx.section?.id||"")+'</select><button type="button" class="kb-admin-btn ghost" data-copy-to-section>Копировать в раздел</button><button type="button" class="kb-admin-btn ghost" data-move-to-section>Перенести</button></div>'+
+    '<button type="button" class="kb-admin-btn danger" data-delete-current-product>Удалить карточку</button></div></section>';
+}
 function renderProductEditor(ctx){
   editorCtx=ctx;
   const existing=deep(overrideCache.products?.[ctx.id]||{});
@@ -734,6 +818,7 @@ function renderProductEditor(ctx){
   const tabs=(ctx.tabs||[]).map(t=>tabRowHtml(t,ctx.product,customIds.has(t.id))).join("");
   const sheet="";
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
+    productManagementHtml(ctx)+
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form">'+
     '<div class="kb-admin-grid two"><label>Название<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
     (sheet?'<p><a class="kb-admin-link" target="_blank" rel="noopener" href="'+sheet+'">Открыть исходный лист Google Sheets ↗</a></p>':"")+
@@ -845,7 +930,7 @@ function sectionProductsEditor(ctx){
   const active=cards.map(p=>'<div class="kb-product-sort-row '+(p.hidden?"is-hidden":"")+'" draggable="true" data-section-product-row data-id="'+esc(p.id)+'">'+
       '<span class="kb-drag" title="Перетащить">⋮⋮</span>'+
       '<div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div>'+
-      '<button type="button" class="kb-mini" data-product-up title="Выше">↑</button><button type="button" class="kb-mini" data-product-down title="Ниже">↓</button>'+
+      '<button type="button" class="kb-mini" data-open-section-product title="Открыть карточку">✎</button><button type="button" class="kb-mini" data-product-up title="Выше">↑</button><button type="button" class="kb-mini" data-product-down title="Ниже">↓</button>'+
       '<label class="kb-product-hide"><input type="checkbox" data-product-hidden '+(p.hidden?"checked":"")+'> <span>Скрыть</span></label>'+
       '<button type="button" class="kb-mini danger kb-product-delete" data-product-delete>Удалить</button>'+
     '</div>').join("");
