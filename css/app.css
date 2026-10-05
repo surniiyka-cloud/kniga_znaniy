@@ -1881,3 +1881,62 @@ body.modal-open{overflow:hidden}
   color:var(--muted,#748078);
   font-size:10px;
 }
+
+
+/* v2.2.81 — compact step-by-step instructions */
+.step-instruction-list{
+  display:grid;
+  gap:8px;
+}
+.step-instruction-row{
+  display:grid;
+  grid-template-columns:minmax(34px,max-content) minmax(0,1fr);
+  align-items:stretch;
+  border:1px solid var(--line,#dfe7e1);
+  border-radius:11px;
+  overflow:hidden;
+  background:#fff;
+}
+.step-instruction-index{
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:11px 12px;
+  min-width:34px;
+  background:#f5f7f5;
+  color:#355642;
+  font-weight:850;
+  font-size:12px;
+  line-height:1.4;
+  white-space:nowrap;
+  border-right:1px solid var(--line,#dfe7e1);
+}
+.step-instruction-text{
+  padding:11px 14px;
+  color:var(--text,#273129);
+  font-size:12.5px;
+  line-height:1.55;
+}
+.step-instruction-row.is-warning{
+  border-color:#e7d7a7;
+  background:#fffdf7;
+}
+.step-instruction-row.is-warning .step-instruction-index{
+  min-width:96px;
+  color:#7a5b11;
+  background:#fff8e4;
+  border-right-color:#ead9a5;
+}
+.step-instruction-row.is-warning .step-instruction-text{
+  font-weight:700;
+  color:#5d4a16;
+}
+@media(max-width:700px){
+  .step-instruction-row{grid-template-columns:1fr}
+  .step-instruction-index{
+    justify-content:flex-start;
+    border-right:0;
+    border-bottom:1px solid var(--line,#dfe7e1);
+  }
+  .step-instruction-row.is-warning .step-instruction-index{min-width:0}
+}
