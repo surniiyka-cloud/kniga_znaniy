@@ -1242,7 +1242,9 @@ async function saveProduct(e){
     let images=parseLines(form.querySelector("[data-images]")?.value||"");
     putDiff(out,"images",images,ctx.sourceImages||[]);
     putDiff(out,"imageSettings",collectPhotoSettings(form),src.imageSettings||{});
-    const o=await loadOverrides(true);
+    // Используем актуальный кэш этой сессии. force-read здесь мог вернуть состояние,
+    // с которым редактор был открыт, и стереть только что сохранённую привязку фотографий.
+    const o=await loadOverrides();
     const isManual=Object.values(o.sections||{}).some(sec=>sec?.manualProducts&&Object.prototype.hasOwnProperty.call(sec.manualProducts,id));
     if(emptyObject(out))delete o.products[id];else o.products[id]=out;
     if(isManual){
