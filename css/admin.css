@@ -589,3 +589,40 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
   .kb-wb-savebar>div{grid-column:1/-1}
   .kb-wb-savebar .kb-admin-btn.primary{min-width:0}
 }
+
+
+/* v2.2.72 — adaptive widths in table editor */
+.kb-edit-table{
+  width:max-content!important;
+  min-width:0!important;
+  max-width:none;
+  table-layout:auto;
+}
+.kb-edit-table th,.kb-edit-table td{
+  min-width:0!important;
+  width:auto;
+  max-width:48ch;
+}
+.kb-edit-table th:first-child,
+.kb-edit-table td:first-child{
+  background:color-mix(in srgb,var(--panel-2,#f6f9f7) 88%,var(--kb-market-accent,#7c3aed) 12%);
+  font-weight:800;
+}
+.kb-edit-table th:not(:first-child),
+.kb-edit-table td:not(:first-child){
+  background-clip:padding-box;
+}
+.kb-edit-table input{
+  min-width:7ch!important;
+  width:auto!important;
+  max-width:46ch;
+}
+.kb-edit-table th:first-child input,
+.kb-edit-table td:first-child input{
+  min-width:18ch!important;
+  font-weight:800;
+}
+.kb-edit-table td:not(:first-child) input,
+.kb-edit-table th:not(:first-child) input{
+  width:max(7ch,100%)!important;
+}
