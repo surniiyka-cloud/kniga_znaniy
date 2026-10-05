@@ -789,10 +789,13 @@ function buildChapter2Catalog(){
   // часть каталога приходит как richTable/rawRows и раньше выпадала из карточек.
   const strips=sBy("2.10");if(strips){
     const seen=new Set();
+    const stripKey=(name)=>String(name||"")
+      .toLowerCase().replace(/ё/g,"е")
+      .replace(/,?\s*\d+\s*шт\.?$/i,"")
+      .replace(/[^a-zа-я0-9]+/gi,"");
     const addStrip=(name,fields,type="Индикаторные полоски")=>{
       const clean=String(name||"").trim();if(!clean)return;
-      const key=clean.toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");
-      if(seen.has(key))return;seen.add(key);
+      const key=stripKey(clean);if(!key||seen.has(key))return;seen.add(key);
       registerCatalog("2.10",clean,uniquePairs(fields||[]),[],{type});
     };
     (strips.tables||[]).forEach((t)=>{
@@ -801,15 +804,6 @@ function buildChapter2Catalog(){
         addStrip(r[0],fs,t.title||"Индикаторные полоски");
       });
     });
-    const raw=strips.rawRows||strips.rows||[];
-    for(const r of raw){
-      const vals=(r||[]).map(v=>String(v||"").trim());
-      const name=vals[0],purpose=vals[1],time=vals[2];
-      if(!name||!purpose)continue;
-      if(/^(Наименование|Индикаторные полоски)$/i.test(name)||/Предназначение/i.test(purpose))continue;
-      addStrip(name,[["Предназначение",purpose],...(time?[["Время анализа",time]]:[])]);
-    }
-
     // Контрольный набор из бумажного каталога: эти позиции должны существовать даже если
     // очередной импорт Google Sheets распознал страницу неполностью.
     const required=[
