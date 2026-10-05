@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T09:50:07.663Z",
+  "updatedAt": "2026-10-05T09:51:20.087Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16790,6 +16790,9 @@
       ]
     },
     "catalog-2-10-остаточная-кислотность": {
+      "tabOrder": [
+        "specs"
+      ],
       "images": [
         "img/photos/admin/catalog-2-10-остаточная-кислотность/catalog-2-10-остаточная-кислотность-01.png"
       ]
