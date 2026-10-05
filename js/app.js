@@ -1149,7 +1149,7 @@ function mapData(){
     if(Array.isArray(pov.appendDetailFields)&&pov.appendDetailFields.length){
       const rows=Array.isArray(x.product.detailFields)?deepCopy(x.product.detailFields):[];
       for(const pair of pov.appendDetailFields){
-        const label=String(pair?.[0]||"").trim(),value=String(pair?.[1]||"").trim();if(!label)return;
+        const label=String(pair?.[0]||"").trim(),value=String(pair?.[1]||"").trim();if(!label)continue;
         const idx=rows.findIndex(r=>String(r?.[0]||"").trim().toLowerCase()===label.toLowerCase());
         if(idx>=0)rows[idx]=[label,value];else rows.push([label,value]);
       }
