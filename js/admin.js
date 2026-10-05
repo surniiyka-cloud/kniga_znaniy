@@ -431,9 +431,32 @@ function customTabContentHtml(t){
   }
   return '<details class="kb-admin-group kb-custom-tab-content" data-custom-content-id="'+esc(id)+'" data-custom-kind="'+esc(kind)+'"><summary><span>'+esc(label)+'</span><small>'+rows.length+' строк</small></summary><label class="kb-admin-field"><span>Одна строка = <b>название | значение</b>. Порядок строк = порядок на сайте.</span><textarea rows="7" data-custom-tab-rows>'+esc(pairText(rows))+'</textarea></label><div class="kb-custom-tab-actions"><button type="button" class="kb-mini danger" data-remove-custom-tab>Удалить вкладку</button></div></details>';
 }
-function pairRowsEditorHtml(key,label,rows){
+function pairRowsEditorHtml(key,label,rows,headers=[]){
   const list=Array.isArray(rows)&&rows.length?rows:[["",""]];
-  return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'"><summary>'+esc(label)+' <small>'+list.filter(r=>r?.[0]||r?.[1]).length+' строк</small></summary><div class="kb-pair-list" data-pair-list>'+list.map((r,i)=>'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики" value="'+esc(r?.[0]||"")+'"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение" value="'+esc(r?.[1]||"")+'"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+'</div><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить характеристику</button></details>';
+  const width=Math.max(2,Number(headers?.length)||Math.max(2,...list.map(r=>Array.isArray(r)?r.length:0)));
+  const defaultHeaders=Array.from({length:width},(_,i)=>headers?.[i]||(["detailFields","advantages"].includes(key)?(i===0?(key==="advantages"?"Преимущество":"Название характеристики"):i===1?"Описание":"Дополнительный столбец "+(i-1)):"Столбец "+(i+1)));
+  const normalized=list.map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||"")));
+  return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'">'+
+    '<summary>'+esc(label)+' <small>'+list.filter(r=>r?.some?.(x=>String(x||"").trim())).length+' строк</small></summary>'+
+    '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Столбцы можно дополнять.</span><button type="button" class="kb-mini" data-pair-add-col>+ столбец</button></div>'+
+    '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'">'+
+    '<div class="kb-pair-header" data-pair-header-row>'+defaultHeaders.map((h,i)=>'<div class="kb-pair-header-cell"><input data-pair-header value="'+esc(h)+'" placeholder="Название столбца">'+(i>=2?'<button type="button" class="kb-pair-col-remove" data-pair-remove-col title="Удалить столбец">×</button>':"")+'</div>').join("")+'<span></span></div>'+
+    normalized.map((r)=>'<div class="kb-pair-row" data-pair-row draggable="false">'+
+      '<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
+      r.map((v,i)=>'<input data-pair-cell="'+i+'" placeholder="'+esc(defaultHeaders[i]||("Столбец "+(i+1)))+'" value="'+esc(v)+'">').join("")+
+      '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+
+    '</div><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить строку</button></details>';
+}
+function collectPairRows(form,key){
+  const ed=form.querySelector('[data-pair-editor="'+CSS.escape(key)+'"]'),list=ed?.querySelector("[data-pair-list]");
+  const rows=[...ed?.querySelectorAll("[data-pair-row]")||[]].map(r=>[...r.querySelectorAll("[data-pair-cell]")].map(x=>x.value.trim()));
+  const headers=[...ed?.querySelectorAll("[data-pair-header]")||[]].map(x=>x.value.trim());
+  return {rows:rows.map(r=>r.filter((_,i)=>i<headers.length)).filter(r=>r.some(Boolean)),headers};
+}
+function productPairEditors(ctx){
+  const standard=PAIR_FIELDS.filter(([key])=>(ctx.product?.[key]||[]).length>0).map(([key,label])=>pairRowsEditorHtml(key,label,ctx.product?.[key]||[],ctx.product?.pairHeaders?.[key]||[]));
+  const custom=(ctx.product?.customTabs||[]).map(customTabContentHtml);
+  return [...standard,...custom].join("");
 }
 function collectPairRows(form,key){
   return [...form.querySelectorAll('[data-pair-editor="'+CSS.escape(key)+'"] [data-pair-row]')].map(r=>[
@@ -979,8 +1002,13 @@ async function saveProduct(e){
     delete out.id;
     for(const key of ["name","article","type","purpose"])putDiff(out,key,String(fd.get(key)||""),String(src[key]||""));
     for(const [key] of PAIR_FIELDS){
-      const value=key==="detailFields"?collectPairRows(form,key):parsePairs(form.querySelector('[data-pair-key="'+key+'"]')?.value||"");
-      putDiff(out,key,value,src[key]||[]);
+      const pair=collectPairRows(form,key);
+      putDiff(out,key,pair.rows,src[key]||[]);
+      const pairHeaders={...(src.pairHeaders||{})};
+      const defaultHeaders=key==="advantages"?["Преимущество","Описание"]:["Название характеристики","Значение"];
+      if(pair.headers.some((h,i)=>h&&h!==defaultHeaders[i])||pair.headers.length>2)pairHeaders[key]=pair.headers;
+      else delete pairHeaders[key];
+      putDiff(out,"pairHeaders",pairHeaders,src.pairHeaders||{});
     }
     const baseHasTables=Object.prototype.hasOwnProperty.call(src||{},"tabTables"),baseTables=deep(src.tabTables||{});if(!baseHasTables&&src.indicatorTable)baseTables.indicators=deep(src.indicatorTable);
     putDiff(out,"tabTables",collectTabTables(form),baseTables);
