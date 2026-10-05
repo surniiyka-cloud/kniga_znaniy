@@ -1940,3 +1940,120 @@ body.modal-open{overflow:hidden}
   }
   .step-instruction-row.is-warning .step-instruction-index{min-width:0}
 }
+
+
+/* v2.2.82 — unified calm card-style layout across product tabs */
+.feature-definition-list{
+  display:grid!important;
+  grid-template-columns:minmax(92px,max-content) minmax(0,1fr)!important;
+  gap:8px 0!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+.feature-definition-list dt,
+.feature-definition-list dd{
+  margin:0!important;
+  border:1px solid var(--line,#dfe7e1)!important;
+  padding:11px 13px!important;
+  min-height:44px;
+}
+.feature-definition-list dt{
+  border-right:0!important;
+  border-radius:11px 0 0 11px!important;
+  background:#f5f7f5!important;
+  color:#355642!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  display:flex;
+  align-items:flex-start;
+}
+.feature-definition-list dd{
+  border-left:0!important;
+  border-radius:0 11px 11px 0!important;
+  background:#fff!important;
+  color:var(--text,#273129)!important;
+  font-size:12.5px!important;
+  line-height:1.55!important;
+}
+.feature-definition-list dt:last-of-type,
+.feature-definition-list dd:last-of-type{border-bottom:1px solid var(--line,#dfe7e1)!important}
+
+.data-table,
+.pair-data-table,
+.definition-pair-table,
+.feature-definition-list-table,
+.content-table table{
+  border-collapse:separate!important;
+  border-spacing:0 8px!important;
+  background:transparent!important;
+}
+.data-table thead th,
+.pair-data-table thead th,
+.definition-pair-table thead th,
+.feature-definition-list-table thead th,
+.content-table thead th{
+  border:0!important;
+  background:transparent!important;
+  padding:0 12px 7px!important;
+  color:var(--muted,#69746d)!important;
+  font-size:10.5px!important;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.data-table tbody td,
+.pair-data-table tbody td,
+.definition-pair-table tbody td,
+.feature-definition-list-table tbody td,
+.content-table tbody td{
+  background:#fff!important;
+  border-top:1px solid var(--line,#dfe7e1)!important;
+  border-bottom:1px solid var(--line,#dfe7e1)!important;
+  padding:11px 13px!important;
+}
+.data-table tbody td:first-child,
+.pair-data-table tbody td:first-child,
+.definition-pair-table tbody td:first-child,
+.feature-definition-list-table tbody td:first-child,
+.content-table tbody td:first-child{
+  border-left:1px solid var(--line,#dfe7e1)!important;
+  border-radius:11px 0 0 11px!important;
+  background:#f5f7f5!important;
+  color:#355642!important;
+  font-weight:850!important;
+}
+.data-table tbody td:last-child,
+.pair-data-table tbody td:last-child,
+.definition-pair-table tbody td:last-child,
+.feature-definition-list-table tbody td:last-child,
+.content-table tbody td:last-child{
+  border-right:1px solid var(--line,#dfe7e1)!important;
+  border-radius:0 11px 11px 0!important;
+}
+.data-table tbody tr:hover td,
+.pair-data-table tbody tr:hover td,
+.definition-pair-table tbody tr:hover td,
+.feature-definition-list-table tbody tr:hover td,
+.content-table tbody tr:hover td{
+  background:#fbfcfb!important;
+}
+.data-table tbody tr:hover td:first-child,
+.pair-data-table tbody tr:hover td:first-child,
+.definition-pair-table tbody tr:hover td:first-child,
+.feature-definition-list-table tbody tr:hover td:first-child,
+.content-table tbody tr:hover td:first-child{
+  background:#f1f4f2!important;
+}
+@media(max-width:700px){
+  .feature-definition-list{grid-template-columns:1fr!important}
+  .feature-definition-list dt{
+    border-right:1px solid var(--line,#dfe7e1)!important;
+    border-bottom:0!important;
+    border-radius:11px 11px 0 0!important;
+  }
+  .feature-definition-list dd{
+    border-left:1px solid var(--line,#dfe7e1)!important;
+    border-radius:0 0 11px 11px!important;
+  }
+}
