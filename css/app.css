@@ -1788,3 +1788,60 @@ body.modal-open{overflow:hidden}
 .table-wrap,.pair-table-wrap,.content-table-wrap{
   background:transparent!important;
 }
+
+
+/* v2.2.77 — calmer product tables and product documents */
+.data-table th:first-child,
+.data-table td:first-child,
+.pair-data-table th:first-child,
+.pair-data-table td:first-child,
+.definition-pair-table th:first-child,
+.definition-pair-table td:first-child,
+.feature-definition-list-table th:first-child,
+.feature-definition-list-table td:first-child,
+.content-table th:first-child,
+.content-table td:first-child{
+  background:#f3f5f3!important;
+  color:#263229!important;
+}
+.data-table th,
+.pair-data-table th,
+.definition-pair-table th,
+.feature-definition-list-table th,
+.content-table th{
+  background:#f7f8f7!important;
+  color:#4b5650!important;
+}
+.data-table td,
+.pair-data-table td,
+.definition-pair-table td,
+.feature-definition-list-table td,
+.content-table td{
+  background:#fff;
+}
+.product-documents{
+  margin-top:12px;padding-top:12px;border-top:1px solid var(--line,#dfe7e1)
+}
+.product-documents-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;
+  font-size:11px;color:var(--muted,#69746d)
+}
+.product-documents-head strong{font-size:12px;color:var(--text,#263229)}
+.product-documents-head span{
+  display:grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#f0f3f1;font-weight:800
+}
+.product-documents-list{display:grid;gap:7px}
+.product-document{
+  display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:9px;align-items:center;
+  padding:9px 10px;border:1px solid var(--line,#dfe7e1);border-radius:11px;background:#fafbfa;
+  color:inherit;text-decoration:none
+}
+.product-document:hover{background:#f5f7f5;border-color:#cfd8d2}
+.product-document-icon{
+  display:grid;place-items:center;width:36px;height:36px;border-radius:8px;background:#edf1ee;
+  color:#47544c;font-size:10px;font-weight:900
+}
+.product-document-copy{display:grid;gap:2px;min-width:0}
+.product-document-copy b{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.product-document-copy small{font-size:9px;color:var(--muted,#758078)}
+.product-document-arrow{color:#7d8981;font-size:15px}
