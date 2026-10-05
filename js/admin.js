@@ -1023,20 +1023,37 @@ function bindBody(){
     else location.hash="#/account";
   });
   body.querySelector("[data-account-back]")?.addEventListener("click",()=>location.hash="#/account");
-  body.querySelector("[data-account-search]")?.addEventListener("input",e=>{
-    const qv=String(e.target.value||"").trim().toLowerCase();
+  const applyAccountFilters=()=>{
+    const qv=String(body.querySelector("[data-account-search]")?.value||"").trim().toLowerCase();
+    const mode=body.querySelector("[data-account-filter].active")?.dataset.accountFilter||"all";
     let shown=0;
     body.querySelectorAll("[data-account-section-card]").forEach(section=>{
       let sectionShown=0;
       section.querySelectorAll("[data-account-product-card]").forEach(card=>{
-        const ok=!qv||String(card.dataset.accountProductSearch||"").toLowerCase().includes(qv);
-        card.hidden=!ok;if(ok)sectionShown++;
+        const matchesText=!qv||String(card.dataset.accountProductSearch||"").toLowerCase().includes(qv);
+        const quality=Number(card.dataset.quality||0),hasPhoto=card.dataset.hasPhoto==="1";
+        const matchesMode=mode==="all"||(mode==="improve"&&quality<75)||(mode==="photo"&&hasPhoto);
+        const ok=matchesText&&matchesMode;card.hidden=!ok;if(ok)sectionShown++;
       });
-      const sectionText=String(section.dataset.accountSearchText||"").toLowerCase();
-      const sectionOk=!qv||sectionText.includes(qv)||sectionShown>0;
-      section.hidden=!sectionOk;if(sectionOk)shown++;
+      section.hidden=sectionShown===0;if(sectionShown)shown++;
     });
     const empty=body.querySelector("[data-account-empty]");if(empty)empty.hidden=shown>0;
+  };
+  body.querySelector("[data-account-search]")?.addEventListener("input",applyAccountFilters);
+  body.querySelectorAll("[data-account-filter]").forEach(b=>b.addEventListener("click",()=>{
+    body.querySelectorAll("[data-account-filter]").forEach(x=>x.classList.toggle("active",x===b));applyAccountFilters();
+  }));
+  body.querySelector("[data-account-clear]")?.addEventListener("click",()=>{
+    const input=body.querySelector("[data-account-search]");if(input)input.value="";
+    const all=body.querySelector('[data-account-filter="all"]');body.querySelectorAll("[data-account-filter]").forEach(x=>x.classList.toggle("active",x===all));applyAccountFilters();
+  });
+  body.querySelector("[data-account-add-first]")?.addEventListener("click",async()=>{
+    const sections=editorSectionList();if(!sections.length)return showError(new Error("Нет доступных разделов."));
+    const suggested=sections[0].id,answer=prompt("В какой раздел создать карточку? Введите номер раздела, например 2.10.",suggested);
+    if(answer==null)return;const target=sections.find(s=>s.id===String(answer).trim());
+    if(!target)return showError(new Error("Раздел "+String(answer).trim()+" не найден."));
+    const name=prompt("Название новой карточки","Новая карточка");if(name==null)return;
+    try{showStatus("Создаём карточку…");await createManualProduct(target.id,name)}catch(err){showError(err)}
   });
   body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
   body.querySelectorAll("[data-account-manage-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountManageSection)));
