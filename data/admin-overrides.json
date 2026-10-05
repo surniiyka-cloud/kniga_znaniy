@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T08:35:14.052Z",
+  "updatedAt": "2026-10-05T08:43:11.098Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2039,8 +2039,8 @@
       "tabTables": {
         "advantages": {
           "headers": [
-            "Преимущество",
-            "Практическое значение"
+            "Преимущества",
+            "Описание"
           ],
           "rows": [
             [
@@ -2067,7 +2067,8 @@
               "Порошковая форма",
               "Позволяет готовить рабочий раствор в необходимом количестве"
             ]
-          ]
+          ],
+          "merges": []
         },
         "workflow": {
           "headers": [
@@ -2095,7 +2096,8 @@
               "5",
               "Перед использованием убедиться, что раствор прозрачный, без комков и осадка"
             ]
-          ]
+          ],
+          "merges": []
         }
       },
       "tabOrder": [
@@ -2107,24 +2109,8 @@
         "workflow": "Приготовление рабочего раствора"
       },
       "images": [
-        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png"
-      ],
-      "imageSettings": {
-        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png": {
-          "card": {
-            "scale": 1,
-            "x": -2,
-            "y": -1,
-            "fit": "contain"
-          },
-          "detail": {
-            "scale": 1,
-            "x": -2,
-            "y": -1,
-            "fit": "contain"
-          }
-        }
-      }
+        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-02.png"
+      ]
     },
     "catalog-2-8-lactochip": {
       "tabTables": {
@@ -16749,12 +16735,9 @@
         "advantages"
       ]
     },
-    "catalog-2-10-кислотность-молока": {
-      "tabOrder": [
-        "specs"
-      ],
+    "catalog-2-10-мочевина-в-молоке": {
       "images": [
-        "img/photos/admin/catalog-2-10-кислотность-молока/catalog-2-10-кислотность-молока-01.png"
+        "img/photos/admin/catalog-2-10-мочевина-в-молоке/catalog-2-10-мочевина-в-молоке-01.png"
       ]
     }
   },
