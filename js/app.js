@@ -928,13 +928,6 @@ function renderCatalogSection(ch,s){
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+items.map(card).join("")+'</section>':'<div class="empty-state"><strong>Карточки готовятся</strong></div>');
     if(items.length){
     q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim(),f=items.filter((it)=>JSON.stringify(it.product).toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?f.map(card).join(""):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});
-    if(isAnalyzerCompare){
-      const bar=q("[data-analyzer-compare-bar]");
-      bar?.querySelector("[data-compare-all]")?.addEventListener("click",()=>{document.querySelectorAll("[data-compare-check]").forEach(x=>x.checked=true);updateAnalyzerCompareBar(items)});
-      bar?.querySelector("[data-compare-open]")?.addEventListener("click",()=>{const selected=items.filter(x=>document.querySelector('[data-compare-check][value="'+CSS.escape(x.product.id)+'"]')?.checked);if(selected.length>=2)renderAnalyzerCompare(selected);});
-      bar?.querySelectorAll("[data-compare-check]").forEach(x=>x.addEventListener("change",()=>updateAnalyzerCompareBar(items)));
-      items.forEach(x=>{const cardEl=[...document.querySelectorAll("[data-open-product]")].find(b=>b.dataset.openProduct===x.product.id)?.closest(".product-card");if(cardEl){const action=cardEl.querySelector(".product-actions");action?.insertAdjacentHTML("afterbegin",'<label class="compare-check"><input type="checkbox" value="'+esc(x.product.id)+'" data-compare-check><span>Сравнить</span></label>');}});
-    }
   }
 }
 
