@@ -826,6 +826,8 @@ async function deleteProductById(productId){
     const sectionId=ctx.section?.id||ctx.sourceSection?.id;if(!sectionId)throw new Error("Не найден раздел карточки.");
     const sec=o.sections[sectionId]||(o.sections[sectionId]={});
     sec.deletedProductIds=[...new Set([...(sec.deletedProductIds||[]),productId])];
+    if(Array.isArray(sec.productOrder))sec.productOrder=sec.productOrder.filter(x=>x!==productId);
+    if(Array.isArray(sec.hiddenProductIds))sec.hiddenProductIds=sec.hiddenProductIds.filter(x=>x!==productId);
   }
   await commitOverrides(o);
   location.hash="#/account";location.reload();
