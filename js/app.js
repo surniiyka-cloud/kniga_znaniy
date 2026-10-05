@@ -1813,7 +1813,7 @@ function rluPanel(rows){
 function tabPanelHtml(p,id){
   const table=tabTableFor(p,id),intro=String(p?.tabIntroTexts?.[id]||"").trim(),tabImage=String(p?.tabImages?.[id]||"").trim();
   const introHtml=intro?'<div class="tab-intro-note">'+esc(intro)+'</div>':"";
-  const imageHtml=tabImage?'<figure class="tab-illustration"><img src="'+esc(imageSrc(tabImage))+'" alt=""><figcaption>Иллюстрация</figcaption></figure>':"";
+  const imageHtml=tabImage?'<figure class="tab-illustration"><img loading="lazy" src="'+esc(imageSrc(tabImage))+'" alt=""></figure>':"";
   if(id==="rlu"&&/Люминометр\s+SMART/i.test(p?.name||"")){
     const custom=(p.customTabs||[]).find(t=>t.id===id);
     const rows=table?.rows?.length?table.rows:(custom?.rows||[]);
