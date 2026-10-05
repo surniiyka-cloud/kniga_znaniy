@@ -389,7 +389,23 @@ function shell(title,subtitle,inner){
   '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать резервную копию</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить резервную копию<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button><span class="kb-admin-devnote">Каталог хранится на сайте</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
-async function renderAccountPage(){
+async function updateAccountCounters(body){
+  const rows=[...body.querySelectorAll("[data-account-product-card]")],all=rows.length;
+  const improve=rows.filter(x=>Number(x.dataset.quality||0)<75).length;
+  const photo=rows.filter(x=>x.dataset.hasPhoto==="1").length;
+  const tabs=[...body.querySelectorAll("[data-account-filter]")];
+  for(const tab of tabs){
+    const b=tab.querySelector("b");if(!b)continue;
+    if(tab.dataset.accountFilter==="all")b.textContent=all;
+    if(tab.dataset.accountFilter==="improve")b.textContent=improve;
+    if(tab.dataset.accountFilter==="photo")b.textContent=photo;
+  }
+  const summary=body.querySelectorAll(".kb-market-summary>div strong");
+  if(summary[0])summary[0].textContent=all;
+  if(summary[1])summary[1].textContent=photo;
+  if(summary[2])summary[2].textContent=improve;
+}
+function renderAccountPage(){
   syncAccountEntry();
   const r=window.KB_EDITOR_API?.route?.()||{name:"account"};
   if(!adminActive()){
@@ -810,7 +826,7 @@ async function duplicateProductTo(productId,targetSection,{move=false}={}){
   await commitOverrides(o);
   location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
 }
-async function deleteProductById(productId){
+async function deleteProductById(productId,{navigate=false}={}){
   const ctx=window.KB_EDITOR_API?.product?.(productId);if(!ctx)throw new Error("Карточка не найдена.");
   const o=await loadOverrides();let removedManual=false;
   for(const sec of Object.values(o.sections||{})){
@@ -830,7 +846,9 @@ async function deleteProductById(productId){
     if(Array.isArray(sec.hiddenProductIds))sec.hiddenProductIds=sec.hiddenProductIds.filter(x=>x!==productId);
   }
   await commitOverrides(o);
-  location.hash="#/account";location.reload();
+  overrideCache=deep(o);
+  if(navigate)location.hash="#/account";
+  return {id:productId,sectionId:ctx.section?.id||ctx.sourceSection?.id||"",manual:removedManual};
 }
 function productManagementHtml(ctx){
   const quality=productQuality(ctx);
@@ -1071,7 +1089,14 @@ function bindBody(){
   body.querySelectorAll("[data-account-delete-product]").forEach(b=>b.addEventListener("click",async()=>{
     const id=b.dataset.accountDeleteProduct,ctx=window.KB_EDITOR_API?.product?.(id);if(!ctx)return;
     if(!confirm('Удалить карточку «'+(ctx.product?.name||id)+'» с сайта?'))return;
-    try{showStatus("Удаляем карточку…");await deleteProductById(id)}catch(err){showError(err)}
+    try{
+      showStatus("Удаляем карточку…");await deleteProductById(id);
+      const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]");
+      row?.remove();
+      if(section&&!section.querySelector("[data-account-product-card]"))section.remove();
+      updateAccountCounters(body);
+      showStatus("Карточка удалена.");
+    }catch(err){showError(err)}
   }));
   body.addEventListener("click",e=>{
     const tabDelete=e.target.closest?.("[data-tab-delete], [data-remove-custom-tab]");
@@ -1151,7 +1176,10 @@ function bindBody(){
   body.querySelector("[data-delete-current-product]")?.addEventListener("click",async()=>{
     const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;if(!id)return;
     if(!confirm('Удалить карточку «'+(editorCtx?.product?.name||id)+'» с сайта?'))return;
-    try{showStatus("Удаляем карточку…");await deleteProductById(id)}catch(err){showError(err)}
+    try{
+      showStatus("Удаляем карточку…");await deleteProductById(id,{navigate:true});
+      showStatus("Карточка удалена.");
+    }catch(err){showError(err)}
   });
   let photoReplaceRow=null;
   const photoAddInput=body.querySelector("[data-photo-file]"),photoReplaceInput=body.querySelector("[data-photo-replace-file]");
@@ -1239,6 +1267,8 @@ function bindBody(){
     try{
       b.disabled=true;showStatus("Удаляем карточку…");
       await deleteProductById(id);
+      r.remove();
+      showStatus("Карточка удалена.");
     }catch(err){b.disabled=false;showError(err)}
   });
   let draggedProduct=null;
