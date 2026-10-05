@@ -8,8 +8,8 @@
   <title>Книга знаний · ТИАН-Трейд</title>
   <link rel="icon" type="image/svg+xml" href="./assets/brand/favicon.svg">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./css/app.css?v=2.2.50">
-  <link rel="stylesheet" href="./css/admin.css?v=2.2.50">
+  <link rel="stylesheet" href="./css/app.css?v=2.2.51">
+  <link rel="stylesheet" href="./css/admin.css?v=2.2.51">
 </head>
 <body>
   <div class="app-shell">
@@ -52,7 +52,7 @@
           <div id="searchPanel" class="search-panel" hidden></div>
         </div>
         <div class="top-actions">
-          <button class="text-btn kb-admin-top" id="kbAdminBtn" type="button" onclick="location.hash='#/account'">♙ <span>Личный кабинет</span></button>
+          <button class="text-btn kb-admin-top" id="kbAdminBtn" type="button" onclick="location.hash='#/account'; import('./js/admin.js?v=2.2.51').then(()=>window.KB_ADMIN_PAGE?.render?.()).catch(e=>{document.querySelector('#app').innerHTML='<div class=&quot;empty-state&quot;><strong>Не удалось запустить личный кабинет</strong><p>'+String(e?.message||e)+'</p></div>'})">♙ <span>Личный кабинет</span></button>
           <button class="text-btn" id="favoritesBtn" type="button">★ <span>Избранное</span><b id="favCount">0</b></button>
           <button class="icon-btn" id="themeBtn" type="button" aria-label="Сменить тему">◐</button>
         </div>
@@ -108,7 +108,7 @@
     </section>
   </dialog>
 
-  <script type="module" src="./js/app.js?v=2.2.50"></script>
-  <script type="module" src="./js/admin.js?v=2.2.50"></script>
+  <script type="module" src="./js/app.js?v=2.2.51"></script>
+  <script type="module" src="./js/admin.js?v=2.2.51"></script>
 </body>
 </html>
