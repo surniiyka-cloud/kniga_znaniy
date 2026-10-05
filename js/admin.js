@@ -258,7 +258,10 @@ function tableRowHtml(row,width,rowIndex=0,merges=[]){
     const merge=tableMergeAt(merges,rowIndex,col);
     if(merge&&!(merge.row===rowIndex&&merge.col===col))continue;
     const attrs=merge?(' rowspan="'+merge.rowspan+'" colspan="'+merge.colspan+'"'):"";
-    cells.push('<td data-table-cell-pos="'+rowIndex+':'+col+'"'+attrs+'><input data-table-cell value="'+esc(row?.[col]||"")+'"></td>');
+    const editor=merge
+      ? '<textarea data-table-cell class="kb-merged-cell-input" rows="'+Math.max(2,merge.rowspan+1)+'">'+esc(row?.[col]||"")+'</textarea>'
+      : '<input data-table-cell value="'+esc(row?.[col]||"")+'">';
+    cells.push('<td data-table-cell-pos="'+rowIndex+':'+col+'"'+attrs+'>'+editor+'</td>');
   }
   return '<tr data-table-row data-table-row-index="'+rowIndex+'">'+cells.join("")+'<td class="kb-row-tools"><div class="kb-row-order"><button type="button" class="kb-row-move" data-table-row-up title="Строкой выше" aria-label="Строкой выше">↑</button><button type="button" class="kb-row-move" data-table-row-down title="Строкой ниже" aria-label="Строкой ниже">↓</button></div><button type="button" class="kb-row-merge" data-table-merge-row title="Объединить всю строку" aria-label="Объединить всю строку">↔</button><button type="button" class="kb-row-remove" data-table-remove-row title="Удалить строку">×</button></td></tr>';
 }
