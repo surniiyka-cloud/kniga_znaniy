@@ -1114,6 +1114,7 @@ function mapData(){
         const manual={...deepCopy(manualSource),id:manualId,manual:true,sourceSectionId:s.id,sourceGid:s.gid||null};
         s.products=Array.isArray(s.products)?s.products:[];
         s.products.push(manual);
+        if(Array.isArray(manual.images)&&manual.images.length)state.assets.productImages[manualId]=deepCopy(manual.images);
       }
       state.sections.set(s.id,{chapter:ch,section:(ch.id==="2"&&s.id==="2.13"?{...s,title:state.overrides?.sections?.["2.13"]?.title||"Тест-пластины KangarooSci"}:s)});
       (s.products||[]).forEach((p)=>state.products.set(p.id,{chapter:ch,section:s,product:p}));
@@ -1125,6 +1126,24 @@ function mapData(){
   });
   enrichRegularProducts();
   buildChapter2Catalog();
+
+  // Ручные карточки для составных разделов 2.6 / 2.7.
+  // Раньше manualProducts загружались только для реальных листов state.book.sections,
+  // поэтому копии, созданные прямо в составном разделе, не появлялись после reload.
+  for(const sectionId of ["2.6","2.7"]){
+    const composite=state.sections.get(sectionId),manualProducts=ov.sections?.[sectionId]?.manualProducts;
+    if(!composite||!manualProducts||typeof manualProducts!=="object"||Array.isArray(manualProducts))continue;
+    for(const [manualId,manualSource] of Object.entries(manualProducts)){
+      if(!manualSource||typeof manualSource!=="object"||state.products.has(manualId))continue;
+      const manual={...deepCopy(manualSource),id:manualId,manual:true,sourceSectionId:sectionId,sourceGid:null};
+      const ctxObj={chapter:composite.chapter,section:composite.section,product:manual};
+      if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
+      state.sectionCatalog.get(sectionId).push(ctxObj);
+      state.products.set(manualId,ctxObj);
+      if(Array.isArray(manual.images)&&manual.images.length)state.assets.productImages[manualId]=deepCopy(manual.images);
+    }
+  }
+
   for(const [id,x] of state.products){
     state.editorBase.products.set(id,deepCopy(x.product));
     state.editorBase.images.set(id,deepCopy(state.assets.productImages?.[id]||[]));
@@ -1178,6 +1197,11 @@ function installEditorApi(){
           })
         };
       });
+    },
+    product(id){
+      const x=ctx(id);if(!x)return null;
+      const sourceId=x.product.sourceSectionId||x.section.id,source=bookSectionById(sourceId)?.section||null;
+      return {kind:"product",id:x.product.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(x.product.id)||{}),images:deepCopy(state.assets.productImages?.[x.product.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(x.product.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title}};
     },
     overrides(){return deepCopy(state.overrides||{})},
     liveSnapshots(){return deepCopy(liveSnapshots())},
