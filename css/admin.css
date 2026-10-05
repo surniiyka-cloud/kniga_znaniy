@@ -281,3 +281,23 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
   .kb-pair-arrow{font-size:0}
   .kb-pair-arrow:after{content:"→";font-size:14px}
 }
+
+
+/* v2.2.43 — dynamic pair editors */
+.kb-pair-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line,#e0e7e2);color:var(--muted,#6f7d74);font-size:11px}
+.kb-pair-header{display:grid;grid-template-columns:30px repeat(var(--pair-width,2),minmax(120px,1fr)) 36px;gap:8px;align-items:center;padding:8px 0}
+.kb-pair-header-cell{display:flex;gap:4px;min-width:0}
+.kb-pair-header-cell input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line,#dfe7e1);background:var(--panel,#fff);color:var(--text,#18251d);border-radius:9px;padding:8px;font:inherit;font-weight:750}
+.kb-pair-header-handle{width:28px}
+.kb-pair-col-remove{border:0;background:transparent;color:var(--muted,#738078);font-size:18px;line-height:1;cursor:pointer;border-radius:7px;padding:3px}
+.kb-pair-col-remove:hover{color:#a02828;background:#fff0f0}
+.kb-pair-row{min-width:0}
+.kb-pair-row input[data-pair-cell]{min-width:0}
+.pair-table-wrap{overflow:auto;max-width:100%;margin-top:10px}
+.pair-data-table{border-collapse:collapse;width:100%;min-width:620px}
+.pair-data-table th,.pair-data-table td{border:1px solid var(--line,#dfe7e1);padding:10px 12px;text-align:left;vertical-align:top}
+.pair-data-table th{background:var(--surface-2,#f6f9f7);font-weight:800}
+@media(max-width:760px){
+  .kb-pair-toolbar{align-items:flex-start;flex-direction:column}
+  .kb-pair-header{overflow-x:auto}
+}
