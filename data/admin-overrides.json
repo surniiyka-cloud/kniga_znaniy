@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T08:27:22.881Z",
+  "updatedAt": "2026-10-05T08:35:10.393Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2039,8 +2039,8 @@
       "tabTables": {
         "advantages": {
           "headers": [
-            "Преимущества",
-            "Описание"
+            "Преимущество",
+            "Практическое значение"
           ],
           "rows": [
             [
@@ -2067,8 +2067,7 @@
               "Порошковая форма",
               "Позволяет готовить рабочий раствор в необходимом количестве"
             ]
-          ],
-          "merges": []
+          ]
         },
         "workflow": {
           "headers": [
@@ -2096,8 +2095,7 @@
               "5",
               "Перед использованием убедиться, что раствор прозрачный, без комков и осадка"
             ]
-          ],
-          "merges": []
+          ]
         }
       },
       "tabOrder": [
@@ -2109,8 +2107,24 @@
         "workflow": "Приготовление рабочего раствора"
       },
       "images": [
-        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-02.png"
-      ]
+        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png"
+      ],
+      "imageSettings": {
+        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png": {
+          "card": {
+            "scale": 1,
+            "x": -2,
+            "y": -1,
+            "fit": "contain"
+          },
+          "detail": {
+            "scale": 1,
+            "x": -2,
+            "y": -1,
+            "fit": "contain"
+          }
+        }
+      }
     },
     "catalog-2-8-lactochip": {
       "tabTables": {
@@ -16733,6 +16747,11 @@
         "specs",
         "indicators",
         "advantages"
+      ]
+    },
+    "catalog-2-10-кислотность-молока": {
+      "images": [
+        "img/photos/admin/catalog-2-10-кислотность-молока/catalog-2-10-кислотность-молока-01.png"
       ]
     }
   },
