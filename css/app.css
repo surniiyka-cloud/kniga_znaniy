@@ -2124,3 +2124,77 @@ body.modal-open{overflow:hidden}
     border-bottom:1px solid var(--line,#dfe7e1);
   }
 }
+
+
+/* v2.2.84 — one visual language for all semantic product tabs */
+.definition-list{
+  display:grid!important;
+  grid-template-columns:minmax(135px,.34fr) minmax(0,1fr)!important;
+  gap:8px 0!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+.definition-list dt,
+.definition-list dd{
+  margin:0!important;
+  min-height:44px;
+  padding:11px 13px!important;
+  border-top:1px solid var(--line,#dfe7e1)!important;
+  border-bottom:1px solid var(--line,#dfe7e1)!important;
+}
+.definition-list dt{
+  border-left:1px solid var(--line,#dfe7e1)!important;
+  border-right:0!important;
+  border-radius:11px 0 0 11px!important;
+  background:#f5f7f5!important;
+  color:#355642!important;
+  font-size:12px!important;
+  font-weight:850!important;
+  line-height:1.45!important;
+}
+.definition-list dd{
+  border-left:0!important;
+  border-right:1px solid var(--line,#dfe7e1)!important;
+  border-radius:0 11px 11px 0!important;
+  background:#fff!important;
+  color:var(--text,#273129)!important;
+  font-size:12.5px!important;
+  line-height:1.55!important;
+}
+.definition-list dt:last-of-type,
+.definition-list dd:last-of-type{
+  border-bottom:1px solid var(--line,#dfe7e1)!important;
+}
+.tab-illustration{
+  margin:0 0 16px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:12px!important;
+  overflow:hidden;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.tab-illustration img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:420px!important;
+  object-fit:contain!important;
+  border-radius:12px!important;
+  background:#fff!important;
+}
+.tab-illustration figcaption{display:none!important}
+@media(max-width:700px){
+  .definition-list{grid-template-columns:1fr!important}
+  .definition-list dt{
+    border-right:1px solid var(--line,#dfe7e1)!important;
+    border-bottom:0!important;
+    border-radius:11px 11px 0 0!important;
+  }
+  .definition-list dd{
+    border-left:1px solid var(--line,#dfe7e1)!important;
+    border-radius:0 0 11px 11px!important;
+  }
+}
