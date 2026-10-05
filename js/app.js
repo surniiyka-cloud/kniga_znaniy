@@ -1063,7 +1063,7 @@ function enrichVerticalProductBlocks(section){
 function enrichRegularProducts(){
   for(const [id,x] of state.products){
     const p=x.product;
-    if(String(id).startsWith("catalog-"))continue;
+    if(String(id).startsWith("catalog-")||p.manual)continue;
     const z=classifySheetFields(p);
     p.detailFields=z.characteristics.length?z.characteristics:[["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose]].filter((r)=>r[1]);
     if(z.advantages.length)p.advantages=z.advantages;
