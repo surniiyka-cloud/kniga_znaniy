@@ -1326,7 +1326,7 @@ function contentBlockHtml(b,i){
   if(type==="table"){
     const h=Array.isArray(b.headers)?b.headers:[],rows=Array.isArray(b.rows)?b.rows:[];
     if(!h.length)return "";
-    return '<section class="content-block content-table"><div class="content-table-wrap"><table><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+h.map((_,j)=>'<td>'+esc(r?.[j]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+    return '<section class="content-block content-table"><div class="content-table-wrap"><table>'+tableColgroup(h,rows)+'<thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+h.map((_,j)=>'<td>'+esc(r?.[j]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
   }
   if(type==="image"){
     const src=String(b.src||"");if(!src)return "";
@@ -1648,12 +1648,25 @@ function pairHeaders(p,key,width){
   const defaults=key==="advantages"?["Преимущество","Описание"]:key==="detailFields"?["Название характеристики","Значение"]:[];
   return Array.from({length:width},(_,i)=>String(saved[i]||defaults[i]||("Столбец "+(i+1))));
 }
+function tableColumnHints(headers,rows){
+  const width=Math.max(1,(headers||[]).length),allRows=Array.isArray(rows)?rows:[];
+  return Array.from({length:width},(_,i)=>{
+    const vals=[String(headers?.[i]||""),...allRows.map(r=>String(r?.[i]||""))].map(v=>v.trim()).filter(Boolean);
+    const maxLen=Math.max(1,...vals.map(v=>v.length));
+    const compact=i>0&&vals.length>0&&vals.every(v=>v.length<=18&&/^[\d\s.,%+\-–—/:<>≤≥×xа-яa-z()]+$/i.test(v));
+    const ch=i===0?Math.min(34,Math.max(16,maxLen+2)):compact?Math.min(18,Math.max(7,maxLen+2)):Math.min(48,Math.max(14,maxLen+2));
+    return {className:(i===0?"table-col-primary ":"")+(compact?"table-col-compact":"table-col-text"),ch};
+  });
+}
+function tableColgroup(headers,rows){
+  return '<colgroup>'+tableColumnHints(headers,rows).map(x=>'<col class="'+x.className+'" style="width:'+x.ch+'ch">').join("")+'</colgroup>';
+}
 function pairTable(rows,p,key,cls="pair-data-table"){
   const body=(rows||[]).filter(r=>(r||[]).some(v=>String(v||"").trim()));
   const width=Math.max(2,...body.map(r=>Array.isArray(r)?r.length:0));
   const headers=pairHeaders(p,key,width);
   if(!body.length)return "";
-  return '<div class="pair-table-wrap"><table class="'+cls+'"><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+
+  return '<div class="pair-table-wrap"><table class="'+cls+'">'+tableColgroup(headers,body)+'<thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+
     body.map(r=>'<tr>'+Array.from({length:width},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+
     '</tbody></table></div>';
 }
@@ -1705,7 +1718,7 @@ function normalizeTableMerges(table,width,height){
 function tablePanel(headers,rows,table=null){
   const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
   const merges=normalizeTableMerges(table,h.length,body.length);
-  return '<div class="table-wrap"><table class="data-table"><thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map((r,rowIndex)=>{const cells=[];for(let col=0;col<h.length;col++){const m=merges.find(x=>rowIndex>=x.row&&rowIndex<x.row+x.rowspan&&col>=x.col&&col<x.col+x.colspan);if(m&&!(m.row===rowIndex&&m.col===col))continue;const span=m?' rowspan="'+m.rowspan+'" colspan="'+m.colspan+'"':"";cells.push('<td'+span+'>'+esc(r?.[col]||"")+'</td>')}return '<tr>'+cells.join("")+'</tr>'}).join("")+'</tbody></table></div>';
+  return '<div class="table-wrap"><table class="data-table">'+tableColgroup(h,body)+'<thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map((r,rowIndex)=>{const cells=[];for(let col=0;col<h.length;col++){const m=merges.find(x=>rowIndex>=x.row&&rowIndex<x.row+x.rowspan&&col>=x.col&&col<x.col+x.colspan);if(m&&!(m.row===rowIndex&&m.col===col))continue;const span=m?' rowspan="'+m.rowspan+'" colspan="'+m.colspan+'"':"";cells.push('<td'+span+'>'+esc(r?.[col]||"")+'</td>')}return '<tr>'+cells.join("")+'</tr>'}).join("")+'</tbody></table></div>';
 }
 function rluPanel(rows){
   const list=(rows||[]).map(r=>({object:String(r?.[0]||""),result:String(r?.[1]||""),interpretation:String(r?.[2]||"")})).filter(x=>x.object&&x.result);
