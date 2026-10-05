@@ -139,13 +139,40 @@ async function publishLiveSnapshots(sectionIds=null){
   const merged=ids.length?{...remote,...Object.fromEntries(ids.filter(id=>local[id]).map(id=>[id,local[id]]))}:local;
   await putRepoText(path,JSON.stringify(merged,null,2)+"\n","Admin: publish refreshed Google Sheets snapshots");
 }
+function isPlainObject(v){return !!v&&typeof v==="object"&&!Array.isArray(v)}
+function threeWayApply(base,next,remote){
+  if(same(base,next))return deep(remote);
+  if(isPlainObject(base)&&isPlainObject(next)){
+    const out=isPlainObject(remote)?deep(remote):{};
+    const keys=new Set([...Object.keys(base||{}),...Object.keys(next||{})]);
+    for(const key of keys){
+      const had=Object.prototype.hasOwnProperty.call(next,key);
+      if(!had){if(!same(base?.[key],undefined))delete out[key];continue}
+      if(same(base?.[key],next[key]))continue;
+      out[key]=threeWayApply(base?.[key],next[key],out?.[key]);
+    }
+    return out;
+  }
+  return deep(next);
+}
 async function commitOverrides(data){
-  data.version=1;data.updatedAt=new Date().toISOString();
+  data.version=1;
   if(!sessionToken())await connectGithub();
-  await putRepoText("data/admin-overrides.json",JSON.stringify(data,null,2)+"\n","Admin: update knowledge book");
+
+  // Вкладка редактора может быть открыта часами, а admin-overrides.json за это время
+  // изменяется другим пользователем/сессией. Никогда не публикуем старый снимок целиком:
+  // берём свежую версию GitHub и накладываем только изменения текущей сессии.
+  const baseline=deep(overrideCache||emptyOverrides());
+  const cur=await repoFile("data/admin-overrides.json");
+  let remote=emptyOverrides();
+  if(cur?.content){try{remote=JSON.parse(base64Utf8(cur.content))||emptyOverrides()}catch{}}
+  const merged=threeWayApply(baseline,data,remote);
+  merged.version=1;merged.updatedAt=new Date().toISOString();
+
+  await putRepoText("data/admin-overrides.json",JSON.stringify(merged,null,2)+"\n","Admin: update knowledge book");
   try{localStorage.removeItem(LOCAL_KEY)}catch{}
-  overrideCache=deep(data);
-  return data;
+  overrideCache=deep(merged);
+  return merged;
 }
 
 function pairText(arr){return (arr||[]).map(r=>[r?.[0]||"",r?.[1]||""].join(" | ")).join("\n")}
