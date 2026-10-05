@@ -558,6 +558,41 @@ function photoPreviewStyle(v){
 function photoRowHtml(path,index){
   return '<div class="kb-photo-row kb-photo-row-simple" data-photo-row data-path="'+esc(path)+'"><div class="kb-photo-preview kb-photo-preview-simple"><img src="'+esc(photoPreviewSrc(path))+'" alt="Фото товара"></div><div class="kb-photo-simple-main"><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div><div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up>↑ Выше</button><button type="button" class="kb-mini" data-photo-down>↓ Ниже</button><button type="button" class="kb-mini primary" data-photo-replace>Заменить фото</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div></div></div>';
 }
+function fileExt(name){
+  const m=String(name||"").toLowerCase().match(/\.([a-z0-9]{1,10})$/);return m?m[1]:"file";
+}
+function documentIcon(ext){
+  ext=String(ext||"").toLowerCase();
+  if(ext==="pdf")return "PDF";
+  if(["ppt","pptx"].includes(ext))return "PPT";
+  if(["doc","docx","rtf"].includes(ext))return "DOC";
+  if(["xls","xlsx","csv"].includes(ext))return "XLS";
+  return "FILE";
+}
+function documentRowHtml(doc,index){
+  const d=doc||{},path=String(d.path||""),name=String(d.name||path.split("/").pop()||("Файл "+(index+1))),ext=fileExt(name||path);
+  return '<div class="kb-document-row" data-document-row data-path="'+esc(path)+'" data-name="'+esc(name)+'"><span class="kb-document-type">'+esc(documentIcon(ext))+'</span><div class="kb-document-meta"><input data-document-name value="'+esc(name)+'"><code>'+esc(path)+'</code></div><div class="kb-document-actions"><button type="button" class="kb-mini" data-document-up>↑</button><button type="button" class="kb-mini" data-document-down>↓</button><button type="button" class="kb-mini danger" data-document-remove>Удалить</button></div></div>';
+}
+function documentEditorHtml(ctx){
+  const docs=Array.isArray(ctx.product?.documents)?ctx.product.documents:[];
+  return '<section class="kb-admin-section kb-document-section"><div class="kb-document-head"><div><h3>Файлы и документы</h3><p class="kb-admin-hint">PDF, Word, PowerPoint, Excel и другие рабочие файлы. Количество не ограничено.</p></div><div><button type="button" class="kb-admin-btn ghost" data-document-add>+ Добавить файл</button><input type="file" multiple data-document-file hidden></div></div><div data-document-list>'+docs.map(documentRowHtml).join("")+'</div><div class="kb-admin-hint">Файлы публикуются сразу после загрузки. Название можно изменить перед сохранением карточки.</div></section>';
+}
+function collectDocuments(form){
+  return [...form.querySelectorAll("[data-document-row]")].map(r=>({name:r.querySelector("[data-document-name]")?.value.trim()||r.dataset.name||"Документ",path:r.dataset.path})).filter(x=>x.path);
+}
+function nextDocumentPath(productId,file,rows){
+  const ext=fileExt(file?.name),folder="docs/products/"+safe(productId),base=safe(String(file?.name||"document").replace(/\.[^.]+$/,""))||"document";
+  const used=new Set((rows||[]).map(r=>String(r.dataset.path||"")));
+  let n=1,path=folder+"/"+base+"."+ext;
+  while(used.has(path)){n++;path=folder+"/"+base+"-"+n+"."+ext}
+  return path;
+}
+async function uploadDocument(file,path){
+  if(!file)throw new Error("Файл не выбран.");
+  if(file.size>40*1024*1024)throw new Error("Файл больше 40 МБ. Для сайта лучше использовать более компактную версию.");
+  await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload product document for "+(editorCtx?.product?.name||editorCtx?.id||"product"));
+  return path;
+}
 function photoEditorHtml(ctx){
   const images=ctx.images||[];
   return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
@@ -869,6 +904,7 @@ function renderProductEditor(ctx){
       '<aside class="kb-wb-media">'+
         '<div class="kb-wb-side-title"><span class="kb-admin-kicker">Медиа</span><h3>Фото товара</h3><p>Перетащи, замени или добавь изображения. Первая фотография используется на карточке.</p></div>'+
         photoEditorHtml(ctx)+
+        documentEditorHtml(ctx)+
         '<div class="kb-wb-quality-card"><div><strong>'+quality+'%</strong><span>качество карточки</span></div><progress max="100" value="'+quality+'"></progress><small>'+(quality>=80?"Карточка хорошо заполнена.":quality>=55?"Есть несколько полей, которые можно улучшить.":"Заполни основные данные, фото и характеристики.")+'</small></div>'+
       '</aside>'+
       '<main class="kb-wb-content">'+
@@ -1221,6 +1257,21 @@ function bindBody(){
     }catch(err){showError(err)}
   });
   let photoReplaceRow=null;
+  const documentInput=body.querySelector("[data-document-file]");
+  body.querySelector("[data-document-add]")?.addEventListener("click",()=>{if(documentInput){documentInput.value="";documentInput.click()}});
+  documentInput?.addEventListener("change",async()=>{
+    const files=[...(documentInput.files||[])];if(!files.length)return;
+    const list=body.querySelector("[data-document-list]"),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
+    try{
+      showStatus("Загружаем документы…");
+      for(const file of files){
+        const rows=[...body.querySelectorAll("[data-document-row]")],path=nextDocumentPath(id,file,rows);
+        await uploadDocument(file,path);
+        list?.insertAdjacentHTML("beforeend",documentRowHtml({name:file.name,path},rows.length));
+      }
+      showStatus("Документы загружены. Сохраните карточку, чтобы закрепить список.");
+    }catch(err){showError(err)}
+  });
   const photoAddInput=body.querySelector("[data-photo-file]"),photoReplaceInput=body.querySelector("[data-photo-replace-file]");
   body.querySelector("[data-photo-add]")?.addEventListener("click",()=>{if(photoAddInput){photoAddInput.value="";photoAddInput.click()}});
   photoAddInput?.addEventListener("change",async()=>{
@@ -1231,6 +1282,12 @@ function bindBody(){
     }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить фото.");showError(err)}
   });
   body.addEventListener("click",async e=>{
+    const docRemove=e.target.closest?.("[data-document-remove]");
+    if(docRemove){docRemove.closest("[data-document-row]")?.remove();return}
+    const docUp=e.target.closest?.("[data-document-up]");
+    if(docUp){const r=docUp.closest("[data-document-row]");r?.previousElementSibling?.before(r);return}
+    const docDown=e.target.closest?.("[data-document-down]");
+    if(docDown){const r=docDown.closest("[data-document-row]");r?.nextElementSibling?.after(r);return}
     const replace=e.target.closest?.("[data-photo-replace]");if(replace){photoReplaceRow=replace.closest("[data-photo-row]");if(photoReplaceInput){photoReplaceInput.value="";photoReplaceInput.click()}return}
     const remove=e.target.closest?.("[data-photo-remove]");if(remove){const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;row.remove();syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Фото удалено из карточки.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить удаление фото.");showError(err)}return}
     const up=e.target.closest?.("[data-photo-up]");if(up){const row=up.closest("[data-photo-row]");row?.previousElementSibling?.before(row);syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить порядок фото.");showError(err)}return}
@@ -1384,6 +1441,8 @@ async function saveProduct(e){
 
     const images=parseLines(form.querySelector("[data-images]")?.value||"");
     if(images.length)out.images=deep(images);else delete out.images;
+    const documents=collectDocuments(form);
+    if(documents.length)out.documents=deep(documents);else delete out.documents;
     const imageSettings=collectPhotoSettings(form);
     if(!emptyObject(imageSettings))out.imageSettings=imageSettings;else delete out.imageSettings;
 
