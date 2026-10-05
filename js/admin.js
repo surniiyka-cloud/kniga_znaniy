@@ -888,6 +888,12 @@ function bindBody(){
   });
   body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
   body.addEventListener("click",e=>{
+    const tabDelete=e.target.closest?.("[data-tab-delete], [data-remove-custom-tab]");
+    if(tabDelete){
+      const row=tabDelete.closest("[data-admin-tab-row]");
+      const id=row?.dataset.id || tabDelete.closest("[data-custom-content-id]")?.dataset.customContentId;
+      if(id){removeCustomTabUi(body,id);return}
+    }
     const ed=e.target.closest("[data-table-editor]");if(!ed)return;
     const cell=e.target.closest("[data-table-cell-pos]");
     if(cell&&!e.target.closest("input,button")&&(e.ctrlKey||e.metaKey)){cell.classList.toggle("is-selected");return}
