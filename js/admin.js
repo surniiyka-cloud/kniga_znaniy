@@ -443,7 +443,7 @@ function pairRowsEditorHtml(key,label,rows,headers=[]){
   return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'">'+
     '<summary>'+esc(label)+' <small>'+list.filter(r=>r?.some?.(x=>String(x||"").trim())).length+' строк</small></summary>'+
     '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Столбцы можно дополнять.</span><button type="button" class="kb-mini" data-pair-add-col>+ столбец</button></div>'+
-    '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'">'+
+    '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'" style="--pair-width:"+width+">'+
     '<div class="kb-pair-header" data-pair-header-row><span class="kb-pair-header-handle"></span>'+defaultHeaders.map((h,i)=>'<div class="kb-pair-header-cell"><input data-pair-header value="'+esc(h)+'" placeholder="Название столбца">'+(i>=2?'<button type="button" class="kb-pair-col-remove" data-pair-remove-col title="Удалить столбец">×</button>':"")+'</div>').join("")+'<span></span></div>'+
     normalized.map((r)=>'<div class="kb-pair-row" data-pair-row draggable="false" style="grid-template-columns:30px repeat("+width+",minmax(120px,1fr)) 36px">'+
       '<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
@@ -956,7 +956,7 @@ function bindBody(){
       list.querySelectorAll("[data-pair-row]").forEach(row=>{
         const input=document.createElement("input");input.dataset.pairCell=String(index);input.placeholder=label;row.insertBefore(input,row.querySelector("[data-pair-remove]"));
       });
-      list.dataset.pairWidth=String(index+1);
+      list.dataset.pairWidth=String(index+1);list.style.setProperty("--pair-width",String(index+1));
       return;
     }
     const removeCol=e.target.closest?.("[data-pair-remove-col]");
@@ -974,7 +974,7 @@ function bindBody(){
       const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
       if(!ed||!list)return;
       const width=Number(list.dataset.pairWidth||2),headers=[...list.querySelectorAll("[data-pair-header]")].map(x=>x.value.trim());
-      const row=document.createElement("div");row.className="kb-pair-row";row.dataset.pairRow="";row.setAttribute("draggable","false");row.style.gridTemplateColumns="30px repeat("+width+",minmax(120px,1fr)) 36px";
+      const row=document.createElement("div");row.className="kb-pair-row";row.dataset.pairRow="";row.setAttribute("draggable","false");row.style.gridTemplateColumns="30px repeat("+width+",minmax(220px,1fr)) 26px";row.style.setProperty("--pair-width",String(width));
       row.innerHTML='<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
         Array.from({length:width},(_,i)=>'<input data-pair-cell="'+i+'" placeholder="'+esc(headers[i]||("Столбец "+(i+1)))+'">').join("")+
         '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button>';
