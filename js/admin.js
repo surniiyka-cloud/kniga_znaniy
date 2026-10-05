@@ -408,7 +408,7 @@ async function renderAccountPage(){
     '</div><div class="kb-account-empty" data-account-empty hidden>По вашему запросу ничего не найдено.</div>');
   setBody(html);
 }
-window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
+window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};\nwindow.dispatchEvent(new CustomEvent("kb:admin-ready"));
 window.addEventListener("hashchange",syncAccountEntry);
 async function renderEditor(){
   await loadOverrides(true);
