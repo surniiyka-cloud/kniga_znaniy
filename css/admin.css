@@ -301,3 +301,53 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
   .kb-pair-toolbar{align-items:flex-start;flex-direction:column}
   .kb-pair-header{overflow-x:auto}
 }
+
+
+/* v2.2.57 — compact table-like pair editor */
+.kb-pair-list{
+  display:block;
+  padding:0 14px 10px;
+  overflow-x:auto;
+}
+.kb-pair-header,
+.kb-pair-row{
+  display:grid;
+  grid-template-columns:30px repeat(var(--pair-width,2),minmax(0,1fr)) 26px!important;
+  gap:8px;
+  align-items:center;
+  width:100%;
+  min-width:620px;
+  box-sizing:border-box;
+}
+.kb-pair-header{
+  padding:12px 0 8px;
+  border-bottom:1px solid var(--line,#e0e7e2);
+}
+.kb-pair-row{
+  padding:7px 0;
+  border-bottom:1px solid var(--line,#edf1ee);
+}
+.kb-pair-row:last-child{border-bottom:0}
+.kb-pair-row input,
+.kb-pair-header-cell input{
+  min-height:40px;
+}
+.kb-pair-drag{
+  align-self:center;
+  width:28px;
+  height:34px;
+}
+.kb-pair-row .kb-mini.danger{
+  justify-self:center;
+  align-self:center;
+}
+.kb-pair-header-cell{
+  min-width:0;
+}
+.kb-pair-header-cell input{
+  background:var(--surface-2,#f7faf8);
+  font-weight:800;
+}
+@media(max-width:760px){
+  .kb-pair-header,.kb-pair-row{min-width:560px}
+}
