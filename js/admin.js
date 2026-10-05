@@ -17,9 +17,10 @@ function emptyOverrides(){return {version:1,updatedAt:null,products:{},sections:
 async function loadOverrides(force=false){
   if(overrideCache&&!force)return overrideCache;
   const published=deep(window.KB_EDITOR_API?.overrides?.()||emptyOverrides());
-  let local=null;try{local=JSON.parse(localStorage.getItem(LOCAL_KEY)||"null")||null}catch{}
-  const pt=Date.parse(published.updatedAt||"")||0,lt=Date.parse(local?.updatedAt||"")||0;
-  overrideCache=lt>pt?local:published;
+  // Полный каталог может быть больше квоты localStorage, поэтому черновик overrides
+  // больше не хранится целиком в браузере. Источником после сохранения остаётся GitHub.
+  try{localStorage.removeItem(LOCAL_KEY)}catch{}
+  overrideCache=published;
   overrideCache ||= emptyOverrides();
   overrideCache.products ||= {};
   overrideCache.sections ||= {};
@@ -142,7 +143,7 @@ async function commitOverrides(data){
   data.version=1;data.updatedAt=new Date().toISOString();
   if(!sessionToken())await connectGithub();
   await putRepoText("data/admin-overrides.json",JSON.stringify(data,null,2)+"\n","Admin: update knowledge book");
-  localStorage.setItem(LOCAL_KEY,JSON.stringify(data));
+  try{localStorage.removeItem(LOCAL_KEY)}catch{}
   overrideCache=deep(data);
   return data;
 }
