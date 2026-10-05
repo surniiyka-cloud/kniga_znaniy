@@ -289,7 +289,7 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
 .kb-pair-header-cell{display:flex;gap:4px;min-width:0}
 .kb-pair-header-cell input{width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line,#dfe7e1);background:var(--panel,#fff);color:var(--text,#18251d);border-radius:9px;padding:8px;font:inherit;font-weight:750}
 .kb-pair-header-handle{width:28px}
-.kb-pair-col-remove{border:0;background:transparent;color:var(--muted,#738078);font-size:18px;line-height:1;cursor:pointer;border-radius:7px;padding:3px}
+.kb-pair-col-remove,.kb-tab-delete,.kb-pair-row .kb-mini.danger{width:26px!important;height:26px!important;min-width:26px!important;padding:0!important;display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;color:var(--muted,#738078);font-size:17px;line-height:1;cursor:pointer;border-radius:7px;box-sizing:border-box}.kb-pair-col-remove:hover,.kb-tab-delete:hover,.kb-pair-row .kb-mini.danger:hover{color:#a02828;background:#fff0f0}.kb-tab-delete{justify-self:center}.kb-tab-delete-slot{width:26px;height:26px;display:block}
 .kb-pair-col-remove:hover{color:#a02828;background:#fff0f0}
 .kb-pair-row{min-width:0}
 .kb-pair-row input[data-pair-cell]{min-width:0}
