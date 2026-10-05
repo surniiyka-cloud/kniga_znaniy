@@ -946,14 +946,43 @@ function bindBody(){
   };
   body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(bindPairDrag);
   body.addEventListener("click",e=>{
+    const addCol=e.target.closest?.("[data-pair-add-col]");
+    if(addCol){
+      const ed=addCol.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
+      if(!ed||!list)return;
+      const headers=[...list.querySelectorAll("[data-pair-header]")];
+      const index=headers.length;
+      const label=index===0?"Название характеристики":index===1?(ed.dataset.pairEditor==="advantages"?"Описание":"Значение"):"Дополнительный столбец "+(index-1);
+      const h=document.createElement("div");h.className="kb-pair-header-cell";h.innerHTML='<input data-pair-header placeholder="Название столбца" value="'+esc(label)+'"><button type="button" class="kb-pair-col-remove" data-pair-remove-col title="Удалить столбец">×</button>';
+      list.querySelector("[data-pair-header-row]")?.insertBefore(h,list.querySelector("[data-pair-header-row] > span"));
+      list.querySelectorAll("[data-pair-row]").forEach(row=>{
+        const input=document.createElement("input");input.dataset.pairCell=String(index);input.placeholder=label;row.insertBefore(input,row.querySelector("[data-pair-remove]"));
+      });
+      list.dataset.pairWidth=String(index+1);
+      return;
+    }
+    const removeCol=e.target.closest?.("[data-pair-remove-col]");
+    if(removeCol){
+      const ed=removeCol.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
+      const cell=removeCol.closest(".kb-pair-header-cell"),headers=[...list.querySelectorAll("[data-pair-header]")],index=headers.indexOf(cell?.querySelector("[data-pair-header]"));
+      if(index<2)return;
+      list.querySelectorAll("[data-pair-row]").forEach(row=>row.querySelector('[data-pair-cell="'+index+'"]')?.remove());
+      cell?.remove();
+      list.querySelectorAll("[data-pair-row]").forEach(row=>[...row.querySelectorAll("[data-pair-cell]")].forEach((input,i)=>input.dataset.pairCell=String(i)));
+      return;
+    }
     const add=e.target.closest?.("[data-pair-add]");
     if(add){
       const ed=add.closest("[data-pair-editor]"),list=ed?.querySelector("[data-pair-list]");
       if(!ed||!list)return;
-      list.insertAdjacentHTML("beforeend",'<div class="kb-pair-row" data-pair-row draggable="true"><button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить характеристику" aria-label="Перетащить характеристику">⋮⋮</button><input data-pair-label placeholder="Название характеристики"><span class="kb-pair-arrow">→</span><input data-pair-value placeholder="Значение"><button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>');
-      const row=list.lastElementChild;
+      const width=Number(list.dataset.pairWidth||2),headers=[...list.querySelectorAll("[data-pair-header]")].map(x=>x.value.trim());
+      const row=document.createElement("div");row.className="kb-pair-row";row.dataset.pairRow="";row.setAttribute("draggable","false");
+      row.innerHTML='<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
+        Array.from({length:width},(_,i)=>'<input data-pair-cell="'+i+'" placeholder="'+esc(headers[i]||("Столбец "+(i+1)))+'">').join("")+
+        '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button>';
+      list.appendChild(row);
       bindPairDrag(row);
-      row?.querySelector("[data-pair-label]")?.focus();
+      row.querySelector("[data-pair-cell]")?.focus();
       return;
     }
     const remove=e.target.closest?.("[data-pair-remove]");
