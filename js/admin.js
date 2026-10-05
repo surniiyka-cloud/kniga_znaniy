@@ -513,33 +513,12 @@ function photoContextSetting(view,context){
 function photoPreviewStyle(v){
   const s=photoSetting(v);return "object-fit:"+s.fit+";transform:translate("+s.x+"%,"+s.y+"%) scale("+s.scale+");";
 }
-function photoContextHtml(path,context,title,view){
-  const v=photoContextSetting(view,context),scale=Math.round(v.scale*100),ratio="4:3";
-  return '<section class="kb-photo-context" data-photo-context="'+context+'">'+
-    '<div class="kb-photo-context-head"><div><strong>'+esc(title)+'</strong><span>'+ratio+'</span></div><button type="button" class="kb-mini primary" data-photo-auto>Автоподгон</button></div>'+
-    '<div class="kb-photo-preview kb-photo-preview-'+context+'"><img src="'+esc(photoPreviewSrc(path))+'" alt="" style="'+esc(photoPreviewStyle(v))+'"></div>'+
-    '<div class="kb-photo-controls">'+
-      '<label><span>Масштаб</span><div class="kb-photo-range"><input type="range" min="60" max="400" step="5" value="'+scale+'" data-photo-scale><output data-photo-scale-out>'+scale+'%</output></div></label>'+
-      '<label><span>Сдвиг X</span><div class="kb-photo-range"><input type="range" min="-60" max="60" step="1" value="'+v.x+'" data-photo-x><output data-photo-x-out>'+v.x+'</output></div></label>'+
-      '<label><span>Сдвиг Y</span><div class="kb-photo-range"><input type="range" min="-60" max="60" step="1" value="'+v.y+'" data-photo-y><output data-photo-y-out>'+v.y+'</output></div></label>'+
-      '<label><span>Режим</span><select data-photo-fit><option value="contain" '+(v.fit==="contain"?"selected":"")+'>Вписать целиком</option><option value="cover" '+(v.fit==="cover"?"selected":"")+'>Заполнить рамку</option></select></label>'+
-    '</div>'+
-    '<div class="kb-photo-quick"><button type="button" class="kb-mini" data-photo-preset-large>+ Крупнее</button><button type="button" class="kb-mini" data-photo-center>По центру</button><button type="button" class="kb-mini" data-photo-copy-context>Ко всем фото</button><button type="button" class="kb-mini" data-photo-reset-view>Сбросить</button></div>'+
-  '</section>';
-}
-function photoRowHtml(path,index,view={}){
-  return '<div class="kb-photo-row" data-photo-row data-path="'+esc(path)+'">'+
-    '<div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code><button type="button" class="kb-mini primary" data-photo-auto-both>Автоподогнать обе рамки</button></div>'+
-    '<div class="kb-photo-context-grid">'+
-      photoContextHtml(path,"card","Карточка раздела",view)+
-      photoContextHtml(path,"detail","Внутри товара",view)+
-    '</div>'+
-    '<div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up>↑ Выше</button><button type="button" class="kb-mini" data-photo-down>↓ Ниже</button><button type="button" class="kb-mini" data-photo-replace>Заменить файл</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div>'+
-  '</div>';
+function photoRowHtml(path,index){
+  return '<div class="kb-photo-row kb-photo-row-simple" data-photo-row data-path="'+esc(path)+'"><div class="kb-photo-preview kb-photo-preview-simple"><img src="'+esc(photoPreviewSrc(path))+'" alt="Фото товара"></div><div class="kb-photo-simple-main"><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div><div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up>↑ Выше</button><button type="button" class="kb-mini" data-photo-down>↓ Ниже</button><button type="button" class="kb-mini primary" data-photo-replace>Заменить фото</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div></div></div>';
 }
 function photoEditorHtml(ctx){
-  const images=ctx.images||[],settings=ctx.product?.imageSettings||{};
-  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">У каждой фотографии теперь два независимых кадра: для плитки товара в разделе и для большой фотографии внутри карточки. «Автоподгон» старается убрать пустые поля вокруг товара, заполнить рамку и при этом оставить сам товар целиком.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn ghost" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn primary" data-photo-save-view>Сохранить вид фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i,settings[p]||{})).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  const images=ctx.images||[];
+  return '<section class="kb-admin-section kb-photo-section"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
 }
 function syncPhotoState(body){
   const rows=[...body.querySelectorAll("[data-photo-row]")],paths=rows.map(r=>r.dataset.path).filter(Boolean);
@@ -555,19 +534,7 @@ function settingFromContext(box){
     fit:box?.querySelector("[data-photo-fit]")?.value||"contain"
   });
 }
-function collectPhotoSettings(body){
-  const out={};
-  body.querySelectorAll("[data-photo-row]").forEach(row=>{
-    const path=row.dataset.path;if(!path)return;
-    const item={};
-    for(const context of ["card","detail"]){
-      const box=row.querySelector('[data-photo-context="'+context+'"]'),v=settingFromContext(box);
-      if(v.scale!==1||v.x!==0||v.y!==0||v.fit!=="contain")item[context]=v;
-    }
-    if(Object.keys(item).length)out[path]=item;
-  });
-  return out;
-}
+function collectPhotoSettings(){return {}}
 function updatePhotoPreview(box){
   if(!box)return;
   const v=settingFromContext(box),img=box.querySelector(".kb-photo-preview img");
@@ -943,6 +910,27 @@ function bindBody(){
     });
   };
   body.querySelectorAll("[data-pair-editor=\"detailFields\"] [data-pair-row]").forEach(bindPairDrag);
+  let photoReplaceRow=null;
+  const photoAddInput=body.querySelector("[data-photo-file]"),photoReplaceInput=body.querySelector("[data-photo-replace-file]");
+  body.querySelector("[data-photo-add]")?.addEventListener("click",()=>{if(photoAddInput){photoAddInput.value="";photoAddInput.click()}});
+  photoAddInput?.addEventListener("change",async()=>{
+    const files=[...(photoAddInput.files||[])];if(!files.length)return;
+    try{showStatus("Загружаем фото…");const list=body.querySelector("[data-photo-list]"),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
+      for(const file of files){const path=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,path);list?.insertAdjacentHTML("beforeend",photoRowHtml(path,list.querySelectorAll("[data-photo-row]").length))}
+      syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото добавлено и опубликовано.");
+    }catch(err){showError(err)}
+  });
+  body.addEventListener("click",async e=>{
+    const replace=e.target.closest?.("[data-photo-replace]");if(replace){photoReplaceRow=replace.closest("[data-photo-row]");if(photoReplaceInput){photoReplaceInput.value="";photoReplaceInput.click()}return}
+    const remove=e.target.closest?.("[data-photo-remove]");if(remove){const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;row.remove();syncPhotoState(body);try{await persistImagesOnly(body);showStatus("Фото удалено из карточки.")}catch(err){showError(err)}return}
+    const up=e.target.closest?.("[data-photo-up]");if(up){const row=up.closest("[data-photo-row]");row?.previousElementSibling?.before(row);syncPhotoState(body);try{await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){showError(err)}return}
+    const down=e.target.closest?.("[data-photo-down]");if(down){const row=down.closest("[data-photo-row]");row?.nextElementSibling?.after(row);syncPhotoState(body);try{await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){showError(err)}return}
+  });
+  photoReplaceInput?.addEventListener("change",async()=>{
+    const file=photoReplaceInput.files?.[0],row=photoReplaceRow;photoReplaceRow=null;if(!file||!row)return;
+    try{showStatus("Заменяем фото…");const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(file));await uploadPhoto(file,newPath);row.dataset.path=newPath;const img=row.querySelector("img");if(img)img.src=photoPreviewSrc(newPath)+"?v="+Date.now();const code=row.querySelector("code");if(code)code.textContent=newPath;syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");}catch(err){showError(err)}
+  });
+
   body.addEventListener("click",e=>{
     const addCol=e.target.closest?.("[data-pair-add-col]");
     if(addCol){
