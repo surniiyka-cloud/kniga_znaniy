@@ -409,7 +409,11 @@ async function renderAccountPage(){
   setBody(html);
 }
 window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
-window.addEventListener("hashchange",syncAccountEntry);
+function handleAccountRoute(){
+  const name=window.KB_EDITOR_API?.route?.()?.name||"";
+  if(name==="account"||name==="accountProduct"||name==="accountSection")renderAccountPage().catch(showError);
+}
+window.addEventListener("hashchange",()=>{syncAccountEntry();handleAccountRoute()});
 async function renderEditor(){
   await loadOverrides(true);
   const ctx=window.KB_EDITOR_API?.current?.()||{kind:"dashboard"};
