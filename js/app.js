@@ -1143,8 +1143,17 @@ function mapData(){
     state.editorBase.images.set(id,deepCopy(state.assets.productImages?.[id]||[]));
     const pov=ov.products?.[id];if(!pov)continue;
     for(const [k,v] of Object.entries(pov)){
-      if(["id","images","__frozen"].includes(k))continue;
+      if(["id","images","__frozen","appendDetailFields"].includes(k))continue;
       x.product[k]=deepCopy(v);
+    }
+    if(Array.isArray(pov.appendDetailFields)&&pov.appendDetailFields.length){
+      const rows=Array.isArray(x.product.detailFields)?deepCopy(x.product.detailFields):[];
+      for(const pair of pov.appendDetailFields){
+        const label=String(pair?.[0]||"").trim(),value=String(pair?.[1]||"").trim();if(!label)return;
+        const idx=rows.findIndex(r=>String(r?.[0]||"").trim().toLowerCase()===label.toLowerCase());
+        if(idx>=0)rows[idx]=[label,value];else rows.push([label,value]);
+      }
+      x.product.detailFields=rows;
     }
     if(Array.isArray(pov.images))state.assets.productImages[id]=deepCopy(pov.images);
   }
