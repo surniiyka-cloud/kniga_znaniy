@@ -373,3 +373,33 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
 .kb-photo-save-state.error{background:#fff0f0;border-color:#e2aaaa}
 .kb-photo-save-state.saved .kb-photo-save-icon{background:#d7efdd}
 .kb-photo-save-state.error .kb-photo-save-icon{background:#f4d1d1}
+
+
+/* v2.2.65 — richer product management workspace */
+.kb-product-command{
+  display:grid;gap:14px;margin:0 0 18px;padding:18px;border:1px solid var(--line,#d9e1dc);
+  border-radius:18px;background:var(--surface,#fff);box-shadow:0 8px 24px rgba(26,44,34,.05);
+}
+.kb-product-command-summary{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.kb-product-command-summary h3{margin:4px 0 2px;font-size:20px}
+.kb-product-command-summary p{margin:0;color:var(--muted,#66706a)}
+.kb-card-quality{display:grid;place-items:center;min-width:94px;padding:10px 12px;border-radius:14px;background:#f3f7f4}
+.kb-card-quality strong{font-size:22px;line-height:1}
+.kb-card-quality span{font-size:11px;color:var(--muted,#66706a);margin-top:4px}
+.kb-product-command-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.kb-copy-target{display:flex;gap:8px;align-items:center;flex:1;min-width:420px}
+.kb-copy-target select{min-width:220px;flex:1}
+.kb-account-section-actions,.kb-account-product-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kb-account-product{grid-template-columns:minmax(0,1fr) auto}
+.kb-account-product-actions .kb-admin-btn{min-height:34px;padding:7px 10px}
+.kb-account-product-actions .kb-admin-btn.danger{min-width:36px}
+@media(max-width:760px){
+  .kb-product-command-summary{align-items:flex-start}
+  .kb-product-command-actions,.kb-copy-target{display:grid;grid-template-columns:1fr;width:100%;min-width:0}
+  .kb-copy-target select{min-width:0;width:100%}
+  .kb-account-section-head{align-items:flex-start}
+  .kb-account-section-actions{width:100%}
+  .kb-account-section-actions .kb-admin-btn{flex:1}
+  .kb-account-product{grid-template-columns:1fr}
+  .kb-account-product-actions{justify-content:flex-start}
+}
