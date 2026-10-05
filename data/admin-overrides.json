@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T10:55:57.855Z",
+  "updatedAt": "2026-10-05T10:56:51.542Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -17863,7 +17863,7 @@
     },
     "2.10": {
       "deletedProductIds": [
-        "catalog-2-10-задача"
+        "catalog-2-10-час-100-мг-2"
       ]
     }
   },
