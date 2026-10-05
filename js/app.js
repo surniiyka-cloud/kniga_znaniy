@@ -1792,15 +1792,16 @@ function rluPanel(rows){
   return '<div class="rlu-panel"><div class="rlu-title"><strong>Рекомендуемые нормы производителя</strong><span>Цветовая интерпретация результатов RLU</span></div><div class="rlu-grid">'+card("Поверхность")+card("Вода")+'</div></div>';
 }
 function tabPanelHtml(p,id){
-  const table=tabTableFor(p,id),intro=String(p?.tabIntroTexts?.[id]||"").trim();
+  const table=tabTableFor(p,id),intro=String(p?.tabIntroTexts?.[id]||"").trim(),tabImage=String(p?.tabImages?.[id]||"").trim();
   const introHtml=intro?'<div class="tab-intro-note">'+esc(intro)+'</div>':"";
+  const imageHtml=tabImage?'<figure class="tab-illustration"><img src="'+esc(imageSrc(tabImage))+'" alt=""><figcaption>Иллюстрация</figcaption></figure>':"";
   if(id==="rlu"&&/Люминометр\s+SMART/i.test(p?.name||"")){
     const custom=(p.customTabs||[]).find(t=>t.id===id);
     const rows=table?.rows?.length?table.rows:(custom?.rows||[]);
-    return introHtml+rluPanel(rows);
+    return introHtml+imageHtml+rluPanel(rows);
   }
-  if(table?.headers?.length&&table?.rows?.length)return introHtml+tablePanel(table.headers,table.rows,table);
-  if(id==="specs"){const rows=fields(p),width=Math.max(2,...rows.map(r=>Array.isArray(r)?r.length:0));if(width>2)return introHtml+pairTable(rows,p,"detailFields","definition-pair-table");return introHtml+'<dl class="definition-list">'+rows.map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';}
+  if(table?.headers?.length&&table?.rows?.length)return introHtml+imageHtml+tablePanel(table.headers,table.rows,table);
+  if(id==="specs"){const rows=fields(p),width=Math.max(2,...rows.map(r=>Array.isArray(r)?r.length:0));if(width>2)return introHtml+imageHtml+pairTable(rows,p,"detailFields","definition-pair-table");return introHtml+imageHtml+'<dl class="definition-list">'+rows.map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';}
   if(id==="advantages")return pairCards(p.advantages||[],"feature-definition-list",p,"advantages");
   if(id==="indicators")return pairCards(p.indicators||[],"feature-definition-list",p,"indicators");
   if(id==="options")return pairCards(p.options||[],"feature-definition-list",p,"options");
@@ -1813,7 +1814,7 @@ function tabPanelHtml(p,id){
   if(id==="consumables")return pairCards(p.consumables||[],"feature-definition-list",p,"consumables");
   if(id==="testKits")return pairCards(p.testKits||[],"feature-definition-list",p,"testKits");
   const custom=(p.customTabs||[]).find((t)=>t.id===id);
-  if(custom)return introHtml+(custom.kind==="table"?tablePanel(custom.headers||[],custom.rows||[]):custom.kind==="steps"?stepCards(custom.rows||[]):pairCards(custom.rows||[]));
+  if(custom)return introHtml+imageHtml+(custom.kind==="table"?tablePanel(custom.headers||[],custom.rows||[]):custom.kind==="steps"?stepCards(custom.rows||[]):pairCards(custom.rows||[]));
   if(id==="substances")return substanceTable(p.substances||[]);
   return "";
 }
