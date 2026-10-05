@@ -450,10 +450,10 @@ function renderAccountPage(){
     '</div><div class="kb-account-empty" data-account-empty hidden>По вашему запросу ничего не найдено.</div>');
   setBody(html);
 }
-window.KB_ADMIN_PAGE={render:()=>renderAccountPage().catch(showError)};
+window.KB_ADMIN_PAGE={render:()=>{try{return renderAccountPage()}catch(err){showError(err)}}};
 function handleAccountRoute(){
   const name=window.KB_EDITOR_API?.route?.()?.name||"";
-  if(name==="account"||name==="accountProduct"||name==="accountSection")renderAccountPage().catch(showError);
+  if(name==="account"||name==="accountProduct"||name==="accountSection"){try{renderAccountPage()}catch(err){showError(err)}}
 }
 window.addEventListener("hashchange",()=>{syncAccountEntry();handleAccountRoute()});
 async function renderEditor(){
