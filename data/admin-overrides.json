@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T08:35:10.393Z",
+  "updatedAt": "2026-10-05T08:35:14.052Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16750,6 +16750,9 @@
       ]
     },
     "catalog-2-10-кислотность-молока": {
+      "tabOrder": [
+        "specs"
+      ],
       "images": [
         "img/photos/admin/catalog-2-10-кислотность-молока/catalog-2-10-кислотность-молока-01.png"
       ]
