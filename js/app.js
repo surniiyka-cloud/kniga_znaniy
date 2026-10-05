@@ -718,6 +718,20 @@ function buildChapter2Catalog(){
       calibration:x.calibration,advantages:x.advantages,customTabs,sourceSectionId:child.id,sourceGid:child.gid
     });
   }
+  // Ekomilk HORIZON относится сразу к двум категориям: качество молока и соматические клетки.
+  // В 2.7 создаём независимую карточку-копию со всем содержимым исходной карточки 2.6.
+  const horizonSource=state.products.get("catalog-2-6-ekomilk-horizon");
+  if(horizonSource){
+    const hp=deepCopy(horizonSource.product),hImages=deepCopy(state.assets.productImages?.[horizonSource.product.id]||[]);
+    registerCatalog("2.7",hp.name,hp.detailFields||[],hImages,{
+      article:hp.article||"",type:hp.type||"Анализатор качества молока",purpose:hp.purpose||"",
+      advantages:hp.advantages||[],substances:hp.substances||[],indicators:hp.indicators||[],indicatorTable:hp.indicatorTable||null,
+      tabTables:hp.tabTables||{},options:hp.options||[],variants:hp.variants||[],complectation:hp.complectation||[],
+      workflow:hp.workflow||[],calibration:hp.calibration||[],assortment:hp.assortment||[],consumables:hp.consumables||[],
+      testKits:hp.testKits||[],washCycle:hp.washCycle||[],customTabs:hp.customTabs||[],
+      sourceSectionId:hp.sourceSectionId||"2.6.4",sourceGid:hp.sourceGid||null
+    });
+  }
   // 2.8 — каждый расходник отдельной карточкой, включая EKODAY; комплектация отдельно
   const cons=sBy("2.8");if(cons){
     buildConsumableBlocks(cons).forEach((b)=>registerCatalog("2.8",b.name,b.fields,[],{advantages:b.advantages,workflow:b.workflow,complectation:b.complectation,washCycle:b.washCycle}));
