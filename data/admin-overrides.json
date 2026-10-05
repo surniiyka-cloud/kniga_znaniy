@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T10:55:28.864Z",
+  "updatedAt": "2026-10-05T10:55:57.855Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16830,12 +16830,12 @@
         "img/photos/admin/catalog-2-10-час-100-мг/catalog-2-10-час-100-мг-01.png"
       ]
     },
-    "catalog-2-10-хлор-10-мг": {
+    "catalog-2-10-нук-1000-мг": {
       "tabOrder": [
         "specs"
       ],
       "images": [
-        "img/photos/admin/catalog-2-10-хлор-10-мг/catalog-2-10-хлор-10-мг-01.webp"
+        "img/photos/admin/catalog-2-10-нук-1000-мг/catalog-2-10-нук-1000-мг-01.webp"
       ]
     }
   },
@@ -17859,6 +17859,11 @@
         "manual-9-1-опрыскиватель-аккумуляторный-пневматический-gartena-kf-40с-1",
         "manual-9-1-опрыскиватель-аккумуляторный-пневматический-gartena-kf-10l-1-нержавейка",
         "manual-9-1-опрыскиватель-аккумуляторный-пневматический-gartena-kf-50с-1"
+      ]
+    },
+    "2.10": {
+      "deletedProductIds": [
+        "catalog-2-10-задача"
       ]
     }
   },
