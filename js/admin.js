@@ -759,7 +759,7 @@ function nextManualProductId(targetSection,name,o){
 async function createManualProduct(sectionId,name="Новая карточка"){
   const o=await loadOverrides(),section=o.sections[sectionId]||(o.sections[sectionId]={}),manualProducts=section.manualProducts||(section.manualProducts={});
   const id=nextManualProductId(sectionId,name,o);
-  manualProducts[id]={name:String(name||"Новая карточка").trim()||"Новая карточка",article:"",type:"",purpose:"",detailFields:[],advantages:[],sourceSectionId:sectionId};
+  manualProducts[id]={name:String(name||"Новая карточка").trim()||"Новая карточка",article:"",type:"",purpose:"",detailFields:[["",""]],advantages:[["",""]],sourceSectionId:sectionId};
   await commitOverrides(o);
   location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
 }
