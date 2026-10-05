@@ -1710,33 +1710,13 @@ function renderDiagnostics(){
 }
 
 function notFound(){title("Не найдено");app.innerHTML='<div class="empty-state"><strong>Страница не найдена</strong><p>Возможно, ссылка относится к старой версии книги.</p><button class="btn primary" data-route="home">На главную</button></div>';}
-let accountPageWaitTimer=null;
 function render(){
   closeMenu();const r=route();
   const accountMode=r.name==="account"||r.name==="accountProduct"||r.name==="accountSection";
   document.body.classList.toggle("kb-account-mode",accountMode);
   if(accountMode){
-    if(window.KB_ADMIN_PAGE?.render){
-      if(accountPageWaitTimer){clearTimeout(accountPageWaitTimer);accountPageWaitTimer=null}
-      window.KB_ADMIN_PAGE.render();
-    }else{
-      app.innerHTML='<div class="loading-screen"><div class="loader"></div><p>Открываем личный кабинет…</p></div>';
-      // admin.js загружается отдельным module-скриптом. Если он ещё не
-      // успел зарегистрировать KB_ADMIN_PAGE, не оставляем пользователя
-      // навсегда на экране загрузки: ждём регистрацию ограниченное время.
-      if(!accountPageWaitTimer){
-        let attempts=0;
-        const waitForAdmin=()=>{
-          accountPageWaitTimer=null;
-          const current=route();
-          if(!["account","accountProduct","accountSection"].includes(current.name))return;
-          if(window.KB_ADMIN_PAGE?.render){render();return}
-          if(attempts++<100)accountPageWaitTimer=setTimeout(waitForAdmin,50);
-          else app.innerHTML='<div class="empty-state"><strong>Личный кабинет не загрузился</strong><p>Модуль редактора не успел запуститься. Обновите страницу ещё раз.</p><button class="btn primary" type="button" onclick="location.reload()">Обновить</button></div>';
-        };
-        accountPageWaitTimer=setTimeout(waitForAdmin,0);
-      }
-    }
+    if(window.KB_ADMIN_PAGE?.render)window.KB_ADMIN_PAGE.render();
+    else app.innerHTML='<div class="loading-screen"><div class="loader"></div><p>Открываем личный кабинет…</p></div>';
     return;
   }
   if(r.name==="home")renderHome();else if(r.name==="chapter")renderChapter(r.id);else if(r.name==="section")renderSection(r.id);else if(r.name==="product")renderProduct(r.id);else if(r.name==="favorites")renderFavorites();else if(r.name==="diagnostics"&&isAdmin())renderDiagnostics();else notFound();
@@ -1876,7 +1856,6 @@ async function init(){
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Каталог · обновлено "+fmtDate(state.book.generatedAt);
   window.addEventListener("kb:admin-change",()=>{applyAdminVisibility();renderNav();const r=route();if(r.name==="diagnostics"&&!isAdmin())go("home");else render();});
-  window.addEventListener("kb:admin-ready",()=>{const r=route();if(r.name==="account"||r.name==="accountProduct"||r.name==="accountSection")render();});
   if(!location.hash)go("home");else render();
   loadTerms11();
 }
