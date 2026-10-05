@@ -1790,9 +1790,16 @@ function substanceTable(rows){
 function normalizeTableMerges(table,width,height){
   const out=[];for(const raw of Array.isArray(table?.merges)?table.merges:[]){const row=Math.max(0,Number(raw?.row)||0),col=Math.max(0,Number(raw?.col)||0),rowspan=Math.max(1,Number(raw?.rowspan)||1),colspan=Math.max(1,Number(raw?.colspan)||1);if(row>=height||col>=width)continue;const rs=Math.min(rowspan,height-row),cs=Math.min(colspan,width-col);if(rs<2&&cs<2)continue;if(!out.some(m=>!(row+rs<=m.row||m.row+m.rowspan<=row||col+cs<=m.col||m.col+m.colspan<=col)))out.push({row,col,rowspan:rs,colspan:cs})}return out;
 }
+function twoColumnCardTable(headers,rows){
+  const h=Array.isArray(headers)?headers:[],body=Array.isArray(rows)?rows:[];
+  return '<div class="tab-card-table"><div class="tab-card-table-head"><span>'+esc(h[0]||"Параметр")+'</span><span>'+esc(h[1]||"Значение")+'</span></div>'+
+    body.map(r=>'<div class="tab-card-table-row"><div class="tab-card-table-key">'+esc(r?.[0]||"")+'</div><div class="tab-card-table-value">'+esc(r?.[1]||"")+'</div></div>').join("")+
+  '</div>';
+}
 function tablePanel(headers,rows,table=null){
   const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
   const merges=normalizeTableMerges(table,h.length,body.length);
+  if(h.length===2&&!merges.length)return twoColumnCardTable(h,body);
   const hints=tableColumnHints(h,body);
   return '<div class="table-wrap"><table class="data-table">'+tableColgroup(h,body)+'<thead><tr>'+h.map((x,i)=>'<th class="'+hints[i].className+'">'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map((r,rowIndex)=>{const cells=[];for(let col=0;col<h.length;col++){const m=merges.find(x=>rowIndex>=x.row&&rowIndex<x.row+x.rowspan&&col>=x.col&&col<x.col+x.colspan);if(m&&!(m.row===rowIndex&&m.col===col))continue;const span=m?' rowspan="'+m.rowspan+'" colspan="'+m.colspan+'"':"";cells.push('<td class="'+hints[col].className+'"'+span+'>'+esc(r?.[col]||"")+'</td>')}return '<tr>'+cells.join("")+'</tr>'}).join("")+'</tbody></table></div>';
 }
