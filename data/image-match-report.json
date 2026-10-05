@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-02T15:44:38.093Z",
-  "imagesTotal": 386,
+  "imagesTotal": 404,
   "imagesMatched": 286,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
@@ -91,15 +91,33 @@
     "img/photos/admin/catalog-2-1-2-meatsensor-kit-108/catalog-2-1-2-meatsensor-kit-108-01.png",
     "img/photos/admin/catalog-2-1-2-tetrasensor/catalog-2-1-2-tetrasensor-01.png",
     "img/photos/admin/catalog-2-1-2-twinsensor-kit-034/catalog-2-1-2-twinsensor-kit-034-01.png",
+    "img/photos/admin/catalog-2-10-ph-0-12/catalog-2-10-ph-0-12-01.png",
+    "img/photos/admin/catalog-2-10-ph-5-9/catalog-2-10-ph-5-9-01.png",
+    "img/photos/admin/catalog-2-10-дхц/catalog-2-10-дхц-01.webp",
+    "img/photos/admin/catalog-2-10-кислотность-молока/catalog-2-10-кислотность-молока-01.png",
+    "img/photos/admin/catalog-2-10-маститное-молоко/catalog-2-10-маститное-молоко-01.png",
+    "img/photos/admin/catalog-2-10-мочевина-в-молоке/catalog-2-10-мочевина-в-молоке-01.png",
+    "img/photos/admin/catalog-2-10-нейтрализующие-вещества/catalog-2-10-нейтрализующие-вещества-01.png",
+    "img/photos/admin/catalog-2-10-нук-100-мг/catalog-2-10-нук-100-мг-01.png",
+    "img/photos/admin/catalog-2-10-нук-1000-мг/catalog-2-10-нук-1000-мг-01.webp",
+    "img/photos/admin/catalog-2-10-остаточная-кислотность/catalog-2-10-остаточная-кислотность-01.png",
+    "img/photos/admin/catalog-2-10-остаточная-щелочность/catalog-2-10-остаточная-щелочность-01.png",
+    "img/photos/admin/catalog-2-10-пероксид-1000-мг/catalog-2-10-пероксид-1000-мг-01.png",
+    "img/photos/admin/catalog-2-10-пероксид-25-мг/catalog-2-10-пероксид-25-мг-01.png",
+    "img/photos/admin/catalog-2-10-хлор-10-мг/catalog-2-10-хлор-10-мг-01.webp",
+    "img/photos/admin/catalog-2-10-час-100-мг/catalog-2-10-час-100-мг-01.png",
     "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png",
     "img/photos/admin/catalog-2-14-кода/catalog-2-14-кода-01.png",
     "img/photos/admin/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий-01.png",
+    "img/photos/admin/catalog-2-3-система-extenso-молоко-и-мясо/catalog-2-3-система-extenso-молоко-и-мясо-01.png",
     "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png",
+    "img/photos/admin/catalog-2-6-ekomilk-9-параметров/catalog-2-6-ekomilk-9-параметров-01.png",
     "img/photos/admin/catalog-2-8-ekoday/catalog-2-8-ekoday-01.png",
     "img/photos/admin/catalog-2-8-ekoprim/catalog-2-8-ekoprim-01.png",
     "img/photos/admin/catalog-2-8-ekoweek/catalog-2-8-ekoweek-01.png",
     "img/photos/admin/catalog-2-8-lactochip/catalog-2-8-lactochip-01.png",
     "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png",
+    "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-02.png",
     "img/photos/admin/catalog-2-9-ph-метр-pht004-ta/catalog-2-9-ph-метр-pht004-ta-01.png",
     "img/photos/admin/catalog-2-9-электрод-для-жидких-продуктов-sensorex/catalog-2-9-электрод-для-жидких-продуктов-sensorex-01.png",
     "img/photos/admin/catalog-2-9-электрод-для-плотных-продуктов-sensorex/catalog-2-9-электрод-для-плотных-продуктов-sensorex-01.png"
@@ -1838,6 +1856,227 @@
       "candidates": []
     },
     {
+      "image": "img/photos/admin/catalog-2-10-ph-0-12/catalog-2-10-ph-0-12-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-ph-5-9/catalog-2-10-ph-5-9-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-дхц/catalog-2-10-дхц-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-кислотность-молока/catalog-2-10-кислотность-молока-01.png",
+      "candidates": [
+        {
+          "id": "3.8-0704-01-004-0-5-л-0704-01-005-1-л-кружка-для-розлива-молока",
+          "name": "Кружка для розлива молока",
+          "article": "0704.01.004 — 0,5 л; 0704.01.005 — 1 л",
+          "section": "3.8",
+          "score": 0.333
+        },
+        {
+          "id": "6.8-0206-130-подогреватель-для-молока-easyheat",
+          "name": "Подогреватель для молока EASYHEAT",
+          "article": "0206.130",
+          "section": "6.8",
+          "score": 0.333
+        },
+        {
+          "id": "6.8-0206-129-подогреватель-молока-superheat-digital",
+          "name": "Подогреватель молока SUPERHEAT DIGITAL",
+          "article": "0206.129",
+          "section": "6.8",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-маститное-молоко/catalog-2-10-маститное-молоко-01.png",
+      "candidates": [
+        {
+          "id": "3.8-0209-111-молокомер-waikato",
+          "name": "Молокомер WAIKATO",
+          "article": "0209.111",
+          "section": "3.8",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-037-щетка-для-молокопроводов-танков",
+          "name": "Щётка для молокопроводов / танков",
+          "article": "0404.037",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "8.1-0404-005-ерш-для-молокопроводов-дф-00-070",
+          "name": "Ёрш для молокопроводов ДФ-00.070",
+          "article": "0404.005",
+          "section": "8.1",
+          "score": 0.333
+        },
+        {
+          "id": "9.2-дезмат-эко-маст",
+          "name": "Дезмат ЭКО-МАСТ",
+          "article": "-",
+          "section": "9.2",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-мочевина-в-молоке/catalog-2-10-мочевина-в-молоке-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-нейтрализующие-вещества/catalog-2-10-нейтрализующие-вещества-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-нук-100-мг/catalog-2-10-нук-100-мг-01.png",
+      "candidates": [
+        {
+          "id": "4.11-рецеф-форте-100",
+          "name": "Рецеф-Форте 100",
+          "article": "—",
+          "section": "4.11",
+          "score": 0.333
+        },
+        {
+          "id": "4.11-рецеф-100",
+          "name": "Рецеф 100",
+          "article": "—",
+          "section": "4.11",
+          "score": 0.333
+        },
+        {
+          "id": "5.7-электропастух-olli-100",
+          "name": "Электропастух OLLI 100",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-нук-1000-мг/catalog-2-10-нук-1000-мг-01.webp",
+      "candidates": [
+        {
+          "id": "5.7-электропастух-olli-1000",
+          "name": "Электропастух OLLI 1000",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.333
+        },
+        {
+          "id": "5.7-шнур-тор-барьер-1000",
+          "name": "Шнур ТОР Барьер-1000",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.25
+        },
+        {
+          "id": "5.7-моток-оцинкованной-проволоки-1-2-мм-1000-м",
+          "name": "Моток оцинкованной проволоки 1,2 мм, 1000 м",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-остаточная-кислотность/catalog-2-10-остаточная-кислотность-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-остаточная-щелочность/catalog-2-10-остаточная-щелочность-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-пероксид-1000-мг/catalog-2-10-пероксид-1000-мг-01.png",
+      "candidates": [
+        {
+          "id": "5.7-электропастух-olli-1000",
+          "name": "Электропастух OLLI 1000",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.333
+        },
+        {
+          "id": "5.7-шнур-тор-барьер-1000",
+          "name": "Шнур ТОР Барьер-1000",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.25
+        },
+        {
+          "id": "5.7-моток-оцинкованной-проволоки-1-2-мм-1000-м",
+          "name": "Моток оцинкованной проволоки 1,2 мм, 1000 м",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-пероксид-25-мг/catalog-2-10-пероксид-25-мг-01.png",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-хлор-10-мг/catalog-2-10-хлор-10-мг-01.webp",
+      "candidates": [
+        {
+          "id": "4.10-натрия-хлорид-0-9-раствор",
+          "name": "Натрия хлорид 0,9%, раствор",
+          "article": "-",
+          "section": "4.10",
+          "score": 0.333
+        },
+        {
+          "id": "4.10-кальция-хлорид-10-раствор-для-инъекций",
+          "name": "Кальция хлорид 10%, раствор для инъекций",
+          "article": "-",
+          "section": "4.10",
+          "score": 0.25
+        },
+        {
+          "id": "9.3-1101-03-016-сухое-зоогигиеническое-средство-хлорисан",
+          "name": "Сухое зоогигиеническое средство ХЛОРИСАН",
+          "article": "1101.03.016*",
+          "section": "9.3",
+          "score": 0.25
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-10-час-100-мг/catalog-2-10-час-100-мг-01.png",
+      "candidates": [
+        {
+          "id": "4.11-рецеф-форте-100",
+          "name": "Рецеф-Форте 100",
+          "article": "—",
+          "section": "4.11",
+          "score": 0.333
+        },
+        {
+          "id": "4.11-рецеф-100",
+          "name": "Рецеф 100",
+          "article": "—",
+          "section": "4.11",
+          "score": 0.333
+        },
+        {
+          "id": "5.7-электропастух-olli-100",
+          "name": "Электропастух OLLI 100",
+          "article": "—",
+          "section": "5.7",
+          "score": 0.333
+        }
+      ]
+    },
+    {
       "image": "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png",
       "candidates": []
     },
@@ -1850,8 +2089,24 @@
       "candidates": []
     },
     {
+      "image": "img/photos/admin/catalog-2-3-система-extenso-молоко-и-мясо/catalog-2-3-система-extenso-молоко-и-мясо-01.png",
+      "candidates": []
+    },
+    {
       "image": "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png",
       "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-6-ekomilk-9-параметров/catalog-2-6-ekomilk-9-параметров-01.png",
+      "candidates": [
+        {
+          "id": "5.2-0208-062-пара-сменных-лезвий-для-щипцов",
+          "name": "Пара сменных лезвий для щипцов",
+          "article": "0208.062",
+          "section": "5.2",
+          "score": 0.25
+        }
+      ]
     },
     {
       "image": "img/photos/admin/catalog-2-8-ekoday/catalog-2-8-ekoday-01.png",
@@ -1871,6 +2126,18 @@
     },
     {
       "image": "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png",
+      "candidates": [
+        {
+          "id": "9.2-дезмат-эко-маст",
+          "name": "Дезмат ЭКО-МАСТ",
+          "article": "-",
+          "section": "9.2",
+          "score": 0.333
+        }
+      ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-02.png",
       "candidates": [
         {
           "id": "9.2-дезмат-эко-маст",
