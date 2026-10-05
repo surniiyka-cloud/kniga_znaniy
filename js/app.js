@@ -1142,9 +1142,16 @@ function mapData(){
     state.editorBase.products.set(id,deepCopy(x.product));
     state.editorBase.images.set(id,deepCopy(state.assets.productImages?.[id]||[]));
     const pov=ov.products?.[id];if(!pov)continue;
+    const metaKeys=["id","images","__frozen","appendDetailFields","removeDetailFieldPatterns","pairPatches","tablePatches","removeCustomTabIds"];
     for(const [k,v] of Object.entries(pov)){
-      if(["id","images","__frozen","appendDetailFields"].includes(k))continue;
+      if(metaKeys.includes(k))continue;
       x.product[k]=deepCopy(v);
+    }
+
+    const rx=(s)=>{try{return new RegExp(String(s||""),"i")}catch{return null}};
+    if(Array.isArray(pov.removeDetailFieldPatterns)&&pov.removeDetailFieldPatterns.length){
+      const pats=pov.removeDetailFieldPatterns.map(rx).filter(Boolean);
+      x.product.detailFields=(x.product.detailFields||[]).filter(r=>!pats.some(p=>p.test(String(r?.[0]||""))));
     }
     if(Array.isArray(pov.appendDetailFields)&&pov.appendDetailFields.length){
       const rows=Array.isArray(x.product.detailFields)?deepCopy(x.product.detailFields):[];
@@ -1154,6 +1161,31 @@ function mapData(){
         if(idx>=0)rows[idx]=[label,value];else rows.push([label,value]);
       }
       x.product.detailFields=rows;
+    }
+
+    const patchRows=(rows,patch)=>{
+      let out=deepCopy(rows||[]);
+      const remove=(patch?.removePatterns||[]).map(rx).filter(Boolean);
+      if(remove.length)out=out.filter(r=>!remove.some(p=>p.test(String(r?.[0]||""))));
+      for(const rr of patch?.rename||[]){
+        const re=rx(rr?.match);if(!re)continue;
+        out=out.map(r=>re.test(String(r?.[0]||""))?[String(rr?.label||r?.[0]||""),...r.slice(1)]:r);
+      }
+      const drop=Math.max(0,Number(patch?.dropLast||0));if(drop)out=out.slice(0,Math.max(0,out.length-drop));
+      return out;
+    };
+    for(const [key,patch] of Object.entries(pov.pairPatches||{})){
+      if(Array.isArray(x.product[key]))x.product[key]=patchRows(x.product[key],patch);
+    }
+    for(const [key,patch] of Object.entries(pov.tablePatches||{})){
+      const table=x.product.tabTables?.[key];if(table?.rows)x.product.tabTables[key]={...table,rows:patchRows(table.rows,patch)};
+      if(key==="indicators"&&x.product.indicatorTable?.rows)x.product.indicatorTable={...x.product.indicatorTable,rows:patchRows(x.product.indicatorTable.rows,patch)};
+    }
+    if(Array.isArray(pov.removeCustomTabIds)&&pov.removeCustomTabIds.length){
+      const gone=new Set(pov.removeCustomTabIds.map(String));
+      x.product.customTabs=(x.product.customTabs||[]).filter(t=>!gone.has(String(t?.id||"")));
+      if(x.product.tabTables)for(const tid of gone)delete x.product.tabTables[tid];
+      if(Array.isArray(x.product.tabOrder))x.product.tabOrder=x.product.tabOrder.filter(t=>!gone.has(String(t)));
     }
     if(Array.isArray(pov.images))state.assets.productImages[id]=deepCopy(pov.images);
   }
