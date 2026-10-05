@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-05T10:27:38.076Z",
+  "updatedAt": "2026-10-05T10:43:27.108Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -16803,6 +16803,31 @@
       ],
       "images": [
         "img/photos/admin/catalog-2-10-нук-100-мг/catalog-2-10-нук-100-мг-01.png"
+      ]
+    },
+    "catalog-2-10-ph-5-9": {
+      "images": [
+        "img/photos/admin/catalog-2-10-ph-5-9/catalog-2-10-ph-5-9-01.png"
+      ]
+    },
+    "catalog-2-10-нейтрализующие-вещества": {
+      "images": [
+        "img/photos/admin/catalog-2-10-нейтрализующие-вещества/catalog-2-10-нейтрализующие-вещества-01.png"
+      ]
+    },
+    "catalog-2-10-остаточная-щелочность": {
+      "images": [
+        "img/photos/admin/catalog-2-10-остаточная-щелочность/catalog-2-10-остаточная-щелочность-01.png"
+      ]
+    },
+    "catalog-2-10-пероксид-1000-мг": {
+      "images": [
+        "img/photos/admin/catalog-2-10-пероксид-1000-мг/catalog-2-10-пероксид-1000-мг-01.png"
+      ]
+    },
+    "catalog-2-10-час-100-мг": {
+      "images": [
+        "img/photos/admin/catalog-2-10-час-100-мг/catalog-2-10-час-100-мг-01.png"
       ]
     }
   },
