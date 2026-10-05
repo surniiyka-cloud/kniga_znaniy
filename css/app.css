@@ -1755,3 +1755,36 @@ body.modal-open{overflow:hidden}
   white-space:nowrap;
   text-align:center;
 }
+
+
+/* v2.2.74 — compact columns shrink, text columns fill remaining space */
+.data-table,
+.pair-data-table,
+.definition-pair-table,
+.feature-definition-list-table,
+.content-table table{
+  width:100%!important;
+  min-width:0!important;
+  table-layout:auto!important;
+}
+.data-table .table-col-compact,
+.pair-data-table .table-col-compact,
+.definition-pair-table .table-col-compact,
+.feature-definition-list-table .table-col-compact,
+.content-table .table-col-compact{
+  width:1%!important;
+  white-space:nowrap!important;
+  max-width:none!important;
+}
+.data-table .table-col-text,
+.pair-data-table .table-col-text,
+.definition-pair-table .table-col-text,
+.feature-definition-list-table .table-col-text,
+.content-table .table-col-text{
+  width:auto!important;
+  white-space:normal!important;
+  max-width:none!important;
+}
+.table-wrap,.pair-table-wrap,.content-table-wrap{
+  background:transparent!important;
+}
