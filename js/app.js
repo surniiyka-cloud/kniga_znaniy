@@ -1326,7 +1326,8 @@ function contentBlockHtml(b,i){
   if(type==="table"){
     const h=Array.isArray(b.headers)?b.headers:[],rows=Array.isArray(b.rows)?b.rows:[];
     if(!h.length)return "";
-    return '<section class="content-block content-table"><div class="content-table-wrap"><table>'+tableColgroup(h,rows)+'<thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+h.map((_,j)=>'<td>'+esc(r?.[j]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
+    const hints=tableColumnHints(h,rows);
+    return '<section class="content-block content-table"><div class="content-table-wrap"><table>'+tableColgroup(h,rows)+'<thead><tr>'+h.map((x,i)=>'<th class="'+hints[i].className+'">'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+h.map((_,j)=>'<td class="'+hints[j].className+'">'+esc(r?.[j]||"")+'</td>').join("")+'</tr>').join("")+'</tbody></table></div></section>';
   }
   if(type==="image"){
     const src=String(b.src||"");if(!src)return "";
@@ -1666,8 +1667,9 @@ function pairTable(rows,p,key,cls="pair-data-table"){
   const width=Math.max(2,...body.map(r=>Array.isArray(r)?r.length:0));
   const headers=pairHeaders(p,key,width);
   if(!body.length)return "";
-  return '<div class="pair-table-wrap"><table class="'+cls+'">'+tableColgroup(headers,body)+'<thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+
-    body.map(r=>'<tr>'+Array.from({length:width},(_,i)=>'<td>'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+
+  const hints=tableColumnHints(headers,body);
+  return '<div class="pair-table-wrap"><table class="'+cls+'">'+tableColgroup(headers,body)+'<thead><tr>'+headers.map((h,i)=>'<th class="'+hints[i].className+'">'+esc(h)+'</th>').join("")+'</tr></thead><tbody>'+
+    body.map(r=>'<tr>'+Array.from({length:width},(_,i)=>'<td class="'+hints[i].className+'">'+esc(r?.[i]||"")+'</td>').join("")+'</tr>').join("")+
     '</tbody></table></div>';
 }
 
@@ -1718,7 +1720,8 @@ function normalizeTableMerges(table,width,height){
 function tablePanel(headers,rows,table=null){
   const h=(headers||[]).filter(Boolean),body=(rows||[]).filter(r=>(r||[]).some(Boolean));if(!h.length||!body.length)return "";
   const merges=normalizeTableMerges(table,h.length,body.length);
-  return '<div class="table-wrap"><table class="data-table">'+tableColgroup(h,body)+'<thead><tr>'+h.map(x=>'<th>'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map((r,rowIndex)=>{const cells=[];for(let col=0;col<h.length;col++){const m=merges.find(x=>rowIndex>=x.row&&rowIndex<x.row+x.rowspan&&col>=x.col&&col<x.col+x.colspan);if(m&&!(m.row===rowIndex&&m.col===col))continue;const span=m?' rowspan="'+m.rowspan+'" colspan="'+m.colspan+'"':"";cells.push('<td'+span+'>'+esc(r?.[col]||"")+'</td>')}return '<tr>'+cells.join("")+'</tr>'}).join("")+'</tbody></table></div>';
+  const hints=tableColumnHints(h,body);
+  return '<div class="table-wrap"><table class="data-table">'+tableColgroup(h,body)+'<thead><tr>'+h.map((x,i)=>'<th class="'+hints[i].className+'">'+esc(x)+'</th>').join("")+'</tr></thead><tbody>'+body.map((r,rowIndex)=>{const cells=[];for(let col=0;col<h.length;col++){const m=merges.find(x=>rowIndex>=x.row&&rowIndex<x.row+x.rowspan&&col>=x.col&&col<x.col+x.colspan);if(m&&!(m.row===rowIndex&&m.col===col))continue;const span=m?' rowspan="'+m.rowspan+'" colspan="'+m.colspan+'"':"";cells.push('<td class="'+hints[col].className+'"'+span+'>'+esc(r?.[col]||"")+'</td>')}return '<tr>'+cells.join("")+'</tr>'}).join("")+'</tbody></table></div>';
 }
 function rluPanel(rows){
   const list=(rows||[]).map(r=>({object:String(r?.[0]||""),result:String(r?.[1]||""),interpretation:String(r?.[2]||"")})).filter(x=>x.object&&x.result);
