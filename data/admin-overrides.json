@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T11:54:24.880Z",
+  "updatedAt": "2026-10-06T11:54:56.935Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -18676,8 +18676,8 @@
       "customTabs": []
     },
     "3.2-0303-017-стаканчик-для-сдаивания-продольный": {
-      "name": "Стаканчик для сдаивания продольный",
-      "article": "0301.017",
+      "name": "Стаканчик продольный для сдаивания первых струек молока ANKAR®",
+      "article": "0303.017",
       "type": "Стаканчик для сдаивания (продольный)",
       "purpose": "Стаканчик с удлиненной ручкой для удобного сдаивания молока в труднодоступных местах.",
       "detailFields": [
@@ -18716,7 +18716,32 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "features": "Оснащён длинной ручкой, удобен для использования в доильных залах. Цвет: зелёный или синий.",
+      "sourceRow": 9,
+      "candidateId": "0303-017-стаканчик-для-сдаивания-продольный",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": [],
+      "images": [
+        "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-stakanchik-prodolnyy-ankar.png"
+      ]
     },
     "3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке": {
       "name": "Штифты для сосков с жемчужной на ручке (KERBL)",
