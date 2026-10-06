@@ -2277,3 +2277,7 @@ body.modal-open{overflow:hidden}
   box-shadow:0 0 0 3px color-mix(in srgb,var(--garant-card-color) 18%,transparent);
   margin-inline:1px 2px;
 }
+
+/* Source-marked detection limits that exceed the regulatory threshold */
+.table-cell-danger{color:#c62828!important;font-weight:800!important;background:rgba(198,40,40,.07)}
+.semantic-pair-value{white-space:pre-line}
