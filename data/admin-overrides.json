@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T14:32:19.616Z",
+  "updatedAt": "2026-10-06T14:33:49.398Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2610,25 +2610,8 @@
         "workflow": "Приготовление рабочего раствора"
       },
       "images": [
-        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png",
         "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-02.png"
       ],
-      "imageSettings": {
-        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png": {
-          "card": {
-            "scale": 1,
-            "x": -2,
-            "y": -1,
-            "fit": "contain"
-          },
-          "detail": {
-            "scale": 1,
-            "x": -2,
-            "y": -1,
-            "fit": "contain"
-          }
-        }
-      },
       "appendDetailFields": [
         [
           "Позиционирование",
