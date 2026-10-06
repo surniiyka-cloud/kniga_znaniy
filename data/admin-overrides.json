@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T07:57:51.890Z",
+  "updatedAt": "2026-10-06T07:58:17.261Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -17903,7 +17903,7 @@
       "customTabs": []
     },
     "3.1-0202-012": {
-      "name": "PREVENTA 3 M",
+      "name": "Прибор для удаления волос на вымени Preventa со шлангом 3 м, Kerbl",
       "article": "0202.012",
       "type": "Газовый прибор для удаления волос",
       "purpose": "Удлиненная версия газового прибора для удаления волос с вымени. Обеспечивает максимальную свободу движений.",
@@ -17958,7 +17958,29 @@
       "__frozen": true,
       "images": [
         "img/photos/admin/3.1-0202-012/3.1-0202-012-01.webp"
-      ]
+      ],
+      "sourceRow": 0,
+      "manufacturer": "",
+      "country": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.1-0202-103": {
       "name": "EXPRESS TERRA",
