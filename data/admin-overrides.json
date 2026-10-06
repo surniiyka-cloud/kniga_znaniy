@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T07:48:50.153Z",
+  "updatedAt": "2026-10-06T07:50:49.357Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4002,29 +4002,6 @@
       "tabLabels": {
         "luci": "LuciPac A3 Water / Surface"
       }
-    },
-    "3.1-0202-013-запасной-патрон-баллон": {
-      "detailFields": [
-        [
-          "Артикул",
-          "0202.013"
-        ],
-        [
-          "Тип",
-          "Газовый баллон"
-        ],
-        [
-          "Назначение",
-          "Запасной газовый баллон для оборудования"
-        ],
-        [
-          "Категория",
-          "Расходные материалы для оборудования"
-        ]
-      ],
-      "tabOrder": [
-        "specs"
-      ]
     },
     "4.2-1105-030-дренчер-drench-mate-1-1-5": {
       "tabTables": {
@@ -17898,7 +17875,10 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.1-0202-011/3.1-0202-011-01.webp"
+      ]
     },
     "3.1-0202-012": {
       "name": "PREVENTA 3 M",
@@ -17953,7 +17933,10 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.1-0202-012/3.1-0202-012-01.webp"
+      ]
     },
     "3.1-0202-103": {
       "name": "EXPRESS TERRA",
@@ -18004,7 +17987,10 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.1-0202-103/3.1-0202-103-01.webp"
+      ]
     },
     "3.1-0202-013": {
       "name": "Запасной патрон (баллон) для приборов PREVENTA",
@@ -18051,7 +18037,10 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.1-0202-013/3.1-0202-013-01.webp"
+      ]
     },
     "3.1-0303-001": {
       "name": "Пистолет-разбрызгиватель ANKAR",
@@ -18110,7 +18099,10 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp"
+      ]
     }
   },
   "sections": {
