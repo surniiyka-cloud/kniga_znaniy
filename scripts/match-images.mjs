@@ -116,6 +116,17 @@ const imageAssignments={};
 const ambiguous=[];
 const invalidAliases=[];
 for(const img of images){
+  // Фото, загруженные через редактор, лежат в img/photos/admin/<product-id>/.
+  // Имя папки уже является стабильным id карточки. Такие привязки считаем ручными
+  // и не отправляем обратно в автоматический матчинг: карточка может создаваться
+  // в браузере из подробного блока Google Sheets и отсутствовать в book.json.
+  const adminMatch=img.folder.match(/^admin\/(.+)$/);
+  if(adminMatch?.[1]){
+    const productId=adminMatch[1];
+    (productAssets[productId] ||= []).push(img.path);
+    imageAssignments[img.path]={type:"product",id:productId,score:1000,source:"admin-folder"};
+    continue;
+  }
   const manual=aliases[img.path];
   if(manual){
     if(manual.product){
