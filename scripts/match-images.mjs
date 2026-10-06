@@ -178,6 +178,20 @@ for(const img of images){
     }
   }
 }
+// Ручные фото из редактора всегда имеют приоритет над автоматическими совпадениями.
+// Если фото заменяли несколько раз, более новый номер (-02, -03...) идёт первым.
+for(const [productId,list] of Object.entries(productAssets)){
+  const adminPrefix="img/photos/admin/"+productId+"/";
+  list.sort((a,b)=>{
+    const aa=String(a).startsWith(adminPrefix),bb=String(b).startsWith(adminPrefix);
+    if(aa!==bb)return aa?-1:1;
+    if(aa&&bb){
+      const num=x=>Number(String(x).match(/-(\d+)\.[^.]+$/)?.[1]||0);
+      return num(b)-num(a);
+    }
+    return 0;
+  });
+}
 const matchedImages=Object.keys(imageAssignments);
 const unmatchedImages=images.filter(x=>!imageAssignments[x.path]);
 function relaxedSuggestions(img){
