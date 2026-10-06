@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T08:22:32.283Z",
+  "updatedAt": "2026-10-06T08:22:37.090Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -5079,7 +5079,29 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "features": "Пенный стаканчик для обработки вымени после доения. Объём 300 мл.",
+      "sourceRow": 7,
+      "candidateId": "0303-012-стаканчик-пенный-ankar-premium-foam",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.3-0303-052-штифты-для-сосков-с-изгибом-на-ручке": {
       "images": [
