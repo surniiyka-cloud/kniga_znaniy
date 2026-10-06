@@ -813,6 +813,7 @@ async function persistImagesOnly(body){
   }
 
   await commitOverrides(o);
+  window.KB_EDITOR_API?.setProductImages?.(id,images);
   editorCtx.images=deep(images);
   body.querySelectorAll("[data-photo-row]").forEach(r=>r.classList.remove("is-photo-dirty"));
   setPhotoSaveState(body,"saved");
