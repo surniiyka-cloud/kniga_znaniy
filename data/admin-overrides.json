@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T07:50:49.357Z",
+  "updatedAt": "2026-10-06T07:57:51.890Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -17823,7 +17823,7 @@
       ]
     },
     "3.1-0202-011": {
-      "name": "PREVENTA 1.5 M",
+      "name": "Прибор для удаления волос на вымени Preventa со шлангом 1,5 м, Kerbl",
       "article": "0202.011",
       "type": "Газовый прибор для удаления волос",
       "purpose": "Газовый прибор для быстрого и безопасного удаления волос с вымени. Мобильное решение для гигиены доения.",
@@ -17878,7 +17878,29 @@
       "__frozen": true,
       "images": [
         "img/photos/admin/3.1-0202-011/3.1-0202-011-01.webp"
-      ]
+      ],
+      "sourceRow": 0,
+      "manufacturer": "",
+      "country": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.1-0202-012": {
       "name": "PREVENTA 3 M",
