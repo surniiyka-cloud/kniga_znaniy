@@ -967,7 +967,7 @@ function refreshProductEditorPreview(body){
   const article=String(form.querySelector('[name="article"]')?.value||"").trim();
   const type=String(form.querySelector('[name="type"]')?.value||"").trim();
   const purpose=String(form.querySelector('[name="purpose"]')?.value||"").trim();
-  const images=syncPhotoState(body),img=images[0]||"";
+  const images=[...body.querySelectorAll("[data-photo-row]")].map(r=>r.dataset.path).filter(Boolean),img=images[0]||"";
   const nameEl=preview.querySelector("[data-preview-name]");if(nameEl)nameEl.textContent=name||"Без названия";
   const artEl=preview.querySelector("[data-preview-article]");if(artEl){artEl.textContent=article?"Арт. "+article:"";artEl.hidden=!article}
   const typeEl=preview.querySelector("[data-preview-type]");if(typeEl){typeEl.textContent=type;typeEl.hidden=!type}
@@ -1203,7 +1203,7 @@ function bindBody(){
     productForm.addEventListener("input",()=>refreshProductEditorPreview(body));
     productForm.addEventListener("change",()=>refreshProductEditorPreview(body));
     const photoList=body.querySelector("[data-photo-list]");
-    if(photoList)new MutationObserver(()=>refreshProductEditorPreview(body)).observe(photoList,{childList:true,subtree:true,attributes:true,attributeFilter:["data-path"]});
+    if(photoList)new MutationObserver(()=>refreshProductEditorPreview(body)).observe(photoList,{childList:true});
     refreshProductEditorPreview(body);
   }
   body.querySelector("[data-account-search]")?.addEventListener("input",applyAccountFilters);
