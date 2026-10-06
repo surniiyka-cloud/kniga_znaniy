@@ -1,6 +1,16 @@
 {
-  "current": "2.2.90",
+  "current": "2.2.91",
   "entries": [
+    {
+      "version": "2.2.91",
+      "date": "2026-10-06",
+      "title": "Убрана лишняя зависимость от raw.githubusercontent.com",
+      "changes": [
+        "Книга на GitHub Pages теперь загружает admin-overrides.json только со своего же домена surniiyka-cloud.github.io/kniga_znaniy.",
+        "Удалён устаревший резервный запрос к raw.githubusercontent.com, который больше не нужен при текущей схеме публикации.",
+        "Запуск книги теперь зависит только от ресурсов самой опубликованной версии сайта."
+      ]
+    },
     {
       "version": "2.2.90",
       "date": "2026-10-06",
