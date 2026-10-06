@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T08:16:20.432Z",
+  "updatedAt": "2026-10-06T08:22:32.283Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -5037,24 +5037,8 @@
     },
     "3.2-0303-012-стаканчик-пенный-ankar-premium-foam": {
       "images": [
-        "img/photos/admin/3.2-0303-012-стаканчик-пенный-ankar-premium-foam/3.2-0303-012-стаканчик-пенный-ankar-premium-foam-01.png"
+        "img/photos/admin/3.2-0303-012-стаканчик-пенный-ankar-premium-foam/3.2-0303-012-стаканчик-пенный-ankar-premium-foam-02.webp"
       ],
-      "imageSettings": {
-        "img/photos/admin/3.2-0303-012-стаканчик-пенный-ankar-premium-foam/3.2-0303-012-стаканчик-пенный-ankar-premium-foam-01.png": {
-          "card": {
-            "scale": 1,
-            "x": 0,
-            "y": -1,
-            "fit": "contain"
-          },
-          "detail": {
-            "scale": 1,
-            "x": 0,
-            "y": -1,
-            "fit": "contain"
-          }
-        }
-      },
       "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
       "article": "0300.012",
       "type": "Стаканчик пенный",
