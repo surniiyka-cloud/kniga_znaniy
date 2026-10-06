@@ -1327,16 +1327,41 @@ function imageViewStyle(p,path,context="card"){
   const v=imageView(p,path,context);
   return "object-fit:"+v.fit+" !important;transform:translate("+v.x+"%,"+v.y+"%) scale("+v.scale+") !important;";
 }
+function garantCardColor(name){
+  const n=String(name||"").toUpperCase();
+  const map=[
+    ["ALBENDAZOLE","#11A9B8"],
+    ["SULFA","#E60012"],
+    ["AVERMECTINS","#30318C"],
+    ["DIO","#D88B89"],
+    ["BTSC PLUS","#B8CB91"],
+    ["BTSC CEFTIOFUR","#8B8179"],
+    ["MACROLIDES TULATHROMYCIN","#7F95AF"],
+    ["ULTRA","#F28A00"],
+    ["QMLE","#079447"],
+    ["AMINO ULTRA","#A89488"],
+    ["AMINOSPEC","#C58AA5"],
+    ["AMINO","#A94283"],
+    ["KFMD","#D6B55E"],
+    ["BACSF","#3D8D7E"],
+    ["LQMES","#666380"],
+    ["FTMCS","#7E70B3"],
+    ["NATAMYCIN","#138FC4"],
+    ["MONENSIN","#4A4A4A"],
+    ["NOVOBIOCIN","#F4D000"],
+    ["METRONIDAZOLE","#73536C"],
+    ["FTSP","#B88A63"]
+  ];
+  return map.find(([k])=>n.includes(k))?.[1]||"#2F7D5A";
+}
 function card(x,index=0){
   const p=x.product, images=state.assets.productImages?.[p.id]||[], im=images[0]||"", a=article(p);
   const priority=index<6,load=priority?"eager":"lazy",fetchPriority=priority?' fetchpriority="high"':"";
-  const garantDemo=x.section?.id==="2.1.3"&&index<5;
-  const demoVariant=garantDemo?(index+1):0;
-  const demoColors=["#10a9b8","#e30622","#313394","#d98282","#ff1f2d"];
-  const demoStyle=garantDemo?' style="--garant-demo-color:'+demoColors[index]+'"':"";
-  const demoClass=garantDemo?" garant-demo garant-demo-v"+demoVariant:"";
-  const demoLabel=garantDemo?'<span class="garant-demo-label">Вариант '+demoVariant+'</span>':"";
-  return '<article class="product-card'+demoClass+'"'+demoStyle+'>'+demoLabel+'<div class="product-image '+(im?"":"placeholder")+'" '+(im?'data-open-product="'+esc(p.id)+'"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" loading="'+load+'" decoding="async"'+fetchPriority+' alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"card"))+'">':"")+(images.length>1?'<span class="photo-count">◫ '+images.length+'</span>':"")+'</div><div class="product-body"><div class="product-meta">'+(a?'<span class="badge article">Арт. '+esc(a)+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+(garantDemo?'<span class="garant-demo-dot" aria-hidden="true"></span>':"")+'</div><h3>'+esc(p.name)+'</h3>'+(p.purpose?'<p>'+esc(p.purpose)+'</p>':"")+'<div class="product-actions"><button class="btn primary" data-open-product="'+esc(p.id)+'">Подробнее</button><button class="btn icon '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'" aria-label="Избранное">★</button></div></div></article>';
+  const isGarant=x.section?.id==="2.1.3";
+  const garantColor=isGarant?garantCardColor(p.name):"";
+  const garantStyle=isGarant?' style="--garant-card-color:'+garantColor+'"':"";
+  const garantClass=isGarant?" garant-card":"";
+  return '<article class="product-card'+garantClass+'"'+garantStyle+'><div class="product-image '+(im?"":"placeholder")+'" '+(im?'data-open-product="'+esc(p.id)+'"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" loading="'+load+'" decoding="async"'+fetchPriority+' alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"card"))+'">':"")+(images.length>1?'<span class="photo-count">◫ '+images.length+'</span>':"")+'</div><div class="product-body"><div class="product-meta">'+(a?'<span class="badge article">Арт. '+esc(a)+'</span>':"")+(isGarant?'<span class="garant-color-dot" aria-hidden="true"></span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div><h3>'+esc(p.name)+'</h3>'+(p.purpose?'<p>'+esc(p.purpose)+'</p>':"")+'<div class="product-actions"><button class="btn primary" data-open-product="'+esc(p.id)+'">Подробнее</button><button class="btn icon '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'" aria-label="Избранное">★</button></div></div></article>';
 }
 function grouped(items){
   let last="",out="";
