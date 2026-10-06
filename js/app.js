@@ -1758,7 +1758,7 @@ function productTabs(p,{includeHidden=false}={}){
 function pairCards(rows,cls="feature-definition-list",p=null,key=""){
   const width=Math.max(2,...(rows||[]).map(r=>Array.isArray(r)?r.length:0));
   if(width>2&&p)return pairTable(rows,p,key,cls+"-table");
-  return '<dl class="'+cls+'">'+(rows||[]).map((r)=>'<dt>'+esc(r?.[0]||"")+'</dt><dd>'+esc(r?.[1]||"")+'</dd>').join("")+'</dl>';
+  return twoColumnCardTable([],rows||[]);
 }
 function stepCards(rows){
   return '<div class="step-instruction-list">'+(rows||[]).map((r,i)=>{
@@ -1821,7 +1821,7 @@ function tabPanelHtml(p,id){
     return introHtml+imageHtml+rluPanel(rows);
   }
   if(table?.headers?.length&&table?.rows?.length)return introHtml+imageHtml+tablePanel(table.headers,table.rows,table);
-  if(id==="specs"){const rows=fields(p),width=Math.max(2,...rows.map(r=>Array.isArray(r)?r.length:0));if(width>2)return introHtml+imageHtml+pairTable(rows,p,"detailFields","definition-pair-table");return introHtml+imageHtml+'<dl class="definition-list">'+rows.map((r)=>'<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>').join("")+'</dl>';}
+  if(id==="specs"){const rows=fields(p),width=Math.max(2,...rows.map(r=>Array.isArray(r)?r.length:0));if(width>2)return introHtml+imageHtml+pairTable(rows,p,"detailFields","definition-pair-table");return introHtml+imageHtml+twoColumnCardTable([],rows);}
   if(id==="advantages")return pairCards(p.advantages||[],"feature-definition-list",p,"advantages");
   if(id==="indicators")return pairCards(p.indicators||[],"feature-definition-list",p,"indicators");
   if(id==="options")return pairCards(p.options||[],"feature-definition-list",p,"options");
