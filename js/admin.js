@@ -1069,18 +1069,28 @@ function collectSectionContentBlocks(form){
 }
 function sectionProductsEditor(ctx){
   const cards=ctx.productCards||[],deleted=ctx.deletedProductCards||[];
-  const active=cards.map(p=>'<div class="kb-product-sort-row '+(p.hidden?"is-hidden":"")+'" draggable="true" data-section-product-row data-id="'+esc(p.id)+'">'+
-      '<span class="kb-drag" title="Перетащить">⋮⋮</span>'+
+  const active=cards.map(p=>'<div class="kb-product-sort-row '+(p.hidden?"is-hidden":"")+'" draggable="false" data-section-product-row data-id="'+esc(p.id)+'">'+
+      '<button type="button" class="kb-drag kb-product-drag" data-product-drag draggable="true" title="Зажмите и перетащите карточку" aria-label="Перетащить карточку">⋮⋮</button>'+
       '<div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div>'+
       '<button type="button" class="kb-mini" data-open-section-product title="Открыть карточку">✎</button><button type="button" class="kb-mini" data-product-up title="Выше">↑</button><button type="button" class="kb-mini" data-product-down title="Ниже">↓</button>'+
       '<label class="kb-product-hide"><input type="checkbox" data-product-hidden '+(p.hidden?"checked":"")+'> <span>Скрыть</span></label>'+
       '<button type="button" class="kb-mini danger kb-product-delete" data-product-delete>Удалить</button>'+
     '</div>').join("");
   const removed=deleted.map(p=>'<div class="kb-deleted-product-row" data-section-deleted-row data-id="'+esc(p.id)+'"><div class="kb-product-sort-name"><strong>'+esc(p.name)+'</strong>'+(p.article?'<small>Арт. '+esc(p.article)+'</small>':'')+'</div><label class="kb-product-restore"><input type="checkbox" data-product-restore> <span>Восстановить при сохранении</span></label></div>').join("");
-  return '<section class="kb-admin-section"><div class="kb-product-section-head"><div><h3>Карточки товаров</h3><p class="kb-admin-hint"><b>Скрыть</b> — временно убрать карточку с сайта. <b>Удалить</b> — исключить её из структуры сайта, поиска и избранного. Google Sheets при этом не меняется.</p></div><button type="button" class="kb-admin-btn primary" data-add-product>+ Добавить карточку товара</button></div>'+
+  return '<section class="kb-admin-section"><div class="kb-product-section-head"><div><h3>Карточки товаров</h3><p class="kb-admin-hint"><b>Перетаскивай карточки за ручку ⋮⋮</b> — новый порядок сохраняется сразу. <b>Скрыть</b> — временно убрать карточку с сайта. <b>Удалить</b> — исключить её из структуры сайта, поиска и избранного. Google Sheets при этом не меняется.</p></div><button type="button" class="kb-admin-btn primary" data-add-product>+ Добавить карточку товара</button></div>'+
     (cards.length?'<div class="kb-product-sort" data-section-product-list>'+active+'</div>':'<div class="kb-admin-empty">В этом разделе пока нет карточек. Создай первую вручную.</div>')+
     (deleted.length?'<details class="kb-admin-group kb-deleted-products"><summary>Удалённые карточки <small>'+deleted.length+'</small></summary><div class="kb-deleted-product-list">'+removed+'</div></details>':'')+
     '</section>';
+}
+
+async function persistSectionProductOrder(body){
+  const form=body?.querySelector("[data-admin-section]"),sectionId=form?.dataset.id;
+  if(!sectionId)return;
+  const order=[...form.querySelectorAll("[data-section-product-row]")].map(r=>r.dataset.id).filter(Boolean);
+  const o=await loadOverrides(),sec=o.sections[sectionId]||(o.sections[sectionId]={});
+  sec.productOrder=order;
+  await commitOverrides(o);
+  overrideCache=deep(o);
 }
 
 function nextContentImagePath(sectionId,file){
@@ -1409,8 +1419,8 @@ function bindBody(){
   body.querySelectorAll("[data-open-section-product]").forEach(b=>b.onclick=()=>{
     const id=b.closest("[data-section-product-row]")?.dataset.id;if(id)location.hash="#/account/product/"+encodeURIComponent(id);
   });
-  body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.previousElementSibling?.before(r)});
-  body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=()=>{const r=b.closest("[data-section-product-row]");r?.nextElementSibling?.after(r)});
+  body.querySelectorAll("[data-product-up]").forEach(b=>b.onclick=async()=>{const r=b.closest("[data-section-product-row]");if(!r?.previousElementSibling)return;r.previousElementSibling.before(r);try{showStatus("Сохраняем порядок…");await persistSectionProductOrder(body);showStatus("Порядок карточек сохранён.")}catch(err){showError(err)}});
+  body.querySelectorAll("[data-product-down]").forEach(b=>b.onclick=async()=>{const r=b.closest("[data-section-product-row]");if(!r?.nextElementSibling)return;r.nextElementSibling.after(r);try{showStatus("Сохраняем порядок…");await persistSectionProductOrder(body);showStatus("Порядок карточек сохранён.")}catch(err){showError(err)}});
   body.querySelectorAll("[data-product-hidden]").forEach(ch=>ch.onchange=()=>ch.closest("[data-section-product-row]")?.classList.toggle("is-hidden",ch.checked));
   body.querySelectorAll("[data-product-delete]").forEach(b=>b.onclick=async()=>{
     const r=b.closest("[data-section-product-row]");if(!r)return;
@@ -1423,11 +1433,40 @@ function bindBody(){
       showStatus("Карточка удалена.");
     }catch(err){b.disabled=false;showError(err)}
   });
-  let draggedProduct=null;
+  let draggedProduct=null,productOrderChanged=false;
   body.querySelectorAll("[data-section-product-row]").forEach(row=>{
-    row.addEventListener("dragstart",()=>{draggedProduct=row;row.classList.add("is-dragging")});
-    row.addEventListener("dragend",()=>{row.classList.remove("is-dragging");draggedProduct=null});
-    row.addEventListener("dragover",e=>{e.preventDefault();if(!draggedProduct||draggedProduct===row)return;const box=row.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;row.parentElement?.insertBefore(draggedProduct,after?row.nextSibling:row)});
+    const handle=row.querySelector("[data-product-drag]");
+    if(!handle)return;
+    row.setAttribute("draggable","false");
+    handle.addEventListener("dragstart",e=>{
+      draggedProduct=row;productOrderChanged=false;
+      e.dataTransfer?.setData("text/plain",row.dataset.id||"product");
+      if(e.dataTransfer)e.dataTransfer.effectAllowed="move";
+      row.classList.add("is-dragging");
+    });
+    handle.addEventListener("dragend",async()=>{
+      row.classList.remove("is-dragging");
+      draggedProduct=null;
+      body.querySelectorAll("[data-section-product-row]").forEach(x=>x.classList.remove("is-drop-target"));
+      if(!productOrderChanged)return;
+      try{showStatus("Сохраняем новый порядок карточек…");await persistSectionProductOrder(body);showStatus("Порядок карточек сохранён.")}
+      catch(err){showError(err)}
+      finally{productOrderChanged=false}
+    });
+    row.addEventListener("dragover",e=>{
+      if(!draggedProduct||draggedProduct===row)return;
+      e.preventDefault();
+      if(e.dataTransfer)e.dataTransfer.dropEffect="move";
+      const box=row.getBoundingClientRect(),after=e.clientY>box.top+box.height/2;
+      const before=after?row.nextSibling:row;
+      if(before!==draggedProduct&&before!==draggedProduct.nextSibling){
+        row.parentElement?.insertBefore(draggedProduct,before);
+        productOrderChanged=true;
+      }
+      body.querySelectorAll("[data-section-product-row]").forEach(x=>x.classList.toggle("is-drop-target",x===row));
+    });
+    row.addEventListener("dragleave",()=>row.classList.remove("is-drop-target"));
+    row.addEventListener("drop",e=>{e.preventDefault();row.classList.remove("is-drop-target")});
   });
     body.querySelector("[data-admin-product]")?.addEventListener("submit",saveProduct);
   body.querySelector("[data-admin-section]")?.addEventListener("submit",saveSection);
