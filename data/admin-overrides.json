@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T08:43:37.609Z",
+  "updatedAt": "2026-10-06T09:08:03.267Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -19228,6 +19228,11 @@
         "advantages"
       ],
       "__frozen": true
+    },
+    "3.8-0209-111-молокомер-waikato": {
+      "images": [
+        "img/photos/admin/3.8-0209-111-молокомер-waikato/3.8-0209-111-молокомер-waikato-01.webp"
+      ]
     }
   },
   "sections": {
