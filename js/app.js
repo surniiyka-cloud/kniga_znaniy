@@ -1792,8 +1792,9 @@ function normalizeTableMerges(table,width,height){
 }
 function twoColumnCardTable(headers,rows){
   const h=Array.isArray(headers)?headers:[],body=Array.isArray(rows)?rows:[];
-  return '<div class="tab-card-table"><div class="tab-card-table-head"><span>'+esc(h[0]||"Параметр")+'</span><span>'+esc(h[1]||"Значение")+'</span></div>'+
-    body.map(r=>'<div class="tab-card-table-row"><div class="tab-card-table-key">'+esc(r?.[0]||"")+'</div><div class="tab-card-table-value">'+esc(r?.[1]||"")+'</div></div>').join("")+
+  return '<div class="semantic-pair-list">'+
+    (h.length?'<div class="semantic-pair-head"><span>'+esc(h[0]||"Параметр")+'</span><span>'+esc(h[1]||"Значение")+'</span></div>':"")+
+    body.map(r=>'<div class="step-instruction-row semantic-pair-row"><div class="step-instruction-index semantic-pair-key">'+esc(r?.[0]||"")+'</div><div class="step-instruction-text semantic-pair-value">'+esc(r?.[1]||"")+'</div></div>').join("")+
   '</div>';
 }
 function tablePanel(headers,rows,table=null){
