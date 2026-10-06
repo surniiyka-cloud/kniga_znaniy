@@ -2091,34 +2091,40 @@ async function loadTerms11(){
     }finally{clearTimeout(timer)}
   }catch(e){console.warn("Раздел 1.1: не удалось загрузить отдельный источник терминов.",e)}
 }
+async function fetchOptionalJson(url,{timeout=4000}={}){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);
+  try{
+    const res=await fetch(url,{cache:"no-store",signal:controller.signal});
+    if(!res.ok)return null;
+    return await res.json();
+  }catch{return null}
+  finally{clearTimeout(timer)}
+}
 async function init(){
   applyTheme();
   const stamp=Date.now();
-  const rs=await Promise.all([
+  const [bookRes,assetsData,indexData,syncData,imageData,versionData,publishedOverrides,rawOverrides]=await Promise.all([
     fetch("./data/book.json?v="+stamp,{cache:"no-store"}),
-    fetch("./data/assets.json?v="+stamp,{cache:"no-store"}),
-    fetch("./data/search-index.json?v="+stamp,{cache:"no-store"}),
-    fetch("./data/sync-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
-    fetch("./data/image-match-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
-    fetch("./data/version-log.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
-    fetch("./data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
-    fetch("https://raw.githubusercontent.com/surniiyka-cloud/kniga_znaniy/main/data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
+    fetchOptionalJson("./data/assets.json?v="+stamp),
+    fetchOptionalJson("./data/search-index.json?v="+stamp),
+    fetchOptionalJson("./data/sync-report.json?v="+stamp),
+    fetchOptionalJson("./data/image-match-report.json?v="+stamp),
+    fetchOptionalJson("./data/version-log.json?v="+stamp),
+    fetchOptionalJson("./data/admin-overrides.json?v="+stamp),
+    fetchOptionalJson("https://raw.githubusercontent.com/surniiyka-cloud/kniga_znaniy/main/data/admin-overrides.json?v="+stamp,{timeout:2500}),
   ]);
-  if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
-  state.book=await rs[0].json();
-  state.assets=rs[1]?.ok?await rs[1].json():state.assets;
-  state.index=rs[2]?.ok?await rs[2].json():[];
-  state.reports.sync=rs[3]?.ok?await rs[3].json():null;
-  state.reports.images=rs[4]?.ok?await rs[4].json():null;
-  state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
-  const publishedOverrides=rs[6]?.ok?await rs[6].json():state.overrides;
-  let latestOverrides=publishedOverrides;
-  if(rs[7]?.ok){
-    try{
-      const rawOverrides=await rs[7].json();
-      const publishedTime=Date.parse(publishedOverrides?.updatedAt||"")||0,rawTime=Date.parse(rawOverrides?.updatedAt||"")||0;
-      if(rawTime>=publishedTime)latestOverrides=rawOverrides;
-    }catch{}
+  if(!bookRes.ok)throw new Error("Не удалось загрузить данные.");
+  state.book=await bookRes.json();
+  state.assets=assetsData||state.assets;
+  state.index=Array.isArray(indexData)?indexData:[];
+  state.reports.sync=syncData;
+  state.reports.images=imageData;
+  state.versionLog=versionData||state.versionLog;
+  const published=publishedOverrides&&typeof publishedOverrides==="object"?publishedOverrides:state.overrides;
+  let latestOverrides=published;
+  if(rawOverrides&&typeof rawOverrides==="object"){
+    const publishedTime=Date.parse(published?.updatedAt||"")||0,rawTime=Date.parse(rawOverrides?.updatedAt||"")||0;
+    if(rawTime>=publishedTime)latestOverrides=rawOverrides;
   }
   state.overrides=mergeOverrideLayer(latestOverrides,localEditorOverrides(latestOverrides));
   state.publishedLiveSnapshots={};
