@@ -1585,7 +1585,15 @@ function renderNormsSection(ch,s){
     else if(mode==="steps")steps.push(r);
   }
 
-  const norm=(v)=>String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
+  const norm=(v)=>String(v||"").toLowerCase()
+    .replace(/ё/g,"е")
+    .replace(/≤/g," less-or-equal ")
+    .replace(/≥/g," greater-or-equal ")
+    .replace(/</g," less ")
+    .replace(/>/g," greater ")
+    .replace(/[^a-zа-я0-9]+/gi," ")
+    .trim()
+    .replace(/\s+/g," ");
   const topicDefs=[
     {id:"micro",label:"Микробиология",where:"микробиология, лабораторный контроль, посевы и тест-пластины",rx:/(кое|омч|микроб|инкубац|посев|тест[- ]?пласт|биотф|питательн|колони)/i,prefixes:["2.13","2.14","2.15"]},
     {id:"analyzers",label:"Анализаторы",where:"анализаторы качества молока, измерительные приборы",rx:/(сомо|scc|анализатор|диапазон измерения|погрешн|опци|комплектац|измеряем|показател)/i,prefixes:["2.6.","2.7.","2.15"]},
