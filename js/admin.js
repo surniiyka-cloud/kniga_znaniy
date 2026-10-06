@@ -1511,8 +1511,9 @@ async function saveProduct(e){
       }
     }
 
-    await commitOverrides(o);
-    overrideCache=deep(o);
+    const committed=await commitOverrides(o);
+    overrideCache=deep(committed);
+    window.KB_EDITOR_API?.setProductOverride?.(id,committed.products?.[id]||out);
     editorCtx={...ctx,product:{...deep(ctx.product),...deep(out)},images:deep(images)};
     showStatus("Карточка закреплена на сайте и сохранена. Данные из таблиц больше не восстановят старый текст.");
     location.hash="#/account";
