@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T12:59:15.107Z",
+  "updatedAt": "2026-10-06T12:59:54.773Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -19539,8 +19539,8 @@
     },
     "3.2": {
       "deletedProductIds": [
-        "3.2-этап-применения",
-        "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar"
+        "3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar",
+        "3.2-этап-применения"
       ],
       "manualProducts": {
         "manual-3.2-стаканчик-для-пенного-средства-premium-kerbl-muwl54ji": {
