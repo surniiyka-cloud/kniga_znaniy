@@ -1249,6 +1249,16 @@ function installEditorApi(){
       return {kind:"product",id:x.product.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(x.product.id)||{}),images:deepCopy(state.assets.productImages?.[x.product.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(x.product.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title}};
     },
     overrides(){return deepCopy(state.overrides||{})},
+    setProductImages(id,images){
+      const key=String(id||"");if(!key)return;
+      const list=Array.isArray(images)?deepCopy(images):[];
+      state.assets.productImages ||= {};
+      if(list.length)state.assets.productImages[key]=list;else delete state.assets.productImages[key];
+      state.overrides ||= {};
+      state.overrides.products ||= {};
+      state.overrides.products[key] ||= {};
+      if(list.length)state.overrides.products[key].images=deepCopy(list);else delete state.overrides.products[key].images;
+    },
     liveSnapshots(){return deepCopy(liveSnapshots())},
     async refreshCurrentSection(){
       const r=route();
