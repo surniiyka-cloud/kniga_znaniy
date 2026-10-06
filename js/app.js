@@ -1611,7 +1611,10 @@ function renderNormsSection(ch,s){
     records.push({label,meaning,definition:meaning,whereSource:where,example:"",important:"",aliases:[...new Set(aliases)],type:"abbreviation"});
   }
   for(const r of reading){
-    const label=String(r?.[0]||"").trim(),definition=String(r?.[1]||"").trim(),example=String(r?.[2]||"").trim(),important=String(r?.[3]||"").trim();
+    const label=String(r?.[0]||"").trim();
+    let definition=String(r?.[1]||"").trim();
+    const example=String(r?.[2]||"").trim(),important=String(r?.[3]||"").trim();
+    if(label==="<"&&/выше указанного уровня/i.test(definition))definition="Значение менее указанного уровня";
     if(!label)continue;
     const existing=findRecord(label);
     if(existing){
