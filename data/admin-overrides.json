@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T06:37:18.306Z",
+  "updatedAt": "2026-10-06T06:40:36.890Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -2609,7 +2609,8 @@
         "workflow": "Приготовление рабочего раствора"
       },
       "images": [
-        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png"
+        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png",
+        "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-02.png"
       ],
       "imageSettings": {
         "img/photos/admin/catalog-2-8-mastoprim/catalog-2-8-mastoprim-01.png": {
@@ -17822,6 +17823,26 @@
     "catalog-2-10-дхц": {
       "images": [
         "img/photos/admin/catalog-2-10-дхц/catalog-2-10-дхц-01.webp"
+      ]
+    },
+    "catalog-2-12-губки-спонжи-для-отбора-образцов": {
+      "images": [
+        "img/photos/admin/catalog-2-12-губки-спонжи-для-отбора-образцов/catalog-2-12-губки-спонжи-для-отбора-образцов-01.webp"
+      ]
+    },
+    "catalog-2-12-пакеты-для-гомогенизации": {
+      "images": [
+        "img/photos/admin/catalog-2-12-пакеты-для-гомогенизации/catalog-2-12-пакеты-для-гомогенизации-01.webp"
+      ]
+    },
+    "catalog-2-12-пакеты-для-отбора-образцов": {
+      "images": [
+        "img/photos/admin/catalog-2-12-пакеты-для-отбора-образцов/catalog-2-12-пакеты-для-отбора-образцов-01.webp"
+      ]
+    },
+    "catalog-2-12-тампоны-свабы-для-отбора-образцов": {
+      "images": [
+        "img/photos/admin/catalog-2-12-тампоны-свабы-для-отбора-образцов/catalog-2-12-тампоны-свабы-для-отбора-образцов-01.webp"
       ]
     }
   },
