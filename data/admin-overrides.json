@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T11:24:23.122Z",
+  "updatedAt": "2026-10-06T11:32:05.381Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -19338,6 +19338,11 @@
         "specs",
         "advantages"
       ]
+    },
+    "manual-3.2-стаканчик-для-пенного-средства-premium-kerbl-muwlcp1l": {
+      "images": [
+        "img/photos/admin/manual-3.2-стаканчик-для-пенного-средства-premium-kerbl-muwlcp1l/manual-3.2-стаканчик-для-пенного-средства-premium-kerbl-muwlcp1l-01.webp"
+      ]
     }
   },
   "sections": {
@@ -19417,7 +19422,10 @@
               ""
             ]
           ],
-          "sourceSectionId": "3.2"
+          "sourceSectionId": "3.2",
+          "images": [
+            "img/photos/admin/manual-3.2-стаканчик-для-пенного-средства-premium-kerbl-muwlcp1l/manual-3.2-стаканчик-для-пенного-средства-premium-kerbl-muwlcp1l-01.webp"
+          ]
         }
       },
       "productOrder": [
