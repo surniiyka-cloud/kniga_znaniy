@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-10-02T15:44:38.093Z",
-  "imagesTotal": 407,
+  "imagesTotal": 420,
   "imagesMatched": 286,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
@@ -73,6 +73,11 @@
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-skrebok-plastmassovyy-igolchitaya-skrebnitsa-17-5h8-5-sm.png",
     "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-pruzhina-dlya-schetki-chesalki-texas.png",
     "img/photos/admin/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами-01.png",
+    "img/photos/admin/3.1-0202-011/3.1-0202-011-01.webp",
+    "img/photos/admin/3.1-0202-012/3.1-0202-012-01.webp",
+    "img/photos/admin/3.1-0202-013/3.1-0202-013-01.webp",
+    "img/photos/admin/3.1-0202-103/3.1-0202-103-01.webp",
+    "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp",
     "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png",
     "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png",
     "img/photos/admin/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити/3.3-0303-051-штифты-для-сосков-из-усиленной-шерстяной-нити-01.png",
@@ -106,12 +111,20 @@
     "img/photos/admin/catalog-2-10-пероксид-25-мг/catalog-2-10-пероксид-25-мг-01.png",
     "img/photos/admin/catalog-2-10-хлор-10-мг/catalog-2-10-хлор-10-мг-01.webp",
     "img/photos/admin/catalog-2-10-час-100-мг/catalog-2-10-час-100-мг-01.png",
+    "img/photos/admin/catalog-2-12-губки-спонжи-для-отбора-образцов/catalog-2-12-губки-спонжи-для-отбора-образцов-01.webp",
+    "img/photos/admin/catalog-2-12-пакеты-для-гомогенизации/catalog-2-12-пакеты-для-гомогенизации-01.webp",
+    "img/photos/admin/catalog-2-12-пакеты-для-отбора-образцов/catalog-2-12-пакеты-для-отбора-образцов-01.webp",
+    "img/photos/admin/catalog-2-12-тампоны-свабы-для-отбора-образцов/catalog-2-12-тампоны-свабы-для-отбора-образцов-01.webp",
     "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png",
     "img/photos/admin/catalog-2-14-кода/catalog-2-14-кода-01.png",
     "img/photos/admin/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий/catalog-2-14-сда-для-определения-спор-мезофильных-анаэробных-бактерий-01.png",
     "img/photos/admin/catalog-2-3-система-extenso-молоко-и-мясо/catalog-2-3-система-extenso-молоко-и-мясо-01.png",
     "img/photos/admin/catalog-2-5-test-strip-reader-gic-q1/catalog-2-5-test-strip-reader-gic-q1-01.png",
     "img/photos/admin/catalog-2-6-ekomilk-9-параметров/catalog-2-6-ekomilk-9-параметров-01.png",
+    "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-final-v2.jpg",
+    "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-final-v3.jpg",
+    "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-final.jpg",
+    "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-real.webp",
     "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-v2.jpg",
     "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette.jpg",
     "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette.webp",
@@ -1303,6 +1316,26 @@
       ]
     },
     {
+      "image": "img/photos/admin/3.1-0202-011/3.1-0202-011-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/3.1-0202-012/3.1-0202-012-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/3.1-0202-013/3.1-0202-013-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/3.1-0202-103/3.1-0202-103-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp",
+      "candidates": []
+    },
+    {
       "image": "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png",
       "candidates": [
         {
@@ -2080,6 +2113,22 @@
       ]
     },
     {
+      "image": "img/photos/admin/catalog-2-12-губки-спонжи-для-отбора-образцов/catalog-2-12-губки-спонжи-для-отбора-образцов-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-12-пакеты-для-гомогенизации/catalog-2-12-пакеты-для-гомогенизации-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-12-пакеты-для-отбора-образцов/catalog-2-12-пакеты-для-отбора-образцов-01.webp",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-12-тампоны-свабы-для-отбора-образцов/catalog-2-12-тампоны-свабы-для-отбора-образцов-01.webp",
+      "candidates": []
+    },
+    {
       "image": "img/photos/admin/catalog-2-13-romer-labs-hygienechek-plus/catalog-2-13-romer-labs-hygienechek-plus-01.png",
       "candidates": []
     },
@@ -2110,6 +2159,22 @@
           "score": 0.25
         }
       ]
+    },
+    {
+      "image": "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-final-v2.jpg",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-final-v3.jpg",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-final.jpg",
+      "candidates": []
+    },
+    {
+      "image": "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-real.webp",
+      "candidates": []
     },
     {
       "image": "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-v2.jpg",
