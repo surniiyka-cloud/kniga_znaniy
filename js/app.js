@@ -1625,6 +1625,21 @@ function renderNormsSection(ch,s){
     }
     records.push({label,meaning:"",definition,whereSource:"",example,important,aliases:[norm(label)],type:"concept"});
   }
+  for(const t of (s.glossaryTerms||[])){
+    const label=String(t?.label||"").trim();if(!label)continue;
+    const aliases=[norm(label),...(Array.isArray(t.aliases)?t.aliases.map(norm):[])].filter(Boolean);
+    records.push({
+      label,
+      meaning:"",
+      definition:String(t?.summary||"").trim(),
+      whereSource:String(t?.where||"").trim(),
+      example:"",
+      important:"",
+      detailsText:Array.isArray(t?.details)?t.details.map(x=>String(x||"").trim()).filter(Boolean):[],
+      aliases:[...new Set(aliases)],
+      type:String(t?.type||"concept")
+    });
+  }
   const uniqueProducts=(arr)=>{
     const seen=new Set(),out=[];
     for(const x of arr){
@@ -1636,12 +1651,12 @@ function renderNormsSection(ch,s){
   };
   const products=[...state.products.values()];
   const buildRecord=(r)=>{
-    const hay=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important].filter(Boolean).join(" ");
+    const hay=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important,...(r.detailsText||[])].filter(Boolean).join(" ");
     const topics=topicDefs.filter(t=>t.rx.test(hay)).map(t=>t.id);
     if(!topics.length)topics.push("selection");
     const topicObjects=topics.map(id=>topicById.get(id)).filter(Boolean);
     const where=[r.whereSource,...topicObjects.map(t=>t.where)].filter(Boolean).join(" · ");
-    const searchTerms=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important,...topicObjects.map(t=>t.label)].filter(Boolean);
+    const searchTerms=[r.label,r.meaning,r.definition,r.whereSource,r.example,r.important,...(r.detailsText||[]),...topicObjects.map(t=>t.label)].filter(Boolean);
     const exact=[];
     const normalizedNeedles=[r.label,r.meaning].filter(x=>norm(x).length>=3).map(norm);
     for(const x of products){
@@ -1666,7 +1681,8 @@ function renderNormsSection(ch,s){
     const productsHtml=r.products.length?r.products.map(x=>'<button type="button" class="glossary-product-link" data-open-product="'+esc(x.product.id)+'"><strong>'+esc(x.product.name)+'</strong>'+(article(x.product)?'<span>Арт. '+esc(article(x.product))+'</span>':"")+'</button>').join(""):'<span class="glossary-empty-link">Связанных карточек пока не привязано</span>';
     const example=r.example?'<div class="glossary-detail-block"><span>Пример</span><p>'+esc(r.example)+'</p></div>':"";
     const important=r.important?'<div class="glossary-detail-block glossary-detail-important"><span>Важно</span><p>'+esc(r.important)+'</p></div>':"";
-    const details=(example||important||r.products.length||r.topicLabels.length)?'<details class="glossary-details"><summary>Подробнее</summary><div class="glossary-detail-grid"><div class="glossary-detail-block"><span>Связанные темы</span><div class="glossary-chip-row">'+chips+'</div></div><div class="glossary-detail-block glossary-products"><span>В каких товарах и карточках</span><div class="glossary-product-list">'+productsHtml+'</div></div>'+example+important+'</div></details>':"";
+    const expanded=(r.detailsText||[]).length?'<div class="glossary-detail-block glossary-detail-expanded"><span>Подробнее</span>'+r.detailsText.map(x=>'<p>'+esc(x)+'</p>').join("")+'</div>':"";
+    const details=(expanded||example||important||r.products.length||r.topicLabels.length)?'<details class="glossary-details"><summary>Подробнее</summary><div class="glossary-detail-grid">'+expanded+'<div class="glossary-detail-block"><span>Связанные темы</span><div class="glossary-chip-row">'+chips+'</div></div><div class="glossary-detail-block glossary-products"><span>В каких товарах и карточках</span><div class="glossary-product-list">'+productsHtml+'</div></div>'+example+important+'</div></details>':"";
     const kind=r.type==="abbreviation"?"Сокращение / обозначение":"Термин";
     const secondary=r.meaning?'<p class="glossary-expansion">'+esc(r.meaning)+'</p>':"";
     const body=r.meaning&&r.definition&&norm(r.meaning)!==norm(r.definition)?'<p class="glossary-definition">'+esc(r.definition)+'</p>':(!r.meaning&&r.definition?'<p class="glossary-definition">'+esc(r.definition)+'</p>':"");
