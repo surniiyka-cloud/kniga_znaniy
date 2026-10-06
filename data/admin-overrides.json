@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T11:53:15.426Z",
+  "updatedAt": "2026-10-06T11:54:24.880Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4983,24 +4983,8 @@
       "images": [
         "img/photos/admin/3.2-0303-022-кружка-для-сдаивания-первых-струек-молока-premium/3.2-0303-022-кружка-для-сдаивания-первых-струек-молока-premium-01.png"
       ],
-      "imageSettings": {
-        "img/photos/admin/3.2-0303-022-кружка-для-сдаивания-первых-струек-молока-premium/3.2-0303-022-кружка-для-сдаивания-первых-струек-молока-premium-01.png": {
-          "card": {
-            "scale": 1.1,
-            "x": 0,
-            "y": 0,
-            "fit": "contain"
-          },
-          "detail": {
-            "scale": 1.1,
-            "x": 0,
-            "y": 0,
-            "fit": "contain"
-          }
-        }
-      },
       "name": "Кружка для сдаивания первых струек молока PREMIUM",
-      "article": "0300.002",
+      "article": "0300.022",
       "type": "Кружка для сдаивания (контроль первой струи)",
       "purpose": "Кружка с сетчатым фильтром для контроля первых струек молока.",
       "detailFields": [
@@ -5039,7 +5023,29 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "features": "Оснащена фильтрующей сеткой. Выполнена из прочной пластмассы, имеет вкладыш для защиты от распыления. При сливании молока сетка остаётся в кружке и не выпадает. Объём 1,5 л. Производство Kerbl.",
+      "sourceRow": 8,
+      "candidateId": "0303-022-кружка-для-сдаивания-первых-струек-молока-premium",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.2-0303-012-стаканчик-пенный-ankar-premium-foam": {
       "images": [
