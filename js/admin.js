@@ -15,7 +15,10 @@ const safe=(v)=>String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9._-]+/gi
 
 function emptyOverrides(){return {version:1,updatedAt:null,products:{},sections:{},chapters:{}}}
 async function loadOverrides(force=false){
-  if(overrideCache&&!force)return overrideCache;
+  // Никогда не отдаём наружу сам overrideCache: формы редактируют возвращённый объект
+  // до commitOverrides(). Если вернуть ссылку на кэш, baseline тоже незаметно меняется,
+  // three-way merge считает, что изменений нет, и в GitHub уходит только updatedAt.
+  if(overrideCache&&!force)return deep(overrideCache);
   const published=deep(window.KB_EDITOR_API?.overrides?.()||emptyOverrides());
   // Полный каталог может быть больше квоты localStorage, поэтому черновик overrides
   // больше не хранится целиком в браузере. Источником после сохранения остаётся GitHub.
@@ -25,7 +28,7 @@ async function loadOverrides(force=false){
   overrideCache.products ||= {};
   overrideCache.sections ||= {};
   overrideCache.chapters ||= {};
-  return overrideCache;
+  return deep(overrideCache);
 }
 async function sha256(v){
   const bytes=new TextEncoder().encode(String(v||"")),hash=await crypto.subtle.digest("SHA-256",bytes);
