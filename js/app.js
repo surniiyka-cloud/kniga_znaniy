@@ -2103,7 +2103,7 @@ async function fetchOptionalJson(url,{timeout=4000}={}){
 async function init(){
   applyTheme();
   const stamp=Date.now();
-  const [bookRes,assetsData,indexData,syncData,imageData,versionData,publishedOverrides,rawOverrides]=await Promise.all([
+  const [bookRes,assetsData,indexData,syncData,imageData,versionData,publishedOverrides]=await Promise.all([
     fetch("./data/book.json?v="+stamp,{cache:"no-store"}),
     fetchOptionalJson("./data/assets.json?v="+stamp),
     fetchOptionalJson("./data/search-index.json?v="+stamp),
@@ -2111,7 +2111,6 @@ async function init(){
     fetchOptionalJson("./data/image-match-report.json?v="+stamp),
     fetchOptionalJson("./data/version-log.json?v="+stamp),
     fetchOptionalJson("./data/admin-overrides.json?v="+stamp),
-    fetchOptionalJson("https://raw.githubusercontent.com/surniiyka-cloud/kniga_znaniy/main/data/admin-overrides.json?v="+stamp,{timeout:2500}),
   ]);
   if(!bookRes.ok)throw new Error("Не удалось загрузить данные.");
   state.book=await bookRes.json();
@@ -2120,12 +2119,7 @@ async function init(){
   state.reports.sync=syncData;
   state.reports.images=imageData;
   state.versionLog=versionData||state.versionLog;
-  const published=publishedOverrides&&typeof publishedOverrides==="object"?publishedOverrides:state.overrides;
-  let latestOverrides=published;
-  if(rawOverrides&&typeof rawOverrides==="object"){
-    const publishedTime=Date.parse(published?.updatedAt||"")||0,rawTime=Date.parse(rawOverrides?.updatedAt||"")||0;
-    if(rawTime>=publishedTime)latestOverrides=rawOverrides;
-  }
+  const latestOverrides=publishedOverrides&&typeof publishedOverrides==="object"?publishedOverrides:state.overrides;
   state.overrides=mergeOverrideLayer(latestOverrides,localEditorOverrides(latestOverrides));
   state.publishedLiveSnapshots={};
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
