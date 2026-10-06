@@ -1256,6 +1256,22 @@ function installEditorApi(){
       return {kind:"product",id:x.product.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(x.product.id)||{}),images:deepCopy(state.assets.productImages?.[x.product.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(x.product.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title}};
     },
     overrides(){return deepCopy(state.overrides||{})},
+    setProductOverride(id,override){
+      const key=String(id||"");if(!key||!override||typeof override!=="object")return;
+      state.overrides ||= {};state.overrides.products ||= {};
+      state.overrides.products[key]=deepCopy(override);
+      const x=state.products.get(key);
+      if(x){
+        const meta=new Set(["id","images","__frozen","appendDetailFields","removeDetailFieldPatterns","pairPatches","tablePatches","removeCustomTabIds"]);
+        for(const [k,v] of Object.entries(override))if(!meta.has(k))x.product[k]=deepCopy(v);
+      }
+      if(Array.isArray(override.images)){
+        state.assets.productImages ||= {};
+        if(override.images.length)state.assets.productImages[key]=deepCopy(override.images);
+        else delete state.assets.productImages[key];
+      }
+      state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);
+    },
     setProductImages(id,images){
       const key=String(id||"");if(!key)return;
       const list=Array.isArray(images)?deepCopy(images):[];
@@ -2028,6 +2044,7 @@ async function init(){
     fetch("./data/image-match-report.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/version-log.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
     fetch("./data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
+    fetch("https://raw.githubusercontent.com/surniiyka-cloud/kniga_znaniy/main/data/admin-overrides.json?v="+stamp,{cache:"no-store"}).catch(()=>null),
   ]);
   if(!rs[0].ok)throw new Error("Не удалось загрузить данные.");
   state.book=await rs[0].json();
@@ -2037,7 +2054,15 @@ async function init(){
   state.reports.images=rs[4]?.ok?await rs[4].json():null;
   state.versionLog=rs[5]?.ok?await rs[5].json():state.versionLog;
   const publishedOverrides=rs[6]?.ok?await rs[6].json():state.overrides;
-  state.overrides=mergeOverrideLayer(publishedOverrides,localEditorOverrides(publishedOverrides));
+  let latestOverrides=publishedOverrides;
+  if(rs[7]?.ok){
+    try{
+      const rawOverrides=await rs[7].json();
+      const publishedTime=Date.parse(publishedOverrides?.updatedAt||"")||0,rawTime=Date.parse(rawOverrides?.updatedAt||"")||0;
+      if(rawTime>=publishedTime)latestOverrides=rawOverrides;
+    }catch{}
+  }
+  state.overrides=mergeOverrideLayer(latestOverrides,localEditorOverrides(latestOverrides));
   state.publishedLiveSnapshots={};
   q("#versionNumber").textContent=state.versionLog.current||"2.0";
   mapData();state.index=buildLiveSearchIndex();state.search=makeSearch(state.index);renderNav();bind();counters();installEditorApi();applyAdminVisibility();q("#syncState").textContent="Каталог · обновлено "+fmtDate(state.book.generatedAt);
