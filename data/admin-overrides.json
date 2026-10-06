@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T10:37:00.966Z",
+  "updatedAt": "2026-10-06T10:41:36.321Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -18507,7 +18507,9 @@
         "advantages"
       ],
       "__frozen": true,
-      "images": []
+      "images": [
+        "img/photos/admin/3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl/3.2-0303-007-стаканчик-для-пенного-средства-premium-kerbl-01.webp"
+      ]
     },
     "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl": {
       "name": "Стаканчик после дойки PREMIUM NON-RETURN KERBL",
