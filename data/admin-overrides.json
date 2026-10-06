@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T11:53:04.030Z",
+  "updatedAt": "2026-10-06T11:53:15.426Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -18603,7 +18603,7 @@
     },
     "3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar": {
       "name": "Стаканчик для дезинфекции сосков NON-RETURN ANKAR®",
-      "article": "0302.099",
+      "article": "0302.009",
       "type": "Стаканчик для дезинфекции сосков",
       "purpose": "Профессиональный стаканчик для дезинфекции сосков с системой защиты от обратного тока.",
       "detailFields": [
@@ -18645,7 +18645,29 @@
       "__frozen": true,
       "images": [
         "img/photos/admin/3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar/3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar-01.webp"
-      ]
+      ],
+      "features": "Изготовлен специально для ТИАН-Трейд. Оснащён невозвратным клапаном. Выполнен из пластика, устойчивого к износу. Объём 300 мл.",
+      "sourceRow": 6,
+      "candidateId": "0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.2-0303-017-стаканчик-для-сдаивания-продольный": {
       "name": "Стаканчик для сдаивания продольный",
