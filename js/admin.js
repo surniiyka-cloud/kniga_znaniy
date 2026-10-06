@@ -945,40 +945,6 @@ function productManagementHtml(ctx){
     '<div class="kb-copy-target"><select data-product-target-section>'+editorSectionOptions(ctx.section?.id||"")+'</select><button type="button" class="kb-admin-btn ghost" data-copy-to-section>Копировать в раздел</button><button type="button" class="kb-admin-btn ghost" data-move-to-section>Перенести</button></div>'+
     '<button type="button" class="kb-admin-btn danger" data-delete-current-product>Удалить карточку</button></div></section>';
 }
-function productEditorPreviewHtml(ctx){
-  const p=ctx.product||{},img=(ctx.images||[])[0]||"";
-  return '<section class="kb-editor-preview" data-editor-preview>'+
-    '<div class="kb-editor-preview-head"><div><span class="kb-admin-kicker">Предпросмотр</span><h3>Как карточка выглядит в разделе</h3></div><span class="kb-editor-preview-live">● live</span></div>'+
-    '<article class="product-card kb-editor-preview-card">'+
-      '<div class="product-image '+(img?"":"placeholder")+'" data-preview-image>'+(img?'<img src="'+esc(photoPreviewSrc(img))+'" alt="'+esc(p.name||"")+'">':'<span class="kb-editor-preview-empty">Фото не выбрано</span>')+'</div>'+
-      '<div class="product-body">'+
-        '<div class="product-meta"><span class="badge article" data-preview-article '+(p.article?"":"hidden")+'>Арт. '+esc(p.article||"")+'</span><span class="badge" data-preview-type '+(p.type?"":"hidden")+'>'+esc(p.type||"")+'</span></div>'+
-        '<h3 data-preview-name>'+esc(p.name||"Без названия")+'</h3>'+
-        '<p data-preview-purpose '+(p.purpose?"":"hidden")+'>'+esc(p.purpose||"")+'</p>'+
-        '<div class="product-actions"><span class="btn primary kb-editor-preview-button">Подробнее</span><span class="btn icon kb-editor-preview-button">★</span></div>'+
-      '</div>'+
-    '</article>'+
-  '</section>';
-}
-function refreshProductEditorPreview(body){
-  const form=body?.querySelector("[data-admin-product]"),preview=body?.querySelector("[data-editor-preview]");
-  if(!form||!preview)return;
-  const name=String(form.querySelector('[name="name"]')?.value||"").trim();
-  const article=String(form.querySelector('[name="article"]')?.value||"").trim();
-  const type=String(form.querySelector('[name="type"]')?.value||"").trim();
-  const purpose=String(form.querySelector('[name="purpose"]')?.value||"").trim();
-  const images=[...body.querySelectorAll("[data-photo-row]")].map(r=>r.dataset.path).filter(Boolean),img=images[0]||"";
-  const nameEl=preview.querySelector("[data-preview-name]");if(nameEl)nameEl.textContent=name||"Без названия";
-  const artEl=preview.querySelector("[data-preview-article]");if(artEl){artEl.textContent=article?"Арт. "+article:"";artEl.hidden=!article}
-  const typeEl=preview.querySelector("[data-preview-type]");if(typeEl){typeEl.textContent=type;typeEl.hidden=!type}
-  const purposeEl=preview.querySelector("[data-preview-purpose]");if(purposeEl){purposeEl.textContent=purpose;purposeEl.hidden=!purpose}
-  const imageBox=preview.querySelector("[data-preview-image]");
-  if(imageBox){
-    imageBox.classList.toggle("placeholder",!img);
-    imageBox.innerHTML=img?'<img src="'+esc(photoPreviewSrc(img))+'" alt="'+esc(name)+'">':'<span class="kb-editor-preview-empty">Фото не выбрано</span>';
-  }
-}
-
 function renderProductEditor(ctx){
   editorCtx=ctx;
   const existing=deep(overrideCache.products?.[ctx.id]||{});
@@ -989,7 +955,6 @@ function renderProductEditor(ctx){
     productManagementHtml(ctx)+
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form kb-wb-editor">'+
       '<aside class="kb-wb-media">'+
-        productEditorPreviewHtml(ctx)+
         '<div class="kb-wb-side-title"><span class="kb-admin-kicker">Медиа</span><h3>Фото товара</h3><p>Перетащи, замени или добавь изображения. Первая фотография используется на карточке.</p></div>'+
         photoEditorHtml(ctx)+
         documentEditorHtml(ctx)+
@@ -1198,14 +1163,6 @@ function bindBody(){
     });
     const empty=body.querySelector("[data-account-empty]");if(empty)empty.hidden=shown>0;
   };
-  const productForm=body.querySelector("[data-admin-product]");
-  if(productForm){
-    productForm.addEventListener("input",()=>refreshProductEditorPreview(body));
-    productForm.addEventListener("change",()=>refreshProductEditorPreview(body));
-    const photoList=body.querySelector("[data-photo-list]");
-    if(photoList)new MutationObserver(()=>refreshProductEditorPreview(body)).observe(photoList,{childList:true});
-    refreshProductEditorPreview(body);
-  }
   body.querySelector("[data-account-search]")?.addEventListener("input",applyAccountFilters);
   body.querySelectorAll("[data-account-filter]").forEach(b=>b.addEventListener("click",()=>{
     body.querySelectorAll("[data-account-filter]").forEach(x=>x.classList.toggle("active",x===b));applyAccountFilters();
