@@ -1049,6 +1049,13 @@ function enrichVerticalProductBlocks(section){
         if(/^(Характеристика|Показатель)$/i.test(label)&&/^(Значение|Практическое значение)$/i.test(value))continue;
         if(adv)advantages.push([label,value]);else pairs.push([label,value]);
       }
+      // В листе 3.1 у Reventa 1.5 M исторически ошибочно указан тот же артикул, что у Reventa 3 M.
+      // Каталожный артикул Reventa 1.5 M — 0202.011; без коррекции обе позиции получают одинаковый id
+      // и одна карточка перезаписывает другую в state.products.
+      if(section.id==="3.1"&&/^reventa\s*1[.,]5\s*m$/i.test(name)){
+        const art=pairs.find(r=>/^Артикул$/i.test(String(r?.[0]||"")));
+        if(art)art[1]="0202.011";else pairs.push(["Артикул","0202.011"]);
+      }
       if(pairs.length>1||advantages.length)applyProductBlock(section,name,pairs,advantages);
     }
   }
