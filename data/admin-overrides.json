@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-06T08:43:10.598Z",
+  "updatedAt": "2026-10-06T08:43:37.609Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4847,23 +4847,7 @@
       "images": [
         "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png"
       ],
-      "imageSettings": {
-        "img/photos/admin/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-005-стаканчик-для-пенного-средства-premium-ankar-01.png": {
-          "card": {
-            "scale": 1,
-            "x": -1,
-            "y": 1,
-            "fit": "contain"
-          },
-          "detail": {
-            "scale": 1,
-            "x": -1,
-            "y": 1,
-            "fit": "contain"
-          }
-        }
-      },
-      "name": "Стаканчик для доения средства PREMIUM ANKAR",
+      "name": "Пеновой стаканчик для обработки вымени PREMIUM, ANKAR®",
       "article": "0301.065",
       "type": "Стаканчик для доения",
       "purpose": "Прозрачный пластиковый стаканчик с крышкой и трубкой для забора молока.",
@@ -4903,7 +4887,29 @@
         "specs",
         "advantages"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "features": "Изготовлен специально для ТИАН-Трейд. Пенообразующий узел состоит из системы трёх ситечек: проходя через них, жидкость насыщается воздухом и образует пену. Разборная конструкция, привычный дизайн. Объём 300 мл.",
+      "sourceRow": 3,
+      "candidateId": "0303-005-стаканчик-для-пенного-средства-premium-ankar",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar": {
       "images": [
