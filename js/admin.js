@@ -418,8 +418,9 @@ function shell(title,subtitle,inner){
   const accountRoute=["account","accountProduct","accountSection"].includes(window.KB_EDITOR_API?.route?.()?.name||"");
   const productOrSection=["accountProduct","accountSection"].includes(window.KB_EDITOR_API?.route?.()?.name||"");
   const navButton=productOrSection?'<button class="kb-admin-back" type="button" data-account-back>← Вернуться в личный кабинет</button>':"";
+  const version=String(document.querySelector("#versionNumber")?.textContent||"—").trim();
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Личный кабинет</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div>'+navButton+'</header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать резервную копию</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить резервную копию<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button><span class="kb-admin-devnote">Каталог хранится на сайте</span></div>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать резервную копию</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить резервную копию<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost kb-admin-version" data-account-version>Версия '+esc(version)+' · что изменилось</button><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button><span class="kb-admin-devnote">Каталог хранится на сайте</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function updateAccountCounters(body){
@@ -1175,6 +1176,7 @@ function bindBody(){
     if(window.KB_ADMIN_PAGE?.render)await window.KB_ADMIN_PAGE.render();
     else location.hash="#/account";
   });
+  body.querySelector("[data-account-version]")?.addEventListener("click",()=>document.querySelector("#versionLogBtn")?.click());
   body.querySelector("[data-account-back]")?.addEventListener("click",()=>{
     const r=window.KB_EDITOR_API?.route?.()||{};
     const sectionId=r.name==="accountProduct"?(editorCtx?.section?.id||editorCtx?.sourceSection?.id||""):"";
