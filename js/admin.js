@@ -2,6 +2,7 @@ const LOCAL_KEY="kb_admin_overrides_local";
 const LIVE_KEY="kb_live_sheet_snapshots";
 const ADMIN_SESSION_KEY="kb_admin";
 const GITHUB_TOKEN_KEY="kb_github_token";
+const ACCOUNT_RETURN_KEY="kb_account_return";
 const ADMIN_PASSWORD_HASH="f40616bfaf4c1e0631d206330ead19b861546d0400b3f9be0589dbadc985ad8e";
 const GITHUB_REPO="surniiyka-cloud/kniga_znaniy";
 const GITHUB_BRANCH="main";
@@ -12,6 +13,50 @@ const esc=(v)=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":
 const deep=(v)=>v==null?v:JSON.parse(JSON.stringify(v));
 const same=(a,b)=>JSON.stringify(a??null)===JSON.stringify(b??null);
 const safe=(v)=>String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9._-]+/gi,"-").replace(/^-+|-+$/g,"").slice(0,90)||"item";
+
+function rememberAccountReturn(sectionId="",productId="",sectionEl=null){
+  const sid=String(sectionId||"").trim();if(!sid)return;
+  try{
+    const sectionTop=sectionEl?sectionEl.getBoundingClientRect().top+window.scrollY:null;
+    sessionStorage.setItem(ACCOUNT_RETURN_KEY,JSON.stringify({
+      sectionId:sid,
+      productId:String(productId||""),
+      scrollY:Number(window.scrollY||0),
+      relativeY:Number.isFinite(sectionTop)?Number(window.scrollY||0)-sectionTop:null
+    }));
+  }catch{}
+}
+function readAccountReturn(){
+  try{
+    const raw=sessionStorage.getItem(ACCOUNT_RETURN_KEY),v=raw?JSON.parse(raw):null;
+    return v&&v.sectionId?v:null;
+  }catch{return null}
+}
+function clearAccountReturn(){try{sessionStorage.removeItem(ACCOUNT_RETURN_KEY)}catch{}}
+function returnToAccountSection(sectionId="",productId=""){
+  const sid=String(sectionId||"").trim();
+  const existing=readAccountReturn();
+  if(sid&&(!existing||existing.sectionId!==sid))rememberAccountReturn(sid,productId);
+  location.hash="#/account";
+}
+function restoreAccountReturn(body){
+  const state=readAccountReturn();if(!state||!body)return;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const section=body.querySelector('[data-account-section-card][data-section-id="'+CSS.escape(String(state.sectionId))+'"]');
+    if(!section){clearAccountReturn();return}
+    let top;
+    if(Number.isFinite(Number(state.relativeY))){
+      const sectionTop=section.getBoundingClientRect().top+window.scrollY;
+      top=sectionTop+Number(state.relativeY);
+    }else if(Number.isFinite(Number(state.scrollY)))top=Number(state.scrollY);
+    else top=section.getBoundingClientRect().top+window.scrollY-24;
+    const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+    window.scrollTo({top:Math.max(0,Math.min(max,top)),behavior:"auto"});
+    const row=state.productId?section.querySelector('[data-account-product-card][data-product-id="'+CSS.escape(String(state.productId))+'"]'):null;
+    if(row){row.classList.add("kb-return-highlight");setTimeout(()=>row.classList.remove("kb-return-highlight"),1400)}
+    clearAccountReturn();
+  }));
+}
 
 function emptyOverrides(){return {version:1,updatedAt:null,products:{},sections:{},chapters:{}}}
 async function loadOverrides(force=false){
@@ -466,7 +511,7 @@ function renderAccountPage(){
     sections.map(sec=>{
       const rows=sec.products.map(p=>{
         const ctx=window.KB_EDITOR_API?.product?.(p.id)||null,q=ctx?productQuality(ctx):0,img=ctx?.images?.[0]||"";
-        return '<article class="kb-account-product kb-market-row" data-account-product-card data-quality="'+q+'" data-has-photo="'+(img?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
+        return '<article class="kb-account-product kb-market-row" data-account-product-card data-product-id="'+esc(p.id)+'" data-quality="'+q+'" data-has-photo="'+(img?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
           '<label class="kb-market-check"><input type="checkbox" data-account-select-product value="'+esc(p.id)+'"></label>'+
           '<div class="kb-market-thumb '+(img?"":"empty")+'">'+(img?'<img src="'+esc(photoPreviewSrc(img))+'" loading="lazy" alt="">':'<span>TIAN</span>')+'</div>'+
           '<div class="kb-market-product-main"><strong>'+esc(p.name)+'</strong><small>'+esc(p.article?("Арт. "+p.article):"Без артикула")+'</small></div>'+
@@ -483,6 +528,7 @@ function renderAccountPage(){
     }).join("")+
     '</div><div class="kb-account-empty" data-account-empty hidden>По вашему запросу ничего не найдено.</div>');
   setBody(html);
+  restoreAccountReturn(document.querySelector(".kb-admin-page")||modal?.querySelector("#kbAdminBody"));
 }
 window.KB_ADMIN_PAGE={render:()=>{try{return renderAccountPage()}catch(err){showError(err)}}};
 function handleAccountRoute(){
@@ -641,8 +687,8 @@ async function persistDocumentsOnly(body){
     if(documents.length)manual.documents=deep(documents);else delete manual.documents;
     sec.manualProducts[id]=manual;
   }
-  await commitOverrides(o);
-  overrideCache=deep(o);
+  const committed=await commitOverrides(o);
+  overrideCache=deep(committed);
   editorCtx.product={...deep(editorCtx.product||{}),documents:deep(documents)};
 }
 function photoEditorHtml(ctx){
@@ -855,6 +901,9 @@ async function uploadPhoto(file,path){
   const ext=imageExt(file);if(!ext)throw new Error("Поддерживаются PNG, JPG и WEBP.");
   if(file.size>15*1024*1024)throw new Error("Фото больше 15 МБ. Сначала уменьшите файл.");
   await putRepoBinary(path,await file.arrayBuffer(),"Admin: upload photo for "+(editorCtx?.product?.name||editorCtx?.id||"product"));
+  const check=await repoFile(path);
+  if(!check?.sha)throw new Error("GitHub не подтвердил загрузку фото. Привязка к карточке не выполнена.");
+  if(Number(check.size||0)!==Number(file.size||0))throw new Error("Размер фото в GitHub не совпал с загруженным. Повторите загрузку.");
   return path;
 }
 function editorSectionList(){
@@ -933,9 +982,9 @@ async function deleteProductById(productId,{navigate=false}={}){
     if(Array.isArray(sec.productOrder))sec.productOrder=sec.productOrder.filter(x=>x!==productId);
     if(Array.isArray(sec.hiddenProductIds))sec.hiddenProductIds=sec.hiddenProductIds.filter(x=>x!==productId);
   }
-  await commitOverrides(o);
-  overrideCache=deep(o);
-  if(navigate)location.hash="#/account";
+  const committed=await commitOverrides(o);
+  overrideCache=deep(committed);
+  if(navigate)returnToAccountSection(ctx.section?.id||ctx.sourceSection?.id||"",productId);
   return {id:productId,sectionId:ctx.section?.id||ctx.sourceSection?.id||"",manual:removedManual};
 }
 function productManagementHtml(ctx){
@@ -1090,8 +1139,8 @@ async function persistSectionProductOrder(body){
   const order=[...form.querySelectorAll("[data-section-product-row]")].map(r=>r.dataset.id).filter(Boolean);
   const o=await loadOverrides(),sec=o.sections[sectionId]||(o.sections[sectionId]={});
   sec.productOrder=order;
-  await commitOverrides(o);
-  overrideCache=deep(o);
+  const committed=await commitOverrides(o);
+  overrideCache=deep(committed);
 }
 
 function nextContentImagePath(sectionId,file){
@@ -1216,11 +1265,14 @@ function bindBody(){
     else location.hash="#/account";
   });
   body.querySelector("[data-account-version]")?.addEventListener("click",()=>document.querySelector("#versionLogBtn")?.click());
-  body.querySelector("[data-account-back]")?.addEventListener("click",()=>{
+  body.querySelectorAll("[data-account-back]").forEach(back=>back.addEventListener("click",()=>{
     const r=window.KB_EDITOR_API?.route?.()||{};
-    const sectionId=r.name==="accountProduct"?(editorCtx?.section?.id||editorCtx?.sourceSection?.id||""):"";
-    location.hash=sectionId?"#/account/section/"+encodeURIComponent(sectionId):"#/account";
-  });
+    if(r.name==="accountProduct"){
+      const sectionId=editorCtx?.section?.id||editorCtx?.sourceSection?.id||"";
+      return returnToAccountSection(sectionId,editorCtx?.id||"");
+    }
+    location.hash="#/account";
+  }));
   const applyAccountFilters=()=>{
     const qv=String(body.querySelector("[data-account-search]")?.value||"").trim().toLowerCase();
     const mode=body.querySelector("[data-account-filter].active")?.dataset.accountFilter||"all";
@@ -1253,10 +1305,16 @@ function bindBody(){
     const name=prompt("Название новой карточки","Новая карточка");if(name==null)return;
     try{showStatus("Создаём карточку…");await createManualProduct(target.id,name)}catch(err){showError(err)}
   });
-  body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct)));
+  body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>{
+    const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]");
+    rememberAccountReturn(section?.dataset.sectionId||"",b.dataset.accountEditProduct,section);
+    location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct);
+  }));
   body.querySelectorAll("[data-account-manage-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountManageSection)));
   body.querySelectorAll("[data-account-add-product]").forEach(b=>b.addEventListener("click",async()=>{
     const name=prompt("Название новой карточки","Новая карточка");if(name==null)return;
+    const section=b.closest("[data-account-section-card]");
+    rememberAccountReturn(b.dataset.accountAddProduct,"",section);
     try{showStatus("Создаём карточку…");await createManualProduct(b.dataset.accountAddProduct,name)}catch(err){showError(err)}
   }));
   body.querySelectorAll("[data-account-duplicate-product]").forEach(b=>b.addEventListener("click",async()=>{
@@ -1405,8 +1463,11 @@ function bindBody(){
     const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;if(!id)return;
     if(!confirm('Удалить карточку «'+(editorCtx?.product?.name||id)+'» с сайта?'))return;
     try{
-      showStatus("Удаляем карточку…");await deleteProductById(id,{navigate:true});
-      showStatus("Карточка удалена.");
+      const sectionId=editorCtx?.section?.id||editorCtx?.sourceSection?.id||"";
+      showStatus("Удаляем карточку…");await deleteProductById(id);
+      rememberAccountReturn(sectionId,"");
+      location.hash="#/account";
+      location.reload();
     }catch(err){showError(err)}
   });
   let photoReplaceRow=null;
@@ -1650,7 +1711,7 @@ async function saveProduct(e){
     editorCtx={...ctx,product:{...deep(ctx.product),...deep(out)},images:deep(images)};
     showStatus("Карточка закреплена на сайте и сохранена. Данные из таблиц больше не восстановят старый текст.");
     const returnSection=ctx.section?.id||ctx.sourceSection?.id||"";
-    location.hash=returnSection?"#/account/section/"+encodeURIComponent(returnSection):"#/account";
+    returnToAccountSection(returnSection,id);
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveSection(e){
@@ -1668,7 +1729,7 @@ async function saveSection(e){
       const previous=o.sections?.[id]||{};
       for(const key of ["glossaryTerms","manualProducts","productOrder","hiddenProductIds","deletedProductIds"])if(previous[key]!==undefined&&out[key]===undefined)out[key]=deep(previous[key]);
       o.sections[id]=out;
-      await commitOverrides(o);overrideCache=deep(o);showStatus("Раздел 1.2 сохранён и опубликован.");location.hash="#/account/section/1.2";location.reload();return;
+      const committed=await commitOverrides(o);overrideCache=deep(committed);showStatus("Раздел 1.2 сохранён и опубликован.");location.hash="#/account/section/1.2";location.reload();return;
     }
     if(id==="1.1"){
       const terms=[...form.querySelectorAll("[data-foundation-edit-term]")].map(el=>{
@@ -1686,7 +1747,7 @@ async function saveSection(e){
       }).filter(t=>t.number&&t.title);
       putDiff(out,"terms11",terms,ctx.sourceTerms11||[]);
       const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
-      await commitOverrides(o);overrideCache=deep(o);showStatus("Термины 1.1 сохранены и опубликованы.");location.hash="#/account";location.reload();return;
+      const committed=await commitOverrides(o);overrideCache=deep(committed);showStatus("Термины 1.1 сохранены и опубликованы.");location.hash="#/account";location.reload();return;
     }
     const blocks=collectSectionContentBlocks(form);
     putDiff(out,"contentBlocks",blocks,src.contentBlocks||[]);
@@ -1708,7 +1769,7 @@ async function saveSection(e){
       putDiff(out,"deletedProductIds",deletedProductIds,src.deletedProductIds||[]);
     }
     const o=await loadOverrides();if(emptyObject(out))delete o.sections[id];else o.sections[id]=out;
-    await commitOverrides(o);overrideCache=deep(o);showStatus("Раздел сохранён и опубликован.");location.hash="#/account";location.reload();
+    const committed=await commitOverrides(o);overrideCache=deep(committed);showStatus("Раздел сохранён и опубликован.");location.hash="#/account";location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function saveChapter(e){
@@ -1716,7 +1777,7 @@ async function saveChapter(e){
   try{
     const ctx=window.KB_EDITOR_API.current(),src=ctx.sourceChapter||{},title=String(new FormData(form).get("title")||""),out={};putDiff(out,"title",title,String(src.title||""));
     const o=await loadOverrides();if(emptyObject(out))delete o.chapters[id];else o.chapters[id]=out;
-    await commitOverrides(o);overrideCache=deep(o);showStatus("Глава сохранена и опубликована.");location.hash="#/account";location.reload();
+    const committed=await commitOverrides(o);overrideCache=deep(committed);showStatus("Глава сохранена и опубликована.");location.hash="#/account";location.reload();
   }catch(err){showError(err);btn.disabled=false}
 }
 async function resetOverride(kind,id){
