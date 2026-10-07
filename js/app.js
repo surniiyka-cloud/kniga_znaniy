@@ -1639,10 +1639,27 @@ function renderNormsSection(ch,s){
   ];
   const topicById=new Map(topicDefs.map(x=>[x.id,x]));
   const records=[];
+  const customNorms=Array.isArray(s.norms12Records)?s.norms12Records:null;
   const findRecord=(label)=>{
     const key=norm(label);
     return records.find(x=>x.aliases.some(a=>a===key))||null;
   };
+  if(customNorms){
+    for(const r of customNorms){
+      const label=String(r?.label||"").trim();if(!label)continue;
+      records.push({
+        label,
+        meaning:String(r?.meaning||"").trim(),
+        definition:String(r?.definition||"").trim(),
+        whereSource:String(r?.whereSource||"").trim(),
+        example:String(r?.example||"").trim(),
+        important:String(r?.important||"").trim(),
+        detailsText:Array.isArray(r?.detailsText)?r.detailsText.map(x=>String(x||"")):[],
+        aliases:[String(r?.label||"").trim().toLowerCase()],
+        type:String(r?.type||"concept")
+      });
+    }
+  }else{
   for(const r of units){
     const label=String(r?.[0]||"").trim(),meaning=String(r?.[1]||"").trim(),where=String(r?.[2]||"").trim();
     if(!label)continue;
@@ -1679,6 +1696,7 @@ function renderNormsSection(ch,s){
       aliases:[...new Set(aliases)],
       type:String(t?.type||"concept")
     });
+  }
   }
   const uniqueProducts=(arr)=>{
     const seen=new Set(),out=[];
@@ -1730,7 +1748,8 @@ function renderNormsSection(ch,s){
     return '<article class="glossary-card" data-glossary-item data-glossary-topics="'+esc(r.topics.join(" "))+'" data-glossary-search="'+esc(r.search)+'"><div class="glossary-card-head"><div><span class="glossary-kind">'+kind+'</span><h3>'+esc(r.label)+'</h3>'+secondary+'</div><span class="glossary-index">'+String(i+1).padStart(2,"0")+'</span></div>'+(body||quick?'<div class="glossary-summary">'+body+quick+'</div>':"")+'<div class="glossary-topic-row">'+r.topicLabels.slice(0,3).map(label=>'<button type="button" class="glossary-chip" data-glossary-topic="'+esc(topicDefs.find(t=>t.label===label)?.id||"all")+'">'+esc(label)+'</button>').join("")+'</div>'+details+'</article>';
   };
   const termsHtml=terms.map(itemHtml).join("");
-  const stepsHtml=steps.map((r,i)=>{
+  const renderedSteps=Array.isArray(s.norms12Steps)?s.norms12Steps:steps;
+  const stepsHtml=renderedSteps.map((r,i)=>{
     const label=String(r?.[0]||"").trim(),value=String(r?.[1]||"").trim();
     if(!label&&!value)return "";
     return '<div class="glossary-step"><span>'+String(i+1).padStart(2,"0")+'</span><div><strong>'+esc(label.replace(/^\d+\.\s*/,""))+'</strong><p>'+esc(value)+'</p></div></div>';
