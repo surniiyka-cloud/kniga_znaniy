@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T14:09:50.735Z",
+  "updatedAt": "2026-10-07T14:25:28.983Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4933,7 +4933,10 @@
       ],
       "tabLabels": {
         "custom-варианты-игл": "Варианты игл"
-      }
+      },
+      "images": [
+        "img/photos/admin/4.5-иглы-ветеринарные-многоразовые-ankar/4.5-иглы-ветеринарные-многоразовые-ankar-01.webp"
+      ]
     },
     "4.5-иглы-ветеринарные-многоразовые-tian": {
       "tabTables": {
