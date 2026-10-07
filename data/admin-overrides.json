@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T10:52:38.473Z",
+  "updatedAt": "2026-10-07T10:59:57.357Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21644,6 +21644,11 @@
       },
       "tabOrder": [
         "specs"
+      ]
+    },
+    "3.6-0302-019-бумага-для-вымени-ankar": {
+      "images": [
+        "img/photos/admin/3.6-0302-019-бумага-для-вымени-ankar/3.6-0302-019-бумага-для-вымени-ankar-01.webp"
       ]
     }
   },
