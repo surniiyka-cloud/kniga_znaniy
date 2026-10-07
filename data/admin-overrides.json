@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T10:45:42.184Z",
+  "updatedAt": "2026-10-07T10:45:52.225Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21559,6 +21559,48 @@
     "catalog-2-14-молочно-солевой-агар": {
       "images": [
         "img/photos/admin/catalog-2-14-молочно-солевой-агар/catalog-2-14-молочно-солевой-агар-01.webp"
+      ],
+      "name": "Молочно-солевой агар",
+      "article": "",
+      "type": "",
+      "purpose": "Используется при исследовании стафилококков в пищевых продуктах по ГОСТ 31746-2012",
+      "detailFields": [
+        [
+          "Назначение",
+          "Используется при исследовании стафилококков в пищевых продуктах по ГОСТ 31746-2012"
+        ],
+        [
+          "Фасовка",
+          "Упаковка ПЭТ банка 100гр/250гр/500гр/1кг"
+        ],
+        [
+          "ТУ / стандарт",
+          "СТО ВНИИМС 011-2012 ГОСТ 30347-2016 ГОСТ 33568-2015"
+        ]
+      ],
+      "advantages": [],
+      "substances": [],
+      "indicators": [],
+      "tabTables": {},
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "washCycle": [],
+      "customTabs": [],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "tabOrder": [
+        "specs"
       ]
     }
   },
