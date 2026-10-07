@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T11:52:24.372Z",
+  "updatedAt": "2026-10-07T11:55:05.039Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -22436,6 +22436,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.1-1105-048-запасные-веревки-vink": {
+      "images": [
+        "img/photos/admin/4.1-1105-048-запасные-веревки-vink/4.1-1105-048-запасные-веревки-vink-01.webp"
       ]
     }
   },
