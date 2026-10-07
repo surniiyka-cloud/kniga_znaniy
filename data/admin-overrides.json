@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:35:41.579Z",
+  "updatedAt": "2026-10-07T09:35:48.554Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21252,7 +21252,29 @@
       "__frozen": true,
       "images": [
         "img/photos/admin/3.9-термометр-пластиковый-min-max-ankar/3.9-термометр-пластиковый-min-max-ankar-01.webp"
-      ]
+      ],
+      "features": "Изготовлен из прочной пластмассы; фиксирует самую высокую и самую низкую температуру; диапазон измерения от −40 до +50 °C",
+      "sourceRow": 7,
+      "candidateId": "термометр-пластиковый-min-max-ankar",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.9-0704-01-010-прибор-для-определения-степени-чистоты-молока-очм-м": {
       "name": "Прибор для определения степени чистоты молока ОЧМ-М",
