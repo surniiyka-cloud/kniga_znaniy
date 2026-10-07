@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:31:24.174Z",
+  "updatedAt": "2026-10-07T09:35:41.579Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21249,7 +21249,10 @@
       "tabOrder": [
         "specs"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.9-термометр-пластиковый-min-max-ankar/3.9-термометр-пластиковый-min-max-ankar-01.webp"
+      ]
     },
     "3.9-0704-01-010-прибор-для-определения-степени-чистоты-молока-очм-м": {
       "name": "Прибор для определения степени чистоты молока ОЧМ-М",
