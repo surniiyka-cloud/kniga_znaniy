@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:11:02.664Z",
+  "updatedAt": "2026-10-07T09:11:06.644Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -5400,7 +5400,29 @@
         ]
       ],
       "advantages": [],
-      "__frozen": true
+      "__frozen": true,
+      "features": "Изготовлены из пластмассы; 10 шт. в банке",
+      "sourceRow": 5,
+      "candidateId": "0303-056-штифты-расширительные",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.6-0302-014-бумага-для-вымени-кр206": {
       "tabOrder": [
