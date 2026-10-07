@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:08:19.111Z",
+  "updatedAt": "2026-10-07T09:10:19.410Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21258,6 +21258,57 @@
         "complectation"
       ],
       "__frozen": true
+    },
+    "manual-3-3-soskovaya-kanyulya": {
+      "name": "Сосковая канюля",
+      "article": "0303.056",
+      "type": "Сосковая канюля",
+      "purpose": "Для поддержания соскового канала раскрытым при повреждениях соска или верхушки соска, а также при оперативном расширении соскового канала.",
+      "detailFields": [
+        [
+          "Материал",
+          "Пластмасса"
+        ],
+        [
+          "Количество",
+          "10 шт. в коробке"
+        ],
+        [
+          "Действие",
+          "Канюли сохраняют сосковый канал раскрытым"
+        ],
+        [
+          "Применение",
+          "При повреждениях соска или верхушки соска, оперативное расширение соскового канала"
+        ]
+      ],
+      "advantages": [],
+      "tabOrder": [
+        "specs"
+      ],
+      "images": [
+        "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png"
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     }
   },
   "sections": {
@@ -21504,7 +21555,7 @@
       "manualProducts": {
         "manual-3-3-soskovaya-kanyulya": {
           "name": "Сосковая канюля",
-          "article": "",
+          "article": "0303.056",
           "type": "Сосковая канюля",
           "purpose": "Для поддержания соскового канала раскрытым при повреждениях соска или верхушки соска, а также при оперативном расширении соскового канала.",
           "detailFields": [
@@ -21532,7 +21583,29 @@
           "images": [
             "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-soskovaya-kanyulya.png"
           ],
-          "sourceSectionId": "3.3"
+          "sourceSectionId": "3.3",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Название характеристики",
+              "Описание"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "workflow": [],
+          "washCycle": [],
+          "tabTables": {},
+          "substances": [],
+          "customTabs": [],
+          "id": "manual-3-3-soskovaya-kanyulya",
+          "manual": true
         }
       },
       "deletedProductIds": [
