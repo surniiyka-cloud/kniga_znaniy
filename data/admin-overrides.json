@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T14:50:02.595Z",
+  "updatedAt": "2026-10-07T14:53:07.405Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24394,6 +24394,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.6-0203-040-поддержка-для-головы-крс-vink": {
+      "images": [
+        "img/photos/admin/4.6-0203-040-поддержка-для-головы-крс-vink/4.6-0203-040-поддержка-для-головы-крс-vink-01.webp"
       ]
     }
   },
