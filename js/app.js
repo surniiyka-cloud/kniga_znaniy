@@ -1971,7 +1971,10 @@ function productTabs(p,{includeHidden=false}={}){
   if(hasTabContent(p,"assortment",p.assortment))tabs.push({id:"assortment",label:"Линейка"});
   if(hasTabContent(p,"consumables",p.consumables))tabs.push({id:"consumables",label:"Расходные материалы"});
   if(hasTabContent(p,"testKits",p.testKits))tabs.push({id:"testKits",label:"Тест-наборы"});
-  for(const t of p.customTabs||[])if(!tabs.some(x=>x.id===t.id))tabs.push({id:t.id,label:t.label||t.id});
+  for(const t of p.customTabs||[]){
+    if(p?.id==="catalog-2-15-турбидофлуориметр-биотф"&&String(t?.id||"")==="bio-щф")continue;
+    if(!tabs.some(x=>x.id===t.id))tabs.push({id:t.id,label:t.label||t.id});
+  }
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
   const hidden=new Set(p.hiddenTabs||[]);
   if(!includeHidden)tabs=tabs.filter(t=>!hidden.has(t.id));
