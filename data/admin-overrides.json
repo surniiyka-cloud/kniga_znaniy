@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:15:41.992Z",
+  "updatedAt": "2026-10-07T12:19:16.950Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -22886,6 +22886,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.3-пробоотборник-сена-wile": {
+      "images": [
+        "img/photos/admin/4.3-пробоотборник-сена-wile/4.3-пробоотборник-сена-wile-01.webp"
       ]
     }
   },
