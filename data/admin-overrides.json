@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T11:29:03.409Z",
+  "updatedAt": "2026-10-07T11:29:14.700Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -22024,6 +22024,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "3.6-бумага-для-обработки-вымени-коров-тиан-vip1": {
+      "images": [
+        "img/photos/admin/3.6-бумага-для-обработки-вымени-коров-тиан-vip1/3.6-бумага-для-обработки-вымени-коров-тиан-vip1-01.webp"
       ]
     }
   },
