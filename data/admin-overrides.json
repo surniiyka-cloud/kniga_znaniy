@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T07:50:23.532Z",
+  "updatedAt": "2026-10-07T07:58:08.843Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -20894,6 +20894,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "3.9-цифровой-термометр-ankar-с-гибким-зондом": {
+      "images": [
+        "img/photos/admin/3.9-цифровой-термометр-ankar-с-гибким-зондом/3.9-цифровой-термометр-ankar-с-гибким-зондом-01.webp"
       ]
     }
   },
