@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:25:11.482Z",
+  "updatedAt": "2026-10-07T12:28:15.760Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4393,7 +4393,10 @@
       ],
       "tabLabels": {
         "custom-комплектация": "Комплектация"
-      }
+      },
+      "images": [
+        "img/photos/admin/4.3-сепаратор-для-навоза-nasco/4.3-сепаратор-для-навоза-nasco-01.webp"
+      ]
     },
     "4.4-прибор-для-массовых-прививок-пмп-5м-шилова": {
       "tabTables": {
