@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:38:50.847Z",
+  "updatedAt": "2026-10-07T12:43:51.228Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4165,25 +4165,7 @@
         ]
       ],
       "__frozen": true,
-      "images": [
-        "img/photos/07-turbidofluorimetr-biotf/07-turbidofluorimetr-biotf.png"
-      ],
-      "imageSettings": {
-        "img/photos/07-turbidofluorimetr-biotf/07-turbidofluorimetr-biotf.png": {
-          "card": {
-            "scale": 2.5,
-            "x": 35,
-            "y": -25,
-            "fit": "contain"
-          },
-          "detail": {
-            "scale": 2.2,
-            "x": 33,
-            "y": -23,
-            "fit": "contain"
-          }
-        }
-      }
+      "images": []
     },
     "catalog-2-16-люминометр-smart": {
       "tabOrder": [
