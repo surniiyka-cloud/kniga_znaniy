@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:07:25.443Z",
+  "updatedAt": "2026-10-07T12:11:54.274Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4251,7 +4251,10 @@
       "tabLabels": {
         "custom-комплектующие-для-drench-mate": "Комплектующие для Drench-Mate",
         "custom-набор-комплектующих-для-drench-mate-начальный": "Набор комплектующих для Drench-Mate начальный"
-      }
+      },
+      "images": [
+        "img/photos/admin/4.2-1105-030-дренчер-drench-mate-1-1-5/4.2-1105-030-дренчер-drench-mate-1-1-5-01.webp"
+      ]
     },
     "4.3-сепаратор-для-навоза-nasco": {
       "tabTables": {
