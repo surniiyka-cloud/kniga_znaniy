@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:02:29.052Z",
+  "updatedAt": "2026-10-07T12:04:59.905Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -22700,6 +22700,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.1-0206-073-реаниматор-для-новорожденных-телят-kerbl": {
+      "images": [
+        "img/photos/admin/4.1-0206-073-реаниматор-для-новорожденных-телят-kerbl/4.1-0206-073-реаниматор-для-новорожденных-телят-kerbl-01.webp"
       ]
     }
   },
