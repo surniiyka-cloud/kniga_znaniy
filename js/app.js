@@ -973,7 +973,7 @@ function buildChapter2Catalog(){
         name="Глюкозо-пептонная среда (ГПС) с индикатором";
         purpose="Жидкая питательная среда для санитарно-бактериологического анализа воды (питьевой, минеральной, прибрежной) с целью обнаружения бактерий группы кишечной палочки (БГКП) по признаку ферментации глюкозы.";
       }else if(/^сда\b/i.test(name)){
-        images=["img/photos/admin/microbiology/sda.png"];
+        images=["img/photos/admin/microbiology/sda.webp"];
       }else if(/ласса/i.test(name)){
         name="Ласса";
         purpose="Полужидкая дифференциально-диагностическая питательная среда, предназначенная для определения спор лактатсбраживающих маслянокислых бактерий (клостридий).";
@@ -988,7 +988,7 @@ function buildChapter2Catalog(){
       }else if(/молочно-солевой агар/i.test(name)){
         purpose="Используется при исследовании стафилококков в пищевых продуктах по ГОСТ 31746-2012";
       }else if(/скив/i.test(name)){
-        target="2.1.4";name="СКИВ";images=["img/photos/admin/microbiology/skiv.png"];
+        target="2.1.4";name="СКИВ";images=["img/photos/admin/microbiology/skiv.webp"];
         extra.push(["Фасовка","Стеклянный флакон"]);
       }else if(/резазурина натриевая/i.test(name)||/микробитесты.*резазурин/i.test(name)){
         target="2.1.4";
