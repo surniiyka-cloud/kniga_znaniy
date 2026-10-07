@@ -1885,7 +1885,7 @@ function twoColumnCardTable(headers,rows){
   const h=Array.isArray(headers)?headers:[],body=Array.isArray(rows)?rows:[];
   return '<div class="semantic-pair-list">'+
     (h.length?'<div class="semantic-pair-head"><span>'+esc(h[0]||"Параметр")+'</span><span>'+esc(h[1]||"Значение")+'</span></div>':"")+
-    body.map(r=>'<div class="step-instruction-row semantic-pair-row"><div class="step-instruction-index semantic-pair-key">'+esc(r?.[0]||"")+'</div><div class="step-instruction-text semantic-pair-value">'+esc(r?.[1]||"")+'</div></div>').join("")+
+    body.map(r=>{const warning=/^важно!?$/i.test(String(r?.[0]||"").trim());return '<div class="step-instruction-row semantic-pair-row '+(warning?"is-warning":"")+'"><div class="step-instruction-index semantic-pair-key">'+esc(r?.[0]||"")+'</div><div class="step-instruction-text semantic-pair-value">'+esc(r?.[1]||"")+'</div></div>'}).join("")+
   '</div>';
 }
 function tablePanel(headers,rows,table=null){
