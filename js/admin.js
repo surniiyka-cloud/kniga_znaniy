@@ -524,10 +524,10 @@ function renderAccountPage(){
   const sections=catalog.flatMap(ch=>ch.sections.map(sec=>({...sec,chapterId:ch.id,chapterTitle:ch.title})));
   const allProducts=sections.flatMap(sec=>sec.products.map(p=>{
     const ctx=window.KB_EDITOR_API?.product?.(p.id)||null;
-    return {...p,sectionId:sec.id,sectionTitle:sec.title,chapterId:sec.chapterId,ctx,quality:ctx?productQuality(ctx):0,image:ctx?.images?.[0]||""};
+    return {...p,sectionId:sec.id,sectionTitle:sec.title,chapterId:sec.chapterId,ctx,quality:ctx?productQuality(ctx):0,images:ctx?.images||[]};
   }));
   const improve=allProducts.filter(p=>p.quality<75).length;
-  const withPhoto=allProducts.filter(p=>p.image).length;
+  const withPhoto=allProducts.filter(p=>(p.images||[]).length).length;
   const html=shell("Товары","Управление карточками каталога",
     '<div class="kb-market-dashboard">'+
       '<div class="kb-market-tabs"><button type="button" class="active" data-account-filter="all">Все товары <b>'+allProducts.length+'</b></button><button type="button" data-account-filter="improve">Можно улучшить <b>'+improve+'</b></button><button type="button" data-account-filter="photo">С фото <b>'+withPhoto+'</b></button></div>'+
@@ -538,10 +538,12 @@ function renderAccountPage(){
     '<div class="kb-account-catalog kb-market-catalog">'+
     sections.map(sec=>{
       const rows=sec.products.map(p=>{
-        const ctx=window.KB_EDITOR_API?.product?.(p.id)||null,q=ctx?productQuality(ctx):0,img=ctx?.images?.[0]||"";
-        return '<article class="kb-account-product kb-market-row" data-account-product-card data-product-id="'+esc(p.id)+'" data-quality="'+q+'" data-has-photo="'+(img?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
+        const ctx=window.KB_EDITOR_API?.product?.(p.id)||null,q=ctx?productQuality(ctx):0,imgs=ctx?.images||[];
+        return '<article class="kb-account-product kb-market-row" data-account-product-card data-product-id="'+esc(p.id)+'" data-quality="'+q+'" data-has-photo="'+(imgs.length?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
           '<label class="kb-market-check"><input type="checkbox" data-account-select-product value="'+esc(p.id)+'"></label>'+
-          '<div class="kb-market-thumb '+(img?"":"empty")+'">'+(img?'<img src="'+esc(photoPreviewSrc(img))+'" loading="lazy" alt="">':'<span>TIAN</span>')+'</div>'+
+          '<div class="kb-market-thumb '+(imgs.length?"":"empty")+'">'+(imgs.length
+            ?'<div class="kb-market-thumb-list">'+imgs.map((img,i)=>'<figure class="kb-market-thumb-item" title="Фото '+(i+1)+'"><img src="'+esc(photoPreviewSrc(img))+'" loading="lazy" alt=""><span>'+(i+1)+'</span></figure>').join("")+'</div>'
+            :'<span>TIAN</span>')+'</div>'+
           '<div class="kb-market-product-main"><strong>'+esc(p.name)+'</strong><small>'+esc(p.article?("Арт. "+p.article):"Без артикула")+'</small></div>'+
           '<div class="kb-market-section">'+esc(sec.id)+'<small>'+esc(sec.title)+'</small></div>'+
           '<div class="kb-market-quality '+(q>=80?"good":q>=55?"mid":"low")+'"><b>'+q+'%</b><span>качество</span></div>'+
