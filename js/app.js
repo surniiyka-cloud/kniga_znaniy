@@ -1282,6 +1282,15 @@ function installEditorApi(){
       return {kind:"product",id:x.product.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(x.product.id)||{}),images:deepCopy(state.assets.productImages?.[x.product.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(x.product.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title}};
     },
     overrides(){return deepCopy(state.overrides||{})},
+    setOverrides(overrides){
+      if(!overrides||typeof overrides!=="object"||Array.isArray(overrides))return;
+      state.overrides=deepCopy(overrides);
+      mapData();
+      state.index=buildLiveSearchIndex();
+      state.search=makeSearch(state.index);
+      renderNav();
+      counters();
+    },
     setProductOverride(id,override){
       const key=String(id||"");if(!key||!override||typeof override!=="object")return;
       state.overrides ||= {};state.overrides.products ||= {};
