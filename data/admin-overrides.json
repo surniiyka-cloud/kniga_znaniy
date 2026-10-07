@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T13:26:07.839Z",
+  "updatedAt": "2026-10-07T13:28:23.627Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -23264,6 +23264,12 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "3.7-0406-091-5506-2-5503-5-0406-101-фильтр-рукавный": {
+      "images": [
+        "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
+        "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png"
       ]
     }
   },
