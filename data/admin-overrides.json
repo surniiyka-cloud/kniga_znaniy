@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T11:47:30.272Z",
+  "updatedAt": "2026-10-07T11:52:19.300Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -22372,6 +22372,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.1-1105-048-родовспомогатель-ankar": {
+      "images": [
+        "img/photos/admin/4.1-1105-048-родовспомогатель-ankar/4.1-1105-048-родовспомогатель-ankar-01.webp"
       ]
     }
   },
