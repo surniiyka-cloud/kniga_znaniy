@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T10:30:16.018Z",
+  "updatedAt": "2026-10-07T10:35:32.470Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21507,6 +21507,11 @@
       },
       "tabOrder": [
         "specs"
+      ]
+    },
+    "catalog-2-14-сывороточный-агар-с-индикатором-бф": {
+      "images": [
+        "img/photos/admin/catalog-2-14-сывороточный-агар-с-индикатором-бф/catalog-2-14-сывороточный-агар-с-индикатором-бф-01.webp"
       ]
     }
   },
