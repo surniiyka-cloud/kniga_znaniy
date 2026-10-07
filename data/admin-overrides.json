@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:12:00.635Z",
+  "updatedAt": "2026-10-07T12:15:21.496Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -22830,6 +22830,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.3-пробоотборник-для-сенажа-и-силоса-nasco": {
+      "images": [
+        "img/photos/admin/4.3-пробоотборник-для-сенажа-и-силоса-nasco/4.3-пробоотборник-для-сенажа-и-силоса-nasco-01.webp"
       ]
     }
   },
