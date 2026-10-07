@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T12:43:51.228Z",
+  "updatedAt": "2026-10-07T12:45:59.207Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4165,7 +4165,9 @@
         ]
       ],
       "__frozen": true,
-      "images": []
+      "images": [
+        "img/photos/admin/catalog-2-15-турбидофлуориметр-биотф/catalog-2-15-турбидофлуориметр-биотф-01.webp"
+      ]
     },
     "catalog-2-16-люминометр-smart": {
       "tabOrder": [
