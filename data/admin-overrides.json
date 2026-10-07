@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:31:07.137Z",
+  "updatedAt": "2026-10-07T09:31:24.174Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21202,7 +21202,29 @@
       "__frozen": true,
       "images": [
         "img/photos/admin/3.9-1105-054-термометр-жидкостной/3.9-1105-054-термометр-жидкостной-01.webp"
-      ]
+      ],
+      "features": "Устойчив к кипячению; оснащён ушком для подвешивания; диапазон измерения от −20 до +110 °C; без ртути, спиртовой",
+      "sourceRow": 6,
+      "candidateId": "1105-054-термометр-жидкостной",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.9-термометр-пластиковый-min-max-ankar": {
       "name": "Термометр пластиковый MIN-MAX, ANKAR",
