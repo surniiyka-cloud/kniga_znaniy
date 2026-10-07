@@ -1111,12 +1111,86 @@ function foundationTermsEditorHtml(ctx){
       '<label class="kb-admin-field"><span>Ожидают добавления — одна строка</span><textarea rows="3" data-foundation-pending>'+esc((t.pendingResources||[]).join("\n"))+'</textarea></label>'+
     '</div></details>').join("")+'</div></section>';
 }
+function norms12Source(ctx){
+  const s=ctx?.section||{},rows=Array.isArray(s.rawRows)?s.rawRows:(Array.isArray(s.rows)?s.rows:[]);
+  const units=[],reading=[],steps=[];let mode="";
+  const heads={"1. Нормативные документы":"docs","2. Обозначения и единицы измерения":"units","3. Как читать показатели и таблицы":"reading","Порядок подбора товара":"steps"};
+  const skip=new Set(["Документ","Обозначение","Показатель / обозначение","Шаг"]);
+  for(const r of rows){
+    const a=String(r?.[0]||"").trim();if(!a)continue;
+    if(heads[a]){mode=heads[a];continue}
+    if(/^Важно:/i.test(a)||skip.has(a))continue;
+    if(mode==="units")units.push(r);
+    else if(mode==="reading")reading.push(r);
+    else if(mode==="steps")steps.push([String(r?.[0]||"").trim(),String(r?.[1]||"").trim()]);
+  }
+  const records=[];
+  for(const r of units){
+    const label=String(r?.[0]||"").trim(),meaning=String(r?.[1]||"").trim(),where=String(r?.[2]||"").trim();if(!label)continue;
+    records.push({label,meaning,definition:meaning,whereSource:where,example:"",important:"",detailsText:[],type:"abbreviation"});
+  }
+  for(const r of reading){
+    const label=String(r?.[0]||"").trim(),definition=String(r?.[1]||"").trim(),example=String(r?.[2]||"").trim(),important=String(r?.[3]||"").trim();if(!label)continue;
+    records.push({label,meaning:"",definition,whereSource:"",example,important,detailsText:[],type:"concept"});
+  }
+  for(const t of (s.glossaryTerms||[])){
+    const label=String(t?.label||"").trim();if(!label)continue;
+    records.push({label,meaning:"",definition:String(t?.summary||"").trim(),whereSource:String(t?.where||"").trim(),example:"",important:"",detailsText:Array.isArray(t?.details)?t.details.map(x=>String(x||"")):[],type:String(t?.type||"concept")});
+  }
+  return {
+    records:Array.isArray(s.norms12Records)?deep(s.norms12Records):records,
+    steps:Array.isArray(s.norms12Steps)?deep(s.norms12Steps):steps
+  };
+}
+function norms12RecordHtml(r,index){
+  return '<details class="kb-admin-group" data-norms12-record open>'+
+    '<summary><strong>'+esc(r.label||("Запись "+(index+1)))+'</strong><small>редактировать</small></summary>'+
+    '<div class="kb-admin-grid">'+
+      '<label class="kb-admin-field"><span>Термин / обозначение</span><input data-norms12-label value="'+esc(r.label||"")+'"></label>'+
+      '<label class="kb-admin-field"><span>Расшифровка / значение</span><textarea rows="2" data-norms12-meaning>'+esc(r.meaning||"")+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Краткое определение</span><textarea rows="3" data-norms12-definition>'+esc(r.definition||"")+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Где используется</span><textarea rows="2" data-norms12-where>'+esc(r.whereSource||"")+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Пример</span><textarea rows="2" data-norms12-example>'+esc(r.example||"")+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Важно</span><textarea rows="2" data-norms12-important>'+esc(r.important||"")+'</textarea></label>'+
+      '<label class="kb-admin-field kb-admin-span-2"><span>Подробнее — каждый абзац с новой строки</span><textarea rows="5" data-norms12-details>'+esc((r.detailsText||[]).join("\n"))+'</textarea></label>'+
+      '<label class="kb-admin-field"><span>Тип</span><select data-norms12-type><option value="concept"'+(r.type==="concept"?" selected":"")+'>Термин</option><option value="abbreviation"'+(r.type==="abbreviation"?" selected":"")+'>Сокращение / обозначение</option></select></label>'+
+      '<div class="kb-admin-field"><span>Действие</span><button type="button" class="kb-admin-btn danger" data-norms12-remove>Удалить запись</button></div>'+
+    '</div></details>';
+}
+function norms12EditorHtml(ctx){
+  const src=norms12Source(ctx);
+  return '<section class="kb-admin-section"><div class="kb-product-section-head"><div><h3>Сокращения, обозначения и единицы измерения</h3><p class="kb-admin-hint">Здесь редактируются именно те карточки, которые видны в разделе 1.2. Текст сохраняется без автоматического переписывания.</p></div><button type="button" class="kb-admin-btn primary" data-norms12-add>+ Добавить запись</button></div>'+
+    '<div data-norms12-list>'+src.records.map(norms12RecordHtml).join("")+'</div>'+
+    '<div class="kb-product-section-head"><div><h3>Порядок подбора товара</h3><p class="kb-admin-hint">Шаги из нижней памятки раздела 1.2.</p></div><button type="button" class="kb-admin-btn ghost" data-norms12-step-add>+ Добавить шаг</button></div>'+
+    '<div data-norms12-steps>'+src.steps.map((r,i)=>'<div class="kb-admin-row" data-norms12-step><input data-norms12-step-label value="'+esc(r?.[0]||"")+'" placeholder="Шаг"><textarea rows="2" data-norms12-step-text placeholder="Описание">'+esc(r?.[1]||"")+'</textarea><button type="button" class="kb-admin-btn danger" data-norms12-step-remove>×</button></div>').join("")+'</div>'+
+  '</section>';
+}
+function readNorms12(form){
+  const records=[...form.querySelectorAll("[data-norms12-record]")].map(el=>({
+    label:el.querySelector("[data-norms12-label]")?.value.trim()||"",
+    meaning:el.querySelector("[data-norms12-meaning]")?.value.trim()||"",
+    definition:el.querySelector("[data-norms12-definition]")?.value.trim()||"",
+    whereSource:el.querySelector("[data-norms12-where]")?.value.trim()||"",
+    example:el.querySelector("[data-norms12-example]")?.value.trim()||"",
+    important:el.querySelector("[data-norms12-important]")?.value.trim()||"",
+    detailsText:parseLines(el.querySelector("[data-norms12-details]")?.value||""),
+    type:el.querySelector("[data-norms12-type]")?.value||"concept"
+  })).filter(x=>x.label);
+  const steps=[...form.querySelectorAll("[data-norms12-step]")].map(el=>[
+    el.querySelector("[data-norms12-step-label]")?.value.trim()||"",
+    el.querySelector("[data-norms12-step-text]")?.value.trim()||""
+  ]).filter(r=>r[0]||r[1]);
+  return {records,steps};
+}
+
 function renderSectionEditor(ctx){
   const existing=deep(overrideCache.sections?.[ctx.id]||{});
   const sheet="";
   const content=ctx.id==="1.1"
     ?foundationTermsEditorHtml(ctx)
-    :sectionProductsEditor(ctx)+sectionBuilderHtml(ctx)+
+    :ctx.id==="1.2"
+      ?norms12EditorHtml(ctx)
+      :sectionProductsEditor(ctx)+sectionBuilderHtml(ctx)+
       '<details class="kb-admin-group"><summary>Старые структурированные данные <small>резерв</small></summary><p class="kb-admin-hint">Оставлены для совместимости со старыми разделами. Новое содержимое редактируй выше — визуальным конструктором.</p>'+
       '<label class="kb-admin-field"><span>Пары «название → значение»</span><textarea rows="7" data-section-pairs>'+esc(pairText((ctx.section.pairs||[]).map(x=>[x.label,x.value])))+'</textarea></label>'+
       '<label class="kb-admin-field"><span>Заметки — одна на строку</span><textarea rows="5" name="notes">'+esc((ctx.section.notes||[]).join("\n"))+'</textarea></label></details>';
@@ -1202,7 +1276,18 @@ function bindBody(){
       showStatus("Карточка удалена.");
     }catch(err){showError(err)}
   }));
+  body.querySelector("[data-norms12-add]")?.addEventListener("click",()=>{
+    const list=body.querySelector("[data-norms12-list]");if(!list)return;
+    list.insertAdjacentHTML("beforeend",norms12RecordHtml({label:"",meaning:"",definition:"",whereSource:"",example:"",important:"",detailsText:[],type:"concept"},list.querySelectorAll("[data-norms12-record]").length));
+  });
+  body.querySelector("[data-norms12-step-add]")?.addEventListener("click",()=>{
+    body.querySelector("[data-norms12-steps]")?.insertAdjacentHTML("beforeend",'<div class="kb-admin-row" data-norms12-step><input data-norms12-step-label value="" placeholder="Шаг"><textarea rows="2" data-norms12-step-text placeholder="Описание"></textarea><button type="button" class="kb-admin-btn danger" data-norms12-step-remove>×</button></div>');
+  });
   body.addEventListener("click",e=>{
+    const normsRemove=e.target.closest?.("[data-norms12-remove]");
+    if(normsRemove){normsRemove.closest("[data-norms12-record]")?.remove();return}
+    const normsStepRemove=e.target.closest?.("[data-norms12-step-remove]");
+    if(normsStepRemove){normsStepRemove.closest("[data-norms12-step]")?.remove();return}
     const addTab=e.target.closest?.("[data-add-tab]");
     if(addTab){
       const form=body.querySelector("[data-admin-product]"),input=body.querySelector("[data-new-tab-label]");
@@ -1575,6 +1660,16 @@ async function saveSection(e){
     let out={};const raw=form.querySelector("[data-section-json]")?.value.trim();
     if(raw){out=JSON.parse(raw);if(!out||Array.isArray(out)||typeof out!=="object")throw new Error("JSON раздела должен быть объектом.");}
     putDiff(out,"title",String(fd.get("title")||""),String(src.title||""));
+    if(id==="1.2"){
+      const edited=readNorms12(form);
+      out.norms12Records=edited.records;
+      out.norms12Steps=edited.steps;
+      const o=await loadOverrides();
+      const previous=o.sections?.[id]||{};
+      for(const key of ["glossaryTerms","manualProducts","productOrder","hiddenProductIds","deletedProductIds"])if(previous[key]!==undefined&&out[key]===undefined)out[key]=deep(previous[key]);
+      o.sections[id]=out;
+      await commitOverrides(o);overrideCache=deep(o);showStatus("Раздел 1.2 сохранён и опубликован.");location.hash="#/account/section/1.2";location.reload();return;
+    }
     if(id==="1.1"){
       const terms=[...form.querySelectorAll("[data-foundation-edit-term]")].map(el=>{
         const number=Number(el.dataset.termNumber||0);
