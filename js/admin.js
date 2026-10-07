@@ -1326,12 +1326,11 @@ function bindBody(){
     const id=b.dataset.accountDeleteProduct,ctx=window.KB_EDITOR_API?.product?.(id);if(!ctx)return;
     if(!confirm('Удалить карточку «'+(ctx.product?.name||id)+'» с сайта?'))return;
     try{
+      const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]"),sectionId=section?.dataset.sectionId||ctx.section?.id||"";
+      rememberAccountReturn(sectionId,"",section);
       showStatus("Удаляем карточку…");await deleteProductById(id);
-      const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]");
-      row?.remove();
-      if(section&&!section.querySelector("[data-account-product-card]"))section.remove();
-      updateAccountCounters(body);
-      showStatus("Карточка удалена.");
+      location.hash="#/account";
+      location.reload();
     }catch(err){showError(err)}
   }));
   body.querySelector("[data-norms12-add]")?.addEventListener("click",()=>{
