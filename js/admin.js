@@ -1012,8 +1012,9 @@ async function deleteProductById(productId,{navigate=false}={}){
   }
   const committed=await commitOverrides(o);
   overrideCache=deep(committed);
+  window.KB_EDITOR_API?.setOverrides?.(committed);
   if(navigate)returnToAccountSection(ctx.section?.id||ctx.sourceSection?.id||"",productId);
-  return {id:productId,sectionId:ctx.section?.id||ctx.sourceSection?.id||"",manual:removedManual};
+  return {id:productId,sectionId:ctx.section?.id||ctx.sourceSection?.id||"",manual:removedManual,committed};
 }
 function productManagementHtml(ctx){
   const quality=productQuality(ctx);
@@ -1357,8 +1358,8 @@ function bindBody(){
       const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]"),sectionId=section?.dataset.sectionId||ctx.section?.id||"";
       rememberAccountReturn(sectionId,"",section);
       showStatus("Удаляем карточку…");await deleteProductById(id);
-      location.hash="#/account";
-      location.reload();
+      if(window.KB_ADMIN_PAGE?.render)await window.KB_ADMIN_PAGE.render();
+      showStatus("Карточка удалена.");
     }catch(err){showError(err)}
   }));
   body.querySelector("[data-norms12-add]")?.addEventListener("click",()=>{
@@ -1494,7 +1495,6 @@ function bindBody(){
       showStatus("Удаляем карточку…");await deleteProductById(id);
       rememberAccountReturn(sectionId,"");
       location.hash="#/account";
-      location.reload();
     }catch(err){showError(err)}
   });
   let photoReplaceRow=null;
