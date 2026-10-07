@@ -188,6 +188,34 @@ async function publishLiveSnapshots(sectionIds=null){
   await putRepoText(path,JSON.stringify(merged,null,2)+"\n","Admin: publish refreshed Google Sheets snapshots");
 }
 function isPlainObject(v){return !!v&&typeof v==="object"&&!Array.isArray(v)}
+function normalizeOverrideStructure(data){
+  data ||= emptyOverrides();data.products ||= {};data.sections ||= {};data.chapters ||= {};
+  for(const sec of Object.values(data.sections)){
+    if(!sec||typeof sec!=="object"||Array.isArray(sec))continue;
+    const deleted=[...new Set((sec.deletedProductIds||[]).map(String).filter(Boolean))];
+    const deletedSet=new Set(deleted);
+    if(sec.manualProducts&&typeof sec.manualProducts==="object"&&!Array.isArray(sec.manualProducts)){
+      for(const id of [...deletedSet]){
+        if(!Object.prototype.hasOwnProperty.call(sec.manualProducts,id))continue;
+        delete sec.manualProducts[id];
+        delete data.products[id];
+        deletedSet.delete(id);
+      }
+      if(!Object.keys(sec.manualProducts).length)delete sec.manualProducts;
+    }
+    const finalDeleted=[...deletedSet];
+    if(finalDeleted.length)sec.deletedProductIds=finalDeleted;else delete sec.deletedProductIds;
+    if(Array.isArray(sec.hiddenProductIds)){
+      const hidden=[...new Set(sec.hiddenProductIds.map(String).filter(id=>id&&!deletedSet.has(id)))];
+      if(hidden.length)sec.hiddenProductIds=hidden;else delete sec.hiddenProductIds;
+    }
+    if(Array.isArray(sec.productOrder)){
+      const order=[...new Set(sec.productOrder.map(String).filter(id=>id&&!deletedSet.has(id)))];
+      if(order.length)sec.productOrder=order;else delete sec.productOrder;
+    }
+  }
+  return data;
+}
 function threeWayApply(base,next,remote){
   if(same(base,next))return deep(remote);
   if(isPlainObject(base)&&isPlainObject(next)){
@@ -214,7 +242,7 @@ async function commitOverrides(data){
   const cur=await repoFile("data/admin-overrides.json");
   let remote=emptyOverrides();
   if(cur?.content){try{remote=JSON.parse(base64Utf8(cur.content))||emptyOverrides()}catch{}}
-  const merged=threeWayApply(baseline,data,remote);
+  const merged=normalizeOverrideStructure(threeWayApply(baseline,data,remote));
   merged.version=1;merged.updatedAt=new Date().toISOString();
 
   await putRepoText("data/admin-overrides.json",JSON.stringify(merged,null,2)+"\n","Admin: update knowledge book");
