@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:26:42.708Z",
+  "updatedAt": "2026-10-07T09:26:47.262Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21144,7 +21144,29 @@
       "__frozen": true,
       "images": [
         "img/photos/admin/3.9-12591350-электронный-ветеринарный-термометр/3.9-12591350-электронный-ветеринарный-термометр-01.webp"
-      ]
+      ],
+      "features": "Цифровой дисплей; время измерения 5–10 секунд; диапазон измерения 32–44 °C; автоматическое отключение через 15 секунд; подвесное кольцо и шнур",
+      "sourceRow": 5,
+      "candidateId": "12591350-электронный-ветеринарный-термометр",
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": []
     },
     "3.9-1105-054-термометр-жидкостной": {
       "name": "Термометр жидкостной",
