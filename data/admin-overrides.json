@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T08:44:56.736Z",
+  "updatedAt": "2026-10-07T08:45:41.733Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -18351,7 +18351,31 @@
       "tabOrder": [
         "specs",
         "advantages"
-      ]
+      ],
+      "name": "Пакеты для гомогенизации",
+      "article": "",
+      "type": "Пробоподготовка",
+      "purpose": "Гомогенизация образцов",
+      "substances": [],
+      "indicators": [],
+      "tabTables": {},
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "washCycle": [],
+      "customTabs": [],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      }
     },
     "catalog-2-12-пакеты-для-отбора-образцов": {
       "images": [
