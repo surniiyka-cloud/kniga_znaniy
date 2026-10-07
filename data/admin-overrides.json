@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T11:28:34.962Z",
+  "updatedAt": "2026-10-07T11:28:58.035Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21952,6 +21952,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "3.6-wp305-бумага-для-вымени-коров-тиан-812": {
+      "images": [
+        "img/photos/admin/3.6-wp305-бумага-для-вымени-коров-тиан-812/3.6-wp305-бумага-для-вымени-коров-тиан-812-01.webp"
       ]
     }
   },
