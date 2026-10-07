@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T09:35:48.554Z",
+  "updatedAt": "2026-10-07T09:39:32.126Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -21338,7 +21338,10 @@
         "specs",
         "complectation"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/3.9-0704-01-010-прибор-для-определения-степени-чистоты-молока-очм-м/3.9-0704-01-010-прибор-для-определения-степени-чистоты-молока-очм-м-01.webp"
+      ]
     },
     "manual-3-3-soskovaya-kanyulya": {
       "name": "Сосковая канюля",
