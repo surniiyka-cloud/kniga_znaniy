@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:53:22.797Z",
+  "updatedAt": "2026-10-08T12:54:38.567Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26177,7 +26177,9 @@
           "Исполнение"
         ]
       },
-      "images": [],
+      "images": [
+        "img/photos/admin/5.2-16801-16803-16805-ножи-для-копыт-profi/5.2-16801-16803-16805-ножи-для-копыт-profi-01.webp"
+      ],
       "advantages": [],
       "tabOrder": [
         "specs",
