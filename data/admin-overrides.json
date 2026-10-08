@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T13:46:49.956Z",
+  "updatedAt": "2026-10-08T13:46:54.075Z",
   "products": {
     "5.3-0207-208-красный-0207-210-зеленый-0207-209-синий-0207-211-желтый-0207-212-черный-маркировочный-каран": {
       "images": [
@@ -303,7 +303,71 @@
     "5.3-повязка-липучка-tian": {
       "images": [
         "img/photos/admin/5.3-повязка-липучка-tian/5.3-повязка-липучка-tian-01.webp"
-      ]
+      ],
+      "name": "Повязка-липучка TIAN",
+      "type": "Ножная маркировочная повязка на липучке",
+      "article": "-",
+      "purpose": "Для визуальной маркировки коров",
+      "features": "10 шт. в комплекте; цвета: голубой, жёлтый, зелёный, красный",
+      "sourceRow": 6,
+      "candidateId": "повязка-липучка-tian",
+      "detailFields": [
+        [
+          "Тип",
+          "Ножная маркировочная повязка на липучке"
+        ],
+        [
+          "Назначение",
+          "Для визуальной маркировки коров"
+        ],
+        [
+          "Доступные цвета",
+          "Голубой, жёлтый, зелёный, красный"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [
+        [
+          "Повязки-липучки",
+          "10 шт."
+        ]
+      ],
+      "variants": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "complectation",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
