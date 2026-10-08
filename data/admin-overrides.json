@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:52:21.568Z",
+  "updatedAt": "2026-10-08T12:53:22.797Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26177,9 +26177,7 @@
           "Исполнение"
         ]
       },
-      "images": [
-        "img/photos/24-uhod-za-kopytami/24-nozh-dlya-kopyt-profi-pravostoronniy-shirokiy.png"
-      ],
+      "images": [],
       "advantages": [],
       "tabOrder": [
         "specs",
