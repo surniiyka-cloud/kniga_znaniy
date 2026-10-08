@@ -1075,17 +1075,56 @@ function renderCatalogSection(ch,s){
   }
 }
 
+function upperRowStart(v){
+  const s=String(v??"");
+  const m=s.match(/^(\s*)([а-яё])(.*)$/s);
+  return m?m[1]+m[2].toUpperCase()+m[3]:s;
+}
 function splitFeatureText(text){
-  return String(text||"").split(/;|\.\s+(?=[А-ЯA-ZЁ])/).map((x)=>x.trim().replace(/[.;]+$/,"")).filter((x)=>x.length>2);
+  return String(text||"").split(/;|\.\s+(?=[А-ЯA-ZЁ])/).map((x)=>upperRowStart(x.trim().replace(/[.;]+$/,""))).filter((x)=>x.length>2);
+}
+function inferFeatureCharacteristic(text){
+  const s=String(text||"").trim(),l=s.toLowerCase().replace(/ё/g,"е");
+  const rules=[
+    [/^размер щетк/i,"Размер щётки"],[/^размер лист/i,"Размер листа"],[/^размеры?\b/i,"Размер"],
+    [/^объем\b/i,"Объём"],[/^длина\b/i,"Длина"],[/^ширина\b/i,"Ширина"],[/^высота\b/i,"Высота"],
+    [/^диаметр\b/i,"Диаметр"],[/^толщина\b/i,"Толщина"],[/^(масса|вес)\b/i,"Масса"],
+    [/^плотность\b/i,"Плотность"],[/^цвета?\b/i,"Цвет"],[/^упаковка\b/i,"Упаковка"],
+    [/^количество\b/i,"Количество"],[/^мощность\b/i,"Мощность"],[/^производительность\b/i,"Производительность"],
+    [/^давление\b/i,"Давление"],[/^расход\b/i,"Расход"],[/^питание\b/i,"Питание"],[/^напряжение\b/i,"Напряжение"],
+    [/^температур/i,"Температура"],[/^время\b/i,"Время"],[/^диапазон\b/i,"Диапазон"],
+    [/^материал\b/i,"Материал"],[/^изготовлен[аоы]? из\b/i,"Материал"],[/^выполнен[аоы]? из\b/i,"Материал"],
+    [/^прочный пластик\b/i,"Материал"],[/^металлическая ручка\b/i,"Материал ручки"],
+    [/^жесткая щетина\b/i,"Щетина"],[/^встроенная пружина\b/i,"Пружина"],
+    [/^горизонтальная щетка подвижна\b/i,"Подвижность горизонтальной щётки"],
+    [/^наклонное дно\b/i,"Конструкция"],[/^состоит из\b/i,"Конструкция"],[/^конструкция\b/i,"Конструкция"],
+    [/^возможно штабелирование\b/i,"Штабелирование"],[/^штабелирован/i,"Штабелирование"],
+    [/^до \d+ (?:ягнят|телят|животных)\b/i,"Количество животных"],
+    [/^зернистость\b/i,"Зернистость"],[/^ресурс\b/i,"Ресурс"],[/^срок службы\b/i,"Срок службы"],
+    [/^скорость\b/i,"Скорость"],[/^частота\b/i,"Частота"],[/^грузоподъемност/i,"Грузоподъёмность"],
+    [/^в комплекте\b/i,"Комплектация"],[/^комплект\b/i,"Комплектация"]
+  ];
+  for(const [rx,label] of rules)if(rx.test(l))return label;
+  return "";
 }
 function classifySheetFields(p){
-  const source=(p.sheetFields||[]).map((r)=>[String(r[0]||"").trim(),String(r[1]||"").trim()]).filter((r)=>r[0]&&r[1]);
+  const source=(p.sheetFields||[]).map((r)=>[upperRowStart(String(r[0]||"").trim()),upperRowStart(String(r[1]||"").trim())]).filter((r)=>r[0]&&r[1]);
   const characteristics=[],advantages=[],complectation=[],options=[],variants=[];
   const baseSkip=/^(Наименование|Название|Артикул)$/i;
+  let featureSeen=false,advIndex=0;
+  const distributeFeature=(value)=>{
+    featureSeen=true;
+    splitFeatureText(value).forEach((x)=>{
+      const label=inferFeatureCharacteristic(x);
+      if(label==="Комплектация"){complectation.push(["Комплектация",x]);return}
+      if(label){characteristics.push([label,x]);return}
+      advantages.push(["Особенность "+(++advIndex),x]);
+    });
+  };
   for(const [label,value] of source){
     if(baseSkip.test(label))continue;
     if(/(Преимуществ|Особенност|Характеристики?\s*(?:\/|и)\s*(?:особенност|преимуществ))/i.test(label)){
-      splitFeatureText(value).forEach((x,i)=>advantages.push(["Пункт "+(i+1),x]));
+      distributeFeature(value);
       continue;
     }
     if(/^(Комплектация|Комплект|Состав комплекта|Состав упаковки)$/i.test(label)){complectation.push([label,value]);continue;}
@@ -1093,19 +1132,19 @@ function classifySheetFields(p){
     if(/^(Варианты?|Исполнение|Размерный ряд|Модификации?)$/i.test(label)){variants.push([label,value]);continue;}
     characteristics.push([label,value]);
   }
-  if(!advantages.length&&p.features){
-    splitFeatureText(p.features).forEach((x,i)=>advantages.push(["Особенность "+(i+1),x]));
-  }
+  if(!featureSeen&&p.features)distributeFeature(p.features);
   const standard=[
     ["Артикул",article(p)||""],["Тип",p.type],["Назначение",p.purpose],["Производитель",p.manufacturer],["Страна",p.country],
     ["Размер",p.size],["Количество",p.quantity],["Рост",p.height],["Ширина",p.width],["Длина",p.length],["Толщина",p.thickness]
-  ].filter((x)=>x[1]);
+  ].filter((x)=>x[1]).map(r=>[r[0],upperRowStart(r[1])]);
+  const chars=uniquePairs([...standard,...characteristics].map(r=>r.map(upperRowStart)));
+  const charValues=new Set(chars.map(r=>String(r[1]||"").trim().toLowerCase()));
   return {
-    characteristics:uniquePairs([...standard,...characteristics]),
-    advantages:uniquePairs(advantages),
-    complectation:uniquePairs(complectation),
-    options:uniquePairs(options),
-    variants:uniquePairs(variants)
+    characteristics:chars,
+    advantages:uniquePairs(advantages.map(r=>r.map(upperRowStart)).filter(r=>!charValues.has(String(r[1]||"").trim().toLowerCase()))),
+    complectation:uniquePairs(complectation.map(r=>r.map(upperRowStart))),
+    options:uniquePairs(options.map(r=>r.map(upperRowStart))),
+    variants:uniquePairs(variants.map(r=>r.map(upperRowStart)))
   };
 }
 
@@ -1175,9 +1214,6 @@ function enrichRegularProducts(){
     if(z.complectation.length)p.complectation=z.complectation;
     if(z.options.length)p.options=z.options;
     if(z.variants.length)p.variants=z.variants;
-    if(!p.advantages?.length&&p.features){
-      p.advantages=splitFeatureText(p.features).map((x,i)=>["Особенность "+(i+1),x]);
-    }
   }
 }
 function deepCopy(v){return v==null?v:JSON.parse(JSON.stringify(v));}
