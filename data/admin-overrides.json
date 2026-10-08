@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:18:03.581Z",
+  "updatedAt": "2026-10-08T06:21:31.139Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24718,6 +24718,11 @@
       "customTabs": [],
       "tabOrder": [
         "specs"
+      ]
+    },
+    "4.7-0203-015-путы-нейлоновые-ankar-с-регулировкой": {
+      "images": [
+        "img/photos/admin/4.7-0203-015-путы-нейлоновые-ankar-с-регулировкой/4.7-0203-015-путы-нейлоновые-ankar-с-регулировкой-01.webp"
       ]
     }
   },
