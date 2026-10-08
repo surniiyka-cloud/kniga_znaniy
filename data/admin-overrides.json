@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T13:01:49.853Z",
+  "updatedAt": "2026-10-08T13:01:57.656Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26290,6 +26290,74 @@
     "5.2-0208-167-0208-168-0208-166-нож-для-копыт-узкий": {
       "images": [
         "img/photos/admin/5.2-0208-167-0208-168-0208-166-нож-для-копыт-узкий/5.2-0208-167-0208-168-0208-166-нож-для-копыт-узкий-01.webp"
+      ],
+      "name": "Нож для копыт узкий",
+      "type": "Узкий копытный нож",
+      "article": "0208.167; 0208.168; 0208.166",
+      "purpose": "Для точной расчистки копыт",
+      "features": "0208.167 — правосторонний; 0208.168 — левосторонний; 0208.166 — двусторонний",
+      "sourceRow": 22,
+      "candidateId": "0208-167-0208-168-0208-166-нож-для-копыт-узкий",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.167; 0208.168; 0208.166"
+        ],
+        [
+          "Тип",
+          "Узкий копытный нож"
+        ],
+        [
+          "Назначение",
+          "Для точной расчистки копыт"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "0208.167 — правосторонний"
+        ],
+        [
+          "Особенность 2",
+          "0208.168 — левосторонний"
+        ],
+        [
+          "Особенность 3",
+          "0208.166 — двусторонний"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
