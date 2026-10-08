@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:38:13.237Z",
+  "updatedAt": "2026-10-08T11:43:40.736Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -23920,11 +23920,11 @@
         ],
         [
           "Прочность",
-          "толстый материал выдерживает высокие нагрузки"
+          "Толстый материал выдерживает высокие нагрузки"
         ],
         [
-          "3",
-          "облегчают подъём коров после отёла"
+          "Функция",
+          "Облегчают подъём коров после отёла"
         ]
       ],
       "advantages": [],
@@ -23946,10 +23946,20 @@
       "workflow": [],
       "washCycle": [],
       "tabTables": {},
-      "substances": [],
       "customTabs": [],
       "tabOrder": [
-        "specs"
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     },
     "4.7-0203-080-путы-для-крс-нейлоновые": {
