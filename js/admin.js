@@ -17,12 +17,23 @@ const safe=(v)=>String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9._-]+/gi
 function rememberAccountReturn(sectionId="",productId="",sectionEl=null){
   const sid=String(sectionId||"").trim();if(!sid)return;
   try{
+    const body=document.querySelector(".kb-admin-page")||modal?.querySelector("#kbAdminBody")||document;
     const sectionTop=sectionEl?sectionEl.getBoundingClientRect().top+window.scrollY:null;
+    const search=String(body.querySelector("[data-account-search]")?.value||"");
+    const view=body.querySelector("[data-account-view].active")?.dataset.accountView||"sections";
+    const filter=body.querySelector("[data-account-filter].active")?.dataset.accountFilter||"all";
+    const chapter=body.querySelector("[data-account-chapter-filter].active")?.dataset.accountChapterFilter||"";
+    const drawer=sectionEl?.querySelector?.("[data-section-products]");
     sessionStorage.setItem(ACCOUNT_RETURN_KEY,JSON.stringify({
       sectionId:sid,
       productId:String(productId||""),
       scrollY:Number(window.scrollY||0),
-      relativeY:Number.isFinite(sectionTop)?Number(window.scrollY||0)-sectionTop:null
+      relativeY:Number.isFinite(sectionTop)?Number(window.scrollY||0)-sectionTop:null,
+      search,
+      view,
+      filter,
+      chapter:String(chapter||""),
+      drawerOpen:drawer?!drawer.hidden:false
     }));
   }catch{}
 }
@@ -41,20 +52,61 @@ function returnToAccountSection(sectionId="",productId=""){
 }
 function restoreAccountReturn(body){
   const state=readAccountReturn();if(!state||!body)return;
+
+  const viewBtn=body.querySelector('[data-account-view="'+CSS.escape(String(state.view||"sections"))+'"]');
+  if(viewBtn&&!viewBtn.classList.contains("active"))viewBtn.click();
+
+  const search=body.querySelector("[data-account-search]");
+  if(search&&String(search.value||"")!==String(state.search||"")){
+    search.value=String(state.search||"");
+    search.dispatchEvent(new Event("input",{bubbles:true}));
+  }
+
+  if(state.view==="products"){
+    const filterBtn=body.querySelector('[data-account-filter="'+CSS.escape(String(state.filter||"all"))+'"]');
+    if(filterBtn&&!filterBtn.classList.contains("active"))filterBtn.click();
+  }
+
+  if(state.chapter){
+    const chapterBtn=body.querySelector('[data-account-chapter-filter="'+CSS.escape(String(state.chapter))+'"]');
+    if(chapterBtn&&!chapterBtn.classList.contains("active"))chapterBtn.click();
+  }
+
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    const section=body.querySelector('[data-account-section-card][data-section-id="'+CSS.escape(String(state.sectionId))+'"]');
+    const selector='[data-section-id="'+CSS.escape(String(state.sectionId))+'"]';
+    let section=null;
+    if(state.view==="products")section=body.querySelector("[data-account-section-card]"+selector);
+    else section=body.querySelector("[data-section-overview]"+selector);
+    section ||= body.querySelector("[data-account-section-card]"+selector)||body.querySelector("[data-section-overview]"+selector);
     if(!section){clearAccountReturn();return}
-    let top;
-    if(Number.isFinite(Number(state.relativeY))){
-      const sectionTop=section.getBoundingClientRect().top+window.scrollY;
-      top=sectionTop+Number(state.relativeY);
-    }else if(Number.isFinite(Number(state.scrollY)))top=Number(state.scrollY);
-    else top=section.getBoundingClientRect().top+window.scrollY-24;
-    const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
-    window.scrollTo({top:Math.max(0,Math.min(max,top)),behavior:"auto"});
-    const row=state.productId?section.querySelector('[data-account-product-card][data-product-id="'+CSS.escape(String(state.productId))+'"]'):null;
-    if(row){row.classList.add("kb-return-highlight");setTimeout(()=>row.classList.remove("kb-return-highlight"),1400)}
-    clearAccountReturn();
+
+    const chapterGroup=section.closest("[data-chapter-group]");
+    if(chapterGroup){
+      const list=chapterGroup.querySelector("[data-chapter-sections]");
+      const head=chapterGroup.querySelector("[data-account-chapter-toggle]");
+      if(list?.hidden)head?.click();
+    }
+
+    if(state.drawerOpen){
+      const drawer=section.querySelector("[data-section-products]");
+      if(drawer?.hidden)section.querySelector("[data-account-toggle-products]")?.click();
+    }
+
+    requestAnimationFrame(()=>{
+      let top;
+      if(Number.isFinite(Number(state.relativeY))){
+        const sectionTop=section.getBoundingClientRect().top+window.scrollY;
+        top=sectionTop+Number(state.relativeY);
+      }else if(Number.isFinite(Number(state.scrollY)))top=Number(state.scrollY);
+      else top=section.getBoundingClientRect().top+window.scrollY-24;
+      const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+      window.scrollTo({top:Math.max(0,Math.min(max,top)),behavior:"auto"});
+      const row=state.productId?section.querySelector('[data-account-product-card][data-product-id="'+CSS.escape(String(state.productId))+'"]'):null;
+      const target=row||section;
+      target.classList.add("kb-return-highlight");
+      setTimeout(()=>target.classList.remove("kb-return-highlight"),1400);
+      clearAccountReturn();
+    });
   }));
 }
 
@@ -1549,14 +1601,14 @@ function bindBody(){
     try{showStatus("Создаём карточку…");await createManualProduct(target.id,name)}catch(err){showError(err)}
   });
   body.querySelectorAll("[data-account-edit-product]").forEach(b=>b.addEventListener("click",()=>{
-    const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]");
+    const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card], [data-section-overview]");
     rememberAccountReturn(section?.dataset.sectionId||"",b.dataset.accountEditProduct,section);
     location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct);
   }));
   body.querySelectorAll("[data-account-manage-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountManageSection)));
   body.querySelectorAll("[data-account-add-product]").forEach(b=>b.addEventListener("click",async()=>{
     const name=prompt("Название новой карточки","Новая карточка");if(name==null)return;
-    const section=b.closest("[data-account-section-card]");
+    const section=b.closest("[data-account-section-card], [data-section-overview]");
     rememberAccountReturn(b.dataset.accountAddProduct,"",section);
     try{showStatus("Создаём карточку…");await createManualProduct(b.dataset.accountAddProduct,name)}catch(err){showError(err)}
   }));
@@ -1569,7 +1621,7 @@ function bindBody(){
     const id=b.dataset.accountDeleteProduct,ctx=window.KB_EDITOR_API?.product?.(id);if(!ctx)return;
     if(!confirm('Удалить карточку «'+(ctx.product?.name||id)+'» с сайта?'))return;
     try{
-      const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card]"),sectionId=section?.dataset.sectionId||ctx.section?.id||"";
+      const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card], [data-section-overview]"),sectionId=section?.dataset.sectionId||ctx.section?.id||"";
       rememberAccountReturn(sectionId,"",section);
       showStatus("Удаляем карточку…");await deleteProductById(id);
       if(window.KB_ADMIN_PAGE?.render)await window.KB_ADMIN_PAGE.render();
