@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:17:42.516Z",
+  "updatedAt": "2026-10-08T06:17:58.389Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24669,6 +24669,11 @@
       "customTabs": [],
       "tabOrder": [
         "specs"
+      ]
+    },
+    "4.7-0203-015-путы-для-крс-нейлоновые-profi": {
+      "images": [
+        "img/photos/admin/4.7-0203-015-путы-для-крс-нейлоновые-profi/4.7-0203-015-путы-для-крс-нейлоновые-profi-01.webp"
       ]
     }
   },
