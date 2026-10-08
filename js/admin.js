@@ -526,19 +526,15 @@ function shell(title,subtitle,inner){
 }
 async function updateAccountCounters(body){
   const rows=[...body.querySelectorAll("[data-account-product-card]")],all=rows.length;
-  const improve=rows.filter(x=>Number(x.dataset.quality||0)<75).length;
   const photo=rows.filter(x=>x.dataset.hasPhoto==="1").length;
+  const noPhoto=all-photo;
   const tabs=[...body.querySelectorAll("[data-account-filter]")];
   for(const tab of tabs){
     const b=tab.querySelector("b");if(!b)continue;
     if(tab.dataset.accountFilter==="all")b.textContent=all;
-    if(tab.dataset.accountFilter==="improve")b.textContent=improve;
     if(tab.dataset.accountFilter==="photo")b.textContent=photo;
+    if(tab.dataset.accountFilter==="no-photo")b.textContent=noPhoto;
   }
-  const summary=body.querySelectorAll(".kb-market-summary>div strong");
-  if(summary[0])summary[0].textContent=all;
-  if(summary[1])summary[1].textContent=photo;
-  if(summary[2])summary[2].textContent=improve;
 }
 function renderAccountPage(){
   syncAccountEntry();
@@ -553,37 +549,34 @@ function renderAccountPage(){
   const sections=catalog.flatMap(ch=>ch.sections.map(sec=>({...sec,chapterId:ch.id,chapterTitle:ch.title})));
   const allProducts=sections.flatMap(sec=>sec.products.map(p=>{
     const ctx=window.KB_EDITOR_API?.product?.(p.id)||null;
-    return {...p,sectionId:sec.id,sectionTitle:sec.title,chapterId:sec.chapterId,ctx,quality:ctx?productQuality(ctx):0,images:ctx?.images||[]};
+    return {...p,sectionId:sec.id,sectionTitle:sec.title,chapterId:sec.chapterId,ctx,images:ctx?.images||[]};
   }));
-  const improve=allProducts.filter(p=>p.quality<75).length;
   const withPhoto=allProducts.filter(p=>(p.images||[]).length).length;
-  const avgQuality=allProducts.length?Math.round(allProducts.reduce((a,p)=>a+p.quality,0)/allProducts.length):0;
+  const withoutPhoto=allProducts.length-withPhoto;
 
   const productRow=(p,sec)=>{
-    const ctx=window.KB_EDITOR_API?.product?.(p.id)||null,q=ctx?productQuality(ctx):0,imgs=ctx?.images||[];
-    return '<article class="kb-account-product kb-market-row" data-account-product-card data-product-id="'+esc(p.id)+'" data-quality="'+q+'" data-has-photo="'+(imgs.length?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
+    const ctx=window.KB_EDITOR_API?.product?.(p.id)||null,imgs=ctx?.images||[];
+    return '<article class="kb-account-product kb-market-row" data-account-product-card data-product-id="'+esc(p.id)+'" data-has-photo="'+(imgs.length?"1":"0")+'" data-account-product-search="'+esc([p.name,p.article,sec.id,sec.title].join(" "))+'">'+
       '<label class="kb-market-check"><input type="checkbox" data-account-select-product value="'+esc(p.id)+'"></label>'+
       '<div class="kb-market-thumb '+(imgs.length?"":"empty")+'">'+(imgs.length
         ?'<div class="kb-market-thumb-list">'+imgs.map((img,i)=>'<figure class="kb-market-thumb-item" title="Фото '+(i+1)+'"><img src="'+esc(photoPreviewSrc(img))+'" loading="lazy" alt=""><span>'+(i+1)+'</span></figure>').join("")+'</div>'
         :'<span>TIAN</span>')+'</div>'+
       '<div class="kb-market-product-main"><strong>'+esc(p.name)+'</strong><small>'+esc(p.article?("Арт. "+p.article):"Без артикула")+'</small></div>'+
       '<div class="kb-market-section">'+esc(sec.id)+'<small>'+esc(sec.title)+'</small></div>'+
-      '<div class="kb-market-quality '+(q>=80?"good":q>=55?"mid":"low")+'"><b>'+q+'%</b><span>качество</span></div>'+
-      '<div class="kb-account-product-actions"><button class="kb-admin-btn ghost" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost" title="Дублировать" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger" title="Удалить" data-account-delete-product="'+esc(p.id)+'">×</button></div>'+
+      '<div class="kb-account-product-actions"><button class="kb-admin-btn primary subtle" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost icon" title="Дублировать" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger icon" title="Удалить" data-account-delete-product="'+esc(p.id)+'">×</button></div>'+
     '</article>';
   };
 
   const sectionCard=sec=>{
-    const qualities=sec.products.map(p=>window.KB_EDITOR_API?.product?.(p.id)).filter(Boolean).map(productQuality);
-    const q=qualities.length?Math.round(qualities.reduce((a,b)=>a+b,0)/qualities.length):0;
     const photos=sec.products.filter(p=>(window.KB_EDITOR_API?.product?.(p.id)?.images||[]).length).length;
-    const improveCount=sec.products.filter(p=>{const ctx=window.KB_EDITOR_API?.product?.(p.id);return ctx&&productQuality(ctx)<75}).length;
+    const noPhoto=sec.products.length-photos;
+    const noArticle=sec.products.filter(p=>!String(p.article||"").trim()).length;
     return '<article class="kb-section-card" data-section-overview data-section-id="'+esc(sec.id)+'" data-chapter-id="'+esc(sec.chapterId)+'" data-section-search="'+esc([sec.id,sec.title,sec.chapterTitle,...sec.products.flatMap(p=>[p.name,p.article])].join(" "))+'">'+
       '<div class="kb-section-card-top"><div><span class="kb-section-code">'+esc(sec.id)+'</span><h3>'+esc(sec.title)+'</h3></div><span class="kb-section-count">'+sec.products.length+' карточек</span></div>'+
-      '<div class="kb-section-metrics"><span><b>'+q+'%</b> среднее качество</span><span><b>'+photos+'</b> с фото</span><span class="'+(improveCount?"warn":"ok")+'"><b>'+improveCount+'</b> улучшить</span></div>'+
+      '<div class="kb-section-metrics"><span><b>'+photos+'</b> с фото</span><span><b>'+noPhoto+'</b> без фото</span><span><b>'+noArticle+'</b> без артикула</span></div>'+
       '<div class="kb-section-card-actions"><button type="button" class="kb-admin-btn primary" data-account-manage-section="'+esc(sec.id)+'">Редактор раздела</button><button type="button" class="kb-admin-btn ghost" data-account-toggle-products="'+esc(sec.id)+'">Карточки <span>⌄</span></button><button type="button" class="kb-admin-btn ghost" data-account-add-product="'+esc(sec.id)+'">+ Товар</button></div>'+
       '<div class="kb-section-products-drawer" data-section-products="'+esc(sec.id)+'" hidden>'+
-        '<div class="kb-market-table-head"><span></span><span>Фото</span><span>Товар</span><span>Раздел</span><span>Качество</span><span>Действия</span></div>'+
+        '<div class="kb-market-table-head"><span></span><span>Фото</span><span>Товар</span><span>Раздел</span><span>Действия</span></div>'+
         '<div class="kb-account-products">'+sec.products.map(p=>productRow(p,sec)).join("")+'</div>'+
       '</div>'+
     '</article>';
@@ -611,16 +604,16 @@ function renderAccountPage(){
     return '<section class="kb-account-section kb-market-section-block" data-account-section-card data-section-id="'+esc(sec.id)+'" data-account-search-text="'+esc([sec.id,sec.title,sec.chapterTitle,...sec.products.flatMap(p=>[p.name,p.article])].join(" "))+'">'+
       '<div class="kb-account-section-head"><div><span class="eyebrow">Глава '+esc(sec.chapterId)+'</span><h2>'+esc(sec.id+" "+sec.title)+'</h2><small>'+sec.products.length+' карточек</small></div>'+
       '<div class="kb-account-section-actions"><button type="button" class="kb-admin-btn ghost" data-account-manage-section="'+esc(sec.id)+'">Редактор раздела</button><button type="button" class="kb-admin-btn primary" data-account-add-product="'+esc(sec.id)+'">+ Карточка</button></div></div>'+
-      '<div class="kb-market-table-head"><span></span><span>Фото</span><span>Товар</span><span>Раздел</span><span>Качество</span><span>Действия</span></div>'+
+      '<div class="kb-market-table-head"><span></span><span>Фото</span><span>Товар</span><span>Раздел</span><span>Действия</span></div>'+
       '<div class="kb-account-products">'+rows+'</div></section>';
   }).join("");
 
-  const html=shell("Панель управления","Разделы, карточки и качество каталога в одном рабочем пространстве.",
+  const html=shell("Панель управления","Структура книги, разделы и товарные карточки в одном рабочем пространстве.",
     '<div class="kb-control-hero">'+
       '<div class="kb-control-hero-main"><span class="kb-admin-kicker">Книга знаний</span><h1>Редактор каталога</h1><p>Начни с главы или раздела. Товары раскрываются только когда они нужны — без бесконечной портянки.</p></div>'+
       '<button type="button" class="kb-admin-btn primary" data-account-add-first>+ Создать карточку</button>'+
     '</div>'+
-    '<div class="kb-control-stats"><div><span>Карточки</span><strong>'+allProducts.length+'</strong><small>во всей книге</small></div><div><span>Разделы</span><strong>'+sections.length+'</strong><small>структура каталога</small></div><div><span>С фото</span><strong>'+withPhoto+'</strong><small>'+Math.round((withPhoto/Math.max(1,allProducts.length))*100)+'% карточек</small></div><div><span>Качество</span><strong>'+avgQuality+'%</strong><small>'+improve+' требуют внимания</small></div></div>'+
+    '<div class="kb-control-stats"><div><span>Карточки</span><strong>'+allProducts.length+'</strong><small>во всей книге</small></div><div><span>Разделы</span><strong>'+sections.length+'</strong><small>структура каталога</small></div><div><span>С фото</span><strong>'+withPhoto+'</strong><small>'+Math.round((withPhoto/Math.max(1,allProducts.length))*100)+'% карточек</small></div><div><span>Без фото</span><strong>'+withoutPhoto+'</strong><small>нужно проверить медиа</small></div></div>'+
     '<div class="kb-control-toolbar">'+
       '<div class="kb-control-views"><button type="button" class="active" data-account-view="sections">Разделы</button><button type="button" data-account-view="products">Все товары</button></div>'+
       '<div class="kb-control-search"><span>⌕</span><input type="search" data-account-search placeholder="Найти раздел, товар или артикул…" autocomplete="off"><button type="button" class="kb-mini" data-account-clear>Сбросить</button></div>'+
@@ -630,7 +623,7 @@ function renderAccountPage(){
       '<main class="kb-control-main">'+
         '<section data-account-view-panel="sections">'+chaptersHtml+'</section>'+
         '<section data-account-view-panel="products" hidden>'+
-          '<div class="kb-market-dashboard compact"><div class="kb-market-tabs"><button type="button" class="active" data-account-filter="all">Все <b>'+allProducts.length+'</b></button><button type="button" data-account-filter="improve">Улучшить <b>'+improve+'</b></button><button type="button" data-account-filter="photo">С фото <b>'+withPhoto+'</b></button></div></div>'+
+          '<div class="kb-market-dashboard compact"><div class="kb-market-tabs"><button type="button" class="active" data-account-filter="all">Все <b>'+allProducts.length+'</b></button><button type="button" data-account-filter="photo">С фото <b>'+withPhoto+'</b></button><button type="button" data-account-filter="no-photo">Без фото <b>'+withoutPhoto+'</b></button></div></div>'+
           '<div class="kb-account-catalog kb-market-catalog">'+productsTable+'</div>'+
         '</section>'+
         '<div class="kb-account-empty" data-account-empty hidden>Ничего не найдено.</div>'+
@@ -1106,8 +1099,7 @@ async function deleteProductById(productId,{navigate=false}={}){
   return {id:productId,sectionId:ctx.section?.id||ctx.sourceSection?.id||"",manual:removedManual,committed};
 }
 function productManagementHtml(ctx){
-  const quality=productQuality(ctx);
-  return '<section class="kb-product-command"><div class="kb-product-command-summary"><div><span class="kb-admin-kicker">Управление карточкой</span><h3>'+esc(ctx.product?.name||ctx.id)+'</h3><p>'+esc(ctx.section?.id+" · "+ctx.section?.title)+'</p></div><div class="kb-card-quality"><strong>'+quality+'%</strong><span>Заполненность</span></div></div>'+
+  return '<section class="kb-product-command"><div class="kb-product-command-summary"><div><span class="kb-admin-kicker">Управление карточкой</span><h3>'+esc(ctx.product?.name||ctx.id)+'</h3><p>'+esc(ctx.section?.id+" · "+ctx.section?.title)+'</p></div></div>'+
     '<div class="kb-product-command-actions"><button type="button" class="kb-admin-btn ghost" data-duplicate-here>⧉ Дублировать здесь</button>'+
     '<div class="kb-copy-target"><select data-product-target-section>'+editorSectionOptions(ctx.section?.id||"")+'</select><button type="button" class="kb-admin-btn ghost" data-copy-to-section>Копировать в раздел</button><button type="button" class="kb-admin-btn ghost" data-move-to-section>Перенести</button></div>'+
     '<button type="button" class="kb-admin-btn danger" data-delete-current-product>Удалить карточку</button></div></section>';
@@ -1124,7 +1116,6 @@ function renderProductEditor(ctx){
     ["workflow","Порядок работы"],["assortment","Линейка / ассортимент"],["consumables","Расходные материалы"]
   ].filter(([id])=>!existingTabIds.has(id));
   const quickAdd=quickStandard.length?'<div class="kb-quick-tabs"><span>Быстро добавить:</span>'+quickStandard.map(([id,label])=>'<button type="button" class="kb-quick-tab" data-quick-standard-tab="'+esc(id)+'">'+esc(label)+'</button>').join("")+'</div>':"";
-  const quality=productQuality(ctx);
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
     productManagementHtml(ctx)+
     '<form data-admin-product data-id="'+esc(ctx.id)+'" class="kb-admin-form kb-wb-editor">'+
@@ -1132,10 +1123,9 @@ function renderProductEditor(ctx){
         '<div class="kb-wb-side-title"><span class="kb-admin-kicker">Медиа</span><h3>Фото товара</h3><p>Перетащи, замени или добавь изображения. Первая фотография используется на карточке.</p></div>'+
         photoEditorHtml(ctx)+
         documentEditorHtml(ctx)+
-        '<div class="kb-wb-quality-card"><div><strong>'+quality+'%</strong><span>качество карточки</span></div><progress max="100" value="'+quality+'"></progress><small>'+(quality>=80?"Карточка хорошо заполнена.":quality>=55?"Есть несколько полей, которые можно улучшить.":"Заполни основные данные, фото и характеристики.")+'</small></div>'+
       '</aside>'+
       '<main class="kb-wb-content">'+
-        '<section class="kb-wb-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Основная информация</span><h3>Карточка товара</h3></div><span class="kb-wb-quality-pill">'+quality+'%</span></div>'+
+        '<section class="kb-wb-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Основная информация</span><h3>Карточка товара</h3></div></div>'+
           '<div class="kb-admin-grid two kb-wb-basic"><label>Наименование<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип / категория<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label class="wide">Описание / назначение<textarea name="purpose" rows="5">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
         '</section>'+
         '<section class="kb-wb-panel kb-content-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Контент</span><h3>Данные карточки</h3><p>Характеристики, преимущества, комплектация и другие содержательные вкладки.</p></div></div><div data-card-content>'+productPairEditors(ctx)+'</div></section>'+
@@ -1426,8 +1416,8 @@ function bindBody(){
         let sectionShown=0;
         section.querySelectorAll("[data-account-product-card]").forEach(card=>{
           const matchesText=!qv||String(card.dataset.accountProductSearch||"").toLowerCase().includes(qv);
-          const quality=Number(card.dataset.quality||0),hasPhoto=card.dataset.hasPhoto==="1";
-          const matchesMode=mode==="all"||(mode==="improve"&&quality<75)||(mode==="photo"&&hasPhoto);
+          const hasPhoto=card.dataset.hasPhoto==="1";
+          const matchesMode=mode==="all"||(mode==="photo"&&hasPhoto)||(mode==="no-photo"&&!hasPhoto);
           const ok=matchesText&&matchesMode;card.hidden=!ok;if(ok)sectionShown++;
         });
         section.hidden=sectionShown===0;if(sectionShown)shown++;
