@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:17:58.389Z",
+  "updatedAt": "2026-10-08T06:18:03.581Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24674,6 +24674,50 @@
     "4.7-0203-015-путы-для-крс-нейлоновые-profi": {
       "images": [
         "img/photos/admin/4.7-0203-015-путы-для-крс-нейлоновые-profi/4.7-0203-015-путы-для-крс-нейлоновые-profi-01.webp"
+      ],
+      "name": "Путы для КРС нейлоновые PROFI",
+      "type": "Нейлоновые путы",
+      "article": "0203.015*",
+      "purpose": "Для фиксации задних конечностей КРС",
+      "sourceRow": 6,
+      "candidateId": "0203-015-путы-для-крс-нейлоновые-profi",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.015*"
+        ],
+        [
+          "Тип",
+          "Нейлоновые путы"
+        ],
+        [
+          "Назначение",
+          "Для фиксации задних конечностей КРС"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "advantages": [],
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": [],
+      "tabOrder": [
+        "specs"
       ]
     }
   },
