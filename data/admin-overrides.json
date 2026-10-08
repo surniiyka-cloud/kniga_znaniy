@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:11:07.719Z",
+  "updatedAt": "2026-10-08T12:11:12.182Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25662,6 +25662,70 @@
     "5.2-0208-171-точило-для-ножей": {
       "images": [
         "img/photos/admin/5.2-0208-171-точило-для-ножей/5.2-0208-171-точило-для-ножей-01.webp"
+      ],
+      "name": "Точило для ножей",
+      "type": "Ручное точило",
+      "article": "0208.171",
+      "purpose": "Для заточки копытных ножей",
+      "features": "Алмазное напыление; предназначено для обработки лезвия и дужки/желоба ножа",
+      "sourceRow": 16,
+      "candidateId": "0208-171-точило-для-ножей",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.171"
+        ],
+        [
+          "Тип",
+          "Ручное точило"
+        ],
+        [
+          "Назначение",
+          "Для заточки копытных ножей"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Алмазное напыление"
+        ],
+        [
+          "Особенность 2",
+          "Предназначено для обработки лезвия и дужки/желоба ножа"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
