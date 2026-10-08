@@ -691,6 +691,27 @@ function pairRowsEditorHtml(key,label,rows,headers=[]){
       '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+
     '</div><div class="kb-pair-footer-actions"><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить строку</button><button type="button" class="kb-admin-btn ghost" data-pair-add-col>+ Добавить столбец</button></div></details>';
 }
+function inferCharacteristicLabel(value){
+  const s=String(value||"").trim(),l=s.toLowerCase().replace(/ё/g,"е");
+  const rules=[
+    ["плотность ","Плотность"],["общая плотность ","Общая плотность"],["размер листа ","Размер листа"],["размеры ","Размер"],["размер ","Размер"],
+    ["внутренний диаметр ","Диаметр"],["диаметр ","Диаметр"],["длина стилета ","Длина стилета"],["длина ","Длина"],
+    ["высота канюли ","Высота канюли"],["высота реза ","Высота реза"],["цвет ","Цвет"],["производство ","Производство"],
+    ["зернистость ","Зернистость"],["крепление ","Крепление"],["упаковка ","Упаковка"],["материал ","Материал"],
+    ["100 % целлюлоза","Сырьё"],["макулатура","Сырьё"],["медицинская сталь","Материал"],["втулка","Втулка"],
+    ["спиральная двусторонняя конструкция","Конструкция"],["оцинкованное покрытие","Покрытие"],["тонкие зубья","Зубья"],
+    ["адаптер luer-lock","Адаптер"],["шкала градуировки","Шкала"],["бесступенчатая регулировка дозирования","Диапазон дозирования"],
+    ["стерилизация ","Температура стерилизации"],["возможность стерилизации","Стерилизация"],["результат анализа примерно за","Время анализа"],
+    ["выпускается в объемах","Объём"],["выпускается в двух вариантах грузоподъемности","Грузоподъёмность"],
+    ["принцип действия ","Принцип действия"],["используются совместно с ","Совместимость"],["применяется совместно с ","Совместимость"],
+    ["рассчитан примерно на ","Ресурс"],["максимальный регистрируемый уровень надоя","Максимальный надой"]
+  ];
+  for(const [prefix,label] of rules)if(l.startsWith(prefix))return label;
+  if(/^\d+\s+лист(?:ов|а)?/i.test(s))return "Количество листов";
+  if(/^\d+\s+сло(?:й|я|ев)/i.test(s))return "Количество слоёв";
+  if(/^\d+\s+отрыв(?:ов|а)?/i.test(s))return "Количество отрывов";
+  return "";
+}
 function normalizeFallbackPairRows(key,rows){
   const out=(rows||[]).map(r=>Array.isArray(r)?[...r]:[]);
   if(key!=="detailFields")return out;
@@ -706,9 +727,13 @@ function normalizeFallbackPairRows(key,rows){
   const takeNext=()=>{while(used.has(next))next++;used.add(next);return String(next++)};
   return out.map(r=>{
     const label=String(r?.[0]||"").trim(),hasOther=r.slice(1).some(v=>String(v||"").trim());
-    const generic=label.match(/^(?:Характеристика|Пункт)\s*(\d+)$/i);
-    if(generic){r[0]=String(Number(generic[1]));return r}
-    if(!label&&hasOther)r[0]=takeNext();
+    const generic=label.match(/^(?:Характеристика|Пункт)\s*(\d+)$/i),numeric=/^\d+$/.test(label);
+    if((generic||numeric)&&hasOther){
+      const semantic=inferCharacteristicLabel(r[1]);
+      r[0]=semantic||(generic?String(Number(generic[1])):label);
+      return r;
+    }
+    if(!label&&hasOther)r[0]=inferCharacteristicLabel(r[1])||takeNext();
     return r;
   });
 }
