@@ -462,13 +462,13 @@ function tableEditorHtml(id,label,table){
     '<div class="kb-table-scroll">'+tableEditorGridHtml(headers,rows,merges)+'</div></article>';
 }
 function readTableEditor(ed){
-  const headers=[...ed.querySelectorAll("[data-table-header]")].map(x=>x.value.trim());
+  const headers=[...ed.querySelectorAll("[data-table-header]")].map(x=>upperAdminRowStart(x.value.trim()));
   const width=headers.length;
   const rows=Array.from(ed.querySelectorAll("[data-table-row]")).map(tr=>{
     const row=Array(width).fill("");
     tr.querySelectorAll("[data-table-cell-pos]").forEach(td=>{
       const [r,c]=td.dataset.tableCellPos.split(":").map(Number);
-      if(Number.isFinite(c)&&c<width)row[c]=td.querySelector("[data-table-cell]")?.value.trim()||"";
+      if(Number.isFinite(c)&&c<width)row[c]=upperAdminRowStart(td.querySelector("[data-table-cell]")?.value.trim()||"");
     });
     return row;
   });
@@ -845,7 +845,7 @@ function collectCustomTabs(form){
     t.id=id;t.label=r.querySelector("[data-tab-label]")?.value.trim()||t.label||id;t.kind=t.kind||"pairs";
     const content=form.querySelector('[data-custom-content-id="'+CSS.escape(id)+'"]');
     const ta=content?.querySelector("[data-custom-tab-rows]");
-    if(ta)t.rows=parsePairs(ta.value);
+    if(ta)t.rows=parsePairs(ta.value).map(r=>Array.isArray(r)?r.map(upperAdminRowStart):r);
     out.push(t);
   });
   raw.forEach(t=>{if(t?.id&&!seen.has(String(t.id)))out.push(t)});
