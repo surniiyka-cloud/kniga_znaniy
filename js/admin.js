@@ -679,7 +679,7 @@ function pairRowsEditorHtml(key,label,rows,headers=[]){
   };
   const preset=presets[key]||["Параметр","Значение"];
   const defaultHeaders=Array.from({length:width},(_,i)=>headers?.[i]||preset[i]||(i<2?["Параметр","Значение"][i]:"Дополнительный столбец "+(i-1)));
-  const normalized=list.map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||"")));
+  const normalized=normalizeFallbackPairRows(key,list.map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||""))));
   return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'">'+
     '<summary>'+esc(label)+' <small>'+list.filter(r=>r?.some?.(x=>String(x||"").trim())).length+' строк</small></summary>'+
     '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Названия столбцов можно менять прямо в шапке.</span></div>'+
@@ -691,11 +691,32 @@ function pairRowsEditorHtml(key,label,rows,headers=[]){
       '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+
     '</div><div class="kb-pair-footer-actions"><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить строку</button><button type="button" class="kb-admin-btn ghost" data-pair-add-col>+ Добавить столбец</button></div></details>';
 }
+function normalizeFallbackPairRows(key,rows){
+  const out=(rows||[]).map(r=>Array.isArray(r)?[...r]:[]);
+  if(key!=="detailFields")return out;
+  let next=1;
+  const used=new Set();
+  for(const r of out){
+    const label=String(r?.[0]||"").trim();
+    const generic=label.match(/^(?:Характеристика|Пункт)\s*(\d+)$/i);
+    const numeric=label.match(/^\d+$/);
+    const n=Number(generic?.[1]||numeric?.[0]||0);
+    if(n>0){used.add(n);next=Math.max(next,n+1)}
+  }
+  const takeNext=()=>{while(used.has(next))next++;used.add(next);return String(next++)};
+  return out.map(r=>{
+    const label=String(r?.[0]||"").trim(),hasOther=r.slice(1).some(v=>String(v||"").trim());
+    const generic=label.match(/^(?:Характеристика|Пункт)\s*(\d+)$/i);
+    if(generic){r[0]=String(Number(generic[1]));return r}
+    if(!label&&hasOther)r[0]=takeNext();
+    return r;
+  });
+}
 function collectPairRows(form,key){
   const ed=form.querySelector('[data-pair-editor="'+CSS.escape(key)+'"]'),list=ed?.querySelector("[data-pair-list]");
   const rows=[...ed?.querySelectorAll("[data-pair-row]")||[]].map(r=>[...r.querySelectorAll("[data-pair-cell]")].map(x=>x.value.trim()));
   const headers=[...ed?.querySelectorAll("[data-pair-header]")||[]].map(x=>x.value.trim());
-  return {rows:rows.map(r=>r.filter((_,i)=>i<headers.length)).filter(r=>r.some(Boolean)),headers};
+  return {rows:normalizeFallbackPairRows(key,rows.map(r=>r.filter((_,i)=>i<headers.length)).filter(r=>r.some(Boolean))),headers};
 }
 function productPairEditors(ctx){
   const customById=new Map((ctx.product?.customTabs||[]).filter(t=>String(t?.id||"")!=="substances").map(t=>[String(t.id),t]));
