@@ -304,17 +304,17 @@ function emptyObject(o){return !o||Object.keys(o).length===0}
 
 const PAIR_FIELDS=[
   ["detailFields","Характеристики"],
-  ["advantages","Преимущества / особенности"],
   ["indicators","Измеряемые показатели"],
   ["options","Дополнительные опции"],
   ["variants","Варианты исполнения"],
+  ["advantages","Преимущества / особенности"],
   ["complectation","Комплектация"],
+  ["washCycle","Цикл мойки"],
+  ["workflow","Порядок работы"],
   ["calibration","Калибровка"],
   ["assortment","Линейка / ассортимент"],
   ["consumables","Расходные материалы"],
-  ["testKits","Тест-наборы"],
-  ["workflow","Порядок работы"],
-  ["washCycle","Цикл мойки"]
+  ["testKits","Тест-наборы"]
 ];
 
 const TAB_TO_PAIR={
@@ -698,10 +698,25 @@ function collectPairRows(form,key){
   return {rows:rows.map(r=>r.filter((_,i)=>i<headers.length)).filter(r=>r.some(Boolean)),headers};
 }
 function productPairEditors(ctx){
-  const standard=PAIR_FIELDS.filter(([key])=>(ctx.product?.[key]||[]).length>0).map(([key,label])=>pairRowsEditorHtml(key,label,ctx.product?.[key]||[],ctx.product?.pairHeaders?.[key]||[]));
-  const custom=(ctx.product?.customTabs||[]).filter(t=>String(t?.id||"")!=="substances").map(customTabContentHtml);
-  if(!standard.length&&!custom.length)return '<div class="kb-editor-empty"><strong>Контент пока не заполнен</strong><span>Добавь нужную вкладку ниже — форма для неё появится здесь автоматически.</span></div>';
-  return [...standard,...custom].join("");
+  const customById=new Map((ctx.product?.customTabs||[]).filter(t=>String(t?.id||"")!=="substances").map(t=>[String(t.id),t]));
+  const rendered=new Set(),blocks=[];
+  for(const tab of (ctx.tabs||[]).filter(t=>String(t?.id||"")!=="substances")){
+    const id=String(tab?.id||""),key=TAB_TO_PAIR[id];
+    if(key){
+      const label=tab?.label||PAIR_FIELDS.find(([k])=>k===key)?.[1]||defaultTabLabel(id,ctx.product||{});
+      blocks.push(pairRowsEditorHtml(key,label,ctx.product?.[key]||[],ctx.product?.pairHeaders?.[key]||[]));
+      rendered.add(id);
+      continue;
+    }
+    const custom=customById.get(id);
+    if(custom){blocks.push(customTabContentHtml(custom));rendered.add(id)}
+  }
+  for(const [key,label] of PAIR_FIELDS){
+    const id=PAIR_TO_TAB[key];
+    if(!rendered.has(id))blocks.push(pairRowsEditorHtml(key,label,ctx.product?.[key]||[],ctx.product?.pairHeaders?.[key]||[]));
+  }
+  for(const custom of customById.values())if(!rendered.has(String(custom.id)))blocks.push(customTabContentHtml(custom));
+  return blocks.join("");
 }
 function tabRowHtml(t,p,custom=false){
   return '<div class="kb-admin-tabrow" data-admin-tab-row data-id="'+esc(t.id)+'" data-custom-tab="'+(custom?"1":"0")+'">'+
