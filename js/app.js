@@ -1345,6 +1345,18 @@ function mapData(){
     }
     if(Array.isArray(pov.images))state.assets.productImages[id]=deepCopy(pov.images);
   }
+
+  for(const [,x] of state.products){
+    const p=x.product;
+    for(const key of ["detailFields","advantages","indicators","options","variants","complectation","workflow","calibration","assortment","consumables","testKits","washCycle"]){
+      if(Array.isArray(p?.[key]))p[key]=p[key].map(r=>Array.isArray(r)?r.map(upperRowStart):r);
+    }
+    if(Array.isArray(p?.customTabs))p.customTabs=p.customTabs.map(t=>({...t,rows:Array.isArray(t?.rows)?t.rows.map(r=>Array.isArray(r)?r.map(upperRowStart):r):t?.rows}));
+    if(p?.tabTables)for(const table of Object.values(p.tabTables)){
+      if(Array.isArray(table?.headers))table.headers=table.headers.map(upperRowStart);
+      if(Array.isArray(table?.rows))table.rows=table.rows.map(r=>Array.isArray(r)?r.map(upperRowStart):r);
+    }
+  }
 }
 function buildLiveSearchIndex(){
   const out=[];
