@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:50:26.154Z",
+  "updatedAt": "2026-10-08T11:50:51.477Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25532,6 +25532,69 @@
     "5.2-0208-169-копытные-клещи": {
       "images": [
         "img/photos/admin/5.2-0208-169-копытные-клещи/5.2-0208-169-копытные-клещи-01.webp"
+      ],
+      "name": "Копытные клещи",
+      "type": "Ручные клещи",
+      "article": "0208.169",
+      "purpose": "Для обработки копыт",
+      "features": "Прочная конструкция; длина 36 см",
+      "sourceRow": 14,
+      "candidateId": "0208-169-копытные-клещи",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.169"
+        ],
+        [
+          "Тип",
+          "Ручные клещи"
+        ],
+        [
+          "Назначение",
+          "Для обработки копыт"
+        ],
+        [
+          "Длина",
+          "36 см"
+        ],
+        [
+          "Конструкция",
+          "Прочная"
+        ]
+      ],
+      "advantages": [],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
