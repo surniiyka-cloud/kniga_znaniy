@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:46:39.931Z",
+  "updatedAt": "2026-10-08T12:51:07.880Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -6326,7 +6326,9 @@
         "specs",
         "variants"
       ],
-      "images": [],
+      "images": [
+        "img/photos/admin/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap-01.webp"
+      ],
       "name": "Ножи для копыт AESCULAP",
       "type": "Копытные ножи",
       "article": "VC 320R; VC 321R; VC 315V; VC 316V; VC 317V; VC 302V; VC 307V",
