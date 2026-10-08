@@ -1957,23 +1957,27 @@ function tabTableFor(p,id){
   if(id==="indicators"&&p?.indicatorTable)return p.indicatorTable;
   return null;
 }
-function hasTabContent(p,id,pairs=[]){return !!(tabTableFor(p,id)?.rows?.length||(pairs||[]).length)}
+function hasTabContent(p,id,pairs=[]){return !!(tabTableFor(p,id)?.rows?.length||(pairs||[]).some(r=>Array.isArray(r)?r.some(v=>String(v||"").trim()):String(r||"").trim()))}
 function productTabs(p,{includeHidden=false}={}){
-  let tabs=[{id:"specs",label:"Характеристики"}];
-  if(hasTabContent(p,"indicators",p.indicators))tabs.push({id:"indicators",label:"Измеряемые показатели"});
-  if(hasTabContent(p,"options",p.options))tabs.push({id:"options",label:"Дополнительные опции"});
-  if(hasTabContent(p,"variants",p.variants))tabs.push({id:"variants",label:"Варианты исполнения"});
-  if(hasTabContent(p,"advantages",p.advantages))tabs.push({id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества / особенности"});
-  if(hasTabContent(p,"complectation",p.complectation))tabs.push({id:"complectation",label:"Комплектация"});
-  if(hasTabContent(p,"washCycle",p.washCycle))tabs.push({id:"washCycle",label:"Рекомендуемый цикл мойки"});
-  if(hasTabContent(p,"workflow",p.workflow))tabs.push({id:"workflow",label:"Порядок работы"});
-  if(hasTabContent(p,"calibration",p.calibration))tabs.push({id:"calibration",label:"Калибровка"});
-  if(hasTabContent(p,"assortment",p.assortment))tabs.push({id:"assortment",label:"Линейка"});
-  if(hasTabContent(p,"consumables",p.consumables))tabs.push({id:"consumables",label:"Расходные материалы"});
-  if(hasTabContent(p,"testKits",p.testKits))tabs.push({id:"testKits",label:"Тест-наборы"});
+  const standard=[
+    {id:"specs",label:"Характеристики",rows:p.detailFields},
+    {id:"indicators",label:"Измеряемые показатели",rows:p.indicators},
+    {id:"options",label:"Дополнительные опции",rows:p.options},
+    {id:"variants",label:"Варианты исполнения",rows:p.variants},
+    {id:"advantages",label:/Анализатор/i.test(p.type||"")?"Особенности":"Преимущества / особенности",rows:p.advantages},
+    {id:"complectation",label:"Комплектация",rows:p.complectation},
+    {id:"washCycle",label:"Рекомендуемый цикл мойки",rows:p.washCycle},
+    {id:"workflow",label:"Порядок работы",rows:p.workflow},
+    {id:"calibration",label:"Калибровка",rows:p.calibration},
+    {id:"assortment",label:"Линейка",rows:p.assortment},
+    {id:"consumables",label:"Расходные материалы",rows:p.consumables},
+    {id:"testKits",label:"Тест-наборы",rows:p.testKits}
+  ];
+  let tabs=standard.filter(t=>includeHidden||hasTabContent(p,t.id,t.rows)).map(({id,label})=>({id,label}));
   for(const t of p.customTabs||[]){
     if(p?.id==="catalog-2-15-турбидофлуориметр-биотф"&&String(t?.id||"")==="bio-щф")continue;
-    if(!tabs.some(x=>x.id===t.id))tabs.push({id:t.id,label:t.label||t.id});
+    const customHasContent=hasTabContent(p,t.id,t.rows)||String(p?.tabIntroTexts?.[t.id]||"").trim()||String(p?.tabImages?.[t.id]||"").trim();
+    if((includeHidden||customHasContent)&&!tabs.some(x=>x.id===t.id))tabs.push({id:t.id,label:t.label||t.id});
   }
   if(p.substances?.length)tabs.push({id:"substances",label:"Вещества и ppb"});
   const hidden=new Set(p.hiddenTabs||[]);
