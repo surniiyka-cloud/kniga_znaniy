@@ -1526,3 +1526,30 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
   .kb-wb-media{position:static!important;max-height:none!important}
   .kb-wb-media .kb-photo-preview-simple{height:320px!important}
 }
+
+
+/* ===== v2.2.119 — wider editor and cleaner controls ===== */
+.kb-admin-page .kb-product-command,
+.kb-admin-page .kb-wb-editor{
+  max-width:1680px!important;
+}
+.kb-wb-editor{
+  grid-template-columns:minmax(390px,440px) minmax(0,1fr)!important;
+  gap:20px!important;
+}
+.kb-photo-add-after{margin-top:2px!important}
+.kb-photo-add-after [data-photo-add]{width:100%!important}
+.kb-pair-footer-actions{
+  display:flex!important;gap:8px!important;align-items:center!important;flex-wrap:wrap!important;
+  padding:0 12px 12px!important
+}
+.kb-pair-footer-actions .kb-pair-add{margin:0!important}
+.kb-pair-footer-actions .kb-admin-btn{min-height:36px!important}
+.kb-pair-toolbar{justify-content:flex-start!important}
+.kb-pair-header-cell input{font-weight:800!important}
+@media(max-width:1250px){
+  .kb-wb-editor{grid-template-columns:350px minmax(0,1fr)!important}
+}
+@media(max-width:900px){
+  .kb-wb-editor{grid-template-columns:1fr!important}
+}
