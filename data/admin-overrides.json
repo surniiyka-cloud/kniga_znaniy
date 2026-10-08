@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:44:20.115Z",
+  "updatedAt": "2026-10-08T11:50:26.154Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25527,6 +25527,11 @@
       ],
       "images": [
         "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-schetka-texas.png"
+      ]
+    },
+    "5.2-0208-169-копытные-клещи": {
+      "images": [
+        "img/photos/admin/5.2-0208-169-копытные-клещи/5.2-0208-169-копытные-клещи-01.webp"
       ]
     }
   },
