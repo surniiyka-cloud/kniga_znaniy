@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:28:16.809Z",
+  "updatedAt": "2026-10-08T06:45:01.884Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24974,6 +24974,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.8-кольца-для-кастрации-ankar": {
+      "images": [
+        "img/photos/admin/4.8-кольца-для-кастрации-ankar/4.8-кольца-для-кастрации-ankar-01.webp"
       ]
     }
   },
