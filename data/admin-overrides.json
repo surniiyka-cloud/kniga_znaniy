@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:21:35.414Z",
+  "updatedAt": "2026-10-08T06:23:42.911Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24774,6 +24774,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.7-0203-059-путы-ankar-с-регулировкой-зелено-синие": {
+      "images": [
+        "img/photos/admin/4.7-0203-059-путы-ankar-с-регулировкой-зелено-синие/4.7-0203-059-путы-ankar-с-регулировкой-зелено-синие-01.webp"
       ]
     }
   },
