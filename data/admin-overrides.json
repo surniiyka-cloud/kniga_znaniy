@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:11:07.217Z",
+  "updatedAt": "2026-10-08T06:17:16.287Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24576,6 +24576,50 @@
     "4.7-0203-080-путы-для-крс-нейлоновые": {
       "images": [
         "img/photos/admin/4.7-0203-080-путы-для-крс-нейлоновые/4.7-0203-080-путы-для-крс-нейлоновые-01.webp"
+      ],
+      "name": "Путы для КРС нейлоновые",
+      "type": "Нейлоновые путы",
+      "article": "0203.080",
+      "purpose": "Для фиксации задних конечностей КРС",
+      "sourceRow": 3,
+      "candidateId": "0203-080-путы-для-крс-нейлоновые",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.080"
+        ],
+        [
+          "Тип",
+          "Нейлоновые путы"
+        ],
+        [
+          "Назначение",
+          "Для фиксации задних конечностей КРС"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "advantages": [],
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": [],
+      "tabOrder": [
+        "specs"
       ]
     }
   },
