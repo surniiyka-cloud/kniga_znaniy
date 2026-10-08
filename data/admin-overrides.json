@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T13:48:54.398Z",
+  "updatedAt": "2026-10-08T13:49:03.368Z",
   "products": {
     "5.3-0207-208-красный-0207-210-зеленый-0207-209-синий-0207-211-желтый-0207-212-черный-маркировочный-каран": {
       "images": [
@@ -372,7 +372,75 @@
     "5.3-повязка-на-ногу-tian": {
       "images": [
         "img/photos/admin/5.3-повязка-на-ногу-tian/5.3-повязка-на-ногу-tian-01.webp"
-      ]
+      ],
+      "name": "Повязка на ногу TIAN",
+      "type": "Пластиковая ножная метка",
+      "article": "-",
+      "purpose": "Для индивидуальной маркировки коров",
+      "features": "Пластиковая конструкция; 10 шт. в комплекте; цвета: синий, жёлтый, зелёный, красный, оранжевый",
+      "sourceRow": 7,
+      "candidateId": "повязка-на-ногу-tian",
+      "detailFields": [
+        [
+          "Тип",
+          "Пластиковая ножная метка"
+        ],
+        [
+          "Назначение",
+          "Для индивидуальной маркировки коров"
+        ],
+        [
+          "Материал / конструкция",
+          "Пластиковая конструкция"
+        ],
+        [
+          "Доступные цвета",
+          "Синий, жёлтый, зелёный, красный, оранжевый"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [
+        [
+          "Повязки на ногу",
+          "10 шт."
+        ]
+      ],
+      "variants": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "complectation",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
