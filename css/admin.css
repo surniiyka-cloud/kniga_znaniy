@@ -1627,3 +1627,99 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
   .kb-wb-editor{grid-template-columns:1fr!important}
   .kb-wb-media .kb-photo-preview-simple{height:280px!important}
 }
+
+
+/* ===== v2.2.122 — compact media and wider content area ===== */
+.kb-wb-editor{
+  grid-template-columns:minmax(250px,290px) minmax(0,1fr)!important;
+  gap:16px!important;
+}
+.kb-wb-media{
+  width:100%!important;
+  max-width:290px!important;
+}
+.kb-wb-media .kb-photo-row-simple{
+  display:grid!important;
+  grid-template-columns:88px minmax(0,1fr)!important;
+  gap:8px!important;
+  padding:8px!important;
+  align-items:center!important;
+}
+.kb-wb-media .kb-photo-preview-simple{
+  width:88px!important;
+  height:88px!important;
+  min-height:88px!important;
+  padding:6px!important;
+  border-radius:9px!important;
+}
+.kb-wb-media .kb-photo-row-simple .kb-photo-meta{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:2px!important;
+  min-width:0!important;
+}
+.kb-wb-media .kb-photo-row-simple .kb-photo-meta code{
+  display:none!important;
+}
+.kb-wb-media .kb-photo-row-simple .kb-photo-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:4px!important;
+}
+.kb-wb-media .kb-photo-row-simple .kb-photo-actions .kb-mini{
+  min-height:28px!important;
+  padding:4px 5px!important;
+  font-size:9px!important;
+}
+.kb-wb-content{
+  width:100%!important;
+  min-width:0!important;
+}
+.kb-content-panel [data-card-content]{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:10px!important;
+}
+.kb-pair-header,
+.kb-pair-row{
+  grid-template-columns:30px repeat(var(--pair-width,2),minmax(0,1fr)) 26px!important;
+  min-width:0!important;
+  width:100%!important;
+}
+.kb-pair-list{
+  overflow-x:visible!important;
+}
+.kb-pair-header{
+  background:#f5f8f7!important;
+  padding:7px 6px!important;
+}
+.kb-pair-header-cell input{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  border:1px solid #dfe6e3!important;
+  background:#fff!important;
+  border-radius:8px!important;
+  padding:8px 9px!important;
+}
+.kb-pair-row{
+  background:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.kb-pair-row:hover{
+  background:#f8fbfa!important;
+  box-shadow:none!important;
+}
+@media(max-width:1250px){
+  .kb-wb-editor{grid-template-columns:240px minmax(0,1fr)!important}
+  .kb-wb-media{max-width:240px!important}
+  .kb-wb-media .kb-photo-row-simple{grid-template-columns:72px minmax(0,1fr)!important}
+  .kb-wb-media .kb-photo-preview-simple{width:72px!important;height:72px!important;min-height:72px!important}
+}
+@media(max-width:900px){
+  .kb-wb-editor{grid-template-columns:1fr!important}
+  .kb-wb-media{max-width:none!important}
+  .kb-wb-media .kb-photo-row-simple{grid-template-columns:100px minmax(0,1fr)!important}
+  .kb-wb-media .kb-photo-preview-simple{width:100px!important;height:100px!important;min-height:100px!important}
+}
