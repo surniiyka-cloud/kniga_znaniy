@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T05:57:20.307Z",
+  "updatedAt": "2026-10-08T05:57:30.569Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24463,6 +24463,50 @@
     "4.7-0203-081-путы-для-крс-profi": {
       "images": [
         "img/photos/admin/4.7-0203-081-путы-для-крс-profi/4.7-0203-081-путы-для-крс-profi-01.webp"
+      ],
+      "name": "Путы для КРС PROFI",
+      "type": "Путы для КРС",
+      "article": "0203.081",
+      "purpose": "Для ограничения излишнего разведения задних конечностей и фиксации животного",
+      "sourceRow": 2,
+      "candidateId": "0203-081-путы-для-крс-profi",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.081"
+        ],
+        [
+          "Тип",
+          "Путы для КРС"
+        ],
+        [
+          "Назначение",
+          "Для ограничения излишнего разведения задних конечностей и фиксации животного"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "advantages": [],
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": [],
+      "tabOrder": [
+        "specs"
       ]
     }
   },
