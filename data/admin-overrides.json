@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T09:22:21.394Z",
+  "updatedAt": "2026-10-08T11:24:42.090Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25979,7 +25979,44 @@
           "Описание"
         ]
       },
-      "__frozen": true
+      "__frozen": true,
+      "name": "Щётка-чесалка для скота TEXAS",
+      "type": "Щётка-чесалка для КРС",
+      "article": "0202.001",
+      "purpose": "Для механической очистки и чесания шкуры животных",
+      "features": "Размер щётки 50 × 10 см; встроенная пружина; горизонтальная щётка подвижна во всех направлениях",
+      "sourceRow": 2,
+      "candidateId": "0202-001-щетка-чесалка-для-скота-texas",
+      "advantages": [],
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "images": [
+        "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetka-chesalka-dlya-chistki-skota-texas.png"
+      ]
     }
   },
   "sections": {
