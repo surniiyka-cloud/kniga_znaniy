@@ -1240,6 +1240,104 @@ function localEditorOverrides(published=null){
     return lt>pt?local:null;
   }catch{return null}
 }
+
+const PRODUCT_COLOR_SPECS=[
+  ["Красный","красн(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|красно(?=-)"],
+  ["Зелёный","зел[её]н(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|зел[её]но(?=-)"],
+  ["Синий","син(?:ий|яя|ее|ие|его|ей|юю|им|ими)|сине(?=-)"],
+  ["Жёлтый","ж[её]лт(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|ж[её]лто(?=-)"],
+  ["Чёрный","ч[её]рн(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|ч[её]рно(?=-)"],
+  ["Белый","бел(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|бело(?=-)"],
+  ["Оранжевый","оранжев(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|оранжево(?=-)"],
+  ["Фиолетовый","фиолетов(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|фиолетово(?=-)"],
+  ["Голубой","голуб(?:ой|ая|ое|ые|ого|ой|ую|ым|ыми)|голубо(?=-)"],
+  ["Серый","сер(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|серо(?=-)"],
+  ["Розовый","розов(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|розово(?=-)"],
+  ["Коричневый","коричнев(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|коричнево(?=-)"],
+  ["Бежевый","бежев(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|бежево(?=-)"],
+  ["Серебристый","серебрист(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|серебристо(?=-)"],
+  ["Золотистый","золотист(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|золотисто(?=-)"],
+  ["Бордовый","бордов(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|бордово(?=-)"],
+  ["Салатовый","салатов(?:ый|ая|ое|ые|ого|ой|ую|ым|ыми)|салатово(?=-)"]
+];
+function productColorsInText(v){
+  const s=String(v||""),out=[];
+  for(const [name,pattern] of PRODUCT_COLOR_SPECS)if(new RegExp(pattern,"giu").test(s))out.push(name);
+  return out;
+}
+function stripProductColorWords(v){
+  let s=String(v||"");
+  for(const [,pattern] of PRODUCT_COLOR_SPECS)s=s.replace(new RegExp(pattern,"giu"),"");
+  s=s.replace(/(?:доступные|варианты)?\s*цвет(?:а|ы|ов)?\s*[:—–-]?\s*/giu,"");
+  return s
+    .replace(/\s*[—–-]\s*(?=;|,|$)/g,"")
+    .replace(/(^|[;,])\s*[—–-]\s*/g,"$1 ")
+    .replace(/(^|\s)-(?=\s|,|;|$)/g,"$1")
+    .replace(/\s{2,}/g," ")
+    .replace(/\s+([,;:.])/g,"$1")
+    .replace(/([,;])\s*([,;])+/g,"$1")
+    .replace(/^[\s,;:—–-]+|[\s,;:—–-]+$/g,"")
+    .trim();
+}
+function normalizeProductColors(p){
+  if(!p||typeof p!=="object")return p;
+  const bag=[];
+  const add=(v)=>{for(const c of productColorsInText(v))if(!bag.includes(c))bag.push(c)};
+  add(p.color||"");
+  const cleanScalar=(key)=>{
+    const v=String(p[key]||"");const found=productColorsInText(v);found.forEach(c=>{if(!bag.includes(c))bag.push(c)});
+    if(found.length)p[key]=stripProductColorWords(v);
+  };
+  for(const key of ["name","article","type","purpose"])cleanScalar(key);
+  if(p.features){
+    const kept=[];
+    for(const raw of String(p.features).split(";")){
+      const clause=raw.trim(),found=productColorsInText(clause);
+      found.forEach(c=>{if(!bag.includes(c))bag.push(c)});
+      if(!found.length){if(clause)kept.push(clause);continue}
+      const cleaned=stripProductColorWords(clause);
+      if(cleaned&&!/^(доступные|варианты)$/iu.test(cleaned))kept.push(cleaned);
+    }
+    p.features=kept.join("; ");
+  }
+  const cleanRows=(rows,key)=>{
+    const out=[];
+    for(const raw of Array.isArray(rows)?rows:[]){
+      const row=Array.isArray(raw)?raw.map(x=>String(x??"")):[String(raw??"")];
+      const label=String(row[0]||"").trim();
+      row.forEach(add);
+      if(/^(?:доступные\s+|варианты\s+)?цвет(?:а|ы|ов)?\b/iu.test(label))continue;
+      const cleaned=row.map(stripProductColorWords);
+      if(key==="variants"&&cleaned.slice(1).every(x=>!String(x).trim()))continue;
+      if(cleaned.some(x=>String(x).trim()))out.push(cleaned);
+    }
+    return out;
+  };
+  const pairKeys=["detailFields","advantages","indicators","options","variants","complectation","calibration","assortment","consumables","testKits","workflow","washCycle"];
+  for(const key of pairKeys)if(Array.isArray(p[key]))p[key]=cleanRows(p[key],key);
+  if(p.tabTables&&typeof p.tabTables==="object"){
+    for(const table of Object.values(p.tabTables)){
+      if(!table||typeof table!=="object")continue;
+      let headers=Array.isArray(table.headers)?table.headers.map(x=>String(x??"")):[];
+      let rows=Array.isArray(table.rows)?table.rows.map(r=>Array.isArray(r)?r.map(x=>String(x??"")):[]):[];
+      const colorCols=[];
+      headers.forEach((h,i)=>{add(h);if(/^(?:доступные\s+|варианты\s+)?цвет(?:а|ы|ов)?\b/iu.test(h.trim()))colorCols.push(i)});
+      rows.forEach(r=>r.forEach(add));
+      if(colorCols.length){
+        const rm=new Set(colorCols);
+        headers=headers.filter((_,i)=>!rm.has(i));
+        rows=rows.map(r=>r.filter((_,i)=>!rm.has(i)));
+        table.merges=[];
+      }
+      table.headers=headers.map(stripProductColorWords);
+      table.rows=cleanRows(rows,"table");
+    }
+  }
+  if(Array.isArray(p.customTabs))p.customTabs=p.customTabs.map(t=>({...t,rows:Array.isArray(t?.rows)?cleanRows(t.rows,"custom"):t?.rows}));
+  p.color=bag.join("; ");
+  return p;
+}
+
 function mapData(){
   state.products.clear();state.sections.clear();state.chapters.clear();state.sectionCatalog.clear();
   state.editorBase={products:new Map(),images:new Map(),sections:new Map(),chapters:new Map()};
@@ -1367,7 +1465,7 @@ function mapData(){
 }
 function buildLiveSearchIndex(){
   const out=[];
-  for(const [id,x] of state.products){if(isProductExcluded(x.section.id,id))continue;const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
+  for(const [id,x] of state.products){if(isProductExcluded(x.section.id,id))continue;const p=x.product;out.push({id,section:x.section.id,chapter:x.chapter.id,name:p.name||"",article:p.article||"",text:[p.name,p.article,p.type,p.color,p.purpose,p.features,p.manufacturer,p.country,JSON.stringify(p.detailFields||[]),JSON.stringify(p.advantages||[]),JSON.stringify(p.indicators||[]),JSON.stringify(p.indicatorTable||{}),JSON.stringify(p.tabTables||{}),JSON.stringify(p.substances||[])].filter(Boolean).join(" ")});}
   return out;
 }
 function installEditorApi(){
@@ -1376,7 +1474,7 @@ function installEditorApi(){
     current(){
       const r=route();
       if(r.name==="product"||r.name==="accountProduct"){
-        const x=ctx(r.id);if(!x)return {kind:"none"};
+        const x=ctx(r.id);if(!x)return {kind:"none"};normalizeProductColors(x.product);
         const sourceId=x.product.sourceSectionId||x.section.id,source=bookSectionById(sourceId)?.section||null;
         return {kind:"product",id:r.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(r.id)||{}),images:deepCopy(state.assets.productImages?.[r.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(r.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title},spreadsheetId:state.book.spreadsheetId};
       }
@@ -1410,7 +1508,7 @@ function installEditorApi(){
       });
     },
     product(id){
-      const x=ctx(id);if(!x)return null;
+      const x=ctx(id);if(!x)return null;normalizeProductColors(x.product);
       const sourceId=x.product.sourceSectionId||x.section.id,source=bookSectionById(sourceId)?.section||null;
       return {kind:"product",id:x.product.id,product:deepCopy(x.product),sourceProduct:deepCopy(state.editorBase.products.get(x.product.id)||{}),images:deepCopy(state.assets.productImages?.[x.product.id]||[]),sourceImages:deepCopy(state.editorBase.images.get(x.product.id)||[]),tabs:productTabs(x.product,{includeHidden:true}),section:{id:x.section.id,title:x.section.title,gid:x.section.gid||null},sourceSection:source?{id:source.id,title:source.title,gid:source.gid||x.product.sourceGid||null}:null,chapter:{id:x.chapter.id,title:x.chapter.title}};
     },
@@ -1523,13 +1621,13 @@ function garantCardColor(name){
   return map.find(([k])=>n.includes(k))?.[1]||"#2F7D5A";
 }
 function card(x,index=0){
-  const p=x.product, images=state.assets.productImages?.[p.id]||[], im=images[0]||"", a=article(p);
+  const p=normalizeProductColors(x.product), images=state.assets.productImages?.[p.id]||[], im=images[0]||"", a=article(p);
   const priority=index<6,load=priority?"eager":"lazy",fetchPriority=priority?' fetchpriority="high"':"";
   const isGarant=x.section?.id==="2.1.3";
   const garantColor=isGarant?garantCardColor(p.name):"";
   const garantStyle=isGarant?' style="--garant-card-color:'+garantColor+'"':"";
   const garantClass=isGarant?" garant-card":"";
-  return '<article class="product-card'+garantClass+'"'+garantStyle+'><div class="product-image '+(im?"":"placeholder")+'" '+(im?'data-open-product="'+esc(p.id)+'"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" loading="'+load+'" decoding="async"'+fetchPriority+' alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"card"))+'">':"")+(images.length>1?'<span class="photo-count">◫ '+images.length+'</span>':"")+'</div><div class="product-body"><div class="product-meta">'+(a?'<span class="badge article">Арт. '+esc(a)+'</span>':"")+(isGarant?'<span class="garant-color-dot" aria-hidden="true"></span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div><h3>'+esc(p.name)+'</h3>'+(p.purpose?'<p>'+esc(p.purpose)+'</p>':"")+'<div class="product-actions"><button class="btn primary" data-open-product="'+esc(p.id)+'">Подробнее</button><button class="btn icon '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'" aria-label="Избранное">★</button></div></div></article>';
+  return '<article class="product-card'+garantClass+'"'+garantStyle+'><div class="product-image '+(im?"":"placeholder")+'" '+(im?'data-open-product="'+esc(p.id)+'"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" loading="'+load+'" decoding="async"'+fetchPriority+' alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"card"))+'">':"")+(images.length>1?'<span class="photo-count">◫ '+images.length+'</span>':"")+'</div><div class="product-body"><div class="product-meta">'+(a?'<span class="badge article">Арт. '+esc(a)+'</span>':"")+(isGarant?'<span class="garant-color-dot" aria-hidden="true"></span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+(p.color?'<span class="badge">Цвет: '+esc(p.color)+'</span>':"")+'</div><h3>'+esc(p.name)+'</h3>'+(p.purpose?'<p>'+esc(p.purpose)+'</p>':"")+'<div class="product-actions"><button class="btn primary" data-open-product="'+esc(p.id)+'">Подробнее</button><button class="btn icon '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'" aria-label="Избранное">★</button></div></div></article>';
 }
 function grouped(items){
   let last="",out="";
@@ -1970,7 +2068,7 @@ function renderSection(id){
     '<div class="page-head"><div><span class="eyebrow">'+esc(s.id)+' · '+esc(ch.title)+'</span><h1>'+esc(s.title)+'</h1><p>'+subtitle+'</p></div></div>'+
     (items.length?'<div class="filter-row"><input class="filter-input" id="sectionFilter" type="search" placeholder="Поиск внутри раздела…"></div><section class="product-grid" id="sectionProducts">'+grouped(items)+'</section>':visualCatalog(s,sectionImgs))+
     (id==="3.1"&&items.length?"":sectionContent(s));
-  if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
+  if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.color,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
 function normalizedCharacteristicRows(rows){
   return (rows||[]).map((r,i)=>{
@@ -2023,7 +2121,7 @@ function tabTableFor(p,id){
   return null;
 }
 function hasTabContent(p,id,pairs=[]){return !!(tabTableFor(p,id)?.rows?.length||(pairs||[]).some(r=>Array.isArray(r)?r.some(v=>String(v||"").trim()):String(r||"").trim()))}
-function productTabs(p,{includeHidden=false}={}){
+function productTabs(p,{includeHidden=false}={}){normalizeProductColors(p);
   const standard=[
     {id:"specs",label:"Характеристики",rows:p.detailFields},
     {id:"indicators",label:"Измеряемые показатели",rows:p.indicators},
@@ -2137,7 +2235,7 @@ function tabPanelHtml(p,id){
 function renderProduct(id){
   const x=ctx(id);if(!x||isProductDeleted(x.section.id,x.product.id))return notFound();const p=x.product,s=x.section,ch=x.chapter;recent.add(p.id);counters();title(p.name);
   const imgs=state.assets.productImages?.[p.id]||[],im=imgs[0]||"",tabs=productTabs(p);
-  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title,route:"section",id:s.id},{label:p.name}])+'<div class="product-page"><aside class="gallery-card"><div class="gallery-topline"><span>Фотографии товара</span><b>'+(imgs.length?imgs.length:"—")+'</b></div><div class="gallery-main '+(im?"":"product-image placeholder")+'" '+(im?'data-lightbox-product="'+esc(p.id)+'" data-lightbox-index="0"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"detail"))+'">':'<div class="gallery-empty"><img src="./assets/brand/favicon.svg" alt=""><strong>Фото пока не привязано</strong><span>Карточка уже работает; изображение появится после сопоставления в диагностике.</span></div>')+'</div>'+(imgs.length>1?'<div class="gallery-thumbs">'+imgs.map((v,i)=>'<button class="gallery-thumb '+(i===0?"active":"")+'" data-gallery-product="'+esc(p.id)+'" data-gallery-index="'+i+'"><img referrerpolicy="no-referrer" src="'+esc(imageSrc(v))+'" alt="" style="'+esc(imageViewStyle(p,v,"detail"))+'"></button>').join("")+'</div>':"")+productDocumentsHtml(p)+'</aside><article class="info-card"><span class="eyebrow">'+esc(s.id)+' · '+esc(s.title)+'</span><h1 class="product-title">'+esc(p.name)+'</h1><div class="product-meta">'+(article(p)?'<span class="badge article">Арт. '+esc(article(p))+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+'</div>'+(p.purpose?'<p class="product-lead">'+esc(p.purpose)+'</p>':"")+'<div class="quick-actions"><button class="btn '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'">★ '+(favorites.has(p.id)?"В избранном":"В избранное")+'</button><button class="btn ghost" data-copy>⌁ Скопировать ссылку</button></div><div class="tabs product-tabs">'+tabs.map((t,i)=>'<button class="tab '+(i===0?"active":"")+'" data-product-tab="'+esc(t.id)+'">'+esc(t.label)+'</button>').join("")+'</div><div class="product-tab-panels">'+tabs.map((t,i)=>'<div class="tab-panel" data-product-panel="'+esc(t.id)+'" '+(i===0?"":"hidden")+'>'+tabPanelHtml(p,t.id)+'</div>').join("")+'</div></article></div>';
+  app.innerHTML=crumb([{label:"Глава "+ch.id,route:"chapter",id:ch.id},{label:s.id+" "+s.title,route:"section",id:s.id},{label:p.name}])+'<div class="product-page"><aside class="gallery-card"><div class="gallery-topline"><span>Фотографии товара</span><b>'+(imgs.length?imgs.length:"—")+'</b></div><div class="gallery-main '+(im?"":"product-image placeholder")+'" '+(im?'data-lightbox-product="'+esc(p.id)+'" data-lightbox-index="0"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"detail"))+'">':'<div class="gallery-empty"><img src="./assets/brand/favicon.svg" alt=""><strong>Фото пока не привязано</strong><span>Карточка уже работает; изображение появится после сопоставления в диагностике.</span></div>')+'</div>'+(imgs.length>1?'<div class="gallery-thumbs">'+imgs.map((v,i)=>'<button class="gallery-thumb '+(i===0?"active":"")+'" data-gallery-product="'+esc(p.id)+'" data-gallery-index="'+i+'"><img referrerpolicy="no-referrer" src="'+esc(imageSrc(v))+'" alt="" style="'+esc(imageViewStyle(p,v,"detail"))+'"></button>').join("")+'</div>':"")+productDocumentsHtml(p)+'</aside><article class="info-card"><span class="eyebrow">'+esc(s.id)+' · '+esc(s.title)+'</span><h1 class="product-title">'+esc(p.name)+'</h1><div class="product-meta">'+(article(p)?'<span class="badge article">Арт. '+esc(article(p))+'</span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+(p.color?'<span class="badge">Цвет: '+esc(p.color)+'</span>':"")+'</div>'+(p.purpose?'<p class="product-lead">'+esc(p.purpose)+'</p>':"")+'<div class="quick-actions"><button class="btn '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'">★ '+(favorites.has(p.id)?"В избранном":"В избранное")+'</button><button class="btn ghost" data-copy>⌁ Скопировать ссылку</button></div><div class="tabs product-tabs">'+tabs.map((t,i)=>'<button class="tab '+(i===0?"active":"")+'" data-product-tab="'+esc(t.id)+'">'+esc(t.label)+'</button>').join("")+'</div><div class="product-tab-panels">'+tabs.map((t,i)=>'<div class="tab-panel" data-product-panel="'+esc(t.id)+'" '+(i===0?"":"hidden")+'>'+tabPanelHtml(p,t.id)+'</div>').join("")+'</div></article></div>';
 }
 function renderFavorites(){
   const items=favorites.get().map(ctx).filter(x=>x&&!isProductExcluded(x.section.id,x.product.id));title("Избранное");
