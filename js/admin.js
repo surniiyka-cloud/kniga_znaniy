@@ -663,18 +663,33 @@ function customTabContentHtml(t){
 function pairRowsEditorHtml(key,label,rows,headers=[]){
   const list=Array.isArray(rows)&&rows.length?rows:[["",""]];
   const width=Math.max(2,Number(headers?.length)||Math.max(2,...list.map(r=>Array.isArray(r)?r.length:0)));
-  const defaultHeaders=Array.from({length:width},(_,i)=>headers?.[i]||(["detailFields","advantages"].includes(key)?(i===0?(key==="advantages"?"Преимущество":"Название характеристики"):i===1?"Описание":"Дополнительный столбец "+(i-1)):"Столбец "+(i+1)));
+  const presets={
+    detailFields:["Характеристика","Значение"],
+    advantages:["Преимущество","Описание"],
+    complectation:["Комплектация","Количество / описание"],
+    indicators:["Показатель","Значение"],
+    options:["Опция","Описание"],
+    variants:["Вариант","Описание"],
+    calibration:["Параметр калибровки","Значение"],
+    assortment:["Наименование","Описание"],
+    consumables:["Расходный материал","Описание / количество"],
+    testKits:["Тест-набор","Описание"],
+    workflow:["Шаг","Описание"],
+    washCycle:["Этап","Описание"]
+  };
+  const preset=presets[key]||["Параметр","Значение"];
+  const defaultHeaders=Array.from({length:width},(_,i)=>headers?.[i]||preset[i]||(i<2?["Параметр","Значение"][i]:"Дополнительный столбец "+(i-1)));
   const normalized=list.map(r=>Array.from({length:width},(_,i)=>String(r?.[i]||"")));
   return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'">'+
     '<summary>'+esc(label)+' <small>'+list.filter(r=>r?.some?.(x=>String(x||"").trim())).length+' строк</small></summary>'+
-    '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Столбцы можно дополнять.</span><button type="button" class="kb-mini" data-pair-add-col>+ столбец</button></div>'+
+    '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Названия столбцов можно менять прямо в шапке.</span></div>'+
     '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'" style="--pair-width:"+width+">'+
     '<div class="kb-pair-header" data-pair-header-row><span class="kb-pair-header-handle"></span>'+defaultHeaders.map((h,i)=>'<div class="kb-pair-header-cell"><input data-pair-header value="'+esc(h)+'" placeholder="Название столбца">'+(i>=2?'<button type="button" class="kb-pair-col-remove" data-pair-remove-col title="Удалить столбец">×</button>':"")+'</div>').join("")+'<span></span></div>'+
     normalized.map((r)=>'<div class="kb-pair-row" data-pair-row draggable="false" style="--pair-width:'+width+'">'+
       '<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
       r.map((v,i)=>'<input data-pair-cell="'+i+'" placeholder="'+esc(defaultHeaders[i]||("Столбец "+(i+1)))+'" value="'+esc(v)+'">').join("")+
       '<button type="button" class="kb-mini danger" data-pair-remove title="Удалить строку">×</button></div>').join("")+
-    '</div><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить строку</button></details>';
+    '</div><div class="kb-pair-footer-actions"><button type="button" class="kb-admin-btn ghost kb-pair-add" data-pair-add>+ Добавить строку</button><button type="button" class="kb-admin-btn ghost" data-pair-add-col>+ Добавить столбец</button></div></details>';
 }
 function collectPairRows(form,key){
   const ed=form.querySelector('[data-pair-editor="'+CSS.escape(key)+'"]'),list=ed?.querySelector("[data-pair-list]");
@@ -804,7 +819,7 @@ async function persistDocumentsOnly(body){
 }
 function photoEditorHtml(ctx){
   const images=ctx.images||[];
-  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div><div class="kb-photo-head-actions"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-head-actions kb-photo-add-after"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
 }
 function setPhotoSaveState(body,state,message=""){
   const section=body?.querySelector("[data-photo-section]"),box=body?.querySelector("[data-photo-save-state]");
