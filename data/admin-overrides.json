@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:54:38.567Z",
+  "updatedAt": "2026-10-08T12:55:55.765Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26125,19 +26125,19 @@
           "Эргономичная, из ценных пород дерева"
         ],
         [
-          "PROFI узкий — тип клинка",
+          "Тип клинка",
           "Плоский, тупоносый"
         ],
         [
-          "PROFI узкий — рукоятка",
+          "Рукоятка",
           "Пластиковая"
         ],
         [
-          "PROFI узкий — заточка",
+          "Заточка",
           "Одна сторона с очень острой и глубокой насечкой, вторая — с грубой насечкой"
         ],
         [
-          "PROFI узкий — размер",
+          "Размер",
           "200 × 45 × 5 мм"
         ]
       ],
@@ -26183,9 +26183,32 @@
       "advantages": [],
       "tabOrder": [
         "specs",
-        "variants"
+        "variants",
+        "indicators",
+        "options",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "sourceRow": 20,
+      "candidateId": "16801-16803-16805-ножи-для-копыт-profi",
+      "indicators": [],
+      "options": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     },
     "5.2-8312-16805-ножи-для-копыт": {
       "name": "Ножи для копыт",
