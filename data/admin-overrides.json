@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T06:45:29.167Z",
+  "updatedAt": "2026-10-08T06:45:41.268Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25094,6 +25094,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.8-резиновые-кольца-для-кастрации": {
+      "images": [
+        "img/photos/admin/4.8-резиновые-кольца-для-кастрации/4.8-резиновые-кольца-для-кастрации-01.webp"
       ]
     }
   },
