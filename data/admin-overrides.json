@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:24:42.090Z",
+  "updatedAt": "2026-10-08T11:25:07.177Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26016,6 +26016,66 @@
       ],
       "images": [
         "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-schetka-chesalka-dlya-chistki-skota-texas.png"
+      ]
+    },
+    "5.1-0202-002-запасная-щетка-texas": {
+      "name": "Запасная щётка TEXAS",
+      "type": "Сменная щётка",
+      "article": "0202.002",
+      "purpose": "Для замены щётки в щётке-чесалке TEXAS",
+      "features": "Запасной элемент для системы TEXAS; отдельные характеристики в каталоге не приведены",
+      "sourceRow": 3,
+      "candidateId": "0202-002-запасная-щетка-texas",
+      "detailFields": [
+        [
+          "Артикул",
+          "0202.002"
+        ],
+        [
+          "Тип",
+          "Сменная щётка"
+        ],
+        [
+          "Назначение",
+          "Для замены щётки в щётке-чесалке TEXAS"
+        ]
+      ],
+      "advantages": [],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "images": [
+        "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-zapasnaya-schetka-texas.png"
       ]
     }
   },
