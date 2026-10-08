@@ -683,7 +683,7 @@ function pairRowsEditorHtml(key,label,rows,headers=[]){
   return '<details class="kb-admin-group kb-pair-editor" open data-pair-editor="'+esc(key)+'">'+
     '<summary>'+esc(label)+' <small>'+list.filter(r=>r?.some?.(x=>String(x||"").trim())).length+' строк</small></summary>'+
     '<div class="kb-pair-toolbar"><span>Строки можно перетаскивать за ⋮⋮. Названия столбцов можно менять прямо в шапке.</span></div>'+
-    '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'" style="--pair-width:"+width+">'+
+    '<div class="kb-pair-list" data-pair-list data-pair-width="'+width+'" style="--pair-width:'+width+'">'+
     '<div class="kb-pair-header" data-pair-header-row><span class="kb-pair-header-handle"></span>'+defaultHeaders.map((h,i)=>'<div class="kb-pair-header-cell"><input data-pair-header value="'+esc(h)+'" placeholder="Название столбца">'+(i>=2?'<button type="button" class="kb-pair-col-remove" data-pair-remove-col title="Удалить столбец">×</button>':"")+'</div>').join("")+'<span></span></div>'+
     normalized.map((r)=>'<div class="kb-pair-row" data-pair-row draggable="false" style="--pair-width:'+width+'">'+
       '<button type="button" class="kb-pair-drag" data-pair-drag title="Перетащить строку" aria-label="Перетащить строку">⋮⋮</button>'+
@@ -720,23 +720,22 @@ function collectPairRows(form,key){
 }
 function productPairEditors(ctx){
   const customById=new Map((ctx.product?.customTabs||[]).filter(t=>String(t?.id||"")!=="substances").map(t=>[String(t.id),t]));
-  const rendered=new Set(),blocks=[];
+  const blocks=[],rendered=new Set();
   for(const tab of (ctx.tabs||[]).filter(t=>String(t?.id||"")!=="substances")){
     const id=String(tab?.id||""),key=TAB_TO_PAIR[id];
     if(key){
+      const rows=ctx.product?.[key]||[],table=ctx.product?.tabTables?.[id];
+      if(!rows.length&&!table?.rows?.length)continue;
       const label=tab?.label||PAIR_FIELDS.find(([k])=>k===key)?.[1]||defaultTabLabel(id,ctx.product||{});
-      blocks.push(pairRowsEditorHtml(key,label,ctx.product?.[key]||[],ctx.product?.pairHeaders?.[key]||[]));
+      blocks.push(pairRowsEditorHtml(key,label,rows,ctx.product?.pairHeaders?.[key]||[]));
       rendered.add(id);
       continue;
     }
     const custom=customById.get(id);
     if(custom){blocks.push(customTabContentHtml(custom));rendered.add(id)}
   }
-  for(const [key,label] of PAIR_FIELDS){
-    const id=PAIR_TO_TAB[key];
-    if(!rendered.has(id))blocks.push(pairRowsEditorHtml(key,label,ctx.product?.[key]||[],ctx.product?.pairHeaders?.[key]||[]));
-  }
   for(const custom of customById.values())if(!rendered.has(String(custom.id)))blocks.push(customTabContentHtml(custom));
+  if(!blocks.length)return '<div class="kb-editor-empty"><strong>Содержательные блоки пока не заполнены</strong><span>Добавь нужный блок ниже — он сразу появится здесь.</span></div>';
   return blocks.join("");
 }
 function tabRowHtml(t,p,custom=false){
@@ -1164,8 +1163,10 @@ function renderProductEditor(ctx){
   const tabs=visibleEditorTabs.map(t=>tabRowHtml(t,ctx.product,customIds.has(t.id))).join("");
   const existingTabIds=new Set(visibleEditorTabs.map(t=>t.id));
   const quickStandard=[
-    ["specs","Характеристики"],["advantages","Преимущества / особенности"],["complectation","Комплектация"],
-    ["workflow","Порядок работы"],["assortment","Линейка / ассортимент"],["consumables","Расходные материалы"]
+    ["specs","Характеристики"],["indicators","Измеряемые показатели"],["options","Дополнительные опции"],
+    ["variants","Варианты исполнения"],["advantages","Преимущества / особенности"],["complectation","Комплектация"],
+    ["washCycle","Рекомендуемый цикл мойки"],["workflow","Порядок работы"],["calibration","Калибровка"],
+    ["assortment","Линейка / ассортимент"],["consumables","Расходные материалы"],["testKits","Тест-наборы"]
   ].filter(([id])=>!existingTabIds.has(id));
   const quickAdd=quickStandard.length?'<div class="kb-quick-tabs"><span>Быстро добавить:</span>'+quickStandard.map(([id,label])=>'<button type="button" class="kb-quick-tab" data-quick-standard-tab="'+esc(id)+'">'+esc(label)+'</button>').join("")+'</div>':"";
   setBody(shell(ctx.product.name||ctx.id,ctx.section.id+" · "+ctx.section.title,
