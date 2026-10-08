@@ -1553,3 +1553,77 @@ body.kb-account-mode .kb-admin-top{display:inline-flex}
 @media(max-width:900px){
   .kb-wb-editor{grid-template-columns:1fr!important}
 }
+
+
+/* ===== v2.2.121 — wider text workspace, compact media, unified pair rows ===== */
+.kb-admin-page .kb-product-command,
+.kb-admin-page .kb-wb-editor{
+  max-width:1680px!important;
+}
+.kb-wb-editor{
+  grid-template-columns:minmax(340px,390px) minmax(0,1fr)!important;
+  gap:18px!important;
+}
+.kb-wb-content{min-width:0!important;width:100%!important}
+.kb-content-panel [data-card-content]{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:10px!important;
+}
+.kb-pair-editor{
+  display:block!important;
+  width:100%!important;
+  overflow:hidden!important;
+}
+.kb-pair-list{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+  padding:0 12px 10px!important;
+}
+.kb-pair-header,
+.kb-pair-row{
+  display:grid!important;
+  grid-template-columns:30px repeat(var(--pair-width,2),minmax(180px,1fr)) 26px!important;
+  gap:8px!important;
+  width:100%!important;
+  min-width:620px!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+}
+.kb-pair-header{
+  padding:8px 6px!important;
+  margin:0!important;
+  border-radius:8px!important;
+  border-bottom:1px solid #e5ebe8!important;
+}
+.kb-pair-row{
+  padding:7px 6px!important;
+  margin:0!important;
+  border-radius:0!important;
+  border:0!important;
+  border-bottom:1px solid #edf1ef!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.kb-pair-row:last-child{border-bottom:0!important}
+.kb-pair-row:hover{background:#f8fbfa!important;box-shadow:none!important}
+.kb-pair-header-cell{display:flex!important;min-width:0!important}
+.kb-pair-header-cell input,
+.kb-pair-row input[data-pair-cell]{
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+.kb-wb-media .kb-photo-preview-simple{
+  height:220px!important;
+}
+@media(max-width:1250px){
+  .kb-wb-editor{grid-template-columns:320px minmax(0,1fr)!important}
+  .kb-wb-media .kb-photo-preview-simple{height:200px!important}
+}
+@media(max-width:900px){
+  .kb-wb-editor{grid-template-columns:1fr!important}
+  .kb-wb-media .kb-photo-preview-simple{height:280px!important}
+}
