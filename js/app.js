@@ -1086,6 +1086,7 @@ function splitFeatureText(text){
 function inferFeatureCharacteristic(text){
   const s=String(text||"").trim(),l=s.toLowerCase().replace(/ё/g,"е");
   const starts=(x)=>l.startsWith(x);
+  if(/^комплект на \d+\s+анализ/i.test(l))return "Количество анализов в комплекте";
   const rules=[
     ["размер щетк","Размер щётки"],["размер лист","Размер листа"],["размер","Размер"],
     ["объем","Объём"],["длина","Длина"],["ширина","Ширина"],["высота","Высота"],
