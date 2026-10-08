@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T14:20:15.239Z",
+  "updatedAt": "2026-10-08T14:20:17.640Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -74,7 +74,67 @@
     "5.4-0207-137-ошейник-маркировочный-ankar-пластмассовое-крепление-130-см": {
       "images": [
         "img/photos/admin/5.4-0207-137-ошейник-маркировочный-ankar-пластмассовое-крепление-130-см/5.4-0207-137-ошейник-маркировочный-ankar-пластмассовое-крепление-130-см-01.webp"
-      ]
+      ],
+      "name": "Ошейник маркировочный ANKAR, пластмассовое крепление, 130 см",
+      "type": "Маркировочный ошейник",
+      "article": "0207.137",
+      "purpose": "Для идентификации КРС",
+      "features": "Длина 130 см; пластиковое крепление",
+      "sourceRow": 6,
+      "candidateId": "0207-137-ошейник-маркировочный-ankar-пластмассовое-крепление-130-см",
+      "detailFields": [
+        [
+          "Тип",
+          "Маркировочный ошейник"
+        ],
+        [
+          "Назначение",
+          "Для идентификации КРС"
+        ],
+        [
+          "Длина",
+          "Длина 130 см"
+        ],
+        [
+          "Конструкция / исполнение",
+          "Пластиковое крепление"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "Зеленый, черный",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
