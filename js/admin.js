@@ -640,15 +640,15 @@ function renderAccountPage(){
     return '<section class="kb-chapter-group" data-chapter-group="'+esc(ch.id)+'">'+
       '<button type="button" class="kb-chapter-group-head" data-account-chapter-toggle="'+esc(ch.id)+'">'+
         '<span><small>Глава '+esc(ch.id)+'</small><strong>'+esc(ch.title)+'</strong></span>'+
-        '<span class="kb-chapter-meta">'+chSections.length+' разделов · '+count+' карточек <b>'+(index===0?"−":"+")+'</b></span>'+
+        '<span class="kb-chapter-meta">'+chSections.length+' разделов · '+count+' карточек <b>+</b></span>'+
       '</button>'+
-      '<div class="kb-section-grid" data-chapter-sections="'+esc(ch.id)+'" '+(index===0?"":"hidden")+'>'+chSections.map(sectionCard).join("")+'</div>'+
+      '<div class="kb-section-grid" data-chapter-sections="'+esc(ch.id)+'" hidden>'+chSections.map(sectionCard).join("")+'</div>'+
     '</section>';
   }).join("");
 
   const chapterNav=catalog.map((ch,index)=>{
     const count=sections.filter(s=>String(s.chapterId)===String(ch.id)).reduce((n,s)=>n+s.products.length,0);
-    return '<button type="button" class="'+(index===0?"active":"")+'" data-account-chapter-filter="'+esc(ch.id)+'"><span>Глава '+esc(ch.id)+'</span><small>'+esc(ch.title)+'</small><b>'+count+'</b></button>';
+    return '<button type="button" data-account-chapter-filter="'+esc(ch.id)+'"><span>Глава '+esc(ch.id)+'</span><small>'+esc(ch.title)+'</small><b>'+count+'</b></button>';
   }).join("");
 
   const productsTable=sections.map(sec=>{
@@ -764,8 +764,13 @@ function inferCharacteristicLabel(value){
   if(/^\d+\s+отрыв(?:ов|а)?/i.test(s))return "Количество отрывов";
   return "";
 }
+function upperAdminRowStart(v){
+  const s=String(v??"");
+  const m=s.match(/^(\s*)([а-яё])(.*)$/s);
+  return m?m[1]+m[2].toUpperCase()+m[3]:s;
+}
 function normalizeFallbackPairRows(key,rows){
-  const out=(rows||[]).map(r=>Array.isArray(r)?[...r]:[]);
+  const out=(rows||[]).map(r=>Array.isArray(r)?r.map(upperAdminRowStart):[]);
   if(key!=="detailFields")return out;
   let next=1;
   const used=new Set();
