@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:21:52.867Z",
+  "updatedAt": "2026-10-08T12:28:22.613Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25889,6 +25889,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.2-0208-007-рашпиль-для-обработки-копыт-disc": {
+      "images": [
+        "img/photos/admin/5.2-0208-007-рашпиль-для-обработки-копыт-disc/5.2-0208-007-рашпиль-для-обработки-копыт-disc-01.webp"
       ]
     }
   },
