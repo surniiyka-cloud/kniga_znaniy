@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T07:16:55.791Z",
+  "updatedAt": "2026-10-08T07:25:56.365Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25422,6 +25422,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.9-экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus": {
+      "images": [
+        "img/photos/admin/4.9-экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus/4.9-экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus-01.webp"
       ]
     }
   },
