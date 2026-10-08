@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:28:59.856Z",
+  "updatedAt": "2026-10-08T12:31:17.649Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25969,7 +25969,9 @@
       ]
     },
     "5.2-0208-059-копытный-рашпиль": {
-      "images": []
+      "images": [
+        "img/photos/admin/5.2-0208-059-копытный-рашпиль/5.2-0208-059-копытный-рашпиль-01.webp"
+      ]
     }
   },
   "sections": {
