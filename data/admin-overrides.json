@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:28:22.613Z",
+  "updatedAt": "2026-10-08T12:28:35.480Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25894,6 +25894,78 @@
     "5.2-0208-007-рашпиль-для-обработки-копыт-disc": {
       "images": [
         "img/photos/admin/5.2-0208-007-рашпиль-для-обработки-копыт-disc/5.2-0208-007-рашпиль-для-обработки-копыт-disc-01.webp"
+      ],
+      "name": "Рашпиль для обработки копыт DISC",
+      "type": "Копытный рашпиль KERBL",
+      "article": "0208.007",
+      "purpose": "Для ручной обработки и выравнивания копыта",
+      "features": "Плоский, тупоносый; пластиковая рукоятка; одна сторона с острой глубокой насечкой, другая — с грубой; размер 200 × 45 × 5 мм",
+      "sourceRow": 17,
+      "candidateId": "0208-007-рашпиль-для-обработки-копыт-disc",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.007"
+        ],
+        [
+          "Тип",
+          "Копытный рашпиль KERBL"
+        ],
+        [
+          "Назначение",
+          "Для ручной обработки и выравнивания копыта"
+        ],
+        [
+          "Размер",
+          "200 × 45 × 5 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Плоский, тупоносый"
+        ],
+        [
+          "Особенность 2",
+          "Пластиковая рукоятка"
+        ],
+        [
+          "Особенность 3",
+          "Одна сторона с острой глубокой насечкой, другая — с грубой"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
