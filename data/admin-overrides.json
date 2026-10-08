@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T08:02:25.647Z",
+  "updatedAt": "2026-10-08T08:07:31.824Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25863,6 +25863,14 @@
       "tabOrder": [
         "specs",
         "performance-fassisi"
+      ]
+    },
+    "5.2-0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт": {
+      "images": [
+        "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120-mm-3-nozha-16316.png",
+        "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120mm-6-nozhey-16318.png",
+        "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-6-lezviy-v-komplekte.png",
+        "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-7-lezviy-v-komplekte.png"
       ]
     }
   },
