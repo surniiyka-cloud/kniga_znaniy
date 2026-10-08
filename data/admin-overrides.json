@@ -1,10 +1,74 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T14:16:19.021Z",
+  "updatedAt": "2026-10-08T14:16:21.505Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
         "img/photos/admin/5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см/5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см-01.webp"
+      ],
+      "name": "Ошейник маркировочный ANKAR бело-зелёный, 130 см",
+      "type": "Маркировочный ошейник",
+      "article": "0207.132",
+      "purpose": "Для идентификации КРС",
+      "features": "Длина 130 см; бело-зелёная расцветка",
+      "sourceRow": 5,
+      "candidateId": "0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.132"
+        ],
+        [
+          "Тип",
+          "Маркировочный ошейник"
+        ],
+        [
+          "Назначение",
+          "Для идентификации КРС"
+        ],
+        [
+          "Длина",
+          "Длина 130 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Бело-зелёная расцветка"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
