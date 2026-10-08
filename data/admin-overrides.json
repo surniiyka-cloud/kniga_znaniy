@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T14:23:30.236Z",
+  "updatedAt": "2026-10-08T14:23:41.353Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -139,7 +139,67 @@
     "5.4-0207-130-ошейник-маркировочный-ankar-кольца-130-см": {
       "images": [
         "img/photos/admin/5.4-0207-130-ошейник-маркировочный-ankar-кольца-130-см/5.4-0207-130-ошейник-маркировочный-ankar-кольца-130-см-01.webp"
-      ]
+      ],
+      "name": "Ошейник маркировочный ANKAR, кольца, 130 см",
+      "type": "Маркировочный ошейник",
+      "article": "0207.130",
+      "purpose": "Для идентификации КРС",
+      "features": "Длина 130 см; конструкция с кольцами",
+      "sourceRow": 7,
+      "candidateId": "0207-130-ошейник-маркировочный-ankar-кольца-130-см",
+      "detailFields": [
+        [
+          "Тип",
+          "Маркировочный ошейник"
+        ],
+        [
+          "Назначение",
+          "Для идентификации КРС"
+        ],
+        [
+          "Длина",
+          "Длина 130 см"
+        ],
+        [
+          "Конструкция / исполнение",
+          "Конструкция с кольцами"
+        ]
+      ],
+      "complectation": [],
+      "advantages": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "Зеленый",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
