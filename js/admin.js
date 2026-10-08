@@ -1181,7 +1181,7 @@ function nextManualProductId(targetSection,name,o){
 async function createManualProduct(sectionId,name="Новая карточка"){
   const o=await loadOverrides(),section=o.sections[sectionId]||(o.sections[sectionId]={}),manualProducts=section.manualProducts||(section.manualProducts={});
   const id=nextManualProductId(sectionId,name,o);
-  manualProducts[id]={name:String(name||"Новая карточка").trim()||"Новая карточка",article:"",type:"",purpose:"",detailFields:[["",""]],advantages:[["",""]],sourceSectionId:sectionId};
+  manualProducts[id]={name:String(name||"Новая карточка").trim()||"Новая карточка",article:"",type:"",color:"",purpose:"",detailFields:[["",""]],advantages:[["",""]],sourceSectionId:sectionId};
   await commitOverrides(o);
   location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
 }
@@ -1261,7 +1261,7 @@ function renderProductEditor(ctx){
       '</aside>'+
       '<main class="kb-wb-content">'+
         '<section class="kb-wb-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Основная информация</span><h3>Карточка товара</h3></div></div>'+
-          '<div class="kb-admin-grid two kb-wb-basic"><label>Наименование<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип / категория<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label class="wide kb-purpose-field">Описание / назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
+          '<div class="kb-admin-grid two kb-wb-basic"><label>Наименование<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип / категория<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label>Цвет / цвета<input name="color" value="'+esc(ctx.product.color||"")+'"></label><label class="wide kb-purpose-field">Описание / назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
         '</section>'+
         '<section class="kb-wb-panel kb-content-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Контент</span><h3>Данные карточки</h3><p>Характеристики, преимущества, комплектация и другие содержательные вкладки.</p></div></div><div data-card-content>'+productPairEditors(ctx)+'</div></section>'+
         '<section class="kb-wb-panel kb-tables-panel">'+tableEditorsHtml(ctx)+'</section>'+
@@ -1983,7 +1983,7 @@ async function saveProduct(e){
     delete out.id;
     out.__frozen=true;
 
-    for(const key of ["name","article","type","purpose"])out[key]=String(fd.get(key)||"");
+    for(const key of ["name","article","type","color","purpose"])out[key]=String(fd.get(key)||"");
 
     out.pairHeaders=deep(out.pairHeaders||{});
     for(const [key] of PAIR_FIELDS){
