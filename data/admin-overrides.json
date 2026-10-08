@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T07:25:56.365Z",
+  "updatedAt": "2026-10-08T07:26:06.508Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25427,6 +25427,69 @@
     "4.9-экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus": {
       "images": [
         "img/photos/admin/4.9-экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus/4.9-экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus-01.webp"
+      ],
+      "name": "Экспресс-тест для диагностики возбудителей диареи КРС FASSISI BODIA PLUS",
+      "type": "Иммунохроматографический экспресс-тест",
+      "article": "-",
+      "purpose": "Для выявления основных возбудителей диареи у молодняка и взрослых коров",
+      "features": "Метод — ИХА; результат за 10 минут; выявляет Rotavirus, Coronavirus, E. coli K99, Cryptosporidia, Clostridium perfringens; исследуемый материал — фекалии; упаковка 10 шт.",
+      "sourceRow": 10,
+      "candidateId": "экспресс-тест-для-диагностики-возбудителей-диареи-крс-fassisi-bodia-plus",
+      "detailFields": [
+        [
+          "Тип",
+          "Иммунохроматографический экспресс-тест"
+        ],
+        [
+          "Назначение",
+          "Для выявления основных возбудителей диареи у молодняка и взрослых коров"
+        ]
+      ],
+      "advantages": [
+        [
+          "Пункт 1",
+          "Метод — ИХА"
+        ],
+        [
+          "Пункт 2",
+          "результат за 10 минут"
+        ],
+        [
+          "Пункт 3",
+          "выявляет Rotavirus, Coronavirus, E. coli K99, Cryptosporidia, Clostridium perfringens"
+        ],
+        [
+          "Пункт 4",
+          "исследуемый материал — фекалии"
+        ],
+        [
+          "Пункт 5",
+          "упаковка 10 шт"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Название характеристики",
+          "Описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "workflow": [],
+      "washCycle": [],
+      "tabTables": {},
+      "substances": [],
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "advantages"
       ]
     }
   },
