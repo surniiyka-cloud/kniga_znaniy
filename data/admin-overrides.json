@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-07T14:53:13.455Z",
+  "updatedAt": "2026-10-08T05:57:20.307Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24458,6 +24458,11 @@
       "tabOrder": [
         "specs",
         "advantages"
+      ]
+    },
+    "4.7-0203-081-путы-для-крс-profi": {
+      "images": [
+        "img/photos/admin/4.7-0203-081-путы-для-крс-profi/4.7-0203-081-путы-для-крс-profi-01.webp"
       ]
     }
   },
