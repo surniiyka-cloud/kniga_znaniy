@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:55:55.765Z",
+  "updatedAt": "2026-10-08T12:58:54.332Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26258,7 +26258,10 @@
         "specs",
         "variants"
       ],
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/5.2-8312-16805-ножи-для-копыт/5.2-8312-16805-ножи-для-копыт-01.webp"
+      ]
     }
   },
   "sections": {
