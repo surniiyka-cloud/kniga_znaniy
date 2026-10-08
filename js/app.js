@@ -1917,8 +1917,18 @@ function renderSection(id){
     (id==="3.1"&&items.length?"":sectionContent(s));
   if(items.length){q("#sectionFilter").addEventListener("input",(e)=>{const z=e.target.value.toLowerCase().trim();const f=items.filter((it)=>[it.product.name,it.product.article,it.product.type,it.product.purpose,it.product.features].filter(Boolean).join(" ").toLowerCase().includes(z));q("#sectionProducts").innerHTML=f.length?grouped(f):'<div class="empty-state" style="grid-column:1/-1"><strong>Ничего не найдено</strong></div>';});}
 }
+function normalizedCharacteristicRows(rows){
+  return (rows||[]).map((r,i)=>{
+    if(!Array.isArray(r))return r;
+    const row=[...r],label=String(row?.[0]||"").trim(),m=label.match(/^(?:Характеристика|Пункт)\s*(\d+)$/i);
+    const hasOther=row.slice(1).some(v=>String(v||"").trim());
+    if(m)row[0]=String(Number(m[1]));
+    else if(!label&&hasOther)row[0]=String(i+1);
+    return row;
+  });
+}
 function fields(p){
-  if(p.detailFields?.length)return p.detailFields.filter((x)=>x?.[0]&&x?.some?.(v=>String(v||"").trim()));
+  if(p.detailFields?.length)return normalizedCharacteristicRows(p.detailFields).filter((x)=>x?.[0]&&x?.some?.(v=>String(v||"").trim()));
   return [["Артикул",article(p)||"Не указан"],["Тип",p.type],["Назначение",p.purpose],["Характеристики / особенности",p.features],["Производитель",p.manufacturer],["Страна",p.country]].filter((x)=>x[1]);
 }
 function pairHeaders(p,key,width){
