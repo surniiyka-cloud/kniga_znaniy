@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:51:07.880Z",
+  "updatedAt": "2026-10-08T12:51:14.038Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -6324,7 +6324,17 @@
     "5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap": {
       "tabOrder": [
         "specs",
-        "variants"
+        "variants",
+        "indicators",
+        "options",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ],
       "images": [
         "img/photos/admin/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap-01.webp"
@@ -6389,7 +6399,20 @@
         ]
       },
       "advantages": [],
-      "__frozen": true
+      "__frozen": true,
+      "sourceRow": 19,
+      "candidateId": "vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap",
+      "indicators": [],
+      "options": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     },
     "5.2-0208-0105-0208-0108-0208-0101-0208-0104-бандаж-для-копыт-ankar": {
       "images": [
