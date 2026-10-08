@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:11:12.182Z",
+  "updatedAt": "2026-10-08T12:21:38.464Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4351,7 +4351,8 @@
       ],
       "tabLabels": {
         "luci": "LuciPac A3 Water / Surface"
-      }
+      },
+      "images": []
     },
     "4.2-1105-030-дренчер-drench-mate-1-1-5": {
       "tabTables": {
