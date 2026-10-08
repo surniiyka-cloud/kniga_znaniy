@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:43:40.736Z",
+  "updatedAt": "2026-10-08T11:44:20.115Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -24324,7 +24324,7 @@
           "очень прочные"
         ],
         [
-          "4",
+          "Функция",
           "помогают коровам вставать после родов"
         ],
         [
@@ -24351,10 +24351,20 @@
       "workflow": [],
       "washCycle": [],
       "tabTables": {},
-      "substances": [],
       "customTabs": [],
       "tabOrder": [
-        "specs"
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     },
     "4.8-кольца-для-кастрации-ankar": {
