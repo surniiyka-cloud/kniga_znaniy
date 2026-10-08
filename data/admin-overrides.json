@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:31:17.649Z",
+  "updatedAt": "2026-10-08T12:31:22.755Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -25971,6 +25971,66 @@
     "5.2-0208-059-копытный-рашпиль": {
       "images": [
         "img/photos/admin/5.2-0208-059-копытный-рашпиль/5.2-0208-059-копытный-рашпиль-01.webp"
+      ],
+      "name": "Копытный рашпиль",
+      "type": "Двусторонний рашпиль",
+      "article": "0208.059",
+      "purpose": "Для обработки поверхности копыта",
+      "features": "Двусторонняя конструкция для быстрой и качественной обработки",
+      "sourceRow": 18,
+      "candidateId": "0208-059-копытный-рашпиль",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.059"
+        ],
+        [
+          "Тип",
+          "Двусторонний рашпиль"
+        ],
+        [
+          "Назначение",
+          "Для обработки поверхности копыта"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Двусторонняя конструкция для быстрой и качественной обработки"
+        ]
+      ],
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
