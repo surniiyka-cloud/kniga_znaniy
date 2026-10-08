@@ -1397,28 +1397,79 @@ function bindBody(){
     }
     location.hash="#/account";
   }));
+  let activeChapter="";
+  const currentAccountView=()=>body.querySelector("[data-account-view].active")?.dataset.accountView||"sections";
   const applyAccountFilters=()=>{
     const qv=String(body.querySelector("[data-account-search]")?.value||"").trim().toLowerCase();
     const mode=body.querySelector("[data-account-filter].active")?.dataset.accountFilter||"all";
+    const view=currentAccountView();
     let shown=0;
-    body.querySelectorAll("[data-account-section-card]").forEach(section=>{
-      let sectionShown=0;
-      section.querySelectorAll("[data-account-product-card]").forEach(card=>{
-        const matchesText=!qv||String(card.dataset.accountProductSearch||"").toLowerCase().includes(qv);
-        const quality=Number(card.dataset.quality||0),hasPhoto=card.dataset.hasPhoto==="1";
-        const matchesMode=mode==="all"||(mode==="improve"&&quality<75)||(mode==="photo"&&hasPhoto);
-        const ok=matchesText&&matchesMode;card.hidden=!ok;if(ok)sectionShown++;
+
+    if(view==="sections"){
+      body.querySelectorAll("[data-chapter-group]").forEach(group=>{
+        const gid=String(group.dataset.chapterGroup||"");
+        let groupShown=0;
+        group.querySelectorAll("[data-section-overview]").forEach(section=>{
+          const text=String(section.dataset.sectionSearch||"").toLowerCase();
+          const matchesText=!qv||text.includes(qv);
+          const matchesChapter=!activeChapter||String(section.dataset.chapterId||"")===activeChapter;
+          const ok=matchesText&&matchesChapter;
+          section.hidden=!ok;if(ok){groupShown++;shown++}
+        });
+        group.hidden=groupShown===0;
+        const list=group.querySelector("[data-chapter-sections]");
+        const head=group.querySelector("[data-account-chapter-toggle]");
+        if((qv||activeChapter)&&groupShown){if(list)list.hidden=false;if(head)head.classList.add("open")}
       });
-      section.hidden=sectionShown===0;if(sectionShown)shown++;
-    });
+    }else{
+      body.querySelectorAll("[data-account-section-card]").forEach(section=>{
+        let sectionShown=0;
+        section.querySelectorAll("[data-account-product-card]").forEach(card=>{
+          const matchesText=!qv||String(card.dataset.accountProductSearch||"").toLowerCase().includes(qv);
+          const quality=Number(card.dataset.quality||0),hasPhoto=card.dataset.hasPhoto==="1";
+          const matchesMode=mode==="all"||(mode==="improve"&&quality<75)||(mode==="photo"&&hasPhoto);
+          const ok=matchesText&&matchesMode;card.hidden=!ok;if(ok)sectionShown++;
+        });
+        section.hidden=sectionShown===0;if(sectionShown)shown++;
+      });
+    }
     const empty=body.querySelector("[data-account-empty]");if(empty)empty.hidden=shown>0;
   };
   body.querySelector("[data-account-search]")?.addEventListener("input",applyAccountFilters);
+  body.querySelectorAll("[data-account-view]").forEach(b=>b.addEventListener("click",()=>{
+    body.querySelectorAll("[data-account-view]").forEach(x=>x.classList.toggle("active",x===b));
+    body.querySelectorAll("[data-account-view-panel]").forEach(p=>p.hidden=p.dataset.accountViewPanel!==b.dataset.accountView);
+    applyAccountFilters();
+  }));
   body.querySelectorAll("[data-account-filter]").forEach(b=>b.addEventListener("click",()=>{
     body.querySelectorAll("[data-account-filter]").forEach(x=>x.classList.toggle("active",x===b));applyAccountFilters();
   }));
+  body.querySelectorAll("[data-account-chapter-filter]").forEach(b=>b.addEventListener("click",()=>{
+    const id=String(b.dataset.accountChapterFilter||"");
+    activeChapter=activeChapter===id?"":id;
+    body.querySelectorAll("[data-account-chapter-filter]").forEach(x=>x.classList.toggle("active",String(x.dataset.accountChapterFilter||"")===activeChapter));
+    applyAccountFilters();
+    if(activeChapter)body.querySelector('[data-chapter-group="'+CSS.escape(activeChapter)+'"]')?.scrollIntoView({behavior:"smooth",block:"start"});
+  }));
+  body.querySelector("[data-account-show-all]")?.addEventListener("click",()=>{
+    activeChapter="";
+    body.querySelectorAll("[data-account-chapter-filter]").forEach(x=>x.classList.remove("active"));
+    applyAccountFilters();
+  });
+  body.querySelectorAll("[data-account-chapter-toggle]").forEach(b=>b.addEventListener("click",()=>{
+    const id=String(b.dataset.accountChapterToggle||""),list=body.querySelector('[data-chapter-sections="'+CSS.escape(id)+'"]');
+    if(!list)return;list.hidden=!list.hidden;b.classList.toggle("open",!list.hidden);
+    const mark=b.querySelector(".kb-chapter-meta b");if(mark)mark.textContent=list.hidden?"+":"−";
+  }));
+  body.querySelectorAll("[data-account-toggle-products]").forEach(b=>b.addEventListener("click",()=>{
+    const id=String(b.dataset.accountToggleProducts||""),drawer=body.querySelector('[data-section-products="'+CSS.escape(id)+'"]');
+    if(!drawer)return;drawer.hidden=!drawer.hidden;b.classList.toggle("active",!drawer.hidden);
+    const mark=b.querySelector("span");if(mark)mark.textContent=drawer.hidden?"⌄":"⌃";
+  }));
   body.querySelector("[data-account-clear]")?.addEventListener("click",()=>{
     const input=body.querySelector("[data-account-search]");if(input)input.value="";
+    activeChapter="";
+    body.querySelectorAll("[data-account-chapter-filter]").forEach(x=>x.classList.remove("active"));
     const all=body.querySelector('[data-account-filter="all"]');body.querySelectorAll("[data-account-filter]").forEach(x=>x.classList.toggle("active",x===all));applyAccountFilters();
   });
   body.querySelector("[data-account-add-first]")?.addEventListener("click",async()=>{
