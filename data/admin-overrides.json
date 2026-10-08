@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:25:07.177Z",
+  "updatedAt": "2026-10-08T11:33:33.750Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -4639,7 +4639,18 @@
       ],
       "tabOrder": [
         "specs",
-        "custom-комплектация"
+        "custom-комплектация",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ],
       "images": [
         "img/photos/admin/4.4-прибор-для-массовых-прививок-пмп-5м-шилова/4.4-прибор-для-массовых-прививок-пмп-5м-шилова-01.webp"
@@ -4669,7 +4680,7 @@
           "позволяет выполнять инъекции дозами 1–5 мл"
         ],
         [
-          "3",
+          "Производительность",
           "Облегчает проведение большого количества однотипных инъекций"
         ]
       ],
@@ -4690,8 +4701,7 @@
       "consumables": [],
       "testKits": [],
       "workflow": [],
-      "washCycle": [],
-      "substances": []
+      "washCycle": []
     },
     "4.5-иглы-ветеринарные-многоразовые-ankar": {
       "tabTables": {
