@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:33:33.750Z",
+  "updatedAt": "2026-10-08T11:35:05.461Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -23279,15 +23279,15 @@
         ],
         [
           "Конструкция",
-          "Лёгкая и прочная конструкция"
+          "Лёгкая и прочная"
         ],
         [
-          "2",
-          "легко разбирается и очищается"
+          "Чистка",
+          "Легко разбирается и очищается"
         ],
         [
           "Объём",
-          "несколько вариантов объёма"
+          "70 мл, 200 мл, 300 мл, 500 мл"
         ]
       ],
       "advantages": [],
@@ -23309,10 +23309,20 @@
       "workflow": [],
       "washCycle": [],
       "tabTables": {},
-      "substances": [],
       "customTabs": [],
       "tabOrder": [
-        "specs"
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     },
     "4.6-152185-троакар-с-кональной-насадкой-для-подшива-сычуга": {
