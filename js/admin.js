@@ -745,8 +745,9 @@ function photoContextSetting(view,context){
 function photoPreviewStyle(v){
   const s=photoSetting(v);return "object-fit:"+s.fit+";transform:translate("+s.x+"%,"+s.y+"%) scale("+s.scale+");";
 }
-function photoRowHtml(path,index){
-  return '<div class="kb-photo-row kb-photo-row-simple" data-photo-row data-path="'+esc(path)+'"><div class="kb-photo-preview kb-photo-preview-simple"><img src="'+esc(photoPreviewSrc(path))+'" alt="Фото товара"></div><div class="kb-photo-simple-main"><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div><div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up>↑ Выше</button><button type="button" class="kb-mini" data-photo-down>↓ Ниже</button><button type="button" class="kb-mini primary" data-photo-replace>Заменить фото</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div></div></div>';
+function photoRowHtml(path,index,previewSrc=""){
+  const src=previewSrc||photoPreviewSrc(path);
+  return '<div class="kb-photo-row kb-photo-row-simple" data-photo-row data-path="'+esc(path)+'"><div class="kb-photo-preview kb-photo-preview-simple"><img src="'+esc(src)+'" alt="Фото товара"></div><div class="kb-photo-simple-main"><div class="kb-photo-meta"><strong>Фото '+(index+1)+'</strong><code>'+esc(path)+'</code></div><div class="kb-photo-actions"><button type="button" class="kb-mini" data-photo-up>↑ Выше</button><button type="button" class="kb-mini" data-photo-down>↓ Ниже</button><button type="button" class="kb-mini primary" data-photo-replace>Заменить фото</button><button type="button" class="kb-mini danger" data-photo-remove>Удалить</button></div></div></div>';
 }
 function fileExt(name){
   const m=String(name||"").toLowerCase().match(/\.([a-z0-9]{1,10})$/);return m?m[1]:"file";
@@ -1126,7 +1127,7 @@ function renderProductEditor(ctx){
       '</aside>'+
       '<main class="kb-wb-content">'+
         '<section class="kb-wb-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Основная информация</span><h3>Карточка товара</h3></div></div>'+
-          '<div class="kb-admin-grid two kb-wb-basic"><label>Наименование<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип / категория<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label class="wide">Описание / назначение<textarea name="purpose" rows="5">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
+          '<div class="kb-admin-grid two kb-wb-basic"><label>Наименование<input name="name" value="'+esc(ctx.product.name||"")+'"></label><label>Артикул<input name="article" value="'+esc(ctx.product.article||"")+'"></label><label>Тип / категория<input name="type" value="'+esc(ctx.product.type||"")+'"></label><label class="wide kb-purpose-field">Описание / назначение<textarea name="purpose" rows="3">'+esc(ctx.product.purpose||"")+'</textarea></label></div>'+
         '</section>'+
         '<section class="kb-wb-panel kb-content-panel"><div class="kb-wb-panel-head"><div><span class="kb-admin-kicker">Контент</span><h3>Данные карточки</h3><p>Характеристики, преимущества, комплектация и другие содержательные вкладки.</p></div></div><div data-card-content>'+productPairEditors(ctx)+'</div></section>'+
         '<section class="kb-wb-panel kb-tables-panel">'+tableEditorsHtml(ctx)+'</section>'+
@@ -1672,7 +1673,12 @@ function bindBody(){
   photoAddInput?.addEventListener("change",async()=>{
     const files=[...(photoAddInput.files||[])];if(!files.length)return;
     try{setPhotoSaveState(body,"saving");showStatus("Загружаем фото…");const list=body.querySelector("[data-photo-list]"),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
-      for(const file of files){const prepared=await optimizePhotoFile(file),path=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));await uploadPhoto(prepared,path);list?.insertAdjacentHTML("beforeend",photoRowHtml(path,list.querySelectorAll("[data-photo-row]").length))}
+      for(const file of files){
+        const prepared=await optimizePhotoFile(file),path=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));
+        await uploadPhoto(prepared,path);
+        const localPreview=URL.createObjectURL(prepared);
+        list?.insertAdjacentHTML("beforeend",photoRowHtml(path,list.querySelectorAll("[data-photo-row]").length,localPreview));
+      }
       syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото добавлено и опубликовано.");
     }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить фото.");showError(err)}
   });
@@ -1693,7 +1699,15 @@ function bindBody(){
   });
   photoReplaceInput?.addEventListener("change",async()=>{
     const file=photoReplaceInput.files?.[0],row=photoReplaceRow;photoReplaceRow=null;if(!file||!row)return;
-    try{setPhotoSaveState(body,"saving");showStatus("Заменяем фото…");const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,prepared=await optimizePhotoFile(file),newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));await uploadPhoto(prepared,newPath);row.dataset.path=newPath;const img=row.querySelector("img");if(img)img.src=photoPreviewSrc(newPath)+"?v="+Date.now();const code=row.querySelector("code");if(code)code.textContent=newPath;syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось заменить фото.");showError(err)}
+    try{
+      setPhotoSaveState(body,"saving");showStatus("Заменяем фото…");
+      const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,prepared=await optimizePhotoFile(file),newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));
+      await uploadPhoto(prepared,newPath);
+      row.dataset.path=newPath;
+      const img=row.querySelector("img");if(img)img.src=URL.createObjectURL(prepared);
+      const code=row.querySelector("code");if(code)code.textContent=newPath;
+      syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");
+    }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось заменить фото.");showError(err)}
   });
 
   body.addEventListener("click",e=>{
