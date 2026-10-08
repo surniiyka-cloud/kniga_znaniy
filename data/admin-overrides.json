@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T12:58:54.332Z",
+  "updatedAt": "2026-10-08T12:58:58.652Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -26256,12 +26256,36 @@
       "advantages": [],
       "tabOrder": [
         "specs",
-        "variants"
+        "variants",
+        "indicators",
+        "options",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ],
       "__frozen": true,
       "images": [
         "img/photos/admin/5.2-8312-16805-ножи-для-копыт/5.2-8312-16805-ножи-для-копыт-01.webp"
-      ]
+      ],
+      "features": "В каталоге: 8312 — нож двусторонний узкий; 16805 — нож двусторонний левый «А»",
+      "sourceRow": 21,
+      "candidateId": "8312-16805-ножи-для-копыт",
+      "indicators": [],
+      "options": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {
