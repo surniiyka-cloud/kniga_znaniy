@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-08T11:36:56.971Z",
+  "updatedAt": "2026-10-08T11:38:13.237Z",
   "products": {
     "catalog-2-1-1-ankar-milk-test-4": {
       "complectation": [
@@ -23799,11 +23799,11 @@
         ],
         [
           "Крепление",
-          "удобное крепление на стойло"
+          "Удобное крепление на стойло"
         ],
         [
-          "3",
-          "позволяет одним движением зафиксировать голову, облегчая подачу лекарств и уход"
+          "Удобство использования",
+          "Позволяет одним движением зафиксировать голову, облегчая подачу лекарств и уход"
         ]
       ],
       "advantages": [],
@@ -23825,10 +23825,20 @@
       "workflow": [],
       "washCycle": [],
       "tabTables": {},
-      "substances": [],
       "customTabs": [],
       "tabOrder": [
-        "specs"
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     },
     "4.7-0203-081-путы-для-крс-profi": {
