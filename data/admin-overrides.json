@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:49:44.106Z",
+  "updatedAt": "2026-10-09T12:53:40.180Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9457,6 +9457,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.10-ик-лампа-ankar": {
+      "images": [
+        "img/photos/admin/6.10-ик-лампа-ankar/6.10-ик-лампа-ankar-01.webp"
       ]
     }
   },
