@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T13:05:08.062Z",
+  "updatedAt": "2026-10-09T13:05:17.576Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9750,6 +9750,75 @@
     "6.11-0202-101-роговыжигатель-газовый-express-daos": {
       "images": [
         "img/photos/admin/6.11-0202-101-роговыжигатель-газовый-express-daos/6.11-0202-101-роговыжигатель-газовый-express-daos-01.webp"
+      ],
+      "name": "Роговыжигатель газовый EXPRESS DAOS",
+      "type": "Газовый роговыжигатель",
+      "article": "0202.101",
+      "purpose": "Для термического обезроживания телят",
+      "features": "Работает с запасным баллоном EXPRESS 110 мл; температура 500–700 °C; вес 290 г",
+      "sourceRow": 4,
+      "candidateId": "0202-101-роговыжигатель-газовый-express-daos",
+      "detailFields": [
+        [
+          "Артикул",
+          "0202.101"
+        ],
+        [
+          "Тип",
+          "Газовый роговыжигатель"
+        ],
+        [
+          "Назначение",
+          "Для термического обезроживания телят"
+        ],
+        [
+          "Температура",
+          "Температура 500–700 °C"
+        ],
+        [
+          "Масса",
+          "Вес 290 г"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Работает с запасным баллоном EXPRESS 110 мл"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
