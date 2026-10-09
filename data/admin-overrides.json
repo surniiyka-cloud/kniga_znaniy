@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:35:42.468Z",
+  "updatedAt": "2026-10-09T08:35:45.288Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3864,6 +3864,71 @@
     "3.2-0303-012-стаканчик-пенный-ankar-premium-foam": {
       "images": [
         "img/photos/admin/3.2-0303-012-стаканчик-пенный-ankar-premium-foam/3.2-0303-012-стаканчик-пенный-ankar-premium-foam-02.webp"
+      ],
+      "name": "Стаканчик пенный ANKAR PREMIUM FOAM",
+      "type": "Пенный",
+      "article": "0303.012",
+      "features": "Пенный стаканчик для обработки вымени после доения. Объём 300 мл.",
+      "sourceRow": 7,
+      "candidateId": "0303-012-стаканчик-пенный-ankar-premium-foam",
+      "detailFields": [
+        [
+          "Артикул",
+          "0303.012"
+        ],
+        [
+          "Тип",
+          "Пенный"
+        ],
+        [
+          "Этап применения",
+          "После доения"
+        ],
+        [
+          "Объём",
+          "Объём 300 мл"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Пенный стаканчик для обработки вымени после доения"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
