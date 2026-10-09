@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:43:08.902Z",
+  "updatedAt": "2026-10-09T11:43:14.783Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -8045,6 +8045,79 @@
     "6.5-0206-120-навесная-кормушка-hangon": {
       "images": [
         "img/photos/admin/6.5-0206-120-навесная-кормушка-hangon/6.5-0206-120-навесная-кормушка-hangon-01.webp"
+      ],
+      "name": "Навесная кормушка HANGON",
+      "type": "Навесная кормушка",
+      "article": "0206.120",
+      "purpose": "Для кормления телят и молодняка",
+      "features": "Переносная; изготовлена из прочного ударостойкого пластика; предусмотрена усиленная скоба для подвешивания; объём 13 л",
+      "sourceRow": 3,
+      "candidateId": "0206-120-навесная-кормушка-hangon",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.120"
+        ],
+        [
+          "Тип",
+          "Навесная кормушка"
+        ],
+        [
+          "Назначение",
+          "Для кормления телят и молодняка"
+        ],
+        [
+          "Материал",
+          "Изготовлена из прочного ударостойкого пластика"
+        ],
+        [
+          "Объём",
+          "Объём 13 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Переносная"
+        ],
+        [
+          "Особенность 2",
+          "Предусмотрена усиленная скоба для подвешивания"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
