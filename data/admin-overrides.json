@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:28:42.118Z",
+  "updatedAt": "2026-10-09T11:28:47.143Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7668,6 +7668,66 @@
     "6.3-0206-078-прокладка-для-клапана": {
       "images": [
         "img/photos/admin/6.3-0206-078-прокладка-для-клапана/6.3-0206-078-прокладка-для-клапана-01.webp"
+      ],
+      "name": "Прокладка для клапана",
+      "type": "Уплотнительная прокладка",
+      "article": "0206.078",
+      "purpose": "Для крепления соски и герметизации клапана ведра",
+      "features": "Толщина 3 мм",
+      "sourceRow": 15,
+      "candidateId": "0206-078-прокладка-для-клапана",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.078"
+        ],
+        [
+          "Тип",
+          "Уплотнительная прокладка"
+        ],
+        [
+          "Назначение",
+          "Для крепления соски и герметизации клапана ведра"
+        ],
+        [
+          "Толщина",
+          "Толщина 3 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
