@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:40:50.589Z",
+  "updatedAt": "2026-10-09T06:40:55.016Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1895,6 +1895,71 @@
     "5.5-96623-маркер-для-бирок-толстый-all-weather": {
       "images": [
         "img/photos/admin/5.5-96623-маркер-для-бирок-толстый-all-weather/5.5-96623-маркер-для-бирок-толстый-all-weather-01.webp"
+      ],
+      "name": "Маркер для бирок толстый ALL-WEATHER",
+      "type": "Толстый маркер для бирок",
+      "article": "96623",
+      "purpose": "Для нанесения хорошо заметных идентификационных надписей",
+      "features": "Толщина линии 5 мм; предназначен для эксплуатации в различных погодных условиях",
+      "sourceRow": 8,
+      "candidateId": "96623-маркер-для-бирок-толстый-all-weather",
+      "detailFields": [
+        [
+          "Артикул",
+          "96623"
+        ],
+        [
+          "Тип",
+          "Толстый маркер для бирок"
+        ],
+        [
+          "Назначение",
+          "Для нанесения хорошо заметных идентификационных надписей"
+        ],
+        [
+          "Толщина",
+          "Толщина линии 5 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Предназначен для эксплуатации в различных погодных условиях"
+        ]
+      ],
+      "color": "Черный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
