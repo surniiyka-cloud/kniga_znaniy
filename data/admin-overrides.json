@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:19:40.427Z",
+  "updatedAt": "2026-10-09T12:22:30.553Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -8801,6 +8801,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.8-0206-072-подогреватель-fastheat-digital": {
+      "images": [
+        "img/photos/admin/6.8-0206-072-подогреватель-fastheat-digital/6.8-0206-072-подогреватель-fastheat-digital-01.webp"
       ]
     }
   },
