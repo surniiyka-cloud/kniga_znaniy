@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:20:47.761Z",
+  "updatedAt": "2026-10-09T07:20:50.502Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2487,6 +2487,79 @@
     "5.6-погонщик-скота-mini-tian-trade": {
       "images": [
         "img/photos/admin/5.6-погонщик-скота-mini-tian-trade/5.6-погонщик-скота-mini-tian-trade-01.webp"
+      ],
+      "name": "Погонщик скота MINI TIAN TRADE",
+      "type": "Компактный электропогонщик",
+      "article": "-",
+      "purpose": "Для управления перемещением животных",
+      "features": "Латунные зубцы; питание от 4 батареек AA; напряжение 5000 В; ёмкость батарей 2600 мА·ч; до 6 часов непрерывной работы",
+      "sourceRow": 7,
+      "candidateId": "погонщик-скота-mini-tian-trade",
+      "detailFields": [
+        [
+          "Тип",
+          "Компактный электропогонщик"
+        ],
+        [
+          "Назначение",
+          "Для управления перемещением животных"
+        ],
+        [
+          "Питание",
+          "Питание от 4 батареек AA"
+        ],
+        [
+          "Напряжение",
+          "Напряжение 5000 В"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Латунные зубцы"
+        ],
+        [
+          "Особенность 2",
+          "Ёмкость батарей 2600 мА·ч"
+        ],
+        [
+          "Особенность 3",
+          "До 6 часов непрерывной работы"
+        ]
+      ],
+      "color": "Зеленый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
