@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:35:27.903Z",
+  "updatedAt": "2026-10-09T08:35:30.122Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3786,6 +3786,79 @@
     "3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar": {
       "images": [
         "img/photos/admin/3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar/3.2-0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar-02.webp"
+      ],
+      "name": "Стаканчик для дезинфекции сосков NON-RETURN ANKAR®",
+      "type": "Невозвратный",
+      "article": "0303.009",
+      "features": "Изготовлен специально для ТИАН-Трейд. Оснащён невозвратным клапаном. Выполнен из пластика, устойчивого к износу. Объём 300 мл.",
+      "sourceRow": 6,
+      "candidateId": "0303-009-стаканчик-для-дезинфекции-сосков-non-return-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0303.009"
+        ],
+        [
+          "Тип",
+          "Невозвратный"
+        ],
+        [
+          "Этап применения",
+          "После доения"
+        ],
+        [
+          "Материал",
+          "Выполнен из пластика, устойчивого к износу"
+        ],
+        [
+          "Объём",
+          "Объём 300 мл"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Изготовлен специально для ТИАН-Трейд"
+        ],
+        [
+          "Особенность 2",
+          "Оснащён невозвратным клапаном"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
