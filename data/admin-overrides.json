@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:35:12.042Z",
+  "updatedAt": "2026-10-09T08:35:13.020Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3708,6 +3708,79 @@
     "3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl": {
       "images": [
         "img/photos/admin/3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl/3.2-0303-014-стаканчик-после-доения-premium-non-return-kerbl-01.webp"
+      ],
+      "name": "Стаканчик после доения PREMIUM NON-RETURN KERBL",
+      "type": "Невозвратный",
+      "article": "0303.014",
+      "features": "Невозвратный клапан обеспечивает оптимальный расход средства. Оснащён одной трубкой для подачи средства в воронку. Изготовлен из износостойкого высококачественного пластика. Объём 300 мл.",
+      "sourceRow": 5,
+      "candidateId": "0303-014-стаканчик-после-доения-premium-non-return-kerbl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0303.014"
+        ],
+        [
+          "Тип",
+          "Невозвратный"
+        ],
+        [
+          "Этап применения",
+          "После доения"
+        ],
+        [
+          "Материал",
+          "Изготовлен из износостойкого высококачественного пластика"
+        ],
+        [
+          "Объём",
+          "Объём 300 мл"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Невозвратный клапан обеспечивает оптимальный расход средства"
+        ],
+        [
+          "Особенность 2",
+          "Оснащён одной трубкой для подачи средства в воронку"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
