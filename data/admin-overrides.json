@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:05:56.151Z",
+  "updatedAt": "2026-10-09T11:06:00.272Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7100,6 +7100,75 @@
     "6.3-0403-050-ведро-для-кормления-телят-tian-зеленое": {
       "images": [
         "img/photos/admin/6.3-0403-050-ведро-для-кормления-телят-tian-зеленое/6.3-0403-050-ведро-для-кормления-телят-tian-зеленое-01.webp"
+      ],
+      "name": "Ведро для кормления телят TIAN",
+      "type": "Кормовое ведро",
+      "article": "0403.050, 0403.051",
+      "purpose": "Для кормления и выпойки телят",
+      "features": "Объём 7 л; производство Голландия; внутренняя мерная шкала с шагом 1 л",
+      "sourceRow": 1,
+      "candidateId": "0403-050-ведро-для-кормления-телят-tian-зеленое",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.050"
+        ],
+        [
+          "Тип",
+          "Кормовое ведро"
+        ],
+        [
+          "Назначение",
+          "Для кормления и выпойки телят"
+        ],
+        [
+          "Объём",
+          "Объём 7 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Производство Голландия"
+        ],
+        [
+          "Особенность 2",
+          "Внутренняя мерная шкала с шагом 1 л"
+        ]
+      ],
+      "color": "Зелёный, синий",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
