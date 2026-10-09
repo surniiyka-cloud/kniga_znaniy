@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:19:24.665Z",
+  "updatedAt": "2026-10-09T06:19:39.074Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1227,6 +1227,67 @@
     "5.4-0207-018-лента-ножная-для-рескаунтера": {
       "images": [
         "img/photos/admin/5.4-0207-018-лента-ножная-для-рескаунтера/5.4-0207-018-лента-ножная-для-рескаунтера-01.webp"
+      ],
+      "name": "Лента ножная для рескаунтера",
+      "type": "Ремень для датчика",
+      "article": "0207.018",
+      "purpose": "Для крепления датчика-рескаунтера на ноге КРС",
+      "features": "Ножная лента для установки электронного датчика",
+      "sourceRow": 20,
+      "candidateId": "0207-018-лента-ножная-для-рескаунтера",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.018"
+        ],
+        [
+          "Тип",
+          "Ремень для датчика"
+        ],
+        [
+          "Назначение",
+          "Для крепления датчика-рескаунтера на ноге КРС"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Ножная лента для установки электронного датчика"
+        ]
+      ],
+      "color": "Зеленый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
