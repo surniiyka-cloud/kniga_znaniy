@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:29:08.869Z",
+  "updatedAt": "2026-10-09T06:29:12.069Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1506,6 +1506,71 @@
     "5.5-0207-064-бирка-ушная-для-крс-ankar": {
       "images": [
         "img/photos/admin/5.5-0207-064-бирка-ушная-для-крс-ankar/5.5-0207-064-бирка-ушная-для-крс-ankar-01.webp"
+      ],
+      "name": "Бирка ушная для КРС ANKAR",
+      "type": "Визуальная ушная бирка",
+      "article": "0207.064",
+      "purpose": "Для индивидуальной визуальной идентификации КРС",
+      "features": "Предназначена для установки щипцами с иглой; размер бирки «мама» 4,5 × 5,5 см, бирки «папа» — 5,5 × 2 см",
+      "sourceRow": 1,
+      "candidateId": "0207-064-бирка-ушная-для-крс-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.064"
+        ],
+        [
+          "Тип",
+          "Визуальная ушная бирка"
+        ],
+        [
+          "Назначение",
+          "Для индивидуальной визуальной идентификации КРС"
+        ],
+        [
+          "Размер",
+          "Размер бирки «мама» 4,5 × 5,5 см, бирки «папа» — 5,5 × 2 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Предназначена для установки щипцами с иглой"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
