@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:32:45.524Z",
+  "updatedAt": "2026-10-09T08:32:50.433Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3412,6 +3412,67 @@
     "6.2-дренчер-для-телят-ankar-2-л-с-жестким-зондом": {
       "images": [
         "img/photos/admin/6.2-дренчер-для-телят-ankar-2-л-с-жестким-зондом/6.2-дренчер-для-телят-ankar-2-л-с-жестким-зондом-01.webp"
+      ],
+      "name": "Дренчер для телят ANKAR 2 л с жёстким зондом",
+      "type": "Дренчер",
+      "article": "-",
+      "purpose": "Для принудительной выпойки телят жидкостями, молозивом и лечебно-профилактическими растворами",
+      "features": "Объём 2 л; жёсткий зонд длиной 48 см",
+      "sourceRow": 2,
+      "candidateId": "дренчер-для-телят-ankar-2-л-с-жестким-зондом",
+      "detailFields": [
+        [
+          "Тип",
+          "Дренчер"
+        ],
+        [
+          "Назначение",
+          "Для принудительной выпойки телят жидкостями, молозивом и лечебно-профилактическими растворами"
+        ],
+        [
+          "Объём",
+          "Объём 2 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Жёсткий зонд длиной 48 см"
+        ]
+      ],
+      "color": "Белый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
