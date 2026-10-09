@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:28:47.143Z",
+  "updatedAt": "2026-10-09T11:29:00.263Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7694,7 +7694,7 @@
           "Толщина 3 мм"
         ]
       ],
-      "color": "",
+      "color": "Красный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
