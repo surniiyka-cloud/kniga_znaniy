@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:45:46.159Z",
+  "updatedAt": "2026-10-09T12:46:31.950Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9298,6 +9298,75 @@
     "6.9-0203-006-кольцо-от-самовысасывания-krause": {
       "images": [
         "img/photos/admin/6.9-0203-006-кольцо-от-самовысасывания-krause/6.9-0203-006-кольцо-от-самовысасывания-krause-01.webp"
+      ],
+      "name": "Кольцо от самовысасывания KRAUSE",
+      "type": "Металлическое носовое кольцо",
+      "article": "0203.006",
+      "purpose": "Для предотвращения самовысасывания у КРС",
+      "features": "Металлическая конструкция; масса около 145 г; изготовлено из листового металла",
+      "sourceRow": 4,
+      "candidateId": "0203-006-кольцо-от-самовысасывания-krause",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.006"
+        ],
+        [
+          "Тип",
+          "Металлическое носовое кольцо"
+        ],
+        [
+          "Назначение",
+          "Для предотвращения самовысасывания у КРС"
+        ],
+        [
+          "Масса",
+          "Масса около 145 г"
+        ],
+        [
+          "Материал",
+          "Изготовлено из листового металла"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Металлическая конструкция"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
