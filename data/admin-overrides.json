@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:53:43.284Z",
+  "updatedAt": "2026-10-09T08:53:51.952Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5646,6 +5646,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.2-0208-016-деревянная-колодка-130-56-мм": {
+      "images": [
+        "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-130-mm-xl-10-sht-v-upakovke-16105-10.png"
       ]
     }
   },
