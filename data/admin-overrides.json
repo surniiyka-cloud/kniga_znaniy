@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:12:48.758Z",
+  "updatedAt": "2026-10-09T08:12:52.706Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3131,6 +3131,67 @@
     "5.6-0203-076-недоуздок-для-быков": {
       "images": [
         "img/photos/admin/5.6-0203-076-недоуздок-для-быков/5.6-0203-076-недоуздок-для-быков-01.webp"
+      ],
+      "name": "Недоуздок для быков",
+      "type": "Недоуздок",
+      "article": "0203.076*",
+      "purpose": "Для фиксации быков",
+      "features": "Для ветеринарных осмотров, зоотехнических процедур, выгула и проводки",
+      "sourceRow": 18,
+      "candidateId": "0203-076-недоуздок-для-быков",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.076*"
+        ],
+        [
+          "Тип",
+          "Недоуздок"
+        ],
+        [
+          "Назначение",
+          "Для фиксации быков"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для ветеринарных осмотров, зоотехнических процедур, выгула и проводки"
+        ]
+      ],
+      "color": "Зеленый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
