@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T13:34:37.833Z",
+  "updatedAt": "2026-10-09T13:34:41.073Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9906,6 +9906,67 @@
     "6.11-0202-054-роговыжигатель-gasbuddex-сопло-20-мм": {
       "images": [
         "img/photos/admin/6.11-0202-054-роговыжигатель-gasbuddex-сопло-20-мм/6.11-0202-054-роговыжигатель-gasbuddex-сопло-20-мм-01.webp"
+      ],
+      "name": "Роговыжигатель GASBUDDEX, сопло Ø20 мм",
+      "type": "Газовый роговыжигатель",
+      "article": "0202.054",
+      "purpose": "Для обезроживания телят",
+      "features": "Вариант с соплом горелки Ø20 мм",
+      "sourceRow": 6,
+      "candidateId": "0202-054-роговыжигатель-gasbuddex-сопло-20-мм",
+      "detailFields": [
+        [
+          "Артикул",
+          "0202.054"
+        ],
+        [
+          "Тип",
+          "Газовый роговыжигатель"
+        ],
+        [
+          "Назначение",
+          "Для обезроживания телят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Вариант с соплом горелки Ø20 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
