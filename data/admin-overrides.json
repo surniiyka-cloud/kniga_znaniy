@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:38:00.723Z",
+  "updatedAt": "2026-10-09T07:38:21.212Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2859,6 +2859,71 @@
     "5.6-0203-044-щипцы-носовые-для-быков-harms": {
       "images": [
         "img/photos/admin/5.6-0203-044-щипцы-носовые-для-быков-harms/5.6-0203-044-щипцы-носовые-для-быков-harms-01.webp"
+      ],
+      "name": "Щипцы носовые для быков HARMS",
+      "type": "Носовые щипцы",
+      "article": "0203.044",
+      "purpose": "Для фиксации быков",
+      "features": "Модель HARMS; подробные характеристики на странице каталога не приведены",
+      "sourceRow": 13,
+      "candidateId": "0203-044-щипцы-носовые-для-быков-harms",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.044"
+        ],
+        [
+          "Тип",
+          "Носовые щипцы"
+        ],
+        [
+          "Назначение",
+          "Для фиксации быков"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Модель HARMS"
+        ],
+        [
+          "Особенность 2",
+          "Подробные характеристики на странице каталога не приведены"
+        ]
+      ],
+      "color": "Металл",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
