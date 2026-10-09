@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:51:15.846Z",
+  "updatedAt": "2026-10-09T08:51:18.950Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -4880,6 +4880,63 @@
     "5.1-ножницы-для-стрижки-овец-с-широкими-зубцами": {
       "images": [
         "img/photos/admin/5.1-ножницы-для-стрижки-овец-с-широкими-зубцами/5.1-ножницы-для-стрижки-овец-с-широкими-зубцами-01.webp"
+      ],
+      "name": "Ножницы для стрижки овец с широкими зубцами",
+      "type": "Ручные ножницы",
+      "purpose": "Для ручной стрижки овец",
+      "features": "Широкие зубцы, металлические лезвия",
+      "sourceRow": 9,
+      "candidateId": "ножницы-для-стрижки-овец-с-широкими-зубцами",
+      "detailFields": [
+        [
+          "Тип",
+          "Ручные ножницы"
+        ],
+        [
+          "Назначение",
+          "Для ручной стрижки овец"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Широкие зубцы, металлические лезвия"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "article": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
