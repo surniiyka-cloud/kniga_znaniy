@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:01:42.439Z",
+  "updatedAt": "2026-10-09T11:03:27.540Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7035,6 +7035,66 @@
     "6.3-0206-075-ведро-для-выпойки-телят-ankar-зеленое": {
       "images": [
         "img/photos/admin/6.3-0206-075-ведро-для-выпойки-телят-ankar-зеленое/6.3-0206-075-ведро-для-выпойки-телят-ankar-зеленое-01.webp"
+      ],
+      "name": "Ведро для выпойки телят ANKAR",
+      "type": "Ведро-поилка",
+      "article": "0206.075, 0206.076, 0206.077",
+      "purpose": "Для индивидуальной выпойки телят",
+      "features": "Объём 8 л",
+      "sourceRow": 1,
+      "candidateId": "0206-075-ведро-для-выпойки-телят-ankar-зеленое",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.075"
+        ],
+        [
+          "Тип",
+          "Ведро-поилка"
+        ],
+        [
+          "Назначение",
+          "Для индивидуальной выпойки телят"
+        ],
+        [
+          "Объём",
+          "Объём 8 л"
+        ]
+      ],
+      "color": "Зелёный, серый, синий",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
