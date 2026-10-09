@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:58:42.686Z",
+  "updatedAt": "2026-10-09T11:58:47.236Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -8496,6 +8496,67 @@
     "6.6-1106-003-колострометр-kruuse": {
       "images": [
         "img/photos/admin/6.6-1106-003-колострометр-kruuse/6.6-1106-003-колострометр-kruuse-01.webp"
+      ],
+      "name": "Колострометр KRUUSE",
+      "type": "Колострометр / ареометр",
+      "article": "1106.003",
+      "purpose": "Для быстрой оценки качества молозива перед выпойкой телёнку",
+      "features": "Используется для оценки молозива по его плотности",
+      "sourceRow": 5,
+      "candidateId": "1106-003-колострометр-kruuse",
+      "detailFields": [
+        [
+          "Артикул",
+          "1106.003"
+        ],
+        [
+          "Тип",
+          "Колострометр / ареометр"
+        ],
+        [
+          "Назначение",
+          "Для быстрой оценки качества молозива перед выпойкой телёнку"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Используется для оценки молозива по его плотности"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
