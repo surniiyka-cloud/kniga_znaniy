@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:24:16.952Z",
+  "updatedAt": "2026-10-09T06:24:25.255Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1354,6 +1354,63 @@
     "5.4-контргруз-с-грунтовкой-и-покраской": {
       "images": [
         "img/photos/admin/5.4-контргруз-с-грунтовкой-и-покраской/5.4-контргруз-с-грунтовкой-и-покраской-01.webp"
+      ],
+      "name": "Контргруз с грунтовкой и покраской",
+      "type": "Контргруз для ошейника",
+      "article": "-",
+      "purpose": "Для балансировки оборудования на ошейнике",
+      "features": "исполнение с грунтовкой и окраской",
+      "sourceRow": 22,
+      "candidateId": "контргруз-с-грунтовкой-и-покраской",
+      "detailFields": [
+        [
+          "Тип",
+          "Контргруз для ошейника"
+        ],
+        [
+          "Назначение",
+          "Для балансировки оборудования на ошейнике"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 2",
+          "Исполнение с грунтовкой и окраской"
+        ]
+      ],
+      "color": "Зелёный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
