@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:31:37.772Z",
+  "updatedAt": "2026-10-09T09:31:41.008Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6005,6 +6005,66 @@
     "6.2-0206-058-сменная-соска-для-сухого-корма-kerbl": {
       "images": [
         "img/photos/admin/6.2-0206-058-сменная-соска-для-сухого-корма-kerbl/6.2-0206-058-сменная-соска-для-сухого-корма-kerbl-01.webp"
+      ],
+      "name": "Сменная соска для сухого корма KERBL",
+      "type": "Запасная соска",
+      "article": "0206.058",
+      "purpose": "Для бутылки сухого корма",
+      "features": "Совместима с бутылкой арт. 0206.014",
+      "sourceRow": 7,
+      "candidateId": "0206-058-сменная-соска-для-сухого-корма-kerbl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.058"
+        ],
+        [
+          "Тип",
+          "Запасная соска"
+        ],
+        [
+          "Назначение",
+          "Для бутылки сухого корма"
+        ],
+        [
+          "Совместимость",
+          "Совместима с бутылкой арт. 0206.014"
+        ]
+      ],
+      "advantages": [],
+      "color": "Красный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
