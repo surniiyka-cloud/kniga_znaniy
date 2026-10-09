@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:35:52.829Z",
+  "updatedAt": "2026-10-09T08:36:23.724Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3929,6 +3929,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "3.4-0301-030-ankar-before-oxy-foam": {
+      "images": [
+        "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy-foam.png"
       ]
     }
   },
