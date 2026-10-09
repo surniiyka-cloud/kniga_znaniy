@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:03:59.894Z",
+  "updatedAt": "2026-10-09T06:04:04.695Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -947,6 +947,71 @@
     "5.4-0203-033-ошейник-с-овальным-и-d-образным-кольцом": {
       "images": [
         "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-130x4sm-s-ovalnym-zvenom-i-d-obraznym-koltsom.png"
+      ],
+      "name": "Ошейник с овальным и D-образным кольцом",
+      "type": "Ошейник для привязного содержания",
+      "article": "0203.033",
+      "purpose": "Для привязи КРС",
+      "features": "Размер 130 × 4 см; овальное звено и D-образное кольцо",
+      "sourceRow": 16,
+      "candidateId": "0203-033-ошейник-с-овальным-и-d-образным-кольцом",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.033"
+        ],
+        [
+          "Тип",
+          "Ошейник для привязного содержания"
+        ],
+        [
+          "Назначение",
+          "Для привязи КРС"
+        ],
+        [
+          "Размер",
+          "Размер 130 × 4 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Овальное звено и D-образное кольцо"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
