@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:20:50.502Z",
+  "updatedAt": "2026-10-09T07:21:14.856Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2560,6 +2560,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.6-погонщик-скота-ankar-shock-pro-2500": {
+      "images": [
+        "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-elektropogonschik-skota-shock-pro-250-vts.png"
       ]
     }
   },
