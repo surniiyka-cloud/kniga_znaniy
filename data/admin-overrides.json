@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:23:49.479Z",
+  "updatedAt": "2026-10-09T10:24:00.570Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6420,6 +6420,71 @@
     "6.2-0206-040-дренчер-для-телят-trusti-tuber": {
       "images": [
         "img/photos/admin/6.2-0206-040-дренчер-для-телят-trusti-tuber/6.2-0206-040-дренчер-для-телят-trusti-tuber-01.webp"
+      ],
+      "name": "Дренчер для телят TRUSTI TUBER",
+      "type": "Дренчер 2-в-1",
+      "article": "0206.040",
+      "purpose": "Для безопасной выпойки телят молозивом и молоком",
+      "features": "Комплект: зонд для выпойки с ограничителем, крышка с клапаном, бутылка с клапаном 4 л; система 2-в-1 — ручной зонд и крышка с соской",
+      "sourceRow": 13,
+      "candidateId": "0206-040-дренчер-для-телят-trusti-tuber",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.040"
+        ],
+        [
+          "Тип",
+          "Дренчер 2-в-1 — ручной зонд и крышка с соской"
+        ],
+        [
+          "Назначение",
+          "Для безопасной выпойки телят молозивом и молоком"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [
+        [
+          "Комплектация",
+          "Комплект: зонд для выпойки с ограничителем, крышка с клапаном, бутылка с клапаном 4 л"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
