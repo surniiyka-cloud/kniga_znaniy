@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:21:46.522Z",
+  "updatedAt": "2026-10-09T06:21:57.879Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1293,6 +1293,62 @@
     "5.4-контргруз-кг-01-1": {
       "images": [
         "img/photos/admin/5.4-контргруз-кг-01-1/5.4-контргруз-кг-01-1-01.webp"
+      ],
+      "name": "Контргруз КГ-01/1",
+      "type": "Контргруз для ошейника",
+      "article": "-",
+      "purpose": "Для балансировки оборудования, установленного на ошейнике",
+      "features": "Масса 300 г",
+      "sourceRow": 21,
+      "candidateId": "контргруз-кг-01-1",
+      "detailFields": [
+        [
+          "Тип",
+          "Контргруз для ошейника"
+        ],
+        [
+          "Назначение",
+          "Для балансировки оборудования, установленного на ошейнике"
+        ],
+        [
+          "Масса",
+          "Масса 300 г"
+        ]
+      ],
+      "color": "Зелёный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
