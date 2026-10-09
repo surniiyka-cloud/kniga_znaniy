@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:29:21.114Z",
+  "updatedAt": "2026-10-09T10:29:26.635Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6556,6 +6556,71 @@
     "6.2-0206-137-запасной-зонд-для-дренчера-trusti-tuber": {
       "images": [
         "img/photos/admin/6.2-0206-137-запасной-зонд-для-дренчера-trusti-tuber/6.2-0206-137-запасной-зонд-для-дренчера-trusti-tuber-01.webp"
+      ],
+      "name": "Запасной зонд для дренчера TRUSTI TUBER",
+      "type": "Запасной зонд",
+      "article": "0206.137",
+      "purpose": "Для замены зонда Trusti Tuber",
+      "features": "В каталоге приведён отдельной второй позицией; дополнительных отличий в описании не указано",
+      "sourceRow": 15,
+      "candidateId": "0206-137-запасной-зонд-для-дренчера-trusti-tuber",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.137"
+        ],
+        [
+          "Тип",
+          "Запасной зонд"
+        ],
+        [
+          "Назначение",
+          "Для замены зонда Trusti Tuber"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В каталоге приведён отдельной второй позицией"
+        ],
+        [
+          "Особенность 2",
+          "Дополнительных отличий в описании не указано"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
