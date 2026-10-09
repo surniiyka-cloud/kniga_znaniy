@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T05:36:50.699Z",
+  "updatedAt": "2026-10-09T05:37:37.456Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -433,6 +433,67 @@
     "5.4-0207-110-шлиц-для-ошейника-ankar": {
       "images": [
         "img/photos/admin/5.4-0207-110-шлиц-для-ошейника-ankar/5.4-0207-110-шлиц-для-ошейника-ankar-01.webp"
+      ],
+      "name": "Шлиц для ошейника ANKAR",
+      "type": "Фиксатор ремня",
+      "article": "0207.110",
+      "purpose": "Для фиксации ремней на ошейнике КРС",
+      "features": "Для ошейников шириной 40 мм",
+      "sourceRow": 9,
+      "candidateId": "0207-110-шлиц-для-ошейника-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.110"
+        ],
+        [
+          "Тип",
+          "Фиксатор ремня"
+        ],
+        [
+          "Назначение",
+          "Для фиксации ремней на ошейнике КРС"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для ошейников шириной 40 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
