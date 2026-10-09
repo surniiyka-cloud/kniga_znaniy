@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T13:00:02.167Z",
+  "updatedAt": "2026-10-09T13:00:05.854Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9598,6 +9598,75 @@
     "6.11-0202-102-роговыжигатель-газовый-express-alios": {
       "images": [
         "img/photos/admin/6.11-0202-102-роговыжигатель-газовый-express-alios/6.11-0202-102-роговыжигатель-газовый-express-alios-01.webp"
+      ],
+      "name": "Роговыжигатель газовый EXPRESS ALIOS",
+      "type": "Газовый роговыжигатель",
+      "article": "0202.102",
+      "purpose": "Для термического обезроживания телят",
+      "features": "Вес 740 г с патроном; рабочая температура 500–700 °C; корпус из стали с эпоксидным покрытием",
+      "sourceRow": 2,
+      "candidateId": "0202-102-роговыжигатель-газовый-express-alios",
+      "detailFields": [
+        [
+          "Артикул",
+          "0202.102"
+        ],
+        [
+          "Тип",
+          "Газовый роговыжигатель"
+        ],
+        [
+          "Назначение",
+          "Для термического обезроживания телят"
+        ],
+        [
+          "Масса",
+          "Вес 740 г с патроном"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Рабочая температура 500–700 °C"
+        ],
+        [
+          "Особенность 2",
+          "Корпус из стали с эпоксидным покрытием"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
