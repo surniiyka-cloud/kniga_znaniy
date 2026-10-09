@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:24:25.255Z",
+  "updatedAt": "2026-10-09T06:26:14.364Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1411,6 +1411,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.5-электронная-бирка-vetflex": {
+      "images": [
+        "img/photos/admin/5.5-электронная-бирка-vetflex/5.5-электронная-бирка-vetflex-01.webp"
       ]
     }
   },
