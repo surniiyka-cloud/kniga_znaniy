@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:36:00.202Z",
+  "updatedAt": "2026-10-09T06:36:03.301Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1756,6 +1756,75 @@
     "5.5-0207-041-маркер-для-ушных-бирок": {
       "images": [
         "img/photos/admin/5.5-0207-041-маркер-для-ушных-бирок/5.5-0207-041-маркер-для-ушных-бирок-01.webp"
+      ],
+      "name": "Маркер для ушных бирок",
+      "type": "Маркер для бирок",
+      "article": "0207.041",
+      "purpose": "Для нанесения номера на ушную бирку",
+      "features": "толщина линии 2 мм; атмосферостойкий",
+      "sourceRow": 1,
+      "candidateId": "0207-041-маркер-для-ушных-бирок",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.041"
+        ],
+        [
+          "Тип",
+          "Маркер для бирок"
+        ],
+        [
+          "Назначение",
+          "Для нанесения номера на ушную бирку"
+        ],
+        [
+          "Толщина",
+          "Толщина линии 2 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          ""
+        ],
+        [
+          "Особенность 2",
+          "Атмосферостойкий"
+        ]
+      ],
+      "color": "Чёрный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
