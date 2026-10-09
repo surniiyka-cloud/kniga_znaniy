@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:58:21.349Z",
+  "updatedAt": "2026-10-09T10:58:26.144Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6969,6 +6969,67 @@
     "6.2-0206-142-tt05-tt05b-запасной-зонд-для-дренчера-trusti-tuber-xs": {
       "images": [
         "img/photos/admin/6.2-0206-142-tt05-tt05b-запасной-зонд-для-дренчера-trusti-tuber-xs/6.2-0206-142-tt05-tt05b-запасной-зонд-для-дренчера-trusti-tuber-xs-01.webp"
+      ],
+      "name": "Запасной зонд для дренчера TRUSTI TUBER XS",
+      "type": "Запасной зонд",
+      "article": "0206.142 / TT05 / TT05B",
+      "purpose": "Для системы Trusti Tuber XS",
+      "features": "Запасной зонд для компактной версии XS",
+      "sourceRow": 21,
+      "candidateId": "0206-142-tt05-tt05b-запасной-зонд-для-дренчера-trusti-tuber-xs",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.142 / TT05 / TT05B"
+        ],
+        [
+          "Тип",
+          "Запасной зонд"
+        ],
+        [
+          "Назначение",
+          "Для системы Trusti Tuber XS"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Запасной зонд для компактной версии XS"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
