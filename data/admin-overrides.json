@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:21:02.084Z",
+  "updatedAt": "2026-10-09T10:21:07.192Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6354,6 +6354,67 @@
     "6.2-0206-096-неподвижный-жесткий-зонд-с-колпачком-kerbl": {
       "images": [
         "img/photos/admin/6.2-0206-096-неподвижный-жесткий-зонд-с-колпачком-kerbl/6.2-0206-096-неподвижный-жесткий-зонд-с-колпачком-kerbl-01.webp"
+      ],
+      "name": "Неподвижный (жёсткий) зонд с колпачком KERBL",
+      "type": "Запасной зонд",
+      "article": "0206.096",
+      "purpose": "Для комплектации дренчеров",
+      "features": "Совместим с дренчерами 0206.032, 0206.031 и 0206.033",
+      "sourceRow": 12,
+      "candidateId": "0206-096-неподвижный-жесткий-зонд-с-колпачком-kerbl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.096"
+        ],
+        [
+          "Тип",
+          "Запасной зонд"
+        ],
+        [
+          "Назначение",
+          "Для комплектации дренчеров"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Совместим с дренчерами 0206.032, 0206.031 и 0206.033"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
