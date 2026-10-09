@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:12:52.827Z",
+  "updatedAt": "2026-10-09T11:12:57.277Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7240,6 +7240,71 @@
     "6.3-0206-052-соска-запасная-для-ведра-ankar": {
       "images": [
         "img/photos/admin/6.3-0206-052-соска-запасная-для-ведра-ankar/6.3-0206-052-соска-запасная-для-ведра-ankar-01.webp"
+      ],
+      "name": "Соска запасная для ведра ANKAR",
+      "type": "Силиконовая соска",
+      "article": "0206.052",
+      "purpose": "Для замены штатной соски ведра-поилки",
+      "features": "Материал — силикон; в каталоге указана совместимость с ведрами 0206.074, 0206.075, 0206.076",
+      "sourceRow": 9,
+      "candidateId": "0206-052-соска-запасная-для-ведра-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.052"
+        ],
+        [
+          "Тип",
+          "Силиконовая соска"
+        ],
+        [
+          "Назначение",
+          "Для замены штатной соски ведра-поилки"
+        ],
+        [
+          "Материал",
+          "Материал — силикон"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В каталоге указана совместимость с ведрами 0206.074, 0206.075, 0206.076"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
