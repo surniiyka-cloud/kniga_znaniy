@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:03:27.031Z",
+  "updatedAt": "2026-10-09T09:06:53.388Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5847,6 +5847,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.2-0206-035-дренчер-speedy-drencher-xl": {
+      "images": [
+        "img/photos/admin/6.2-0206-035-дренчер-speedy-drencher-xl/6.2-0206-035-дренчер-speedy-drencher-xl-01.webp"
       ]
     }
   },
