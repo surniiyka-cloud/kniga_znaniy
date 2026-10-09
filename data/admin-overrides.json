@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:53:49.051Z",
+  "updatedAt": "2026-10-09T07:58:22.232Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2995,6 +2995,67 @@
     "5.6-0203-077-недоуздок-для-коров-с-цепочкой": {
       "images": [
         "img/photos/admin/5.6-0203-077-недоуздок-для-коров-с-цепочкой/5.6-0203-077-недоуздок-для-коров-с-цепочкой-01.webp"
+      ],
+      "name": "Недоуздок для коров с цепочкой",
+      "type": "Недоуздок",
+      "article": "0203.077",
+      "purpose": "Для надёжной фиксации, ветеринарных осмотров, зоотехнических процедур, выгула и проводки",
+      "features": "Модель с цепочкой",
+      "sourceRow": 16,
+      "candidateId": "0203-077-недоуздок-для-коров-с-цепочкой",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.077"
+        ],
+        [
+          "Тип",
+          "Недоуздок"
+        ],
+        [
+          "Назначение",
+          "Для надёжной фиксации, ветеринарных осмотров, зоотехнических процедур, выгула и проводки"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Модель с цепочкой"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
