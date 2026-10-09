@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:37:22.643Z",
+  "updatedAt": "2026-10-09T10:15:37.041Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6209,6 +6209,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.2-0206-060-соска-запасная-для-speedy-feeder": {
+      "images": [
+        "img/photos/admin/6.2-0206-060-соска-запасная-для-speedy-feeder/6.2-0206-060-соска-запасная-для-speedy-feeder-01.webp"
       ]
     }
   },
