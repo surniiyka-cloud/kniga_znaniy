@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:33:40.299Z",
+  "updatedAt": "2026-10-09T08:33:46.914Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3556,6 +3556,71 @@
     "3.3-0303-056-штифты-расширительные": {
       "images": [
         "img/photos/admin/3.3-0303-056-штифты-расширительные/3.3-0303-056-штифты-расширительные-01.png"
+      ],
+      "name": "Штифты расширительные",
+      "type": "Расширительный штифт",
+      "article": "0303.056",
+      "purpose": "Для механического расширения и поддержания проходимости соскового канала",
+      "features": "Изготовлены из пластмассы; 10 шт. в банке",
+      "sourceRow": 5,
+      "candidateId": "0303-056-штифты-расширительные",
+      "detailFields": [
+        [
+          "Артикул",
+          "0303.056"
+        ],
+        [
+          "Тип",
+          "Расширительный штифт"
+        ],
+        [
+          "Назначение",
+          "Для механического расширения и поддержания проходимости соскового канала"
+        ],
+        [
+          "Материал",
+          "Изготовлены из пластмассы"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "10 шт. в банке"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
