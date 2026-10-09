@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T13:02:23.788Z",
+  "updatedAt": "2026-10-09T13:02:29.481Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9672,6 +9672,79 @@
     "6.11-0202-100-роговыжигатель-газовый-express-arkos": {
       "images": [
         "img/photos/admin/6.11-0202-100-роговыжигатель-газовый-express-arkos/6.11-0202-100-роговыжигатель-газовый-express-arkos-01.webp"
+      ],
+      "name": "Роговыжигатель газовый EXPRESS ARKOS",
+      "type": "Газовый роговыжигатель",
+      "article": "0202.100",
+      "purpose": "Для термического обезроживания телят",
+      "features": "Работает с запасным баллоном EXPRESS 110 мл; вес 470 г; температура 500–700 °C; реверсивный наконечник с внутренним диаметром 17 и 19 мм",
+      "sourceRow": 3,
+      "candidateId": "0202-100-роговыжигатель-газовый-express-arkos",
+      "detailFields": [
+        [
+          "Артикул",
+          "0202.100"
+        ],
+        [
+          "Тип",
+          "Газовый роговыжигатель"
+        ],
+        [
+          "Назначение",
+          "Для термического обезроживания телят"
+        ],
+        [
+          "Масса",
+          "Вес 470 г"
+        ],
+        [
+          "Температура",
+          "Температура 500–700 °C"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Работает с запасным баллоном EXPRESS 110 мл"
+        ],
+        [
+          "Особенность 2",
+          "Реверсивный наконечник с внутренним диаметром 17 и 19 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
