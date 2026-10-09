@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:38:12.841Z",
+  "updatedAt": "2026-10-09T10:44:02.445Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6687,6 +6687,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.2-0206-037-дренчер-antahi": {
+      "images": [
+        "img/photos/admin/6.2-0206-037-дренчер-antahi/6.2-0206-037-дренчер-antahi-01.webp"
       ]
     }
   },
