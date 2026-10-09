@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:51:53.948Z",
+  "updatedAt": "2026-10-09T08:51:57.750Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5027,6 +5027,75 @@
     "5.2-0208-048-стандартный-диск-для-обработки-копыт-super": {
       "images": [
         "img/photos/admin/5.2-0208-048-стандартный-диск-для-обработки-копыт-super/5.2-0208-048-стандартный-диск-для-обработки-копыт-super-01.webp"
+      ],
+      "name": "Стандартный диск для обработки копыт SUPER",
+      "type": "Абразивный диск",
+      "article": "0208.048",
+      "purpose": "Для обработки копыт",
+      "features": "Рассчитан примерно на 1500 копыт; зернистость №30; диаметр 125 мм",
+      "sourceRow": 4,
+      "candidateId": "0208-048-стандартный-диск-для-обработки-копыт-super",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.048"
+        ],
+        [
+          "Тип",
+          "Абразивный диск"
+        ],
+        [
+          "Назначение",
+          "Для обработки копыт"
+        ],
+        [
+          "Зернистость",
+          "Зернистость №30"
+        ],
+        [
+          "Диаметр",
+          "Диаметр 125 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Рассчитан примерно на 1500 копыт"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
