@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:18:54.807Z",
+  "updatedAt": "2026-10-09T10:18:59.345Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6288,6 +6288,67 @@
     "6.2-0206-098-гибкий-зонд-с-колпачком-kerbl": {
       "images": [
         "img/photos/admin/6.2-0206-098-гибкий-зонд-с-колпачком-kerbl/6.2-0206-098-гибкий-зонд-с-колпачком-kerbl-01.webp"
+      ],
+      "name": "Гибкий зонд с колпачком KERBL",
+      "type": "Запасной зонд",
+      "article": "0206.098",
+      "purpose": "Для комплектации дренчеров для телят",
+      "features": "Используется с дренчерами 0206.032, 0206.031 и 0206.033",
+      "sourceRow": 11,
+      "candidateId": "0206-098-гибкий-зонд-с-колпачком-kerbl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.098"
+        ],
+        [
+          "Тип",
+          "Запасной зонд"
+        ],
+        [
+          "Назначение",
+          "Для комплектации дренчеров для телят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Используется с дренчерами 0206.032, 0206.031 и 0206.033"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
