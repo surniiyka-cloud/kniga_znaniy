@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:37:57.762Z",
+  "updatedAt": "2026-10-09T06:38:00.861Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1830,6 +1830,66 @@
     "5.5-0207-207-маркер-staedtler-319-m-9": {
       "images": [
         "img/photos/admin/5.5-0207-207-маркер-staedtler-319-m-9/5.5-0207-207-маркер-staedtler-319-m-9-01.webp"
+      ],
+      "name": "Маркер STAEDTLER 319 M-9",
+      "type": "Перманентный маркер",
+      "article": "0207.207",
+      "purpose": "Для надписей на ушных бирках",
+      "features": "Толщина линии 1 мм",
+      "sourceRow": 1,
+      "candidateId": "0207-207-маркер-staedtler-319-m-9",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.207"
+        ],
+        [
+          "Тип",
+          "Перманентный маркер"
+        ],
+        [
+          "Назначение",
+          "Для надписей на ушных бирках"
+        ],
+        [
+          "Толщина",
+          "Толщина линии 1 мм"
+        ]
+      ],
+      "color": "Черный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
