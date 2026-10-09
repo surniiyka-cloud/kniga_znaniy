@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:03:40.545Z",
+  "updatedAt": "2026-10-09T06:03:59.894Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -942,6 +942,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.4-0203-033-ошейник-с-овальным-и-d-образным-кольцом": {
+      "images": [
+        "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-osheynik-130x4sm-s-ovalnym-zvenom-i-d-obraznym-koltsom.png"
       ]
     }
   },
