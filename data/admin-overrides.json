@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T13:00:05.854Z",
+  "updatedAt": "2026-10-09T13:02:23.788Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9667,6 +9667,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.11-0202-100-роговыжигатель-газовый-express-arkos": {
+      "images": [
+        "img/photos/admin/6.11-0202-100-роговыжигатель-газовый-express-arkos/6.11-0202-100-роговыжигатель-газовый-express-arkos-01.webp"
       ]
     }
   },
