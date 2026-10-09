@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:12:57.277Z",
+  "updatedAt": "2026-10-09T11:14:45.274Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7305,6 +7305,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.3-0206-049-соска-big-softy": {
+      "images": [
+        "img/photos/admin/6.3-0206-049-соска-big-softy/6.3-0206-049-соска-big-softy-01.webp"
       ]
     }
   },
