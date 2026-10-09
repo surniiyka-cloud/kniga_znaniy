@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:13:07.604Z",
+  "updatedAt": "2026-10-09T06:13:10.943Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1091,6 +1091,71 @@
     "5.4-0207-024-ошейник-для-привязи-коров": {
       "images": [
         "img/photos/admin/5.4-0207-024-ошейник-для-привязи-коров/5.4-0207-024-ошейник-для-привязи-коров-01.webp"
+      ],
+      "name": "Ошейник для привязи коров",
+      "type": "Ошейник с цепями",
+      "article": "0207.024",
+      "purpose": "Для привязного содержания коров",
+      "features": "Размер 130 × 4 см; две одинаковые цепи, карабин и закрутка",
+      "sourceRow": 18,
+      "candidateId": "0207-024-ошейник-для-привязи-коров",
+      "detailFields": [
+        [
+          "Артикул",
+          "0207.024"
+        ],
+        [
+          "Тип",
+          "Ошейник с цепями"
+        ],
+        [
+          "Назначение",
+          "Для привязного содержания коров"
+        ],
+        [
+          "Размер",
+          "Размер 130 × 4 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Две одинаковые цепи, карабин и закрутка"
+        ]
+      ],
+      "color": "Зеленый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
