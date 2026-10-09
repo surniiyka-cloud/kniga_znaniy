@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:31:25.064Z",
+  "updatedAt": "2026-10-09T07:31:37.307Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2706,6 +2706,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.6-0203-055-антибрык-anti-kick-сталь": {
+      "images": [
+        "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-stal.png"
       ]
     }
   },
