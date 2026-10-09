@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:31:17.194Z",
+  "updatedAt": "2026-10-09T07:31:25.064Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2641,6 +2641,71 @@
     "5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian": {
       "images": [
         "img/photos/admin/5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian/5.6-0203-001-антибрык-anti-kick-нержавеющая-сталь-tian-01.webp"
+      ],
+      "name": "Антибрык ANTI-KICK, нержавеющая сталь, TIAN",
+      "type": "Ограничитель подвижности",
+      "article": "0203.001",
+      "purpose": "Для ограничения движений коровы и предотвращения ударов задними ногами",
+      "features": "Нержавеющая сталь; устанавливается на животное во время ветеринарных и хозяйственных манипуляций",
+      "sourceRow": 8,
+      "candidateId": "0203-001-антибрык-anti-kick-нержавеющая-сталь-tian",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.001"
+        ],
+        [
+          "Тип",
+          "Ограничитель подвижности"
+        ],
+        [
+          "Назначение",
+          "Для ограничения движений коровы и предотвращения ударов задними ногами"
+        ],
+        [
+          "Материал",
+          "Нержавеющая сталь"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 2",
+          "Устанавливается на животное во время ветеринарных и хозяйственных манипуляций"
+        ]
+      ],
+      "color": "Серый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
