@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:53:51.952Z",
+  "updatedAt": "2026-10-09T08:53:55.200Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5651,6 +5651,66 @@
     "5.2-0208-016-деревянная-колодка-130-56-мм": {
       "images": [
         "img/photos/24-uhod-za-kopytami/24-derevyannaya-kolodka-130-mm-xl-10-sht-v-upakovke-16105-10.png"
+      ],
+      "name": "Деревянная колодка 130 × 56 мм",
+      "type": "Копытная колодка",
+      "article": "0208.016",
+      "purpose": "Для использования в системах разгрузки повреждённого копыта",
+      "features": "Размер 130 × 56 мм",
+      "sourceRow": 28,
+      "candidateId": "0208-016-деревянная-колодка-130-56-мм",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.016"
+        ],
+        [
+          "Тип",
+          "Копытная колодка"
+        ],
+        [
+          "Назначение",
+          "Для использования в системах разгрузки повреждённого копыта"
+        ],
+        [
+          "Размер",
+          "Размер 130 × 56 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
