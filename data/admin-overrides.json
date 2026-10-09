@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:58:32.099Z",
+  "updatedAt": "2026-10-09T06:58:36.739Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2163,6 +2163,67 @@
     "5.5-тавратор-для-ушных-бирок-allflex": {
       "images": [
         "img/photos/admin/5.5-тавратор-для-ушных-бирок-allflex/5.5-тавратор-для-ушных-бирок-allflex-01.webp"
+      ],
+      "name": "Тавратор для ушных бирок ALLFLEX",
+      "type": "Аппликатор для ушных бирок",
+      "article": "-",
+      "purpose": "Для установки ушных бирок животным",
+      "features": "Предназначен для быстрой установки бирок; используется со вставками Allflex и Primaflex",
+      "sourceRow": 12,
+      "candidateId": "тавратор-для-ушных-бирок-allflex",
+      "detailFields": [
+        [
+          "Тип",
+          "Аппликатор для ушных бирок"
+        ],
+        [
+          "Назначение",
+          "Для установки ушных бирок животным"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Предназначен для быстрой установки бирок"
+        ],
+        [
+          "Особенность 2",
+          "Используется со вставками Allflex и Primaflex"
+        ]
+      ],
+      "color": "Чёрный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
