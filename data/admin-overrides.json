@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:27:45.919Z",
+  "updatedAt": "2026-10-09T12:29:56.326Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -8989,6 +8989,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.8-0206-071-подогреватель-euro-farm": {
+      "images": [
+        "img/photos/admin/6.8-0206-071-подогреватель-euro-farm/6.8-0206-071-подогреватель-euro-farm-01.webp"
       ]
     }
   },
