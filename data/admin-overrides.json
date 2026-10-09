@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:10:17.936Z",
+  "updatedAt": "2026-10-09T11:10:23.981Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7174,6 +7174,67 @@
     "6.3-302101-соска-для-ведра-ankar-красная": {
       "images": [
         "img/photos/admin/6.3-302101-соска-для-ведра-ankar-красная/6.3-302101-соска-для-ведра-ankar-красная-01.webp"
+      ],
+      "name": "Соска для ведра ANKAR",
+      "type": "Сменная соска",
+      "article": "302101, 0206.056",
+      "purpose": "Для выпойки телят из ведра",
+      "features": "Каучуковая резина",
+      "sourceRow": 7,
+      "candidateId": "302101-соска-для-ведра-ankar-красная",
+      "detailFields": [
+        [
+          "Артикул",
+          "302101"
+        ],
+        [
+          "Тип",
+          "Сменная соска"
+        ],
+        [
+          "Назначение",
+          "Для выпойки телят из ведра"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Каучуковая резина"
+        ]
+      ],
+      "color": "Красный, белый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
