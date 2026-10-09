@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:10:48.470Z",
+  "updatedAt": "2026-10-09T12:17:18.614Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -8633,6 +8633,9 @@
         "assortment",
         "consumables",
         "testKits"
+      ],
+      "images": [
+        "img/photos/admin/6.7-0206-005-набор-для-молозива-ankar-set50-4-л/6.7-0206-005-набор-для-молозива-ankar-set50-4-л-01.webp"
       ]
     }
   },
