@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:21:16.506Z",
+  "updatedAt": "2026-10-09T07:21:57.674Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2563,7 +2563,9 @@
       ]
     },
     "5.6-погонщик-скота-ankar-shock-pro-2500": {
-      "images": []
+      "images": [
+        "img/photos/admin/5.6-погонщик-скота-ankar-shock-pro-2500/5.6-погонщик-скота-ankar-shock-pro-2500-01.webp"
+      ]
     }
   },
   "sections": {
