@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:40:06.362Z",
+  "updatedAt": "2026-10-09T08:40:09.551Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -4094,6 +4094,71 @@
     "3.9-1105-061-цифровой-термометр-ankar-2": {
       "images": [
         "img/photos/admin/3.9-1105-061-цифровой-термометр-ankar-2/3.9-1105-061-цифровой-термометр-ankar-2-01.webp"
+      ],
+      "name": "Цифровой термометр ANKAR",
+      "type": "Электронный термометр",
+      "article": "1105.061",
+      "purpose": "Для оперативного измерения температуры",
+      "features": "Водонепроницаемый электронный термометр. Корпус изготовлен из прочной пластмассы",
+      "sourceRow": 2,
+      "candidateId": "1105-061-цифровой-термометр-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "1105.061"
+        ],
+        [
+          "Тип",
+          "Электронный термометр"
+        ],
+        [
+          "Назначение",
+          "Для оперативного измерения температуры"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Водонепроницаемый электронный термометр"
+        ],
+        [
+          "Особенность 2",
+          "Корпус изготовлен из прочной пластмассы"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
