@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:25:37.505Z",
+  "updatedAt": "2026-10-09T11:25:42.557Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7602,6 +7602,67 @@
     "6.3-0206-059-клапан-запасной-для-ведра-kerbl-ankar": {
       "images": [
         "img/photos/admin/6.3-0206-059-клапан-запасной-для-ведра-kerbl-ankar/6.3-0206-059-клапан-запасной-для-ведра-kerbl-ankar-01.webp"
+      ],
+      "name": "Клапан запасной для ведра KERBL / ANKAR",
+      "type": "Запасной клапан",
+      "article": "0206.059",
+      "purpose": "Для ремонта ведра для выпойки телят",
+      "features": "В актуальном каталоге напечатан арт. 0206.059",
+      "sourceRow": 14,
+      "candidateId": "0206-059-клапан-запасной-для-ведра-kerbl-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.059*"
+        ],
+        [
+          "Тип",
+          "Запасной клапан"
+        ],
+        [
+          "Назначение",
+          "Для ремонта ведра для выпойки телят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В актуальном каталоге напечатан арт. 0206.059"
+        ]
+      ],
+      "color": "Серый, красный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
