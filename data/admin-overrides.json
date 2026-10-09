@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:47:23.248Z",
+  "updatedAt": "2026-10-09T06:48:37.853Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2035,6 +2035,63 @@
     "5.5-щипцы-универсальные-с-иглой": {
       "images": [
         "img/photos/admin/5.5-щипцы-универсальные-с-иглой/5.5-щипцы-универсальные-с-иглой-01.webp"
+      ],
+      "name": "Щипцы универсальные с иглой",
+      "type": "Аппликатор для ушных бирок",
+      "article": "-",
+      "purpose": "Для установки игольчатых бирок разных размеров",
+      "features": "Используются для маркировки и идентификации сельскохозяйственных животных",
+      "sourceRow": 10,
+      "candidateId": "щипцы-универсальные-с-иглой",
+      "detailFields": [
+        [
+          "Тип",
+          "Аппликатор для ушных бирок"
+        ],
+        [
+          "Назначение",
+          "Для установки игольчатых бирок разных размеров"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Используются для маркировки и идентификации сельскохозяйственных животных"
+        ]
+      ],
+      "color": "Синий",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
