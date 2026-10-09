@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:55:43.362Z",
+  "updatedAt": "2026-10-09T10:55:48.443Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6890,6 +6890,80 @@
     "6.2-0206-141-sr03b-дренчер-trusti-tuber-xs": {
       "images": [
         "img/photos/admin/6.2-0206-141-sr03b-дренчер-trusti-tuber-xs/6.2-0206-141-sr03b-дренчер-trusti-tuber-xs-01.webp"
+      ],
+      "name": "Дренчер TRUSTI TUBER XS",
+      "type": "Компактный дренчер 2-в-1",
+      "article": "0206.141 / SR03B",
+      "purpose": "Для выпойки небольших телят",
+      "features": "Комплект: зонд, крышка с соской, бутылка с клапаном 4 л; уменьшенная версия Trusti Tuber 2-в-1 для телят менее 25 кг; ярко- элементы для визуального отличия",
+      "sourceRow": 20,
+      "candidateId": "0206-141-sr03b-дренчер-trusti-tuber-xs",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.141 / SR03B"
+        ],
+        [
+          "Тип",
+          "Компактный дренчер 2-в-1"
+        ],
+        [
+          "Назначение",
+          "Для выпойки небольших телят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Уменьшенная версия Trusti Tuber 2-в-1 для телят менее 25 кг"
+        ],
+        [
+          "Особенность 2",
+          "Ярко- элементы для визуального отличия"
+        ]
+      ],
+      "complectation": [
+        [
+          "Комплектация",
+          "Комплект: зонд, крышка с соской, бутылка с клапаном 4 л"
+        ]
+      ],
+      "color": "Фиолетовый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
