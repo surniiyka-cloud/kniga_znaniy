@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:15:37.041Z",
+  "updatedAt": "2026-10-09T10:16:47.074Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6214,6 +6214,75 @@
     "6.2-0206-060-соска-запасная-для-speedy-feeder": {
       "images": [
         "img/photos/admin/6.2-0206-060-соска-запасная-для-speedy-feeder/6.2-0206-060-соска-запасная-для-speedy-feeder-01.webp"
+      ],
+      "name": "Соска запасная для SPEEDY FEEDER",
+      "type": "Запасная соска с крышкой",
+      "article": "0206.060",
+      "purpose": "Для бутылок Speedy Feeder",
+      "features": "Соска «насосного» типа; для бутылок с горлышком Ø 70 мм; крышки Speedy Feeder, Speedy Drencher и Big Drencher взаимозаменяемы",
+      "sourceRow": 10,
+      "candidateId": "0206-060-соска-запасная-для-speedy-feeder",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.060"
+        ],
+        [
+          "Тип",
+          "Запасная соска с крышкой"
+        ],
+        [
+          "Назначение",
+          "Для бутылок Speedy Feeder"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Соска «насосного» типа"
+        ],
+        [
+          "Особенность 2",
+          "Для бутылок с горлышком Ø 70 мм"
+        ],
+        [
+          "Особенность 3",
+          "Крышки Speedy Feeder, Speedy Drencher и Big Drencher взаимозаменяемы"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
