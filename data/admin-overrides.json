@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:03:12.801Z",
+  "updatedAt": "2026-10-09T09:03:27.031Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5782,6 +5782,71 @@
     "6.2-0206-029-дренчер-для-телят-ankar-4-л-с-гибким-зондом": {
       "images": [
         "img/photos/admin/6.2-0206-029-дренчер-для-телят-ankar-4-л-с-гибким-зондом/6.2-0206-029-дренчер-для-телят-ankar-4-л-с-гибким-зондом-01.webp"
+      ],
+      "name": "Дренчер для телят ANKAR 4 л с гибким зондом",
+      "type": "Дренчер",
+      "article": "0206.029",
+      "purpose": "Для выпойки телят",
+      "features": "Объём 4 л; гибкий зонд длиной 105 см",
+      "sourceRow": 4,
+      "candidateId": "0206-029-дренчер-для-телят-ankar-4-л-с-гибким-зондом",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.029"
+        ],
+        [
+          "Тип",
+          "Дренчер"
+        ],
+        [
+          "Назначение",
+          "Для выпойки телят"
+        ],
+        [
+          "Объём",
+          "Объём 4 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Гибкий зонд длиной 105 см"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
