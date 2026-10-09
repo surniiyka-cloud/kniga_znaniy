@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:14:45.274Z",
+  "updatedAt": "2026-10-09T11:14:48.802Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7310,6 +7310,71 @@
     "6.3-0206-049-соска-big-softy": {
       "images": [
         "img/photos/admin/6.3-0206-049-соска-big-softy/6.3-0206-049-соска-big-softy-01.webp"
+      ],
+      "name": "Соска BIG SOFTY",
+      "type": "Запасная соска",
+      "article": "0206.049",
+      "purpose": "Для групповых поилок молодняка",
+      "features": "Для ванны-поилки Multi Feeder, двойной поилки Milk Train и поилки Milk Bar; 5 шт. в упаковке",
+      "sourceRow": 10,
+      "candidateId": "0206-049-соска-big-softy",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.049"
+        ],
+        [
+          "Тип",
+          "Запасная соска"
+        ],
+        [
+          "Назначение",
+          "Для групповых поилок молодняка"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для ванны-поилки Multi Feeder, двойной поилки Milk Train и поилки Milk Bar"
+        ],
+        [
+          "Особенность 2",
+          "5 шт. в упаковке"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
