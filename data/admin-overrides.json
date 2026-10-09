@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:52:38.201Z",
+  "updatedAt": "2026-10-09T10:52:43.264Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6824,6 +6824,67 @@
     "6.2-0206-064-соска-запасная-для-бутылки": {
       "images": [
         "img/photos/admin/6.2-0206-064-соска-запасная-для-бутылки/6.2-0206-064-соска-запасная-для-бутылки-01.webp"
+      ],
+      "name": "Соска запасная для бутылки",
+      "type": "Сменная соска",
+      "article": "0206.064",
+      "purpose": "Для бутылок для выпойки",
+      "features": "Для бутылок диаметром 6 см",
+      "sourceRow": 19,
+      "candidateId": "0206-064-соска-запасная-для-бутылки",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.064"
+        ],
+        [
+          "Тип",
+          "Сменная соска"
+        ],
+        [
+          "Назначение",
+          "Для бутылок для выпойки"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для бутылок диаметром 6 см"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
