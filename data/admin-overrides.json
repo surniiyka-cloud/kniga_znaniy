@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:55:32.374Z",
+  "updatedAt": "2026-10-09T06:55:42.689Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2097,6 +2097,67 @@
     "5.5-щипцы-для-металлических-бирок": {
       "images": [
         "img/photos/admin/5.5-щипцы-для-металлических-бирок/5.5-щипцы-для-металлических-бирок-01.webp"
+      ],
+      "name": "Щипцы для металлических бирок",
+      "type": "Аппликатор для металлических ушных бирок",
+      "article": "-",
+      "purpose": "Для установки металлических бирок",
+      "features": "Металлическая часть имеет антикоррозионную защиту; пружинный механизм",
+      "sourceRow": 11,
+      "candidateId": "щипцы-для-металлических-бирок",
+      "detailFields": [
+        [
+          "Тип",
+          "Аппликатор для металлических ушных бирок"
+        ],
+        [
+          "Назначение",
+          "Для установки металлических бирок"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Металлическая часть имеет антикоррозионную защиту"
+        ],
+        [
+          "Особенность 2",
+          "Пружинный механизм"
+        ]
+      ],
+      "color": "Зеленый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
