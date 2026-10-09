@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:34:26.915Z",
+  "updatedAt": "2026-10-09T09:37:15.711Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6131,6 +6131,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.2-0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl": {
+      "images": [
+        "img/photos/admin/6.2-0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl/6.2-0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl-01.webp"
       ]
     }
   },
