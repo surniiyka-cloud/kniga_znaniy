@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:36:23.724Z",
+  "updatedAt": "2026-10-09T08:36:26.634Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3934,6 +3934,75 @@
     "3.4-0301-030-ankar-before-oxy-foam": {
       "images": [
         "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-oxy-foam.png"
+      ],
+      "name": "ANKAR BEFORE OXY FOAM",
+      "type": "Пенное средство до доения с антисептическим эффектом",
+      "article": "0301.030",
+      "purpose": "Для обработки сосков вымени перед доением",
+      "features": "Ухаживающая моющая жидкость со стабильной пеной и антисептическим эффектом. Антисептическое действие обеспечивается наличием перекиси водорода. Состав: перекись водорода, глицерин, ПАВ, пищевой краситель. pH 4–6.",
+      "sourceRow": 2,
+      "candidateId": "0301-030-ankar-before-oxy-foam",
+      "detailFields": [
+        [
+          "Артикул",
+          "0301.030"
+        ],
+        [
+          "Тип",
+          "Пенное средство до доения с антисептическим эффектом"
+        ],
+        [
+          "Назначение",
+          "Для обработки сосков вымени перед доением"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Ухаживающая моющая жидкость со стабильной пеной и антисептическим эффектом"
+        ],
+        [
+          "Особенность 2",
+          "Антисептическое действие обеспечивается наличием перекиси водорода"
+        ],
+        [
+          "Особенность 3",
+          "Состав: перекись водорода, глицерин, ПАВ, пищевой краситель. pH 4–6"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
