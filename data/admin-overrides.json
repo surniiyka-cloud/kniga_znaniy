@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:21:57.674Z",
+  "updatedAt": "2026-10-09T07:23:41.650Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2565,6 +2565,78 @@
     "5.6-погонщик-скота-ankar-shock-pro-2500": {
       "images": [
         "img/photos/admin/5.6-погонщик-скота-ankar-shock-pro-2500/5.6-погонщик-скота-ankar-shock-pro-2500-01.webp"
+      ],
+      "name": "Погонщик скота ANKAR SHOCK PRO 2500",
+      "type": "Электропогонщик",
+      "article": "-",
+      "purpose": "Для управления перемещением скота",
+      "features": "Латунные зубцы; работает от 4 батареек AA; заявленное напряжение удара 5000 В; ёмкость батарей 2600 мА·ч; время непрерывной работы до 6 часов",
+      "sourceRow": 6,
+      "candidateId": "погонщик-скота-ankar-shock-pro-2500",
+      "detailFields": [
+        [
+          "Тип",
+          "Электропогонщик"
+        ],
+        [
+          "Назначение",
+          "Для управления перемещением скота"
+        ],
+        [
+          "Время",
+          "Время непрерывной работы до 6 часов"
+        ],
+        [
+          "Напряжение удара",
+          "5000 В"
+        ],
+        [
+          "Материал вилки",
+          "Латунные зубцы"
+        ],
+        [
+          "Аккамулятор",
+          "Работает от 4 батареек AA"
+        ],
+        [
+          "Ёмкость батарей",
+          "2600 мА·ч"
+        ]
+      ],
+      "advantages": [],
+      "color": "Зеленый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
