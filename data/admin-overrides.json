@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:52:43.405Z",
+  "updatedAt": "2026-10-09T08:52:46.660Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5343,6 +5343,75 @@
     "5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap": {
       "images": [
         "img/photos/admin/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap/5.2-vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap-01.png"
+      ],
+      "name": "Ножи для копыт AESCULAP",
+      "type": "Профессиональные копытные ножи",
+      "article": "VC 320R; VC 321R; VC 315V; VC 316V; VC 317V; VC 302V; VC 307V",
+      "purpose": "Для расчистки копыт парно- и непарнокопытных животных",
+      "features": "Хирургическая сталь; прочные и долговечные. Варианты: правый/левый узкий, двусторонний узкий/средний/широкий, правый/левый широкий",
+      "sourceRow": 19,
+      "candidateId": "vc-320r-vc-321r-vc-315v-vc-316v-vc-317v-vc-302v-vc-307v-ножи-для-копыт-aesculap",
+      "detailFields": [
+        [
+          "Артикул",
+          "VC 320R; VC 321R; VC 315V; VC 316V; VC 317V; VC 302V; VC 307V"
+        ],
+        [
+          "Тип",
+          "Профессиональные копытные ножи"
+        ],
+        [
+          "Назначение",
+          "Для расчистки копыт парно- и непарнокопытных животных"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Хирургическая сталь"
+        ],
+        [
+          "Особенность 2",
+          "Прочные и долговечные"
+        ],
+        [
+          "Особенность 3",
+          "Варианты: правый/левый узкий, двусторонний узкий/средний/широкий, правый/левый широкий"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
