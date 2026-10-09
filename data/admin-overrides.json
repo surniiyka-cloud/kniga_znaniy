@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:06:53.388Z",
+  "updatedAt": "2026-10-09T09:06:57.802Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -5852,6 +5852,75 @@
     "6.2-0206-035-дренчер-speedy-drencher-xl": {
       "images": [
         "img/photos/admin/6.2-0206-035-дренчер-speedy-drencher-xl/6.2-0206-035-дренчер-speedy-drencher-xl-01.webp"
+      ],
+      "name": "Дренчер SPEEDY DRENCHER XL",
+      "type": "Дренчер",
+      "article": "0206.035",
+      "purpose": "Для выпойки телят и введения жидкостей",
+      "features": "Объём 4 л; комплектуется сменным зондом, который можно приобрести отдельно",
+      "sourceRow": 5,
+      "candidateId": "0206-035-дренчер-speedy-drencher-xl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.035"
+        ],
+        [
+          "Тип",
+          "Дренчер"
+        ],
+        [
+          "Назначение",
+          "Для выпойки телят и введения жидкостей"
+        ],
+        [
+          "Объём",
+          "Объём 4 л"
+        ]
+      ],
+      "complectation": [
+        [
+          "Комплектация",
+          "Комплектуется сменным зондом, который можно приобрести отдельно"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
