@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T09:37:15.711Z",
+  "updatedAt": "2026-10-09T09:37:22.643Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6136,6 +6136,79 @@
     "6.2-0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl": {
       "images": [
         "img/photos/admin/6.2-0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl/6.2-0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl-01.webp"
+      ],
+      "name": "Бутылка для телят SPEEDY FEEDER / SPEEDY FEEDER XL",
+      "type": "Бутылка для выпойки",
+      "article": "0206.020 — 2,5 л; 0206.022 — 4 л",
+      "purpose": "Для индивидуальной выпойки телят",
+      "features": "Ёмкость 2,5 или 4 л; 3-позиционный дозирующий кран; широкое горлышко 70 мм; соска «насосного» типа",
+      "sourceRow": 9,
+      "candidateId": "0206-020-2-5-л-0206-022-4-л-бутылка-для-телят-speedy-feeder-speedy-feeder-xl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.020 — 2,5 л; 0206.022 — 4 л"
+        ],
+        [
+          "Тип",
+          "Бутылка для выпойки"
+        ],
+        [
+          "Назначение",
+          "Для индивидуальной выпойки телят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Ёмкость 2,5 или 4 л"
+        ],
+        [
+          "Особенность 2",
+          "3-позиционный дозирующий кран"
+        ],
+        [
+          "Особенность 3",
+          "Широкое горлышко 70 мм"
+        ],
+        [
+          "Особенность 4",
+          "Соска «насосного» типа"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
