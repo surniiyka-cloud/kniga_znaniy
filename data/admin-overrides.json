@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T06:29:21.612Z",
+  "updatedAt": "2026-10-09T06:31:31.199Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -1571,6 +1571,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.5-микрочип-в-шприце-vetflex": {
+      "images": [
+        "img/photos/admin/5.5-микрочип-в-шприце-vetflex/5.5-микрочип-в-шприце-vetflex-01.webp"
       ]
     }
   },
