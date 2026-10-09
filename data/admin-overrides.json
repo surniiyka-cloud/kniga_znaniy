@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:52:43.264Z",
+  "updatedAt": "2026-10-09T10:55:43.362Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6885,6 +6885,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.2-0206-141-sr03b-дренчер-trusti-tuber-xs": {
+      "images": [
+        "img/photos/admin/6.2-0206-141-sr03b-дренчер-trusti-tuber-xs/6.2-0206-141-sr03b-дренчер-trusti-tuber-xs-01.webp"
       ]
     }
   },
