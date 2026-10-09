@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:44:02.445Z",
+  "updatedAt": "2026-10-09T10:44:06.427Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6692,6 +6692,71 @@
     "6.2-0206-037-дренчер-antahi": {
       "images": [
         "img/photos/admin/6.2-0206-037-дренчер-antahi/6.2-0206-037-дренчер-antahi-01.webp"
+      ],
+      "name": "Дренчер ANTAHI",
+      "type": "Дренчер",
+      "article": "0206.037",
+      "purpose": "Для выпойки телят",
+      "features": "Высококачественный дренчер Antahi Trusti Feeder; объём 4 л",
+      "sourceRow": 17,
+      "candidateId": "0206-037-дренчер-antahi",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.037"
+        ],
+        [
+          "Тип",
+          "Дренчер"
+        ],
+        [
+          "Назначение",
+          "Для выпойки телят"
+        ],
+        [
+          "Объём",
+          "Объём 4 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Высококачественный дренчер Antahi Trusti Feeder"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
