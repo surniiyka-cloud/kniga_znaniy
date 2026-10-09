@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T10:46:27.394Z",
+  "updatedAt": "2026-10-09T10:47:50.040Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -6762,6 +6762,63 @@
     "6.2-запасная-соска-в-наборе-для-дренчера-antahi": {
       "images": [
         "img/photos/admin/6.2-запасная-соска-в-наборе-для-дренчера-antahi/6.2-запасная-соска-в-наборе-для-дренчера-antahi-01.webp"
+      ],
+      "name": "Запасная соска в наборе для дренчера ANTAHI",
+      "type": "Запасная соска",
+      "article": "-",
+      "purpose": "Для дренчера Antahi Trusti Feeder",
+      "features": "Поставляется как запасная соска для системы Antahi",
+      "sourceRow": 18,
+      "candidateId": "запасная-соска-в-наборе-для-дренчера-antahi",
+      "detailFields": [
+        [
+          "Тип",
+          "Запасная соска"
+        ],
+        [
+          "Назначение",
+          "Для дренчера Antahi Trusti Feeder"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Поставляется как запасная соска для системы Antahi"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
