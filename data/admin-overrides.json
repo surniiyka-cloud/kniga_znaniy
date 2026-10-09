@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:30:00.006Z",
+  "updatedAt": "2026-10-09T12:31:53.957Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9059,6 +9059,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "6.8-0206-129-подогреватель-молока-superheat-digital": {
+      "images": [
+        "img/photos/admin/6.8-0206-129-подогреватель-молока-superheat-digital/6.8-0206-129-подогреватель-молока-superheat-digital-01.webp"
       ]
     }
   },
