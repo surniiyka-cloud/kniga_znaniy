@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T07:31:37.307Z",
+  "updatedAt": "2026-10-09T07:31:43.238Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -2711,6 +2711,79 @@
     "5.6-0203-055-антибрык-anti-kick-сталь": {
       "images": [
         "img/photos/23-fiksatsiya-i-usmirenie-zhivotnyh/23-antibryk-anti-kick-stal.png"
+      ],
+      "name": "Антибрык ANTI-KICK, сталь",
+      "type": "Регулируемый антибрык",
+      "article": "0203.055",
+      "purpose": "Для предотвращения ударов ногами при работе с животным",
+      "features": "Регулируется по размеру животного; 45 положений регулировки; фиксирующий болт Ø 9 мм; маркировка длинной стороны для удобства настройки",
+      "sourceRow": 9,
+      "candidateId": "0203-055-антибрык-anti-kick-сталь",
+      "detailFields": [
+        [
+          "Артикул",
+          "0203.055"
+        ],
+        [
+          "Тип",
+          "Регулируемый антибрык"
+        ],
+        [
+          "Назначение",
+          "Для предотвращения ударов ногами при работе с животным"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Регулируется по размеру животного"
+        ],
+        [
+          "Особенность 2",
+          "45 положений регулировки"
+        ],
+        [
+          "Особенность 3",
+          "Фиксирующий болт Ø 9 мм"
+        ],
+        [
+          "Особенность 4",
+          "Маркировка длинной стороны для удобства настройки"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
