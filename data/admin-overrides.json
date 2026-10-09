@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:51:40.684Z",
+  "updatedAt": "2026-10-09T08:51:46.533Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -4945,6 +4945,83 @@
         "img/photos/24-uhod-za-kopytami/24-disk-dlya-obrabotki-kopyt-120mm-6-nozhey-16318.png",
         "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-6-lezviy-v-komplekte.png",
         "img/photos/24-uhod-za-kopytami/24-zapasnye-lezviya-dlya-diskovogo-nozha-vts-7-lezviy-v-komplekte.png"
+      ],
+      "name": "Диск для обработки копыт",
+      "type": "Диск с режущими ножами",
+      "article": "0208.043 — 6 ножей; 0208.042 — 3 ножа",
+      "purpose": "Для механической обработки и расчистки копыт",
+      "features": "Основа из алюминия; наклонное расположение режущих элементов; ножи можно использовать с двух сторон и заменять по отдельности; быстросъёмное болтовое соединение; высота реза 1,2 мм, с подкладкой — 1,8 мм",
+      "sourceRow": 2,
+      "candidateId": "0208-043-6-ножей-0208-042-3-ножа-диск-для-обработки-копыт",
+      "detailFields": [
+        [
+          "Артикул",
+          "0208.043 — 6 ножей; 0208.042 — 3 ножа"
+        ],
+        [
+          "Тип",
+          "Диск с режущими ножами"
+        ],
+        [
+          "Назначение",
+          "Для механической обработки и расчистки копыт"
+        ],
+        [
+          "Высота",
+          "Высота реза 1,2 мм, с подкладкой — 1,8 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Основа из алюминия"
+        ],
+        [
+          "Особенность 2",
+          "Наклонное расположение режущих элементов"
+        ],
+        [
+          "Особенность 3",
+          "Ножи можно использовать с двух сторон и заменять по отдельности"
+        ],
+        [
+          "Особенность 4",
+          "Быстросъёмное болтовое соединение"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
