@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T11:40:03.747Z",
+  "updatedAt": "2026-10-09T11:40:13.509Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -7971,6 +7971,75 @@
     "6.5-0206-105-кормушка-круглая": {
       "images": [
         "img/photos/admin/6.5-0206-105-кормушка-круглая/6.5-0206-105-кормушка-круглая-01.webp"
+      ],
+      "name": "Кормушка круглая",
+      "type": "Навесная кормушка",
+      "article": "0206.105",
+      "purpose": "Для кормления телят и молодняка КРС",
+      "features": "Изготовлена из прочного ударостойкого пластика; навесная конструкция; объём 8 л",
+      "sourceRow": 2,
+      "candidateId": "0206-105-кормушка-круглая",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.105"
+        ],
+        [
+          "Тип",
+          "Навесная кормушка"
+        ],
+        [
+          "Назначение",
+          "Для кормления телят и молодняка КРС"
+        ],
+        [
+          "Материал",
+          "Изготовлена из прочного ударостойкого пластика"
+        ],
+        [
+          "Объём",
+          "Объём 8 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Навесная конструкция"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
