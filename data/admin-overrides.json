@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T12:53:40.180Z",
+  "updatedAt": "2026-10-09T12:54:01.159Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -9462,6 +9462,75 @@
     "6.10-ик-лампа-ankar": {
       "images": [
         "img/photos/admin/6.10-ик-лампа-ankar/6.10-ик-лампа-ankar-01.webp"
+      ],
+      "name": "ИК-лампа ANKAR",
+      "type": "Инфра лампа для обогрева",
+      "article": "-",
+      "purpose": "Для локального инфра обогрева телят и другого молодняка",
+      "features": "Варианты мощности: 100, 150, 175 и 250 Вт; /",
+      "sourceRow": 3,
+      "candidateId": "ик-лампа-ankar",
+      "detailFields": [
+        [
+          "Тип",
+          "Инфра лампа для обогрева"
+        ],
+        [
+          "Назначение",
+          "Для локального инфра обогрева телят и другого молодняка"
+        ],
+        [
+          "Тип",
+          "Инфра лампа для обогрева"
+        ],
+        [
+          "Назначение",
+          "Для локального инфра обогрева телят и другого молодняка"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Варианты мощности: 100, 150, 175 и 250 Вт"
+        ],
+        [
+          "Особенность 2",
+          "/"
+        ]
+      ],
+      "color": "Красный; Белый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
