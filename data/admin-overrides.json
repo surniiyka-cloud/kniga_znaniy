@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-09T08:35:30.122Z",
+  "updatedAt": "2026-10-09T08:35:42.468Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -3859,6 +3859,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "3.2-0303-012-стаканчик-пенный-ankar-premium-foam": {
+      "images": [
+        "img/photos/admin/3.2-0303-012-стаканчик-пенный-ankar-premium-foam/3.2-0303-012-стаканчик-пенный-ankar-premium-foam-02.webp"
       ]
     }
   },
