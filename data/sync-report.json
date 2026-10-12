@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-02T15:44:34.065Z",
+  "generatedAt": "2026-10-12T13:35:22.156Z",
   "sheets": 89,
   "sections": 88,
-  "products": 705,
+  "products": 700,
   "byKind": {
     "richTable": 13,
     "keyValue": 24,
@@ -493,7 +493,7 @@
       "id": "6.3",
       "title": "Вёдра для выпойки телят",
       "kind": "products",
-      "products": 19,
+      "products": 14,
       "tables": 0,
       "notes": 0
     },
@@ -759,26 +759,6 @@
     },
     {
       "article": "190030 / 190032",
-      "count": 2
-    },
-    {
-      "article": "0206.075",
-      "count": 2
-    },
-    {
-      "article": "0206.076",
-      "count": 2
-    },
-    {
-      "article": "0206.077",
-      "count": 2
-    },
-    {
-      "article": "0403.050",
-      "count": 2
-    },
-    {
-      "article": "0403.051",
       "count": 2
     },
     {
