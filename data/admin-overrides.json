@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:27:22.227Z",
+  "updatedAt": "2026-10-12T10:31:37.598Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5193,6 +5193,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "8.2-0403-080-лопата-profi-ankar-размер-7": {
+      "images": [
+        "img/photos/admin/8.2-0403-080-лопата-profi-ankar-размер-7/8.2-0403-080-лопата-profi-ankar-размер-7-01.webp"
       ]
     }
   },
