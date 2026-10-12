@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:51:16.057Z",
+  "updatedAt": "2026-10-12T08:51:18.907Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3025,6 +3025,71 @@
     "7.1-275-запасной-клапан-для-ведра-0210-007": {
       "images": [
         "img/photos/admin/7.1-275-запасной-клапан-для-ведра-0210-007/7.1-275-запасной-клапан-для-ведра-0210-007-01.webp"
+      ],
+      "name": "Запасной клапан для ведра 0210.007",
+      "type": "Запасной клапан",
+      "article": "275",
+      "purpose": "Для ведра KERBL арт. 0210.007",
+      "features": "Материал — алюминий; отгружается кратно 6 шт.",
+      "sourceRow": 11,
+      "candidateId": "275-запасной-клапан-для-ведра-0210-007",
+      "detailFields": [
+        [
+          "Артикул",
+          "275"
+        ],
+        [
+          "Тип",
+          "Запасной клапан"
+        ],
+        [
+          "Назначение",
+          "Для ведра KERBL арт. 0210.007"
+        ],
+        [
+          "Материал",
+          "Материал — алюминий"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Отгружается кратно 6 шт"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
