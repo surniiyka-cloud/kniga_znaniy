@@ -1162,7 +1162,7 @@ function applyProductBlock(section,name,pairs,advantages){
   if(!name)return;
   const want=normProductName(name);
   let p=(section.products||[]).find(x=>normProductName(x.name)===want);
-  const articlePair=(pairs||[]).find(r=>/^Артикул$/i.test(r?.[0]||""));
+  const articlePair=(pairs||[]).find(r=>/^Артикул(?:\s+из\s+каталога)?$/i.test(String(r?.[0]||"").trim()));
   if(!p&&articlePair?.[1])p=(section.products||[]).find(x=>String(x.article||"").trim()===String(articlePair[1]).trim()&&(!want||normProductName(x.name).includes(want)||want.includes(normProductName(x.name))));
   if(!p){
     p={id:section.id+"-"+safeSlug(articlePair?.[1]||name),name,sourceRow:0,sheetFields:[]};
@@ -1170,7 +1170,7 @@ function applyProductBlock(section,name,pairs,advantages){
   }
   p.sheetFields=uniquePairs([...(p.sheetFields||[]),...(pairs||[])]);
   const val=(label)=>p.sheetFields.find(r=>new RegExp("^"+label+"$","i").test(String(r?.[0]||"")))?.[1]||"";
-  p.article=p.article||val("Артикул");
+  p.article=p.article||val("Артикул")||val("Артикул из каталога");
   p.type=p.type||val("Тип");
   p.purpose=p.purpose||val("Назначение");
   p.manufacturer=p.manufacturer||val("Производитель");
@@ -1178,7 +1178,14 @@ function applyProductBlock(section,name,pairs,advantages){
   if((advantages||[]).length)p.advantages=uniquePairs([...(p.advantages||[]),...advantages]);
 }
 function enrichVerticalProductBlocks(section){
-  if(!section||!/^(3)(\.|$)/.test(section.id||""))return;
+  if(!section)return;
+  const sid=String(section.id||"");
+  const supported=/^3(?:\.|$)/.test(sid)||sid==="9.1"||/^10(?:\.|$)/.test(sid);
+  if(!supported)return;
+  // Для 9.1 и главы 10 исходные листы приходят как двухколоночные keyValue-блоки,
+  // хотя фактически каждый блок «Наименование → параметры» является товарной карточкой.
+  // Уже корректно распознанные товарные разделы не трогаем, чтобы не создавать дубли.
+  if((sid==="9.1"||/^10(?:\.|$)/.test(sid))&&Array.isArray(section.products)&&section.products.length)return;
   const rows=section.rawRows||section.packedRows||[];if(!rows.length)return;
   for(let i=0;i<rows.length;i++){
     const row=rows[i]||[];
