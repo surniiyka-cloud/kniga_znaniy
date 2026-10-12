@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T11:30:18.163Z",
+  "updatedAt": "2026-10-12T11:30:31.430Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5815,6 +5815,51 @@
       },
       "images": [
         "img/photos/admin/8.2-0403-118-сгон-для-воды-оцинкованный-держатель-45-см/8.2-0403-118-сгон-для-воды-оцинкованный-держатель-45-см-01.webp"
+      ],
+      "type": "Металлический сгон",
+      "purpose": "Для удаления воды",
+      "sourceRow": 16,
+      "candidateId": "0403-118-сгон-для-воды-оцинкованный-держатель-45-см",
+      "advantages": [
+        [
+          "Особенность 1",
+          "Металлическое исполнение"
+        ],
+        [
+          "Особенность 2",
+          "Универсальное крепление"
+        ],
+        [
+          "Особенность 3",
+          "Кромка из натурального каучука"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     },
     "8.2-0403-123-скребок-без-черенка-30-см": {
