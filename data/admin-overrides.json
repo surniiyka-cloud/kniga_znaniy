@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T05:35:36.616Z",
+  "updatedAt": "2026-10-12T05:35:40.421Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10187,6 +10187,68 @@
     "5.7-электропастух-olli-250в-plus-на-аккумуляторной-батарее": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-250в-plus-на-аккумуляторной-батарее/5.7-электропастух-olli-250в-plus-на-аккумуляторной-батарее-01.webp"
+      ],
+      "name": "Электропастух OLLI 250В PLUS на аккумуляторной батарее",
+      "type": "Генератор импульсов",
+      "article": "—",
+      "purpose": "Для систем электрического ограждения",
+      "features": "Аккумуляторная модель PLUS; статус «Декларация»",
+      "group": "Электропастухи с автономным / аккумуляторным питанием",
+      "sourceRow": 5,
+      "candidateId": "электропастух-olli-250в-plus-на-аккумуляторной-батарее",
+      "detailFields": [
+        [
+          "Тип",
+          "Генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для систем электрического ограждения"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Аккумуляторная модель PLUS"
+        ],
+        [
+          "Особенность 2",
+          "Статус «Декларация»"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
