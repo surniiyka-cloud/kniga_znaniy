@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:30:31.782Z",
+  "updatedAt": "2026-10-12T09:30:34.603Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3976,6 +3976,71 @@
     "7.4-0210-036-ножницы-для-стрижки-овец-ankar": {
       "images": [
         "img/photos/admin/7.4-0210-036-ножницы-для-стрижки-овец-ankar/7.4-0210-036-ножницы-для-стрижки-овец-ankar-01.webp"
+      ],
+      "name": "Ножницы для стрижки овец ANKAR",
+      "type": "Ручные ножницы для стрижки",
+      "article": "0210.036",
+      "purpose": "Для ручной стрижки шерсти овец",
+      "features": "Общая длина около 31 см; длина лезвия 16 см",
+      "sourceRow": 2,
+      "candidateId": "0210-036-ножницы-для-стрижки-овец-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.036"
+        ],
+        [
+          "Тип",
+          "Ручные ножницы для стрижки"
+        ],
+        [
+          "Назначение",
+          "Для ручной стрижки шерсти овец"
+        ],
+        [
+          "Длина",
+          "Длина лезвия 16 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Общая длина около 31 см"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
