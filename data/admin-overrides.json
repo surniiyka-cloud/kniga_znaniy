@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:47:49.086Z",
+  "updatedAt": "2026-10-12T09:47:56.170Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4413,6 +4413,74 @@
     "8.1-0404-054-щетка-с-длинной-рукояткой-ankar": {
       "images": [
         "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png"
+      ],
+      "name": "Щётка с длинной рукояткой ANKAR",
+      "type": "Ручная щётка",
+      "article": "0404.054",
+      "purpose": "Для мойки оборудования и поверхностей с увеличенной зоной доступа",
+      "features": "Жёсткая щетина; размер 410 × 43 × 50 мм; высота ворса 35 мм",
+      "sourceRow": 6,
+      "candidateId": "0404-054-щетка-с-длинной-рукояткой-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.054"
+        ],
+        [
+          "Тип",
+          "Ручная щётка"
+        ],
+        [
+          "Назначение",
+          "Для мойки оборудования и поверхностей с увеличенной зоной доступа"
+        ],
+        [
+          "Щетина",
+          "Жёсткая щетина"
+        ],
+        [
+          "Размер",
+          "Размер 410 × 43 × 50 мм"
+        ],
+        [
+          "Высота",
+          "Высота ворса 35 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
