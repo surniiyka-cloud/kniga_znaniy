@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:13:04.496Z",
+  "updatedAt": "2026-10-12T09:18:51.898Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3683,6 +3683,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "7.3-0210-020-ножницы-для-копыт-felco": {
+      "images": [
+        "img/photos/admin/7.3-0210-020-ножницы-для-копыт-felco/7.3-0210-020-ножницы-для-копыт-felco-01.webp"
       ]
     }
   },
