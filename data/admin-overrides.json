@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:08:38.719Z",
+  "updatedAt": "2026-10-12T06:08:43.010Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10995,6 +10995,68 @@
     "5.7-электропастух-olli-100": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-100/5.7-электропастух-olli-100-01.webp"
+      ],
+      "name": "Электропастух OLLI 100",
+      "type": "Сетевой генератор импульсов",
+      "article": "—",
+      "purpose": "Для электрического ограждения пастбищ и загонов",
+      "features": "Питание от сети; в старой книге указан статус «Декларация»",
+      "group": "Электропастухи с питанием от сети",
+      "sourceRow": 19,
+      "candidateId": "электропастух-olli-100",
+      "detailFields": [
+        [
+          "Тип",
+          "Сетевой генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для электрического ограждения пастбищ и загонов"
+        ],
+        [
+          "Питание",
+          "Питание от сети"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В старой книге указан статус «Декларация»"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
