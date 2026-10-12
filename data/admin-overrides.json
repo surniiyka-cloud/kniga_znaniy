@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T07:09:25.056Z",
+  "updatedAt": "2026-10-12T07:09:27.962Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -381,7 +381,68 @@
     "5.7-многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white": {
       "images": [
         "img/photos/admin/5.7-многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white/5.7-многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white-01.webp"
-      ]
+      ],
+      "name": "Многожильный шнур OLLI Shockteq Wire 3 мм / 1000 м Black/White",
+      "type": "Токопроводящий шнур",
+      "article": "—",
+      "purpose": "Для линии электроизгороди",
+      "features": "Диаметр 3 мм; длина 1000 м; чёрно-белый",
+      "group": "Проводники: ленты, шнуры и проволока",
+      "sourceRow": 30,
+      "candidateId": "многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white",
+      "detailFields": [
+        [
+          "Тип",
+          "Токопроводящий шнур"
+        ],
+        [
+          "Назначение",
+          "Для линии электроизгороди"
+        ],
+        [
+          "Диаметр",
+          "Диаметр 3 мм"
+        ],
+        [
+          "Длина",
+          "Длина 1000 м"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
