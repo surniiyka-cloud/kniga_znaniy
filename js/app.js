@@ -1165,7 +1165,11 @@ function applyProductBlock(section,name,pairs,advantages){
   const articlePair=(pairs||[]).find(r=>/^Артикул(?:\s+из\s+каталога)?$/i.test(String(r?.[0]||"").trim()));
   if(!p&&articlePair?.[1])p=(section.products||[]).find(x=>String(x.article||"").trim()===String(articlePair[1]).trim()&&(!want||normProductName(x.name).includes(want)||want.includes(normProductName(x.name))));
   if(!p){
-    p={id:section.id+"-"+safeSlug(articlePair?.[1]||name),name,sourceRow:0,sheetFields:[]};
+    const rawArticle=String(articlePair?.[1]||"").trim();
+    const usableArticle=rawArticle&&!/^(?:без артикула|не указан|нет|—|-|n\/a)$/i.test(rawArticle);
+    const verticalCatalog=/^(?:9\.1|10(?:\.|$))/.test(String(section.id||""));
+    const identity=verticalCatalog?((usableArticle?rawArticle+"-":"")+name):(rawArticle||name);
+    p={id:section.id+"-"+safeSlug(identity),name,sourceRow:0,sheetFields:[]};
     section.products=section.products||[];section.products.push(p);
   }
   p.sheetFields=uniquePairs([...(p.sheetFields||[]),...(pairs||[])]);
