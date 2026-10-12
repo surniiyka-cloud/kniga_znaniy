@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:29:32.323Z",
+  "updatedAt": "2026-10-12T08:29:36.500Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2732,6 +2732,71 @@
     "7.1-0206-081-прокладка-для-клапана": {
       "images": [
         "img/photos/admin/7.1-0206-081-прокладка-для-клапана/7.1-0206-081-прокладка-для-клапана-01.webp"
+      ],
+      "name": "Прокладка для клапана",
+      "type": "Уплотнительная прокладка",
+      "article": "0206.081",
+      "purpose": "Для герметизации клапана ведра-поилки",
+      "features": "Толщина 3 мм; подходит для ведер 0210.004 и 0210.005",
+      "sourceRow": 1,
+      "candidateId": "0206-081-прокладка-для-клапана",
+      "detailFields": [
+        [
+          "Артикул",
+          "0206.081"
+        ],
+        [
+          "Тип",
+          "Уплотнительная прокладка"
+        ],
+        [
+          "Назначение",
+          "Для герметизации клапана ведра-поилки"
+        ],
+        [
+          "Толщина",
+          "Толщина 3 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Подходит для ведер 0210.004 и 0210.005"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
