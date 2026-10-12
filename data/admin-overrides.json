@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:18:47.501Z",
+  "updatedAt": "2026-10-12T10:18:50.954Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4985,6 +4985,67 @@
     "8.1-0404-039-щетка-ankar-для-сосковой-резины-с-деревянной-ручкой": {
       "images": [
         "img/photos/admin/8.1-0404-039-щетка-ankar-для-сосковой-резины-с-деревянной-ручкой/8.1-0404-039-щетка-ankar-для-сосковой-резины-с-деревянной-ручкой-01.webp"
+      ],
+      "name": "Щётка ANKAR для сосковой резины с деревянной ручкой",
+      "type": "Щётка для сосковой резины",
+      "article": "0404.039",
+      "purpose": "Для механической очистки сосковой резины",
+      "features": "Исполнение с деревянной ручкой",
+      "sourceRow": 15,
+      "candidateId": "0404-039-щетка-ankar-для-сосковой-резины-с-деревянной-ручкой",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.039"
+        ],
+        [
+          "Тип",
+          "Щётка для сосковой резины"
+        ],
+        [
+          "Назначение",
+          "Для механической очистки сосковой резины"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Исполнение с деревянной ручкой"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
