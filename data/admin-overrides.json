@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:39:21.138Z",
+  "updatedAt": "2026-10-12T10:39:32.580Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5428,6 +5428,71 @@
     "8.2-0403-140-универсальная-щетка": {
       "images": [
         "img/photos/admin/8.2-0403-140-универсальная-щетка/8.2-0403-140-универсальная-щетка-01.webp"
+      ],
+      "name": "Универсальная щётка",
+      "type": "Щётка для пола",
+      "article": "0403.140",
+      "purpose": "Для уборки производственных помещений",
+      "features": "Металлический черенок 150 см; рабочая ширина 40 см",
+      "sourceRow": 10,
+      "candidateId": "0403-140-универсальная-щетка",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.140"
+        ],
+        [
+          "Тип",
+          "Щётка для пола"
+        ],
+        [
+          "Назначение",
+          "Для уборки производственных помещений"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Металлический черенок 150 см"
+        ],
+        [
+          "Особенность 2",
+          "Рабочая ширина 40 см"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
