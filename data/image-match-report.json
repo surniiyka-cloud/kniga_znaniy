@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-09T16:24:50.752Z",
-  "imagesTotal": 645,
-  "imagesMatched": 576,
+  "generatedAt": "2026-10-12T05:47:08.391Z",
+  "imagesTotal": 651,
+  "imagesMatched": 582,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -1212,7 +1212,7 @@
     }
   ],
   "productsTotal": 705,
-  "productsWithImages": 318,
+  "productsWithImages": 324,
   "productsWithoutImages": [
     {
       "id": "2.11-10006320-agrastrip-watex-дезоксиниваленол",
@@ -2557,42 +2557,6 @@
       "section": "5.5",
       "name": "Маркер STAEDTLER 319 M-9",
       "article": "0207.207"
-    },
-    {
-      "id": "5.7-электропастух-olli-180в-на-аккумуляторной-батарее",
-      "section": "5.7",
-      "name": "Электропастух OLLI 180В на аккумуляторной батарее",
-      "article": "—"
-    },
-    {
-      "id": "5.7-электропастух-olli-250в-plus-на-аккумуляторной-батарее",
-      "section": "5.7",
-      "name": "Электропастух OLLI 250В PLUS на аккумуляторной батарее",
-      "article": "—"
-    },
-    {
-      "id": "5.7-электропастух-olli-450-b-plus",
-      "section": "5.7",
-      "name": "Электропастух OLLI 450 B PLUS",
-      "article": "—"
-    },
-    {
-      "id": "5.7-электропастух-olli-9-07в",
-      "section": "5.7",
-      "name": "Электропастух OLLI 9.07В",
-      "article": "—"
-    },
-    {
-      "id": "5.7-электропастух-olli-sg3",
-      "section": "5.7",
-      "name": "Электропастух OLLI SG3",
-      "article": "—"
-    },
-    {
-      "id": "5.7-электропастух-тор-лайт-12-в-1-дж-12-в-акб",
-      "section": "5.7",
-      "name": "Электропастух ТОР ЛАЙТ 12 В / 1 Дж / 12 В АКБ",
-      "article": "—"
     },
     {
       "id": "5.7-электропастух-тор-лайт-220-в-1-дж",
