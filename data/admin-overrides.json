@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:59:42.102Z",
+  "updatedAt": "2026-10-12T08:59:55.384Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3244,6 +3244,67 @@
     "7.1-0210-009-запасная-соска-для-anti-vac": {
       "images": [
         "img/photos/admin/7.1-0210-009-запасная-соска-для-anti-vac/7.1-0210-009-запасная-соска-для-anti-vac-01.webp"
+      ],
+      "name": "Запасная соска для ANTI-VAC",
+      "type": "Сменная соска",
+      "article": "0210.009",
+      "purpose": "Для бутылки ANTI-VAC",
+      "features": "Для бутылки арт. 0210.003",
+      "sourceRow": 14,
+      "candidateId": "0210-009-запасная-соска-для-anti-vac",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.009"
+        ],
+        [
+          "Тип",
+          "Сменная соска"
+        ],
+        [
+          "Назначение",
+          "Для бутылки ANTI-VAC"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для бутылки арт. 0210.003"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
