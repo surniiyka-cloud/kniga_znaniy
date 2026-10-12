@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:46:54.442Z",
+  "updatedAt": "2026-10-12T09:47:00.188Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4339,6 +4339,75 @@
     "8.1-0404-052-щетка-утюжок-ankar": {
       "images": [
         "img/photos/admin/8.1-0404-052-щетка-утюжок-ankar/8.1-0404-052-щетка-утюжок-ankar-01.webp"
+      ],
+      "name": "Щётка-утюжок ANKAR",
+      "type": "Ручная щётка-утюжок",
+      "article": "0404.052",
+      "purpose": "Для ручной санитарной очистки поверхностей",
+      "features": "Мягкая щетина; размер 175 × 45 × 75 мм; высота ворса 30 мм",
+      "sourceRow": 4,
+      "candidateId": "0404-052-щетка-утюжок-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.052"
+        ],
+        [
+          "Тип",
+          "Ручная щётка-утюжок"
+        ],
+        [
+          "Назначение",
+          "Для ручной санитарной очистки поверхностей"
+        ],
+        [
+          "Размер",
+          "Размер 175 × 45 × 75 мм"
+        ],
+        [
+          "Высота",
+          "Высота ворса 30 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Мягкая щетина"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
