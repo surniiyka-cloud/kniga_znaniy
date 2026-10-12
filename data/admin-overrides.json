@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T07:32:04.488Z",
+  "updatedAt": "2026-10-12T07:32:07.451Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -654,6 +654,68 @@
     "5.7-измеритель-напряжения-изгороди-olli-digitester-plus": {
       "images": [
         "img/photos/admin/5.7-измеритель-напряжения-изгороди-olli-digitester-plus/5.7-измеритель-напряжения-изгороди-olli-digitester-plus-01.webp"
+      ],
+      "name": "Измеритель напряжения изгороди OLLI DIGITESTER PLUS",
+      "type": "Тестер электроизгороди",
+      "article": "—",
+      "purpose": "Для контроля напряжения на линии ограждения",
+      "features": "Цифровой измеритель; модель DIGITESTER PLUS",
+      "group": "Столбики, заземление и контроль напряжения",
+      "sourceRow": 67,
+      "candidateId": "измеритель-напряжения-изгороди-olli-digitester-plus",
+      "detailFields": [
+        [
+          "Тип",
+          "Тестер электроизгороди"
+        ],
+        [
+          "Назначение",
+          "Для контроля напряжения на линии ограждения"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Цифровой измеритель"
+        ],
+        [
+          "Особенность 2",
+          "Модель DIGITESTER PLUS"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
