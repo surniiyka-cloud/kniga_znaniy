@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:36:38.395Z",
+  "updatedAt": "2026-10-12T10:36:41.634Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5346,6 +5346,83 @@
     "8.2-0403-109-метла-для-помещений-compact": {
       "images": [
         "img/photos/admin/8.2-0403-109-метла-для-помещений-compact/8.2-0403-109-метла-для-помещений-compact-01.webp"
+      ],
+      "name": "Метла для помещений COMPACT",
+      "type": "Метла",
+      "article": "0403.109",
+      "purpose": "Для уборки помещений",
+      "features": "С держателем ручки; щетина из конского волоса; размер 50 см; деревянное основание; диаметр черенка 24 мм",
+      "sourceRow": 9,
+      "candidateId": "0403-109-метла-для-помещений-compact",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.109"
+        ],
+        [
+          "Тип",
+          "Метла"
+        ],
+        [
+          "Назначение",
+          "Для уборки помещений"
+        ],
+        [
+          "Размер",
+          "Размер 50 см"
+        ],
+        [
+          "Диаметр",
+          "Диаметр черенка 24 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "С держателем ручки"
+        ],
+        [
+          "Особенность 2",
+          "Щетина из конского волоса"
+        ],
+        [
+          "Особенность 3",
+          "Деревянное основание"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
