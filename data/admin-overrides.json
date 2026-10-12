@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:31:00.825Z",
+  "updatedAt": "2026-10-12T09:31:42.516Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4046,6 +4046,74 @@
     "7.4-0210-025-ножницы-для-ручной-стрижки-овец": {
       "images": [
         "img/photos/admin/7.4-0210-025-ножницы-для-ручной-стрижки-овец/7.4-0210-025-ножницы-для-ручной-стрижки-овец-01.webp"
+      ],
+      "name": "Ножницы для ручной стрижки овец",
+      "type": "Ручные ножницы",
+      "article": "0210.025",
+      "purpose": "Для стрижки овец",
+      "features": "Изготовлены из высококачественной стали; длина около 25 см; ширина захвата при стрижке — около 45 мм",
+      "sourceRow": 3,
+      "candidateId": "0210-025-ножницы-для-ручной-стрижки-овец",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.025"
+        ],
+        [
+          "Тип",
+          "Ручные ножницы"
+        ],
+        [
+          "Назначение",
+          "Для стрижки овец"
+        ],
+        [
+          "Материал",
+          "Изготовлены из высококачественной стали"
+        ],
+        [
+          "Длина",
+          "Длина около 25 см"
+        ],
+        [
+          "Ширина",
+          "Ширина захвата при стрижке — около 45 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
