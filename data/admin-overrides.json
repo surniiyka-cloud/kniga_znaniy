@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T11:54:50.236Z",
+  "updatedAt": "2026-10-12T11:58:08.134Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -6497,6 +6497,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "8.2-самоходная-тележка-модель-tya30ps": {
+      "images": [
+        "img/photos/admin/8.2-самоходная-тележка-модель-tya30ps/8.2-самоходная-тележка-модель-tya30ps-01.webp"
       ]
     }
   },
