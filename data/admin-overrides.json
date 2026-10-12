@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:26:19.735Z",
+  "updatedAt": "2026-10-12T09:26:22.757Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3836,6 +3836,71 @@
     "7.3-0210-023-ножницы-для-копыт-без-зубьев": {
       "images": [
         "img/photos/admin/7.3-0210-023-ножницы-для-копыт-без-зубьев/7.3-0210-023-ножницы-для-копыт-без-зубьев-01.webp"
+      ],
+      "name": "Ножницы для копыт без зубьев",
+      "type": "Копытные ножницы с гладкими лезвиями",
+      "article": "0210.023",
+      "purpose": "Для подрезки и расчистки копыт овец и коз",
+      "features": "Длина 26 см; высококачественные гладкие лезвия",
+      "sourceRow": 1,
+      "candidateId": "0210-023-ножницы-для-копыт-без-зубьев",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.023"
+        ],
+        [
+          "Тип",
+          "Копытные ножницы с гладкими лезвиями"
+        ],
+        [
+          "Назначение",
+          "Для подрезки и расчистки копыт овец и коз"
+        ],
+        [
+          "Длина",
+          "Длина 26 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Высококачественные гладкие лезвия"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
