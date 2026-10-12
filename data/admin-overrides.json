@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:50:44.991Z",
+  "updatedAt": "2026-10-12T06:50:47.851Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -129,7 +129,60 @@
     "5.7-электропастух-olli-protector-11": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-protector-11/5.7-электропастух-olli-protector-11-01.webp"
-      ]
+      ],
+      "name": "Электропастух OLLI PROTECTOR 11",
+      "type": "Сетевой генератор импульсов",
+      "article": "—",
+      "purpose": "Для электрического ограждения животных",
+      "features": "Серия PROTECTOR; в старой книге указан статус «Декларация»",
+      "group": "Электропастухи с питанием от сети",
+      "sourceRow": 24,
+      "candidateId": "электропастух-olli-protector-11",
+      "detailFields": [
+        [
+          "Тип",
+          "Сетевой генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для электрического ограждения животных"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
