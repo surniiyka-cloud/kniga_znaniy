@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:07:37.468Z",
+  "updatedAt": "2026-10-12T10:07:43.464Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4702,6 +4702,79 @@
     "8.1-0404-059-щетка-угловая-для-пола-ankar": {
       "images": [
         "img/photos/admin/8.1-0404-059-щетка-угловая-для-пола-ankar/8.1-0404-059-щетка-угловая-для-пола-ankar-01.webp"
+      ],
+      "name": "Щётка угловая для пола ANKAR",
+      "type": "Угловая щётка",
+      "article": "0404.059",
+      "purpose": "Для уборки вдоль стыков пола и стен, под оборудованием и для очистки сливов",
+      "features": "Изогнутая колодка; жёсткая щетина; размер 245 × 90 × 65 мм; высота ворса 50 мм",
+      "sourceRow": 10,
+      "candidateId": "0404-059-щетка-угловая-для-пола-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.059"
+        ],
+        [
+          "Тип",
+          "Угловая щётка"
+        ],
+        [
+          "Назначение",
+          "Для уборки вдоль стыков пола и стен, под оборудованием и для очистки сливов"
+        ],
+        [
+          "Щетина",
+          "Жёсткая щетина"
+        ],
+        [
+          "Размер",
+          "Размер 245 × 90 × 65 мм"
+        ],
+        [
+          "Высота",
+          "Высота ворса 50 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Изогнутая колодка"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
