@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T13:03:32.823Z",
+  "updatedAt": "2026-10-12T13:06:43.158Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -7065,6 +7065,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.2-дезмат-эко-маст": {
+      "images": [
+        "img/photos/admin/9.2-дезмат-эко-маст/9.2-дезмат-эко-маст-01.webp"
       ]
     }
   },
