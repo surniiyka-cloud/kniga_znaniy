@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:32:04.819Z",
+  "updatedAt": "2026-10-12T10:36:38.395Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5341,6 +5341,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "8.2-0403-109-метла-для-помещений-compact": {
+      "images": [
+        "img/photos/admin/8.2-0403-109-метла-для-помещений-compact/8.2-0403-109-метла-для-помещений-compact-01.webp"
       ]
     }
   },
