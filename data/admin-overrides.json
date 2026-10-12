@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:43:17.949Z",
+  "updatedAt": "2026-10-12T09:43:21.436Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4266,6 +4266,74 @@
     "8.1-0404-051-щетка-для-мытья-ankar": {
       "images": [
         "img/photos/admin/8.1-0404-051-щетка-для-мытья-ankar/8.1-0404-051-щетка-для-мытья-ankar-01.webp"
+      ],
+      "name": "Щётка для мытья ANKAR",
+      "type": "Ручная щётка",
+      "article": "0404.051",
+      "purpose": "Для мойки поверхностей и оборудования",
+      "features": "Жёсткая щетина; размер 180 × 70 × 55 мм; высота ворса 35 мм",
+      "sourceRow": 3,
+      "candidateId": "0404-051-щетка-для-мытья-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.051"
+        ],
+        [
+          "Тип",
+          "Ручная щётка"
+        ],
+        [
+          "Назначение",
+          "Для мойки поверхностей и оборудования"
+        ],
+        [
+          "Щетина",
+          "Жёсткая щетина"
+        ],
+        [
+          "Размер",
+          "Размер 180 × 70 × 55 мм"
+        ],
+        [
+          "Высота",
+          "Высота ворса 35 мм"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
