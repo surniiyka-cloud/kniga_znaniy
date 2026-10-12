@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:45:01.199Z",
+  "updatedAt": "2026-10-12T08:45:04.661Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2942,6 +2942,84 @@
     "7.1-0210-002-бутылка-для-мрс": {
       "images": [
         "img/photos/admin/7.1-0210-002-бутылка-для-мрс/7.1-0210-002-бутылка-для-мрс-01.webp"
+      ],
+      "name": "Бутылка для МРС",
+      "type": "Бутылка для индивидуальной выпойки",
+      "article": "0210.002",
+      "purpose": "Для выпойки ягнят",
+      "features": "Объём 1 л; в комплекте с соской; измерительная шкала; петля для подвешивания на дне бутылки",
+      "sourceRow": 1,
+      "candidateId": "0210-002-бутылка-для-мрс",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.002"
+        ],
+        [
+          "Тип",
+          "Бутылка для индивидуальной выпойки"
+        ],
+        [
+          "Назначение",
+          "Для выпойки ягнят"
+        ],
+        [
+          "Объём",
+          "Объём 1 л"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Измерительная шкала"
+        ],
+        [
+          "Особенность 2",
+          "Петля для подвешивания на дне бутылки"
+        ]
+      ],
+      "complectation": [
+        [
+          "Комплектация",
+          "В комплекте с соской"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
