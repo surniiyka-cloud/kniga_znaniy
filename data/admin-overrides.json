@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T12:04:35.096Z",
+  "updatedAt": "2026-10-12T12:21:02.107Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -6707,6 +6707,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.2-дезковрик-эко": {
+      "images": [
+        "img/photos/admin/9.2-дезковрик-эко/9.2-дезковрик-эко-01.webp"
       ]
     }
   },
