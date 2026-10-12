@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-12T13:35:25.740Z",
-  "imagesTotal": 739,
-  "imagesMatched": 670,
+  "generatedAt": "2026-10-12T21:52:24.325Z",
+  "imagesTotal": 744,
+  "imagesMatched": 675,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -1212,7 +1212,7 @@
     }
   ],
   "productsTotal": 700,
-  "productsWithImages": 412,
+  "productsWithImages": 415,
   "productsWithoutImages": [
     {
       "id": "2.11-10006320-agrastrip-watex-дезоксиниваленол",
@@ -2869,24 +2869,6 @@
       "section": "9.3",
       "name": "Разбрасыватель подстилки WINK, 43 л",
       "article": "0501.08.001"
-    },
-    {
-      "id": "9.4-0401-071-уничтожитель-насекомых-ankar-gc2-16",
-      "section": "9.4",
-      "name": "Уничтожитель насекомых ANKAR GC2-16",
-      "article": "0401.071"
-    },
-    {
-      "id": "9.4-0401-072-уничтожитель-насекомых-ankar-gc2-30",
-      "section": "9.4",
-      "name": "Уничтожитель насекомых ANKAR GC2-30",
-      "article": "0401.072"
-    },
-    {
-      "id": "9.4-0401-070-уничтожитель-насекомых-ankar-gc1-60",
-      "section": "9.4",
-      "name": "Уничтожитель насекомых ANKAR GC1-60",
-      "article": "0401.070"
     },
     {
       "id": "11.1-0205-025-s-0205-026-m-0205-027-l-0205-028-xl-перчатки-нитриловые-milkmaster",
