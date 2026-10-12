@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:29:51.765Z",
+  "updatedAt": "2026-10-12T09:29:55.757Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3906,6 +3906,71 @@
     "7.3-16819-копытный-нож-profi-двусторонний": {
       "images": [
         "img/photos/admin/7.3-16819-копытный-нож-profi-двусторонний/7.3-16819-копытный-нож-profi-двусторонний-01.webp"
+      ],
+      "name": "Копытный нож PROFI двусторонний",
+      "type": "Двусторонний копытный нож",
+      "article": "16819",
+      "purpose": "Для ручной расчистки и обработки копыт",
+      "features": "Профессиональное двустороннее исполнение; заточенные рабочие кромки позволяют использовать обе стороны инструмента",
+      "sourceRow": 6,
+      "candidateId": "16819-копытный-нож-profi-двусторонний",
+      "detailFields": [
+        [
+          "Артикул",
+          "16819"
+        ],
+        [
+          "Тип",
+          "Двусторонний копытный нож"
+        ],
+        [
+          "Назначение",
+          "Для ручной расчистки и обработки копыт"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Профессиональное двустороннее исполнение"
+        ],
+        [
+          "Особенность 2",
+          "Заточенные рабочие кромки позволяют использовать обе стороны инструмента"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
