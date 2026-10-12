@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T05:58:58.559Z",
+  "updatedAt": "2026-10-12T05:59:01.738Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10790,6 +10790,68 @@
     "5.7-электропастух-тор-15-про-15-дж-12-в-акб-220-в": {
       "images": [
         "img/photos/admin/5.7-электропастух-тор-15-про-15-дж-12-в-акб-220-в/5.7-электропастух-тор-15-про-15-дж-12-в-акб-220-в-01.webp"
+      ],
+      "name": "Электропастух ТОР-15 ПРО / 15 Дж / 12 В АКБ + 220 В",
+      "type": "Комбинированный электропастух",
+      "article": "—",
+      "purpose": "Для электрических ограждений",
+      "features": "15 Дж; питание 12 В АКБ / 220 В",
+      "group": "Электропастухи с автономным / аккумуляторным питанием",
+      "sourceRow": 14,
+      "candidateId": "электропастух-тор-15-про-15-дж-12-в-акб-220-в",
+      "detailFields": [
+        [
+          "Тип",
+          "Комбинированный электропастух"
+        ],
+        [
+          "Назначение",
+          "Для электрических ограждений"
+        ],
+        [
+          "Питание",
+          "Питание 12 В АКБ / 220 В"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "15 Дж"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
