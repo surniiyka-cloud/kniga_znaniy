@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:19:22.293Z",
+  "updatedAt": "2026-10-12T10:19:27.496Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5051,6 +5051,66 @@
     "8.1-0404-038-щетка-ankar-для-молочных-шлангов": {
       "images": [
         "img/photos/admin/8.1-0404-038-щетка-ankar-для-молочных-шлангов/8.1-0404-038-щетка-ankar-для-молочных-шлангов-01.webp"
+      ],
+      "name": "Щётка ANKAR для молочных шлангов",
+      "type": "Щётка для шлангов",
+      "article": "0404.038",
+      "purpose": "Для внутренней очистки молочных шлангов",
+      "features": "Длина 115 см",
+      "sourceRow": 16,
+      "candidateId": "0404-038-щетка-ankar-для-молочных-шлангов",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.038"
+        ],
+        [
+          "Тип",
+          "Щётка для шлангов"
+        ],
+        [
+          "Назначение",
+          "Для внутренней очистки молочных шлангов"
+        ],
+        [
+          "Длина",
+          "Длина 115 см"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
