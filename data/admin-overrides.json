@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:29:15.350Z",
+  "updatedAt": "2026-10-12T08:29:18.638Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2666,6 +2666,67 @@
     "7.1-0201-028-запасной-клапан-для-ведра-выпойки-ягнят-kerbl": {
       "images": [
         "img/photos/admin/7.1-0201-028-запасной-клапан-для-ведра-выпойки-ягнят-kerbl/7.1-0201-028-запасной-клапан-для-ведра-выпойки-ягнят-kerbl-01.webp"
+      ],
+      "name": "Запасной клапан для ведра выпойки ягнят KERBL",
+      "type": "Запасной клапан",
+      "article": "0201.028*",
+      "purpose": "Для ремонта ведер-поилок",
+      "features": "В каталоге указана совместимость с ведрами на 3 и 5 сосок — 0210.004 и 0210.005",
+      "sourceRow": 1,
+      "candidateId": "0201-028-запасной-клапан-для-ведра-выпойки-ягнят-kerbl",
+      "detailFields": [
+        [
+          "Артикул",
+          "0201.028*"
+        ],
+        [
+          "Тип",
+          "Запасной клапан"
+        ],
+        [
+          "Назначение",
+          "Для ремонта ведер-поилок"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В каталоге указана совместимость с ведрами на 3 и 5 сосок — 0210.004 и 0210.005"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
