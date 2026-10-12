@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:29:53.515Z",
+  "updatedAt": "2026-10-12T08:30:04.844Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2802,6 +2802,71 @@
     "7.1-0201-028-кронштейн": {
       "images": [
         "img/photos/admin/7.1-0201-028-кронштейн/7.1-0201-028-кронштейн-01.webp"
+      ],
+      "name": "Кронштейн",
+      "type": "Крепление для ведра-поилки",
+      "article": "0201.028*",
+      "purpose": "Для подвешивания ведер",
+      "features": "Оцинкованный; подходит для ведер 0210.004, 0210.005 и 0210.006",
+      "sourceRow": 1,
+      "candidateId": "0201-028-кронштейн",
+      "detailFields": [
+        [
+          "Артикул",
+          "0201.028*"
+        ],
+        [
+          "Тип",
+          "Крепление для ведра-поилки"
+        ],
+        [
+          "Назначение",
+          "Для подвешивания ведер"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Оцинкованный"
+        ],
+        [
+          "Особенность 2",
+          "Подходит для ведер 0210.004, 0210.005 и 0210.006"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
