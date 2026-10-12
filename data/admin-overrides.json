@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T07:05:18.642Z",
+  "updatedAt": "2026-10-12T07:05:26.764Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -319,7 +319,64 @@
     "5.7-многожильная-лента-40-мм-200-м": {
       "images": [
         "img/photos/admin/5.7-многожильная-лента-40-мм-200-м/5.7-многожильная-лента-40-мм-200-м-01.webp"
-      ]
+      ],
+      "name": "Многожильная лента 40 мм / 200 м",
+      "type": "Токопроводящая лента",
+      "article": "—",
+      "purpose": "Для построения электрического ограждения",
+      "features": "40 мм × 200 м",
+      "group": "Проводники: ленты, шнуры и проволока",
+      "sourceRow": 29,
+      "candidateId": "многожильная-лента-40-мм-200-м",
+      "detailFields": [
+        [
+          "Тип",
+          "Токопроводящая лента"
+        ],
+        [
+          "Назначение",
+          "Для построения электрического ограждения"
+        ],
+        [
+          "Параметр",
+          "40 мм × 200 м"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
