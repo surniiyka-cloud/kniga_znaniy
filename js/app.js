@@ -1268,72 +1268,59 @@ function productColorsInText(v){
 function stripProductColorWords(v){
   let s=String(v||"");
   for(const [,pattern] of PRODUCT_COLOR_SPECS)s=s.replace(new RegExp(pattern,"giu"),"");
-  s=s.replace(/(?:доступные|варианты)?\s*цвет(?:а|ы|ов)?\s*[:—–-]?\s*/giu,"");
-  return s
-    .replace(/\s*[—–-]\s*(?=;|,|$)/g,"")
-    .replace(/(^|[;,])\s*[—–-]\s*/g,"$1 ")
-    .replace(/(^|\s)-(?=\s|,|;|$)/g,"$1")
-    .replace(/\s{2,}/g," ")
-    .replace(/\s+([,;:.])/g,"$1")
-    .replace(/([,;])\s*([,;])+/g,"$1")
-    .replace(/^[\s,;:—–-]+|[\s,;:—–-]+$/g,"")
-    .trim();
+  return s.replace(/\s{2,}/g," ").replace(/\s+([,;:.])/g,"$1").replace(/^[\s,;:—–-]+|[\s,;:—–-]+$/g,"").trim();
+}
+function isColorLabel(v){
+  return /^(?:доступные\s+|варианты\s+)?цвет(?:а|ы|ов)?(?:\s|$|[:/])/iu.test(String(v||"").trim());
 }
 function normalizeProductColors(p){
   if(!p||typeof p!=="object")return p;
   const bag=[];
   const add=(v)=>{for(const c of productColorsInText(v))if(!bag.includes(c))bag.push(c)};
   add(p.color||"");
-  const cleanScalar=(key)=>{
-    const v=String(p[key]||"");const found=productColorsInText(v);found.forEach(c=>{if(!bag.includes(c))bag.push(c)});
-    if(found.length)p[key]=stripProductColorWords(v);
-  };
-  for(const key of ["name","article","type","purpose"])cleanScalar(key);
-  if(p.features){
-    const kept=[];
-    for(const raw of String(p.features).split(";")){
-      const clause=raw.trim(),found=productColorsInText(clause);
-      found.forEach(c=>{if(!bag.includes(c))bag.push(c)});
-      if(!found.length){if(clause)kept.push(clause);continue}
-      const cleaned=stripProductColorWords(clause);
-      if(cleaned&&!/^(доступные|варианты)$/iu.test(cleaned))kept.push(cleaned);
-    }
-    p.features=kept.join("; ");
+
+  // Цвет из названия и артикула переносим наверх, потому что там он обозначает исполнение товара.
+  for(const key of ["name","article"]){
+    const v=String(p[key]||""),found=productColorsInText(v);
+    found.forEach(c=>{if(!bag.includes(c))bag.push(c)});
+    if(found.length)p[key]=stripProductColorWords(v).replace(/\s*[—–-]\s*(?=;|,|$)/g,"").trim();
   }
-  const cleanRows=(rows,key)=>{
-    const out=[];
-    for(const raw of Array.isArray(rows)?rows:[]){
-      const row=Array.isArray(raw)?raw.map(x=>String(x??"")):[String(raw??"")];
-      const label=String(row[0]||"").trim();
-      row.forEach(add);
-      if(/^(?:доступные\s+|варианты\s+)?цвет(?:а|ы|ов)?\b/iu.test(label))continue;
-      const cleaned=row.map(stripProductColorWords);
-      if(key==="variants"&&cleaned.slice(1).every(x=>!String(x).trim()))continue;
-      if(cleaned.some(x=>String(x).trim()))out.push(cleaned);
+
+  // В характеристиках удаляем только отдельную строку «Цвет / Доступные цвета».
+  if(Array.isArray(p.detailFields)){
+    p.detailFields=p.detailFields.filter(row=>{
+      if(!Array.isArray(row)||!isColorLabel(row[0]))return true;
+      row.slice(1).forEach(add);return false;
+    });
+  }
+
+  // Для вариантов исполнения переносим цвет только если сама колонка подписана как «Цвет».
+  if(Array.isArray(p.variants)){
+    const headers=p.pairHeaders?.variants||[];
+    const colorCol=headers.findIndex(isColorLabel);
+    if(colorCol>=0){
+      p.variants.forEach(row=>{if(Array.isArray(row))add(row[colorCol])});
+      p.variants=p.variants.map(row=>Array.isArray(row)?row.filter((_,i)=>i!==colorCol):row).filter(row=>Array.isArray(row)?row.some(v=>String(v||"").trim()):true);
+      p.pairHeaders={...(p.pairHeaders||{}),variants:headers.filter((_,i)=>i!==colorCol)};
     }
-    return out;
-  };
-  const pairKeys=["detailFields","advantages","indicators","options","variants","complectation","calibration","assortment","consumables","testKits","workflow","washCycle"];
-  for(const key of pairKeys)if(Array.isArray(p[key]))p[key]=cleanRows(p[key],key);
+  }
+
+  // В обычных таблицах убираем только явно обозначенную колонку «Цвет».
   if(p.tabTables&&typeof p.tabTables==="object"){
     for(const table of Object.values(p.tabTables)){
-      if(!table||typeof table!=="object")continue;
-      let headers=Array.isArray(table.headers)?table.headers.map(x=>String(x??"")):[];
-      let rows=Array.isArray(table.rows)?table.rows.map(r=>Array.isArray(r)?r.map(x=>String(x??"")):[]):[];
-      const colorCols=[];
-      headers.forEach((h,i)=>{add(h);if(/^(?:доступные\s+|варианты\s+)?цвет(?:а|ы|ов)?\b/iu.test(h.trim()))colorCols.push(i)});
-      rows.forEach(r=>r.forEach(add));
-      if(colorCols.length){
-        const rm=new Set(colorCols);
-        headers=headers.filter((_,i)=>!rm.has(i));
-        rows=rows.map(r=>r.filter((_,i)=>!rm.has(i)));
-        table.merges=[];
-      }
-      table.headers=headers.map(stripProductColorWords);
-      table.rows=cleanRows(rows,"table");
+      if(!table||typeof table!=="object"||!Array.isArray(table.headers))continue;
+      const cols=[];table.headers.forEach((h,i)=>{if(isColorLabel(h))cols.push(i)});
+      if(!cols.length)continue;
+      const rm=new Set(cols);
+      for(const row of table.rows||[])for(const i of cols)add(Array.isArray(row)?row[i]:"");
+      table.headers=table.headers.filter((_,i)=>!rm.has(i));
+      table.rows=(table.rows||[]).map(row=>Array.isArray(row)?row.filter((_,i)=>!rm.has(i)):row);
+      table.merges=[];
     }
   }
-  if(Array.isArray(p.customTabs))p.customTabs=p.customTabs.map(t=>({...t,rows:Array.isArray(t?.rows)?cleanRows(t.rows,"custom"):t?.rows}));
+
+  // Тексты назначений, преимуществ, инструкций и пользовательских вкладок не трогаем:
+  // упоминание цвета там может быть смыслом анализа, индикации или рабочего процесса.
   p.color=bag.join("; ");
   return p;
 }
