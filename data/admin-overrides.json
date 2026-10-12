@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:53:26.373Z",
+  "updatedAt": "2026-10-12T08:55:52.481Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3156,6 +3156,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "7.1-0210-003-бутылка-для-мрс-anti-vac": {
+      "images": [
+        "img/photos/admin/7.1-0210-003-бутылка-для-мрс-anti-vac/7.1-0210-003-бутылка-для-мрс-anti-vac-01.webp"
       ]
     }
   },
