@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:41:32.285Z",
+  "updatedAt": "2026-10-12T10:41:35.806Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5498,6 +5498,75 @@
     "8.2-0403-108-полимерная-метла-с-ручкой": {
       "images": [
         "img/photos/admin/8.2-0403-108-полимерная-метла-с-ручкой/8.2-0403-108-полимерная-метла-с-ручкой-01.webp"
+      ],
+      "name": "Полимерная метла с ручкой",
+      "type": "Полимерная метла",
+      "article": "0403.108",
+      "purpose": "Для уборки помещений и территории",
+      "features": "Четырёхрядная пластмассовая щетина; различные цвета; длина 135 см",
+      "sourceRow": 11,
+      "candidateId": "0403-108-полимерная-метла-с-ручкой",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.108"
+        ],
+        [
+          "Тип",
+          "Полимерная метла"
+        ],
+        [
+          "Назначение",
+          "Для уборки помещений и территории"
+        ],
+        [
+          "Длина",
+          "Длина 135 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Четырёхрядная пластмассовая щетина"
+        ],
+        [
+          "Особенность 2",
+          "Различные цвета"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
