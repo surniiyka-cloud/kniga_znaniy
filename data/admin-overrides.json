@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T11:37:17.958Z",
+  "updatedAt": "2026-10-12T11:37:24.004Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -6188,6 +6188,71 @@
     "8.2-0403-132-скребок-из-листовой-стали": {
       "images": [
         "img/photos/admin/8.2-0403-132-скребок-из-листовой-стали/8.2-0403-132-скребок-из-листовой-стали-01.webp"
+      ],
+      "name": "Скребок из листовой стали",
+      "type": "Скребок для твёрдого навоза",
+      "article": "0403.132",
+      "purpose": "Для удаления твёрдого навоза",
+      "features": "Без черенка; ширина 35 см",
+      "sourceRow": 22,
+      "candidateId": "0403-132-скребок-из-листовой-стали",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.132"
+        ],
+        [
+          "Тип",
+          "Скребок для твёрдого навоза"
+        ],
+        [
+          "Назначение",
+          "Для удаления твёрдого навоза"
+        ],
+        [
+          "Ширина",
+          "Ширина 35 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Без черенка"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
