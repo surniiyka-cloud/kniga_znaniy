@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:53:20.460Z",
+  "updatedAt": "2026-10-12T08:53:26.373Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -3095,6 +3095,67 @@
     "7.1-0210-010-запасная-соска": {
       "images": [
         "img/photos/admin/7.1-0210-010-запасная-соска/7.1-0210-010-запасная-соска-01.webp"
+      ],
+      "name": "Запасная соска",
+      "type": "Сменная соска",
+      "article": "0210.010",
+      "purpose": "Для выпойного оборудования МРС",
+      "features": "В каталоге указана совместимость с арт. 0210.007",
+      "sourceRow": 12,
+      "candidateId": "0210-010-запасная-соска",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.010"
+        ],
+        [
+          "Тип",
+          "Сменная соска"
+        ],
+        [
+          "Назначение",
+          "Для выпойного оборудования МРС"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В каталоге указана совместимость с арт. 0210.007"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
