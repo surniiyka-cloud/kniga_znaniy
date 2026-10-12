@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:07:43.464Z",
+  "updatedAt": "2026-10-12T10:11:05.878Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4775,6 +4775,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "8.1-0404-058-щетка-для-пола-ankar": {
+      "images": [
+        "img/photos/admin/8.1-0404-058-щетка-для-пола-ankar/8.1-0404-058-щетка-для-пола-ankar-01.webp"
       ]
     }
   },
