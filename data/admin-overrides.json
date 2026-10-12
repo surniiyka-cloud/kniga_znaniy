@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:01:27.625Z",
+  "updatedAt": "2026-10-12T06:01:32.701Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10857,6 +10857,72 @@
     "5.7-солнечная-панель-30-вт-с-mppt-контроллером": {
       "images": [
         "img/photos/admin/5.7-солнечная-панель-30-вт-с-mppt-контроллером/5.7-солнечная-панель-30-вт-с-mppt-контроллером-01.webp"
+      ],
+      "name": "Солнечная панель 30 Вт с MPPT-контроллером",
+      "type": "Источник питания / комплектующее",
+      "article": "—",
+      "purpose": "Для автономного питания оборудования электроизгороди",
+      "features": "Мощность 30 Вт; комплектуется MPPT-контроллером",
+      "group": "Электропастухи с автономным / аккумуляторным питанием",
+      "sourceRow": 15,
+      "candidateId": "солнечная-панель-30-вт-с-mppt-контроллером",
+      "detailFields": [
+        [
+          "Тип",
+          "Источник питания / комплектующее"
+        ],
+        [
+          "Назначение",
+          "Для автономного питания оборудования электроизгороди"
+        ],
+        [
+          "Мощность",
+          "Мощность 30 Вт"
+        ]
+      ],
+      "complectation": [
+        [
+          "Комплектация",
+          "Комплектуется MPPT-контроллером"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
