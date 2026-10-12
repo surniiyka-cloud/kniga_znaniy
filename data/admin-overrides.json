@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:47:00.188Z",
+  "updatedAt": "2026-10-12T09:47:49.086Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4408,6 +4408,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "8.1-0404-054-щетка-с-длинной-рукояткой-ankar": {
+      "images": [
+        "img/photos/19-rabochiy-i-uborochnyy-inventar/19-fbk-shchetka-dlinnaya-ruchka-myagkaya.png"
       ]
     }
   },
