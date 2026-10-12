@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T07:29:10.568Z",
+  "updatedAt": "2026-10-12T07:32:04.488Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -649,6 +649,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.7-измеритель-напряжения-изгороди-olli-digitester-plus": {
+      "images": [
+        "img/photos/admin/5.7-измеритель-напряжения-изгороди-olli-digitester-plus/5.7-измеритель-напряжения-изгороди-olli-digitester-plus-01.webp"
       ]
     }
   },
