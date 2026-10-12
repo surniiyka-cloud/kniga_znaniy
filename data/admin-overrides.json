@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:54:43.376Z",
+  "updatedAt": "2026-10-12T06:59:46.854Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -249,6 +249,11 @@
       "testKits": [],
       "tabTables": {},
       "customTabs": []
+    },
+    "5.7-зимняя-лента-shockteq-40-мм-200-м": {
+      "images": [
+        "img/photos/admin/5.7-зимняя-лента-shockteq-40-мм-200-м/5.7-зимняя-лента-shockteq-40-мм-200-м-01.webp"
+      ]
     }
   },
   "sections": {},
