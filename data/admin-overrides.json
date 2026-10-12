@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:23:46.770Z",
+  "updatedAt": "2026-10-12T08:23:50.759Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2516,6 +2516,76 @@
     "7.1-0210-004-ведро-для-ягнят-3-соски": {
       "images": [
         "img/photos/admin/7.1-0210-004-ведро-для-ягнят-3-соски/7.1-0210-004-ведро-для-ягнят-3-соски-01.webp"
+      ],
+      "name": "Ведро для ягнят, 3 соски",
+      "type": "Групповое ведро-поилка",
+      "article": "0210.004",
+      "purpose": "Для групповой выпойки ягнят",
+      "features": "Пищевой пластик; ручка, клапаны и короткие соски в комплекте",
+      "sourceRow": 1,
+      "candidateId": "0210-004-ведро-для-ягнят-3-соски",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.004"
+        ],
+        [
+          "Тип",
+          "Групповое ведро-поилка"
+        ],
+        [
+          "Назначение",
+          "Для групповой выпойки ягнят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Пищевой пластик"
+        ]
+      ],
+      "complectation": [
+        [
+          "Комплектация",
+          "Ручка, клапаны и короткие соски в комплекте"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
