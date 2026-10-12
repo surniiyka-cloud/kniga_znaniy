@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T05:39:52.284Z",
+  "updatedAt": "2026-10-12T05:39:55.876Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10321,6 +10321,68 @@
     "5.7-электропастух-olli-9-07в": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-9-07в/5.7-электропастух-olli-9-07в-01.webp"
+      ],
+      "name": "Электропастух OLLI 9.07В",
+      "type": "Генератор импульсов",
+      "article": "—",
+      "purpose": "Для систем электрического ограждения",
+      "features": "В старой книге указан статус «Декларация»; обозначение модели необходимо перепроверить",
+      "group": "Электропастухи с автономным / аккумуляторным питанием",
+      "sourceRow": 7,
+      "candidateId": "электропастух-olli-9-07в",
+      "detailFields": [
+        [
+          "Тип",
+          "Генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для систем электрического ограждения"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В старой книге указан статус «Декларация»"
+        ],
+        [
+          "Особенность 2",
+          "Обозначение модели необходимо перепроверить"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
