@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T09:58:25.385Z",
+  "updatedAt": "2026-10-12T09:58:28.805Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4633,6 +4633,70 @@
     "8.1-0404-057-ручка-для-щетки-молочных-танков-ankar-150-см": {
       "images": [
         "img/photos/admin/8.1-0404-057-ручка-для-щетки-молочных-танков-ankar-150-см/8.1-0404-057-ручка-для-щетки-молочных-танков-ankar-150-см-01.webp"
+      ],
+      "name": "Ручка для щётки молочных танков ANKAR, 150 см",
+      "type": "Сменная рукоять",
+      "article": "0404.057",
+      "purpose": "Для щёток для молочных танков",
+      "features": "Длина 150 см; диаметр захвата 32 мм; цвета: красный, синий, зелёный, жёлтый, фиолетовый",
+      "sourceRow": 9,
+      "candidateId": "0404-057-ручка-для-щетки-молочных-танков-ankar-150-см",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.057"
+        ],
+        [
+          "Тип",
+          "Сменная рукоять"
+        ],
+        [
+          "Назначение",
+          "Для щёток для молочных танков"
+        ],
+        [
+          "Длина",
+          "Длина 150 см"
+        ],
+        [
+          "Диаметр",
+          "Диаметр захвата 32 мм"
+        ]
+      ],
+      "color": "Красный; Зелёный; Синий; Жёлтый; Фиолетовый",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
