@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:46:45.596Z",
+  "updatedAt": "2026-10-12T06:48:33.239Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -63,6 +63,11 @@
       "testKits": [],
       "tabTables": {},
       "customTabs": []
+    },
+    "5.7-электропастух-olli-1000": {
+      "images": [
+        "img/photos/admin/5.7-электропастух-olli-1000/5.7-электропастух-olli-1000-01.webp"
+      ]
     }
   },
   "sections": {},
