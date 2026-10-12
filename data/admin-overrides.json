@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T05:35:40.421Z",
+  "updatedAt": "2026-10-12T05:38:03.573Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10249,6 +10249,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "5.7-электропастух-olli-450-b-plus": {
+      "images": [
+        "img/photos/admin/5.7-электропастух-olli-450-b-plus/5.7-электропастух-olli-450-b-plus-01.webp"
       ]
     }
   },
