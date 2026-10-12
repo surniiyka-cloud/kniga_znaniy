@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T07:05:26.764Z",
+  "updatedAt": "2026-10-12T07:09:25.056Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -377,6 +377,11 @@
       "testKits": [],
       "tabTables": {},
       "customTabs": []
+    },
+    "5.7-многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white": {
+      "images": [
+        "img/photos/admin/5.7-многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white/5.7-многожильный-шнур-olli-shockteq-wire-3-мм-1000-м-black-white-01.webp"
+      ]
     }
   },
   "sections": {},
