@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T07:15:59.090Z",
+  "updatedAt": "2026-10-12T07:16:03.459Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -447,7 +447,68 @@
     "5.7-многожильный-шнур-shockteq-super-6-3-мм-1000-м": {
       "images": [
         "img/photos/admin/5.7-многожильный-шнур-shockteq-super-6-3-мм-1000-м/5.7-многожильный-шнур-shockteq-super-6-3-мм-1000-м-01.webp"
-      ]
+      ],
+      "name": "Многожильный шнур Shockteq Super-6, 3 мм / 1000 м",
+      "type": "Токопроводящий шнур",
+      "article": "—",
+      "purpose": "Для электрических ограждений",
+      "features": "Диаметр 3 мм; длина 1000 м",
+      "group": "Проводники: ленты, шнуры и проволока",
+      "sourceRow": 31,
+      "candidateId": "многожильный-шнур-shockteq-super-6-3-мм-1000-м",
+      "detailFields": [
+        [
+          "Тип",
+          "Токопроводящий шнур"
+        ],
+        [
+          "Назначение",
+          "Для электрических ограждений"
+        ],
+        [
+          "Диаметр",
+          "Диаметр 3 мм"
+        ],
+        [
+          "Длина",
+          "Длина 1000 м"
+        ]
+      ],
+      "complectation": [],
+      "advantages": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
