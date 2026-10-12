@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:13:33.529Z",
+  "updatedAt": "2026-10-12T10:13:36.673Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4854,6 +4854,66 @@
     "8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая": {
       "images": [
         "img/photos/admin/8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая/8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая-01.webp"
+      ],
+      "name": "Ручка для щётки для пола ANKAR",
+      "type": "Сменная рукоять",
+      "article": "0404.060",
+      "purpose": "Для напольных щёток ANKAR",
+      "features": "Диаметр захвата 32 мм",
+      "sourceRow": 12,
+      "candidateId": "0404-060-ручка-для-щетки-для-пола-ankar-зеленая",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.060"
+        ],
+        [
+          "Тип",
+          "Сменная рукоять"
+        ],
+        [
+          "Назначение",
+          "Для напольных щёток ANKAR"
+        ],
+        [
+          "Диаметр",
+          "Диаметр захвата 32 мм"
+        ]
+      ],
+      "color": "Зелёный",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
