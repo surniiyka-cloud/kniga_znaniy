@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:48:33.239Z",
+  "updatedAt": "2026-10-12T06:48:36.539Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -67,7 +67,64 @@
     "5.7-электропастух-olli-1000": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-1000/5.7-электропастух-olli-1000-01.webp"
-      ]
+      ],
+      "name": "Электропастух OLLI 1000",
+      "type": "Сетевой генератор импульсов",
+      "article": "—",
+      "purpose": "Для систем электрического ограждения",
+      "features": "Модель OLLI; статус «Декларация»",
+      "group": "Электропастухи с питанием от сети",
+      "sourceRow": 23,
+      "candidateId": "электропастух-olli-1000",
+      "detailFields": [
+        [
+          "Тип",
+          "Сетевой генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для систем электрического ограждения"
+        ],
+        [
+          "Исполнение",
+          "Модель OLLI"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
