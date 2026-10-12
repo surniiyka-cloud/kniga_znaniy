@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:53:18.726Z",
+  "updatedAt": "2026-10-12T10:53:22.213Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5572,6 +5572,75 @@
     "8.2-0403-110-метла-из-рисовой-соломы": {
       "images": [
         "img/photos/admin/8.2-0403-110-метла-из-рисовой-соломы/8.2-0403-110-метла-из-рисовой-соломы-01.webp"
+      ],
+      "name": "Метла из рисовой соломы",
+      "type": "Натуральная метла",
+      "article": "0403.110",
+      "purpose": "Для уборки помещений и уличных работ",
+      "features": "Длина 150 см; деревянная ручка; щетина из рисовой соломы",
+      "sourceRow": 12,
+      "candidateId": "0403-110-метла-из-рисовой-соломы",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.110"
+        ],
+        [
+          "Тип",
+          "Натуральная метла"
+        ],
+        [
+          "Назначение",
+          "Для уборки помещений и уличных работ"
+        ],
+        [
+          "Длина",
+          "Длина 150 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Деревянная ручка"
+        ],
+        [
+          "Особенность 2",
+          "Щетина из рисовой соломы"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
