@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:32:00.787Z",
+  "updatedAt": "2026-10-12T10:32:04.819Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -5272,6 +5272,75 @@
     "8.2-0403-082-лопата-profi-ankar-размер-9": {
       "images": [
         "img/photos/admin/8.2-0403-082-лопата-profi-ankar-размер-9/8.2-0403-082-лопата-profi-ankar-размер-9-01.webp"
+      ],
+      "name": "Лопата PROFI/ANKAR, размер 9",
+      "type": "Алюминиевая лопата",
+      "article": "0403.082",
+      "purpose": "Для хозяйственных работ",
+      "features": "Без черенка; защитная кромка; материал толщиной около 2,5 мм",
+      "sourceRow": 8,
+      "candidateId": "0403-082-лопата-profi-ankar-размер-9",
+      "detailFields": [
+        [
+          "Артикул",
+          "0403.082"
+        ],
+        [
+          "Тип",
+          "Алюминиевая лопата"
+        ],
+        [
+          "Назначение",
+          "Для хозяйственных работ"
+        ],
+        [
+          "Материал",
+          "Материал толщиной около 2,5 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Без черенка"
+        ],
+        [
+          "Особенность 2",
+          "Защитная кромка"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
