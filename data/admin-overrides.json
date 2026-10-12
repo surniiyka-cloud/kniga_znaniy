@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:59:46.854Z",
+  "updatedAt": "2026-10-12T06:59:52.952Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -253,7 +253,68 @@
     "5.7-зимняя-лента-shockteq-40-мм-200-м": {
       "images": [
         "img/photos/admin/5.7-зимняя-лента-shockteq-40-мм-200-м/5.7-зимняя-лента-shockteq-40-мм-200-м-01.webp"
-      ]
+      ],
+      "name": "Зимняя лента SHOCKTEQ 40 мм / 200 м",
+      "type": "Токопроводящая лента",
+      "article": "—",
+      "purpose": "Для электроограждений, в том числе сезонного применения",
+      "features": "Ширина 40 мм; длина 200 м; в названии обозначена как зимняя",
+      "group": "Проводники: ленты, шнуры и проволока",
+      "sourceRow": 28,
+      "candidateId": "зимняя-лента-shockteq-40-мм-200-м",
+      "detailFields": [
+        [
+          "Тип",
+          "Токопроводящая лента"
+        ],
+        [
+          "Назначение",
+          "Для электроограждений, в том числе сезонного применения"
+        ],
+        [
+          "Ширина",
+          "Ширина 40 мм"
+        ],
+        [
+          "Длина",
+          "Длина 200 м"
+        ]
+      ],
+      "advantages": [],
+      "complectation": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
