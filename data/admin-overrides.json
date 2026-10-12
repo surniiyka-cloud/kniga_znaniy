@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:11:05.878Z",
+  "updatedAt": "2026-10-12T10:11:09.372Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4780,6 +4780,75 @@
     "8.1-0404-058-щетка-для-пола-ankar": {
       "images": [
         "img/photos/admin/8.1-0404-058-щетка-для-пола-ankar/8.1-0404-058-щетка-для-пола-ankar-01.webp"
+      ],
+      "name": "Щётка для пола ANKAR",
+      "type": "Щётка для подметания",
+      "article": "0404.058",
+      "purpose": "Для подметания мелких частиц в сухой зоне",
+      "features": "Размер 400 × 50 × 80 мм; материал: полипропилен (PP), полиэстер; в описании указана мягкая расщеплённая щетина",
+      "sourceRow": 11,
+      "candidateId": "0404-058-щетка-для-пола-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.058"
+        ],
+        [
+          "Тип",
+          "Щётка для подметания"
+        ],
+        [
+          "Назначение",
+          "Для подметания мелких частиц в сухой зоне"
+        ],
+        [
+          "Размер",
+          "Размер 400 × 50 × 80 мм"
+        ],
+        [
+          "Материал",
+          "Материал: полипропилен (PP), полиэстер"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В описании указана мягкая расщеплённая щетина"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
