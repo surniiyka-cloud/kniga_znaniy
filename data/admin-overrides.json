@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:21:04.665Z",
+  "updatedAt": "2026-10-12T08:21:08.387Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2441,6 +2441,76 @@
     "7.1-0210-005-ведро-для-ягнят-5-сосок": {
       "images": [
         "img/photos/admin/7.1-0210-005-ведро-для-ягнят-5-сосок/7.1-0210-005-ведро-для-ягнят-5-сосок-01.webp"
+      ],
+      "name": "Ведро для ягнят, 5 сосок",
+      "type": "Групповое ведро-поилка",
+      "article": "0210.005",
+      "purpose": "Для групповой выпойки ягнят",
+      "features": "Пищевой пластик; комплектуется ручкой, клапанами и короткими сосками",
+      "sourceRow": 1,
+      "candidateId": "0210-005-ведро-для-ягнят-5-сосок",
+      "detailFields": [
+        [
+          "Артикул",
+          "0210.005"
+        ],
+        [
+          "Тип",
+          "Групповое ведро-поилка"
+        ],
+        [
+          "Назначение",
+          "Для групповой выпойки ягнят"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Пищевой пластик"
+        ]
+      ],
+      "complectation": [
+        [
+          "Комплектация",
+          "Комплектуется ручкой, клапанами и короткими сосками"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
