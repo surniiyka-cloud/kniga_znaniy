@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T05:33:33.184Z",
+  "updatedAt": "2026-10-12T05:33:41.402Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10120,6 +10120,68 @@
     "5.7-электропастух-olli-180в-на-аккумуляторной-батарее": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-180в-на-аккумуляторной-батарее/5.7-электропастух-olli-180в-на-аккумуляторной-батарее-01.webp"
+      ],
+      "name": "Электропастух OLLI 180В на аккумуляторной батарее",
+      "type": "Генератор импульсов",
+      "article": "—",
+      "purpose": "Для электрификации пастбищного ограждения",
+      "features": "Аккумуляторное питание; статус «Декларация»",
+      "group": "Электропастухи с автономным / аккумуляторным питанием",
+      "sourceRow": 4,
+      "candidateId": "электропастух-olli-180в-на-аккумуляторной-батарее",
+      "detailFields": [
+        [
+          "Тип",
+          "Генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для электрификации пастбищного ограждения"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Аккумуляторное питание"
+        ],
+        [
+          "Особенность 2",
+          "Статус «Декларация»"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
