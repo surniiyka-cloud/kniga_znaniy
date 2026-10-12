@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T10:16:21.393Z",
+  "updatedAt": "2026-10-12T10:16:35.955Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4919,6 +4919,67 @@
     "8.1-0404-037-щетка-для-молокопроводов-танков": {
       "images": [
         "img/photos/admin/8.1-0404-037-щетка-для-молокопроводов-танков/8.1-0404-037-щетка-для-молокопроводов-танков-01.webp"
+      ],
+      "name": "Щётка для молокопроводов / танков",
+      "type": "Длинная щётка для оборудования",
+      "article": "0404.037",
+      "purpose": "Для очистки молокопроводов и внутренних поверхностей оборудования",
+      "features": "Общий размер / длина 155 см",
+      "sourceRow": 13,
+      "candidateId": "0404-037-щетка-для-молокопроводов-танков",
+      "detailFields": [
+        [
+          "Артикул",
+          "0404.037"
+        ],
+        [
+          "Тип",
+          "Длинная щётка для оборудования"
+        ],
+        [
+          "Назначение",
+          "Для очистки молокопроводов и внутренних поверхностей оборудования"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Общий размер / длина 155 см"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
