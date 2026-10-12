@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T05:42:09.301Z",
+  "updatedAt": "2026-10-12T05:42:13.377Z",
   "products": {
     "5.4-0207-132-ошейник-маркировочный-ankar-бело-зеленый-130-см": {
       "images": [
@@ -10388,6 +10388,68 @@
     "5.7-электропастух-olli-sg3": {
       "images": [
         "img/photos/admin/5.7-электропастух-olli-sg3/5.7-электропастух-olli-sg3-01.webp"
+      ],
+      "name": "Электропастух OLLI SG3",
+      "type": "Генератор импульсов",
+      "article": "—",
+      "purpose": "Для электрификации ограждения",
+      "features": "Автономная модель; статус «Декларация»",
+      "group": "Электропастухи с автономным / аккумуляторным питанием",
+      "sourceRow": 8,
+      "candidateId": "электропастух-olli-sg3",
+      "detailFields": [
+        [
+          "Тип",
+          "Генератор импульсов"
+        ],
+        [
+          "Назначение",
+          "Для электрификации ограждения"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Автономная модель"
+        ],
+        [
+          "Особенность 2",
+          "Статус «Декларация»"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
