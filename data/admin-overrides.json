@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T06:54:39.002Z",
+  "updatedAt": "2026-10-12T06:54:43.376Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -187,7 +187,68 @@
     "5.7-зеленая-многожильная-лента-shockteq-20-мм-200-м": {
       "images": [
         "img/photos/admin/5.7-зеленая-многожильная-лента-shockteq-20-мм-200-м/5.7-зеленая-многожильная-лента-shockteq-20-мм-200-м-01.webp"
-      ]
+      ],
+      "name": "Многожильная лента Shockteq 20 мм / 200 м",
+      "type": "Токопроводящая лента",
+      "article": "—",
+      "purpose": "Для формирования линии электроизгороди",
+      "features": "Ширина 20 мм; длина 200 м",
+      "group": "Проводники: ленты, шнуры и проволока",
+      "sourceRow": 27,
+      "candidateId": "зеленая-многожильная-лента-shockteq-20-мм-200-м",
+      "detailFields": [
+        [
+          "Тип",
+          "Токопроводящая лента"
+        ],
+        [
+          "Назначение",
+          "Для формирования линии электроизгороди"
+        ],
+        [
+          "Ширина",
+          "Ширина 20 мм"
+        ],
+        [
+          "Длина",
+          "Длина 200 м"
+        ]
+      ],
+      "complectation": [],
+      "advantages": [],
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
+      ],
+      "color": "Зелёный",
+      "__frozen": true,
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": []
     }
   },
   "sections": {},
