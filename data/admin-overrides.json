@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T12:50:08.258Z",
+  "updatedAt": "2026-10-12T12:54:15.552Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -6925,6 +6925,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.2-липкие-коврики": {
+      "images": [
+        "img/photos/admin/9.2-липкие-коврики/9.2-липкие-коврики-01.webp"
       ]
     }
   },
