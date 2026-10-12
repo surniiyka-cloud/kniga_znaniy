@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-12T08:13:12.724Z",
+  "updatedAt": "2026-10-12T08:18:43.880Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -2337,6 +2337,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "7.1-0210-007-ведро-для-мрс-kerbl": {
+      "images": [
+        "img/photos/admin/7.1-0210-007-ведро-для-мрс-kerbl/7.1-0210-007-ведро-для-мрс-kerbl-01.webp"
       ]
     }
   },
