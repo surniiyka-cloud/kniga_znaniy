@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T06:54:44.249Z",
+  "updatedAt": "2026-10-13T06:54:53.583Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -10207,6 +10207,75 @@
     "11.1-в-каталоге-не-указан-перчатки-highrisk-ankar": {
       "images": [
         "img/photos/admin/11.1-в-каталоге-не-указан-перчатки-highrisk-ankar/11.1-в-каталоге-не-указан-перчатки-highrisk-ankar-01.webp"
+      ],
+      "name": "Перчатки HIGHRISK ANKAR",
+      "type": "Усиленные защитные перчатки",
+      "article": "В каталоге не указан",
+      "purpose": "Для работ, где требуется повышенная механическая прочность перчаток",
+      "features": "Цвет синий; заявлена высокая прочность; размеры S/M/L/XL; упаковка 50 шт.",
+      "sourceRow": 7,
+      "candidateId": "в-каталоге-не-указан-перчатки-highrisk-ankar",
+      "detailFields": [
+        [
+          "Артикул",
+          "В каталоге не указан"
+        ],
+        [
+          "Тип",
+          "Усиленные защитные перчатки"
+        ],
+        [
+          "Назначение",
+          "Для работ, где требуется повышенная механическая прочность перчаток"
+        ],
+        [
+          "Размер",
+          "Размеры S/M/L/XL"
+        ],
+        [
+          "Упаковка",
+          "Упаковка 50 шт"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Заявлена высокая прочность"
+        ]
+      ],
+      "color": "Синий",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
