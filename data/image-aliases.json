@@ -144,10 +144,10 @@
     "product": "11.3-303-фартук-с-рукавами-и-логотипом"
   },
   "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png": {
-    "product": "11.3-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами"
+    "product": "11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами"
   },
   "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png": {
-    "product": "11.3-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом"
+    "product": "11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом"
   },
   "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310.png": {
     "product": "11.3-310-фартук-с-нарукавниками-с-логотипом-tian-трейд-цельный-без-карманов"
@@ -208,5 +208,11 @@
   },
   "img/photos/25-uhod-za-shkuroy-i-udalenie-rogov/25-nozh-dlya-tailwell2.png": {
     "product": "5.1-0202-015-tailwell2-триммер-для-хвоста"
+  },
+  "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png": {
+    "product": "11.3-фартук-специальный-пищевой-белый"
+  },
+  "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png": {
+    "product": "3.1-0303-001"
   }
 }
