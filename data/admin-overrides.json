@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T07:38:54.751Z",
+  "updatedAt": "2026-10-13T07:55:03.534Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -10645,6 +10645,9 @@
         "consumables",
         "testKits"
       ]
+    },
+    "11.3-316-ветеринарная-сумка": {
+      "images": []
     }
   },
   "sections": {
