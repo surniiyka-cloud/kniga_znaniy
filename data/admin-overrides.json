@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T06:54:23.414Z",
+  "updatedAt": "2026-10-13T06:54:36.663Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -10203,6 +10203,9 @@
         "consumables",
         "testKits"
       ]
+    },
+    "11.1-в-каталоге-не-указан-перчатки-highrisk-ankar": {
+      "images": []
     }
   },
   "sections": {
