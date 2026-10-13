@@ -295,6 +295,17 @@ async function commitOverrides(data){
   let remote=emptyOverrides();
   if(cur?.content){try{remote=JSON.parse(base64Utf8(cur.content))||emptyOverrides()}catch{}}
   const merged=normalizeOverrideStructure(threeWayApply(baseline,data,remote));
+
+  // Зафиксированные сотруднические/проверенные карточки нельзя случайно удалить
+  // устаревшей вкладкой редактора. Явное удаление товара выполняется через
+  // deletedProductIds раздела и не требует стирать его проверенный override.
+  for(const [id,prev] of Object.entries(remote.products||{})){
+    if(prev?.__frozen&&!merged.products?.[id]){
+      merged.products ||= {};
+      merged.products[id]=deep(prev);
+    }
+  }
+
   merged.version=1;merged.updatedAt=new Date().toISOString();
 
   // Перед каждой публикацией сохраняем предыдущую опубликованную версию overrides.
