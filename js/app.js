@@ -1388,10 +1388,44 @@ function mapData(){
     }
   }
 
+  // Защита от потери редакторских правок при изменении стабильного ID карточки.
+  // Прямой ID всегда приоритетен. Если после переразбора Google Sheets ID поменялся,
+  // консервативно подхватываем только ЕДИНСТВЕННЫЙ старый override с тем же товаром:
+  // по точному артикулу в том же разделе или по точному нормализованному названию.
+  const claimedFallbackOverrides=new Set();
+  const identityText=(v)=>String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
+  const identityArticle=(v)=>{
+    const s=String(v||"").trim();
+    return (!s||/^(?:-|—|без артикула|не указан|нет)$/i.test(s))?"":s.toLowerCase().replace(/[^a-zа-я0-9]+/gi,"");
+  };
+  const overrideSectionMatch=(overrideId,sectionId)=>{
+    const oid=String(overrideId||""),sid=String(sectionId||"");
+    return oid.startsWith(sid+"-")||oid.startsWith("catalog-"+safeSlug(sid)+"-");
+  };
+  const fallbackOverride=(id,x)=>{
+    const direct=ov.products?.[id];if(direct)return {key:id,value:direct};
+    const name=identityText(x.product?.name),art=identityArticle(x.product?.article),sectionId=x.section?.id;
+    const matches=[];
+    for(const [oid,pov] of Object.entries(ov.products||{})){
+      if(claimedFallbackOverrides.has(oid)||!pov||typeof pov!=="object")continue;
+      const sameSection=overrideSectionMatch(oid,sectionId)||String(pov.sourceSectionId||"")===String(sectionId||"");
+      if(!sameSection)continue;
+      const oname=identityText(pov.name),oart=identityArticle(pov.article);
+      if(art&&oart&&art===oart)matches.push({key:oid,value:pov,rank:2});
+      else if(name&&oname&&name===oname)matches.push({key:oid,value:pov,rank:1});
+    }
+    if(!matches.length)return null;
+    matches.sort((a,b)=>b.rank-a.rank);
+    const best=matches.filter(m=>m.rank===matches[0].rank);
+    return best.length===1?best[0]:null;
+  };
+
   for(const [id,x] of state.products){
     state.editorBase.products.set(id,deepCopy(x.product));
     state.editorBase.images.set(id,deepCopy(state.assets.productImages?.[id]||[]));
-    const pov=ov.products?.[id];if(!pov)continue;
+    const resolved=fallbackOverride(id,x),pov=resolved?.value;
+    if(!pov)continue;
+    if(resolved.key!==id)claimedFallbackOverrides.add(resolved.key);
     const metaKeys=["id","images","__frozen","appendDetailFields","removeDetailFieldPatterns","pairPatches","tablePatches","removeCustomTabIds"];
     for(const [k,v] of Object.entries(pov)){
       if(metaKeys.includes(k))continue;
