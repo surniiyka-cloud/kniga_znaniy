@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T21:52:24.325Z",
+  "generatedAt": "2026-10-13T08:31:42.930Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -361,10 +361,12 @@
       "img/photos/admin/10.1-0601-003-влагомер-зерна-wile-65/10.1-0601-003-влагомер-зерна-wile-65-01.webp"
     ],
     "11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами": [
-      "img/photos/admin/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами-01.png"
+      "img/photos/admin/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами-01.png",
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png"
     ],
     "11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом": [
-      "img/photos/admin/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом-01.png"
+      "img/photos/admin/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом-01.png",
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png"
     ],
     "3.1-0202-011": [
       "img/photos/admin/3.1-0202-011/3.1-0202-011-01.webp"
@@ -379,7 +381,8 @@
       "img/photos/admin/3.1-0202-103/3.1-0202-103-01.webp"
     ],
     "3.1-0303-001": [
-      "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp"
+      "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp",
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png"
     ],
     "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar": [
       "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png"
@@ -1490,6 +1493,12 @@
     "microbiology": [
       "img/photos/admin/microbiology/sda.webp",
       "img/photos/admin/microbiology/skiv.webp"
+    ],
+    "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png"
+    ],
+    "11.3-фартук-специальный-пищевой-белый": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png"
     ]
   },
   "sectionImages": {
