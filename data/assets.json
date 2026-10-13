@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T08:36:24.954Z",
+  "generatedAt": "2026-10-13T09:52:02.442Z",
   "productImages": {
     "3.4-0301-003-ankar-before-eco": [
       "img/photos/13-sredstva-dlya-vymeni/13-ankar-before-eco.png"
@@ -57,6 +57,10 @@
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-cross-kerbl.png",
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-kerbl.png",
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-non-return-premium-kerbl.png"
+    ],
+    "3.1-0303-001": [
+      "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp",
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png"
     ],
     "3.3-0303-060-пластырь-для-сосков-udderosoft": [
       "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-plastyr-uddersoft.png"
@@ -141,6 +145,63 @@
     "8.3-0405-002-ankar-superacid-hw": [
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/ANKAR-superacid-HW.png"
     ],
+    "9.1-генератор-горячего-тумана-аирофог-ae35": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ae35.png"
+    ],
+    "9.1-генератор-горячего-тумана-аирофог-ar35e": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ar35e.png"
+    ],
+    "9.1-генератор-горячего-тумана-bd-400": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-bd-400.png"
+    ],
+    "9.1-генератор-горячего-тумана-b-f-150": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-bf-150.png"
+    ],
+    "9.1-дезинфекционная-установка-ds-160-бензиновый-двигатель": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-benzin.png"
+    ],
+    "9.1-дезинфекционная-установка-ds-160-с-электр-двигателем": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-elektro.png"
+    ],
+    "9.1-дезинфекционная-установка-ds-50-50-литров-с-бензиновым-двигателем": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-50.png"
+    ],
+    "9.1-дезинфекционная-установка-du-125-унигрин-двс": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-dvs.png"
+    ],
+    "9.1-дезинфекционная-установка-du-125-унигрин-с-электр-двигателем": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-elektro.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-good-fog": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-good-fog.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-jp-s20": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png"
+    ],
+    "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png"
+    ],
+    "9.1-мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-moo-gun": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-moo-gun.png"
+    ],
+    "9.1-аккумуляторный-генератор-холодного-тумана-swg2020": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-swg2020.png"
+    ],
+    "9.1-генератор-горячего-тумана-tf15-ffg-10": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-tf15-ffg-10.png"
+    ],
+    "9.1-генератор-горячего-тумана-th-180": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png"
+    ],
+    "9.1-генератор-горячего-тумана-t-h-250-h400": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-250-h400.png"
+    ],
+    "9.1-генератор-горячего-тумана-t-h-fog-130-a": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-tn-fog-130.png"
+    ],
     "8.1-0404-001-ерш-для-коллектора-дпр-7": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-ersh-kollektor-dpr7.png"
     ],
@@ -193,6 +254,14 @@
     "11.3-303-фартук-с-рукавами-и-логотипом": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-303.png"
     ],
+    "11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами": [
+      "img/photos/admin/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами-01.png",
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png"
+    ],
+    "11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом": [
+      "img/photos/admin/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом-01.png",
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png"
+    ],
     "11.3-310-фартук-с-нарукавниками-с-логотипом-tian-трейд-цельный-без-карманов": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310.png"
     ],
@@ -202,7 +271,11 @@
     "11.3-0205-104-фартук-врача-ортопеда": [
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-ortopeda.png"
     ],
+    "11.3-фартук-специальный-пищевой-белый": [
+      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png"
+    ],
     "11.1-в-каталоге-не-указан-перчатки-highrisk-ankar": [
+      "img/photos/admin/11.1-в-каталоге-не-указан-перчатки-highrisk-ankar/11.1-в-каталоге-не-указан-перчатки-highrisk-ankar-01.webp",
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-high-risk.png"
     ],
     "11.2-1102-004-наплечник-осеменатора": [
@@ -212,6 +285,7 @@
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-90-21.png"
     ],
     "11.2-9121-3-перчатка-для-ио-с-наплечником": [
+      "img/photos/admin/11.2-9121-3-перчатка-для-ио-с-наплечником/11.2-9121-3-перчатка-для-ио-с-наплечником-01.webp",
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-perchatka-io-napleshnik.png"
     ],
     "11.1-0205-001-s-0205-003-m-0205-005-l-0205-007-xl-перчатки-нитриловые-ankar": [
@@ -221,6 +295,7 @@
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-doyara-314.png"
     ],
     "11.3-316-ветеринарная-сумка": [
+      "img/photos/admin/11.3-316-ветеринарная-сумка/11.3-316-ветеринарная-сумка-01.webp",
       "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-sumka-vetvracha-316.png"
     ],
     "11.1-0205-120-s-0205-121-m-0205-122-l-0205-123-xl-перчатки-нитриловые-tian-black": [
@@ -360,13 +435,63 @@
     "10.1-0601-003-влагомер-зерна-wile-65": [
       "img/photos/admin/10.1-0601-003-влагомер-зерна-wile-65/10.1-0601-003-влагомер-зерна-wile-65-01.webp"
     ],
-    "11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами": [
-      "img/photos/admin/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами/11.3-00311-к-2-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-двумя-карманами-01.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k-2.png"
+    "10.1-0601-005-влагомер-зерна-wile-200": [
+      "img/photos/admin/10.1-0601-005-влагомер-зерна-wile-200/10.1-0601-005-влагомер-зерна-wile-200-01.webp"
     ],
-    "11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом": [
-      "img/photos/admin/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом/11.3-00311-к-фартук-с-нарукавниками-с-логотипом-tian-трейд-с-одним-карманом-01.png",
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-310-k.png"
+    "10.1-0601-006-ankar-unimeter": [
+      "img/photos/admin/10.1-0601-006-ankar-unimeter/10.1-0601-006-ankar-unimeter-01.webp"
+    ],
+    "10.1-0601-007-влагомер-зерна-wile-78-с-размолом": [
+      "img/photos/admin/10.1-0601-007-влагомер-зерна-wile-78-с-размолом/10.1-0601-007-влагомер-зерна-wile-78-с-размолом-01.webp"
+    ],
+    "10.1-0601-017-крышка-для-влагомера-wile-55-65-66": [
+      "img/photos/admin/10.1-0601-017-крышка-для-влагомера-wile-55-65-66/10.1-0601-017-крышка-для-влагомера-wile-55-65-66-01.webp"
+    ],
+    "10.2-0601-002-специальная-версия-wile-coffee-cocoa-влагомер-кофе-и-какао-wile": [
+      "img/photos/admin/10.2-0601-002-специальная-версия-wile-coffee-cocoa-влагомер-кофе-и-какао-wile/10.2-0601-002-специальная-версия-wile-coffee-cocoa-влагомер-кофе-и-какао-wile-01.webp"
+    ],
+    "10.3-0601-00x-уточняется-в-спецификации-поставщика-плотномер-почвы-wile-soil": [
+      "img/photos/admin/10.3-0601-00x-уточняется-в-спецификации-поставщика-плотномер-почвы-wile-soil/10.3-0601-00x-уточняется-в-спецификации-поставщика-плотномер-почвы-wile-soil-01.webp"
+    ],
+    "10.4-0601-002-уточняется-в-спецификации-поставщика-влагомер-сена-wile-25": [
+      "img/photos/admin/10.4-0601-002-уточняется-в-спецификации-поставщика-влагомер-сена-wile-25/10.4-0601-002-уточняется-в-спецификации-поставщика-влагомер-сена-wile-25-01.webp"
+    ],
+    "10.4-0601-003-уточняется-в-спецификации-поставщика-влагомер-сена-wile-26": [
+      "img/photos/admin/10.4-0601-003-уточняется-в-спецификации-поставщика-влагомер-сена-wile-26/10.4-0601-003-уточняется-в-спецификации-поставщика-влагомер-сена-wile-26-01.webp"
+    ],
+    "10.4-0601-00x-уточняется-в-спецификации-поставщика-влагомер-сена-wile-27": [
+      "img/photos/admin/10.4-0601-00x-уточняется-в-спецификации-поставщика-влагомер-сена-wile-27/10.4-0601-00x-уточняется-в-спецификации-поставщика-влагомер-сена-wile-27-01.webp"
+    ],
+    "10.4-0601-00x-уточняется-в-спецификации-поставщика-влагомер-сена-wile-500": [
+      "img/photos/admin/10.4-0601-00x-уточняется-в-спецификации-поставщика-влагомер-сена-wile-500/10.4-0601-00x-уточняется-в-спецификации-поставщика-влагомер-сена-wile-500-01.webp"
+    ],
+    "10.5-датчик-с-параболической-чашей-wile-253-блюдечный-тарелочный-датчик": [
+      "img/photos/admin/10.5-датчик-с-параболической-чашей-wile-253-блюдечный-тарелочный-датчик/10.5-датчик-с-параболической-чашей-wile-253-блюдечный-тарелочный-датчик-01.webp"
+    ],
+    "10.5-зондовый-датчик-wile-251": [
+      "img/photos/admin/10.5-зондовый-датчик-wile-251/10.5-зондовый-датчик-wile-251-01.webp"
+    ],
+    "10.5-температурный-датчик-wile-651": [
+      "img/photos/admin/10.5-температурный-датчик-wile-651/10.5-температурный-датчик-wile-651-01.webp"
+    ],
+    "11.1-0205-025-s-0205-026-m-0205-027-l-0205-028-xl-перчатки-нитриловые-milkmaster": [
+      "img/photos/admin/11.1-0205-025-s-0205-026-m-0205-027-l-0205-028-xl-перчатки-нитриловые-milkmaster/11.1-0205-025-s-0205-026-m-0205-027-l-0205-028-xl-перчатки-нитриловые-milkmaster-01.webp"
+    ],
+    "11.1-0205-040-s-0205-041-m-0205-042-l-0205-043-xl-перчатки-латексные": [
+      "img/photos/admin/11.1-0205-040-s-0205-041-m-0205-042-l-0205-043-xl-перчатки-латексные/11.1-0205-040-s-0205-041-m-0205-042-l-0205-043-xl-перчатки-латексные-02.webp",
+      "img/photos/admin/11.1-0205-040-s-0205-041-m-0205-042-l-0205-043-xl-перчатки-латексные/11.1-0205-040-s-0205-041-m-0205-042-l-0205-043-xl-перчатки-латексные-01.webp"
+    ],
+    "11.2-перчатки-ветеринарные-пн-90-20": [
+      "img/photos/admin/11.2-перчатки-ветеринарные-пн-90-20/11.2-перчатки-ветеринарные-пн-90-20-01.webp"
+    ],
+    "11.2-перчатки-ветеринарные-с-наплечником-пвн-120-25": [
+      "img/photos/admin/11.2-перчатки-ветеринарные-с-наплечником-пвн-120-25/11.2-перчатки-ветеринарные-с-наплечником-пвн-120-25-01.webp"
+    ],
+    "11.3-313-нарукавники": [
+      "img/photos/admin/11.3-313-нарукавники/11.3-313-нарукавники-01.webp"
+    ],
+    "11.3-оранжевый-плащ-из-винилискожи": [
+      "img/photos/admin/11.3-оранжевый-плащ-из-винилискожи/11.3-оранжевый-плащ-из-винилискожи-01.webp"
     ],
     "3.1-0202-011": [
       "img/photos/admin/3.1-0202-011/3.1-0202-011-01.webp"
@@ -379,10 +504,6 @@
     ],
     "3.1-0202-103": [
       "img/photos/admin/3.1-0202-103/3.1-0202-103-01.webp"
-    ],
-    "3.1-0303-001": [
-      "img/photos/admin/3.1-0303-001/3.1-0303-001-01.webp",
-      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-pistolet-ankar.png"
     ],
     "3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar": [
       "img/photos/admin/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar/3.2-0303-004-стаканчик-для-пенного-средства-premium-ankar-01.png"
@@ -1302,6 +1423,15 @@
     "8.2-тележка-универсальная-с-весами-для-телят": [
       "img/photos/admin/8.2-тележка-универсальная-с-весами-для-телят/8.2-тележка-универсальная-с-весами-для-телят-01.webp"
     ],
+    "9.1-генератор-холодного-тумана-storm-10-литров": [
+      "img/photos/admin/9.1-генератор-холодного-тумана-storm-10-литров/9.1-генератор-холодного-тумана-storm-10-литров-01.webp"
+    ],
+    "9.1-генератор-холодного-тумана-storm-5-литров": [
+      "img/photos/admin/9.1-генератор-холодного-тумана-storm-5-литров/9.1-генератор-холодного-тумана-storm-5-литров-01.webp"
+    ],
+    "9.1-генератор-холодного-тумана-storm-7-литров": [
+      "img/photos/admin/9.1-генератор-холодного-тумана-storm-7-литров/9.1-генератор-холодного-тумана-storm-7-литров-01.webp"
+    ],
     "9.2-дезбарьер-эко-люкс": [
       "img/photos/admin/9.2-дезбарьер-эко-люкс/9.2-дезбарьер-эко-люкс-01.webp"
     ],
@@ -1493,66 +1623,6 @@
     "microbiology": [
       "img/photos/admin/microbiology/sda.webp",
       "img/photos/admin/microbiology/skiv.webp"
-    ],
-    "9.1-мини-генератор-тумана-minifog-hyt-2-газовый-баллончик": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2.png"
-    ],
-    "11.3-фартук-специальный-пищевой-белый": [
-      "img/photos/20-spetsodezhda-i-sredstva-zashchity/20-fartuk-pishchevoy.png"
-    ],
-    "9.1-генератор-горячего-тумана-аирофог-ae35": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ae35.png"
-    ],
-    "9.1-генератор-горячего-тумана-аирофог-ar35e": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-airofog-ar35e.png"
-    ],
-    "9.1-генератор-горячего-тумана-bd-400": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-bd-400.png"
-    ],
-    "9.1-генератор-горячего-тумана-b-f-150": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-bf-150.png"
-    ],
-    "9.1-дезинфекционная-установка-ds-160-бензиновый-двигатель": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-benzin.png"
-    ],
-    "9.1-дезинфекционная-установка-ds-160-с-электр-двигателем": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-160-elektro.png"
-    ],
-    "9.1-дезинфекционная-установка-ds-50-50-литров-с-бензиновым-двигателем": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-ds-50.png"
-    ],
-    "9.1-дезинфекционная-установка-du-125-унигрин-двс": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-dvs.png"
-    ],
-    "9.1-дезинфекционная-установка-du-125-унигрин-с-электр-двигателем": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-du-125-elektro.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-good-fog": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-good-fog.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-jp-s20": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-jp-s20.png"
-    ],
-    "9.1-мини-генератор-тумана-minifog-hyt-2w-газовый-баллончик": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-minifog-hyt-2w.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-moo-gun": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-moo-gun.png"
-    ],
-    "9.1-аккумуляторный-генератор-холодного-тумана-swg2020": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-swg2020.png"
-    ],
-    "9.1-генератор-горячего-тумана-tf15-ffg-10": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-tf15-ffg-10.png"
-    ],
-    "9.1-генератор-горячего-тумана-th-180": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-180.png"
-    ],
-    "9.1-генератор-горячего-тумана-t-h-250-h400": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-th-250-h400.png"
-    ],
-    "9.1-генератор-горячего-тумана-t-h-fog-130-a": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-tn-fog-130.png"
     ]
   },
   "sectionImages": {
@@ -1674,13 +1744,13 @@
     "8.3": [
       "img/photos/17-moyushchie-i-dezinfitsiruyushchie-sredstva/17-kompomol-dz-chas-v.png"
     ],
+    "9.2": [
+      "img/photos/18-dezinfektsiya-generatory-tumana/18-dezkovriki.png"
+    ],
     "9.1": [
       "img/photos/18-dezinfektsiya-generatory-tumana/18-du-750.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-sf-720.png",
       "img/photos/18-dezinfektsiya-generatory-tumana/18-strim-a.png"
-    ],
-    "9.2": [
-      "img/photos/18-dezinfektsiya-generatory-tumana/18-dezkovriki.png"
     ],
     "9.4": [
       "img/photos/19-rabochiy-i-uborochnyy-inventar/19-lipuchka-ankar.png",
