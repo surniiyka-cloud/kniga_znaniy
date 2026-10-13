@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T05:28:22.606Z",
+  "updatedAt": "2026-10-13T05:33:03.864Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -8654,6 +8654,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "10.2-0601-002-специальная-версия-wile-coffee-cocoa-влагомер-кофе-и-какао-wile": {
+      "images": [
+        "img/photos/admin/10.2-0601-002-специальная-версия-wile-coffee-cocoa-влагомер-кофе-и-какао-wile/10.2-0601-002-специальная-версия-wile-coffee-cocoa-влагомер-кофе-и-какао-wile-01.webp"
       ]
     }
   },
