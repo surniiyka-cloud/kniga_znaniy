@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T09:56:22.709Z",
+  "updatedAt": "2026-10-13T10:02:19.089Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -11291,6 +11291,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-генератор-холодного-тумана-cyclone": {
+      "images": [
+        "img/photos/admin/9.1-генератор-холодного-тумана-cyclone/9.1-генератор-холодного-тумана-cyclone-01.webp"
       ]
     }
   },
