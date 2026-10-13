@@ -83,11 +83,40 @@ async function walk(dir){
 }
 await walk(root);
 
+function safeSlug(v){return String(v||"item").toLowerCase().replace(/[^a-zа-яё0-9]+/gi,"-").replace(/^-|-$/g,"").slice(0,72)||"item";}
+function usableArticle(v){const s=String(v||"").trim();return s&&!/^(?:без артикула|не указан|нет|—|-|n\/a)$/i.test(s);}
+function virtualVerticalProducts(sec){
+  const sid=String(sec?.id||"");
+  if(!(/^3(?:\.|$)/.test(sid)||sid==="9.1"||/^10(?:\.|$)/.test(sid)))return [];
+  const rows=sec.rawRows||sec.packedRows||[];
+  if(!rows.length)return [];
+  const out=[];
+  for(let i=0;i<rows.length;i++){
+    const row=rows[i]||[];
+    for(let col=0;col<row.length-1;col++){
+      if(!/^Наименование$/i.test(String(row[col]||"").trim()))continue;
+      const name=String(row[col+1]||"").trim();if(!name)continue;
+      let article="";
+      for(let j=i+1;j<rows.length;j++){
+        const r=rows[j]||[],label=String(r[col]||"").trim(),value=String(r[col+1]||"").trim();
+        if(/^Наименование$/i.test(label)&&value)break;
+        if(/^Артикул(?:\s+из\s+каталога)?$/i.test(label)){article=value;break}
+      }
+      const verticalCatalog=sid==="9.1"||/^10(?:\.|$)/.test(sid);
+      const identity=verticalCatalog?((usableArticle(article)?article+"-":"")+name):(article||name);
+      out.push({id:sid+"-"+safeSlug(identity),section:sid,name,article});
+    }
+  }
+  return out;
+}
 const products=[];
 const sectionTitles=[];
 for(const ch of book.chapters)for(const sec of ch.sections){
   sectionTitles.push({section:sec.id,title:sec.title});
   for(const p of sec.products||[])products.push({section:sec.id,...p});
+  for(const p of virtualVerticalProducts(sec)){
+    if(!products.some(x=>x.id===p.id))products.push(p);
+  }
 }
 function scoreImage(img,p){
   if(!validProductName(p.name))return {score:0,strong:false};
