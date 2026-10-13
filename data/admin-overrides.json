@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T12:10:22.472Z",
+  "updatedAt": "2026-10-13T12:16:31.260Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -13022,6 +13022,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-опрыскиватель-ранцевый-моторный-farmate-3wf-5": {
+      "images": [
+        "img/photos/admin/9.1-опрыскиватель-ранцевый-моторный-farmate-3wf-5/9.1-опрыскиватель-ранцевый-моторный-farmate-3wf-5-01.webp"
       ]
     }
   },
