@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T07:30:16.153Z",
+  "updatedAt": "2026-10-13T07:37:47.417Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -10562,6 +10562,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "11.3-313-нарукавники": {
+      "images": [
+        "img/photos/admin/11.3-313-нарукавники/11.3-313-нарукавники-01.webp"
       ]
     }
   },
