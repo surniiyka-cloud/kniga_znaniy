@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T05:26:06.034Z",
+  "updatedAt": "2026-10-13T05:28:18.357Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -8516,6 +8516,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "10.1-0601-006-ankar-unimeter": {
+      "images": [
+        "img/photos/admin/10.1-0601-006-ankar-unimeter/10.1-0601-006-ankar-unimeter-01.webp"
       ]
     }
   },
