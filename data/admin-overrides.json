@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T05:55:15.591Z",
+  "updatedAt": "2026-10-13T06:08:29.257Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -9694,6 +9694,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "10.5-зондовый-датчик-wile-251": {
+      "images": [
+        "img/photos/admin/10.5-зондовый-датчик-wile-251/10.5-зондовый-датчик-wile-251-01.webp"
       ]
     }
   },
