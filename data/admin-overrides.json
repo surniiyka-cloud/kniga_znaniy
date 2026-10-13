@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T12:03:44.052Z",
+  "updatedAt": "2026-10-13T12:10:15.200Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -12909,6 +12909,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-генератор-горячего-тумана-blackfog-bd-35a": {
+      "images": [
+        "img/photos/admin/9.1-генератор-горячего-тумана-blackfog-bd-35a/9.1-генератор-горячего-тумана-blackfog-bd-35a-01.webp"
       ]
     }
   },
