@@ -297,6 +297,16 @@ async function commitOverrides(data){
   const merged=normalizeOverrideStructure(threeWayApply(baseline,data,remote));
   merged.version=1;merged.updatedAt=new Date().toISOString();
 
+  // Перед каждой публикацией сохраняем предыдущую опубликованную версию overrides.
+  // Это не участвует в рендере, но даёт гарантированную точку отката, если карточки
+  // были массово перезаписаны из старой вкладки редактора или при конфликте сессий.
+  if(cur?.content){
+    try{
+      const previousText=base64Utf8(cur.content);
+      await putRepoText("data/admin-overrides.backup.json",previousText.endsWith("\n")?previousText:previousText+"\n","Admin: backup knowledge book overrides");
+    }catch{}
+  }
+
   await putRepoText("data/admin-overrides.json",JSON.stringify(merged,null,2)+"\n","Admin: update knowledge book");
   try{localStorage.removeItem(LOCAL_KEY)}catch{}
   overrideCache=deep(merged);
