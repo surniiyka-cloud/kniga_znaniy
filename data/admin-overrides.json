@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T13:54:11.263Z",
+  "updatedAt": "2026-10-13T14:01:13.060Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -13702,6 +13702,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-опрыскиватель-наплечный-farmate-fm-10a-10-литров": {
+      "images": [
+        "img/photos/admin/9.1-опрыскиватель-наплечный-farmate-fm-10a-10-литров/9.1-опрыскиватель-наплечный-farmate-fm-10a-10-литров-01.webp"
       ]
     }
   },
