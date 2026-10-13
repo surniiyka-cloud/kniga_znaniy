@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T09:37:16.093Z",
+  "updatedAt": "2026-10-13T09:53:00.737Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -11069,6 +11069,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-генератор-холодного-тумана-tornado-10-pro": {
+      "images": [
+        "img/photos/admin/9.1-генератор-холодного-тумана-tornado-10-pro/9.1-генератор-холодного-тумана-tornado-10-pro-01.webp"
       ]
     }
   },
