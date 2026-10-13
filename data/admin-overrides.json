@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T06:11:44.273Z",
+  "updatedAt": "2026-10-13T06:14:40.291Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -9942,6 +9942,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "10.5-температурный-датчик-wile-651": {
+      "images": [
+        "img/photos/admin/10.5-температурный-датчик-wile-651/10.5-температурный-датчик-wile-651-01.webp"
       ]
     }
   },
