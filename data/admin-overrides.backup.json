@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T07:26:51.331Z",
+  "updatedAt": "2026-10-14T07:29:55.072Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -16548,6 +16548,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-опрыскиватель-пневматический-gartena-tm-08a": {
+      "images": [
+        "img/photos/admin/9.1-опрыскиватель-пневматический-gartena-tm-08a/9.1-опрыскиватель-пневматический-gartena-tm-08a-01.webp"
       ]
     }
   },
