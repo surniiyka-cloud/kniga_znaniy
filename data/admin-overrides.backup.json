@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:14:13.491Z",
+  "updatedAt": "2026-10-14T09:14:20.820Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19075,6 +19075,72 @@
     "2.11-10006318-agrastrip-watex-общий-фумонизин": {
       "images": [
         "img/photos/admin/2.11-10006318-agrastrip-watex-общий-фумонизин/2.11-10006318-agrastrip-watex-общий-фумонизин-01.webp"
+      ],
+      "name": "AgraStrip Watex Общий фумонизин",
+      "article": "10006318",
+      "features": "Одновременная подготовка до 4 образцов; комплект на 40 анализов",
+      "group": "AgraStrip Pro WATEX",
+      "sourceRow": 4,
+      "candidateId": "10006318-agrastrip-watex-общий-фумонизин",
+      "detailFields": [
+        [
+          "Артикул",
+          "10006318"
+        ],
+        [
+          "Определяемый микотоксин",
+          "Общий фумонизин"
+        ],
+        [
+          "Диапазон, ppb (мкг/кг)",
+          "0–44"
+        ],
+        [
+          "Количество анализов в комплекте",
+          "Комплект на 40 анализов"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Одновременная подготовка до 4 образцов"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
