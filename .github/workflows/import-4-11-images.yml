@@ -150,3 +150,5 @@ jobs:
           git add -A data/admin-overrides.json data/import-4.11-images-report.json img/photos/admin
           git commit -m "Correct section 4.11 Rubikon product photo import"
           git push
+
+# rerun after JSON repair
