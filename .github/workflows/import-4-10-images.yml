@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 8
+name: Import 4.10 product images batch 9
 
 on:
   push:
@@ -27,8 +27,13 @@ jobs:
             case "$mime" in image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;; *) echo "SKIP MIME $mime"; rm -f "$tmp" ;; esac
           }
 
-          download_optional "https://static.insales-cdn.com/r/qZ4-uvx-XvA/rs%3Afit%3A1000%3A0%3A1/q%3A100/plain/images/products/1/2832/594201360/%D0%92%D0%B8%D1%82%D0%B0%D0%BC_%D0%B4%D0%BB%D1%8F_%D0%B8%D0%BD%D1%8A%D0%B5%D0%BA%D1%86%D0%B8%D0%B9_100_%D0%BC%D0%BB.jpg%40jpg" "img/photos/admin/4.10-витам/4.10-витам-01.jpg"
-          download_optional "https://pettown.ru/upload/iblock/536/0y1hyeagxi4b7aqzyaohps503snz4khb.jpg" "img/photos/admin/4.10-кабуфол-нита/4.10-кабуфол-нита-01.jpg"
+          download_optional "https://zoo-vet.com.ua/content/images/13/1200x1200l80br10/maz-ikhtiolovaya-10-50-g-tu-78-64884057065176.jpg" "img/photos/admin/4.10-мазь-ихтиоловая-10/4.10-мазь-ихтиоловая-10-01.jpg"
+          download_optional "https://images.prom.ua/2914649273_w1280_h640_2914649273.jpg" "img/photos/admin/4.10-прогестерон-2-5/4.10-прогестерон-2-5-01.jpg"
+          download_optional "https://cdn.eapteka.ru/upload/offer_photo/319/476/1_4b6f23b66b8c33a06a41c66402c2e146.png?_cvc=1775045135&t=1698872765" "img/photos/admin/4.10-натрия-хлорид-0-9-раствор/4.10-натрия-хлорид-0-9-раствор-01.png"
+          download_optional "https://zoofarm67.ru/files/gallery/935/big/kof-100_1723989408.png" "img/photos/admin/4.10-кофеина-бензоат-натрия-20/4.10-кофеина-бензоат-натрия-20-01.png"
+          download_optional "https://www.zaisy.ru/upload/iblock/46e/mjb2d65zqdx1afh4hs4wa78d2hdrotvg.jpeg" "img/photos/admin/4.10-борглюконат-кальция-20/4.10-борглюконат-кальция-20-01.jpeg"
+          download_optional "https://planimal.ru/wa-data/public/shop/products/54/95/49554/images/49864/49864.970.jpg" "img/photos/admin/4.10-глюкоза-40-раствор-для-инъекций/4.10-глюкоза-40-раствор-для-инъекций-01.jpg"
+          download_optional "https://vetpreparaty.com/content/images/36/536x536l50nn0/novokayinu-rozchin-05-200-ml-98178252991702.jpg" "img/photos/admin/4.10-новокаин-0-5/4.10-новокаин-0-5-01.jpg"
 
       - name: Attach successful images
         shell: bash
@@ -40,8 +45,13 @@ jobs:
           data=json.loads(p.read_text(encoding="utf-8"))
           products=data.setdefault("products",{})
           mapping={
-            "4.10-витам":"img/photos/admin/4.10-витам/4.10-витам-01.jpg",
-            "4.10-кабуфол-нита":"img/photos/admin/4.10-кабуфол-нита/4.10-кабуфол-нита-01.jpg"
+            "4.10-мазь-ихтиоловая-10":"img/photos/admin/4.10-мазь-ихтиоловая-10/4.10-мазь-ихтиоловая-10-01.jpg",
+            "4.10-прогестерон-2-5":"img/photos/admin/4.10-прогестерон-2-5/4.10-прогестерон-2-5-01.jpg",
+            "4.10-натрия-хлорид-0-9-раствор":"img/photos/admin/4.10-натрия-хлорид-0-9-раствор/4.10-натрия-хлорид-0-9-раствор-01.png",
+            "4.10-кофеина-бензоат-натрия-20":"img/photos/admin/4.10-кофеина-бензоат-натрия-20/4.10-кофеина-бензоат-натрия-20-01.png",
+            "4.10-борглюконат-кальция-20":"img/photos/admin/4.10-борглюконат-кальция-20/4.10-борглюконат-кальция-20-01.jpeg",
+            "4.10-глюкоза-40-раствор-для-инъекций":"img/photos/admin/4.10-глюкоза-40-раствор-для-инъекций/4.10-глюкоза-40-раствор-для-инъекций-01.jpg",
+            "4.10-новокаин-0-5":"img/photos/admin/4.10-новокаин-0-5/4.10-новокаин-0-5-01.jpg"
           }
           for pid,img in mapping.items():
             if Path(img).is_file():
@@ -57,5 +67,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/admin-overrides.json img/photos/admin/4.10-* 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Add verified product photos to section 4.10 batch 8"
+          git commit -m "Add verified product photos to section 4.10 batch 9"
           git push
