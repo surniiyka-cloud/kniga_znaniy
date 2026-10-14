@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:19:17.026Z",
+  "updatedAt": "2026-10-14T12:22:52.786Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21549,6 +21549,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-9.1-airfog-ue2-pro": {
+      "images": [
+        "img/photos/admin/manual-9.1-airfog-ue2-pro/manual-9.1-airfog-ue2-pro-01.webp"
+      ]
     }
   },
   "sections": {
@@ -22769,7 +22774,9 @@
             ]
           ],
           "complectation": [],
-          "images": [],
+          "images": [
+            "img/photos/admin/manual-9.1-airfog-ue2-pro/manual-9.1-airfog-ue2-pro-01.webp"
+          ],
           "manufacturer": "Airofog",
           "country": "Россия",
           "sourceInfo": "АкваТехно / Dealmed, UE-2-PRO"
