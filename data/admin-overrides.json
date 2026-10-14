@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:05:44.993Z",
+  "updatedAt": "2026-10-14T11:05:55.145Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19895,6 +19895,61 @@
     "manual-2.11-ringbio-zearalenone": {
       "images": [
         "img/photos/admin/manual-2.11-ringbio-zearalenone/manual-2.11-ringbio-zearalenone-01.webp"
+      ],
+      "name": "Ringbio Technology — Зеараленон",
+      "article": "600001-96T",
+      "type": "Экспресс-тест на микотоксины",
+      "purpose": "Экспресс-тест для количественного определения микотоксинов в зерне, орехах, злаках, кормах и другом сельскохозяйственном сырье.",
+      "detailFields": [
+        [
+          "Определяемый микотоксин",
+          "Зеараленон"
+        ],
+        [
+          "Предел обнаружения, ppb (мкг/кг)",
+          "60"
+        ]
+      ],
+      "group": "RINGBIO TECHNOLOGY",
+      "advantages": [
+        [
+          "Особенность",
+          "Быстрая оценка результата без считывающего устройства"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -20213,6 +20268,40 @@
           ],
           "images": [
             "img/photos/admin/manual-2.11-ringbio-zearalenone/manual-2.11-ringbio-zearalenone-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-ringbio-aflatoxin-b1": {
