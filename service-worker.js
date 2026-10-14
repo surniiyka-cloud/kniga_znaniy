@@ -1,4 +1,4 @@
-const CACHE="tian-kb-v2-84";
+const CACHE="tian-kb-v2-85";
 const CORE=["./","./index.html","./css/app.css","./css/admin.css","./js/app.js","./js/admin.js","./js/router.js","./js/search.js","./js/storage.js","./assets/brand/favicon.svg"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
@@ -8,17 +8,24 @@ self.addEventListener("fetch",event=>{
   if(url.origin!==location.origin)return;
   const isImage=url.pathname.includes("/img/photos/")||event.request.destination==="image";
   if(isImage){
-    // Never cache a failed image response. Previously a temporary 404 during
-    // GitHub Pages deployment was stored and replayed forever.
+    // Фото всегда проверяем в сети первым. Раньше service worker возвращал
+    // успешную картинку из кэша бесконечно, поэтому замена файла в GitHub
+    // могла не появляться ни в редакторе, ни в самой Книге знаний.
     event.respondWith(caches.open(CACHE).then(async cache=>{
       const key=new Request(url.origin+url.pathname);
-      const cached=await cache.match(key);
-      if(cached&&cached.ok&&/image\//i.test(cached.headers.get("content-type")||""))return cached;
-      const response=await fetch(event.request,{cache:"no-store"});
-      if(response.ok&&/image\//i.test(response.headers.get("content-type")||"")){
-        event.waitUntil(cache.put(key,response.clone()).catch(()=>{}));
+      try{
+        const response=await fetch(event.request,{cache:"no-store"});
+        if(response.ok&&/image\//i.test(response.headers.get("content-type")||"")){
+          event.waitUntil(cache.put(key,response.clone()).catch(()=>{}));
+          return response;
+        }
+        const cached=await cache.match(key);
+        return cached&&cached.ok?cached:response;
+      }catch(err){
+        const cached=await cache.match(key);
+        if(cached&&cached.ok)return cached;
+        throw err;
       }
-      return response;
     }).catch(()=>fetch(event.request,{cache:"no-store"})));
     return;
   }
