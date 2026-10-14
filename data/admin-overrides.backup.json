@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T10:21:06.240Z",
+  "updatedAt": "2026-10-14T10:27:00.000Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4237,7 +4237,7 @@
           "Высота ворса 50 мм"
         ]
       ],
-      "color": "Красный; Зелёный; Синий; Жёлтый",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4271,6 +4271,10 @@
         "assortment",
         "consumables",
         "testKits"
+      ],
+      "sourceSectionId": "8.1",
+      "images": [
+        "img/photos/admin/8.1-0404-050-щетка-с-круглой-ручкой-ankar/8.1-0404-050-щетка-с-круглой-ручкой-ankar-01.webp"
       ]
     },
     "8.1-0404-051-щетка-для-мытья-ankar": {
@@ -4310,7 +4314,7 @@
           "Высота ворса 35 мм"
         ]
       ],
-      "color": "",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4344,7 +4348,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-052-щетка-утюжок-ankar": {
       "images": [
@@ -4385,7 +4390,7 @@
           "Мягкая щетина"
         ]
       ],
-      "color": "",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4418,7 +4423,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-054-щетка-с-длинной-рукояткой-ankar": {
       "images": [
@@ -4457,7 +4463,7 @@
           "Высота ворса 35 мм"
         ]
       ],
-      "color": "",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4491,7 +4497,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-055-щетка-для-молочных-танков-ankar": {
       "images": [
@@ -4536,7 +4543,7 @@
           "Рассчитана на мойку внутренних поверхностей"
         ]
       ],
-      "color": "",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4569,7 +4576,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-056-ручка-для-щетки-молочных-танков-ankar-130-см": {
       "images": [
@@ -4604,7 +4612,7 @@
           "Диаметр захвата 32 мм"
         ]
       ],
-      "color": "Красный; Зелёный; Синий; Жёлтый; Фиолетовый",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4638,7 +4646,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-057-ручка-для-щетки-молочных-танков-ankar-150-см": {
       "images": [
@@ -4673,7 +4682,7 @@
           "Диаметр захвата 32 мм"
         ]
       ],
-      "color": "Красный; Зелёный; Синий; Жёлтый; Фиолетовый",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4707,7 +4716,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-059-щетка-угловая-для-пола-ankar": {
       "images": [
@@ -4752,7 +4762,7 @@
           "Изогнутая колодка"
         ]
       ],
-      "color": "",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4785,7 +4795,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-058-щетка-для-пола-ankar": {
       "images": [
@@ -4826,7 +4837,7 @@
           "В описании указана мягкая расщеплённая щетина"
         ]
       ],
-      "color": "",
+      "color": "Зелёный",
       "__frozen": true,
       "pairHeaders": {
         "detailFields": [
@@ -4859,7 +4870,8 @@
         "assortment",
         "consumables",
         "testKits"
-      ]
+      ],
+      "sourceSectionId": "8.1"
     },
     "8.1-0404-060-ручка-для-щетки-для-пола-ankar-зеленая": {
       "images": [
@@ -19815,6 +19827,10 @@
         "img/photos/admin/4.4-1104-072-5-мл-1104-069-10-мл-1104-070-20-мл-1104-071-30-мл-1104-073-50-мл-шприц-пласти/4.4-1104-072-5-мл-1104-069-10-мл-1104-070-20-мл-1104-071-30-мл-1104-073-50-мл-шприц-пласти-01.webp"
       ],
       "sourceSectionId": "4.4"
+    },
+    "8.1-0404-053-щетка-с-короткой-рукояткой-ankar": {
+      "color": "Зелёный",
+      "sourceSectionId": "8.1"
     }
   },
   "sections": {
