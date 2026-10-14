@@ -1661,7 +1661,7 @@ function activeNav(){
   if(cid)document.querySelector('.nav-chapter[data-chapter="'+CSS.escape(cid)+'"]')?.classList.add("open");
   if(sid)document.querySelector('.nav-link[data-nav-section="'+CSS.escape(sid)+'"]')?.classList.add("active");
 }
-function imageSrc(v){const s=String(v||"");return /^https?:\/\//i.test(s)||s.startsWith("data:")||s.startsWith("./")?s:"./"+s;}
+function imageSrc(v){\n  const s=String(v||"");\n  if(/^https?:\\/\\//i.test(s)||s.startsWith("data:"))return s;\n  const base=s.startsWith("./")?s:"./"+s;\n  if(base.includes("/img/photos/admin/")){\n    try{\n      const u=new URL(base,location.href);\n      const rev=String(state.overrides?.updatedAt||state.book?.generatedAt||"").replace(/[^0-9]/g,"").slice(-14);\n      if(rev)u.searchParams.set("kbv",rev);\n      return u.toString();\n    }catch{}\n  }\n  return base;\n}
 
 function enablePhotoRetry(){
   // A newly published photo may briefly return 404 while GitHub Pages deploys.
