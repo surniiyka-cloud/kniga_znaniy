@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:04:56.223Z",
+  "updatedAt": "2026-10-14T12:19:01.722Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21434,6 +21434,11 @@
       "sourceInfo": "Simclean / профильный каталог Unigreen 125",
       "__frozen": true,
       "sourceRow": 0
+    },
+    "manual-9.1-airfog-u60-pro-2": {
+      "images": [
+        "img/photos/admin/manual-9.1-airfog-u60-pro-2/manual-9.1-airfog-u60-pro-2-01.webp"
+      ]
     }
   },
   "sections": {
@@ -22536,7 +22541,9 @@
             ]
           ],
           "complectation": [],
-          "images": [],
+          "images": [
+            "img/photos/admin/manual-9.1-airfog-u60-pro-2/manual-9.1-airfog-u60-pro-2-01.webp"
+          ],
           "manufacturer": "БД ГРУПП",
           "country": "Россия",
           "sourceInfo": "Dealmed, U60-PRO с двумя форсунками"
