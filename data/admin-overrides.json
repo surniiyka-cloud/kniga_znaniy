@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:26:54.929Z",
+  "updatedAt": "2026-10-14T12:27:31.263Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21668,6 +21668,92 @@
     "manual-9.1-kf-5c-1": {
       "images": [
         "img/photos/admin/manual-9.1-kf-5c-1/manual-9.1-kf-5c-1-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-5C-1",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для обработки растений рабочими растворами без ручной подкачки.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Аккумуляторный садовый опрыскиватель"
+        ],
+        [
+          "Объём",
+          "5 л"
+        ],
+        [
+          "Материал",
+          "PP, ABS, POM, HDPE"
+        ],
+        [
+          "Аккумулятор",
+          "2,5 А·ч, 3,7 В, литиевый, встроенный"
+        ],
+        [
+          "Расход",
+          "0,6–0,8 л/мин"
+        ],
+        [
+          "Максимальное давление",
+          "0,25 МПа"
+        ],
+        [
+          "Время работы",
+          "До 120 минут"
+        ],
+        [
+          "Время зарядки",
+          "180 минут"
+        ]
+      ],
+      "advantages": [
+        [
+          "Без ручной подкачки",
+          "Автоматический насос поддерживает подачу раствора."
+        ],
+        [
+          "Регулируемая форсунка",
+          "Режимы распыления и струи."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-5C-1",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -22965,7 +23051,7 @@
             ],
             [
               "Время работы",
-              "до 120 минут"
+              "До 120 минут"
             ],
             [
               "Время зарядки",
@@ -22988,7 +23074,40 @@
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-5C-1"
+          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-5C-1",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-7c-2": {
           "id": "manual-9.1-kf-7c-2",
