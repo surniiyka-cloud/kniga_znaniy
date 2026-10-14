@@ -1244,13 +1244,12 @@ function mergeOverrideLayer(base,extra){
   }
   return out;
 }
-function localEditorOverrides(published=null){
-  try{
-    const local=JSON.parse(localStorage.getItem("kb_admin_overrides_local")||"null")||null;
-    if(!local)return null;
-    const lt=Date.parse(local.updatedAt||"")||0,pt=Date.parse(published?.updatedAt||"")||0;
-    return lt>pt?local:null;
-  }catch{return null}
+function localEditorOverrides(){
+  // Опубликованный admin-overrides.json — единственный источник истины при загрузке.
+  // Старый локальный черновик раньше мог быть новее по timestamp и полностью
+  // перекрывать уже опубликованные правки по товарам, разделам и фотографиям.
+  try{localStorage.removeItem("kb_admin_overrides_local")}catch{}
+  return null;
 }
 
 const PRODUCT_COLOR_SPECS=[
