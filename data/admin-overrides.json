@@ -22770,6 +22770,42 @@
         "consumables",
         "testKits"
       ]
+    },
+    "4.10-амоксиджект-la": {
+      "images": [
+        "img/photos/admin/4.10-амоксиджект-la/4.10-амоксиджект-la-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.10-амоксим-80": {
+      "images": [
+        "img/photos/admin/4.10-амоксим-80/4.10-амоксим-80-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.10-утеробел": {
+      "images": [
+        "img/photos/admin/4.10-утеробел/4.10-утеробел-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.10-хелсивит": {
+      "images": [
+        "img/photos/admin/4.10-хелсивит/4.10-хелсивит-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.10-цефтивитам-звс": {
+      "images": [
+        "img/photos/admin/4.10-цефтивитам-звс/4.10-цефтивитам-звс-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.10-бовитаб": {
+      "images": [
+        "img/photos/admin/4.10-бовитаб/4.10-бовитаб-01.png"
+      ],
+      "__frozen": true
     }
   },
   "sections": {
