@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:26:19.577Z",
+  "updatedAt": "2026-10-14T11:26:37.181Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20360,6 +20360,56 @@
     "manual-2.11-agraquant-zearalenone-plus": {
       "images": [
         "img/photos/admin/manual-2.11-agraquant-zearalenone-plus/manual-2.11-agraquant-zearalenone-plus-01.webp"
+      ],
+      "name": "AgraQuant Зеараленон Плюс",
+      "article": "10002122/2123",
+      "type": "Экспресс ИФА тест-система",
+      "purpose": "Количественное определение микотоксинов методом ИФА (ELISA).",
+      "detailFields": [
+        [
+          "Количество",
+          "48/96 лунок"
+        ],
+        [
+          "Количественный диапазон измерения, ppb (мкг/кг)",
+          "25–1000"
+        ]
+      ],
+      "group": "Экспресс ИФА тест-системы",
+      "advantages": [],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -21162,6 +21212,40 @@
           "advantages": [],
           "images": [
             "img/photos/admin/manual-2.11-agraquant-zearalenone-plus/manual-2.11-agraquant-zearalenone-plus-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-testsip-afla": {
