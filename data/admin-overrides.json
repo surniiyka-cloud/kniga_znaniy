@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T07:53:19.940Z",
+  "updatedAt": "2026-10-14T07:53:27.035Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -17220,6 +17220,90 @@
     "9.1-опрыскиватель-аккумуляторный-gartena-18-литров-мод-od-18wd": {
       "images": [
         "img/photos/admin/9.1-опрыскиватель-аккумуляторный-gartena-18-литров-мод-od-18wd/9.1-опрыскиватель-аккумуляторный-gartena-18-литров-мод-od-18wd-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный Gartena 18 литров мод. OD-18WD",
+      "sourceRow": 0,
+      "article": "Без артикула",
+      "type": "Аккумуляторный ранцевый опрыскиватель",
+      "purpose": "Обработка сада и дома",
+      "manufacturer": "",
+      "country": "",
+      "detailFields": [
+        [
+          "Артикул",
+          "Без артикула"
+        ],
+        [
+          "Тип",
+          "Аккумуляторный ранцевый опрыскиватель"
+        ],
+        [
+          "Назначение",
+          "Обработка сада и дома"
+        ],
+        [
+          "Артикул из каталога",
+          "Без артикула"
+        ],
+        [
+          "Объем бака",
+          "18 л"
+        ],
+        [
+          "Аккумуляторное питание",
+          "Не требует ручной подкачки"
+        ],
+        [
+          "Большой объем",
+          "18 литров"
+        ],
+        [
+          "Удобство",
+          "Наплечные ремни"
+        ],
+        [
+          "Надежность",
+          "Прочная конструкция"
+        ],
+        [
+          "Эффективность",
+          "Равномерное распыление"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
