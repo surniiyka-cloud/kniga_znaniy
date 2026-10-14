@@ -1038,8 +1038,9 @@ function keepMycoDefault(name){
   return n.includes("agrastrip pro watex")||n.startsWith("ringbio technology")||n==="ифа"||n.startsWith("ифа ")||n.includes("agrastrip gmo trait check");
 }
 function defaultHiddenProducts(sectionId,items){
-  if(sectionId!=="2.11")return [];
-  return (items||[]).filter(x=>!keepMycoDefault(x?.product?.name)).map(x=>x.product.id);
+  // Раздел 2.11 больше не режем до старого набора из четырёх групп:
+  // показываем все карточки, которые есть в источнике и в ручном слое.
+  return [];
 }
 function defaultProductOrder(sectionId,items){
   const base=(items||[]).map(x=>x.product.id);if(sectionId!=="2.11")return base;
