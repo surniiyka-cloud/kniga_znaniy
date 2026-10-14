@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:21:12.587Z",
+  "updatedAt": "2026-10-14T09:21:29.170Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19488,6 +19488,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "2.11-10001318-agrastrip-cry1ab-seed-and-leaf": {
+      "images": [
+        "img/photos/admin/2.11-10001318-agrastrip-cry1ab-seed-and-leaf/2.11-10001318-agrastrip-cry1ab-seed-and-leaf-01.webp"
       ]
     }
   },
