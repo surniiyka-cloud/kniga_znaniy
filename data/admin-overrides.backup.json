@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T08:43:24.343Z",
+  "updatedAt": "2026-10-14T08:46:38.178Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -18537,6 +18537,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-дустер-аккумуляторный-gartena-twister-8l": {
+      "images": [
+        "img/photos/admin/9.1-дустер-аккумуляторный-gartena-twister-8l/9.1-дустер-аккумуляторный-gartena-twister-8l-01.webp"
       ]
     }
   },
