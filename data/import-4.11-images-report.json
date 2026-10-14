@@ -1,15 +1,12 @@
 {
   "targets": 92,
   "candidate_pages": 118,
-  "matched": 39,
+  "matched": 2,
   "items": [
     {
-      "id": "4.11-ацидокс",
       "name": "Ацидокс",
       "page": "https://vetsnab.info/vetpreparaty/aczidoks/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-ацидокс/4.11-ацидокс-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
       "id": "4.11-азитрикон",
@@ -20,252 +17,154 @@
       "status": "matched"
     },
     {
-      "id": "4.11-биохелат-гель",
-      "name": "Биохелат Гель",
+      "name": "Биохелат-гель",
       "page": "https://vetsnab.info/vetpreparaty/biohelat-gel/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-биохелат-гель/4.11-биохелат-гель-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-биохелат-концентрат",
-      "name": "Биохелат Концентрат",
+      "name": "Биохелат-концентрат",
       "page": "https://vetsnab.info/vetpreparaty/biohelat-konczentrat-2/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-биохелат-концентрат/4.11-биохелат-концентрат-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-биоквинол",
       "name": "Биоквинол",
       "page": "https://vetsnab.info/vetpreparaty/biokvinol/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-биоквинол/4.11-биоквинол-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-цефалек-dc",
       "name": "Цефалек DC",
       "page": "https://vetsnab.info/vetpreparaty/czefalek-dc/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-цефалек-dc/4.11-цефалек-dc-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-цефапирин-рн",
-      "name": "Цефапирин-РН",
+      "name": "Цефапирин-Рн",
       "page": "https://vetsnab.info/vetpreparaty/czefapirin-rn/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-цефапирин-рн/4.11-цефапирин-рн-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-дац",
       "name": "ДАЦ",
       "page": "https://vetsnab.info/vetpreparaty/dacz/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-дац/4.11-дац-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-дистреп-400-la",
       "name": "Дистреп 400 LA",
       "page": "https://vetsnab.info/vetpreparaty/distrep-400-la/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-дистреп-400-la/4.11-дистреп-400-la-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-дорамек",
       "name": "Дорамек",
       "page": "https://vetsnab.info/vetpreparaty/doramek-2/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-дорамек/4.11-дорамек-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-дуоциллин-la",
       "name": "Дуоциллин LA",
       "page": "https://vetsnab.info/vetpreparaty/duoczillin-la/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-дуоциллин-la/4.11-дуоциллин-la-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-энрамицин-8",
       "name": "Энрамицин 8%",
       "page": "https://vetsnab.info/vetpreparaty/enramiczin-8/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-энрамицин-8/4.11-энрамицин-8-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-эприкон-20",
       "name": "Эприкон 20",
       "page": "https://vetsnab.info/vetpreparaty/eprikon-20/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-эприкон-20/4.11-эприкон-20-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-флавовит",
       "name": "Флавовит",
       "page": "https://vetsnab.info/vetpreparaty/flavovit/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-флавовит/4.11-флавовит-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-гель-повиаргола-1",
-      "name": "Гель Повиаргола 1%",
+      "name": "Гель повиаргола 1%",
       "page": "https://vetsnab.info/vetpreparaty/gel-poviargola-1/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-гель-повиаргола-1/4.11-гель-повиаргола-1-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-ксиловит",
       "name": "Ксиловит",
       "page": "https://vetsnab.info/vetpreparaty/ksilovit/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-ксиловит/4.11-ксиловит-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-квиностим",
       "name": "Квиностим",
       "page": "https://vetsnab.info/vetpreparaty/kvinostim/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-квиностим/4.11-квиностим-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-марбофлокс-2",
-      "name": "Марбофлокс 2%",
       "page": "https://vetsnab.info/vetpreparaty/marbofloks-2/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/09/marbofloks-tmb.jpg",
-      "path": "img/photos/admin/4.11-марбофлокс-2/4.11-марбофлокс-2-01.jpg",
-      "status": "matched"
+      "status": "error",
+      "error": "No connection adapters were found for \"data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E\""
     },
     {
-      "id": "4.11-мастидез-концентрат",
       "name": "Мастидез-концентрат",
       "page": "https://vetsnab.info/vetpreparaty/mastidez-konczentrat/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-мастидез-концентрат/4.11-мастидез-концентрат-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-мастипен",
       "name": "Мастипен",
       "page": "https://vetsnab.info/vetpreparaty/mastipen-2/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-мастипен/4.11-мастипен-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-мазь-камфорно-ихтиоловая",
-      "name": "Мазь Камфорно-Ихтиоловая",
+      "name": "Мазь камфорно-ихтиоловая",
       "page": "https://vetsnab.info/vetpreparaty/maz-kamforno-ihtiolovaya/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-мазь-камфорно-ихтиоловая/4.11-мазь-камфорно-ихтиоловая-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-мексикам",
       "name": "Мексикам",
       "page": "https://vetsnab.info/vetpreparaty/meksikam/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-мексикам/4.11-мексикам-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-пирокарб",
       "name": "Пирокарб",
       "page": "https://vetsnab.info/vetpreparaty/pirokarb/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-пирокарб/4.11-пирокарб-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рамоклокс-dc",
       "name": "Рамоклокс DC",
       "page": "https://vetsnab.info/vetpreparaty/ramokloks-dc/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рамоклокс-dc/4.11-рамоклокс-dc-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рамоксил-la",
       "name": "Рамоксил LA",
       "page": "https://vetsnab.info/vetpreparaty/ramoksil-la/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рамоксил-la/4.11-рамоксил-la-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рецеф-100",
       "name": "Рецеф 100",
       "page": "https://vetsnab.info/vetpreparaty/reczef-100/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рецеф-100/4.11-рецеф-100-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рецеф-50",
       "name": "Рецеф 50",
       "page": "https://vetsnab.info/vetpreparaty/reczef-50/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рецеф-50/4.11-рецеф-50-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рецеф-форте-100",
       "name": "Рецеф-Форте 100",
       "page": "https://vetsnab.info/vetpreparaty/reczef-forte-100/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рецеф-форте-100/4.11-рецеф-форте-100-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рецеф-форте-200",
       "name": "Рецеф-Форте 200",
       "page": "https://vetsnab.info/vetpreparaty/reczef-forte-200/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рецеф-форте-200/4.11-рецеф-форте-200-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рэнрокол",
       "name": "Рэнрокол",
       "page": "https://vetsnab.info/vetpreparaty/renrokol/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рэнрокол/4.11-рэнрокол-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рэнрокол-2",
-      "name": "Рэнрокол",
-      "page": "https://vetsnab.info/vetpreparaty/renrokol/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рэнрокол-2/4.11-рэнрокол-2-01.jpg",
-      "status": "matched"
-    },
-    {
-      "id": "4.11-рэнросепт",
       "name": "Рэнросепт",
       "page": "https://vetsnab.info/vetpreparaty/renrosept/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рэнросепт/4.11-рэнросепт-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-рихометрин-п",
       "name": "Рихометрин П",
       "page": "https://vetsnab.info/vetpreparaty/rihometrin-p/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-рихометрин-п/4.11-рихометрин-п-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
       "id": "4.11-риверкон",
@@ -276,44 +175,29 @@
       "status": "matched"
     },
     {
-      "id": "4.11-роксилонг-300",
       "name": "Роксилонг 300",
       "page": "https://vetsnab.info/vetpreparaty/roksilong-300/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-роксилонг-300/4.11-роксилонг-300-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-селекар",
       "name": "Селекар",
       "page": "https://vetsnab.info/vetpreparaty/selekar/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-селекар/4.11-селекар-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-стимулонг",
       "name": "Стимулонг",
       "page": "https://vetsnab.info/vetpreparaty/stimulong/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-стимулонг/4.11-стимулонг-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-тилмикон",
       "name": "Тилмикон",
       "page": "https://vetsnab.info/vetpreparaty/tilmikon/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-тилмикон/4.11-тилмикон-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     },
     {
-      "id": "4.11-утеросепт-био",
       "name": "Утеросепт Био",
       "page": "https://vetsnab.info/vetpreparaty/uterosept-bio/",
-      "image": "https://vetsnab.info/wp-content/uploads/2021/10/vatsnab-soc-logo.jpg",
-      "path": "img/photos/admin/4.11-утеросепт-био/4.11-утеросепт-био-01.jpg",
-      "status": "matched"
+      "status": "no-exact-product-image"
     }
   ]
-}\n
+}
