@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:20:07.976Z",
+  "updatedAt": "2026-10-14T09:20:15.915Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19292,6 +19292,68 @@
     "2.11-10001312-agrastrip-rur-bulk-grain": {
       "images": [
         "img/photos/admin/2.11-10001312-agrastrip-rur-bulk-grain/2.11-10001312-agrastrip-rur-bulk-grain-01.webp"
+      ],
+      "name": "AgraStrip RUR Bulk Grain",
+      "article": "10001312",
+      "features": "Полевое / внелабораторное тестирование",
+      "group": "AgraStrip GMO Trait Check",
+      "sourceRow": 39,
+      "candidateId": "10001312-agrastrip-rur-bulk-grain",
+      "detailFields": [
+        [
+          "Артикул",
+          "10001312"
+        ],
+        [
+          "Исследуемые культуры / материал",
+          "Соя, сахарная свёкла"
+        ],
+        [
+          "Определяемый признак",
+          "CP4 EPSPS"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Полевое / внелабораторное тестирование"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
