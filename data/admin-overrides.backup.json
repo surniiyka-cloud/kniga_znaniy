@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T07:09:17.616Z",
+  "updatedAt": "2026-10-14T07:13:19.428Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -16354,6 +16354,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-телескопическая-удочка-volpitech-125-250-см": {
+      "images": [
+        "img/photos/admin/9.1-телескопическая-удочка-volpitech-125-250-см/9.1-телескопическая-удочка-volpitech-125-250-см-01.webp"
       ]
     }
   },
