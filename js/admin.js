@@ -992,7 +992,7 @@ async function persistDocumentsOnly(body){
 }
 function photoEditorHtml(ctx){
   const images=ctx.images||[];
-  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-head-actions kb-photo-add-after"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn ghost" data-photo-refresh>↻ Обновить превью</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Удаление редакторского фото удаляет и сам файл из репозитория; исходные каталожные фото отвязываются от карточки, но физически сохраняются как резерв.</p></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-head-actions kb-photo-add-after"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn ghost" data-photo-refresh>↻ Обновить превью</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
 }
 function setPhotoSaveState(body,state,message=""){
   const section=body?.querySelector("[data-photo-section]"),box=body?.querySelector("[data-photo-save-state]");
@@ -1204,6 +1204,26 @@ async function uploadPhoto(file,path){
   if(!check?.sha)throw new Error("GitHub не подтвердил загрузку фото. Привязка к карточке не выполнена.");
   if(Number(check.size||0)!==Number(file.size||0))throw new Error("Размер фото в GitHub не совпал с загруженным. Повторите загрузку.");
   return path;
+}
+
+function isAdminPhotoPath(path,productId=""){
+  const p=String(path||"").replace(/^\.\//,""),id=safe(productId||editorCtx?.id||"");
+  if(!p.startsWith("img/photos/admin/"))return false;
+  return !id||p.startsWith("img/photos/admin/"+id+"/");
+}
+async function deleteManagedPhotoFile(path,productId=""){
+  const p=String(path||"").replace(/^\.\//,"");
+  if(!isAdminPhotoPath(p,productId))return false;
+  await deleteRepoFile(p,"Admin: delete removed product photo");
+  return true;
+}
+async function deleteRemovedManagedPhotos(paths,productId=""){
+  const list=[...new Set((paths||[]).filter(p=>isAdminPhotoPath(p,productId)))];
+  for(const path of list){
+    try{await deleteManagedPhotoFile(path,productId)}
+    catch(err){console.warn("Не удалось удалить старый файл фото из репозитория:",path,err)}
+  }
+  return list.length;
 }
 function editorSectionList(){
   return (window.KB_EDITOR_API?.catalog?.()||[]).flatMap(ch=>(ch.sections||[]).map(sec=>({id:sec.id,title:sec.title,chapterId:ch.id,chapterTitle:ch.title})));
@@ -1910,12 +1930,24 @@ function bindBody(){
     const docDown=e.target.closest?.("[data-document-down]");
     if(docDown){const r=docDown.closest("[data-document-row]");r?.nextElementSibling?.after(r);try{await persistDocumentsOnly(body)}catch(err){showError(err)}return}
     const replace=e.target.closest?.("[data-photo-replace]");if(replace){photoReplaceRow=replace.closest("[data-photo-row]");if(photoReplaceInput){photoReplaceInput.value="";photoReplaceInput.click()}return}
-    const remove=e.target.closest?.("[data-photo-remove]");if(remove){const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;row.remove();syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Фото удалено из карточки.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить удаление фото.");showError(err)}return}
+    const remove=e.target.closest?.("[data-photo-remove]");if(remove){
+      const row=remove.closest("[data-photo-row]");if(!row||!confirm("Удалить это фото из карточки товара?"))return;
+      const oldPath=String(row.dataset.path||""),id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id;
+      row.remove();syncPhotoState(body);
+      try{
+        setPhotoSaveState(body,"saving");
+        await persistImagesOnly(body);
+        const deleted=await deleteRemovedManagedPhotos([oldPath],id);
+        showStatus(deleted?"Фото удалено из карточки и из репозитория.":"Фото удалено из карточки. Исходный файл каталога сохранён в репозитории.");
+      }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить удаление фото.");showError(err)}
+      return;
+    }
     const up=e.target.closest?.("[data-photo-up]");if(up){const row=up.closest("[data-photo-row]");row?.previousElementSibling?.before(row);syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить порядок фото.");showError(err)}return}
     const down=e.target.closest?.("[data-photo-down]");if(down){const row=down.closest("[data-photo-row]");row?.nextElementSibling?.after(row);syncPhotoState(body);try{setPhotoSaveState(body,"saving");await persistImagesOnly(body);showStatus("Порядок фото сохранён.")}catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось сохранить порядок фото.");showError(err)}return}
   });
   photoReplaceInput?.addEventListener("change",async()=>{
     const file=photoReplaceInput.files?.[0],row=photoReplaceRow;photoReplaceRow=null;if(!file||!row)return;
+    const oldPath=String(row.dataset.path||"");
     try{
       setPhotoSaveState(body,"saving");showStatus("Заменяем фото…");
       const id=body.querySelector("[data-admin-product]")?.dataset.id||editorCtx?.id,prepared=await optimizePhotoFile(file),newPath=nextPhotoPath(id,syncPhotoState(body),imageExt(prepared));
@@ -1923,7 +1955,9 @@ function bindBody(){
       row.dataset.path=newPath;
       const img=row.querySelector("img");if(img)img.src=URL.createObjectURL(prepared);
       const code=row.querySelector("code");if(code)code.textContent=newPath;
-      syncPhotoState(body);await persistImagesOnly(body);showStatus("Фото заменено и опубликовано.");
+      syncPhotoState(body);await persistImagesOnly(body);
+      await deleteRemovedManagedPhotos([oldPath],id);
+      showStatus("Фото заменено и опубликовано. Старый редакторский файл удалён.");
     }catch(err){setPhotoSaveState(body,"error",err?.message||"Не удалось заменить фото.");showError(err)}
   });
 
