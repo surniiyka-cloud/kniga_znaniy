@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:24:00.000Z",
+  "updatedAt": "2026-10-14T09:30:00.000Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19555,6 +19555,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "catalog-2-16-люминометр-smart": {
+      "images": [
+        "img/photos/admin/catalog-2-16-люминометр-smart/catalog-2-16-люминометр-smart-01.webp"
       ]
     }
   },
