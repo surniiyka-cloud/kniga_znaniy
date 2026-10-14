@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:14:20.820Z",
+  "updatedAt": "2026-10-14T09:16:16.391Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19141,6 +19141,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "2.11-10006316-agrastrip-watex-зеараленон": {
+      "images": [
+        "img/photos/admin/2.11-10006316-agrastrip-watex-зеараленон/2.11-10006316-agrastrip-watex-зеараленон-01.webp"
       ]
     }
   },
