@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T10:27:00.000Z",
+  "updatedAt": "2026-10-14T11:04:39.100Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19831,6 +19831,11 @@
     "8.1-0404-053-щетка-с-короткой-рукояткой-ankar": {
       "color": "Зелёный",
       "sourceSectionId": "8.1"
+    },
+    "manual-2.11-ringbio-don": {
+      "images": [
+        "img/photos/admin/manual-2.11-ringbio-don/manual-2.11-ringbio-don-01.webp"
+      ]
     }
   },
   "sections": {
@@ -20083,7 +20088,9 @@
               "Быстрая оценка результата без считывающего устройства"
             ]
           ],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-ringbio-don/manual-2.11-ringbio-don-01.webp"
+          ]
         },
         "manual-2.11-ringbio-zearalenone": {
           "id": "manual-2.11-ringbio-zearalenone",
