@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:39:03.322Z",
+  "updatedAt": "2026-10-14T12:39:11.517Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22081,6 +22081,96 @@
     "manual-9.1-kf-b-5l": {
       "images": [
         "img/photos/admin/manual-9.1-kf-b-5l/manual-9.1-kf-b-5l-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-B-5L",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для ухода за садом и обработки растений рабочими растворами.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Аккумуляторный ранцевый опрыскиватель"
+        ],
+        [
+          "Объём",
+          "5 л"
+        ],
+        [
+          "Аккумулятор",
+          "2 А·ч, 12 В, съёмный"
+        ],
+        [
+          "Максимальное давление",
+          "0,4 МПа"
+        ],
+        [
+          "Время работы",
+          "До 90 минут"
+        ],
+        [
+          "Время зарядки",
+          "180 минут"
+        ],
+        [
+          "Насос",
+          "Автоматический водяной мини-диафрагменный"
+        ],
+        [
+          "Длина шланга",
+          "120 см"
+        ],
+        [
+          "Длина штанги",
+          "86 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Ранцевая система",
+          "Распределяет нагрузку при переноске."
+        ],
+        [
+          "Автоматическая подача",
+          "Не требует ручной подкачки."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-5L",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -23795,7 +23885,7 @@
             ],
             [
               "Время работы",
-              "до 90 минут"
+              "До 90 минут"
             ],
             [
               "Время зарядки",
@@ -23803,7 +23893,7 @@
             ],
             [
               "Насос",
-              "автоматический водяной мини-диафрагменный"
+              "Автоматический водяной мини-диафрагменный"
             ],
             [
               "Длина шланга",
@@ -23830,7 +23920,40 @@
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-5L"
+          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-5L",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-b-6l": {
           "id": "manual-9.1-kf-b-6l",
