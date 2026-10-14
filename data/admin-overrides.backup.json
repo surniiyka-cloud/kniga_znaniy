@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:54:10.617Z",
+  "updatedAt": "2026-10-14T09:54:32.470Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19643,6 +19643,12 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "3.3-0303-056-штифты-расширительные": {
+      "images": [
+        "img/photos/admin/3.3-0303-056-штифты-расширительные/3.3-0303-056-штифты-расширительные-01.png",
+        "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-rasshiritelnye.png"
       ]
     }
   },
