@@ -1,4 +1,4 @@
-name: Analyze Vetar Rubikon photos for section 4.11
+name: Analyze official Rubikon photos for section 4.11
 
 on:
   push:
@@ -15,22 +15,23 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
       - run: pip install -q requests beautifulsoup4
-      - name: Scrape Vetar Rubikon catalog
+
+      - name: Crawl official Rubikon site and match section 4.11
         shell: bash
         run: |
           python3 - <<'PY'
           import json,re,time
           from pathlib import Path
-          from urllib.parse import urljoin
+          from urllib.parse import urljoin,urlparse
           from difflib import SequenceMatcher
           import requests
           from bs4 import BeautifulSoup
 
-          BASE="https://www.vetar-vet.ru"
-          START="https://www.vetar-vet.ru/catalog/rubikon_ooo/"
+          BASES=["https://rubikonvet.by","http://rubikonvet.by"]
           s=requests.Session()
-          s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.4)"})
+          s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/2.0)"})
 
           def norm(x):
               x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
@@ -44,88 +45,112 @@ jobs:
           idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
           arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
           targets=[x for x in arr if str(x.get("section"))=="4.11"]
+          by_norm={norm(x["name"]):x for x in targets}
 
-          pages=[START]
-          products=[]
-          visited=set()
-          for page_no in range(1,12):
-              url=START if page_no==1 else START+f"?PAGEN_1={page_no}"
+          def fetch(url):
               try:
-                  r=s.get(url,timeout=45)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  # Gather cards using links and nearby images.
-                  for a in soup.find_all("a",href=True):
-                      title=a.get_text(" ",strip=True)
-                      href=urljoin(BASE,a["href"])
-                      if not title or href in visited: continue
-                      if "/catalog/" not in href or "rubikon_ooo" in href.rstrip("/"):
-                          continue
-                      if len(norm(title))<3: continue
-                      img=None
-                      parent=a
-                      for _ in range(4):
-                          if parent is None: break
-                          im=parent.find("img")
-                          if im and (im.get("src") or im.get("data-src")):
-                              src=im.get("data-src") or im.get("src")
-                              img=urljoin(BASE,src)
-                              break
-                          parent=parent.parent
-                      visited.add(href)
-                      products.append({"title":title,"url":href,"image":img})
-              except Exception as e:
-                  print("page error",page_no,e)
-
-          # Refine each product from detail page and gallery.
-          detailed=[]
-          for p in products:
-              try:
-                  r=s.get(p["url"],timeout=35)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  h1=soup.find("h1")
-                  title=h1.get_text(" ",strip=True) if h1 else p["title"]
-                  text=soup.get_text(" ",strip=True)
-                  if "рубикон" not in text.lower(): continue
-                  imgs=[]
-                  for im in soup.find_all("img"):
-                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
-                      if not src: continue
-                      src=urljoin(BASE,src)
-                      low=src.lower()
-                      if any(z in low for z in ["logo","icon","sprite","placeholder","no-image"]): continue
-                      if src.startswith("http"):
-                          imgs.append({"src":src,"alt":im.get("alt","")})
-                  detailed.append({"title":title,"url":p["url"],"images":imgs[:15]})
+                  r=s.get(url,timeout=30,allow_redirects=True)
+                  if r.status_code==200 and "text/html" in r.headers.get("content-type","text/html"):
+                      return r
               except Exception:
-                  pass
-              time.sleep(0.03)
+                  return None
 
-          sugg=[]
+          # Discover links from homepage, sitemap(s) and a shallow crawl.
+          seeds=[]
+          live_base=None
+          for base in BASES:
+              r=fetch(base+"/")
+              if r:
+                  live_base=base
+                  seeds.append(base+"/")
+                  for sm in ["/sitemap.xml","/sitemap_index.xml"]:
+                      try:
+                          x=s.get(base+sm,timeout=20)
+                          if x.status_code==200:
+                              for loc in re.findall(r"<loc>(.*?)</loc>",x.text,re.I|re.S):
+                                  seeds.append(loc.strip())
+                      except Exception:
+                          pass
+                  break
+
+          pages=[]
+          seen=set()
+          q=list(dict.fromkeys(seeds))
+          max_pages=500
+          while q and len(seen)<max_pages:
+              url=q.pop(0)
+              if url in seen: continue
+              seen.add(url)
+              r=fetch(url)
+              if not r: continue
+              soup=BeautifulSoup(r.text,"html.parser")
+              title=(soup.find("h1") or soup.find("title"))
+              title=title.get_text(" ",strip=True) if title else ""
+              text=soup.get_text(" ",strip=True)
+              imgs=[]
+              for im in soup.find_all("img"):
+                  src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
+                  if not src: continue
+                  src=urljoin(r.url,src)
+                  low=src.lower()
+                  if any(z in low for z in ["logo","icon","sprite","captcha","placeholder","no-image"]): continue
+                  if src.startswith("http"):
+                      imgs.append({"src":src,"alt":im.get("alt","")})
+              pages.append({"url":r.url,"title":title,"text":text[:5000],"images":imgs[:30]})
+
+              # shallow same-domain crawl
+              if live_base and len(seen)<220:
+                  host=urlparse(live_base).netloc
+                  for a in soup.find_all("a",href=True):
+                      href=urljoin(r.url,a["href"]).split("#")[0]
+                      if urlparse(href).netloc==host and href not in seen and href not in q:
+                          if not re.search(r"\.(pdf|docx?|xlsx?|zip|jpg|jpeg|png|webp)$",href,re.I):
+                              q.append(href)
+
+          suggestions=[]
           for t in targets:
               tn=norm(t["name"]); ns=nums(tn); cand=[]
-              for p in detailed:
+              for p in pages:
                   pn=norm(p["title"])
-                  if nums(pn)!=ns: continue
+                  if not pn: continue
+                  if ns and nums(pn)!=ns: continue
                   score=SequenceMatcher(None,tn,pn).ratio()
                   if tn==pn: score=1
                   elif tn in pn or pn in tn: score=max(score,.94)
-                  if score>=.72 and p["images"]:
-                      cand.append({"title":p["title"],"url":p["url"],"score":round(score,3),"images":p["images"]})
+                  # Require Rubikon context and product-like image.
+                  if score<.76: continue
+                  ctx=norm(p["text"])
+                  if "рубикон" not in ctx and "rubikon" not in ctx: continue
+                  good=[]
+                  for im in p["images"]:
+                      a=norm(im.get("alt","")); u=im.get("src","")
+                      if tn in a or a in tn or score>=.94:
+                          good.append(im)
+                  if good:
+                      cand.append({"title":p["title"],"url":p["url"],"score":round(score,3),"images":good[:10]})
               cand=sorted(cand,key=lambda x:x["score"],reverse=True)[:5]
-              sugg.append({"id":t["id"],"name":t["name"],"numbers":ns,"candidates":cand})
+              suggestions.append({"id":t["id"],"name":t["name"],"numbers":ns,"candidates":cand})
 
-          Path("data/import-4.11-vetar-candidates.json").write_text(
-              json.dumps({"targets":len(targets),"products":len(detailed),"suggestions":sugg},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print("products",len(detailed),"candidate targets",sum(bool(x["candidates"]) for x in sugg))
+          report={
+              "source":"rubikonvet.by",
+              "live_base":live_base,
+              "targets":len(targets),
+              "pages_scanned":len(pages),
+              "matched_targets":sum(bool(x["candidates"]) for x in suggestions),
+              "suggestions":suggestions
+          }
+          Path("data/import-4.11-official-candidates.json").write_text(
+              json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps({k:report[k] for k in ["live_base","targets","pages_scanned","matched_targets"]},ensure_ascii=False))
           PY
-      - name: Commit report
+
+      - name: Commit official-source report
         shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/import-4.11-vetar-candidates.json
-          git commit -m "Analyze Vetar Rubikon images for section 4.11"
+          git add data/import-4.11-official-candidates.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Analyze official Rubikon images for section 4.11"
           git push
