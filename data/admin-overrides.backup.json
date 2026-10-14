@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:11:43.253Z",
+  "updatedAt": "2026-10-14T11:11:50.020Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20195,6 +20195,56 @@
     "manual-2.11-agraquant-don-plus": {
       "images": [
         "img/photos/admin/manual-2.11-agraquant-don-plus/manual-2.11-agraquant-don-plus-01.webp"
+      ],
+      "name": "AgraQuant Дезоксиниваленол Плюс",
+      "article": "10006639/6638",
+      "type": "Экспресс ИФА тест-система",
+      "purpose": "Количественное определение микотоксинов методом ИФА (ELISA).",
+      "detailFields": [
+        [
+          "Количество",
+          "48/96 лунок"
+        ],
+        [
+          "Количественный диапазон измерения, ppb (мкг/кг)",
+          "250–5000"
+        ]
+      ],
+      "group": "Экспресс ИФА тест-системы",
+      "advantages": [],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -20823,6 +20873,40 @@
           "advantages": [],
           "images": [
             "img/photos/admin/manual-2.11-agraquant-don-plus/manual-2.11-agraquant-don-plus-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-agraquant-total-fumonisin": {
