@@ -1,0 +1,77 @@
+name: Import 4.10 product images batch 1
+
+on:
+  push:
+    paths:
+      - ".github/workflows/import-4-10-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download verified product images
+        shell: bash
+        run: |
+          set -euo pipefail
+          download() {
+            url="$1"
+            out="$2"
+            mkdir -p "$(dirname "$out")"
+            curl -fL --retry 4 --retry-delay 2 --connect-timeout 20 --max-time 120 -A "Mozilla/5.0" "$url" -o "$out"
+            test -s "$out"
+            mime="$(file -b --mime-type "$out")"
+            case "$mime" in
+              image/jpeg|image/png|image/webp) ;;
+              *) echo "Unexpected MIME for $out: $mime"; exit 1 ;;
+            esac
+          }
+
+          download "https://prok.ru/upload/iblock/76d/rs961dg5sl3r6qrk0n9vgf020fdxoxgb.jpg" "img/photos/admin/4.10-цефт-50/4.10-цефт-50-01.jpg"
+          download "https://xn--b1aghuag4a.xn--p1ai/wp-content/cache/image/500x500--center-5922fe1608ba33a1a4932bb03c7e3cb0.jpg" "img/photos/admin/4.10-амоксиджект-la/4.10-амоксиджект-la-01.jpg"
+          download "https://klm-agro.by/storage/products/June2024/medium/amoksim80.jpg" "img/photos/admin/4.10-амоксим-80/4.10-амоксим-80-01.jpg"
+          download "https://agrokomfort.net/image/cache/data/Uterobel-600x864.png" "img/photos/admin/4.10-утеробел/4.10-утеробел-01.png"
+          download "https://kupi-korm.ru/pictures/product/big/31175_big.jpg" "img/photos/admin/4.10-хелсивит/4.10-хелсивит-01.jpg"
+          download "https://vetq.by/wp-content/uploads/2025/01/czestivitam-zvs-500.jpg" "img/photos/admin/4.10-цефтивитам-звс/4.10-цефтивитам-звс-01.jpg"
+          download "https://static.tildacdn.com/tild3061-3739-4464-a436-393238633865/GM_06131_.png" "img/photos/admin/4.10-бовитаб/4.10-бовитаб-01.png"
+
+      - name: Attach images to product overrides
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path("data/admin-overrides.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          products = data.setdefault("products", {})
+          mapping = {
+              "4.10-цефт-50": "img/photos/admin/4.10-цефт-50/4.10-цефт-50-01.jpg",
+              "4.10-амоксиджект-la": "img/photos/admin/4.10-амоксиджект-la/4.10-амоксиджект-la-01.jpg",
+              "4.10-амоксим-80": "img/photos/admin/4.10-амоксим-80/4.10-амоксим-80-01.jpg",
+              "4.10-утеробел": "img/photos/admin/4.10-утеробел/4.10-утеробел-01.png",
+              "4.10-хелсивит": "img/photos/admin/4.10-хелсивит/4.10-хелсивит-01.jpg",
+              "4.10-цефтивитам-звс": "img/photos/admin/4.10-цефтивитам-звс/4.10-цефтивитам-звс-01.jpg",
+              "4.10-бовитаб": "img/photos/admin/4.10-бовитаб/4.10-бовитаб-01.png",
+          }
+          for product_id, image_path in mapping.items():
+              product = products.setdefault(product_id, {})
+              product["images"] = [image_path]
+              product["__frozen"] = True
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Commit imported files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json img/photos/admin/4.10-*
+          git commit -m "Add verified product photos to section 4.10 batch 1"
+          git push
