@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:44:51.940Z",
+  "updatedAt": "2026-10-14T12:47:49.239Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22358,6 +22358,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-9.1-kf-b-9l": {
+      "images": [
+        "img/photos/admin/manual-9.1-kf-b-9l/manual-9.1-kf-b-9l-01.webp"
+      ]
     }
   },
   "sections": {
@@ -24387,7 +24392,9 @@
             ]
           ],
           "complectation": [],
-          "images": [],
+          "images": [
+            "img/photos/admin/manual-9.1-kf-b-9l/manual-9.1-kf-b-9l-01.webp"
+          ],
           "manufacturer": "GARTENA",
           "country": "",
           "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-9L"
