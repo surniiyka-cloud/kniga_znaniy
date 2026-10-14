@@ -19493,6 +19493,68 @@
     "2.11-10001318-agrastrip-cry1ab-seed-and-leaf": {
       "images": [
         "img/photos/admin/2.11-10001318-agrastrip-cry1ab-seed-and-leaf/2.11-10001318-agrastrip-cry1ab-seed-and-leaf-01.webp"
+      ],
+      "name": "AgraStrip Cry1Ab Seed and Leaf",
+      "article": "10001318",
+      "features": "Для семян и листьев",
+      "group": "AgraStrip GMO Trait Check",
+      "sourceRow": 42,
+      "candidateId": "10001318-agrastrip-cry1ab-seed-and-leaf",
+      "detailFields": [
+        [
+          "Артикул",
+          "10001318"
+        ],
+        [
+          "Исследуемые культуры / материал",
+          "Кукуруза, хлопок"
+        ],
+        [
+          "Определяемый признак",
+          "Bt-Cry1Ab"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для семян и листьев"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     },
     "catalog-2-16-люминометр-smart": {
