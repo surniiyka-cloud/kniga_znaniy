@@ -227,7 +227,9 @@ function registerCatalog(sectionId,name,fields=[],images=[],opts={}){
   if(!state.sectionCatalog.has(sectionId))state.sectionCatalog.set(sectionId,[]);
   state.sectionCatalog.get(sectionId).push(ctxObj);
   state.products.set(id,ctxObj);
-  if(images?.length)state.assets.productImages[id]=images;
+  // Не перетираем уже привязанное редактором фото дефолтной картинкой раздела.
+  // assets.productImages содержит опубликованные ручные замены и должен иметь приоритет.
+  if(images?.length&&!state.assets.productImages?.[id]?.length)state.assets.productImages[id]=images;
   return ctxObj;
 }
 function bestImage(sectionId,needle){
