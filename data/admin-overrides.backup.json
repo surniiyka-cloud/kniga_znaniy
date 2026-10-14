@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:08:05.357Z",
+  "updatedAt": "2026-10-14T11:08:46.380Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20135,6 +20135,61 @@
     "manual-2.11-ringbio-fumonisin": {
       "images": [
         "img/photos/admin/manual-2.11-ringbio-fumonisin/manual-2.11-ringbio-fumonisin-01.webp"
+      ],
+      "name": "Ringbio Technology — Фумонизин",
+      "article": "600003-96T",
+      "type": "Экспресс-тест на микотоксины",
+      "purpose": "Экспресс-тест для количественного определения микотоксинов в зерне, орехах, злаках, кормах и другом сельскохозяйственном сырье.",
+      "detailFields": [
+        [
+          "Определяемый микотоксин",
+          "Фумонизин"
+        ],
+        [
+          "Предел обнаружения, ppb (мкг/кг)",
+          "2"
+        ]
+      ],
+      "group": "RINGBIO TECHNOLOGY",
+      "advantages": [
+        [
+          "Особенность",
+          "Быстрая оценка результата без считывающего устройства"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -20705,6 +20760,40 @@
           ],
           "images": [
             "img/photos/admin/manual-2.11-ringbio-fumonisin/manual-2.11-ringbio-fumonisin-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-agraquant-don-plus": {
