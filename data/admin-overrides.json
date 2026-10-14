@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:56:35.418Z",
+  "updatedAt": "2026-10-14T12:56:52.163Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22659,6 +22659,116 @@
     "manual-9.1-kf-50c-1": {
       "images": [
         "img/photos/admin/manual-9.1-kf-50c-1/manual-9.1-kf-50c-1-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-50С-1",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для обработки больших садовых и хозяйственных площадей рабочими растворами.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Колёсный аккумуляторный опрыскиватель"
+        ],
+        [
+          "Объём",
+          "50 л"
+        ],
+        [
+          "Материал",
+          "PP, ABS, POM, HDPE"
+        ],
+        [
+          "Аккумулятор",
+          "4 А·ч, 18 В, съёмный"
+        ],
+        [
+          "Расход",
+          "1,5–3 л/мин"
+        ],
+        [
+          "Рабочее давление",
+          "0,1–0,45 МПа"
+        ],
+        [
+          "Время работы",
+          "4 часа"
+        ],
+        [
+          "Время зарядки",
+          "10 часов"
+        ],
+        [
+          "Насос",
+          "Автоматический водяной диафрагменный"
+        ],
+        [
+          "Длина шланга",
+          "50 м"
+        ],
+        [
+          "Длина штанги с пистолетом",
+          "75 см"
+        ],
+        [
+          "Масса",
+          "25 кг"
+        ],
+        [
+          "Габариты",
+          "96×46×37 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Большой бак",
+          "50 л для продолжительной обработки."
+        ],
+        [
+          "Длинный шланг",
+          "50 м для работы на большой площади."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-50C-1",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -24985,7 +25095,7 @@
             ],
             [
               "Насос",
-              "автоматический водяной диафрагменный"
+              "Автоматический водяной диафрагменный"
             ],
             [
               "Длина шланга",
@@ -25014,21 +25124,50 @@
               "50 м для работы на большой площади."
             ]
           ],
-          "complectation": [
-            "Опрыскиватель",
-            "Аккумулятор 18 В, 4 А·ч",
-            "Зарядное устройство",
-            "Штанга",
-            "Шланг",
-            "3 распылительные насадки",
-            "Упаковка"
-          ],
+          "complectation": [],
           "images": [
             "img/photos/admin/manual-9.1-kf-50c-1/manual-9.1-kf-50c-1-01.webp"
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-50C-1"
+          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-50C-1",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ],
+            "complectation": [
+              "Комплектация",
+              "Количество / описание"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         }
       }
     }
