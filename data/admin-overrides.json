@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:20:30.601Z",
+  "updatedAt": "2026-10-14T09:20:38.012Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19359,6 +19359,68 @@
     "2.11-10001313-agrastrip-rur-seed-and-leaf": {
       "images": [
         "img/photos/admin/2.11-10001313-agrastrip-rur-seed-and-leaf/2.11-10001313-agrastrip-rur-seed-and-leaf-01.webp"
+      ],
+      "name": "AgraStrip RUR Seed and Leaf",
+      "article": "10001313",
+      "features": "Для семян и листьев",
+      "group": "AgraStrip GMO Trait Check",
+      "sourceRow": 40,
+      "candidateId": "10001313-agrastrip-rur-seed-and-leaf",
+      "detailFields": [
+        [
+          "Артикул",
+          "10001313"
+        ],
+        [
+          "Исследуемые культуры / материал",
+          "Соя, сахарная свёкла, хлопок, рапс, люцерна"
+        ],
+        [
+          "Определяемый признак",
+          "CP4 EPSPS"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Для семян и листьев"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
