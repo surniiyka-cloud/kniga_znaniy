@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:19:01.722Z",
+  "updatedAt": "2026-10-14T12:19:17.026Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21438,6 +21438,116 @@
     "manual-9.1-airfog-u60-pro-2": {
       "images": [
         "img/photos/admin/manual-9.1-airfog-u60-pro-2/manual-9.1-airfog-u60-pro-2-01.webp"
+      ],
+      "name": "Генератор холодного тумана \"Аирофог\" U60-PRO/ две форсунки",
+      "article": "Без артикула",
+      "type": "Генератор холодного тумана",
+      "purpose": "Для аэрозольной дезинфекции, вакцинации, санации, увлажнения и обработки больших производственных помещений.",
+      "group": "Холодный туман",
+      "detailFields": [
+        [
+          "Тип",
+          "Стационарно-передвижной генератор холодного тумана с двумя форсунками"
+        ],
+        [
+          "Мощность двигателя",
+          "1,5 кВт"
+        ],
+        [
+          "Питание",
+          "220–240 В, 50 Гц"
+        ],
+        [
+          "Номинальный ток",
+          "10 А"
+        ],
+        [
+          "Мощность нагнетателя",
+          "3,6 м³/мин"
+        ],
+        [
+          "Давление",
+          "0,2 бар"
+        ],
+        [
+          "Скорость воздуха",
+          "180 м/с"
+        ],
+        [
+          "Рабочая ёмкость резервуара",
+          "До 30 л"
+        ],
+        [
+          "Полная ёмкость резервуара",
+          "40 л"
+        ],
+        [
+          "Максимальный расход",
+          "18 л/ч"
+        ],
+        [
+          "Регулировка",
+          "Горизонтальная 360° / вертикальная 180°"
+        ],
+        [
+          "Уровень шума",
+          "<85 дБ"
+        ],
+        [
+          "Габариты",
+          "50×68×105 см"
+        ],
+        [
+          "Масса",
+          "65 кг"
+        ]
+      ],
+      "advantages": [
+        [
+          "Две регулируемые форсунки",
+          "Позволяют направлять аэрозоль по горизонтали и вертикали."
+        ],
+        [
+          "Большой резервуар",
+          "Полная ёмкость 40 л для продолжительных обработок."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "БД ГРУПП",
+      "country": "Россия",
+      "sourceInfo": "Dealmed, U60-PRO с двумя форсунками",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -22503,7 +22613,7 @@
             ],
             [
               "Рабочая ёмкость резервуара",
-              "до 30 л"
+              "До 30 л"
             ],
             [
               "Полная ёмкость резервуара",
@@ -22515,7 +22625,7 @@
             ],
             [
               "Регулировка",
-              "горизонтальная 360° / вертикальная 180°"
+              "Горизонтальная 360° / вертикальная 180°"
             ],
             [
               "Уровень шума",
@@ -22546,7 +22656,40 @@
           ],
           "manufacturer": "БД ГРУПП",
           "country": "Россия",
-          "sourceInfo": "Dealmed, U60-PRO с двумя форсунками"
+          "sourceInfo": "Dealmed, U60-PRO с двумя форсунками",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-airfog-ue2-pro": {
           "id": "manual-9.1-airfog-ue2-pro",
