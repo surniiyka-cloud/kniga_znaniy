@@ -1282,8 +1282,22 @@ async function duplicateProductTo(productId,targetSection,{move=false}={}){
   await commitOverrides(o);
   location.hash="#/account/product/"+encodeURIComponent(id);location.reload();
 }
+function deletionIdentityAdmin(p){
+  const name=String(p?.name||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
+  const article=String(p?.article||"").toLowerCase().replace(/[^a-zа-я0-9]+/gi,"");
+  return article+"|"+name;
+}
+function deletionRefForProduct(productId,ctx){
+  const sectionId=ctx?.section?.id||ctx?.sourceSection?.id||"";
+  const key=deletionIdentityAdmin(ctx?.product||{});
+  const sec=(window.KB_EDITOR_API?.catalog?.()||[]).flatMap(ch=>ch.sections||[]).find(s=>String(s.id)===String(sectionId));
+  const peers=(sec?.products||[]).filter(p=>deletionIdentityAdmin(p)===key);
+  const index=Math.max(0,peers.findIndex(p=>String(p.id)===String(productId)));
+  return {key,name:String(ctx?.product?.name||""),article:String(ctx?.product?.article||""),occurrence:index+1};
+}
 async function deleteProductById(productId,{navigate=false}={}){
   const ctx=window.KB_EDITOR_API?.product?.(productId);if(!ctx)throw new Error("Карточка не найдена.");
+  const deletionRef=deletionRefForProduct(productId,ctx);
   const o=await loadOverrides();let removedManual=false;
   for(const sec of Object.values(o.sections||{})){
     if(sec?.manualProducts&&Object.prototype.hasOwnProperty.call(sec.manualProducts,productId)){
@@ -1298,6 +1312,10 @@ async function deleteProductById(productId,{navigate=false}={}){
     const sectionId=ctx.section?.id||ctx.sourceSection?.id;if(!sectionId)throw new Error("Не найден раздел карточки.");
     const sec=o.sections[sectionId]||(o.sections[sectionId]={});
     sec.deletedProductIds=[...new Set([...(sec.deletedProductIds||[]),productId])];
+    sec.deletedProductRefs=Array.isArray(sec.deletedProductRefs)?sec.deletedProductRefs:[];
+    if(deletionRef?.key&&!sec.deletedProductRefs.some(r=>r?.key===deletionRef.key&&Number(r?.occurrence||1)===Number(deletionRef.occurrence||1))){
+      sec.deletedProductRefs.push(deletionRef);
+    }
     if(Array.isArray(sec.productOrder))sec.productOrder=sec.productOrder.filter(x=>x!==productId);
     if(Array.isArray(sec.hiddenProductIds))sec.hiddenProductIds=sec.hiddenProductIds.filter(x=>x!==productId);
   }
