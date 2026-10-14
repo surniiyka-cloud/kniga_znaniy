@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 1
+name: Import 4.10 product images batch 2
 
 on:
   push:
@@ -38,24 +38,15 @@ jobs:
             fi
             mime="$(file -b --mime-type "$tmp" || true)"
             case "$mime" in
-              image/jpeg|image/png|image/webp)
-                mv "$tmp" "$out"
-                echo "OK $out ($mime)"
-                ;;
-              *)
-                echo "SKIP unexpected MIME $mime: $url"
-                rm -f "$tmp"
-                ;;
+              image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;;
+              *) echo "SKIP unexpected MIME $mime: $url"; rm -f "$tmp" ;;
             esac
           }
 
-          download_optional "https://prok.ru/upload/iblock/76d/rs961dg5sl3r6qrk0n9vgf020fdxoxgb.jpg" "img/photos/admin/4.10-цефт-50/4.10-цефт-50-01.jpg"
-          download_optional "https://xn--b1aghuag4a.xn--p1ai/wp-content/cache/image/500x500--center-5922fe1608ba33a1a4932bb03c7e3cb0.jpg" "img/photos/admin/4.10-амоксиджект-la/4.10-амоксиджект-la-01.jpg"
-          download_optional "https://klm-agro.by/storage/products/June2024/medium/amoksim80.jpg" "img/photos/admin/4.10-амоксим-80/4.10-амоксим-80-01.jpg"
-          download_optional "https://agrokomfort.net/image/cache/data/Uterobel-600x864.png" "img/photos/admin/4.10-утеробел/4.10-утеробел-01.png"
-          download_optional "https://kupi-korm.ru/pictures/product/big/31175_big.jpg" "img/photos/admin/4.10-хелсивит/4.10-хелсивит-01.jpg"
-          download_optional "https://vetq.by/wp-content/uploads/2025/01/czestivitam-zvs-500.jpg" "img/photos/admin/4.10-цефтивитам-звс/4.10-цефтивитам-звс-01.jpg"
-          download_optional "https://static.tildacdn.com/tild3061-3739-4464-a436-393238633865/GM_06131_.png" "img/photos/admin/4.10-бовитаб/4.10-бовитаб-01.png"
+          download_optional "https://feedkaz.kz/wp-content/uploads/2025/09/kloksam-500-300x300.jpg" "img/photos/admin/4.10-клоксам/4.10-клоксам-01.jpg"
+          download_optional "https://pettown.ru/upload/iblock/607/b6d55nf048k3w40b4sjno2j0vgus3ofx.jpg" "img/photos/admin/4.10-мастибак/4.10-мастибак-01.jpg"
+          download_optional "https://feedkaz.kz/wp-content/uploads/2025/09/metrimast-zvs-500-1.jpg" "img/photos/admin/4.10-метримаст-звс/4.10-метримаст-звс-01.jpg"
+          download_optional "https://feedkaz.kz/wp-content/uploads/2025/09/penivitakan-500.jpg" "img/photos/admin/4.10-пенивитакан/4.10-пенивитакан-01.jpg"
 
       - name: Attach successful images to product overrides
         shell: bash
@@ -66,23 +57,29 @@ jobs:
           path = Path("data/admin-overrides.json")
           data = json.loads(path.read_text(encoding="utf-8"))
           products = data.setdefault("products", {})
-          mapping = {
-              "4.10-цефт-50": "img/photos/admin/4.10-цефт-50/4.10-цефт-50-01.jpg",
-              "4.10-амоксиджект-la": "img/photos/admin/4.10-амоксиджект-la/4.10-амоксиджект-la-01.jpg",
-              "4.10-амоксим-80": "img/photos/admin/4.10-амоксим-80/4.10-амоксим-80-01.jpg",
-              "4.10-утеробел": "img/photos/admin/4.10-утеробел/4.10-утеробел-01.png",
-              "4.10-хелсивит": "img/photos/admin/4.10-хелсивит/4.10-хелсивит-01.jpg",
-              "4.10-цефтивитам-звс": "img/photos/admin/4.10-цефтивитам-звс/4.10-цефтивитам-звс-01.jpg",
-              "4.10-бовитаб": "img/photos/admin/4.10-бовитаб/4.10-бовитаб-01.png",
+          groups = {
+              "img/photos/admin/4.10-клоксам/4.10-клоксам-01.jpg": [
+                  "4.10-клоксам", "4.10-клоксам-упаковка-20-шт"
+              ],
+              "img/photos/admin/4.10-мастибак/4.10-мастибак-01.jpg": [
+                  "4.10-мастибак", "4.10-мастибак-упаковка-20-шт"
+              ],
+              "img/photos/admin/4.10-метримаст-звс/4.10-метримаст-звс-01.jpg": [
+                  "4.10-метримаст-звс", "4.10-метримаст-звс-упаковка-20-шт"
+              ],
+              "img/photos/admin/4.10-пенивитакан/4.10-пенивитакан-01.jpg": [
+                  "4.10-пенивитакан", "4.10-пенивитакан-упаковка-20-шт"
+              ],
           }
           attached = []
-          for product_id, image_path in mapping.items():
+          for image_path, product_ids in groups.items():
               if not Path(image_path).is_file():
                   continue
-              product = products.setdefault(product_id, {})
-              product["images"] = [image_path]
-              product["__frozen"] = True
-              attached.append(product_id)
+              for product_id in product_ids:
+                  product = products.setdefault(product_id, {})
+                  product["images"] = [image_path]
+                  product["__frozen"] = True
+                  attached.append(product_id)
           path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           print("Attached:", len(attached), attached)
           PY
@@ -98,5 +95,5 @@ jobs:
             echo "No images downloaded; nothing to commit"
             exit 0
           fi
-          git commit -m "Add verified product photos to section 4.10 batch 1"
+          git commit -m "Add verified product photos to section 4.10 batch 2"
           git push
