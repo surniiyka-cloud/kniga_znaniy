@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:01:50.533Z",
+  "updatedAt": "2026-10-14T09:02:00.644Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19106,6 +19106,11 @@
     "3.6": {
       "deletedProductIds": [
         "3.6-тип"
+      ]
+    },
+    "3.7": {
+      "deletedProductIds": [
+        "3.7-тип"
       ]
     }
   },
