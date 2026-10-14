@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:09:22.219Z",
+  "updatedAt": "2026-10-14T09:09:29.206Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -18925,6 +18925,80 @@
     "2.11-10006320-agrastrip-watex-дезоксиниваленол": {
       "images": [
         "img/photos/admin/2.11-10006320-agrastrip-watex-дезоксиниваленол/2.11-10006320-agrastrip-watex-дезоксиниваленол-01.webp"
+      ],
+      "name": "AgraStrip Watex Дезоксиниваленол",
+      "article": "10006320",
+      "features": "Водная экстракция; анализ до 15 минут; ридер AgraVision Pro; комплект на 40 анализов",
+      "group": "AgraStrip Pro WATEX",
+      "sourceRow": 3,
+      "candidateId": "10006320-agrastrip-watex-дезоксиниваленол",
+      "detailFields": [
+        [
+          "Артикул",
+          "10006320"
+        ],
+        [
+          "Определяемый микотоксин",
+          "Дезоксиниваленол"
+        ],
+        [
+          "Диапазон, ppb (мкг/кг)",
+          "0–44"
+        ],
+        [
+          "Количество анализов в комплекте",
+          "Комплект на 40 анализов"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Водная экстракция"
+        ],
+        [
+          "Особенность 2",
+          "Анализ до 15 минут"
+        ],
+        [
+          "Особенность 3",
+          "Ридер AgraVision Pro"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
