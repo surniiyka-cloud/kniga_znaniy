@@ -23150,7 +23150,10 @@
       "__frozen": true
     },
     "4.11-марбофлокс-2": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-марбофлокс-2/4.11-марбофлокс-2-01.jpg"
+      ]
     },
     "4.11-мастидез-концентрат": {
       "__frozen": true
@@ -23216,6 +23219,48 @@
       "__frozen": true
     },
     "4.11-утеросепт-био": {
+      "__frozen": true
+    },
+    "4.11-полибром-концентрат": {
+      "images": [
+        "img/photos/admin/4.11-полибром-концентрат/4.11-полибром-концентрат-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-ратеид": {
+      "images": [
+        "img/photos/admin/4.11-ратеид/4.11-ратеид-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-ратокс": {
+      "images": [
+        "img/photos/admin/4.11-ратокс/4.11-ратокс-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-эктофен": {
+      "images": [
+        "img/photos/admin/4.11-эктофен/4.11-эктофен-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-рацидол": {
+      "images": [
+        "img/photos/admin/4.11-рацидол/4.11-рацидол-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-флуатрин": {
+      "images": [
+        "img/photos/admin/4.11-флуатрин/4.11-флуатрин-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-глютар": {
+      "images": [
+        "img/photos/admin/4.11-глютар/4.11-глютар-01.jpg"
+      ],
       "__frozen": true
     }
   },
