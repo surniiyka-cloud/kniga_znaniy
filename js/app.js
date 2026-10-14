@@ -1049,13 +1049,37 @@ function defaultProductOrder(sectionId,items){
   const rank=name=>{const n=String(name||"").trim().toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ");if(n.includes("agrastrip pro watex"))return 0;if(n.startsWith("ringbio technology"))return 1;if(n==="ифа"||n.startsWith("ифа "))return 2;if(n.includes("agrastrip gmo trait check"))return 3;return 999;};
   return [...items].sort((a,b)=>rank(a.product.name)-rank(b.product.name)).map(x=>x.product.id);
 }
+function deletionIdentity(p){
+  const name=String(p?.name||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]+/gi," ").trim().replace(/\s+/g," ");
+  const article=String(p?.article||"").toLowerCase().replace(/[^a-zа-я0-9]+/gi,"");
+  return article+"|"+name;
+}
+function resolveDeletedProductRefs(items,refs){
+  const out=[],groups=new Map();
+  for(const x of items||[]){
+    const key=deletionIdentity(x.product);
+    if(!groups.has(key))groups.set(key,[]);
+    groups.get(key).push(x.product.id);
+  }
+  for(const ref of refs||[]){
+    if(!ref||typeof ref!=="object")continue;
+    const key=String(ref.key||"")||deletionIdentity(ref);
+    const group=groups.get(key)||[];
+    const occurrence=Math.max(1,Number(ref.occurrence)||1);
+    const id=group[occurrence-1];
+    if(id)out.push(id);
+  }
+  return out;
+}
 function sectionProductLayout(sectionId){
   const items=sectionBaseItems(sectionId),section=state.sections.get(sectionId)?.section||{};
   const defaultOrder=defaultProductOrder(sectionId,items);
   const hidden=Array.isArray(section.hiddenProductIds)?section.hiddenProductIds:defaultHiddenProducts(sectionId,items);
-  const deleted=Array.isArray(section.deletedProductIds)?section.deletedProductIds:[];
+  const deletedIds=Array.isArray(section.deletedProductIds)?section.deletedProductIds:[];
+  const deletedRefs=Array.isArray(section.deletedProductRefs)?section.deletedProductRefs:[];
+  const deleted=[...deletedIds,...resolveDeletedProductRefs(items,deletedRefs)];
   const order=Array.isArray(section.productOrder)&&section.productOrder.length?section.productOrder:defaultOrder;
-  return {items,defaultOrder,hidden:[...new Set(hidden)],deleted:[...new Set(deleted)],order:[...new Set([...order,...defaultOrder])]};
+  return {items,defaultOrder,hidden:[...new Set(hidden)],deleted:[...new Set(deleted)],deletedRefs:deepCopy(deletedRefs),order:[...new Set([...order,...defaultOrder])]};
 }
 function orderedSectionItems(sectionId,{includeHidden=false,includeDeleted=false}={}){
   const l=sectionProductLayout(sectionId),byId=new Map(l.items.map(x=>[x.product.id,x])),hidden=new Set(l.hidden),deleted=new Set(l.deleted),out=[];
