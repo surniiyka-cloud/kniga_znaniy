@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:11:55.121Z",
+  "updatedAt": "2026-10-14T09:12:02.320Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19004,6 +19004,72 @@
     "2.11-10006332-agrastrip-watex-охратоксин": {
       "images": [
         "img/photos/admin/2.11-10006332-agrastrip-watex-охратоксин/2.11-10006332-agrastrip-watex-охратоксин-01.webp"
+      ],
+      "name": "AgraStrip Watex Охратоксин",
+      "article": "10006332",
+      "features": "Водная экстракция; анализ до 15 минут",
+      "group": "AgraStrip Pro WATEX",
+      "sourceRow": 5,
+      "candidateId": "10006332-agrastrip-watex-охратоксин",
+      "detailFields": [
+        [
+          "Артикул",
+          "10006332"
+        ],
+        [
+          "Определяемый микотоксин",
+          "Охратоксин"
+        ],
+        [
+          "Диапазон, ppb (мкг/кг)",
+          "0–100"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Водная экстракция"
+        ],
+        [
+          "Особенность 2",
+          "Анализ до 15 минут"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
