@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:05:55.145Z",
+  "updatedAt": "2026-10-14T11:06:50.917Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19951,6 +19951,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-2.11-ringbio-aflatoxin-b1": {
+      "images": [
+        "img/photos/admin/manual-2.11-ringbio-aflatoxin-b1/manual-2.11-ringbio-aflatoxin-b1-01.webp"
+      ]
     }
   },
   "sections": {
@@ -20329,7 +20334,9 @@
               "Быстрая оценка результата без считывающего устройства"
             ]
           ],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-ringbio-aflatoxin-b1/manual-2.11-ringbio-aflatoxin-b1-01.webp"
+          ]
         },
         "manual-2.11-ringbio-ochratoxin": {
           "id": "manual-2.11-ringbio-ochratoxin",
