@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T06:56:22.293Z",
+  "updatedAt": "2026-10-14T06:59:04.600Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -15825,6 +15825,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "9.1-опрыскиватель-ранцевый-farmate-fm-16v-16-литров": {
+      "images": [
+        "img/photos/admin/9.1-опрыскиватель-ранцевый-farmate-fm-16v-16-литров/9.1-опрыскиватель-ранцевый-farmate-fm-16v-16-литров-01.webp"
       ]
     }
   },
