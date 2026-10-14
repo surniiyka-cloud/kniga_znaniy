@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:07:50.277Z",
+  "updatedAt": "2026-10-14T11:08:05.357Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20131,6 +20131,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-2.11-ringbio-fumonisin": {
+      "images": [
+        "img/photos/admin/manual-2.11-ringbio-fumonisin/manual-2.11-ringbio-fumonisin-01.webp"
+      ]
     }
   },
   "sections": {
@@ -20698,7 +20703,9 @@
               "Быстрая оценка результата без считывающего устройства"
             ]
           ],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-ringbio-fumonisin/manual-2.11-ringbio-fumonisin-01.webp"
+          ]
         },
         "manual-2.11-agraquant-don-plus": {
           "id": "manual-2.11-agraquant-don-plus",
