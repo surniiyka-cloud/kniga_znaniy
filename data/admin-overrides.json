@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:19:42.694Z",
+  "updatedAt": "2026-10-14T09:19:51.057Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19217,6 +19217,76 @@
     "2.11-10001311-agrastrip-rur-hs-bulk-grain": {
       "images": [
         "img/photos/admin/2.11-10001311-agrastrip-rur-hs-bulk-grain/2.11-10001311-agrastrip-rur-hs-bulk-grain-01.webp"
+      ],
+      "name": "AgraStrip RUR-HS Bulk Grain",
+      "article": "10001311",
+      "features": "Готовые тест-полоски; инкубация 5–10 минут; предел определения от 0,1% ГМО в зерне",
+      "group": "AgraStrip GMO Trait Check",
+      "sourceRow": 38,
+      "candidateId": "10001311-agrastrip-rur-hs-bulk-grain",
+      "detailFields": [
+        [
+          "Артикул",
+          "10001311"
+        ],
+        [
+          "Исследуемые культуры / материал",
+          "Зерно: кукуруза, рапс, люцерна"
+        ],
+        [
+          "Определяемый признак",
+          "CP4 EPSPS"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Готовые тест-полоски"
+        ],
+        [
+          "Особенность 2",
+          "Инкубация 5–10 минут"
+        ],
+        [
+          "Особенность 3",
+          "Предел определения от 0,1% ГМО в зерне"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
