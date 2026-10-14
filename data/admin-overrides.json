@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:54:09.832Z",
+  "updatedAt": "2026-10-14T12:56:35.418Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22655,6 +22655,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-9.1-kf-50c-1": {
+      "images": [
+        "img/photos/admin/manual-9.1-kf-50c-1/manual-9.1-kf-50c-1-01.webp"
+      ]
     }
   },
   "sections": {
@@ -25018,7 +25023,9 @@
             "3 распылительные насадки",
             "Упаковка"
           ],
-          "images": [],
+          "images": [
+            "img/photos/admin/manual-9.1-kf-50c-1/manual-9.1-kf-50c-1-01.webp"
+          ],
           "manufacturer": "GARTENA",
           "country": "",
           "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-50C-1"
