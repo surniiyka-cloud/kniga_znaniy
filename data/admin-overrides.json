@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:16:26.906Z",
+  "updatedAt": "2026-10-14T09:19:42.694Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19212,6 +19212,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "2.11-10001311-agrastrip-rur-hs-bulk-grain": {
+      "images": [
+        "img/photos/admin/2.11-10001311-agrastrip-rur-hs-bulk-grain/2.11-10001311-agrastrip-rur-hs-bulk-grain-01.webp"
       ]
     }
   },
