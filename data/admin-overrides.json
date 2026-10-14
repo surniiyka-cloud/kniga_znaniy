@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T07:33:17.720Z",
+  "updatedAt": "2026-10-14T07:33:25.362Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -16650,6 +16650,98 @@
     "9.1-опрыскиватель-пневматический-gartena-tm-10a": {
       "images": [
         "img/photos/admin/9.1-опрыскиватель-пневматический-gartena-tm-10a/9.1-опрыскиватель-пневматический-gartena-tm-10a-01.webp"
+      ],
+      "name": "Опрыскиватель пневматический Gartena TM-10A",
+      "sourceRow": 0,
+      "article": "Без артикула",
+      "type": "Пневматический опрыскиватель",
+      "purpose": "Обработка сада и дома",
+      "manufacturer": "",
+      "country": "",
+      "detailFields": [
+        [
+          "Артикул",
+          "Без артикула"
+        ],
+        [
+          "Тип",
+          "Пневматический опрыскиватель"
+        ],
+        [
+          "Назначение",
+          "Обработка сада и дома"
+        ],
+        [
+          "Артикул из каталога",
+          "Без артикула"
+        ],
+        [
+          "Объем бака",
+          "10 л"
+        ],
+        [
+          "Вес",
+          "1,76 кг"
+        ],
+        [
+          "Габаритные размеры",
+          "630 × 180 × 180 мм"
+        ],
+        [
+          "Удобство",
+          "Наплечный ремень"
+        ],
+        [
+          "Объем",
+          "10 литров"
+        ],
+        [
+          "Простота",
+          "Пневматический механизм"
+        ],
+        [
+          "Универсальность",
+          "Для сада и дома"
+        ],
+        [
+          "Надежность",
+          "Прочная конструкция"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
