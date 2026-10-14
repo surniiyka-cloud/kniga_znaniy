@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 7
+name: Import 4.10 product images batch 8
 
 on:
   push:
@@ -27,10 +27,8 @@ jobs:
             case "$mime" in image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;; *) echo "SKIP MIME $mime"; rm -f "$tmp" ;; esac
           }
 
-          download_optional "https://avzvet.ru/upload/iblock/821/j9jimfyf8viv6wv073chkla78mktjc1c/oxarep_500ml_face.jpg" "img/photos/admin/4.10-оксареп/4.10-оксареп-01.jpg"
-          download_optional "https://pettown.ru/upload/iblock/300/nvvry0lj47m6zjefo1bgkmloyvmfvhpu.jpg" "img/photos/admin/4.10-мазь-мастисепт-а/4.10-мазь-мастисепт-а-01.jpg"
-          download_optional "https://vetapteka1.ru/upload/iblock/af1/k6epoae5un5899dgy5ddeiu7620dibru/levomikol.jpg" "img/photos/admin/4.10-мазь-левомеколь-вет/4.10-мазь-левомеколь-вет-01.jpg"
-          download_optional "https://zoovostorg.com/image/cache/catalog/product/35241/1-1000x1000.jpg" "img/photos/admin/4.10-нутризан/4.10-нутризан-01.jpg"
+          download_optional "https://static.insales-cdn.com/r/qZ4-uvx-XvA/rs%3Afit%3A1000%3A0%3A1/q%3A100/plain/images/products/1/2832/594201360/%D0%92%D0%B8%D1%82%D0%B0%D0%BC_%D0%B4%D0%BB%D1%8F_%D0%B8%D0%BD%D1%8A%D0%B5%D0%BA%D1%86%D0%B8%D0%B9_100_%D0%BC%D0%BB.jpg%40jpg" "img/photos/admin/4.10-витам/4.10-витам-01.jpg"
+          download_optional "https://pettown.ru/upload/iblock/536/0y1hyeagxi4b7aqzyaohps503snz4khb.jpg" "img/photos/admin/4.10-кабуфол-нита/4.10-кабуфол-нита-01.jpg"
 
       - name: Attach successful images
         shell: bash
@@ -42,18 +40,14 @@ jobs:
           data=json.loads(p.read_text(encoding="utf-8"))
           products=data.setdefault("products",{})
           mapping={
-            "4.10-оксареп":"img/photos/admin/4.10-оксареп/4.10-оксареп-01.jpg",
-            "4.10-мазь-мастисепт-а":"img/photos/admin/4.10-мазь-мастисепт-а/4.10-мазь-мастисепт-а-01.jpg",
-            "4.10-мазь-левомеколь-вет":"img/photos/admin/4.10-мазь-левомеколь-вет/4.10-мазь-левомеколь-вет-01.jpg",
-            "4.10-нутризан":"img/photos/admin/4.10-нутризан/4.10-нутризан-01.jpg"
+            "4.10-витам":"img/photos/admin/4.10-витам/4.10-витам-01.jpg",
+            "4.10-кабуфол-нита":"img/photos/admin/4.10-кабуфол-нита/4.10-кабуфол-нита-01.jpg"
           }
-          attached=[]
           for pid,img in mapping.items():
             if Path(img).is_file():
               obj=products.setdefault(pid,{})
-              obj["images"]=[img]; obj["__frozen"]=True; attached.append(pid)
+              obj["images"]=[img]; obj["__frozen"]=True
           p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print("Attached:",len(attached),attached)
           PY
       - name: Commit imported files
         shell: bash
@@ -63,5 +57,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/admin-overrides.json img/photos/admin/4.10-* 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Add verified product photos to section 4.10 batch 7"
+          git commit -m "Add verified product photos to section 4.10 batch 8"
           git push
