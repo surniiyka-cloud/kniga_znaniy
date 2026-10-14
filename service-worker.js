@@ -26,13 +26,13 @@ self.addEventListener("fetch",event=>{
   if(event.request.mode==="navigate"||isFreshAsset){
     const cacheKey=new Request(url.origin+url.pathname);
     event.respondWith(fetch(event.request,{cache:"no-store"}).then(response=>{
-      if(response.ok)event.waitUntil(caches.open(CACHE).then(c=>c.put(cacheKey,response.clone())).catch(()=>{}));
+      if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(cacheKey,copy)).catch(()=>{}));}
       return response;
     }).catch(()=>caches.match(cacheKey).then(x=>x||(event.request.mode==="navigate"?caches.match("./index.html"):Response.error()))));
     return;
   }
   event.respondWith(caches.match(event.request).then(hit=>hit&&hit.ok?hit:fetch(event.request).then(response=>{
-    if(response.ok)event.waitUntil(caches.open(CACHE).then(c=>c.put(event.request,response.clone())).catch(()=>{}));
+    if(response.ok){const copy=response.clone();event.waitUntil(caches.open(CACHE).then(c=>c.put(event.request,copy)).catch(()=>{}));}
     return response;
   })));
 });
