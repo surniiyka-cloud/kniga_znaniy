@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:02:24.938Z",
+  "updatedAt": "2026-10-14T09:09:22.219Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -18921,6 +18921,11 @@
         ]
       },
       "__frozen": true
+    },
+    "2.11-10006320-agrastrip-watex-дезоксиниваленол": {
+      "images": [
+        "img/photos/admin/2.11-10006320-agrastrip-watex-дезоксиниваленол/2.11-10006320-agrastrip-watex-дезоксиниваленол-01.webp"
+      ]
     }
   },
   "sections": {
