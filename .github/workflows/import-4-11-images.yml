@@ -1,4 +1,4 @@
-name: Analyze official Rubikon photos for section 4.11
+name: Import exact Rubikon photos for section 4.11
 
 on:
   push:
@@ -9,29 +9,30 @@ permissions:
   contents: write
 
 jobs:
-  analyze:
+  import:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - run: pip install -q requests beautifulsoup4
+      - run: pip install -q requests beautifulsoup4 pillow
 
-      - name: Crawl official Rubikon site and match section 4.11
+      - name: Import exact Rubikon product images from VetFarmGarant
         shell: bash
         run: |
           python3 - <<'PY'
-          import json,re,time
+          import io,json,re,time,mimetypes
           from pathlib import Path
           from urllib.parse import urljoin,urlparse
           from difflib import SequenceMatcher
           import requests
           from bs4 import BeautifulSoup
+          from PIL import Image
 
-          BASES=["https://rubikonvet.by","http://rubikonvet.by"]
+          BASE="https://www.vetfarmgarant.ru"
           s=requests.Session()
-          s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/2.0)"})
+          s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/2.1)"})
 
           def norm(x):
               x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
@@ -39,118 +40,135 @@ jobs:
               x=re.sub(r"[^a-zа-я0-9%.,+ ]+"," ",x)
               return re.sub(r"\s+"," ",x).strip(" .,-")
 
-          def nums(x):
-              return re.findall(r"\d+(?:[.,]\d+)?",norm(x))
-
           idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
           arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
           targets=[x for x in arr if str(x.get("section"))=="4.11"]
-          by_norm={norm(x["name"]):x for x in targets}
+          target_norm={norm(x["name"]):x for x in targets}
 
-          def fetch(url):
-              try:
-                  r=s.get(url,timeout=30,allow_redirects=True)
-                  if r.status_code==200 and "text/html" in r.headers.get("content-type","text/html"):
-                      return r
-              except Exception:
-                  return None
+          overrides_path=Path("data/admin-overrides.json")
+          overrides=json.loads(overrides_path.read_text(encoding="utf-8"))
+          products=overrides.setdefault("products",{})
 
-          # Discover links from homepage, sitemap(s) and a shallow crawl.
-          seeds=[]
-          live_base=None
-          for base in BASES:
-              r=fetch(base+"/")
-              if r:
-                  live_base=base
-                  seeds.append(base+"/")
-                  for sm in ["/sitemap.xml","/sitemap_index.xml"]:
-                      try:
-                          x=s.get(base+sm,timeout=20)
-                          if x.status_code==200:
-                              for loc in re.findall(r"<loc>(.*?)</loc>",x.text,re.I|re.S):
-                                  seeds.append(loc.strip())
-                      except Exception:
-                          pass
-                  break
-
-          pages=[]
+          # discover product URLs from all catalog pages and category pages
+          queue=[BASE+"/catalog/"]
           seen=set()
-          q=list(dict.fromkeys(seeds))
-          max_pages=500
-          while q and len(seen)<max_pages:
-              url=q.pop(0)
-              if url in seen: continue
-              seen.add(url)
-              r=fetch(url)
-              if not r: continue
-              soup=BeautifulSoup(r.text,"html.parser")
-              title=(soup.find("h1") or soup.find("title"))
-              title=title.get_text(" ",strip=True) if title else ""
-              text=soup.get_text(" ",strip=True)
-              imgs=[]
-              for im in soup.find_all("img"):
-                  src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
-                  if not src: continue
-                  src=urljoin(r.url,src)
-                  low=src.lower()
-                  if any(z in low for z in ["logo","icon","sprite","captcha","placeholder","no-image"]): continue
-                  if src.startswith("http"):
-                      imgs.append({"src":src,"alt":im.get("alt","")})
-              pages.append({"url":r.url,"title":title,"text":text[:5000],"images":imgs[:30]})
+          product_urls=set()
+          for n in range(1,16):
+              queue.append(BASE+f"/catalog/?PAGEN_1={n}")
+          for cat in ["krs","mrs","svinovodstvo","ptitsevodstvo"]:
+              queue.append(BASE+f"/catalog/{cat}/")
 
-              # shallow same-domain crawl
-              if live_base and len(seen)<220:
-                  host=urlparse(live_base).netloc
+          for url in queue:
+              try:
+                  r=s.get(url,timeout=35)
+                  if r.status_code!=200: continue
+                  soup=BeautifulSoup(r.text,"html.parser")
                   for a in soup.find_all("a",href=True):
                       href=urljoin(r.url,a["href"]).split("#")[0]
-                      if urlparse(href).netloc==host and href not in seen and href not in q:
-                          if not re.search(r"\.(pdf|docx?|xlsx?|zip|jpg|jpeg|png|webp)$",href,re.I):
-                              q.append(href)
+                      if "/catalog/" not in href: continue
+                      p=urlparse(href).path.rstrip("/")
+                      parts=[x for x in p.split("/") if x]
+                      if len(parts)>=3 and parts[0]=="catalog":
+                          product_urls.add(href)
+              except Exception as e:
+                  print("LIST_ERR",url,e)
 
-          suggestions=[]
-          for t in targets:
-              tn=norm(t["name"]); ns=nums(tn); cand=[]
-              for p in pages:
-                  pn=norm(p["title"])
-                  if not pn: continue
-                  if ns and nums(pn)!=ns: continue
-                  score=SequenceMatcher(None,tn,pn).ratio()
-                  if tn==pn: score=1
-                  elif tn in pn or pn in tn: score=max(score,.94)
-                  # Require Rubikon context and product-like image.
-                  if score<.76: continue
-                  ctx=norm(p["text"])
-                  if "рубикон" not in ctx and "rubikon" not in ctx: continue
-                  good=[]
-                  for im in p["images"]:
-                      a=norm(im.get("alt","")); u=im.get("src","")
-                      if tn in a or a in tn or score>=.94:
-                          good.append(im)
-                  if good:
-                      cand.append({"title":p["title"],"url":p["url"],"score":round(score,3),"images":good[:10]})
-              cand=sorted(cand,key=lambda x:x["score"],reverse=True)[:5]
-              suggestions.append({"id":t["id"],"name":t["name"],"numbers":ns,"candidates":cand})
+          print("product urls",len(product_urls))
+          matches=[]
+          for url in sorted(product_urls):
+              try:
+                  r=s.get(url,timeout=35)
+                  if r.status_code!=200: continue
+                  soup=BeautifulSoup(r.text,"html.parser")
+                  h1=soup.find("h1")
+                  if not h1: continue
+                  title=h1.get_text(" ",strip=True)
+                  nt=norm(title)
+                  target=target_norm.get(nt)
+                  if not target: continue
+                  txt=norm(soup.get_text(" ",strip=True))
+                  if "производитель рубикон" not in txt and "производитель: рубикон" not in txt:
+                      continue
 
+                  pid=target["id"]
+                  existing=products.get(pid,{})
+                  if existing.get("images"):
+                      matches.append({"id":pid,"name":target["name"],"url":url,"status":"already-has-image"})
+                      continue
+
+                  candidates=[]
+                  og=soup.find("meta",property="og:image")
+                  if og and og.get("content"):
+                      candidates.append(urljoin(r.url,og["content"]))
+                  for im in soup.find_all("img"):
+                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
+                      if not src: continue
+                      src=urljoin(r.url,src)
+                      low=src.lower()
+                      if any(z in low for z in ["logo","icon","sprite","captcha","placeholder","no-image"]):
+                          continue
+                      candidates.append(src)
+
+                  # unique, then validate dimensions and image bytes
+                  uniq=[]
+                  for u in candidates:
+                      if u not in uniq and u.startswith("http"): uniq.append(u)
+
+                  chosen=None; data=None; ext=None
+                  for u in uniq:
+                      try:
+                          ir=s.get(u,timeout=35)
+                          if ir.status_code!=200 or len(ir.content)<5000: continue
+                          ctype=ir.headers.get("content-type","").lower()
+                          if not ctype.startswith("image/"): continue
+                          im=Image.open(io.BytesIO(ir.content))
+                          w,h=im.size
+                          if w<250 or h<250: continue
+                          # avoid banners / super-wide decorative images
+                          if w/h>3.2 or h/w>3.2: continue
+                          chosen=u; data=ir.content
+                          fmt=(im.format or "").lower()
+                          ext={ "jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp" }.get(fmt,".jpg")
+                          break
+                      except Exception:
+                          continue
+
+                  if not chosen:
+                      matches.append({"id":pid,"name":target["name"],"url":url,"status":"exact-page-no-usable-image"})
+                      continue
+
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+                  out.parent.mkdir(parents=True,exist_ok=True)
+                  out.write_bytes(data)
+                  products[pid]={"images":[str(out)],"__frozen":True}
+                  matches.append({"id":pid,"name":target["name"],"url":url,"image":chosen,"path":str(out),"status":"imported"})
+                  print("IMPORTED",target["name"],chosen)
+              except Exception as e:
+                  print("DETAIL_ERR",url,e)
+              time.sleep(0.03)
+
+          overrides_path.write_text(json.dumps(overrides,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
           report={
-              "source":"rubikonvet.by",
-              "live_base":live_base,
+              "source":"vetfarmgarant.ru",
               "targets":len(targets),
-              "pages_scanned":len(pages),
-              "matched_targets":sum(bool(x["candidates"]) for x in suggestions),
-              "suggestions":suggestions
+              "product_urls":len(product_urls),
+              "imported":sum(x["status"]=="imported" for x in matches),
+              "already":sum(x["status"]=="already-has-image" for x in matches),
+              "no_usable_image":sum(x["status"]=="exact-page-no-usable-image" for x in matches),
+              "items":matches
           }
-          Path("data/import-4.11-official-candidates.json").write_text(
+          Path("data/import-4.11-vetfarm-exact-report.json").write_text(
               json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print(json.dumps({k:report[k] for k in ["live_base","targets","pages_scanned","matched_targets"]},ensure_ascii=False))
+          print(json.dumps({k:report[k] for k in ["targets","product_urls","imported","already","no_usable_image"]},ensure_ascii=False))
           PY
 
-      - name: Commit official-source report
+      - name: Commit imported images
         shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/import-4.11-official-candidates.json
+          git add data/admin-overrides.json data/import-4.11-vetfarm-exact-report.json img/photos/admin/4.11-* || true
           git diff --cached --quiet && exit 0
-          git commit -m "Analyze official Rubikon images for section 4.11"
+          git commit -m "Import exact VetFarm Rubikon photos for section 4.11"
           git push
