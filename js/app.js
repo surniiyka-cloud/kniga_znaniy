@@ -1616,6 +1616,33 @@ function activeNav(){
   if(sid)document.querySelector('.nav-link[data-nav-section="'+CSS.escape(sid)+'"]')?.classList.add("active");
 }
 function imageSrc(v){const s=String(v||"");return /^https?:\/\//i.test(s)||s.startsWith("data:")||s.startsWith("./")?s:"./"+s;}
+
+function enablePhotoRetry(){
+  // A newly published photo may briefly return 404 while GitHub Pages deploys.
+  // Retry failed visible images without refreshing the entire Knowledge Book.
+  document.addEventListener("error",event=>{
+    const img=event.target;
+    if(!(img instanceof HTMLImageElement))return;
+    const path=img.closest("[data-photo-row]")?.dataset.path||img.src;
+    let url;
+    try{url=new URL(path,location.href)}catch{return}
+    if(url.origin!==location.origin||!url.pathname.includes("/img/photos/"))return;
+    const tries=Number(img.dataset.kbPhotoRetries||0);
+    if(tries>=3){
+      img.title="Фотография пока недоступна. Попробуйте «Обновить фото» в личном кабинете.";
+      return;
+    }
+    img.dataset.kbPhotoRetries=String(tries+1);
+    setTimeout(()=>{
+      if(!img.isConnected)return;
+      const fresh=new URL(path,location.href);
+      fresh.searchParams.set("kb-retry",Date.now().toString(36)+"-"+(tries+1));
+      img.src=fresh.toString();
+    },[1300,3500,7000][tries]);
+  },true);
+}
+enablePhotoRetry();
+
 function imageView(p,path,context="card"){
   const raw=p?.imageSettings?.[path]||{},legacy=raw&&("scale" in raw||"x" in raw||"y" in raw||"fit" in raw)?raw:null;
   const v=raw?.[context]||legacy||{},num=(x,d,min,max)=>{const n=Number(x);return Number.isFinite(n)?Math.min(max,Math.max(min,n)):d};
