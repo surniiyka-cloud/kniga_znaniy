@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:54:44.149Z",
+  "updatedAt": "2026-10-14T09:57:19.251Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19713,6 +19713,12 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "3.7-0406-091-5506-2-5503-5-0406-101-фильтр-рукавный": {
+      "images": [
+        "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-a-germaniya.png",
+        "img/photos/16-filtry-i-soputstvuyushchie-tovary/16-filtr-rukav-ankar-polsha.png"
       ]
     }
   },
