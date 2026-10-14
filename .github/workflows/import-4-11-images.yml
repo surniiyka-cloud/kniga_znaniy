@@ -1,4 +1,4 @@
-name: Import verified 4.11 product photos batch 2
+name: Import verified 4.11 product photos batch 3
 
 on:
   push:
@@ -15,35 +15,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Download verified images
+      - name: Download exact official images
         shell: bash
         run: |
-          set -u
-          get() {
-            url="$1"; out="$2"; mkdir -p "$(dirname "$out")"; tmp="${out}.tmp"; rm -f "$tmp" "$out"
-            if ! curl -fL --retry 3 --retry-delay 1 --connect-timeout 20 --max-time 120 -A "Mozilla/5.0" "$url" -o "$tmp"; then
-              echo "SKIP $url"; rm -f "$tmp"; return 0
-            fi
-            mime="$(file -b --mime-type "$tmp" || true)"
-            case "$mime" in
-              image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out" ;;
-              *) echo "SKIP MIME $mime"; rm -f "$tmp" ;;
-            esac
-          }
-
-          get "https://vetsnab.info/wp-content/uploads/2021/09/marbofloks-tmb.jpg" "img/photos/admin/4.11-марбофлокс-2/4.11-марбофлокс-2-01.jpg"
-          get "https://vetsnab.info/wp-content/uploads/2021/05/polibrom-koncentrat.jpg" "img/photos/admin/4.11-полибром-концентрат/4.11-полибром-концентрат-01.jpg"
-
-          get "https://rubikon-agro.com/images/prep/rateid.JPG" "img/photos/admin/4.11-ратеид/4.11-ратеид-01.jpg"
-          get "https://rubikon-agro.com/images/prep/Ratox.JPG" "img/photos/admin/4.11-ратокс/4.11-ратокс-01.jpg"
-          get "https://rubikon-agro.com/images/prep/ektofena.JPG" "img/photos/admin/4.11-эктофен/4.11-эктофен-01.jpg"
-          get "https://rubikon-agro.com/images/prep/racidol.JPG" "img/photos/admin/4.11-рацидол/4.11-рацидол-01.jpg"
-          get "https://rubikon-agro.com/images/prep/fluatrin.JPG" "img/photos/admin/4.11-флуатрин/4.11-флуатрин-01.jpg"
-          get "https://rubikon-agro.com/images/prep/tayfun.JPG" "img/photos/admin/4.11-тайфун/4.11-тайфун-01.jpg"
-          get "https://rubikon-agro.com/images/prep/glutar.JPG" "img/photos/admin/4.11-глютар/4.11-глютар-01.jpg"
-          get "https://rubikon-agro.com/images/prep/mikofarm.JPG" "img/photos/admin/4.11-микофарм/4.11-микофарм-01.jpg"
-
-      - name: Attach successful images
+          set -e
+          mkdir -p "img/photos/admin/4.11-тайфун" "img/photos/admin/4.11-микофарм"
+          curl -fL --retry 3 -A "Mozilla/5.0" "https://rubikon-agro.com/images/tayfun.JPG" -o "img/photos/admin/4.11-тайфун/4.11-тайфун-01.jpg"
+          curl -fL --retry 3 -A "Mozilla/5.0" "https://rubikon-agro.com/images/prep/microfarm.JPG" -o "img/photos/admin/4.11-микофарм/4.11-микофарм-01.jpg"
+          file "img/photos/admin/4.11-тайфун/4.11-тайфун-01.jpg"
+          file "img/photos/admin/4.11-микофарм/4.11-микофарм-01.jpg"
+      - name: Attach
         shell: bash
         run: |
           python3 - <<'PY'
@@ -53,34 +34,20 @@ jobs:
           data=json.loads(p.read_text(encoding="utf-8"))
           products=data.setdefault("products",{})
           mapping={
-            "4.11-марбофлокс-2":"img/photos/admin/4.11-марбофлокс-2/4.11-марбофлокс-2-01.jpg",
-            "4.11-полибром-концентрат":"img/photos/admin/4.11-полибром-концентрат/4.11-полибром-концентрат-01.jpg",
-            "4.11-ратеид":"img/photos/admin/4.11-ратеид/4.11-ратеид-01.jpg",
-            "4.11-ратокс":"img/photos/admin/4.11-ратокс/4.11-ратокс-01.jpg",
-            "4.11-эктофен":"img/photos/admin/4.11-эктофен/4.11-эктофен-01.jpg",
-            "4.11-рацидол":"img/photos/admin/4.11-рацидол/4.11-рацидол-01.jpg",
-            "4.11-флуатрин":"img/photos/admin/4.11-флуатрин/4.11-флуатрин-01.jpg",
             "4.11-тайфун":"img/photos/admin/4.11-тайфун/4.11-тайфун-01.jpg",
-            "4.11-глютар":"img/photos/admin/4.11-глютар/4.11-глютар-01.jpg",
             "4.11-микофарм":"img/photos/admin/4.11-микофарм/4.11-микофарм-01.jpg"
           }
-          attached=[]
           for pid,img in mapping.items():
-            if Path(img).is_file():
               obj=products.setdefault(pid,{})
               obj["images"]=[img]
               obj["__frozen"]=True
-              attached.append(pid)
           p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print("Attached",len(attached),attached)
           PY
       - name: Commit
         shell: bash
         run: |
-          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json img/photos/admin/4.11-* 2>/dev/null || true
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Add verified product photos to section 4.11 batch 2"
+          git add data/admin-overrides.json img/photos/admin/4.11-тайфун img/photos/admin/4.11-микофарм
+          git commit -m "Add official Tayfun and Mikofarm photos to section 4.11"
           git push
