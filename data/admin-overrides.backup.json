@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:07:24.802Z",
+  "updatedAt": "2026-10-14T11:07:39.721Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20071,6 +20071,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-2.11-ringbio-t2": {
+      "images": [
+        "img/photos/admin/manual-2.11-ringbio-t2/manual-2.11-ringbio-t2-01.webp"
+      ]
     }
   },
   "sections": {
@@ -20575,7 +20580,9 @@
               "Быстрая оценка результата без считывающего устройства"
             ]
           ],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-ringbio-t2/manual-2.11-ringbio-t2-01.webp"
+          ]
         },
         "manual-2.11-ringbio-fumonisin": {
           "id": "manual-2.11-ringbio-fumonisin",
