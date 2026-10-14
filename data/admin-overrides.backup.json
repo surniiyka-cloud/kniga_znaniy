@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:14:37.109Z",
+  "updatedAt": "2026-10-14T11:15:00.882Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20301,6 +20301,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-2.11-agraquant-ochratoxin": {
+      "images": [
+        "img/photos/admin/manual-2.11-agraquant-ochratoxin/manual-2.11-agraquant-ochratoxin-01.webp"
+      ]
     }
   },
   "sections": {
@@ -21042,7 +21047,9 @@
           ],
           "group": "Экспресс ИФА тест-системы",
           "advantages": [],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-agraquant-ochratoxin/manual-2.11-agraquant-ochratoxin-01.webp"
+          ]
         },
         "manual-2.11-agraquant-zearalenone-plus": {
           "id": "manual-2.11-agraquant-zearalenone-plus",
