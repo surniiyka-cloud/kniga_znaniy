@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 6
+name: Import 4.10 product images batch 7
 
 on:
   push:
@@ -27,10 +27,10 @@ jobs:
             case "$mime" in image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;; *) echo "SKIP MIME $mime"; rm -f "$tmp" ;; esac
           }
 
-          download_optional "https://farmaks.com/upload/dev2fun.imagecompress/webp/iblock/589/rx9cbxfhwotkh5r7julnrhrliyayeb81/gempotin_100ml-_1_.webp" "img/photos/admin/4.10-гемпотин-с-распылителем/4.10-гемпотин-с-распылителем-01.webp"
-          download_optional "https://areal-vet.ru/image/cache/catalog/antibakterialnye/m-500x500.png" "img/photos/admin/4.10-гелерон/4.10-гелерон-01.png"
-          download_optional "https://pettown.ru/upload/iblock/b24/d2hvx01826xqv42a6cxl2b8tkzk4h1cl.jpg" "img/photos/admin/4.10-бутастим-асконт/4.10-бутастим-асконт-01.jpg"
-          download_optional "https://askont.ru/media/pages/101/antitoks.png" "img/photos/admin/4.10-антитокс/4.10-антитокс-01.png"
+          download_optional "https://avzvet.ru/upload/iblock/821/j9jimfyf8viv6wv073chkla78mktjc1c/oxarep_500ml_face.jpg" "img/photos/admin/4.10-оксареп/4.10-оксареп-01.jpg"
+          download_optional "https://pettown.ru/upload/iblock/300/nvvry0lj47m6zjefo1bgkmloyvmfvhpu.jpg" "img/photos/admin/4.10-мазь-мастисепт-а/4.10-мазь-мастисепт-а-01.jpg"
+          download_optional "https://vetapteka1.ru/upload/iblock/af1/k6epoae5un5899dgy5ddeiu7620dibru/levomikol.jpg" "img/photos/admin/4.10-мазь-левомеколь-вет/4.10-мазь-левомеколь-вет-01.jpg"
+          download_optional "https://zoovostorg.com/image/cache/catalog/product/35241/1-1000x1000.jpg" "img/photos/admin/4.10-нутризан/4.10-нутризан-01.jpg"
 
       - name: Attach successful images
         shell: bash
@@ -42,16 +42,18 @@ jobs:
           data=json.loads(p.read_text(encoding="utf-8"))
           products=data.setdefault("products",{})
           mapping={
-            "4.10-гемпотин-с-распылителем":"img/photos/admin/4.10-гемпотин-с-распылителем/4.10-гемпотин-с-распылителем-01.webp",
-            "4.10-гелерон":"img/photos/admin/4.10-гелерон/4.10-гелерон-01.png",
-            "4.10-бутастим-асконт":"img/photos/admin/4.10-бутастим-асконт/4.10-бутастим-асконт-01.jpg",
-            "4.10-антитокс":"img/photos/admin/4.10-антитокс/4.10-антитокс-01.png"
+            "4.10-оксареп":"img/photos/admin/4.10-оксареп/4.10-оксареп-01.jpg",
+            "4.10-мазь-мастисепт-а":"img/photos/admin/4.10-мазь-мастисепт-а/4.10-мазь-мастисепт-а-01.jpg",
+            "4.10-мазь-левомеколь-вет":"img/photos/admin/4.10-мазь-левомеколь-вет/4.10-мазь-левомеколь-вет-01.jpg",
+            "4.10-нутризан":"img/photos/admin/4.10-нутризан/4.10-нутризан-01.jpg"
           }
+          attached=[]
           for pid,img in mapping.items():
             if Path(img).is_file():
               obj=products.setdefault(pid,{})
-              obj["images"]=[img]; obj["__frozen"]=True
+              obj["images"]=[img]; obj["__frozen"]=True; attached.append(pid)
           p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("Attached:",len(attached),attached)
           PY
       - name: Commit imported files
         shell: bash
@@ -61,5 +63,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/admin-overrides.json img/photos/admin/4.10-* 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Add verified product photos to section 4.10 batch 6"
+          git commit -m "Add verified product photos to section 4.10 batch 7"
           git push
