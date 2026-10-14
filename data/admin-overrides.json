@@ -23262,6 +23262,18 @@
         "img/photos/admin/4.11-глютар/4.11-глютар-01.jpg"
       ],
       "__frozen": true
+    },
+    "4.11-тайфун": {
+      "images": [
+        "img/photos/admin/4.11-тайфун/4.11-тайфун-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-микофарм": {
+      "images": [
+        "img/photos/admin/4.11-микофарм/4.11-микофарм-01.jpg"
+      ],
+      "__frozen": true
     }
   },
   "sections": {
