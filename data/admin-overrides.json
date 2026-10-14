@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:26:37.181Z",
+  "updatedAt": "2026-10-14T11:28:20.080Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20411,6 +20411,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-2.11-testsip-afla": {
+      "images": [
+        "img/photos/admin/manual-2.11-testsip-afla/manual-2.11-testsip-afla-01.webp"
+      ]
     }
   },
   "sections": {
@@ -21268,7 +21273,9 @@
           ],
           "group": "Экспресс ИФА тест-системы",
           "advantages": [],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-testsip-afla/manual-2.11-testsip-afla-01.webp"
+          ]
         },
         "manual-2.11-testsip-t2": {
           "id": "manual-2.11-testsip-t2",
