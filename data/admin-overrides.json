@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:16:16.391Z",
+  "updatedAt": "2026-10-14T09:16:26.906Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19146,6 +19146,72 @@
     "2.11-10006316-agrastrip-watex-зеараленон": {
       "images": [
         "img/photos/admin/2.11-10006316-agrastrip-watex-зеараленон/2.11-10006316-agrastrip-watex-зеараленон-01.webp"
+      ],
+      "name": "AgraStrip Watex Зеараленон",
+      "article": "10006316",
+      "features": "Водная экстракция; анализ до 15 минут",
+      "group": "AgraStrip Pro WATEX",
+      "sourceRow": 6,
+      "candidateId": "10006316-agrastrip-watex-зеараленон",
+      "detailFields": [
+        [
+          "Артикул",
+          "10006316"
+        ],
+        [
+          "Определяемый микотоксин",
+          "Зеараленон"
+        ],
+        [
+          "Диапазон, ppb (мкг/кг)",
+          "0–1650"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Водная экстракция"
+        ],
+        [
+          "Особенность 2",
+          "Анализ до 15 минут"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
