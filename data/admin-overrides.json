@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:41:20.407Z",
+  "updatedAt": "2026-10-14T12:41:53.807Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22176,6 +22176,88 @@
     "manual-9.1-kf-b-6l": {
       "images": [
         "img/photos/admin/manual-9.1-kf-b-6l/manual-9.1-kf-b-6l-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-B-6L",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для обработки сада от вредителей и болезней и других работ с рабочими растворами.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Аккумуляторный ранцевый опрыскиватель"
+        ],
+        [
+          "Объём",
+          "6 л"
+        ],
+        [
+          "Аккумулятор",
+          "2 А·ч, 12 В, съёмный"
+        ],
+        [
+          "Расход",
+          "До 1,6 л/мин"
+        ],
+        [
+          "Максимальная дальность распыления",
+          "Около 1 м"
+        ],
+        [
+          "Длина шланга",
+          "120 см"
+        ],
+        [
+          "Длина штанги",
+          "86 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Ранцевое исполнение",
+          "Удобно для переноски."
+        ],
+        [
+          "Стабильная подача",
+          "Электрический насос исключает ручную подкачку."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "GARTENA / DEZKOVRIK marketplace card, KF-B-6L",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -23984,11 +24066,11 @@
             ],
             [
               "Расход",
-              "до 1,6 л/мин"
+              "До 1,6 л/мин"
             ],
             [
               "Максимальная дальность распыления",
-              "около 1 м"
+              "Около 1 м"
             ],
             [
               "Длина шланга",
@@ -24015,7 +24097,40 @@
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "GARTENA / DEZKOVRIK marketplace card, KF-B-6L"
+          "sourceInfo": "GARTENA / DEZKOVRIK marketplace card, KF-B-6L",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-b-8l": {
           "id": "manual-9.1-kf-b-8l",
