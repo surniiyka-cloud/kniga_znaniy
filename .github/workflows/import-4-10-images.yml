@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 12
+name: Import 4.10 product images batch 13
 
 on:
   push:
@@ -27,10 +27,9 @@ jobs:
             case "$mime" in image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;; *) echo "SKIP MIME $mime"; rm -f "$tmp" ;; esac
           }
 
-          download_optional "https://pettown.ru/upload/iblock/d90/dr5h7yu8qxtn0sq0f5686neughblyspj.jpg" "img/photos/admin/4.10-ветбензицин-3/4.10-ветбензицин-3-01.jpg"
-          download_optional "https://biohimfarm.ru/wp-content/uploads/2015/02/biostomasan.png" "img/photos/admin/4.10-биостомасан/4.10-биостомасан-01.png"
-          download_optional "https://farmvet.ru/images/products/kliodeziv.jpg" "img/photos/admin/4.10-клиодезив/4.10-клиодезив-01.jpg"
-          download_optional "https://farmvet.ru/images/products/kliodeziv-dez.jpg" "img/photos/admin/4.10-клиодезив-дез/4.10-клиодезив-дез-01.jpg"
+          download_optional "https://www.nita-farm.ru/upload/iblock/bbb/yrqu9a22nc5ufmtlcujhypt39iwwldu6.webp" "img/photos/admin/4.10-кабуфол-нита/4.10-кабуфол-нита-01.webp"
+          download_optional "https://askont.ru/media/pages/103/butastim.png" "img/photos/admin/4.10-бутастим-асконт/4.10-бутастим-асконт-01.png"
+          download_optional "https://zoovostorg.com/image/cache/catalog/product/33614/1-500x500.jpg" "img/photos/admin/4.10-раствор-рингера-локка/4.10-раствор-рингера-локка-01.jpg"
 
       - name: Attach successful images
         shell: bash
@@ -42,10 +41,9 @@ jobs:
           data=json.loads(p.read_text(encoding="utf-8"))
           products=data.setdefault("products",{})
           mapping={
-            "4.10-ветбензицин-3":"img/photos/admin/4.10-ветбензицин-3/4.10-ветбензицин-3-01.jpg",
-            "4.10-биостомасан":"img/photos/admin/4.10-биостомасан/4.10-биостомасан-01.png",
-            "4.10-клиодезив":"img/photos/admin/4.10-клиодезив/4.10-клиодезив-01.jpg",
-            "4.10-клиодезив-дез":"img/photos/admin/4.10-клиодезив-дез/4.10-клиодезив-дез-01.jpg"
+            "4.10-кабуфол-нита":"img/photos/admin/4.10-кабуфол-нита/4.10-кабуфол-нита-01.webp",
+            "4.10-бутастим-асконт":"img/photos/admin/4.10-бутастим-асконт/4.10-бутастим-асконт-01.png",
+            "4.10-раствор-рингера-локка":"img/photos/admin/4.10-раствор-рингера-локка/4.10-раствор-рингера-локка-01.jpg"
           }
           for pid,img in mapping.items():
             if Path(img).is_file():
@@ -61,5 +59,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/admin-overrides.json img/photos/admin/4.10-* 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Add verified product photos to section 4.10 batch 12"
+          git commit -m "Add verified product photos to section 4.10 batch 13"
           git push
