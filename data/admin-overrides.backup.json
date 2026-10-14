@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T07:35:28.724Z",
+  "updatedAt": "2026-10-14T07:35:39.187Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -16747,6 +16747,90 @@
     "9.1-опрыскиватель-пневматический-gartena-tm-18ld": {
       "images": [
         "img/photos/admin/9.1-опрыскиватель-пневматический-gartena-tm-18ld/9.1-опрыскиватель-пневматический-gartena-tm-18ld-01.webp"
+      ],
+      "name": "Опрыскиватель пневматический Gartena TM-18LD",
+      "sourceRow": 0,
+      "article": "Без артикула",
+      "type": "Пневматический опрыскиватель",
+      "purpose": "Обработка сада и дома",
+      "manufacturer": "",
+      "country": "",
+      "detailFields": [
+        [
+          "Артикул",
+          "Без артикула"
+        ],
+        [
+          "Тип",
+          "Пневматический опрыскиватель"
+        ],
+        [
+          "Назначение",
+          "Обработка сада и дома"
+        ],
+        [
+          "Артикул из каталога",
+          "Без артикула"
+        ],
+        [
+          "Объем бака",
+          "18 л"
+        ],
+        [
+          "Большой объем бака",
+          "18 литров"
+        ],
+        [
+          "Простота",
+          "Пневматический механизм"
+        ],
+        [
+          "Универсальность",
+          "Для сада и дома"
+        ],
+        [
+          "Эргономика",
+          "Наплечный ремень"
+        ],
+        [
+          "Надежность",
+          "Прочная конструкция"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "advantages": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
