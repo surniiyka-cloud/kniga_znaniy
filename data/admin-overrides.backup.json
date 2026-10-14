@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:15:00.882Z",
+  "updatedAt": "2026-10-14T11:25:28.655Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20305,6 +20305,56 @@
     "manual-2.11-agraquant-ochratoxin": {
       "images": [
         "img/photos/admin/manual-2.11-agraquant-ochratoxin/manual-2.11-agraquant-ochratoxin-01.webp"
+      ],
+      "name": "AgraQuant Охратоксин",
+      "article": "10002118/2119",
+      "type": "Экспресс ИФА тест-система",
+      "purpose": "Количественное определение микотоксинов методом ИФА (ELISA).",
+      "detailFields": [
+        [
+          "Количество",
+          "48/96 лунок"
+        ],
+        [
+          "Количественный диапазон измерения, ppb (мкг/кг)",
+          "2–40"
+        ]
+      ],
+      "group": "Экспресс ИФА тест-системы",
+      "advantages": [],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -21049,6 +21099,40 @@
           "advantages": [],
           "images": [
             "img/photos/admin/manual-2.11-agraquant-ochratoxin/manual-2.11-agraquant-ochratoxin-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-agraquant-zearalenone-plus": {
