@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T10:21:06.240Z",
+  "updatedAt": "2026-10-14T10:21:13.575Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -4271,6 +4271,9 @@
         "assortment",
         "consumables",
         "testKits"
+      ],
+      "images": [
+        "img/photos/admin/8.1-0404-050-щетка-с-круглой-ручкой-ankar/8.1-0404-050-щетка-с-круглой-ручкой-ankar-01.webp"
       ]
     },
     "8.1-0404-051-щетка-для-мытья-ankar": {
