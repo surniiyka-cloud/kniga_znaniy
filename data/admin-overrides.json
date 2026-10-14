@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:27:31.263Z",
+  "updatedAt": "2026-10-14T12:31:37.309Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21755,6 +21755,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-9.1-kf-7c-2": {
+      "images": [
+        "img/photos/admin/manual-9.1-kf-7c-2/manual-9.1-kf-7c-2-01.webp"
+      ]
     }
   },
   "sections": {
@@ -23187,7 +23192,9 @@
             "Набор прокладок",
             "Упаковка"
           ],
-          "images": [],
+          "images": [
+            "img/photos/admin/manual-9.1-kf-7c-2/manual-9.1-kf-7c-2-01.webp"
+          ],
           "manufacturer": "GARTENA",
           "country": "",
           "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-7C-2"
