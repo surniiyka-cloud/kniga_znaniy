@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:54:00.900Z",
+  "updatedAt": "2026-10-14T12:54:09.832Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22564,6 +22564,96 @@
     "manual-9.1-kf-10l-1": {
       "images": [
         "img/photos/admin/manual-9.1-kf-10l-1/manual-9.1-kf-10l-1-01.webp"
+      ],
+      "name": "Опрыскиватель пневматический помповый Gartena KF-10L-1, нержавеющая сталь",
+      "article": "Без артикула",
+      "type": "Пневматический помповый опрыскиватель",
+      "purpose": "Для профессионального распыления рабочих растворов; бак из нержавеющей стали.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Пневматический помповый опрыскиватель"
+        ],
+        [
+          "Объём",
+          "10 л"
+        ],
+        [
+          "Материал бака",
+          "Нержавеющая сталь"
+        ],
+        [
+          "Длина штанги",
+          "370–640 мм"
+        ],
+        [
+          "Длина шланга",
+          "2,5 м"
+        ],
+        [
+          "Химстойкость",
+          "Да"
+        ],
+        [
+          "Регулировка распыления",
+          "Да"
+        ],
+        [
+          "Класс",
+          "Профессиональный"
+        ],
+        [
+          "Габариты",
+          "650×280×255 мм"
+        ]
+      ],
+      "advantages": [
+        [
+          "Нержавеющая сталь",
+          "Прочный химстойкий бак."
+        ],
+        [
+          "Профессиональное исполнение",
+          "Удлинённый шланг 2,5 м и регулируемая штанга."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "Официальная карточка GARTENA у профильного продавца, KF-10L-1",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -24811,7 +24901,40 @@
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "Официальная карточка GARTENA у профильного продавца, KF-10L-1"
+          "sourceInfo": "Официальная карточка GARTENA у профильного продавца, KF-10L-1",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-50c-1": {
           "id": "manual-9.1-kf-50c-1",
