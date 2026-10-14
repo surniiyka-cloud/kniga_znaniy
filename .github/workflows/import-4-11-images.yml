@@ -1,4 +1,4 @@
-name: Analyze VetFarmGarant photos for section 4.11
+name: Analyze Vetar Rubikon photos for section 4.11
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 1
       - run: pip install -q requests beautifulsoup4
-      - name: Scrape Rubikon catalog candidates
+      - name: Scrape Vetar Rubikon catalog
         shell: bash
         run: |
           python3 - <<'PY'
@@ -27,16 +27,16 @@ jobs:
           import requests
           from bs4 import BeautifulSoup
 
-          BASE="https://www.vetfarmgarant.ru"
-          session=requests.Session()
-          session.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.3)"})
+          BASE="https://www.vetar-vet.ru"
+          START="https://www.vetar-vet.ru/catalog/rubikon_ooo/"
+          s=requests.Session()
+          s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.4)"})
 
           def norm(x):
               x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
               x=re.sub(r'[«»"\']',"",x).replace("-"," ")
               x=re.sub(r"[^a-zа-я0-9%.,+ ]+"," ",x)
-              x=re.sub(r"\s+"," ",x).strip(" .,-")
-              return x
+              return re.sub(r"\s+"," ",x).strip(" .,-")
 
           def nums(x):
               return re.findall(r"\d+(?:[.,]\d+)?",norm(x))
@@ -45,81 +45,87 @@ jobs:
           arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
           targets=[x for x in arr if str(x.get("section"))=="4.11"]
 
-          links=set()
-          for page in range(1,15):
-              url=f"{BASE}/catalog/?PAGEN_1={page}&arrFilter_7_1159954462=Y&set_filter=y"
+          pages=[START]
+          products=[]
+          visited=set()
+          for page_no in range(1,12):
+              url=START if page_no==1 else START+f"?PAGEN_1={page_no}"
               try:
-                  r=session.get(url,timeout=45)
+                  r=s.get(url,timeout=45)
                   if r.status_code!=200: continue
                   soup=BeautifulSoup(r.text,"html.parser")
-                  before=len(links)
+                  # Gather cards using links and nearby images.
                   for a in soup.find_all("a",href=True):
+                      title=a.get_text(" ",strip=True)
                       href=urljoin(BASE,a["href"])
-                      txt=norm(a.get_text(" ",strip=True))
-                      if "/catalog/" in href and href.rstrip("/")!=url.rstrip("/") and txt:
-                          links.add(href.split("?")[0].split("#")[0])
-                  print("page",page,"links",len(links)-before)
+                      if not title or href in visited: continue
+                      if "/catalog/" not in href or "rubikon_ooo" in href.rstrip("/"):
+                          continue
+                      if len(norm(title))<3: continue
+                      img=None
+                      parent=a
+                      for _ in range(4):
+                          if parent is None: break
+                          im=parent.find("img")
+                          if im and (im.get("src") or im.get("data-src")):
+                              src=im.get("data-src") or im.get("src")
+                              img=urljoin(BASE,src)
+                              break
+                          parent=parent.parent
+                      visited.add(href)
+                      products.append({"title":title,"url":href,"image":img})
               except Exception as e:
-                  print("catalog error",page,e)
+                  print("page error",page_no,e)
 
-          products=[]
-          seen=set()
-          for u in sorted(links):
-              if u in seen: continue
-              seen.add(u)
+          # Refine each product from detail page and gallery.
+          detailed=[]
+          for p in products:
               try:
-                  r=session.get(u,timeout=40)
+                  r=s.get(p["url"],timeout=35)
                   if r.status_code!=200: continue
                   soup=BeautifulSoup(r.text,"html.parser")
                   h1=soup.find("h1")
-                  title=h1.get_text(" ",strip=True) if h1 else ""
-                  if not title: continue
+                  title=h1.get_text(" ",strip=True) if h1 else p["title"]
                   text=soup.get_text(" ",strip=True)
-                  if "руби" not in text.lower(): continue
-
+                  if "рубикон" not in text.lower(): continue
                   imgs=[]
-                  for img in soup.find_all("img"):
-                      src=img.get("data-src") or img.get("data-lazy-src") or img.get("src")
+                  for im in soup.find_all("img"):
+                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
                       if not src: continue
-                      src=urljoin(u,src)
+                      src=urljoin(BASE,src)
                       low=src.lower()
-                      if any(z in low for z in ["logo","icon","sprite","no-image","no_img","placeholder"]): continue
-                      alt=img.get("alt","")
+                      if any(z in low for z in ["logo","icon","sprite","placeholder","no-image"]): continue
                       if src.startswith("http"):
-                          imgs.append({"src":src,"alt":alt})
-                  products.append({"title":title,"url":u,"text":text[:2000],"images":imgs[:12]})
+                          imgs.append({"src":src,"alt":im.get("alt","")})
+                  detailed.append({"title":title,"url":p["url"],"images":imgs[:15]})
               except Exception:
                   pass
               time.sleep(0.03)
 
-          suggestions=[]
+          sugg=[]
           for t in targets:
-              tn=norm(t["name"])
-              tn_nums=nums(tn)
-              cand=[]
-              for p in products:
+              tn=norm(t["name"]); ns=nums(tn); cand=[]
+              for p in detailed:
                   pn=norm(p["title"])
-                  if nums(pn)!=tn_nums: continue
+                  if nums(pn)!=ns: continue
                   score=SequenceMatcher(None,tn,pn).ratio()
                   if tn==pn: score=1
-                  elif tn in pn or pn in tn: score=max(score,0.94)
-                  if score>=0.72:
+                  elif tn in pn or pn in tn: score=max(score,.94)
+                  if score>=.72 and p["images"]:
                       cand.append({"title":p["title"],"url":p["url"],"score":round(score,3),"images":p["images"]})
-              cand=sorted(cand,key=lambda z:z["score"],reverse=True)[:5]
-              suggestions.append({"id":t["id"],"name":t["name"],"numbers":tn_nums,"candidates":cand})
+              cand=sorted(cand,key=lambda x:x["score"],reverse=True)[:5]
+              sugg.append({"id":t["id"],"name":t["name"],"numbers":ns,"candidates":cand})
 
-          Path("data/import-4.11-vetfarm-candidates.json").write_text(
-              json.dumps({"targets":len(targets),"pages_scanned":14,"product_pages":len(products),"suggestions":suggestions},ensure_ascii=False,indent=2)+"\n",
-              encoding="utf-8"
-          )
-          print("product pages",len(products),"targets with candidates",sum(bool(x["candidates"]) for x in suggestions))
+          Path("data/import-4.11-vetar-candidates.json").write_text(
+              json.dumps({"targets":len(targets),"products":len(detailed),"suggestions":sugg},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("products",len(detailed),"candidate targets",sum(bool(x["candidates"]) for x in sugg))
           PY
-      - name: Commit candidate report
+      - name: Commit report
         shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/import-4.11-vetfarm-candidates.json
-          git commit -m "Analyze VetFarmGarant image candidates for section 4.11"
+          git add data/import-4.11-vetar-candidates.json
+          git commit -m "Analyze Vetar Rubikon images for section 4.11"
           git push
