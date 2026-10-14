@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:12:02.320Z",
+  "updatedAt": "2026-10-14T09:14:13.491Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19070,6 +19070,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "2.11-10006318-agrastrip-watex-общий-фумонизин": {
+      "images": [
+        "img/photos/admin/2.11-10006318-agrastrip-watex-общий-фумонизин/2.11-10006318-agrastrip-watex-общий-фумонизин-01.webp"
       ]
     }
   },
