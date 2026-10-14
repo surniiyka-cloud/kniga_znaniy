@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:23:05.393Z",
+  "updatedAt": "2026-10-14T12:26:54.929Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21664,6 +21664,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-9.1-kf-5c-1": {
+      "images": [
+        "img/photos/admin/manual-9.1-kf-5c-1/manual-9.1-kf-5c-1-01.webp"
+      ]
     }
   },
   "sections": {
@@ -22978,7 +22983,9 @@
             ]
           ],
           "complectation": [],
-          "images": [],
+          "images": [
+            "img/photos/admin/manual-9.1-kf-5c-1/manual-9.1-kf-5c-1-01.webp"
+          ],
           "manufacturer": "GARTENA",
           "country": "",
           "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-5C-1"
