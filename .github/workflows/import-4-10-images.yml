@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 2
+name: Import 4.10 product images batch 3
 
 on:
   push:
@@ -21,21 +21,11 @@ jobs:
         run: |
           set -u
           download_optional() {
-            url="$1"
-            out="$2"
-            mkdir -p "$(dirname "$out")"
-            tmp="${out}.tmp"
-            rm -f "$tmp" "$out"
+            url="$1"; out="$2"; mkdir -p "$(dirname "$out")"; tmp="${out}.tmp"; rm -f "$tmp" "$out"
             if ! curl -fL --retry 2 --retry-delay 1 --connect-timeout 15 --max-time 90 -A "Mozilla/5.0" "$url" -o "$tmp"; then
-              echo "SKIP download failed: $url"
-              rm -f "$tmp"
-              return 0
+              echo "SKIP download failed: $url"; rm -f "$tmp"; return 0
             fi
-            if [ ! -s "$tmp" ]; then
-              echo "SKIP empty file: $url"
-              rm -f "$tmp"
-              return 0
-            fi
+            [ -s "$tmp" ] || { rm -f "$tmp"; return 0; }
             mime="$(file -b --mime-type "$tmp" || true)"
             case "$mime" in
               image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;;
@@ -43,10 +33,10 @@ jobs:
             esac
           }
 
-          download_optional "https://feedkaz.kz/wp-content/uploads/2025/09/kloksam-500-300x300.jpg" "img/photos/admin/4.10-клоксам/4.10-клоксам-01.jpg"
-          download_optional "https://pettown.ru/upload/iblock/607/b6d55nf048k3w40b4sjno2j0vgus3ofx.jpg" "img/photos/admin/4.10-мастибак/4.10-мастибак-01.jpg"
-          download_optional "https://feedkaz.kz/wp-content/uploads/2025/09/metrimast-zvs-500-1.jpg" "img/photos/admin/4.10-метримаст-звс/4.10-метримаст-звс-01.jpg"
-          download_optional "https://feedkaz.kz/wp-content/uploads/2025/09/penivitakan-500.jpg" "img/photos/admin/4.10-пенивитакан/4.10-пенивитакан-01.jpg"
+          download_optional "https://www.qoovee.com/media/shops/2254/items/multivitmineralyi/multivitmineralyi.jpg" "img/photos/admin/4.10-мультивит-минералы-immcont-gmbh-германия/4.10-мультивит-минералы-immcont-gmbh-германия-01.jpg"
+          download_optional "https://33korovy.in.ua/image/cache/import_files/a8/a83a6041-477e-11e3-ac55-000854670ff9-500x400.jpeg" "img/photos/admin/4.10-олиговит-kela-бельгия/4.10-олиговит-kela-бельгия-01.jpg"
+          download_optional "https://konsulagro.by/assets/konsul/img/products/biovetalgin-%D0%90.jpg" "img/photos/admin/4.10-биоветальгин-biowet-drwalew-польша/4.10-биоветальгин-biowet-drwalew-польша-01.jpg"
+          download_optional "https://vettorg.info/image/cache/catalog/derma/2/992739909-terramitsin-aerozol-sprej-150-ml-zoetis-zoetis-inc-800x800.jpg" "img/photos/admin/4.10-террамицин-аэрозоль-спрей/4.10-террамицин-аэрозоль-спрей-01.jpg"
 
       - name: Attach successful images to product overrides
         shell: bash
@@ -54,34 +44,22 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
-          path = Path("data/admin-overrides.json")
-          data = json.loads(path.read_text(encoding="utf-8"))
-          products = data.setdefault("products", {})
-          groups = {
-              "img/photos/admin/4.10-клоксам/4.10-клоксам-01.jpg": [
-                  "4.10-клоксам", "4.10-клоксам-упаковка-20-шт"
-              ],
-              "img/photos/admin/4.10-мастибак/4.10-мастибак-01.jpg": [
-                  "4.10-мастибак", "4.10-мастибак-упаковка-20-шт"
-              ],
-              "img/photos/admin/4.10-метримаст-звс/4.10-метримаст-звс-01.jpg": [
-                  "4.10-метримаст-звс", "4.10-метримаст-звс-упаковка-20-шт"
-              ],
-              "img/photos/admin/4.10-пенивитакан/4.10-пенивитакан-01.jpg": [
-                  "4.10-пенивитакан", "4.10-пенивитакан-упаковка-20-шт"
-              ],
+          path=Path("data/admin-overrides.json")
+          data=json.loads(path.read_text(encoding="utf-8"))
+          products=data.setdefault("products",{})
+          mapping={
+            "4.10-мультивит-минералы-immcont-gmbh-германия":"img/photos/admin/4.10-мультивит-минералы-immcont-gmbh-германия/4.10-мультивит-минералы-immcont-gmbh-германия-01.jpg",
+            "4.10-олиговит-kela-бельгия":"img/photos/admin/4.10-олиговит-kela-бельгия/4.10-олиговит-kela-бельгия-01.jpg",
+            "4.10-биоветальгин-biowet-drwalew-польша":"img/photos/admin/4.10-биоветальгин-biowet-drwalew-польша/4.10-биоветальгин-biowet-drwalew-польша-01.jpg",
+            "4.10-террамицин-аэрозоль-спрей":"img/photos/admin/4.10-террамицин-аэрозоль-спрей/4.10-террамицин-аэрозоль-спрей-01.jpg"
           }
-          attached = []
-          for image_path, product_ids in groups.items():
-              if not Path(image_path).is_file():
-                  continue
-              for product_id in product_ids:
-                  product = products.setdefault(product_id, {})
-                  product["images"] = [image_path]
-                  product["__frozen"] = True
-                  attached.append(product_id)
-          path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-          print("Attached:", len(attached), attached)
+          attached=[]
+          for pid,img in mapping.items():
+            if Path(img).is_file():
+              p=products.setdefault(pid,{})
+              p["images"]=[img]; p["__frozen"]=True; attached.append(pid)
+          path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("Attached:",len(attached),attached)
           PY
 
       - name: Commit imported files
@@ -91,9 +69,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/admin-overrides.json img/photos/admin/4.10-* 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No images downloaded; nothing to commit"
-            exit 0
-          fi
-          git commit -m "Add verified product photos to section 4.10 batch 2"
+          if git diff --cached --quiet; then echo "No images downloaded"; exit 0; fi
+          git commit -m "Add verified product photos to section 4.10 batch 3"
           git push
