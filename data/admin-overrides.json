@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:20:38.012Z",
+  "updatedAt": "2026-10-14T09:21:05.274Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19421,6 +19421,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "2.11-10001317-agrastrip-cry1ab-bulk-grain": {
+      "images": [
+        "img/photos/admin/2.11-10001317-agrastrip-cry1ab-bulk-grain/2.11-10001317-agrastrip-cry1ab-bulk-grain-01.webp"
       ]
     }
   },
