@@ -585,8 +585,8 @@ function logoutAccount(){
   window.dispatchEvent(new CustomEvent("kb:admin-change"));
 }
 function closeAdmin(){if(modal)modal.hidden=true;document.body.classList.remove("kb-admin-open")}
-function showError(e){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status error";box.textContent=e?.message||String(e)}else alert(e?.message||e)}
-function showStatus(t,kind="ok"){const box=modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status "+kind;box.textContent=t}}
+function showError(e){const box=document.querySelector(".kb-admin-page [data-admin-status]")||modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status error";box.textContent=e?.message||String(e)}else alert(e?.message||e)}
+function showStatus(t,kind="ok"){const box=document.querySelector(".kb-admin-page [data-admin-status]")||modal?.querySelector("[data-admin-status]");if(box){box.className="kb-admin-status "+kind;box.textContent=t}}
 
 function shell(title,subtitle,inner){
   const accountRoute=["account","accountProduct","accountSection"].includes(window.KB_EDITOR_API?.route?.()?.name||"");
@@ -594,7 +594,7 @@ function shell(title,subtitle,inner){
   const navButton=productOrSection?'<button class="kb-admin-back" type="button" data-account-back>← Вернуться в личный кабинет</button>':"";
   const version=String(document.querySelector("#versionNumber")?.textContent||"—").trim();
   return '<header class="kb-admin-head"><div><span class="kb-admin-kicker">Личный кабинет</span><h2>'+esc(title)+'</h2><p>'+esc(subtitle||"")+'</p></div>'+navButton+'</header>'+
-  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать резервную копию</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить резервную копию<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost kb-admin-version" data-account-version>Версия '+esc(version)+' · что изменилось</button><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button><span class="kb-admin-devnote">Каталог хранится на сайте</span></div>'+
+  '<div class="kb-admin-toolbar"><button class="kb-admin-btn ghost" data-admin-refresh-images>↻ Обновить фото</button><button class="kb-admin-btn ghost" data-github-connect>'+(sessionToken()?'✓ GitHub подключен':'Подключить GitHub')+'</button><button class="kb-admin-btn ghost" data-admin-export>↓ Скачать резервную копию</button><label class="kb-admin-btn ghost kb-admin-import">↑ Загрузить резервную копию<input type="file" accept="application/json,.json" data-admin-import hidden></label><button class="kb-admin-btn ghost kb-admin-version" data-account-version>Версия '+esc(version)+' · что изменилось</button><button class="kb-admin-btn ghost" data-admin-logout>Выйти</button><span class="kb-admin-devnote">Каталог хранится на сайте</span></div>'+
   '<div class="kb-admin-status" data-admin-status></div>'+inner;
 }
 async function updateAccountCounters(body){
@@ -636,7 +636,7 @@ function renderAccountPage(){
         :'<span>TIAN</span>')+'</div>'+
       '<div class="kb-market-product-main"><strong>'+esc(p.name)+'</strong><small>'+esc(p.article?("Арт. "+p.article):"Без артикула")+'</small></div>'+
       '<div class="kb-market-section">'+esc(sec.id)+'<small>'+esc(sec.title)+'</small></div>'+
-      '<div class="kb-account-product-actions"><button class="kb-admin-btn primary subtle" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost icon" title="Дублировать" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger icon" title="Удалить" data-account-delete-product="'+esc(p.id)+'">×</button></div>'+
+      '<div class="kb-account-product-actions"><button class="kb-admin-btn ghost icon" type="button" title="Добавить или заменить фото" aria-label="Управление фото товара" data-account-photo-product="'+esc(p.id)+'">📷</button><button class="kb-admin-btn primary subtle" data-account-edit-product="'+esc(p.id)+'">Редактировать</button><button class="kb-admin-btn ghost icon" title="Дублировать" data-account-duplicate-product="'+esc(p.id)+'">⧉</button><button class="kb-admin-btn danger icon" title="Удалить" data-account-delete-product="'+esc(p.id)+'">×</button></div>'+
     '</article>';
   };
 
@@ -887,6 +887,41 @@ function removeCustomTabUi(body,id){
 function photoPreviewSrc(v){
   const s=String(v||"");return /^https?:\/\//i.test(s)||s.startsWith("data:")||s.startsWith("./")?s:"./"+s;
 }
+
+async function refreshPhotoPreviews(root){
+  const all=[...root.querySelectorAll("img")];
+  const items=all.map(img=>{
+    const path=img.closest("[data-photo-row]")?.dataset.path||img.currentSrc||img.src;
+    try{
+      const url=new URL(photoPreviewSrc(path),location.href);
+      if(url.origin!==location.origin||!url.pathname.includes("/img/photos/"))return null;
+      const box=img.getBoundingClientRect();
+      const nearby=img.getClientRects().length>0&&box.bottom>=-500&&box.top<=window.innerHeight+500;
+      return nearby?{img,url}:null;
+    }catch{return null}
+  }).filter(Boolean).slice(0,80);
+  if(!items.length){showStatus("Рядом с видимой областью нет фото для обновления.");return 0}
+  const paths=new Set(items.map(item=>item.url.pathname));
+  if("caches" in window){
+    try{
+      const names=(await caches.keys()).filter(name=>name.startsWith("tian-kb-"));
+      for(const name of names){
+        const cache=await caches.open(name);
+        const entries=await cache.keys();
+        await Promise.all(entries.filter(req=>paths.has(new URL(req.url).pathname)).map(req=>cache.delete(req)));
+      }
+    }catch(err){console.warn("Не удалось очистить старые превью из кэша.",err)}
+  }
+  const stamp=Date.now().toString(36);
+  items.forEach(({img,url},index)=>{
+    img.dataset.kbPhotoRetries="0";
+    url.searchParams.set("kb-refresh",stamp+"-"+index);
+    img.loading="eager";
+    img.src=url.toString();
+  });
+  showStatus("Повторно запрошено фото: "+items.length+". Если файл ещё публикуется GitHub Pages, повторите через несколько секунд.");
+  return items.length;
+}
 function photoSetting(v){
   const num=(x,d,min,max)=>{const n=Number(x);return Number.isFinite(n)?Math.min(max,Math.max(min,n)):d};
   return {scale:num(v?.scale,1,.6,4),x:num(v?.x,0,-60,60),y:num(v?.y,0,-60,60),fit:v?.fit==="cover"?"cover":"contain"};
@@ -957,7 +992,7 @@ async function persistDocumentsOnly(body){
 }
 function photoEditorHtml(ctx){
   const images=ctx.images||[];
-  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-head-actions kb-photo-add-after"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
+  return '<section class="kb-admin-section kb-photo-section" data-photo-section data-photo-state="idle"><div class="kb-photo-head"><div><h3>Фотографии</h3><p class="kb-admin-hint">Показаны фотографии, которые сейчас стоят у товара. Можно добавить ещё фото или заменить конкретное существующее.</p></div></div><div class="kb-photo-list" data-photo-list>'+images.map((p,i)=>photoRowHtml(p,i)).join("")+'</div><div class="kb-photo-head-actions kb-photo-add-after"><button type="button" class="kb-admin-btn primary" data-photo-add>+ Добавить фото</button><button type="button" class="kb-admin-btn ghost" data-photo-refresh>↻ Обновить превью</button><input type="file" accept="image/png,image/jpeg,image/webp" multiple data-photo-file hidden><input type="file" accept="image/png,image/jpeg,image/webp" data-photo-replace-file hidden></div><div class="kb-photo-save-state idle" data-photo-save-state><span class="kb-photo-save-icon">○</span><div><strong>Фото без изменений</strong><small>Если заменить или добавить фото, здесь появится подтверждение сохранения.</small></div></div><textarea data-images hidden>'+esc(linesText(images))+'</textarea></section>';
 }
 function setPhotoSaveState(body,state,message=""){
   const section=body?.querySelector("[data-photo-section]"),box=body?.querySelector("[data-photo-save-state]");
@@ -1292,6 +1327,12 @@ function renderProductEditor(ctx){
       '<div class="kb-wb-savebar"><div><strong>Редактирование карточки</strong><span data-wb-save-note>Проверь фото и данные перед публикацией.</span></div><button type="button" class="kb-admin-btn ghost" data-account-back>К списку товаров</button><button type="submit" class="kb-admin-btn primary">Сохранить и опубликовать</button></div>'+
     '</form>'
   ));
+  try{
+    if(sessionStorage.getItem("kb_photo_jump")===ctx.id){
+      sessionStorage.removeItem("kb_photo_jump");
+      requestAnimationFrame(()=>document.querySelector(".kb-admin-page [data-photo-section]")?.scrollIntoView({behavior:"smooth",block:"start"}));
+    }
+  }catch{}
 }
 
 function sectionContentBlocks(ctx){
@@ -1535,6 +1576,11 @@ function bindBody(){
     else location.hash="#/account";
   });
   body.querySelector("[data-account-version]")?.addEventListener("click",()=>document.querySelector("#versionLogBtn")?.click());
+  body.querySelectorAll("[data-admin-refresh-images],[data-photo-refresh]").forEach(btn=>btn.addEventListener("click",async()=>{
+    btn.disabled=true;
+    try{await refreshPhotoPreviews(body)}catch(err){showError(err)}
+    finally{btn.disabled=false}
+  }));
   body.querySelectorAll("[data-account-back]").forEach(back=>back.addEventListener("click",()=>{
     const r=window.KB_EDITOR_API?.route?.()||{};
     if(r.name==="accountProduct"){
@@ -1630,6 +1676,13 @@ function bindBody(){
     const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card], [data-section-overview]");
     rememberAccountReturn(section?.dataset.sectionId||"",b.dataset.accountEditProduct,section);
     location.hash="#/account/product/"+encodeURIComponent(b.dataset.accountEditProduct);
+  }));
+  body.querySelectorAll("[data-account-photo-product]").forEach(b=>b.addEventListener("click",()=>{
+    const id=b.dataset.accountPhotoProduct;
+    const row=b.closest("[data-account-product-card]"),section=row?.closest("[data-account-section-card], [data-section-overview]");
+    rememberAccountReturn(section?.dataset.sectionId||"",id,section);
+    try{sessionStorage.setItem("kb_photo_jump",id)}catch{}
+    location.hash="#/account/product/"+encodeURIComponent(id);
   }));
   body.querySelectorAll("[data-account-manage-section]").forEach(b=>b.addEventListener("click",()=>location.hash="#/account/section/"+encodeURIComponent(b.dataset.accountManageSection)));
   body.querySelectorAll("[data-account-add-product]").forEach(b=>b.addEventListener("click",async()=>{
