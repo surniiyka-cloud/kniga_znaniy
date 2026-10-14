@@ -1414,6 +1414,26 @@ function mapData(){
     }
   }
 
+  // Защита от потери фотографий при изменении стабильного ID карточки.
+  // Старые редакторские фото лежат в assets под прежним ID. Если новый ID является
+  // продолжением старого усечённого ID (или наоборот), переносим фото на текущую карточку.
+  // Срабатывает только при единственном совпадении внутри того же раздела.
+  const claimedFallbackImages=new Set();
+  for(const [id,x] of state.products){
+    if(state.assets.productImages?.[id]?.length)continue;
+    const sid=String(x.section?.id||"");
+    const candidates=Object.entries(state.assets.productImages||{}).filter(([oldId,imgs])=>{
+      if(claimedFallbackImages.has(oldId)||!Array.isArray(imgs)||!imgs.length)return false;
+      if(!String(oldId).startsWith(sid+"-")&&!String(oldId).startsWith("catalog-"+safeSlug(sid)+"-"))return false;
+      return String(id).startsWith(String(oldId))||String(oldId).startsWith(String(id));
+    });
+    if(candidates.length===1){
+      const [oldId,imgs]=candidates[0];
+      state.assets.productImages[id]=deepCopy(imgs);
+      claimedFallbackImages.add(oldId);
+    }
+  }
+
   // Защита от потери редакторских правок при изменении стабильного ID карточки.
   // Прямой ID всегда приоритетен. Если после переразбора Google Sheets ID поменялся,
   // консервативно подхватываем только ЕДИНСТВЕННЫЙ старый override с тем же товаром:
