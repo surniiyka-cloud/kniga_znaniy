@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:06:50.917Z",
+  "updatedAt": "2026-10-14T11:06:58.950Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19955,6 +19955,61 @@
     "manual-2.11-ringbio-aflatoxin-b1": {
       "images": [
         "img/photos/admin/manual-2.11-ringbio-aflatoxin-b1/manual-2.11-ringbio-aflatoxin-b1-01.webp"
+      ],
+      "name": "Ringbio Technology — Афлатоксин B1",
+      "article": "400001-96T",
+      "type": "Экспресс-тест на микотоксины",
+      "purpose": "Экспресс-тест для количественного определения микотоксинов в зерне, орехах, злаках, кормах и другом сельскохозяйственном сырье.",
+      "detailFields": [
+        [
+          "Определяемый микотоксин",
+          "Афлатоксин B1"
+        ],
+        [
+          "Предел обнаружения, ppb (мкг/кг)",
+          "5–8"
+        ]
+      ],
+      "group": "RINGBIO TECHNOLOGY",
+      "advantages": [
+        [
+          "Особенность",
+          "Быстрая оценка результата без считывающего устройства"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -20336,6 +20391,40 @@
           ],
           "images": [
             "img/photos/admin/manual-2.11-ringbio-aflatoxin-b1/manual-2.11-ringbio-aflatoxin-b1-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-ringbio-ochratoxin": {
