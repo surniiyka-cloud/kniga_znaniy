@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:08:46.380Z",
+  "updatedAt": "2026-10-14T11:11:43.253Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -20191,6 +20191,11 @@
         "consumables",
         "testKits"
       ]
+    },
+    "manual-2.11-agraquant-don-plus": {
+      "images": [
+        "img/photos/admin/manual-2.11-agraquant-don-plus/manual-2.11-agraquant-don-plus-01.webp"
+      ]
     }
   },
   "sections": {
@@ -20816,7 +20821,9 @@
           ],
           "group": "Экспресс ИФА тест-системы",
           "advantages": [],
-          "images": []
+          "images": [
+            "img/photos/admin/manual-2.11-agraquant-don-plus/manual-2.11-agraquant-don-plus-01.webp"
+          ]
         },
         "manual-2.11-agraquant-total-fumonisin": {
           "id": "manual-2.11-agraquant-total-fumonisin",
