@@ -1,4 +1,4 @@
-name: Import 4.10 product images batch 11
+name: Import 4.10 product images batch 12
 
 on:
   push:
@@ -27,9 +27,10 @@ jobs:
             case "$mime" in image/jpeg|image/png|image/webp) mv "$tmp" "$out"; echo "OK $out ($mime)" ;; *) echo "SKIP MIME $mime"; rm -f "$tmp" ;; esac
           }
 
-          download_optional "https://static.insales-cdn.com/r/4FpxBlM0ers/rs%3Afit%3A1000%3A0%3A1/q%3A100/plain/images/products/1/1192/604603560/%D0%92%D0%B0%D0%B7%D0%B5%D0%BB%D0%B8%D0%BD_%D0%B2%D0%B5%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D1%8B%D0%B9_200_%D0%B3.jpg%40jpg" "img/photos/admin/4.10-вазелин-ветеринарный/4.10-вазелин-ветеринарный-01.jpg"
-          download_optional "https://planimal.ru/wa-data/public/shop/products/39/79/57939/images/58564/58564.750x0.jpg" "img/photos/admin/4.10-мазь-камфорная-10/4.10-мазь-камфорная-10-01.jpg"
-          download_optional "https://images.satu.kz/135066187_w640_h640_135066187.jpg" "img/photos/admin/4.10-сыворотка-9-валентная-для-крс/4.10-сыворотка-9-валентная-для-крс-01.jpg"
+          download_optional "https://pettown.ru/upload/iblock/d90/dr5h7yu8qxtn0sq0f5686neughblyspj.jpg" "img/photos/admin/4.10-ветбензицин-3/4.10-ветбензицин-3-01.jpg"
+          download_optional "https://biohimfarm.ru/wp-content/uploads/2015/02/biostomasan.png" "img/photos/admin/4.10-биостомасан/4.10-биостомасан-01.png"
+          download_optional "https://farmvet.ru/images/products/kliodeziv.jpg" "img/photos/admin/4.10-клиодезив/4.10-клиодезив-01.jpg"
+          download_optional "https://farmvet.ru/images/products/kliodeziv-dez.jpg" "img/photos/admin/4.10-клиодезив-дез/4.10-клиодезив-дез-01.jpg"
 
       - name: Attach successful images
         shell: bash
@@ -41,9 +42,10 @@ jobs:
           data=json.loads(p.read_text(encoding="utf-8"))
           products=data.setdefault("products",{})
           mapping={
-            "4.10-вазелин-ветеринарный":"img/photos/admin/4.10-вазелин-ветеринарный/4.10-вазелин-ветеринарный-01.jpg",
-            "4.10-мазь-камфорная-10":"img/photos/admin/4.10-мазь-камфорная-10/4.10-мазь-камфорная-10-01.jpg",
-            "4.10-сыворотка-9-валентная-для-крс":"img/photos/admin/4.10-сыворотка-9-валентная-для-крс/4.10-сыворотка-9-валентная-для-крс-01.jpg"
+            "4.10-ветбензицин-3":"img/photos/admin/4.10-ветбензицин-3/4.10-ветбензицин-3-01.jpg",
+            "4.10-биостомасан":"img/photos/admin/4.10-биостомасан/4.10-биостомасан-01.png",
+            "4.10-клиодезив":"img/photos/admin/4.10-клиодезив/4.10-клиодезив-01.jpg",
+            "4.10-клиодезив-дез":"img/photos/admin/4.10-клиодезив-дез/4.10-клиодезив-дез-01.jpg"
           }
           for pid,img in mapping.items():
             if Path(img).is_file():
@@ -59,5 +61,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/admin-overrides.json img/photos/admin/4.10-* 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Add verified product photos to section 4.10 batch 11"
+          git commit -m "Add verified product photos to section 4.10 batch 12"
           git push
