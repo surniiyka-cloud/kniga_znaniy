@@ -1,4 +1,4 @@
-name: Import exact Rubikon photos for section 4.11
+name: Add verified Rubikon photo to section 4.11
 
 on:
   push:
@@ -16,159 +16,40 @@ jobs:
         with:
           fetch-depth: 1
 
-      - run: pip install -q requests beautifulsoup4 pillow
-
-      - name: Import exact Rubikon product images from VetFarmGarant
+      - name: Download verified Roksilong 300 photo
         shell: bash
         run: |
+          set -e
           python3 - <<'PY'
-          import io,json,re,time,mimetypes
+          import json,requests
           from pathlib import Path
-          from urllib.parse import urljoin,urlparse
-          from difflib import SequenceMatcher
-          import requests
-          from bs4 import BeautifulSoup
-          from PIL import Image
+          url="https://www.vetfarmgarant.ru/upload/iblock/83c/83c8c511280b8f105c96edf1d1b410a1.png"
+          pid="4.11-роксилонг-300"
+          out=Path("img/photos/admin")/pid/(pid+"-01.png")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          r=requests.get(url,timeout=60,headers={"User-Agent":"Mozilla/5.0"})
+          r.raise_for_status()
+          if not r.headers.get("content-type","").lower().startswith("image/"):
+              raise RuntimeError("Source is not an image")
+          out.write_bytes(r.content)
 
-          BASE="https://www.vetfarmgarant.ru"
-          s=requests.Session()
-          s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/2.1)"})
-
-          def norm(x):
-              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
-              x=re.sub(r'[«»"\']',"",x).replace("-"," ")
-              x=re.sub(r"[^a-zа-я0-9%.,+ ]+"," ",x)
-              return re.sub(r"\s+"," ",x).strip(" .,-")
-
-          idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
-          arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
-          targets=[x for x in arr if str(x.get("section"))=="4.11"]
-          target_norm={norm(x["name"]):x for x in targets}
-
-          overrides_path=Path("data/admin-overrides.json")
-          overrides=json.loads(overrides_path.read_text(encoding="utf-8"))
-          products=overrides.setdefault("products",{})
-
-          # discover product URLs from all catalog pages and category pages
-          queue=[BASE+"/catalog/"]
-          seen=set()
-          product_urls=set()
-          for n in range(1,16):
-              queue.append(BASE+f"/catalog/?PAGEN_1={n}")
-          for cat in ["krs","mrs","svinovodstvo","ptitsevodstvo"]:
-              queue.append(BASE+f"/catalog/{cat}/")
-
-          for url in queue:
-              try:
-                  r=s.get(url,timeout=35)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  for a in soup.find_all("a",href=True):
-                      href=urljoin(r.url,a["href"]).split("#")[0]
-                      if "/catalog/" not in href: continue
-                      p=urlparse(href).path.rstrip("/")
-                      parts=[x for x in p.split("/") if x]
-                      if len(parts)>=3 and parts[0]=="catalog":
-                          product_urls.add(href)
-              except Exception as e:
-                  print("LIST_ERR",url,e)
-
-          print("product urls",len(product_urls))
-          matches=[]
-          for url in sorted(product_urls):
-              try:
-                  r=s.get(url,timeout=35)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  h1=soup.find("h1")
-                  if not h1: continue
-                  title=h1.get_text(" ",strip=True)
-                  nt=norm(title)
-                  target=target_norm.get(nt)
-                  if not target: continue
-                  txt=norm(soup.get_text(" ",strip=True))
-                  if "производитель рубикон" not in txt and "производитель: рубикон" not in txt:
-                      continue
-
-                  pid=target["id"]
-                  existing=products.get(pid,{})
-                  if existing.get("images"):
-                      matches.append({"id":pid,"name":target["name"],"url":url,"status":"already-has-image"})
-                      continue
-
-                  candidates=[]
-                  og=soup.find("meta",property="og:image")
-                  if og and og.get("content"):
-                      candidates.append(urljoin(r.url,og["content"]))
-                  for im in soup.find_all("img"):
-                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
-                      if not src: continue
-                      src=urljoin(r.url,src)
-                      low=src.lower()
-                      if any(z in low for z in ["logo","icon","sprite","captcha","placeholder","no-image"]):
-                          continue
-                      candidates.append(src)
-
-                  # unique, then validate dimensions and image bytes
-                  uniq=[]
-                  for u in candidates:
-                      if u not in uniq and u.startswith("http"): uniq.append(u)
-
-                  chosen=None; data=None; ext=None
-                  for u in uniq:
-                      try:
-                          ir=s.get(u,timeout=35)
-                          if ir.status_code!=200 or len(ir.content)<5000: continue
-                          ctype=ir.headers.get("content-type","").lower()
-                          if not ctype.startswith("image/"): continue
-                          im=Image.open(io.BytesIO(ir.content))
-                          w,h=im.size
-                          if w<250 or h<250: continue
-                          # avoid banners / super-wide decorative images
-                          if w/h>3.2 or h/w>3.2: continue
-                          chosen=u; data=ir.content
-                          fmt=(im.format or "").lower()
-                          ext={ "jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp" }.get(fmt,".jpg")
-                          break
-                      except Exception:
-                          continue
-
-                  if not chosen:
-                      matches.append({"id":pid,"name":target["name"],"url":url,"status":"exact-page-no-usable-image"})
-                      continue
-
-                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
-                  out.parent.mkdir(parents=True,exist_ok=True)
-                  out.write_bytes(data)
-                  products[pid]={"images":[str(out)],"__frozen":True}
-                  matches.append({"id":pid,"name":target["name"],"url":url,"image":chosen,"path":str(out),"status":"imported"})
-                  print("IMPORTED",target["name"],chosen)
-              except Exception as e:
-                  print("DETAIL_ERR",url,e)
-              time.sleep(0.03)
-
-          overrides_path.write_text(json.dumps(overrides,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          report={
-              "source":"vetfarmgarant.ru",
-              "targets":len(targets),
-              "product_urls":len(product_urls),
-              "imported":sum(x["status"]=="imported" for x in matches),
-              "already":sum(x["status"]=="already-has-image" for x in matches),
-              "no_usable_image":sum(x["status"]=="exact-page-no-usable-image" for x in matches),
-              "items":matches
+          p=Path("data/admin-overrides.json")
+          data=json.loads(p.read_text(encoding="utf-8"))
+          data.setdefault("products",{})[pid]={
+              "images":[str(out)],
+              "__frozen":True
           }
-          Path("data/import-4.11-vetfarm-exact-report.json").write_text(
-              json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print(json.dumps({k:report[k] for k in ["targets","product_urls","imported","already","no_usable_image"]},ensure_ascii=False))
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("saved",out,len(r.content))
           PY
 
-      - name: Commit imported images
+      - name: Commit verified image
         shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json data/import-4.11-vetfarm-exact-report.json img/photos/admin/4.11-* || true
+          git add data/admin-overrides.json img/photos/admin/4.11-роксилонг-300/4.11-роксилонг-300-01.png
           git diff --cached --quiet && exit 0
-          git commit -m "Import exact VetFarm Rubikon photos for section 4.11"
+          git commit -m "Add verified Roksilong 300 photo to section 4.11"
           git push
