@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:47:49.239Z",
+  "updatedAt": "2026-10-14T12:47:57.063Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22362,6 +22362,92 @@
     "manual-9.1-kf-b-9l": {
       "images": [
         "img/photos/admin/manual-9.1-kf-b-9l/manual-9.1-kf-b-9l-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-B-9L",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для обработки растений рабочими растворами без ручной подкачки.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Аккумуляторный ранцевый опрыскиватель"
+        ],
+        [
+          "Объём",
+          "9 л"
+        ],
+        [
+          "Материал",
+          "PP, ABS, POM, HDPE"
+        ],
+        [
+          "Аккумулятор",
+          "2 А·ч, 12 В, литиевый, съёмный"
+        ],
+        [
+          "Расход",
+          "0,1–1,6 л/мин"
+        ],
+        [
+          "Максимальное давление",
+          "0,45–0,48 МПа"
+        ],
+        [
+          "Время работы",
+          "До 120 минут"
+        ],
+        [
+          "Время зарядки",
+          "180 минут"
+        ]
+      ],
+      "advantages": [
+        [
+          "Регулируемая подача",
+          "Расход до 1,6 л/мин."
+        ],
+        [
+          "Съёмный аккумулятор",
+          "Удобен для обслуживания."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-9L",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -24374,7 +24460,7 @@
             ],
             [
               "Время работы",
-              "до 120 минут"
+              "До 120 минут"
             ],
             [
               "Время зарядки",
@@ -24397,7 +24483,40 @@
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-9L"
+          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-B-9L",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-40c-1": {
           "id": "manual-9.1-kf-40c-1",
