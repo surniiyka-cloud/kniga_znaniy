@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T09:21:05.274Z",
+  "updatedAt": "2026-10-14T09:21:12.587Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19426,6 +19426,68 @@
     "2.11-10001317-agrastrip-cry1ab-bulk-grain": {
       "images": [
         "img/photos/admin/2.11-10001317-agrastrip-cry1ab-bulk-grain/2.11-10001317-agrastrip-cry1ab-bulk-grain-01.webp"
+      ],
+      "name": "AgraStrip Cry1Ab Bulk Grain",
+      "article": "10001317",
+      "features": "Готовые тест-полоски",
+      "group": "AgraStrip GMO Trait Check",
+      "sourceRow": 41,
+      "candidateId": "10001317-agrastrip-cry1ab-bulk-grain",
+      "detailFields": [
+        [
+          "Артикул",
+          "10001317"
+        ],
+        [
+          "Исследуемые культуры / материал",
+          "Кукуруза"
+        ],
+        [
+          "Определяемый признак",
+          "Bt-Cry1Ab"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Готовые тест-полоски"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "type": "",
+      "purpose": "",
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
