@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:31:37.309Z",
+  "updatedAt": "2026-10-14T12:31:45.513Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -21759,6 +21759,141 @@
     "manual-9.1-kf-7c-2": {
       "images": [
         "img/photos/admin/manual-9.1-kf-7c-2/manual-9.1-kf-7c-2-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-7C-2",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для полива и обработки растений от вредителей и болезней.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Аккумуляторный садовый опрыскиватель"
+        ],
+        [
+          "Объём",
+          "7 л"
+        ],
+        [
+          "Материал",
+          "PP, ABS, POM, HDPE"
+        ],
+        [
+          "Аккумулятор",
+          "Li-ion 3,7 В, 2500 мА·ч, встроенный"
+        ],
+        [
+          "Расход",
+          "1,0–1,5 л/мин"
+        ],
+        [
+          "Рабочее давление",
+          "0,2–0,3 МПа"
+        ],
+        [
+          "Время работы",
+          "120 минут"
+        ],
+        [
+          "Время зарядки",
+          "60 минут"
+        ],
+        [
+          "Длина шланга",
+          "100 см"
+        ],
+        [
+          "Штанга",
+          "42–79 см"
+        ],
+        [
+          "Масса",
+          "1,2 кг"
+        ],
+        [
+          "Габариты",
+          "27,5×16×46 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Небольшая масса",
+          "1,2 кг."
+        ],
+        [
+          "Телескопическая штанга",
+          "Регулировка от 42 до 79 см."
+        ]
+      ],
+      "complectation": [
+        [
+          "О",
+          "П"
+        ],
+        [
+          "П",
+          "Р"
+        ],
+        [
+          "Ш",
+          "Т"
+        ],
+        [
+          "Ш",
+          "Л"
+        ],
+        [
+          "П",
+          "Л"
+        ],
+        [
+          "Н",
+          "А"
+        ],
+        [
+          "У",
+          "П"
+        ]
+      ],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-7C-2",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ],
+        "complectation": [
+          "Комплектация",
+          "Количество / описание"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -23184,20 +23319,78 @@
             ]
           ],
           "complectation": [
-            "Опрыскиватель",
-            "Провод для зарядки",
-            "Штанга",
-            "Шланг",
-            "Плечевой ремень",
-            "Набор прокладок",
-            "Упаковка"
+            [
+              "О",
+              "П"
+            ],
+            [
+              "П",
+              "Р"
+            ],
+            [
+              "Ш",
+              "Т"
+            ],
+            [
+              "Ш",
+              "Л"
+            ],
+            [
+              "П",
+              "Л"
+            ],
+            [
+              "Н",
+              "А"
+            ],
+            [
+              "У",
+              "П"
+            ]
           ],
           "images": [
             "img/photos/admin/manual-9.1-kf-7c-2/manual-9.1-kf-7c-2-01.webp"
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-7C-2"
+          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-7C-2",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ],
+            "complectation": [
+              "Комплектация",
+              "Количество / описание"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-8c-1": {
           "id": "manual-9.1-kf-8c-1",
