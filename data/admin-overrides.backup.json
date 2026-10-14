@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T12:51:02.339Z",
+  "updatedAt": "2026-10-14T12:51:21.736Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -22453,6 +22453,112 @@
     "manual-9.1-kf-40c-1": {
       "images": [
         "img/photos/admin/manual-9.1-kf-40c-1/manual-9.1-kf-40c-1-01.webp"
+      ],
+      "name": "Опрыскиватель аккумуляторный пневматический Gartena KF-40С-1",
+      "article": "Без артикула",
+      "type": "Аккумуляторный пневматический опрыскиватель",
+      "purpose": "Для обработки больших садовых и хозяйственных площадей рабочими растворами.",
+      "group": "Опрыскиватели Gartena KF",
+      "detailFields": [
+        [
+          "Тип",
+          "Колёсный аккумуляторный опрыскиватель"
+        ],
+        [
+          "Объём",
+          "40 л"
+        ],
+        [
+          "Материал",
+          "PP, ABS, POM, HDPE"
+        ],
+        [
+          "Аккумулятор",
+          "2,4 А·ч, 14 В, съёмный"
+        ],
+        [
+          "Расход",
+          "1,5–3 л/мин"
+        ],
+        [
+          "Рабочее давление",
+          "0,1–0,45 МПа"
+        ],
+        [
+          "Время работы",
+          "4 часа"
+        ],
+        [
+          "Время зарядки",
+          "10 часов"
+        ],
+        [
+          "Насос",
+          "Автоматический водяной диафрагменный"
+        ],
+        [
+          "Длина шланга",
+          "50 м"
+        ],
+        [
+          "Длина штанги с пистолетом",
+          "75 см"
+        ],
+        [
+          "Масса",
+          "23 кг"
+        ],
+        [
+          "Габариты",
+          "39×42×85 см"
+        ]
+      ],
+      "advantages": [
+        [
+          "Колёсное исполнение",
+          "Удобно для перемещения большого бака."
+        ],
+        [
+          "Длинный шланг",
+          "50 м для обработки без постоянного перемещения установки."
+        ]
+      ],
+      "complectation": [],
+      "manufacturer": "GARTENA",
+      "country": "",
+      "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-40C-1",
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -24567,7 +24673,7 @@
             ],
             [
               "Насос",
-              "автоматический водяной диафрагменный"
+              "Автоматический водяной диафрагменный"
             ],
             [
               "Длина шланга",
@@ -24602,7 +24708,40 @@
           ],
           "manufacturer": "GARTENA",
           "country": "",
-          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-40C-1"
+          "sourceInfo": "ТД БД Групп / DEZKOVRIK, KF-40C-1",
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
+          ]
         },
         "manual-9.1-kf-10l-1": {
           "id": "manual-9.1-kf-10l-1",
