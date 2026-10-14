@@ -688,7 +688,7 @@ function renderAccountPage(){
     '</div>'+
     '<div class="kb-control-stats"><div><span>Карточки</span><strong>'+allProducts.length+'</strong><small>во всей книге</small></div><div><span>Разделы</span><strong>'+sections.length+'</strong><small>структура каталога</small></div><div><span>С фото</span><strong>'+withPhoto+'</strong><small>'+Math.round((withPhoto/Math.max(1,allProducts.length))*100)+'% карточек</small></div><div><span>Без фото</span><strong>'+withoutPhoto+'</strong><small>нужно проверить медиа</small></div></div>'+
     '<div class="kb-control-toolbar">'+
-      '<div class="kb-control-views"><button type="button" class="active" data-account-view="sections">Разделы</button><button type="button" data-account-view="products">Все товары</button></div>'+
+      '<div class="kb-control-views"><button type="button" class="active" data-account-view="sections">Разделы</button><button type="button" data-account-view="products">Все товары</button><button type="button" data-account-open-no-photo>Без фото <b>'+withoutPhoto+'</b></button></div>'+
       '<div class="kb-control-search"><span>⌕</span><input type="search" data-account-search placeholder="Найти раздел, товар или артикул…" autocomplete="off"><button type="button" class="kb-mini" data-account-clear>Сбросить</button></div>'+
     '</div>'+
     '<div class="kb-control-layout">'+
@@ -1658,6 +1658,15 @@ function bindBody(){
     if(!drawer)return;drawer.hidden=!drawer.hidden;b.classList.toggle("active",!drawer.hidden);
     const mark=b.querySelector("span");if(mark)mark.textContent=drawer.hidden?"⌄":"⌃";
   }));
+  body.querySelector("[data-account-open-no-photo]")?.addEventListener("click",()=>{
+    activeChapter="";
+    body.querySelectorAll("[data-account-chapter-filter]").forEach(x=>x.classList.remove("active"));
+    const productsView=body.querySelector('[data-account-view="products"]');
+    if(productsView&&!productsView.classList.contains("active"))productsView.click();
+    const noPhoto=body.querySelector('[data-account-filter="no-photo"]');
+    if(noPhoto&&!noPhoto.classList.contains("active"))noPhoto.click();
+    body.querySelector("[data-account-view-panel=\"products\"]")?.scrollIntoView({behavior:"smooth",block:"start"});
+  });
   body.querySelector("[data-account-clear]")?.addEventListener("click",()=>{
     const input=body.querySelector("[data-account-search]");if(input)input.value="";
     activeChapter="";
