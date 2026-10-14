@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T11:04:39.100Z",
+  "updatedAt": "2026-10-14T11:05:16.156Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -19835,6 +19835,61 @@
     "manual-2.11-ringbio-don": {
       "images": [
         "img/photos/admin/manual-2.11-ringbio-don/manual-2.11-ringbio-don-01.webp"
+      ],
+      "name": "Ringbio Technology — Дезоксиниваленол",
+      "article": "600002-96T",
+      "type": "Экспресс-тест на микотоксины",
+      "purpose": "Экспресс-тест для количественного определения микотоксинов в зерне, орехах, злаках, кормах и другом сельскохозяйственном сырье.",
+      "detailFields": [
+        [
+          "Определяемый микотоксин",
+          "Дезоксиниваленол"
+        ],
+        [
+          "Предел обнаружения, ppb (мкг/кг)",
+          "500"
+        ]
+      ],
+      "group": "RINGBIO TECHNOLOGY",
+      "advantages": [
+        [
+          "Особенность",
+          "Быстрая оценка результата без считывающего устройства"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
@@ -20090,6 +20145,40 @@
           ],
           "images": [
             "img/photos/admin/manual-2.11-ringbio-don/manual-2.11-ringbio-don-01.webp"
+          ],
+          "color": "",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "complectation": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": [],
+          "tabOrder": [
+            "specs",
+            "indicators",
+            "options",
+            "variants",
+            "advantages",
+            "complectation",
+            "washCycle",
+            "workflow",
+            "calibration",
+            "assortment",
+            "consumables",
+            "testKits"
           ]
         },
         "manual-2.11-ringbio-zearalenone": {
