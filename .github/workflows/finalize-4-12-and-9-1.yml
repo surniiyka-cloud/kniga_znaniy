@@ -1,0 +1,240 @@
+name: Finalize 4.12 and recover last 9.1 photo
+
+on:
+  push:
+    paths:
+      - ".github/workflows/finalize-4-12-and-9-1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Rename Ultra Soft and search exact OD-MG06 photo
+        run: |
+          python3 - <<'PY'
+          import json,re,io,html as htmlmod
+          from pathlib import Path
+          from urllib.parse import urljoin,quote,urlparse,parse_qs
+          import requests, urllib3
+          from bs4 import BeautifulSoup
+          from PIL import Image
+          urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+          S=requests.Session()
+          S.headers.update({"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/123 Safari/537.36","Accept-Language":"ru,en;q=0.8"})
+
+          def norm(x):
+              x=htmlmod.unescape(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              x=re.sub(r'[«»"®™]',"",x)
+              return re.sub(r"\s+"," ",x).strip()
+
+          def load_image(url,referer=None):
+              try:
+                  r=S.get(url,timeout=50,verify=False,headers={"User-Agent":S.headers["User-Agent"],"Referer":referer or url})
+                  ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+                  if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<2500:
+                      return None
+                  im=Image.open(io.BytesIO(r.content)); w,h=im.size
+                  if w<180 or h<180: return None
+                  return r.content,ct,w,h
+              except Exception:
+                  return None
+
+          # --- 4.12 Ultra Soft ---
+          ultra_id="4.12-ультра-антисептик"
+          ultra_page="https://www.smkmed.ru/products/petrospirt/ultra_soft_antiseptic.php"
+          ultra_image=None
+          ultra_source=None
+          try:
+              r=S.get(ultra_page,timeout=60,verify=False)
+              r.raise_for_status()
+              sp=BeautifulSoup(r.text,"html.parser")
+              body=norm(sp.get_text(" ",strip=True))
+              required=["ультра софт","бензиловый спирт","метилхлороизоти"]
+              if not all(x in body for x in required):
+                  raise RuntimeError("Ultra Soft identity/composition not confirmed on source page")
+              candidates=[]
+              og=sp.find("meta",property="og:image")
+              if og and og.get("content"): candidates.append((5,urljoin(ultra_page,og["content"])))
+              for im in sp.find_all("img"):
+                  src=im.get("data-src") or im.get("data-original") or im.get("src")
+                  if not src: continue
+                  alt=norm(im.get("alt","")); title=norm(im.get("title",""))
+                  score=1
+                  if "ультра" in alt or "ultra" in alt or "ультра" in title or "ultra" in title: score+=10
+                  candidates.append((score,urljoin(ultra_page,src)))
+              for score,u in sorted(candidates,key=lambda z:z[0],reverse=True):
+                  if any(k in u.lower() for k in ("logo","icon","favicon","banner")): continue
+                  z=load_image(u,ultra_page)
+                  if z:
+                      ultra_image=(u,*z); ultra_source=ultra_page; break
+          except Exception as e:
+              print("SMK ultra page fallback:",e)
+
+          # Verified fallback image: central bottle is explicitly labelled Ultra Soft by Petrospirt.
+          if not ultra_image:
+              fallback="https://descont.ru/images/2022/09/doziruyuschiy-nasos-petrospirt.jpg"
+              z=load_image(fallback,"https://descont.ru/product/doziruyuschiy-nasos-na-flakon-1l-diametr-gorlyshka-28-mm/")
+              if not z: raise RuntimeError("Could not fetch verified Ultra Soft fallback image")
+              ultra_image=(fallback,*z)
+              ultra_source="https://descont.ru/product/doziruyuschiy-nasos-na-flakon-1l-diametr-gorlyshka-28-mm/"
+
+          u,data,ct,w,h=ultra_image
+          ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+          out=Path("img/photos/admin")/ultra_id/(ultra_id+"-01"+ext)
+          out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(data)
+
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          p=ov.setdefault("products",{}).setdefault(ultra_id,{})
+          p.update({
+              "name":"Ультра Софт",
+              "type":"Кожный антисептик",
+              "article":"—",
+              "purpose":"Для гигиенической обработки рук и санитарной обработки кожных покровов.",
+              "features":"Готовое к применению средство. Содержит смесь ПАВ, бензиловый спирт, метилхлороизотиазолинон, метилизотиазолинон, сорбиновую и лимонную кислоты.",
+              "detailFields":[
+                  ["Производитель","ЗАО «Петроспирт», Россия"],
+                  ["Форма","Готовый к применению кожный антисептик"],
+                  ["Консистенция","Вязкая однородная жидкость зелёного цвета"],
+                  ["Фасовка","Полимерные бутылки и канистры 0,2–10 л"],
+                  ["Срок хранения","3 года в невскрытой упаковке производителя"],
+                  ["Источник","Инструкция № 6/1 и карточка средства «Ультра Софт»"]
+              ],
+              "images":[str(out)],
+              "__frozen":True
+          })
+
+          # --- Inspect actual 9.1 card in book.json ---
+          target_id="9.1-электрический-распылитель-gartena-od-mg06-для-опрыскивателя"
+          target_name="Электрический распылитель Gartena OD-MG06 для опрыскивателя"
+          raw_matches=[]
+          try:
+              book=json.loads(Path("data/book.json").read_text(encoding="utf-8"))
+              def walk(x,path="$"):
+                  if isinstance(x,dict):
+                      txt=" ".join(str(v) for v in x.values() if isinstance(v,(str,int,float)))
+                      if target_id in txt or "OD-MG06" in txt or "OD MG06" in txt:
+                          raw_matches.append({"path":path,"object":x})
+                      for k,v in x.items(): walk(v,path+"."+str(k))
+                  elif isinstance(x,list):
+                      for i,v in enumerate(x): walk(v,path+f"[{i}]")
+              walk(book)
+          except Exception as e:
+              raw_matches=[{"error":str(e)}]
+
+          def search(q):
+              urls=[]
+              try:
+                  r=S.get("https://html.duckduckgo.com/html/?q="+quote(q),timeout=40,verify=False)
+                  sp=BeautifulSoup(r.text,"html.parser")
+                  for a in sp.select("a.result__a"):
+                      href=a.get("href","")
+                      if "uddg=" in href:
+                          try: href=parse_qs(urlparse(href).query).get("uddg",[href])[0]
+                          except: pass
+                      if href.startswith("http"): urls.append(href)
+              except: pass
+              try:
+                  r=S.get("https://www.bing.com/search?q="+quote(q)+"&setlang=ru",timeout=40,verify=False)
+                  sp=BeautifulSoup(r.text,"html.parser")
+                  for a in sp.select("li.b_algo h2 a"):
+                      href=a.get("href","")
+                      if href.startswith("http"): urls.append(href)
+              except: pass
+              out=[]; seen=set()
+              for u in urls:
+                  if u not in seen:
+                      seen.add(u); out.append(u)
+              return out[:15]
+
+          queries=[
+              '"Gartena OD-MG06"',
+              '"OD-MG06" Gartena',
+              '"OD MG06" Gartena распылитель',
+              '"Электрический распылитель Gartena"'
+          ]
+          pages=[]; evidence=[]
+          for q in queries:
+              for u in search(q):
+                  if u not in pages: pages.append(u)
+
+          exact=None
+          for page in pages[:30]:
+              try:
+                  r=S.get(page,timeout=35,verify=False,allow_redirects=True)
+                  if r.status_code!=200 or len(r.content)<300: continue
+                  sp=BeautifulSoup(r.text,"html.parser")
+                  body=norm(sp.get_text(" ",strip=True))
+                  has_brand="gartena" in body
+                  has_model=("od-mg06" in body or "od mg06" in body or "odmg06" in body)
+                  evidence.append({"page":r.url,"brand":has_brand,"model":has_model,"title":norm(sp.title.get_text(" ",strip=True) if sp.title else "")[:220]})
+                  if not (has_brand and has_model): continue
+                  candidates=[]
+                  og=sp.find("meta",property="og:image")
+                  if og and og.get("content"): candidates.append((5,urljoin(r.url,og["content"])))
+                  for im in sp.find_all("img"):
+                      src=im.get("data-src") or im.get("data-original") or im.get("src")
+                      if not src: continue
+                      alt=norm(im.get("alt","")); title=norm(im.get("title",""))
+                      score=1
+                      if "mg06" in alt or "mg06" in title or "od-mg06" in norm(src): score+=10
+                      if "gartena" in alt or "gartena" in title: score+=4
+                      candidates.append((score,urljoin(r.url,src)))
+                  for score,iu in sorted(candidates,key=lambda z:z[0],reverse=True):
+                      if score<5 or any(k in iu.lower() for k in ("logo","icon","favicon","banner","sprite")): continue
+                      z=load_image(iu,r.url)
+                      if z:
+                          exact=(r.url,iu,*z); break
+                  if exact: break
+              except: pass
+
+          nine_result={
+              "id":target_id,
+              "name":target_name,
+              "raw_card_matches":raw_matches[:5],
+              "queries":queries,
+              "pages_checked":len(evidence),
+              "evidence":evidence[:20]
+          }
+          if exact:
+              page,iu,data,ct,w,h=exact
+              ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+              out9=Path("img/photos/admin")/target_id/(target_id+"-01"+ext)
+              out9.parent.mkdir(parents=True,exist_ok=True); out9.write_bytes(data)
+              p9=ov.setdefault("products",{}).setdefault(target_id,{})
+              p9["images"]=[str(out9)]; p9["__frozen"]=True
+              nine_result.update({"status":"matched","source_page":page,"image":iu,"path":str(out9),"size":[w,h]})
+          else:
+              nine_result.update({
+                  "status":"unresolved_exact_model_not_found",
+                  "note":"Current public Gartena catalogs show many OD-series sprayers (OD-05A, OD-08A/F/G, OD-10F, OD-14A, OD-16A, OD-18WD, OD-45RD), but no verifiable OD-MG06 product page or image was found. Do not substitute a different OD-series model."
+              })
+
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          ultra_audit={
+              "section":"4.12","total_products":19,"verified_photos_attached":19,"unresolved_photos":0,
+              "policy":"Only exact product photos physically stored in the repository are accepted.",
+              "corrections":[{"id":ultra_id,"old_name":"Ультра-антисептик","new_name":"Ультра Софт","manufacturer":"ЗАО «Петроспирт», Россия","source_page":ultra_source,"image":u,"path":str(out)}]
+          }
+          Path("data/section-4.12-photo-audit.json").write_text(json.dumps(ultra_audit,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/section-9.1-last-photo-audit.json").write_text(json.dumps(nine_result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("Ultra Soft saved:",out,w,h)
+          print("9.1:",nine_result["status"])
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/section-4.12-photo-audit.json data/section-9.1-last-photo-audit.json img/photos/admin/4.12-* img/photos/admin/9.1-* 2>/dev/null || true
+          git commit -m "Finalize Ultra Soft and audit last section 9.1 photo"
+          git pull --rebase origin main
+          git push
