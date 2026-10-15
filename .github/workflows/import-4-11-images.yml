@@ -1,4 +1,4 @@
-name: Add verified Stimulong mirror photo to section 4.11
+name: Import exact Vitamix 1 photo from verified SellBuy card
 on:
   push:
     paths:
@@ -12,39 +12,75 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - run: pip install -q requests pillow
-      - name: Import verified Stimulong image
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Extract product image from exact card
         run: |
           python3 - <<'PY'
-          import io,json
+          import io,json,re
           from pathlib import Path
+          from urllib.parse import urljoin
           import requests
+          from bs4 import BeautifulSoup
           from PIL import Image
-          pid="4.11-стимулонг"
-          url="https://kz.sellbuy.zone/uploads/photo/102/5f38d31ddee2eeeafbbf3f2dbbe1dc25.jpeg"
-          r=requests.get(url,timeout=45,headers={"User-Agent":"Mozilla/5.0","Referer":"https://kz.sellbuy.zone/"})
+
+          pid="4.11-витамикс-1"
+          page="https://ru.sellbuy.zone/ua/physical_product/614420-vitamiks-1.html"
+          S=requests.Session()
+          S.headers.update({"User-Agent":"Mozilla/5.0"})
+          r=S.get(page,timeout=50)
           r.raise_for_status()
-          if not r.headers.get("content-type","").lower().startswith("image/"):
-              raise RuntimeError(r.headers.get("content-type"))
-          im=Image.open(io.BytesIO(r.content))
-          if im.width<200 or im.height<200: raise RuntimeError("too small")
-          out=Path("img/photos/admin")/pid/(pid+"-01.jpg")
+          soup=BeautifulSoup(r.text,"html.parser")
+          text=soup.get_text(" ",strip=True).lower()
+          if "витамикс 1" not in text or "рубикон" not in text:
+              raise RuntimeError("Exact product/manufacturer text not confirmed")
+          candidates=[]
+          og=soup.find("meta",property="og:image")
+          if og and og.get("content"): candidates.append(urljoin(page,og["content"]))
+          for im in soup.find_all("img"):
+              alt=(im.get("alt") or "").lower()
+              src=im.get("data-src") or im.get("data-original") or im.get("src")
+              if not src: continue
+              u=urljoin(page,src)
+              if "витамикс" in alt or "/uploads/photo/" in u.lower():
+                  candidates.append(u)
+          seen=[]
+          for u in candidates:
+              if u not in seen: seen.append(u)
+          print("candidates",seen)
+          chosen=None
+          for u in seen:
+              try:
+                  ir=S.get(u,timeout=40,headers={"Referer":page,"User-Agent":"Mozilla/5.0"})
+                  if ir.status_code!=200 or len(ir.content)<4000: continue
+                  if not ir.headers.get("content-type","").lower().startswith("image/"): continue
+                  I=Image.open(io.BytesIO(ir.content))
+                  if I.width<150 or I.height<150: continue
+                  chosen=(u,ir.content,I)
+                  break
+              except Exception as e: print("img err",u,e)
+          if not chosen: raise RuntimeError("No usable product image")
+          u,data,I=chosen
+          ext={"JPEG":".jpg","PNG":".png","WEBP":".webp"}.get(I.format,".jpg")
+          out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
           out.parent.mkdir(parents=True,exist_ok=True)
-          out.write_bytes(r.content)
+          out.write_bytes(data)
           p=Path("data/admin-overrides.json")
           d=json.loads(p.read_text(encoding="utf-8"))
           d.setdefault("products",{}).setdefault(pid,{})
           d["products"][pid]["images"]=[str(out)]
           d["products"][pid]["__frozen"]=True
           p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print("saved",im.size,len(r.content))
+          Path("data/import-4.11-vitamix-source.json").write_text(json.dumps({
+              "id":pid,"page":page,"image":u,"size":[I.width,I.height],"path":str(out)
+          },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("saved",u,I.size)
           PY
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json img/photos/admin/4.11-стимулонг
+          git add data/admin-overrides.json data/import-4.11-vitamix-source.json img/photos/admin/4.11-витамикс-1
           git diff --cached --quiet && exit 0
-          git commit -m "Add verified Stimulong photo to section 4.11"
+          git commit -m "Add verified Vitamix 1 photo to section 4.11"
           git pull --rebase origin main
           git push
