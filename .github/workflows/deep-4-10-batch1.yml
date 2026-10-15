@@ -1,0 +1,157 @@
+name: Deep photo pass section 4.10 batch 1
+
+on:
+  push:
+    paths:
+      - ".github/workflows/deep-4-10-batch1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Import verified exact photos
+        run: |
+          python3 - <<'PY'
+          import json,re,io
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+          from PIL import Image
+
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"
+
+          fixed=[
+            ("4.10-сульфаприм-аква-трв","Сульфаприм Аква-ТРВ","https://trionisvet.ru/catalog/antibacterial_water/sulfaprim_aqua/"),
+            ("4.10-концентрат-кормовой-минеральный-кальфид","Кальфид","https://omegafarm.by/product/kalfid-koncentrat-kormovoj-mineralnyj/"),
+            ("4.10-борглюконат-кальция-20-бионит","Борглюконат кальция 20%","https://bionit.ru/catalog/preparaty-dlya-korov/borglyukonat-kaltsiya-20/"),
+          ]
+
+          def norm(x):
+              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              x=re.sub(r'[«»"®™]',"",x); x=re.sub(r"\s+"," ",x)
+              return x.strip()
+
+          def pick_img(sp,page,title):
+              c=[]
+              og=sp.find("meta",attrs={"property":"og:image"})
+              if og and og.get("content"): c.append(urljoin(page,og["content"]))
+              for img in sp.find_all("img"):
+                  src=img.get("data-src") or img.get("data-lazy-src") or img.get("src")
+                  if not src: continue
+                  alt=norm(img.get("alt",""))
+                  if alt and (norm(title) in alt or alt in norm(title)):
+                      c.insert(0,urljoin(page,src))
+              seen=set()
+              for u in c:
+                  if u in seen: continue
+                  seen.add(u)
+                  if any(z in u.lower() for z in ("logo","favicon","icon","social","sprite")): continue
+                  try:
+                      r=s.get(u,timeout=50)
+                      ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+                      if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<3500: continue
+                      im=Image.open(io.BytesIO(r.content)); w,h=im.size
+                      if w<160 or h<160: continue
+                      return u,r.content,ct,(w,h)
+                  except Exception:
+                      continue
+              return None
+
+          def save(pid,page,title,sp,products,report):
+              got=pick_img(sp,page,title)
+              if not got:
+                  report.append({"id":pid,"status":"no-usable-image","page":page,"title":title}); return 0
+              iu,data,ct,size=got
+              ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+              out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(data)
+              obj=products.setdefault(pid,{}); obj["images"]=[str(out)]; obj["__frozen"]=True
+              report.append({"id":pid,"status":"matched","page":page,"title":title,"image":iu,"path":str(out),"size":list(size)})
+              return 1
+
+          ovp=Path("data/admin-overrides.json"); ov=json.loads(ovp.read_text(encoding="utf-8")); products=ov.setdefault("products",{})
+          report=[]; matched=0
+
+          for pid,expect,page in fixed:
+              try:
+                  r=s.get(page,timeout=60); r.raise_for_status(); sp=BeautifulSoup(r.text,"html.parser")
+                  h=sp.find("h1"); title=h.get_text(" ",strip=True) if h else ""
+                  if norm(expect) not in norm(title) and norm(title) not in norm(expect):
+                      report.append({"id":pid,"status":"title-mismatch","page":page,"title":title}); continue
+                  matched+=save(pid,page,title,sp,products,report)
+              except Exception as e:
+                  report.append({"id":pid,"status":"error","page":page,"error":str(e)})
+
+          # Agro-Star official product listing: resolve exact product detail links first.
+          try:
+              base="https://agro-star.net/production/"
+              r=s.get(base,timeout=60); r.raise_for_status(); sp=BeautifulSoup(r.text,"html.parser")
+              wanted={
+                "старт энерджи":("4.10-старт-энерджи","СТАРТ ЭНЕРДЖИ"),
+                "диарвит":("4.10-диарвит","ДИАРВИТ"),
+              }
+              for a in sp.find_all("a",href=True):
+                  txt=norm(a.get_text(" ",strip=True))
+                  if txt in wanted:
+                      pid,expect=wanted.pop(txt)
+                      page=urljoin(base,a["href"])
+                      pr=s.get(page,timeout=60); pr.raise_for_status(); ps=BeautifulSoup(pr.text,"html.parser")
+                      h=ps.find("h1"); title=h.get_text(" ",strip=True) if h else expect
+                      if norm(expect) not in norm(title):
+                          report.append({"id":pid,"status":"detail-title-mismatch","page":page,"title":title}); continue
+                      matched+=save(pid,page,title,ps,products,report)
+              for _,(pid,expect) in wanted.items():
+                  report.append({"id":pid,"status":"detail-link-not-found","page":base,"title":expect})
+          except Exception as e:
+              report.append({"source":"agro-star","status":"error","error":str(e)})
+
+          # Astrabel category contains exact product cards + images for both Dietevit products.
+          try:
+              page="https://www.astrabel.ru/types-animals/bolyusy-dlya-krs/"
+              r=s.get(page,timeout=60); r.raise_for_status(); sp=BeautifulSoup(r.text,"html.parser")
+              targets=[
+                ("4.10-диетевит-флэш","диетевит флэш"),
+                ("4.10-диетевит-иксель","диетевит иксель"),
+              ]
+              for pid,key in targets:
+                  candidate=None
+                  for img in sp.find_all("img"):
+                      alt=norm(img.get("alt",""))
+                      if key in alt:
+                          src=img.get("data-src") or img.get("data-lazy-src") or img.get("src")
+                          if src: candidate=urljoin(page,src); break
+                  if not candidate:
+                      report.append({"id":pid,"status":"no-exact-card-image","page":page}); continue
+                  ir=s.get(candidate,timeout=50); ct=(ir.headers.get("content-type") or "").split(";")[0].lower()
+                  if ir.status_code!=200 or not ct.startswith("image/") or len(ir.content)<3500:
+                      report.append({"id":pid,"status":"image-failed","page":page,"image":candidate}); continue
+                  im=Image.open(io.BytesIO(ir.content)); w,h=im.size
+                  if w<160 or h<160:
+                      report.append({"id":pid,"status":"image-too-small","page":page,"image":candidate,"size":[w,h]}); continue
+                  ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(ir.content)
+                  obj=products.setdefault(pid,{}); obj["images"]=[str(out)]; obj["__frozen"]=True
+                  report.append({"id":pid,"status":"matched","page":page,"image":candidate,"path":str(out),"size":[w,h]}); matched+=1
+          except Exception as e:
+              report.append({"source":"astrabel","status":"error","error":str(e)})
+
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/deep-4.10-batch1-report.json").write_text(json.dumps({"matched":matched,"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/deep-4.10-batch1-report.json img/photos/admin/4.10-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Deep photo pass for section 4.10 batch 1"
+          git pull --rebase origin main
+          git push
