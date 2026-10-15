@@ -1,4 +1,4 @@
-name: Add verified Stimulong photo to section 4.11
+name: Add verified Stimulong mirror photo to section 4.11
 on:
   push:
     paths:
@@ -21,14 +21,14 @@ jobs:
           import requests
           from PIL import Image
           pid="4.11-стимулонг"
-          url="https://tian-trade.ru/upload/iblock/8b5/vgn46ja29ctgrlgwcq7updytyego8qhp/Stimulong_-inekts..png"
-          r=requests.get(url,timeout=45,headers={"User-Agent":"Mozilla/5.0","Referer":"https://tian-trade.ru/"})
+          url="https://kz.sellbuy.zone/uploads/photo/102/5f38d31ddee2eeeafbbf3f2dbbe1dc25.jpeg"
+          r=requests.get(url,timeout=45,headers={"User-Agent":"Mozilla/5.0","Referer":"https://kz.sellbuy.zone/"})
           r.raise_for_status()
           if not r.headers.get("content-type","").lower().startswith("image/"):
               raise RuntimeError(r.headers.get("content-type"))
           im=Image.open(io.BytesIO(r.content))
           if im.width<200 or im.height<200: raise RuntimeError("too small")
-          out=Path("img/photos/admin")/pid/(pid+"-01.png")
+          out=Path("img/photos/admin")/pid/(pid+"-01.jpg")
           out.parent.mkdir(parents=True,exist_ok=True)
           out.write_bytes(r.content)
           p=Path("data/admin-overrides.json")
