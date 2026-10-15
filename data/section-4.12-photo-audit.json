@@ -11,8 +11,9 @@
       "new_name": "Ультра Софт",
       "manufacturer": "ЗАО «Петроспирт», Россия",
       "source_page": "https://descont.ru/product/doziruyuschiy-nasos-na-flakon-1l-diametr-gorlyshka-28-mm/",
-      "image": "https://www.bing.com/ck/a?!&&p=1ac36a25fa80aa003c185d9b34e8a59a12dd8cca54feae9f78a25fc5650bcea7JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuYWJicmV2aWF0aW9ucy5jb20vT0Q&ntb=1",
-      "path": "img/photos/admin/4.12-ультра-антисептик/4.12-ультра-антисептик-01.jpg"
+      "source_image": "https://descont.ru/images/2022/09/doziruyuschiy-nasos-petrospirt.jpg",
+      "path": "img/photos/admin/4.12-ультра-антисептик/4.12-ультра-антисептик-01.jpg",
+      "processing": "Cropped the center Ultra Soft bottle from the verified Petrospirt source photo onto a white catalog canvas."
     }
   ]
 }

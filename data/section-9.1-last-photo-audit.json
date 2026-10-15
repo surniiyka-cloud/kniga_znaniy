@@ -205,5 +205,14 @@
     }
   ],
   "status": "unresolved_exact_model_not_found",
-  "note": "Current public Gartena catalogs show many OD-series sprayers (OD-05A, OD-08A/F/G, OD-10F, OD-14A, OD-16A, OD-18WD, OD-45RD), but no verifiable OD-MG06 product page or image was found. Do not substitute a different OD-series model."
+  "note": "Current public Gartena catalogs show many OD-series sprayers (OD-05A, OD-08A/F/G, OD-10F, OD-14A, OD-16A, OD-18WD, OD-45RD), but no verifiable OD-MG06 product page or image was found. Do not substitute a different OD-series model.",
+  "data_quality_flag": {
+    "issue": "The standalone model name OD-MG06 could not be verified in current or indexed public Gartena catalogs.",
+    "comparison": "The card values Li-ion 2.6 Ah / 12 V, 120 min runtime, 240 min charging and 0.2–0.3 MPa working pressure match published specifications of the Gartena 8008 sprayer.",
+    "conclusion": "OD-MG06 may be an incorrect/outdated internal designation or the card may have inherited specifications from Gartena 8008. A photo of another Gartena OD/8008 model was not attached because that would be a substitution.",
+    "reference_pages": [
+      "https://www.simclean.ru/products/opryskivatel-akkumulyatornyy-gartena-10-litrov-mod-8008/",
+      "https://www.vseinstrumenti.ru/product/opryskivatel-akkumulyatornyj-gartena-10-8008-18844257/"
+    ]
+  }
 }
