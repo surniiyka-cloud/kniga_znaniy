@@ -23120,7 +23120,10 @@
       "__frozen": true
     },
     "4.11-цефапирин-рн": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-цефапирин-рн/4.11-цефапирин-рн-01.jpg"
+      ]
     },
     "4.11-дац": {
       "__frozen": true,
