@@ -1,0 +1,135 @@
+name: Reconcile section 9.1 with Arkady list
+
+on:
+  push:
+    paths:
+      - ".github/workflows/reconcile-9-1-arkady.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Audit visible cards and reconcile
+        run: |
+          python3 - <<'PY'
+          import json,re
+          from pathlib import Path
+          from difflib import SequenceMatcher
+
+          approved=json.loads(Path("data/section-9.1-arkady-approved.json").read_text(encoding="utf-8"))["items"]
+          book=json.loads(Path("data/book.json").read_text(encoding="utf-8"))
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          s91=ov.setdefault("sections",{}).setdefault("9.1",{})
+          hidden=set(s91.get("hiddenProductIds",[]))
+          manual=s91.get("manualProducts",{})
+
+          sec=None
+          for ch in book.get("chapters",[]):
+              for s in ch.get("sections",[]):
+                  if str(s.get("section") or s.get("id"))=="9.1":
+                      sec=s; break
+              if sec: break
+          if sec is None: raise RuntimeError("9.1 not found")
+
+          def slug(s):
+              s=s.lower().replace("ё","е")
+              s=re.sub(r'[^a-zа-я0-9]+','-',s)
+              return re.sub(r'-+','-',s).strip('-')
+
+          base=[]
+          for t in sec.get("tables",[]):
+              title=(t.get("title") or "").strip()
+              if not title: continue
+              pid="9.1-"+slug(title)
+              base.append({"id":pid,"name":title,"hidden":pid in hidden})
+
+          visible=[x for x in base if not x["hidden"]]
+          visible += [{"id":k,"name":v.get("name",""),"manual":True} for k,v in manual.items() if v.get("name")]
+
+          def norm(s):
+              s=s.lower().replace("ё","е")
+              s=s.replace("литров","л").replace("литра","л").replace("литр","л")
+              s=s.replace("нержавейка","нержавеющая сталь").replace("нерж. сталь","нержавеющая сталь")
+              s=re.sub(r'[«»"“”]',"",s)
+              s=re.sub(r'[^a-zа-я0-9]+',' ',s)
+              return re.sub(r'\s+',' ',s).strip()
+
+          def codes(s):
+              n=norm(s)
+              return set(re.findall(r'(?=[a-zа-я0-9-]*\d)[a-zа-я0-9]+(?:-[a-zа-я0-9]+)*',n))
+
+          unused=set(range(len(visible)))
+          matches=[]; missing=[]
+          for a in approved:
+              na=norm(a); ac=codes(a)
+              best=None
+              for i in unused:
+                  c=visible[i]["name"]; nc=norm(c); cc=codes(c)
+                  # If approved has model codes, candidate must share at least one meaningful code.
+                  if ac and not (ac & cc):
+                      continue
+                  score=SequenceMatcher(None,na,nc).ratio()
+                  if ac & cc: score+=0.18
+                  if best is None or score>best[0]: best=(score,i)
+              if best and best[0]>=0.78:
+                  unused.remove(best[1])
+                  matches.append({"approved":a,"current":visible[best[1]],"score":round(best[0],3)})
+              else:
+                  missing.append(a)
+
+          extra=[visible[i] for i in sorted(unused)]
+
+          # Known exact approval: JP-S20 is not in Arkady's list. Hide it, preserving data.
+          jp=[x for x in extra if 'jp-s20' in norm(x["name"])]
+          changed=[]
+          for x in jp:
+              if x["id"] not in hidden:
+                  hidden.add(x["id"]); changed.append({"action":"hide_extra","id":x["id"],"name":x["name"]})
+
+          # OD-MG06 is also not approved; keep it hidden if present.
+          for x in base:
+              if "od-mg06" in norm(x["name"]) and x["id"] not in hidden:
+                  hidden.add(x["id"]); changed.append({"action":"hide_extra","id":x["id"],"name":x["name"]})
+
+          # Match Arkady's exact wording for KF-10L-1 while retaining verified specs/photo.
+          m=manual.get("manual-9.1-kf-10l-1")
+          if m and m.get("name")!="Опрыскиватель аккумуляторный пневматический Gartena KF-10L-1 нержавейка":
+              changed.append({"action":"rename_manual","id":"manual-9.1-kf-10l-1","old":m.get("name"),"new":"Опрыскиватель аккумуляторный пневматический Gartena KF-10L-1 нержавейка"})
+              m["name"]="Опрыскиватель аккумуляторный пневматический Gartena KF-10L-1 нержавейка"
+
+          s91["hiddenProductIds"]=sorted(hidden)
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          # Recompute visible count after changes.
+          visible_after=[x for x in base if x["id"] not in hidden]
+          visible_after += [{"id":k,"name":v.get("name",""),"manual":True} for k,v in manual.items() if v.get("name")]
+
+          report={
+              "approved_count":len(approved),
+              "base_cards":len(base),
+              "hidden_base_cards":len(hidden),
+              "manual_cards":len(manual),
+              "visible_after_count":len(visible_after),
+              "pre_reconcile_missing":missing,
+              "pre_reconcile_extra":extra,
+              "changes_applied":changed,
+              "note":"The 17 legacy/non-approved raw cards remain stored but hidden. Manual approved cards are rendered from section overrides."
+          }
+          Path("data/section-9.1-arkady-visible-audit.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/section-9.1-arkady-visible-audit.json
+          git commit -m "Reconcile section 9.1 with Arkady approved list"
+          git pull --rebase origin main
+          git push
