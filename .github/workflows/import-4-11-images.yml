@@ -1,4 +1,4 @@
-name: Analyze Agrokomfort for remaining 4.11
+name: Import cross-verified 4.11 photos
 
 on:
   push:
@@ -9,100 +9,94 @@ permissions:
   contents: write
 
 jobs:
-  analyze:
+  import:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - run: pip install -q requests beautifulsoup4
-      - name: Analyze exact remaining products
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Import cross-verified products
         shell: bash
         run: |
           python3 - <<'PY'
-          import json,re
+          import io,json
           from pathlib import Path
-          from urllib.parse import urljoin, urlparse, parse_qs
+          from urllib.parse import urljoin
           import requests
           from bs4 import BeautifulSoup
+          from PIL import Image
           from requests.adapters import HTTPAdapter
           from urllib3.util.retry import Retry
 
-          BASE="https://agrokomfort.net"
-          S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0"
-          S.mount("https://",HTTPAdapter(max_retries=Retry(total=3,backoff_factor=.6,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])))
-
-          def norm(x):
-              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
-              x=x.replace("«","").replace("»","").replace('"',"")
-              x=re.sub(r"[^a-zа-я0-9%.,+ -]+"," ",x)
-              return re.sub(r"\s+"," ",x).strip(" .,-")
-
-          idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
-          arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
-          ov=json.loads(Path("data/admin-overrides.json").read_text(encoding="utf-8"))
-          P=ov.get("products",{})
-          targets=[x for x in arr if str(x.get("section"))=="4.11" and not P.get(x["id"],{}).get("images")]
-          nt={t["id"]:norm(t["name"]) for t in targets}
-
-          product_urls=set()
-          # Crawl every category page found in home/catalog navigation and broad search pagination.
-          seeds=[BASE+"/"]
-          for page in range(1,20):
-              seeds.append(BASE+f"/index.php?filter_tag=&limit=100&page={page}&route=product%2Fsearch")
-          # Known categories used by site.
-          for path in range(50,101):
-              seeds.append(BASE+f"/index.php?path={path}&route=product%2Fcategory&limit=100")
-
-          for u in seeds:
-              try:
-                  r=S.get(u,timeout=12)
-                  if r.status_code!=200: continue
-                  q=BeautifulSoup(r.text,"html.parser")
-                  for a in q.find_all("a",href=True):
-                      h=urljoin(r.url,a["href"])
-                      qs=parse_qs(urlparse(h).query)
-                      if "product_id" in qs and ("product/product" in h or "route=product" in h):
-                          product_urls.add(h)
-              except Exception: pass
-
-          print("products",len(product_urls))
-          candidates=[]
-          for u in product_urls:
-              try:
-                  r=S.get(u,timeout=12)
-                  if r.status_code!=200: continue
-                  q=BeautifulSoup(r.text,"html.parser"); h1=q.find("h1")
-                  title=h1.get_text(" ",strip=True) if h1 else ""
-                  if not title: continue
-                  ntitle=norm(title)
-                  matched=[t for t in targets if nt[t["id"]]==ntitle or nt[t["id"]] in ntitle or ntitle in nt[t["id"]]]
-                  if not matched: continue
-                  text=q.get_text(" ",strip=True)
-                  imgs=[]
-                  m=q.find("meta",property="og:image")
-                  if m and m.get("content"): imgs.append(urljoin(r.url,m["content"]))
-                  for im in q.find_all("img"):
-                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
-                      if src:
-                          src=urljoin(r.url,src)
-                          if src not in imgs: imgs.append(src)
-                  for t in matched:
-                      candidates.append({"id":t["id"],"name":t["name"],"title":title,"url":u,
-                                         "rubikon":"рубикон" in norm(text),
-                                         "images":[x for x in imgs if not any(z in x.lower() for z in ["logo","icon","sprite","banner"])][:10]})
-              except Exception: pass
-
-          out={"targets":len(targets),"products":len(product_urls),"candidates":candidates}
-          Path("data/import-4.11-agrokomfort-candidates.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print(json.dumps({"targets":len(targets),"products":len(product_urls),"candidates":len(candidates)},ensure_ascii=False))
+          pages={
+            "4.11-мастипен":("Мастипен","https://agrokomfort.net/index.php?route=product/product&filter_tag=&sort=pd.name&order=DESC&page=8&limit=25&product_id=434"),
+            "4.11-утеросепт-био":("Утеросепт Био","https://agrokomfort.net/index.php?route=product/product&filter_tag=&page=12&limit=25&product_id=521"),
+            "4.11-полийодметрин":("Полийодометрин","https://agrokomfort.net/index.php?route=product/product&path=57&product_id=435"),
+            "4.11-цефалек-dc":("Цефалек DC","https://vetpreparaty-optom.ru/catalog/tsefalek-dc-9-g-up-tsefapirin/")
+          }
+          S=requests.Session()
+          S.headers.update({
+            "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36",
+            "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,image/*,*/*;q=0.8",
+            "Accept-Language":"ru-RU,ru;q=0.9,en;q=0.7"
+          })
+          S.mount("https://",HTTPAdapter(max_retries=Retry(total=4,connect=4,read=4,backoff_factor=.8,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])))
+          p=Path("data/admin-overrides.json")
+          data=json.loads(p.read_text(encoding="utf-8")); P=data.setdefault("products",{})
+          report=[]
+          for pid,(expected,url) in pages.items():
+            if P.get(pid,{}).get("images"):
+              report.append({"id":pid,"status":"already"}); continue
+            try:
+              r=S.get(url,timeout=25); r.raise_for_status()
+              q=BeautifulSoup(r.text,"html.parser")
+              h1=q.find("h1"); title=h1.get_text(" ",strip=True) if h1 else ""
+              chk=title.lower().replace("ё","е")
+              e=expected.lower().replace("ё","е")
+              if e not in chk and not (pid=="4.11-полийодметрин" and "полийодометрин" in chk):
+                report.append({"id":pid,"status":"title-mismatch","title":title}); continue
+              imgs=[]
+              for im in q.find_all("img"):
+                src=im.get("data-src") or im.get("data-lazy-src") or im.get("data-original") or im.get("src")
+                if src:
+                  src=urljoin(r.url,src)
+                  if src not in imgs: imgs.append(src)
+              m=q.find("meta",property="og:image")
+              if m and m.get("content"): imgs.insert(0,urljoin(r.url,m["content"]))
+              chosen=None
+              for iu in imgs:
+                lo=iu.lower()
+                if any(z in lo for z in ["logo","icon","sprite","banner","placeholder","noimage","favicon"]): continue
+                try:
+                  ir=S.get(iu,timeout=25,headers={"Referer":url,"Accept":"image/avif,image/webp,image/apng,image/*,*/*;q=0.8"})
+                  if ir.status_code!=200 or len(ir.content)<5000: continue
+                  im=Image.open(io.BytesIO(ir.content)); w,h=im.size
+                  if w<180 or h<180 or w/h>4 or h/w>4: continue
+                  ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get((im.format or "").lower())
+                  if not ext: continue
+                  chosen=(iu,ir.content,ext,w,h); break
+                except Exception: pass
+              if not chosen:
+                report.append({"id":pid,"status":"no-image","title":title,"images":imgs[:8]}); continue
+              iu,blob,ext,w,h=chosen
+              out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(blob)
+              P.setdefault(pid,{})["images"]=[str(out)]; P[pid]["__frozen"]=True
+              report.append({"id":pid,"status":"imported","title":title,"image":iu,"path":str(out),"size":[w,h]})
+              print("IMPORTED",pid,iu,w,h)
+            except Exception as e:
+              report.append({"id":pid,"status":"error","error":str(e)})
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/import-4.11-crossverified-report.json").write_text(json.dumps({"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps(report,ensure_ascii=False))
           PY
-      - name: Commit report
+      - name: Commit
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/import-4.11-agrokomfort-candidates.json
+          git add data/admin-overrides.json data/import-4.11-crossverified-report.json img/photos/admin/4.11-* || true
           git diff --cached --quiet && exit 0
-          git commit -m "Analyze Agrokomfort candidates for remaining section 4.11"
+          git commit -m "Import cross-verified photos for section 4.11"
           git pull --rebase origin main
           git push
