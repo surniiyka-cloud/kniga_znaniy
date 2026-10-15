@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T06:33:03.912Z",
+  "updatedAt": "2026-10-15T06:33:40.777Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -23617,6 +23617,68 @@
     "4.10-кетомаст": {
       "images": [
         "img/photos/admin/4.10-кетомаст/4.10-кетомаст-01.webp"
+      ],
+      "name": "Кетомаст",
+      "type": "Акушерско-гинекологический ветеринарный препарат",
+      "article": "-",
+      "purpose": "Для применения в ветеринарной акушерско-гинекологической практике",
+      "features": "Упаковка 20 шт.; в старой книге указан статус РУ",
+      "group": "Акушерско-гинекологические препараты",
+      "sourceRow": 3,
+      "candidateId": "кетомаст",
+      "detailFields": [
+        [
+          "Тип",
+          "Акушерско-гинекологический ветеринарный препарат"
+        ],
+        [
+          "Назначение",
+          "Для применения в ветеринарной акушерско-гинекологической практике"
+        ],
+        [
+          "Упаковка",
+          "Упаковка 20 шт"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "В старой книге указан статус РУ"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
