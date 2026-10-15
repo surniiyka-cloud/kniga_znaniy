@@ -1,0 +1,73 @@
+{
+  "matched": 0,
+  "items": [
+    {
+      "id": "4.11-гель-повиаргола-1",
+      "status": "no-usable-image",
+      "page": "https://www.tandem-industry.ru/catalog/?id=967",
+      "candidates": [
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_1.gif"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_2.gif"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_3.gif"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_8.gif"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_5.gif"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_9.png"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_7.png"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/object_6.gif"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/loupe.png"
+        },
+        {
+          "score": 3,
+          "url": "https://www.tandem-industry.ru/img/price.jpg"
+        },
+        {
+          "score": 3,
+          "url": "https://mc.yandex.ru/watch/13129360"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/tandem_katalog.jpg"
+        }
+      ]
+    },
+    {
+      "id": "4.11-мастидез-концентрат",
+      "status": "identity-not-confirmed",
+      "page": "https://www.tandem-industry.ru/",
+      "body_sample": "найти кормовые добавки, биохимия и ветеринарные препараты оптом раствор линкоферон-с серволайн дез 1000 биоциллин-200 пелтамаст шашка сити генератор холодного тумана atomer 2 профессиональный генератор горячего тумана p-th180 (корея) quad bike mounted thermal fogger амоксициллин 80% вм уксусная кислота 79% фосбак плюс т гигасепт инстру аф мастоферон ципромаг, 10% костовит форте бетамокс la cyclone 3004 экофильтрум ветоспорин - ж bacillus subtilis 12в и 11в (жидкость) ветом-1.1 гентаприм night st"
+    },
+    {
+      "id": "4.11-гель-декорнум",
+      "status": "identity-not-confirmed",
+      "page": "https://www.tandem-industry.ru/",
+      "body_sample": "найти кормовые добавки, биохимия и ветеринарные препараты оптом амоксицин 15% галапан биогумитель-кормовая добавка станция для гигиены рук, модель st-hf-02 крепление на стену аламицин la 300 алиосепт полиоксидоний-вет раствор, уп. 5 амп. по 2 мл (6 мг) таблетки кобальта хлорида дезоксиплюс генератор холодного тумана ulv tornado 10 сиквест колиджет 4,8м деконекс 50 плюс ветримоксин 50% ацидонорм санпропускник select 1 спрейеры серия pro 1300 глютекс опрыскиватель kima 12 л matabi ферранимал-75 ал"
+    }
+  ],
+  "cleanup": "removed_generic_flavovit_image"
+}
