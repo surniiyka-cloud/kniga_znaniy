@@ -28648,6 +28648,206 @@
           "testKits": [],
           "tabTables": {},
           "customTabs": []
+        },
+        "manual-2-1-3-flash-bt": {
+          "id": "manual-2-1-3-flash-bt",
+          "manual": true,
+          "sourceSectionId": "2.1.3",
+          "name": "FLASH BT",
+          "article": "BY21",
+          "purpose": "",
+          "detailFields": [
+            [
+              "Наименование",
+              "FLASH BT"
+            ],
+            [
+              "Код продукта",
+              "BY21"
+            ],
+            [
+              "Цвет этикетки",
+              "RGB 255,0,0"
+            ],
+            [
+              "Источник",
+              "Product-list-with-logo-color-Belarus.xlsx"
+            ]
+          ],
+          "advantages": [],
+          "complectation": [],
+          "images": [
+            "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png"
+          ],
+          "sourceInfo": "Таблица цветов Product-list-with-logo-color-Belarus.xlsx",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": []
+        },
+        "manual-2-1-3-garant-macrolides": {
+          "id": "manual-2-1-3-garant-macrolides",
+          "manual": true,
+          "sourceSectionId": "2.1.3",
+          "name": "GARANT MACROLIDES",
+          "article": "BY12",
+          "purpose": "",
+          "detailFields": [
+            [
+              "Наименование",
+              "GARANT MACROLIDES"
+            ],
+            [
+              "Код продукта",
+              "BY12"
+            ],
+            [
+              "Цвет этикетки",
+              "0,20,100,0"
+            ],
+            [
+              "Источник",
+              "Product-list-with-logo-color-Belarus.xlsx"
+            ]
+          ],
+          "advantages": [],
+          "complectation": [],
+          "images": [
+            "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png"
+          ],
+          "sourceInfo": "Таблица цветов Product-list-with-logo-color-Belarus.xlsx",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": []
+        },
+        "manual-2-1-3-garant-bacitracin": {
+          "id": "manual-2-1-3-garant-bacitracin",
+          "manual": true,
+          "sourceSectionId": "2.1.3",
+          "name": "GARANT BACITRACIN",
+          "article": "BY16",
+          "purpose": "",
+          "detailFields": [
+            [
+              "Наименование",
+              "GARANT BACITRACIN"
+            ],
+            [
+              "Код продукта",
+              "BY16"
+            ],
+            [
+              "Цвет этикетки",
+              "60,0,40,40"
+            ],
+            [
+              "Источник",
+              "Product-list-with-logo-color-Belarus.xlsx"
+            ]
+          ],
+          "advantages": [],
+          "complectation": [],
+          "images": [
+            "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png"
+          ],
+          "sourceInfo": "Таблица цветов Product-list-with-logo-color-Belarus.xlsx",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": []
+        },
+        "manual-2-1-3-garant-colistin": {
+          "id": "manual-2-1-3-garant-colistin",
+          "manual": true,
+          "sourceSectionId": "2.1.3",
+          "name": "GARANT COLISTIN",
+          "article": "BY14",
+          "purpose": "",
+          "detailFields": [
+            [
+              "Наименование",
+              "GARANT COLISTIN"
+            ],
+            [
+              "Код продукта",
+              "BY14"
+            ],
+            [
+              "Цвет этикетки",
+              "0,40,0,0"
+            ],
+            [
+              "Источник",
+              "Product-list-with-logo-color-Belarus.xlsx"
+            ]
+          ],
+          "advantages": [],
+          "complectation": [],
+          "images": [
+            "img/photos/03-testy-dopolnitelnyh-grupp/03-garant.png"
+          ],
+          "sourceInfo": "Таблица цветов Product-list-with-logo-color-Belarus.xlsx",
+          "__frozen": true,
+          "pairHeaders": {
+            "detailFields": [
+              "Характеристика",
+              "Значение"
+            ]
+          },
+          "indicators": [],
+          "options": [],
+          "variants": [],
+          "washCycle": [],
+          "workflow": [],
+          "calibration": [],
+          "assortment": [],
+          "consumables": [],
+          "testKits": [],
+          "tabTables": {},
+          "customTabs": []
         }
       }
     }
