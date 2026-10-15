@@ -1,0 +1,95 @@
+name: Import exact retailer photos for remaining 4.12
+
+on:
+  push:
+    paths:
+      - ".github/workflows/finalize-4-12-retailer-photos.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Download verified exact photos
+        run: |
+          python3 - <<'PY'
+          import json,io
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+          from PIL import Image
+
+          s=requests.Session();s.headers["User-Agent"]="Mozilla/5.0"
+          items=[
+            {
+              "id":"4.12-раносепт-спрей",
+              "page":"https://4lapy.ru/product/biohimfarm-ranosept-antibakterialnyj-sprej-hlortetratsiklin-100ml-94568-1066197/",
+              "image":"https://cdn.4lapy.ru/_next/image/?q=70&url=https%3A%2F%2Fstorage.yandexcloud.net%2Fpim-core%2F422615.jpeg&w=3840",
+              "expect":["раносепт","биохимфарм"]
+            },
+            {
+              "id":"4.12-алюмиспрей",
+              "page":"https://4lapy.ru/product/biohimfarm-alyumisprej-zazhivlyayushchij-dlya-koshek-i-sobak-100-ml-9749-1026743/",
+              "image":"https://cdn.4lapy.ru/_next/image/?q=70&url=https%3A%2F%2Fstorage.yandexcloud.net%2Fpim-core%2F357029.png&w=3840",
+              "expect":["алюмиспрей","биохимфарм"]
+            },
+            {
+              "id":"4.12-биозоль-спрей",
+              "page":"https://www.sibagrotrade.com/catalogzoo/preparaty_dlya_s_kh_zhivotnykh/naruzhnye_sredstva_skhzh/186627/",
+              "image":null,
+              "expect":["биозоль","биохимфарм"]
+            }
+          ]
+          ovp=Path("data/admin-overrides.json");ov=json.loads(ovp.read_text(encoding="utf-8"));products=ov.setdefault("products",{})
+          rep=[];matched=0
+          for x in items:
+            try:
+              pr=s.get(x["page"],timeout=45);pr.raise_for_status();html=pr.text.lower().replace("ё","е")
+              if not all(k in html for k in x["expect"]):
+                rep.append({"id":x["id"],"status":"source-verification-failed","page":x["page"]});continue
+              iu=x["image"]
+              if not iu:
+                sp=BeautifulSoup(pr.text,"html.parser")
+                og=sp.find("meta",attrs={"property":"og:image"})
+                if og and og.get("content"): iu=urljoin(x["page"],og["content"])
+                if not iu:
+                  cands=[]
+                  for im in sp.find_all("img"):
+                    src=im.get("data-src") or im.get("src")
+                    alt=(im.get("alt") or "").lower().replace("ё","е")
+                    if src and "биозоль" in alt:cands.append(urljoin(x["page"],src))
+                  iu=cands[0] if cands else None
+              if not iu:
+                rep.append({"id":x["id"],"status":"no-image","page":x["page"]});continue
+              ir=s.get(iu,timeout=45);ct=(ir.headers.get("content-type") or "").split(";")[0].lower()
+              if ir.status_code!=200 or not ct.startswith("image/") or len(ir.content)<4000:
+                rep.append({"id":x["id"],"status":"image-failed","page":x["page"],"image":iu,"http":ir.status_code,"content_type":ct});continue
+              im=Image.open(io.BytesIO(ir.content));w,h=im.size
+              if w<180 or h<180:
+                rep.append({"id":x["id"],"status":"image-too-small","image":iu,"size":[w,h]});continue
+              ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+              out=Path("img/photos/admin")/x["id"]/(x["id"]+"-01"+ext);out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(ir.content)
+              products.setdefault(x["id"],{})["images"]=[str(out)];products[x["id"]]["__frozen"]=True
+              rep.append({"id":x["id"],"status":"matched","page":x["page"],"image":iu,"path":str(out),"size":[w,h]});matched+=1
+            except Exception as e:
+              rep.append({"id":x["id"],"status":"error","page":x["page"],"error":str(e)})
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/finalize-4.12-retailer-report.json").write_text(json.dumps({"matched":matched,"items":rep},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/finalize-4.12-retailer-report.json img/photos/admin/4.12-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Add verified retailer photos for remaining section 4.12 cards"
+          git pull --rebase origin main
+          git push
