@@ -1734,35 +1734,34 @@ function imageViewStyle(p,path,context="card"){
 }
 function garantCardColor(name){
   const n=String(name||"").toUpperCase();
+  // Цвета взяты из фактических цветных образцов файла
+  // Product-list-with-logo-color-Belarus.xlsx, а не рассчитаны приблизительно из CMYK.
   const map=[
-    ["MACROLIDES TULATHROMYCIN","#7F95AF"],
-    ["AMINO ULTRA","#A89488"],
-    ["BTSC CEFTIOFUR","#8B8179"],
-    ["BTSC PLUS","#B8CB91"],
-    ["ALBENDAZOLE","#00FFFF"],
-    ["SULFA","#FF0000"],
-    ["AVERMECTINS","#0000FF"],
-    ["DIO","#D96666"],
-    ["DPF","#00FF00"],
-    ["MACROLIDES","#CCB366"],
-    ["ULTRA","#FF6600"],
-    ["QMLE","#009900"],
-    ["AMINOSPEC","#CC99CC"],
-    ["AMINO","#B34D99"],
-    ["KFMD","#CCB366"],
-    ["BACSF","#669977"],
-    ["LQMES","#666699"],
+    ["MACROLIDES TULATHROMYCIN","#7386A2"],
+    ["AMINO ULTRA","#86746B"],
+    ["BTSC CEFTIOFUR","#86746B"],
+    ["BTSC PLUS","#BAC998"],
+    ["ALBENDAZOLE","#00A0E9"],
+    ["SULFA","#E50012"],
+    ["AVERMECTINS","#1D2088"],
+    ["DIO","#CE726D"],
     ["FLASH BT","#FF0000"],
-    ["BACITRACIN","#669977"],
-    ["COLISTIN","#99FF99"],
-    ["FTMCS","#666699"],
-    ["MONENSIN","#333333"],
-    ["NOSIHEPTIDE","#FFFF00"],
-    ["METAMIZOLE","#996699"],
-    ["NATAMYCIN","#00CCFF"],
-    ["NOVOBIOCIN","#F4D000"],
-    ["METRONIDAZOLE","#73536C"],
-    ["FTSP","#B88A63"]
+    ["DPF","#E4007E"],
+    ["MACROLIDES","#FDD000"],
+    ["ULTRA","#EF8200"],
+    ["QMLE","#009944"],
+    ["AMINOSPEC","#D39BB4"],
+    ["AMINO","#AF4184"],
+    ["KFMD","#D9B765"],
+    ["BACSF","#438A7B"],
+    ["LQMES","#58516E"],
+    ["BACITRACIN","#438A7B"],
+    ["COLISTIN","#F4B4CF"],
+    ["FTMCS","#796BAF"],
+    ["MONENSIN","#595757"],
+    ["NOSIHEPTIDE","#FFF000"],
+    ["METAMIZOLE","#70586F"],
+    ["NATAMYCIN","#008CD6"]
   ];
   return map.find(([k])=>n.includes(k))?.[1]||"";
 }
