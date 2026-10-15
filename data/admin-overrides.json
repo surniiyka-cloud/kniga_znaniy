@@ -6806,7 +6806,12 @@
       "variants": [],
       "complectation": [],
       "washCycle": [],
-      "workflow": [],
+      "workflow": [
+        [
+          "Эксплуатация",
+          "Своевременно доливать раствор по мере его расходования."
+        ]
+      ],
       "calibration": [],
       "assortment": [],
       "consumables": [],
