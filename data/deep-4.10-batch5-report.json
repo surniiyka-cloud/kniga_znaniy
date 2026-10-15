@@ -1,0 +1,27 @@
+{
+  "matched": 1,
+  "items": [
+    {
+      "id": "4.10-сульфаприм-аква-трв",
+      "status": "no-usable-image",
+      "page": "https://www.vetar-vet.ru/catalog/sulfaprim-akva-trv-1l/"
+    },
+    {
+      "id": "4.10-ихтиоловые-свечи",
+      "status": "matched",
+      "page": "https://vet-farm.dzumba.kz/product/61216",
+      "image": "https://vet-farm.dzumba.kz/storage/vet-farm/NztaCOa2yIIVSPOYst4mnYgxUqNfIRgtF0dErd3S.webp",
+      "path": "img/photos/admin/4.10-ихтиоловые-свечи/4.10-ихтиоловые-свечи-01.webp",
+      "size": [
+        600,
+        463
+      ]
+    },
+    {
+      "id": "4.10-вакцина-против-сибирской-язвы-и-эмкара-орловская",
+      "status": "error",
+      "page": "https://instruka.top/vakczina-protiv-emkara-i-sibirskoj-yazvy-krs-instrukcziya/",
+      "error": "HTTPSConnectionPool(host='instruka.top', port=443): Max retries exceeded with url: /vakczina-protiv-emkara-i-sibirskoj-yazvy-krs-instrukcziya/ (Caused by ConnectTimeoutError(<urllib3.connection.HTTPSConnection object at 0x7fe8f3e9e420>, 'Connection to instruka.top timed out. (connect timeout=60)'))"
+    }
+  ]
+}
