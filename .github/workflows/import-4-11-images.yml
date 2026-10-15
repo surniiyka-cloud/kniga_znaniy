@@ -1,4 +1,4 @@
-name: Import remaining 4.11 photos from Tian Trade
+name: Import exact Tian Trade 4.11 photo set
 
 on:
   push:
@@ -16,97 +16,52 @@ jobs:
         with:
           fetch-depth: 1
       - run: pip install -q requests beautifulsoup4 pillow
-      - name: Import exact catalog cards
+      - name: Import exact Tian Trade pages
         shell: bash
         run: |
           python3 - <<'PY'
-          import io,json,re,xml.etree.ElementTree as ET
+          import io,json,re
           from pathlib import Path
-          from urllib.parse import urljoin,urlparse
-          from concurrent.futures import ThreadPoolExecutor,as_completed
+          from urllib.parse import urljoin
           import requests
           from bs4 import BeautifulSoup
           from PIL import Image
           from requests.adapters import HTTPAdapter
           from urllib3.util.retry import Retry
 
-          BASE="https://tian-trade.ru"
-          S=requests.Session()
-          S.headers["User-Agent"]="Mozilla/5.0 (KnowledgeBook image sync)"
-          retry=Retry(total=3,connect=3,read=3,backoff_factor=.8,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])
+          pages={
+            "4.11-ксиловит":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/prochie-preparaty/ksilovit-inekts/",
+            "4.11-стимулонг":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/stimulong-inekts/",
+            "4.11-руфферан-200-плюс":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/rufferan-200-plyus-inekts/",
+            "4.11-витамикс-1":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitamiks-1-poroshok/",
+            "4.11-витасорб":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitasorb-poroshok/",
+            "4.11-биосан":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/antisepticheskie-i-dezsredstva/biosan-osushitel-podstilka/"
+          }
+          expected={
+            "4.11-ксиловит":"ксиловит",
+            "4.11-стимулонг":"стимулонг",
+            "4.11-руфферан-200-плюс":"руфферан-200 плюс",
+            "4.11-витамикс-1":"витамикс-1",
+            "4.11-витасорб":"витасорб",
+            "4.11-биосан":"биосан"
+          }
+          S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0"
+          retry=Retry(total=4,connect=4,read=4,backoff_factor=.8,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])
           S.mount("https://",HTTPAdapter(max_retries=retry))
-
           def norm(x):
               x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
               x=x.replace("«","").replace("»","").replace('"',"")
-              x=re.sub(r"\b(инъекц|инъекционный|инъекционная|порошок|раствор|суспензия|таблетки|гранулят)\.?\b"," ",x)
-              x=re.sub(r"[^a-zа-я0-9%.,+ -]+"," ",x)
-              return re.sub(r"\s+"," ",x).strip(" .,-")
+              x=re.sub(r"\b(инъекц|порошок|осушитель|подстилка)\.?\b"," ",x)
+              return re.sub(r"\s+"," ",re.sub(r"[^a-zа-я0-9%.,+ -]+"," ",x)).strip(" .,-()")
 
-          idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
-          arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
-          ovp=Path("data/admin-overrides.json")
-          ov=json.loads(ovp.read_text(encoding="utf-8"))
-          products=ov.setdefault("products",{})
-          targets=[x for x in arr if str(x.get("section"))=="4.11" and not products.get(x["id"],{}).get("images")]
-          target_norm={t["id"]:norm(t["name"]) for t in targets}
-
-          # Discover sitemaps from robots plus common paths.
-          sitemap_urls=set()
-          try:
-              rr=S.get(BASE+"/robots.txt",timeout=15)
-              for line in rr.text.splitlines():
-                  if line.lower().startswith("sitemap:"):
-                      sitemap_urls.add(line.split(":",1)[1].strip())
-          except Exception: pass
-          sitemap_urls.update([BASE+"/sitemap.xml",BASE+"/sitemap_index.xml",BASE+"/sitemap-index.xml"])
-
-          seen_maps=set(); urls=set()
-          def parse_map(u):
-              if u in seen_maps: return
-              seen_maps.add(u)
+          p=Path("data/admin-overrides.json"); data=json.loads(p.read_text(encoding="utf-8")); products=data.setdefault("products",{})
+          report=[]
+          for pid,url in pages.items():
               try:
-                  r=S.get(u,timeout=20)
-                  if r.status_code!=200 or not r.text.strip(): return
-                  root=ET.fromstring(r.content)
-                  locs=[el.text.strip() for el in root.iter() if el.tag.lower().endswith("loc") and el.text]
-                  for loc in locs:
-                      if loc.lower().endswith(".xml") or "sitemap" in urlparse(loc).path.lower():
-                          if loc not in seen_maps: parse_map(loc)
-                      elif "/catalog/" in loc:
-                          urls.add(loc)
-              except Exception as e:
-                  print("MAPERR",u,e)
-
-          for sm in list(sitemap_urls):
-              parse_map(sm)
-
-          # Fallback: search product links from category entry pages.
-          if not urls:
-              seeds=[BASE+"/catalog/",BASE+"/catalog/veterinariya/",BASE+"/catalog/veterinariya/veterinarnye-preparaty/"]
-              for u in seeds:
-                  try:
-                      r=S.get(u,timeout=20)
-                      q=BeautifulSoup(r.text,"html.parser")
-                      for a in q.find_all("a",href=True):
-                          h=urljoin(r.url,a["href"]).split("#")[0]
-                          if "/catalog/" in h: urls.add(h)
-                  except Exception: pass
-
-          print("catalog urls",len(urls),"remaining targets",len(targets))
-
-          def inspect(url):
-              try:
-                  r=S.get(url,timeout=15)
-                  if r.status_code!=200: return None
-                  q=BeautifulSoup(r.text,"html.parser")
-                  h1=q.find("h1")
-                  title=h1.get_text(" ",strip=True) if h1 else ""
-                  if not title: return None
-                  nt=norm(title)
-                  matched=[t for t in targets if target_norm[t["id"]]==nt]
-                  if not matched: return None
-                  text=q.get_text(" ",strip=True)
+                  r=S.get(url,timeout=25); r.raise_for_status()
+                  q=BeautifulSoup(r.text,"html.parser"); h1=q.find("h1"); title=h1.get_text(" ",strip=True) if h1 else ""
+                  if expected[pid] not in norm(title):
+                      report.append({"id":pid,"status":"title-mismatch","title":title,"page":url}); continue
                   imgs=[]
                   og=q.find("meta",property="og:image")
                   if og and og.get("content"): imgs.append(urljoin(r.url,og["content"]))
@@ -115,67 +70,39 @@ jobs:
                       if src:
                           src=urljoin(r.url,src)
                           if src not in imgs: imgs.append(src)
-                  return (url,title,text,imgs,matched)
-              except Exception:
-                  return None
-
-          pages=[]
-          with ThreadPoolExecutor(max_workers=12) as ex:
-              futs=[ex.submit(inspect,u) for u in urls]
-              for f in as_completed(futs):
-                  v=f.result()
-                  if v: pages.append(v)
-
-          report=[]; added=0
-          # Some cards intentionally duplicate the same product; exact names may match more than one target.
-          for url,title,text,imgs,matched in pages:
-              for t in matched:
-                  pid=t["id"]
-                  if products.get(pid,{}).get("images"): continue
                   chosen=None
                   for iu in imgs:
                       lo=iu.lower()
-                      if any(z in lo for z in ["logo","icon","sprite","banner","placeholder","no-photo","nophoto","favicon"]): continue
+                      if any(z in lo for z in ["logo","icon","sprite","banner","placeholder","favicon"]): continue
                       try:
-                          ir=S.get(iu,timeout=15)
-                          if ir.status_code!=200 or len(ir.content)<7000: continue
-                          if not ir.headers.get("content-type","").lower().startswith("image/"): continue
+                          ir=S.get(iu,timeout=25)
+                          if ir.status_code!=200 or len(ir.content)<7000 or not ir.headers.get("content-type","").lower().startswith("image/"): continue
                           im=Image.open(io.BytesIO(ir.content)); w,h=im.size
                           if w<240 or h<240 or w/h>3.5 or h/w>3.5: continue
                           ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get((im.format or "").lower())
                           if not ext: continue
                           chosen=(iu,ir.content,ext); break
-                      except Exception: continue
+                      except Exception: pass
                   if not chosen:
-                      report.append({"id":pid,"name":t["name"],"page":url,"title":title,"status":"exact-page-no-image"})
-                      continue
+                      report.append({"id":pid,"status":"no-image","title":title,"page":url}); continue
                   iu,blob,ext=chosen
-                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
-                  out.parent.mkdir(parents=True,exist_ok=True)
-                  out.write_bytes(blob)
-                  products.setdefault(pid,{})
-                  products[pid]["images"]=[str(out)]
-                  products[pid]["__frozen"]=True
-                  report.append({"id":pid,"name":t["name"],"page":url,"title":title,"image":iu,"path":str(out),"status":"imported"})
-                  added+=1
-                  print("IMPORTED",t["name"],url,iu)
-
-          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          remaining=[t for t in targets if not products.get(t["id"],{}).get("images")]
-          out={"source":"tian-trade.ru","catalog_urls":len(urls),"exact_pages":len(pages),"added":added,
-               "items":report,"remaining":[{"id":t["id"],"name":t["name"]} for t in remaining]}
-          Path("data/import-4.11-tian-report.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print(json.dumps({"catalog_urls":len(urls),"exact_pages":len(pages),"added":added,"remaining":len(remaining)},ensure_ascii=False))
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(blob)
+                  products.setdefault(pid,{})["images"]=[str(out)]; products[pid]["__frozen"]=True
+                  report.append({"id":pid,"status":"imported","title":title,"page":url,"image":iu,"path":str(out)})
+                  print("IMPORTED",pid,iu)
+              except Exception as e:
+                  report.append({"id":pid,"status":"error","page":url,"error":str(e)})
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/import-4.11-tian-exact-report.json").write_text(json.dumps({"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps(report,ensure_ascii=False))
           PY
-
       - name: Commit
-        shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json data/import-4.11-tian-report.json img/photos/admin/4.11-* || true
+          git add data/admin-overrides.json data/import-4.11-tian-exact-report.json img/photos/admin/4.11-* || true
           git diff --cached --quiet && exit 0
-          git commit -m "Import exact Tian Trade photos for section 4.11"
+          git commit -m "Import exact Tian Trade photo set for section 4.11"
           git pull --rebase origin main
           git push
