@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T06:33:40.777Z",
+  "updatedAt": "2026-10-15T06:39:05.759Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -23679,6 +23679,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "4.10-цефт-50": {
+      "images": [
+        "img/photos/admin/4.10-цефт-50/4.10-цефт-50-01.webp"
       ]
     }
   },
