@@ -1,0 +1,75 @@
+{
+  "matched": 5,
+  "items": [
+    {
+      "id": "4.10-сульфаприм-аква-трв",
+      "status": "no-usable-image",
+      "page": "https://trionisvet.ru/catalog/antibacterial_water/sulfaprim_aqua/",
+      "title": "Сульфаприм Аква-ТРВ"
+    },
+    {
+      "id": "4.10-концентрат-кормовой-минеральный-кальфид",
+      "status": "matched",
+      "page": "https://omegafarm.by/product/kalfid-koncentrat-kormovoj-mineralnyj/",
+      "title": "Кальфид — концентрат кормовой минеральный",
+      "image": "https://omegafarm.by/?seraph_accel_gi=wp-content%2Fuploads%2F2026%2F02%2Fkalfid.jpg&n=n0MkDaH3sMh3VcJkLNhEQ",
+      "path": "img/photos/admin/4.10-концентрат-кормовой-минеральный-кальфид/4.10-концентрат-кормовой-минеральный-кальфид-01.jpg",
+      "size": [
+        1200,
+        800
+      ]
+    },
+    {
+      "id": "4.10-борглюконат-кальция-20-бионит",
+      "status": "no-usable-image",
+      "page": "https://bionit.ru/catalog/preparaty-dlya-korov/borglyukonat-kaltsiya-20/",
+      "title": "Борглюконат кальция 20%"
+    },
+    {
+      "id": "4.10-старт-энерджи",
+      "status": "matched",
+      "page": "https://agro-star.net/production/dlya-zdorovya-korovi/start-energy/",
+      "title": "СТАРТ ЭНЕРДЖИ - энергетический напиток после отела",
+      "image": "https://agro-star.net/upload/iblock/0f1/0f1739a866b40d018e47f194efa58d07.png",
+      "path": "img/photos/admin/4.10-старт-энерджи/4.10-старт-энерджи-01.png",
+      "size": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "id": "4.10-диарвит",
+      "status": "matched",
+      "page": "https://agro-star.net/production/dlya-zdorovya-telenka/diarvit/",
+      "title": "ДИАРВИТ - уникальный комплекс для остановки диареи",
+      "image": "https://agro-star.net/upload/iblock/328/328b85c6ec7983f3b310abdfc7dd92d5.png",
+      "path": "img/photos/admin/4.10-диарвит/4.10-диарвит-01.png",
+      "size": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "id": "4.10-диетевит-флэш",
+      "status": "matched",
+      "page": "https://www.astrabel.ru/types-animals/bolyusy-dlya-krs/",
+      "image": "https://www.astrabel.ru/wp-content/uploads/2020/07/dietevit-flesh.jpg",
+      "path": "img/photos/admin/4.10-диетевит-флэш/4.10-диетевит-флэш-01.jpg",
+      "size": [
+        420,
+        355
+      ]
+    },
+    {
+      "id": "4.10-диетевит-иксель",
+      "status": "matched",
+      "page": "https://www.astrabel.ru/types-animals/bolyusy-dlya-krs/",
+      "image": "https://www.astrabel.ru/wp-content/uploads/2020/07/dietevit-iksel.jpg",
+      "path": "img/photos/admin/4.10-диетевит-иксель/4.10-диетевит-иксель-01.jpg",
+      "size": [
+        421,
+        336
+      ]
+    }
+  ]
+}
