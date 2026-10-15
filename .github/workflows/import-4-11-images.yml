@@ -34,7 +34,9 @@ jobs:
             "4.11-рецеф-100":("Рецеф 100","https://www.tandem-industry.ru/catalog/?id=8365"),
             "4.11-ксиловит":("Ксиловит","https://www.tandem-industry.ru/catalog/?id=5124")
           }
-          S=requests.Session()\n          import urllib3\n          urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+          S=requests.Session()
+          import urllib3
+          urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
           S.headers.update({"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131 Safari/537.36"})
           S.mount("https://",HTTPAdapter(max_retries=Retry(total=4,connect=4,read=4,backoff_factor=.8,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])))
           p=Path("data/admin-overrides.json"); data=json.loads(p.read_text(encoding="utf-8")); P=data.setdefault("products",{})
