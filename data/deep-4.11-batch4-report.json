@@ -1,0 +1,27 @@
+{
+  "matched": 2,
+  "items": [
+    {
+      "id": "4.11-крем-буренка",
+      "status": "matched",
+      "page": "https://www.vetar-vet.ru/catalog/krem-d-doeniya-burenka-200g/",
+      "image": "https://www.vetar-vet.ru/upload/iblock/3fc/xrck3c8e9z6l301885ge9u72fu37bgka.jpeg",
+      "path": "img/photos/admin/4.11-крем-буренка/4.11-крем-буренка-01.jpg",
+      "size": [
+        300,
+        300
+      ]
+    },
+    {
+      "id": "4.11-рихометрин-п",
+      "status": "matched",
+      "page": "https://bri-hanna.com/rikhometrin/",
+      "image": "https://bri-hanna.com/wp-content/uploads/2021/04/rikhometrin-p.jpg",
+      "path": "img/photos/admin/4.11-рихометрин-п/4.11-рихометрин-п-01.jpg",
+      "size": [
+        1000,
+        2417
+      ]
+    }
+  ]
+}
