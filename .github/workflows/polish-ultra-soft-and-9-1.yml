@@ -1,0 +1,109 @@
+name: Polish Ultra Soft and verify last 9.1 card
+
+on:
+  push:
+    paths:
+      - ".github/workflows/polish-ultra-soft-and-9-1.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests pillow
+      - name: Crop Ultra Soft product and update indexes
+        run: |
+          python3 - <<'PY'
+          import json,io
+          from pathlib import Path
+          import requests
+          from PIL import Image,ImageOps
+
+          pid="4.12-ультра-антисептик"
+          source_page="https://descont.ru/product/doziruyuschiy-nasos-na-flakon-1l-diametr-gorlyshka-28-mm/"
+          source_image="https://descont.ru/images/2022/09/doziruyuschiy-nasos-petrospirt.jpg"
+
+          r=requests.get(source_image,timeout=60,headers={"User-Agent":"Mozilla/5.0","Referer":source_page})
+          r.raise_for_status()
+          im=Image.open(io.BytesIO(r.content)).convert("RGB")
+          w,h=im.size
+          # The verified Ultra Soft bottle is the center bottle in this source photo.
+          crop=im.crop((int(w*0.30),int(h*0.08),int(w*0.72),int(h*0.96)))
+          # Put on a white catalog canvas with small margins.
+          cw,ch=crop.size
+          canvas=Image.new("RGB",(max(cw+80,420),max(ch+80,520)),"white")
+          x=(canvas.width-cw)//2; y=(canvas.height-ch)//2
+          canvas.paste(crop,(x,y))
+          out=Path("img/photos/admin")/pid/(pid+"-01.jpg")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          canvas.save(out,"JPEG",quality=94)
+
+          # Keep override as the corrected product.
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          p=ov.setdefault("products",{}).setdefault(pid,{})
+          p["name"]="Ультра Софт"
+          p["type"]="Кожный антисептик"
+          p["purpose"]="Для гигиенической обработки рук и санитарной обработки кожных покровов."
+          p["features"]="Готовое к применению средство. Содержит смесь ПАВ, бензиловый спирт, метилхлороизотиазолинон, метилизотиазолинон, сорбиновую и лимонную кислоты."
+          p["detailFields"]=[
+            ["Производитель","ЗАО «Петроспирт», Россия"],
+            ["Форма","Готовый к применению кожный антисептик"],
+            ["Консистенция","Вязкая однородная жидкость зелёного цвета"],
+            ["Фасовка","Полимерные бутылки и канистры 0,2–10 л"],
+            ["Срок хранения","3 года в невскрытой упаковке производителя"],
+            ["Источник","Инструкция № 6/1 и карточка средства «Ультра Софт»"]
+          ]
+          p["images"]=[str(out)]; p["__frozen"]=True
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          # Make search results use the corrected name as well.
+          sip=Path("data/search-index.json")
+          si=json.loads(sip.read_text(encoding="utf-8"))
+          arr=si if isinstance(si,list) else si.get("items",[])
+          for x in arr:
+              if x.get("id")==pid:
+                  x["name"]="Ультра Софт"
+                  x["text"]="Ультра Софт — Кожный антисептик Для гигиенической обработки рук и санитарной обработки кожных покровов Готовое к применению средство Наименование Ультра Софт Тип Кожный антисептик Артикул — Назначение Для гигиенической обработки рук и санитарной обработки кожных покровов Особенности Смесь ПАВ, бензиловый спирт, метилхлороизотиазолинон, метилизотиазолинон, сорбиновая и лимонная кислоты Производитель ЗАО «Петроспирт», Россия"
+          sip.write_text(json.dumps(si,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          audit={
+            "section":"4.12","total_products":19,"verified_photos_attached":19,"unresolved_photos":0,
+            "policy":"Only exact product photos physically stored in the repository are accepted.",
+            "corrections":[{
+              "id":pid,"old_name":"Ультра-антисептик","new_name":"Ультра Софт",
+              "manufacturer":"ЗАО «Петроспирт», Россия",
+              "source_page":source_page,"source_image":source_image,
+              "path":str(out),"processing":"Cropped the center Ultra Soft bottle from the verified Petrospirt source photo onto a white catalog canvas."
+            }]
+          }
+          Path("data/section-4.12-photo-audit.json").write_text(json.dumps(audit,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+
+          # Enrich the 9.1 audit: the card's specifications duplicate Gartena 8008.
+          p91=Path("data/section-9.1-last-photo-audit.json")
+          a=json.loads(p91.read_text(encoding="utf-8"))
+          a["data_quality_flag"]={
+            "issue":"The standalone model name OD-MG06 could not be verified in current or indexed public Gartena catalogs.",
+            "comparison":"The card values Li-ion 2.6 Ah / 12 V, 120 min runtime, 240 min charging and 0.2–0.3 MPa working pressure match published specifications of the Gartena 8008 sprayer.",
+            "conclusion":"OD-MG06 may be an incorrect/outdated internal designation or the card may have inherited specifications from Gartena 8008. A photo of another Gartena OD/8008 model was not attached because that would be a substitution.",
+            "reference_pages":[
+              "https://www.simclean.ru/products/opryskivatel-akkumulyatornyy-gartena-10-litrov-mod-8008/",
+              "https://www.vseinstrumenti.ru/product/opryskivatel-akkumulyatornyj-gartena-10-8008-18844257/"
+            ]
+          }
+          p91.write_text(json.dumps(a,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("done",canvas.size)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/search-index.json data/section-4.12-photo-audit.json data/section-9.1-last-photo-audit.json img/photos/admin/4.12-ультра-антисептик/4.12-ультра-антисептик-01.jpg
+          git commit -m "Polish Ultra Soft card and verify last section 9.1 item"
+          git pull --rebase origin main
+          git push
