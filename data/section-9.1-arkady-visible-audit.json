@@ -1,9 +1,9 @@
 {
   "approved_count": 86,
   "base_cards": 91,
-  "hidden_base_cards": 17,
+  "hidden_base_cards": 18,
   "manual_cards": 13,
-  "visible_after_count": 87,
+  "visible_after_count": 86,
   "pre_reconcile_missing": [],
   "pre_reconcile_extra": [
     {
@@ -18,7 +18,15 @@
       "id": "manual-9.1-kf-10l-1",
       "old": "Опрыскиватель пневматический помповый Gartena KF-10L-1, нержавеющая сталь",
       "new": "Опрыскиватель аккумуляторный пневматический Gartena KF-10L-1 нержавейка"
+    },
+    {
+      "action": "hide_extra",
+      "id": "9.1-аккумуляторный-генератор-холодного-тумана-jp-s20",
+      "name": "Аккумуляторный генератор холодного тумана \"JP-S20\""
     }
   ],
-  "note": "The 17 legacy/non-approved raw cards remain stored but hidden. Manual approved cards are rendered from section overrides."
+  "note": "The 17 legacy/non-approved raw cards remain stored but hidden. Manual approved cards are rendered from section overrides.",
+  "final_status": "matches_arkady_approved_list",
+  "remaining_extra_visible": [],
+  "remaining_missing_visible": []
 }
