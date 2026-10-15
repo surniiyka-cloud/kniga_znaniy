@@ -1,0 +1,41 @@
+{
+  "matched": 2,
+  "items": [
+    {
+      "id": "4.10-сульфаприм-аква-трв",
+      "status": "no-usable-image",
+      "page": "https://www.vetar-vet.ru/catalog/sulfaprim-akva-trv-1l/",
+      "title": "Сульфаприм Аква-ТРВ, 1л"
+    },
+    {
+      "id": "4.10-эстробел-d",
+      "status": "matched",
+      "page": "https://www.sibagrotrade.com/catalogzoo/preparaty_dlya_s_kh_zhivotnykh/gormonalnye_preparaty_skhzh/199264/",
+      "title": "Эстробел D, 50 мл",
+      "image": "https://www.sibagrotrade.com/upload/resize_cache/iblock/f06/400_400_140cd750bba9870f18aada2478b24840a/f061fdb8cbd6cdffcb2dd95aa92381ee.jpg",
+      "path": "img/photos/admin/4.10-эстробел-d/4.10-эстробел-d-01.jpg",
+      "size": [
+        400,
+        400
+      ]
+    },
+    {
+      "id": "4.10-ихтиоловые-свечи",
+      "status": "error",
+      "page": "https://rozetka.com.ua/322596259/p322596259/",
+      "error": "403 Client Error: Forbidden for url: https://rozetka.com.ua/322596259/p322596259/"
+    },
+    {
+      "id": "4.10-кальцифос-biowet-drwalew-польша",
+      "status": "matched",
+      "page": "https://xn--b1aghuag4a.xn--p1ai/catalog/kalczifos-calciphos-inekczionnyj-rastvor/",
+      "title": "Кальцифос (Calciphos) инъекционный раствор",
+      "image": "https://xn--b1aghuag4a.xn--p1ai/wp-content/uploads/2021/10/kalczifos.jpg",
+      "path": "img/photos/admin/4.10-кальцифос-biowet-drwalew-польша/4.10-кальцифос-biowet-drwalew-польша-01.jpg",
+      "size": [
+        458,
+        458
+      ]
+    }
+  ]
+}
