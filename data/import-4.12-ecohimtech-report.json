@@ -1,0 +1,89 @@
+{
+  "section": "4.12",
+  "targets": 19,
+  "catalog_pages_checked": 35,
+  "matched": 9,
+  "items": [
+    {
+      "id": "4.12-микровитам",
+      "name": "Микровитам",
+      "title": "Микровитам",
+      "page": "https://ecohimtech-ufa.ru/catalog/biologics/mikrovitam-sx/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/46b/46b51e1e054770310813ff8bb3b86a61.jpg",
+      "path": "img/photos/admin/4.12-микровитам/4.12-микровитам-01.jpg",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-нуклеопептид",
+      "name": "Нуклеопептид",
+      "title": "Нуклеопептид",
+      "page": "https://ecohimtech-ufa.ru/catalog/biologics/nukleopeptid-sx/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/b74/b7455c623c5ee5473d11c18bab4767bb.jpg",
+      "path": "img/photos/admin/4.12-нуклеопептид/4.12-нуклеопептид-01.jpg",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-sport-horse-hhl-horse-health-line",
+      "name": "Sport Horse (HHL – Horse Health Line)",
+      "title": "Sport Horse - Horse health line™",
+      "page": "https://ecohimtech-ufa.ru/catalog/biologics/sport-horse-horse-heatlh-line/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/3ce/3ce3d4cf802e4ae6f808bfd564588c7a.jpg",
+      "path": "img/photos/admin/4.12-sport-horse-hhl-horse-health-line/4.12-sport-horse-hhl-horse-health-line-01.jpg",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-витаспорин",
+      "name": "Витаспорин",
+      "title": "Витаспорин",
+      "page": "https://ecohimtech-ufa.ru/catalog/biologics/vitasporin-sx/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/285/285c786bc198e5b58da47a2e33fda493.jpg",
+      "path": "img/photos/admin/4.12-витаспорин/4.12-витаспорин-01.jpg",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-септопол",
+      "name": "Септопол",
+      "title": "Септопол",
+      "page": "https://ecohimtech-ufa.ru/catalog/disinfectants/septopol-sx/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/c0a/c0a15c93bdf2845b18e56a8fb74e644a.png",
+      "path": "img/photos/admin/4.12-септопол/4.12-септопол-01.png",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-костоправ",
+      "name": "Костоправ",
+      "title": "Костоправ",
+      "page": "https://ecohimtech-ufa.ru/catalog/goodies/kostoprav/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/9c6/9c621351bafed1d0cc9882c678473a07.jpg",
+      "path": "img/photos/admin/4.12-костоправ/4.12-костоправ-01.jpg",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-нуклеостим-водорастворимый",
+      "name": "Нуклеостим водорастворимый",
+      "title": "Нуклеостим",
+      "page": "https://ecohimtech-ufa.ru/catalog/goodies/nukleostim/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/757/757ab5c72878e0d8eee3bd6ad8fd5557.png",
+      "path": "img/photos/admin/4.12-нуклеостим-водорастворимый/4.12-нуклеостим-водорастворимый-01.png",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-спороветин-для-всех-видов-животных",
+      "name": "Спороветин для всех видов животных",
+      "title": "Спороветин",
+      "page": "https://ecohimtech-ufa.ru/catalog/goodies/sporovetin-sx/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/813/81309d6def0b988b7fab31f4f9ff6601.jpg",
+      "path": "img/photos/admin/4.12-спороветин-для-всех-видов-животных/4.12-спороветин-для-всех-видов-животных-01.jpg",
+      "status": "matched"
+    },
+    {
+      "id": "4.12-спороветин-для-всех-видов-животных-2",
+      "name": "Спороветин для всех видов животных",
+      "title": "Спороветин",
+      "page": "https://ecohimtech-ufa.ru/catalog/goodies/sporovetin-sx/",
+      "image": "https://ecohimtech-ufa.ru/upload/thumbs/813/81309d6def0b988b7fab31f4f9ff6601.jpg",
+      "path": "img/photos/admin/4.12-спороветин-для-всех-видов-животных-2/4.12-спороветин-для-всех-видов-животных-2-01.jpg",
+      "status": "matched"
+    }
+  ]
+}
