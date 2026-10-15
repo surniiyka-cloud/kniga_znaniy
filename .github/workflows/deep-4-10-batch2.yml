@@ -1,0 +1,124 @@
+name: Deep photo pass section 4.10 batch 2
+
+on:
+  push:
+    paths:
+      - ".github/workflows/deep-4-10-batch2.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Import exact photos from verified sources
+        run: |
+          python3 - <<'PY'
+          import json,re,io
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+          from PIL import Image
+
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"
+
+          items=[
+            {"id":"4.10-прогестамаг","expect":["прогестамаг"],"page":"https://www.mosagrogen.ru/catalog/progestamag-100-ml/"},
+            {"id":"4.10-лексоджект","expect":["лексоджект"],"page":"https://trionisvet.ru/catalog/antibacterial_solutions/leksodzhekt/"},
+            {"id":"4.10-вакцина-комбовак-р-для-крс","expect":["комбовак-р","комбовак р"],"page":"https://www.webvet.ru/preparats/kombovak-r/"},
+            {"id":"4.10-мастибак-упаковка-20-шт","expect":["мастибак","мастибак суспензия"],"page":"https://krasnogorsk.003ms.ru/catalog/veterinarnye-preparaty-i-izdeliya/veterinarnye-preparaty-i-izdeliya/mastibak"},
+            {"id":"4.10-мазь-мастисепт-а","expect":["мастисепт-а","мастисепт а"],"page":"https://biohimfarm.ru/antibakter_r/mastisept-a/"},
+            {"id":"4.10-смекто-плюс-ооо-белбиорост-республика-беларусь","expect":["смекто плюс"],"page":"https://flagma.by/smekto-plyus-effektivnoe-antidiareynoe-sredstvo-prirodnogo-proiskhozhdeniya-bez-o5911761.html"},
+            {"id":"4.10-кальцифос-biowet-drwalew-польша","expect":["кальцифос","calciphos"],"page":"https://ingafarm.ru/home/catalog/item?item_id=6146e63728624509008b4567"},
+          ]
+
+          def norm(x):
+              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              x=re.sub(r'[«»"®™]',"",x); x=re.sub(r"\s+"," ",x)
+              return x.strip()
+
+          def candidates(sp,page,expects):
+              out=[]
+              og=sp.find("meta",attrs={"property":"og:image"})
+              if og and og.get("content"): out.append(urljoin(page,og["content"]))
+              tw=sp.find("meta",attrs={"name":"twitter:image"})
+              if tw and tw.get("content"): out.append(urljoin(page,tw["content"]))
+              for img in sp.find_all("img"):
+                  src=img.get("data-src") or img.get("data-lazy-src") or img.get("data-original") or img.get("src")
+                  if not src: continue
+                  alt=norm(img.get("alt",""))
+                  title=norm(img.get("title",""))
+                  score=0
+                  for e in expects:
+                      ne=norm(e)
+                      if ne and (ne in alt or ne in title): score+=3
+                  u=urljoin(page,src)
+                  if score: out.insert(0,u)
+                  else: out.append(u)
+              seen=[]
+              for u in out:
+                  if u not in seen: seen.append(u)
+              return seen
+
+          def usable_image(url):
+              if any(z in url.lower() for z in ("logo","favicon","icon","sprite","social","captcha","counter","avatar")): return None
+              try:
+                  r=s.get(url,timeout=50)
+                  ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+                  if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<3500: return None
+                  im=Image.open(io.BytesIO(r.content)); w,h=im.size
+                  if w<180 or h<180: return None
+                  return r.content,ct,(w,h)
+              except Exception:
+                  return None
+
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          products=ov.setdefault("products",{})
+          report=[]; matched=0
+
+          for x in items:
+              try:
+                  pr=s.get(x["page"],timeout=60); pr.raise_for_status()
+                  sp=BeautifulSoup(pr.text,"html.parser")
+                  h=sp.find("h1")
+                  title=h.get_text(" ",strip=True) if h else ""
+                  body=norm((sp.find("body") or sp).get_text(" ",strip=True))
+                  if not any(norm(e) in norm(title) or norm(e) in body for e in x["expect"]):
+                      report.append({"id":x["id"],"status":"identity-not-confirmed","page":x["page"],"title":title}); continue
+                  found=None
+                  for iu in candidates(sp,x["page"],x["expect"]):
+                      z=usable_image(iu)
+                      if z:
+                          found=(iu,*z); break
+                  if not found:
+                      report.append({"id":x["id"],"status":"no-usable-image","page":x["page"],"title":title}); continue
+                  iu,data,ct,size=found
+                  ext={"image/png":".png","image/webp":".webp","image/gif":".gif"}.get(ct,".jpg")
+                  out=Path("img/photos/admin")/x["id"]/(x["id"]+"-01"+ext)
+                  out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(data)
+                  obj=products.setdefault(x["id"],{}); obj["images"]=[str(out)]; obj["__frozen"]=True
+                  report.append({"id":x["id"],"status":"matched","page":x["page"],"title":title,"image":iu,"path":str(out),"size":list(size)})
+                  matched+=1
+              except Exception as e:
+                  report.append({"id":x["id"],"status":"error","page":x["page"],"error":str(e)})
+
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/deep-4.10-batch2-report.json").write_text(json.dumps({"matched":matched,"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/deep-4.10-batch2-report.json img/photos/admin/4.10-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Deep photo pass for section 4.10 batch 2"
+          git pull --rebase origin main
+          git push
