@@ -1,0 +1,57 @@
+{
+  "items": [
+    {
+      "id": "4.11-цефалек-dc",
+      "status": "no-usable-image",
+      "title": "Цефалек DC 9 г/уп (цефапирин)",
+      "page": "https://vetpreparaty-optom.ru/catalog/tsefalek-dc-9-g-up-tsefapirin/",
+      "images": [
+        "https://vetpreparaty-optom.ru/upload/resize_cache/nextype.corporate/5b1/300_300_0/zlx2kf7ocoazcq3jtoeoba5b83uxzunv.jpg",
+        "https://vetpreparaty-optom.ru/upload/resize_cache/iblock/01b/600_600_0/ktkuyy62hm119ielyucx5o5n4ucwusi6.png",
+        "https://mc.yandex.ru/watch/97604946"
+      ]
+    },
+    {
+      "id": "4.11-цефтисепт",
+      "status": "imported",
+      "title": "Цефтисепт",
+      "page": "https://www.kzvt.ru/catalog/veterinarnoe/ginekologicheskie-preparaty/tseftisept/",
+      "image": "https://www.kzvt.ru/upload/iblock/c45/Цефтисепт_10 таб.jpg",
+      "path": "img/photos/admin/4.11-цефтисепт/4.11-цефтисепт-01.jpg",
+      "size": [
+        300,
+        231
+      ]
+    },
+    {
+      "id": "4.11-уберосан",
+      "status": "imported",
+      "title": "Уберосан",
+      "page": "https://agrokomfort.net/index.php?product_id=432&route=product%2Fproduct",
+      "image": "https://agrokomfort.net/image/cache/data/rubikon/-уберосан-300x432.jpg",
+      "path": "img/photos/admin/4.11-уберосан/4.11-уберосан-01.jpg",
+      "size": [
+        300,
+        432
+      ]
+    },
+    {
+      "id": "4.11-полийодметрин",
+      "status": "rubikon-not-confirmed",
+      "title": "Полийодометрин",
+      "page": "https://agrokomfort.net/index.php?route=product/product&path=57&product_id=435"
+    },
+    {
+      "id": "4.11-утеросепт-био",
+      "status": "rubikon-not-confirmed",
+      "title": "Утеросепт Био",
+      "page": "https://agrokomfort.net/index.php?route=product/product&filter_tag=&page=12&limit=25&product_id=521"
+    },
+    {
+      "id": "4.11-мастипен",
+      "status": "rubikon-not-confirmed",
+      "title": "Мастипен",
+      "page": "https://agrokomfort.net/index.php?route=product/product&filter_tag=&sort=pd.name&order=DESC&page=8&limit=25&product_id=434"
+    }
+  ]
+}
