@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-15T06:33:17.864Z",
-  "imagesTotal": 1000,
-  "imagesMatched": 935,
+  "generatedAt": "2026-10-15T06:39:19.878Z",
+  "imagesTotal": 1001,
+  "imagesMatched": 936,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -1099,7 +1099,7 @@
     }
   ],
   "productsTotal": 818,
-  "productsWithImages": 667,
+  "productsWithImages": 668,
   "productsWithoutImages": [
     {
       "id": "3.2-этап-применения",
@@ -1244,12 +1244,6 @@
       "section": "4.9",
       "name": "Экспресс-тест для определения стельности с 24-го дня после осеменения FASSISI BOVIPREG",
       "article": "1106.042"
-    },
-    {
-      "id": "4.10-цефт-50",
-      "section": "4.10",
-      "name": "ЦЕФТ 50",
-      "article": "-"
     },
     {
       "id": "4.10-гентафарм-10",
