@@ -1,0 +1,53 @@
+name: Fix exact Felucen menthol photo 4.10
+
+on:
+  push:
+    paths:
+      - ".github/workflows/fix-4-10-felucen-menthol.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests pillow
+      - name: Replace with exact product image
+        run: |
+          python3 - <<'PY'
+          import json,io
+          from pathlib import Path
+          import requests
+          from PIL import Image
+
+          pid="4.10-фелуцен-к-2-4-для-молодняка-крс-ментоловый"
+          image="https://www.agrovit87.ru/assets/images/products/491/webpm/uvmkk-felucen-k-2-4-dlya-molodnyaka-krs-mentolovyj-litera-3884-briket4kg.webp"
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0"
+          r=s.get(image,timeout=60); r.raise_for_status()
+          ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+          if not ct.startswith("image/"): raise SystemExit("not image")
+          im=Image.open(io.BytesIO(r.content)); w,h=im.size
+          if w<180 or h<180: raise SystemExit("image too small")
+          out=Path("img/photos/admin")/pid/(pid+"-01.webp")
+          out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(r.content)
+          ovp=Path("data/admin-overrides.json"); ov=json.loads(ovp.read_text(encoding="utf-8"))
+          obj=ov.setdefault("products",{}).setdefault(pid,{})
+          obj["images"]=[str(out)]; obj["__frozen"]=True
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/fix-4.10-felucen-menthol-report.json").write_text(json.dumps({
+            "id":pid,"status":"matched","source_page":"https://www.agrovit87.ru/katalog/korma/zalivnye-lizuncy-brikety/uvmkk-felucen-k-2-4-dlya-molodnyaka-krs-mentolovyj-briket-15-kg",
+            "image":image,"path":str(out),"size":[w,h]
+          },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/fix-4.10-felucen-menthol-report.json img/photos/admin/4.10-фелуцен-к-2-4-для-молодняка-крс-ментоловый
+          git commit -m "Fix exact Felucen menthol photo in section 4.10"
+          git pull --rebase origin main
+          git push
