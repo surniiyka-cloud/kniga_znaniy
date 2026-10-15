@@ -1,0 +1,35 @@
+{
+  "matched": 2,
+  "items": [
+    {
+      "id": "4.12-раносепт-спрей",
+      "status": "matched",
+      "page": "https://4lapy.ru/product/biohimfarm-ranosept-antibakterialnyj-sprej-hlortetratsiklin-100ml-94568-1066197/",
+      "image": "https://cdn.4lapy.ru/_next/image/?q=70&url=https%3A%2F%2Fstorage.yandexcloud.net%2Fpim-core%2F422615.jpeg&w=3840",
+      "path": "img/photos/admin/4.12-раносепт-спрей/4.12-раносепт-спрей-01.jpg",
+      "size": [
+        1000,
+        1000
+      ]
+    },
+    {
+      "id": "4.12-алюмиспрей",
+      "status": "matched",
+      "page": "https://4lapy.ru/product/biohimfarm-alyumisprej-zazhivlyayushchij-dlya-koshek-i-sobak-100-ml-9749-1026743/",
+      "image": "https://cdn.4lapy.ru/_next/image/?q=70&url=https%3A%2F%2Fstorage.yandexcloud.net%2Fpim-core%2F357029.png&w=3840",
+      "path": "img/photos/admin/4.12-алюмиспрей/4.12-алюмиспрей-01.jpg",
+      "size": [
+        1000,
+        1000
+      ]
+    },
+    {
+      "id": "4.12-биозоль-спрей",
+      "status": "image-failed",
+      "page": "https://www.sibagrotrade.com/catalogzoo/preparaty_dlya_s_kh_zhivotnykh/naruzhnye_sredstva_skhzh/186627/",
+      "image": "https://www.sibagrotrade.com/upload/iblock/2a1/2a1d152104f7b8d2c3d8e8da924d866b.jpg",
+      "http": 200,
+      "content_type": "image/jpeg"
+    }
+  ]
+}
