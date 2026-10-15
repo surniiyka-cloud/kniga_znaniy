@@ -1,49 +1,253 @@
-name: Import exact Trimetoks photo 4.11
+name: Finalize section 4.11 verified photos
+
 on:
   push:
     paths:
       - ".github/workflows/import-4-11-images.yml"
+
 permissions:
   contents: write
+
 jobs:
-  import:
+  finalize:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - run: pip install -q requests pillow
-      - name: Import image
+
+      - run: pip install -q requests beautifulsoup4 pillow
+
+      - name: Collect and import remaining exact product photos
+        shell: bash
         run: |
           python3 - <<'PY'
-          import io,json
+          import io, json, re, time
           from pathlib import Path
+          from urllib.parse import urljoin, urlparse, parse_qs
           import requests
+          from bs4 import BeautifulSoup
           from PIL import Image
-          pid="4.11-триметокс"
-          page="https://agrokomfort.net/index.php?route=product/product&product_id=463"
-          url="https://agrokomfort.net/image/cache/data/rubikon/-%D0%A2%D1%80%D0%B8%D0%BC%D0%B5%D1%82%D0%BE%D0%BA%D1%81%20%D1%82%D0%B0%D0%B1-300x432.jpg"
-          r=requests.get(url,timeout=30,headers={"User-Agent":"Mozilla/5.0","Referer":page})
-          r.raise_for_status()
-          im=Image.open(io.BytesIO(r.content))
-          if im.width<200 or im.height<200: raise RuntimeError("small image")
-          out=Path("img/photos/admin")/pid/(pid+"-01.jpg")
-          out.parent.mkdir(parents=True,exist_ok=True)
-          out.write_bytes(r.content)
-          p=Path("data/admin-overrides.json")
-          d=json.loads(p.read_text(encoding="utf-8"))
-          d.setdefault("products",{}).setdefault(pid,{})
-          d["products"][pid]["images"]=[str(out)]
-          d["products"][pid]["__frozen"]=True
-          p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print(out,im.size)
+
+          S=requests.Session()
+          S.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBook/4.11-final)"})
+
+          def norm(s):
+              s=(s or "").lower().replace("ё","е").replace("–","-").replace("—","-").replace("−","-")
+              s=s.replace("«","").replace("»","").replace('"',"").replace("'","")
+              s=s.replace(",",".")
+              s=re.sub(r"\s+"," ",s)
+              return s.strip(" .-_")
+
+          def tokens_num(s):
+              return re.findall(r"\d+(?:[.,]\d+)?", norm(s))
+
+          def compatible(target, title):
+              a,b=norm(target),norm(title)
+              # normalize common dosage-form / punctuation variations
+              for word in ["таблетки","таблетка","порошок","раствор","суспензия","гранулят","концентрат"]:
+                  b=re.sub(rf"\b{word}\b"," ",b)
+              b=re.sub(r"\s+"," ",b).strip()
+              # preserve exact concentration distinction
+              nums=tokens_num(a)
+              if nums and any(n.replace(",",".") not in b.replace(",",".") for n in nums):
+                  return False
+              aa=re.sub(r"\s+"," ",a.replace("-"," ")).strip()
+              bb=re.sub(r"\s+"," ",b.replace("-"," ")).strip()
+              return aa==bb or bb.startswith(aa+" ") or aa.startswith(bb+" ")
+
+          idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
+          arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
+          targets=[x for x in arr if str(x.get("section"))=="4.11"]
+
+          op=Path("data/admin-overrides.json")
+          overrides=json.loads(op.read_text(encoding="utf-8"))
+          products=overrides.setdefault("products",{})
+          remaining=[x for x in targets if not (products.get(x["id"],{}).get("images") or [])]
+          print("remaining initially",len(remaining))
+
+          pages={}
+          report={"initial_remaining":len(remaining),"discovered":[],"imported":[],"unresolved":[]}
+
+          # --- Tandem: catalogue pages expose links as ?id=... ---
+          tandem_roots=[
+              "https://www.tandem-industry.ru/catalog/",
+              "https://www.tandem-industry.ru/catalog/?folder_id=28",
+              "https://www.tandem-industry.ru/catalog/?folder_id=21",
+              "https://www.tandem-industry.ru/catalog/?folder_id=19",
+          ]
+          for root in tandem_roots:
+              try:
+                  r=S.get(root,timeout=45,verify=False)
+                  soup=BeautifulSoup(r.text,"html.parser")
+                  for a in soup.find_all("a",href=True):
+                      href=urljoin(r.url,a["href"])
+                      if "/catalog/" not in href or "id=" not in href: continue
+                      title=a.get_text(" ",strip=True)
+                      if not title: continue
+                      for t in remaining:
+                          if compatible(t["name"],title):
+                              pages.setdefault(t["id"],[]).append(("tandem",href,title))
+              except Exception as e:
+                  print("tandem root error",root,e)
+
+          # --- VetFarmGarant: crawl product URLs from catalogue ---
+          vf_urls=set()
+          for p in range(1,16):
+              url=f"https://www.vetfarmgarant.ru/catalog/?PAGEN_1={p}"
+              try:
+                  r=S.get(url,timeout=45)
+                  soup=BeautifulSoup(r.text,"html.parser")
+                  for a in soup.find_all("a",href=True):
+                      href=urljoin(r.url,a["href"])
+                      if "/catalog/" not in href: continue
+                      path=urlparse(href).path.rstrip("/")
+                      parts=[z for z in path.split("/") if z]
+                      if len(parts)>=3 and parts[0]=="catalog":
+                          vf_urls.add(href.split("#")[0])
+              except Exception as e:
+                  print("vf list error",p,e)
+          for href in sorted(vf_urls):
+              try:
+                  r=S.get(href,timeout=35)
+                  soup=BeautifulSoup(r.text,"html.parser")
+                  h=soup.find("h1")
+                  title=h.get_text(" ",strip=True) if h else ""
+                  if not title: continue
+                  body=norm(soup.get_text(" ",strip=True))
+                  if "производитель: рубикон" not in body and "производитель рубикон" not in body:
+                      continue
+                  for t in remaining:
+                      if compatible(t["name"],title):
+                          pages.setdefault(t["id"],[]).append(("vetfarm",href,title))
+              except Exception:
+                  pass
+
+          # --- Agrokomfort: crawl product pages and match exact remaining titles ---
+          agro_urls=set()
+          for p in range(1,7):
+              url=f"https://agrokomfort.net/index.php?route=product/category&path=57&page={p}&limit=100"
+              try:
+                  r=S.get(url,timeout=45,verify=False)
+                  soup=BeautifulSoup(r.text,"html.parser")
+                  for a in soup.find_all("a",href=True):
+                      href=urljoin(r.url,a["href"])
+                      if "route=product/product" in href and "product_id=" in href:
+                          agro_urls.add(href)
+              except Exception:
+                  pass
+          # include all known links from previous candidate report
+          cp=Path("data/import-4.11-agrokomfort-candidates.json")
+          if cp.exists():
+              try:
+                  c=json.loads(cp.read_text(encoding="utf-8"))
+                  for x in c.get("candidates",[]): agro_urls.add(x.get("url",""))
+              except Exception: pass
+
+          for href in sorted(u for u in agro_urls if u):
+              try:
+                  r=S.get(href,timeout=35,verify=False)
+                  soup=BeautifulSoup(r.text,"html.parser")
+                  h=soup.find("h1")
+                  title=h.get_text(" ",strip=True) if h else ""
+                  if not title: continue
+                  for t in remaining:
+                      if compatible(t["name"],title):
+                          pages.setdefault(t["id"],[]).append(("agrokomfort",href,title))
+              except Exception:
+                  pass
+
+          def candidate_images(source,page):
+              try:
+                  r=S.get(page,timeout=45,verify=False)
+                  soup=BeautifulSoup(r.text,"html.parser")
+              except Exception:
+                  return []
+              out=[]
+              # strong page-level metadata first
+              for prop in [("property","og:image"),("name","twitter:image")]:
+                  m=soup.find("meta",attrs={prop[0]:prop[1]})
+                  if m and m.get("content"): out.append(urljoin(r.url,m["content"]))
+              # then local product-like images
+              for im in soup.find_all("img"):
+                  u=im.get("data-zoom-image") or im.get("data-large") or im.get("data-src") or im.get("src")
+                  if not u: continue
+                  u=urljoin(r.url,u)
+                  low=u.lower()
+                  if any(z in low for z in ["logo","icon","sprite","banner","captcha","yandex","counter","no-image","placeholder"]):
+                      continue
+                  if source=="agrokomfort" and ("/rubikon/" in low or "-300x432" in low):
+                      out.append(u)
+                  elif source=="vetfarm" and ("/upload/" in low or "/images/" in low):
+                      out.append(u)
+                  elif source=="tandem" and ("/upload/" in low or "/files/" in low or "/images/" in low or "/catalog/" in low):
+                      out.append(u)
+              seen=[]
+              for u in out:
+                  if u.startswith("http") and u not in seen: seen.append(u)
+              return seen
+
+          def fetch_image(url,referer):
+              try:
+                  r=S.get(url,timeout=45,verify=False,headers={"Referer":referer,"User-Agent":"Mozilla/5.0"})
+                  if r.status_code!=200 or len(r.content)<6000: return None
+                  if not r.headers.get("content-type","").lower().startswith("image/"): return None
+                  im=Image.open(io.BytesIO(r.content))
+                  w,h=im.size
+                  if w<220 or h<220: return None
+                  if w/h>3.5 or h/w>4.5: return None
+                  fmt=(im.format or "").lower()
+                  ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get(fmt)
+                  if not ext: return None
+                  return r.content,ext,(w,h)
+              except Exception:
+                  return None
+
+          # Prefer source order: Tandem, VetFarmGarant, Agrokomfort.
+          rank={"tandem":0,"vetfarm":1,"agrokomfort":2}
+          for t in remaining:
+              candidates=sorted(pages.get(t["id"],[]),key=lambda x:rank.get(x[0],9))
+              report["discovered"].append({"id":t["id"],"name":t["name"],"pages":candidates})
+              imported=False
+              for source,page,title in candidates:
+                  imgs=candidate_images(source,page)
+                  for imgurl in imgs:
+                      got=fetch_image(imgurl,page)
+                      if not got: continue
+                      data,ext,wh=got
+                      pid=t["id"]
+                      out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+                      out.parent.mkdir(parents=True,exist_ok=True)
+                      out.write_bytes(data)
+                      products.setdefault(pid,{})
+                      products[pid]["images"]=[str(out)]
+                      products[pid]["__frozen"]=True
+                      report["imported"].append({
+                          "id":pid,"name":t["name"],"source":source,
+                          "page":page,"image":imgurl,"path":str(out),"size":wh
+                      })
+                      print("IMPORTED",t["name"],source,imgurl,wh)
+                      imported=True
+                      break
+                  if imported: break
+              if not imported:
+                  report["unresolved"].append({"id":t["id"],"name":t["name"],"pages":candidates})
+
+          op.write_text(json.dumps(overrides,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          report["final_with_images"]=sum(1 for x in targets if products.get(x["id"],{}).get("images"))
+          report["final_without_images"]=len(targets)-report["final_with_images"]
+          Path("data/import-4.11-final-report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("FINAL",report["final_with_images"],"with images;",report["final_without_images"],"without")
           PY
-      - name: Commit
+
+      - name: Commit final verified photo batch
+        shell: bash
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json img/photos/admin
+          git add data/admin-overrides.json data/import-4.11-final-report.json img/photos/admin
           git diff --cached --quiet && exit 0
-          git commit -m "Add exact Trimetoks tablets photo"
+          git commit -m "Finalize verified photos for section 4.11"
           git pull --rebase origin main
           git push
