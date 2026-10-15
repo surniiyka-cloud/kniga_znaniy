@@ -362,19 +362,24 @@ function buildGarantCards(s){
     advantages:parsed.advantages,complectation:parsed.complectation,substances:parsed.substances,customTabs:parsed.customTabs
   });
 
-  // Ручные карточки GARANT (добавленные по этикеткам) должны попадать
-  // в sectionCatalog вместе с карточками, собранными из Google Sheets.
-  // Иначе sectionBaseItems() возвращает только sectionCatalog и manualProducts не видны.
+  // Ручные карточки GARANT из override-слоя добавляем напрямую.
+  // Раздел 2.1.3 рендерится из sectionCatalog, поэтому полагаться только
+  // на s.products недостаточно: manualProducts могут не попасть в него
+  // при отдельных сценариях пересборки/загрузки.
   const catalog=state.sectionCatalog.get(s.id)||[];
   const known=new Set(catalog.map(x=>x.product.id));
   const sectionCtx=state.sections.get(s.id);
-  for(const p of (s.products||[])){
-    if(!p?.manual||known.has(p.id))continue;
-    const ctxObj={chapter:sectionCtx?.chapter,section:s,product:p};
-    catalog.push(ctxObj);
-    state.products.set(p.id,ctxObj);
-    known.add(p.id);
-    if(Array.isArray(p.images)&&p.images.length)state.assets.productImages[p.id]=deepCopy(p.images);
+  const manualProducts=state.overrides?.sections?.[s.id]?.manualProducts;
+  if(manualProducts&&typeof manualProducts==="object"&&!Array.isArray(manualProducts)){
+    for(const [manualId,manualSource] of Object.entries(manualProducts)){
+      if(!manualSource||typeof manualSource!=="object"||known.has(manualId))continue;
+      const p={...deepCopy(manualSource),id:manualId,manual:true,sourceSectionId:s.id,sourceGid:s.gid||null};
+      const ctxObj={chapter:sectionCtx?.chapter,section:s,product:p};
+      catalog.push(ctxObj);
+      state.products.set(manualId,ctxObj);
+      known.add(manualId);
+      if(Array.isArray(p.images)&&p.images.length)state.assets.productImages[manualId]=deepCopy(p.images);
+    }
   }
   state.sectionCatalog.set(s.id,catalog);
 }
