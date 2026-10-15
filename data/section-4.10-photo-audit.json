@@ -1,0 +1,30 @@
+{
+  "section": "4.10",
+  "total_products": 80,
+  "verified_photos_attached": 77,
+  "unresolved_photos": 3,
+  "policy": "Only exact product photos physically stored in the repository are accepted. Similar products, recommendation images, placeholders and generic category images are rejected.",
+  "final_sweep_commit": "c058426a874acd365f70089626364e7701cacf2c",
+  "unresolved": [
+    {
+      "id": "4.10-сульфаприм-аква-трв",
+      "name": "Сульфаприм Аква-ТРВ",
+      "reason": "no_verified_exact_public_photo_after_final_sweep"
+    },
+    {
+      "id": "4.10-вакцина-против-сибирской-язвы-и-эмкара-орловская",
+      "name": "Вакцина против сибирской язвы и ЭМКАРа, Орловская",
+      "reason": "no_verified_exact_public_photo_after_final_sweep"
+    },
+    {
+      "id": "4.10-метростимовит-звс",
+      "name": "МетростимоВит ЗВС",
+      "reason": "no_verified_exact_public_photo_after_final_sweep"
+    }
+  ],
+  "notes": [
+    "A final search pass was run over every remaining card in sections 4.10 and 4.11.",
+    "Exact product identity was required before binding an image.",
+    "The generic image previously attached to Flavovit was removed and not counted."
+  ]
+}
