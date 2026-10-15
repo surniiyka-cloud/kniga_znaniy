@@ -1,0 +1,77 @@
+{
+  "matched": 5,
+  "items": [
+    {
+      "id": "4.10-прогестамаг",
+      "status": "matched",
+      "page": "https://www.mosagrogen.ru/catalog/progestamag-100-ml/",
+      "title": "Прогестамаг® 100 мл",
+      "image": "https://www.mosagrogen.ru/upload/iblock/233/%D0%9F%D1%80%D0%BE%D0%B3%D0%B5%D1%81%D1%82%D0%B0%D0%BC%D0%B0%D0%B3%C2%AE_100-%D0%BC%D0%BB.jpg",
+      "path": "img/photos/admin/4.10-прогестамаг/4.10-прогестамаг-01.jpg",
+      "size": [
+        349,
+        700
+      ]
+    },
+    {
+      "id": "4.10-лексоджект",
+      "status": "matched",
+      "page": "https://trionisvet.ru/catalog/antibacterial_solutions/leksodzhekt/",
+      "title": "Лексоджект",
+      "image": "https://trionisvet.ru/upload/resize_cache/iblock/901/330_330_2/lexodgekt.jpg",
+      "path": "img/photos/admin/4.10-лексоджект/4.10-лексоджект-01.jpg",
+      "size": [
+        330,
+        330
+      ]
+    },
+    {
+      "id": "4.10-вакцина-комбовак-р-для-крс",
+      "status": "matched",
+      "page": "https://www.webvet.ru/preparats/kombovak-r/",
+      "title": "Комбовак-р",
+      "image": "https://www.webvet.ru/imgs/preparat/kombovak-r.webvet.ru.jpg",
+      "path": "img/photos/admin/4.10-вакцина-комбовак-р-для-крс/4.10-вакцина-комбовак-р-для-крс-01.jpg",
+      "size": [
+        260,
+        339
+      ]
+    },
+    {
+      "id": "4.10-мастибак-упаковка-20-шт",
+      "status": "error",
+      "page": "https://krasnogorsk.003ms.ru/catalog/veterinarnye-preparaty-i-izdeliya/veterinarnye-preparaty-i-izdeliya/mastibak",
+      "error": "403 Client Error: Forbidden for url: https://krasnogorsk.003ms.ru/catalog/veterinarnye-preparaty-i-izdeliya/veterinarnye-preparaty-i-izdeliya/mastibak"
+    },
+    {
+      "id": "4.10-мазь-мастисепт-а",
+      "status": "matched",
+      "page": "https://biohimfarm.ru/antibakter_r/mastisept-a/",
+      "title": "МАЗЬ МАСТИСЕПТ-А",
+      "image": "http://biohimfarm.ru/wp-content/uploads/2015/02/masticept300.png",
+      "path": "img/photos/admin/4.10-мазь-мастисепт-а/4.10-мазь-мастисепт-а-01.png",
+      "size": [
+        311,
+        312
+      ]
+    },
+    {
+      "id": "4.10-смекто-плюс-ооо-белбиорост-республика-беларусь",
+      "status": "matched",
+      "page": "https://flagma.by/smekto-plyus-effektivnoe-antidiareynoe-sredstvo-prirodnogo-proiskhozhdeniya-bez-o5911761.html",
+      "title": "Смекто Плюс – эффективное антидиарейное средство природного происхождения без антибиотика",
+      "image": "https://img01.flagma.by/photo/smekto-plyus-effektivnoe-antidiareynoe-sredstvo-prirodnogo-proiskhozhdeniya-bez-6886981_big.jpg",
+      "path": "img/photos/admin/4.10-смекто-плюс-ооо-белбиорост-республика-беларусь/4.10-смекто-плюс-ооо-белбиорост-республика-беларусь-01.jpg",
+      "size": [
+        660,
+        424
+      ]
+    },
+    {
+      "id": "4.10-кальцифос-biowet-drwalew-польша",
+      "status": "no-usable-image",
+      "page": "https://ingafarm.ru/home/catalog/item?item_id=6146e63728624509008b4567",
+      "title": "Каталог ветеринарной компании Инга-Фарм / 03102 Кальцифос"
+    }
+  ]
+}
