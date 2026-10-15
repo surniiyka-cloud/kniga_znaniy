@@ -1,0 +1,96 @@
+name: Import verified BioHimFarm photos for section 4.12
+
+on:
+  push:
+    paths:
+      - ".github/workflows/import-4-12-biohimfarm.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: pip install -q requests beautifulsoup4 pillow
+      - name: Download exact product images
+        run: |
+          python3 - <<'PY'
+          import json, re, io
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+          from PIL import Image
+
+          PAGES={
+            "4.12-биозоль-спрей":"https://biohimfarm.ru/antibakter_r/biozol/",
+            "4.12-раносепт-спрей":"https://biohimfarm.ru/antibakter_r/ranocept/",
+            "4.12-алюмиспрей":"https://biohimfarm.ru/antibakter_r/alumispray/",
+          }
+          EXPECT={
+            "4.12-биозоль-спрей":["биозоль"],
+            "4.12-раносепт-спрей":["раносепт"],
+            "4.12-алюмиспрей":["алюмиспрей"],
+          }
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"
+          def norm(x):
+              x=(x or "").lower().replace("ё","е"); x=re.sub(r"\s+"," ",x); return x.strip()
+          def image_candidates(sp,url):
+              out=[]
+              main=sp.find("main") or sp.find("article") or sp
+              og=sp.find("meta",attrs={"property":"og:image"})
+              if og and og.get("content"): out.append(urljoin(url,og["content"]))
+              for img in main.find_all("img"):
+                  src=img.get("data-src") or img.get("data-lazy-src") or img.get("src")
+                  if src: out.append(urljoin(url,src))
+              seen=[]; ret=[]
+              for u in out:
+                  if u in seen: continue
+                  seen.append(u)
+                  if any(z in u.lower() for z in ("logo","favicon","avatar","smiley","icon")): continue
+                  ret.append(u)
+              return ret
+          ovp=Path("data/admin-overrides.json"); ov=json.loads(ovp.read_text(encoding="utf-8"))
+          products=ov.setdefault("products",{}); report=[]; matched=0
+          for pid,url in PAGES.items():
+              try:
+                  r=s.get(url,timeout=60); r.raise_for_status(); sp=BeautifulSoup(r.text,"html.parser")
+                  h=sp.find("h1"); title=h.get_text(" ",strip=True) if h else ""
+                  if not any(k in norm(title) for k in EXPECT[pid]):
+                      report.append({"id":pid,"page":url,"status":"title-mismatch","title":title}); continue
+                  chosen=None; chosen_meta=None
+                  for iu in image_candidates(sp,url):
+                      try:
+                          ir=s.get(iu,timeout=50)
+                          ct=(ir.headers.get("content-type") or "").split(";")[0].lower()
+                          if ir.status_code!=200 or not ct.startswith("image/") or len(ir.content)<4000: continue
+                          im=Image.open(io.BytesIO(ir.content))
+                          w,h=im.size
+                          if w<180 or h<180: continue
+                          chosen=(iu,ir.content,ct); chosen_meta={"width":w,"height":h}; break
+                      except Exception:
+                          continue
+                  if not chosen:
+                      report.append({"id":pid,"page":url,"title":title,"status":"no-usable-image"}); continue
+                  iu,data,ct=chosen
+                  ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(data)
+                  obj=products.setdefault(pid,{}); obj["images"]=[str(out)]; obj["__frozen"]=True
+                  report.append({"id":pid,"page":url,"title":title,"image":iu,"path":str(out),"status":"matched",**chosen_meta}); matched+=1
+              except Exception as e:
+                  report.append({"id":pid,"page":url,"status":"error","error":str(e)})
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/import-4.12-biohimfarm-report.json").write_text(json.dumps({"matched":matched,"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/import-4.12-biohimfarm-report.json img/photos/admin/4.12-* 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "Import verified BioHimFarm photos for section 4.12"
+          git push
