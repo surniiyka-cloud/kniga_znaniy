@@ -1,0 +1,102 @@
+name: Audit 9.1 approved list v2
+
+on:
+  push:
+    paths:
+      - "data/section-9.1-arkady-approved.json"
+      - ".github/workflows/audit-9-1-arkady-list-v2.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Compare
+        run: |
+          python3 - <<'PY'
+          import json,re
+          from pathlib import Path
+          from difflib import SequenceMatcher
+
+          approved=json.loads(Path("data/section-9.1-arkady-approved.json").read_text(encoding="utf-8"))["items"]
+          book=json.loads(Path("data/book.json").read_text(encoding="utf-8"))
+          sec=None
+          for ch in book.get("chapters",[]):
+              for s in ch.get("sections",[]):
+                  if str(s.get("section") or s.get("id"))=="9.1":
+                      sec=s
+                      break
+              if sec:
+                  break
+          if sec is None:
+              raise RuntimeError("Section 9.1 not found")
+
+          current=[]
+          for t in sec.get("tables",[]):
+              title=(t.get("title") or "").strip()
+              if title:
+                  current.append(title)
+
+          def n(s):
+              s=s.lower().replace("ё","е")
+              s=s.replace("литров","л").replace("литра","л").replace("литр","л")
+              s=re.sub(r'[«»"“”]',"",s)
+              s=re.sub(r'[^a-zа-я0-9]+',' ',s)
+              return re.sub(r'\s+',' ',s).strip()
+
+          unused=set(range(len(current)))
+          matches=[]
+          missing=[]
+          for a in approved:
+              na=n(a)
+              exact_idx=None
+              for i in list(unused):
+                  if n(current[i])==na:
+                      exact_idx=i
+                      break
+              if exact_idx is not None:
+                  unused.remove(exact_idx)
+                  matches.append({"approved":a,"current":current[exact_idx],"score":1.0})
+                  continue
+              best=None
+              for i in unused:
+                  score=SequenceMatcher(None,na,n(current[i])).ratio()
+                  # Strongly reward same model identifiers.
+                  am=set(re.findall(r'[a-zа-я]*\d+[a-zа-я0-9-]*',na))
+                  cm=set(re.findall(r'[a-zа-я]*\d+[a-zа-я0-9-]*',n(current[i])))
+                  if am and cm and am&cm:
+                      score+=0.12
+                  if best is None or score>best[0]:
+                      best=(score,i)
+              if best and best[0]>=0.84:
+                  unused.remove(best[1])
+                  matches.append({"approved":a,"current":current[best[1]],"score":round(best[0],3)})
+              else:
+                  missing.append(a)
+
+          extra=[current[i] for i in sorted(unused)]
+          result={
+              "approved_count":len(approved),
+              "current_count":len(current),
+              "matched_count":len(matches),
+              "missing_from_current":missing,
+              "extra_in_current":extra,
+              "od_mg06_extra":[x for x in extra if "OD-MG06" in x.upper()],
+              "matches":matches
+          }
+          Path("data/section-9.1-arkady-audit.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps({k:v for k,v in result.items() if k!="matches"},ensure_ascii=False,indent=2))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/section-9.1-arkady-audit.json
+          git commit -m "Audit section 9.1 against approved list"
+          git pull --rebase origin main
+          git push
