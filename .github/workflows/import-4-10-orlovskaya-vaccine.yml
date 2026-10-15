@@ -1,0 +1,57 @@
+name: Import exact Orlovskaya vaccine photo 4.10
+
+on:
+  push:
+    paths:
+      - ".github/workflows/import-4-10-orlovskaya-vaccine.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests pillow
+      - name: Import exact vaccine image
+        run: |
+          python3 - <<'PY'
+          import json,io
+          from pathlib import Path
+          import requests
+          from PIL import Image
+
+          pid="4.10-вакцина-против-сибирской-язвы-и-эмкара-орловская"
+          source_page="https://xn--80acbmi2bea3aj.xn--p1ai/vaktsina-p-sibirskoy-yazvy-i-emkara-assotsiirovanaya"
+          image="https://xn--80acbmi2bea3aj.xn--p1ai/d/03_1467104997.png"
+          s=requests.Session()
+          s.headers.update({"User-Agent":"Mozilla/5.0","Referer":source_page})
+          r=s.get(image,timeout=60)
+          r.raise_for_status()
+          ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+          if not ct.startswith("image/") or len(r.content)<3000:
+              raise RuntimeError(f"invalid image {ct} {len(r.content)}")
+          im=Image.open(io.BytesIO(r.content)); w,h=im.size
+          if w<200 or h<200: raise RuntimeError(f"too small {w}x{h}")
+          out=Path("img/photos/admin")/pid/(pid+"-01.png")
+          out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(r.content)
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          obj=ov.setdefault("products",{}).setdefault(pid,{})
+          obj["images"]=[str(out)]; obj["__frozen"]=True
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/import-4.10-orlovskaya-vaccine-report.json").write_text(json.dumps({
+            "id":pid,"status":"matched","source_page":source_page,"image":image,"path":str(out),"size":[w,h]
+          },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/import-4.10-orlovskaya-vaccine-report.json img/photos/admin/4.10-вакцина-против-сибирской-язвы-и-эмкара-орловская
+          git commit -m "Add exact Orlovskaya vaccine photo to section 4.10"
+          git pull --rebase origin main
+          git push
