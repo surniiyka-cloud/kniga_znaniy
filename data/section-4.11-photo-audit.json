@@ -1,0 +1,206 @@
+{
+  "section": "4.11",
+  "title": "Препараты «РубиконВ»",
+  "total_products": 92,
+  "verified_photos_attached": 58,
+  "unresolved_photos": 34,
+  "policy": "Only exact product photos physically stored in the repository are accepted. Similar packaging, related products, recommendation images and no-image placeholders are rejected.",
+  "unresolved": [
+    {
+      "id": "4.11-биоквинол",
+      "name": "Биоквинол",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-дистреп-400-la",
+      "name": "Дистреп 400 LA",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-окситетрациклина-гидрохлорид-25",
+      "name": "Окситетрациклина гидрохлорид 25%",
+      "reason": "concentration_conflict_current_rubikon_sources_show_20_percent"
+    },
+    {
+      "id": "4.11-рецеф-форте-200",
+      "name": "Рецеф-Форте 200",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-рецеф-форте-100",
+      "name": "Рецеф-Форте 100",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-рецеф-100",
+      "name": "Рецеф 100",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-рэнровет-0-15",
+      "name": "Рэнровет 0,15",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-тилмикон",
+      "name": "Тилмикон",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-флавовит",
+      "name": "Флавовит",
+      "reason": "name_requires_verification_legacy_source_calls_product_Flavovit_8_percent"
+    },
+    {
+      "id": "4.11-флониксин",
+      "name": "Флониксин",
+      "reason": "name_conflict_current_registry_calls_product_Florniksin"
+    },
+    {
+      "id": "4.11-мастидез-концентрат",
+      "name": "Мастидез-концентрат",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-гель-повиаргола-1",
+      "name": "Гель Повиаргола 1%",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-рамоклокс-dc",
+      "name": "Рамоклокс DC",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-рихометрин-п",
+      "name": "Рихометрин П",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-рэнросепт",
+      "name": "Рэнросепт",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-цефалек-dc",
+      "name": "Цефалек DC",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-пирокарб",
+      "name": "Пирокарб",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-празитаб",
+      "name": "Празитаб",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-празитаб-плюс",
+      "name": "Празитаб Плюс",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-эприкон-20",
+      "name": "Эприкон 20",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-биосан",
+      "name": "Биосан",
+      "reason": "source_product_page_known_but_source_blocks_or_no_verified_image"
+    },
+    {
+      "id": "4.11-витасорб",
+      "name": "Витасорб",
+      "reason": "source_product_page_known_but_source_blocks_or_no_verified_image"
+    },
+    {
+      "id": "4.11-мексикам",
+      "name": "Мексикам",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-селекар",
+      "name": "Селекар",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-руфферан-200-плюс",
+      "name": "Руфферан-200 Плюс",
+      "reason": "source_image_unavailable_and_spelling_varies_Rufferan"
+    },
+    {
+      "id": "4.11-руфферан",
+      "name": "Руфферан",
+      "reason": "spelling_requires_verification_Rufferan_in_registry_sources"
+    },
+    {
+      "id": "4.11-рубиотик",
+      "name": "Рубиотик",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-крем-буренка",
+      "name": "Крем «Бурёнка»",
+      "reason": "generic_product_name_many_non_Rubikon_images_rejected"
+    },
+    {
+      "id": "4.11-гель-декорнум",
+      "name": "Гель Декорнум",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-мазь-камфорно-ихтиоловая",
+      "name": "Мазь Камфорно-Ихтиоловая",
+      "reason": "no_verified_public_photo"
+    },
+    {
+      "id": "4.11-биохелат-гель",
+      "name": "Биохелат Гель",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-биохелат-концентрат",
+      "name": "Биохелат Концентрат",
+      "reason": "official_registry_page_has_no_image"
+    },
+    {
+      "id": "4.11-ксиловит",
+      "name": "Ксиловит",
+      "reason": "official_registry_page_has_no_image_source_product_page_blocks_image_access"
+    },
+    {
+      "id": "4.11-имупрофен-10",
+      "name": "Имупрофен 10%",
+      "reason": "official_registry_page_has_no_image"
+    }
+  ],
+  "data_quality_flags": [
+    {
+      "id": "4.11-флониксин",
+      "current_name": "Флониксин",
+      "verified_registry_name": "Флорниксин",
+      "action": "Do not attach a Florniksin package to the current card until the card name is corrected/confirmed."
+    },
+    {
+      "id": "4.11-флавовит",
+      "current_name": "Флавовит",
+      "legacy_verified_name": "Флавовит 8%",
+      "action": "Confirm whether the concentration 8% must be restored in the card title."
+    },
+    {
+      "id": "4.11-окситетрациклина-гидрохлорид-25",
+      "current_name": "Окситетрациклина гидрохлорид 25%",
+      "current_manufacturer_catalog_name": "Порошок окситетрациклина гидрохлорид 20%",
+      "action": "Do not substitute the 20% product photo; verify whether the 25% card is obsolete or erroneous."
+    }
+  ],
+  "source_notes": [
+    "Vetsnab manufacturer/registration pages were used to verify Rubikon product identity; many explicitly show 'Изображение отсутствует'.",
+    "Tandem exact pages were checked where available; several expose product text but no usable product image.",
+    "Tian-Trade exact product pages were found for several items, but automated access to product images is blocked/returns 403 for some pages.",
+    "SellBuy mirrors were used only when the exact product/manufacturer card and the actual product image were both verifiable."
+  ]
+}
