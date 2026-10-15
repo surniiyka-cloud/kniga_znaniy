@@ -23252,7 +23252,10 @@
       "__frozen": true
     },
     "4.11-стимулонг": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-стимулонг/4.11-стимулонг-01.jpg"
+      ]
     },
     "4.11-тилмикон": {
       "__frozen": true
