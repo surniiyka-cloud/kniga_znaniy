@@ -1,0 +1,94 @@
+name: Finish verified Ecohimtech photos for section 4.12
+
+on:
+  push:
+    paths:
+      - ".github/workflows/finish-4-12-ecohimtech.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: pip install -q requests beautifulsoup4
+      - name: Download exact product images
+        run: |
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+          import requests
+          from bs4 import BeautifulSoup
+
+          PAGES = {
+            "4.12-antistress-horse-hhl-horse-health-line":"https://ecohimtech-ufa.ru/catalog/biologics/antistess-horse-horse-health-line/",
+            "4.12-тринорм":"https://ecohimtech-ufa.ru/catalog/goodies/trinorm/",
+            "4.12-лизин":"https://ecohimtech-ufa.ru/catalog/goodies/lizin/",
+            "4.12-азинокс-ветеринарный":"https://ecohimtech-ufa.ru/catalog/dogs/azinoks/",
+            "4.12-хондро-про":"https://ecohimtech-ufa.ru/catalog/goodies/khondro-pro/",
+            "4.12-сангра":"https://ecohimtech-ufa.ru/catalog/goodies/sangra/",
+          }
+          EXPECT = {
+            "4.12-antistress-horse-hhl-horse-health-line":["antistess horse","antistress horse"],
+            "4.12-тринорм":["тринорм"],
+            "4.12-лизин":["лизин"],
+            "4.12-азинокс-ветеринарный":["азинокс"],
+            "4.12-хондро-про":["хондро-про","хондро про"],
+            "4.12-сангра":["сангра"],
+          }
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"
+          def norm(x):
+              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              x=re.sub(r'[«»"®™]',"",x); x=re.sub(r"\s+"," ",x)
+              return x.strip()
+          def choose_image(sp,url,title):
+              og=sp.find("meta",attrs={"property":"og:image"})
+              cand=[]
+              if og and og.get("content"): cand.append(urljoin(url,og["content"]))
+              for img in sp.find_all("img"):
+                  src=img.get("data-src") or img.get("data-lazy-src") or img.get("src")
+                  if not src: continue
+                  alt=norm(img.get("alt",""))
+                  if alt and (alt in norm(title) or norm(title) in alt): cand.insert(0,urljoin(url,src))
+              for u in cand:
+                  low=u.lower()
+                  if any(z in low for z in ("logo","favicon","social")): continue
+                  return u
+              return cand[0] if cand else None
+          ovp=Path("data/admin-overrides.json"); ov=json.loads(ovp.read_text(encoding="utf-8"))
+          products=ov.setdefault("products",{}); report=[]; matched=0
+          for pid,url in PAGES.items():
+              try:
+                  r=s.get(url,timeout=60); r.raise_for_status(); sp=BeautifulSoup(r.text,"html.parser")
+                  h=sp.find("h1"); title=h.get_text(" ",strip=True) if h else ""
+                  nt=norm(title)
+                  if not any(k in nt for k in EXPECT[pid]):
+                      report.append({"id":pid,"page":url,"status":"title-mismatch","title":title}); continue
+                  iu=choose_image(sp,url,title)
+                  if not iu:
+                      report.append({"id":pid,"page":url,"status":"no-image","title":title}); continue
+                  ir=s.get(iu,timeout=60); ct=(ir.headers.get("content-type") or "").split(";")[0].lower()
+                  if ir.status_code!=200 or not ir.content or not ct.startswith("image/"):
+                      report.append({"id":pid,"page":url,"image":iu,"status":"image-failed","http":ir.status_code,"content_type":ct}); continue
+                  ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(ir.content)
+                  obj=products.setdefault(pid,{}); obj["images"]=[str(out)]; obj["__frozen"]=True
+                  report.append({"id":pid,"page":url,"title":title,"image":iu,"path":str(out),"status":"matched"}); matched+=1
+              except Exception as e:
+                  report.append({"id":pid,"page":url,"status":"error","error":str(e)})
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/finish-4.12-ecohimtech-report.json").write_text(json.dumps({"matched":matched,"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/finish-4.12-ecohimtech-report.json img/photos/admin/4.12-* 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "Finish verified Ecohimtech photos for section 4.12"
+          git push
