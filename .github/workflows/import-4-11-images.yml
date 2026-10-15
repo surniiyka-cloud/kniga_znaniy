@@ -1,103 +1,126 @@
-name: Fast verified Rubikon photo import 4.11
+name: Section 4.11 exact alias photo pass
+
 on:
   push:
-    paths: [".github/workflows/import-4-11-images.yml"]
+    paths:
+      - ".github/workflows/import-4-11-images.yml"
+
 permissions:
   contents: write
+
 jobs:
   import:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 1}
+        with:
+          fetch-depth: 1
+
       - run: pip install -q requests beautifulsoup4 pillow
-      - name: Import
+
+      - name: Import exact alias matches
+        shell: bash
         run: |
           python3 - <<'PY'
-          import io,json,re
+          import io,json
           from pathlib import Path
           from urllib.parse import urljoin
           import requests
           from bs4 import BeautifulSoup
           from PIL import Image
-          B="https://biopromgarant.ru"; S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0"
-          def n(x):
-            x=(x or "").lower().replace("ё","е").replace("рэн","рен").replace("–","-").replace("—","-")
-            x=re.sub(r'[«»"]',"",x); x=re.sub(r"\b(порошок|раствор|суспензия|таблетки|для инъекций|антибактериальный препарат)\b"," ",x)
-            return re.sub(r"\s+"," ",re.sub(r"[^a-zа-я0-9%.,+ -]"," ",x)).strip(" .,-")
-          def nums(x): return re.findall(r"\d+(?:[.,]\d+)?",x or "")
-          idx=json.loads(Path("data/search-index.json").read_text()); arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
-          T=[x for x in arr if str(x.get("section"))=="4.11"]
-          p=Path("data/admin-overrides.json"); O=json.loads(p.read_text()); P=O.setdefault("products",{})
-          links={t["id"]:[] for t in T}
-          urls=[]
-          for cat in ["","ptitsevodstvo/","krupnyy-rogatyy-skot/","svinovodstvo/"]:
-            for pg in range(1,18): urls.append(B+"/catalog/"+cat+f"?PAGEN_1={pg}")
-          for u in urls:
-            try:
-              r=S.get(u,timeout=12)
-              if r.status_code!=200: continue
-              q=BeautifulSoup(r.text,"html.parser")
-              for a in q.find_all("a",href=True):
-                label=a.get_text(" ",strip=True); nl=n(label)
-                if len(nl)<3: continue
-                h=urljoin(r.url,a["href"]).split("#")[0]
-                if "/catalog/" not in h or "PAGEN_" in h: continue
-                for t in T:
-                  nt=n(t["name"])
-                  if not (nt==nl or nt in nl or nl in nt): continue
-                  tn=nums(nt); ln=nums(nl)
-                  if tn and any(v not in ln for v in tn): continue
-                  if h not in [x[0] for x in links[t["id"]]]: links[t["id"]].append((h,label))
-            except Exception as e: print("list",u,e)
-          R=[]; added=0
-          for t in T:
-            pid=t["id"]; name=t["name"]
-            if P.get(pid,{}).get("images"): R.append({"id":pid,"name":name,"status":"already"}); continue
-            done=False
-            for u,label in links[pid][:6]:
-              try:
-                r=S.get(u,timeout=12)
-                if r.status_code!=200: continue
-                q=BeautifulSoup(r.text,"html.parser"); h1=q.find("h1"); title=h1.get_text(" ",strip=True) if h1 else label
-                txt=q.get_text(" ",strip=True).lower().replace("ё","е")
-                if "рубикон" not in txt: continue
-                nt,np=n(name),n(title)
-                if not (nt==np or nt in np or np in nt): continue
-                tn,pn=nums(nt),nums(np)
-                if tn and any(v not in pn for v in tn): continue
-                ims=[]; og=q.find("meta",property="og:image")
-                if og and og.get("content"): ims.append(urljoin(r.url,og["content"]))
-                for im in q.find_all("img"):
-                  z=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
-                  if z: ims.append(urljoin(r.url,z))
-                for iu in ims:
-                  lo=iu.lower()
-                  if any(v in lo for v in ["logo","icon","sprite","placeholder","nophoto","no-photo","banner"]): continue
+
+          mapping = {
+            "4.11-амоксициллин-10": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/amoksitsillin-10-poroshok/",
+            "4.11-биовит-р-150": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/biovit-r-150-poroshok/",
+            "4.11-норфлоксацин-никотинат-20": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/norfloksatsina-nikotinat-20/",
+            "4.11-рецеф-4-0": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/retsef-4-0-poroshok/",
+            "4.11-рецеф-50": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/retsef-5-rastvor/",
+            "4.11-роксилонг-300": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/roksilong-300/",
+            "4.11-рефкином-2-5": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/refkinom-2-5-i-7-5/",
+            "4.11-рефкином-7-5": "https://biopromgarant.ru/catalog/krupnyy-rogatyy-skot/refkinom-2-5-i-7-5/"
+          }
+
+          s=requests.Session()
+          s.headers["User-Agent"]="Mozilla/5.0 (KnowledgeBook exact image importer)"
+          p=Path("data/admin-overrides.json")
+          data=json.loads(p.read_text(encoding="utf-8"))
+          products=data.setdefault("products",{})
+
+          # Remove a false fuzzy assignment: Trimetoks tablets != Trimetoks T powder.
+          if "4.11-триметокс" in products:
+              products["4.11-триметокс"]["images"]=[]
+              products["4.11-триметокс"]["__frozen"]=True
+
+          report=[]
+          for pid,url in mapping.items():
+              r=s.get(url,timeout=40)
+              r.raise_for_status()
+              soup=BeautifulSoup(r.text,"html.parser")
+              text=soup.get_text(" ",strip=True).lower().replace("ё","е")
+              if "производитель: рубикон" not in text and "производитель рубикон" not in text:
+                  raise RuntimeError(f"Rubikon not confirmed for {pid}: {url}")
+
+              imgs=[]
+              og=soup.find("meta",property="og:image")
+              if og and og.get("content"):
+                  imgs.append(urljoin(r.url,og["content"]))
+              # Prefer images from the product detail region / large images.
+              for im in soup.find_all("img"):
+                  src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
+                  if src:
+                      imgs.append(urljoin(r.url,src))
+
+              chosen=None
+              for iu in imgs:
+                  low=iu.lower()
+                  if any(z in low for z in ["logo","icon","sprite","banner","placeholder","nophoto","no-photo","loader"]):
+                      continue
                   try:
-                    ir=S.get(iu,timeout=12)
-                    if ir.status_code!=200 or len(ir.content)<7000 or not ir.headers.get("content-type","").lower().startswith("image/"): continue
-                    im=Image.open(io.BytesIO(ir.content)); w,h=im.size
-                    if w<240 or h<240 or w/h>3.2 or h/w>3.2: continue
-                    ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get((im.format or "").lower())
-                    if not ext: continue
-                    out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(ir.content)
-                    P.setdefault(pid,{})["images"]=[str(out)]; P[pid]["__frozen"]=True
-                    R.append({"id":pid,"name":name,"status":"imported","page":u,"image":iu,"path":str(out)}); added+=1; done=True; print("ADD",name,iu); break
-                  except: pass
-                if done: break
-              except Exception as e: print("detail",name,u,e)
-            if not done: R.append({"id":pid,"name":name,"status":"not-found","links":[x[0] for x in links[pid][:4]]})
-          p.write_text(json.dumps(O,ensure_ascii=False,indent=2)+"\n")
-          Path("data/import-4.11-fast-report.json").write_text(json.dumps({"targets":len(T),"added":added,"items":R},ensure_ascii=False,indent=2)+"\n")
-          print("ADDED",added)
+                      ir=s.get(iu,timeout=40)
+                      if ir.status_code!=200 or len(ir.content)<7000:
+                          continue
+                      if not ir.headers.get("content-type","").lower().startswith("image/"):
+                          continue
+                      im=Image.open(io.BytesIO(ir.content))
+                      w,h=im.size
+                      if w<240 or h<240 or w/h>3.3 or h/w>3.3:
+                          continue
+                      fmt=(im.format or "").lower()
+                      ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get(fmt)
+                      if not ext:
+                          continue
+                      chosen=(iu,ir.content,ext)
+                      break
+                  except Exception:
+                      continue
+
+              if not chosen:
+                  report.append({"id":pid,"page":url,"status":"no-usable-image"})
+                  continue
+
+              iu,blob,ext=chosen
+              out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+              out.parent.mkdir(parents=True,exist_ok=True)
+              out.write_bytes(blob)
+              products.setdefault(pid,{})
+              products[pid]["images"]=[str(out)]
+              products[pid]["__frozen"]=True
+              report.append({"id":pid,"page":url,"image":iu,"path":str(out),"status":"imported"})
+
+          p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/import-4.11-alias-report.json").write_text(
+              json.dumps({"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps(report,ensure_ascii=False))
           PY
+
       - name: Commit
+        shell: bash
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json data/import-4.11-fast-report.json img/photos/admin/4.11-* || true
+          git add data/admin-overrides.json data/import-4.11-alias-report.json img/photos/admin/4.11-* || true
           git diff --cached --quiet && exit 0
-          git commit -m "Finish verified photos for section 4.11"
-          git pull --rebase origin main || true
+          git commit -m "Add exact alias-matched photos for section 4.11"
+          git pull --rebase origin main
           git push
