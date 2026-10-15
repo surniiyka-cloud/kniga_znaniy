@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "id": "4.11-ксиловит",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/prochie-preparaty/ksilovit-inekts/",
+      "error": "403 Client Error: Forbidden for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/prochie-preparaty/ksilovit-inekts/"
+    },
+    {
+      "id": "4.11-стимулонг",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/stimulong-inekts/",
+      "error": "403 Client Error: Forbidden for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/stimulong-inekts/"
+    },
+    {
+      "id": "4.11-руфферан-200-плюс",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/rufferan-200-plyus-inekts/",
+      "error": "403 Client Error: Forbidden for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/rufferan-200-plyus-inekts/"
+    },
+    {
+      "id": "4.11-витамикс-1",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitamiks-1-poroshok/",
+      "error": "403 Client Error: Forbidden for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitamiks-1-poroshok/"
+    },
+    {
+      "id": "4.11-витасорб",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitasorb-poroshok/",
+      "error": "403 Client Error: Forbidden for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitasorb-poroshok/"
+    },
+    {
+      "id": "4.11-биосан",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/antisepticheskie-i-dezsredstva/biosan-osushitel-podstilka/",
+      "error": "403 Client Error: Forbidden for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/antisepticheskie-i-dezsredstva/biosan-osushitel-podstilka/"
+    }
+  ]
+}
