@@ -1,0 +1,316 @@
+name: Final photo sweep sections 4.10 and 4.11
+
+on:
+  push:
+    paths:
+      - ".github/workflows/final-photo-sweep-4-10-4-11.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Search and import every remaining exact photo
+        run: |
+          python3 - <<'PY'
+          import json,re,io,time,html as htmlmod
+          from pathlib import Path
+          from urllib.parse import urljoin,urlparse,parse_qs,quote
+          import requests, urllib3
+          from bs4 import BeautifulSoup
+          from PIL import Image
+          urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+          REPO=Path(".")
+          report=json.loads(Path("data/image-match-report.json").read_text(encoding="utf-8"))
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          products=ov.setdefault("products",{})
+
+          targets=[]
+          for x in report.get("productsWithoutImages",[]):
+              if x.get("section") not in ("4.10","4.11"): continue
+              if products.get(x["id"],{}).get("images"): continue
+              targets.append(x)
+
+          S=requests.Session()
+          S.headers.update({
+              "User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/123 Safari/537.36",
+              "Accept-Language":"ru,en;q=0.8"
+          })
+
+          BAD_HOSTS={"youtube.com","www.youtube.com","vk.com","ok.ru","instagram.com","facebook.com","tiktok.com","pinterest.com"}
+          BAD_IMAGE_WORDS=("logo","favicon","icon","sprite","social","avatar","counter","captcha","banner","dogandcat","no-img","no_image","noimage","placeholder","loader","loupe","price.jpg","object_")
+          MANUAL={
+            "4.10-вакцина-против-сибирской-язвы-и-эмкара-орловская":{
+              "page":"https://xn--80acbmi2bea3aj.xn--p1ai/vaktsina-p-sibirskoy-yazvy-i-emkara-assotsiirovanaya",
+              "image":"https://xn--80acbmi2bea3aj.xn--p1ai/d/03_1467104997.png",
+              "verify":False
+            },
+            "4.10-сульфаприм-аква-трв":{
+              "page":"https://www.vetar-vet.ru/catalog/sulfaprim-akva-trv-1l/"
+            },
+            "4.11-цефалек-dc":{
+              "page":"https://vetpreparaty-optom.ru/catalog/tsefalek-dc-9-g-up-tsefapirin/"
+            },
+            "4.11-флавовит":{
+              "page":"https://vettorg.ru/catalog/item-913.html"
+            },
+          }
+
+          def norm(s):
+              s=htmlmod.unescape(s or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              s=s.replace("®","").replace("™","")
+              s=re.sub(r'[^a-zа-я0-9%+., -]+',' ',s)
+              return re.sub(r'\s+',' ',s).strip()
+
+          def core_name(name):
+              s=norm(name)
+              s=s.replace("ооо ","").replace("республика беларусь","").replace("польша","")
+              s=re.sub(r'\bупаковка\s*\d+\s*шт\.?','',s)
+              return re.sub(r'\s+',' ',s).strip()
+
+          def tokens(name):
+              stop={"для","крем","гель","мазь","ветеринарный","ветеринарная","ветеринарные","раствор","порошок","концентрат","свечи","вакцина","против","крупного","рогатого","скота","ооо"}
+              return [t for t in re.findall(r'[a-zа-я0-9]+',core_name(name)) if len(t)>2 and t not in stop]
+
+          def decode_response(r):
+              raw=r.content
+              candidates=[]
+              encs=[]
+              if r.encoding: encs.append(r.encoding)
+              encs += ["utf-8","cp1251","windows-1251"]
+              seen=set()
+              for enc in encs:
+                  if not enc or enc.lower() in seen: continue
+                  seen.add(enc.lower())
+                  try:
+                      txt=raw.decode(enc)
+                      score=len(re.findall(r'[А-Яа-яЁё]',txt))
+                      candidates.append((score,txt))
+                  except: pass
+              return max(candidates,key=lambda z:z[0])[1] if candidates else raw.decode("utf-8","ignore")
+
+          def fetch_page(url):
+              try:
+                  r=S.get(url,timeout=35,verify=False,allow_redirects=True)
+                  if r.status_code!=200 or len(r.content)<300: return None
+                  ct=(r.headers.get("content-type") or "").lower()
+                  if "text/html" not in ct and "application/xhtml" not in ct and not ct.startswith("text/"): return None
+                  txt=decode_response(r)
+                  return r.url,txt,BeautifulSoup(txt,"html.parser")
+              except Exception:
+                  return None
+
+          def search_web(q):
+              urls=[]
+              # DuckDuckGo HTML
+              try:
+                  u="https://html.duckduckgo.com/html/?q="+quote(q)
+                  r=S.get(u,timeout=35,verify=False)
+                  sp=BeautifulSoup(decode_response(r),"html.parser")
+                  for a in sp.select("a.result__a, a.result-link"):
+                      href=a.get("href","")
+                      if "uddg=" in href:
+                          try: href=parse_qs(urlparse(href).query).get("uddg",[href])[0]
+                          except: pass
+                      if href.startswith("http"): urls.append(href)
+              except: pass
+              # Bing fallback
+              if len(urls)<4:
+                  try:
+                      u="https://www.bing.com/search?q="+quote(q)+"&setlang=ru"
+                      r=S.get(u,timeout=35,verify=False)
+                      sp=BeautifulSoup(decode_response(r),"html.parser")
+                      for a in sp.select("li.b_algo h2 a"):
+                          href=a.get("href","")
+                          if href.startswith("http"): urls.append(href)
+                  except: pass
+              out=[]
+              seen=set()
+              for u in urls:
+                  h=urlparse(u).hostname or ""
+                  if h in BAD_HOSTS or any(h.endswith("."+b) for b in BAD_HOSTS): continue
+                  if u not in seen:
+                      seen.add(u); out.append(u)
+              return out[:12]
+
+          def identity_score(name,page_url,sp):
+              text=norm((sp.find("body") or sp).get_text(" ",strip=True))
+              title=norm(sp.title.get_text(" ",strip=True) if sp.title else "")
+              h1=norm(sp.find("h1").get_text(" ",strip=True) if sp.find("h1") else "")
+              n=core_name(name)
+              toks=tokens(name)
+              score=0
+              if n and n in text: score+=7
+              if n and (n in title or n in h1): score+=8
+              hits=sum(1 for t in toks if t in text)
+              score += min(hits,5)
+              # Numeric/form qualifiers must match when present.
+              nums=re.findall(r'\d+(?:[.,]\d+)?',n)
+              if nums and not all(num in text for num in nums): score-=5
+              # Section 4.11 Rubicon items: corroborate manufacturer where available.
+              if "рубикон" in text: score+=2
+              return score,{"title":title[:250],"h1":h1[:250],"token_hits":hits}
+
+          def image_candidates(name,page_url,html,sp):
+              n=core_name(name); toks=tokens(name)
+              out=[]
+              def add(u,score,why):
+                  if not u or u.startswith("data:"): return
+                  u=urljoin(page_url,u)
+                  low=u.lower()
+                  if any(w in low for w in BAD_IMAGE_WORDS): return
+                  out.append((score,u,why))
+              for attrs in ({"property":"og:image"},{"name":"twitter:image"},{"itemprop":"image"}):
+                  m=sp.find("meta",attrs=attrs)
+                  if m and m.get("content"): add(m["content"],5,"meta")
+              for im in sp.find_all("img"):
+                  src=im.get("data-src") or im.get("data-lazy-src") or im.get("data-original") or im.get("src")
+                  alt=norm(im.get("alt","")); title=norm(im.get("title",""))
+                  score=1
+                  if n and (n in alt or n in title): score+=10
+                  score += min(sum(1 for t in toks if t in alt or t in title),4)*2
+                  srcn=norm(src or "")
+                  score += min(sum(1 for t in toks if t in srcn),3)*2
+                  # Product galleries commonly wrap image links.
+                  parent=im.parent
+                  ptxt=norm(parent.get_text(" ",strip=True) if parent else "")
+                  if n and n in ptxt: score+=5
+                  add(src,score,"img")
+              # JSON-LD product image
+              for script in sp.find_all("script",type="application/ld+json"):
+                  try:
+                      data=json.loads(script.string or "")
+                      objs=data if isinstance(data,list) else [data]
+                      for o in objs:
+                          if not isinstance(o,dict): continue
+                          typ=o.get("@type")
+                          if typ=="Product" or (isinstance(typ,list) and "Product" in typ):
+                              nm=norm(o.get("name",""))
+                              if n in nm or nm in n:
+                                  imgs=o.get("image",[])
+                                  if isinstance(imgs,str): imgs=[imgs]
+                                  if isinstance(imgs,dict): imgs=[imgs.get("url")]
+                                  for u in imgs or []:
+                                      if isinstance(u,dict): u=u.get("url")
+                                      add(u,12,"jsonld-product")
+                  except: pass
+              seen=set(); res=[]
+              for score,u,why in sorted(out,key=lambda z:z[0],reverse=True):
+                  if u not in seen:
+                      seen.add(u); res.append((score,u,why))
+              return res
+
+          def load_image(u,referer,verify=False):
+              try:
+                  r=S.get(u,timeout=40,verify=verify,headers={"User-Agent":S.headers["User-Agent"],"Referer":referer})
+                  ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+                  if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<2500: return None
+                  im=Image.open(io.BytesIO(r.content)); w,h=im.size
+                  if w<160 or h<160: return None
+                  # Reject extreme banners.
+                  ratio=max(w/h,h/w)
+                  if ratio>5.5: return None
+                  return r.content,ct,w,h,im.format
+              except: return None
+
+          def save(pid,u,data,ct,w,h,source_page,reason):
+              ext={"image/png":".png","image/webp":".webp","image/gif":".gif"}.get(ct,".jpg")
+              out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+              out.parent.mkdir(parents=True,exist_ok=True)
+              out.write_bytes(data)
+              obj=products.setdefault(pid,{})
+              obj["images"]=[str(out)]; obj["__frozen"]=True
+              return {"status":"matched","source_page":source_page,"image":u,"path":str(out),"size":[w,h],"reason":reason}
+
+          results=[]
+          for idx,x in enumerate(targets,1):
+              pid=x["id"]; name=x["name"]
+              item={"id":pid,"name":name,"section":x["section"],"attempts":[]}
+              print(f"[{idx}/{len(targets)}] {name}",flush=True)
+
+              # Manual exact image first.
+              man=MANUAL.get(pid,{})
+              if man.get("image"):
+                  z=load_image(man["image"],man["page"],verify=man.get("verify",False))
+                  if z:
+                      data,ct,w,h,fmt=z
+                      item.update(save(pid,man["image"],data,ct,w,h,man["page"],"manual_exact_source"))
+                      results.append(item); continue
+
+              pages=[]
+              if man.get("page"): pages.append(man["page"])
+              queries=[
+                  f'"{name}" ветеринарный препарат',
+                  f'"{name}" фото',
+              ]
+              if x["section"]=="4.11": queries.append(f'"{name}" Рубикон')
+              for q in queries:
+                  for u in search_web(q):
+                      if u not in pages: pages.append(u)
+                  if len(pages)>=12: break
+
+              best=None
+              for page in pages[:15]:
+                  fp=fetch_page(page)
+                  if not fp: continue
+                  final_url,html,sp=fp
+                  ident,meta=identity_score(name,final_url,sp)
+                  item["attempts"].append({"page":final_url,"identity":ident,**meta})
+                  if ident<8: continue
+                  for iscore,iu,why in image_candidates(name,final_url,html,sp)[:12]:
+                      # Require semantic image signal unless JSON-LD; og:image only accepted on very strong exact-title page.
+                      if iscore<5: continue
+                      if why=="meta" and ident<14: continue
+                      z=load_image(iu,final_url,verify=False)
+                      if not z: continue
+                      data,ct,w,h,fmt=z
+                      total=ident+iscore
+                      cand=(total,iu,data,ct,w,h,final_url,why,ident,iscore)
+                      if best is None or cand[0]>best[0]: best=cand
+                      if total>=22: break
+                  if best and best[0]>=22: break
+
+              if best:
+                  total,iu,data,ct,w,h,page,why,ident,iscore=best
+                  item.update(save(pid,iu,data,ct,w,h,page,f"identity={ident}; image={iscore}; {why}"))
+              else:
+                  item["status"]="unresolved_no_verified_exact_photo"
+              results.append(item)
+              time.sleep(.25)
+
+          # final cleanup for known wrong Flavovit file if unbound
+          bad=Path("img/photos/admin/4.11-флавовит/4.11-флавовит-01.jpg")
+          if bad.exists() and not products.get("4.11-флавовит",{}).get("images"):
+              bad.unlink()
+
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          unresolved=[r for r in results if r["status"]!="matched"]
+          Path("data/final-photo-sweep-4.10-4.11-report.json").write_text(json.dumps({
+              "targets":len(targets),
+              "matched":sum(1 for r in results if r["status"]=="matched"),
+              "unresolved":len(unresolved),
+              "items":results
+          },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/final-photo-sweep-4.10-4.11-unresolved.json").write_text(json.dumps({
+              "count":len(unresolved),
+              "items":[{"id":r["id"],"section":r["section"],"name":r["name"],"status":r["status"]} for r in unresolved]
+          },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",sum(1 for r in results if r["status"]=="matched"),"unresolved",len(unresolved))
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/admin-overrides.json data/final-photo-sweep-4.10-4.11-report.json data/final-photo-sweep-4.10-4.11-unresolved.json img/photos/admin/4.10-* img/photos/admin/4.11-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Final exact photo sweep for sections 4.10 and 4.11"
+          git pull --rebase origin main
+          git push
