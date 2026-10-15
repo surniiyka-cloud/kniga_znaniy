@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T06:43:32.796Z",
+  "updatedAt": "2026-10-15T06:43:39.483Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -23751,6 +23751,64 @@
     "4.10-гентафарм-10": {
       "images": [
         "img/photos/admin/4.10-гентафарм-10/4.10-гентафарм-10-01.webp"
+      ],
+      "name": "Гентафарм 10%",
+      "type": "Антибактериальный ветеринарный препарат",
+      "article": "-",
+      "purpose": "Для антибактериальной терапии животных",
+      "features": "Концентрация 10%",
+      "group": "Антибактериальные препараты",
+      "sourceRow": 10,
+      "candidateId": "гентафарм-10",
+      "detailFields": [
+        [
+          "Тип",
+          "Антибактериальный ветеринарный препарат"
+        ],
+        [
+          "Назначение",
+          "Для антибактериальной терапии животных"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Концентрация 10%"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
