@@ -43,7 +43,7 @@ jobs:
             {
               "id":"4.12-биозоль-спрей",
               "page":"https://www.sibagrotrade.com/catalogzoo/preparaty_dlya_s_kh_zhivotnykh/naruzhnye_sredstva_skhzh/186627/",
-              "image":null,
+              "image":None,
               "expect":["биозоль","биохимфарм"]
             }
           ]
