@@ -361,6 +361,22 @@ function buildGarantCards(s){
   for(const parsed of merged.values())registerCatalog(s.id,parsed.name,parsed.fields,img?[img]:[],{
     advantages:parsed.advantages,complectation:parsed.complectation,substances:parsed.substances,customTabs:parsed.customTabs
   });
+
+  // Ручные карточки GARANT (добавленные по этикеткам) должны попадать
+  // в sectionCatalog вместе с карточками, собранными из Google Sheets.
+  // Иначе sectionBaseItems() возвращает только sectionCatalog и manualProducts не видны.
+  const catalog=state.sectionCatalog.get(s.id)||[];
+  const known=new Set(catalog.map(x=>x.product.id));
+  const sectionCtx=state.sections.get(s.id);
+  for(const p of (s.products||[])){
+    if(!p?.manual||known.has(p.id))continue;
+    const ctxObj={chapter:sectionCtx?.chapter,section:s,product:p};
+    catalog.push(ctxObj);
+    state.products.set(p.id,ctxObj);
+    known.add(p.id);
+    if(Array.isArray(p.images)&&p.images.length)state.assets.productImages[p.id]=deepCopy(p.images);
+  }
+  state.sectionCatalog.set(s.id,catalog);
 }
 function splitAdvantages(pairs){
   const arr=pairs||[],idx=arr.findIndex((p)=>/^(Преимущество|Особенность)$/i.test(String(p.label||"").trim())&&/Практическое значение/i.test(String(p.value||"")));
@@ -1736,15 +1752,15 @@ function garantCardColor(name){
     ["METRONIDAZOLE","#73536C"],
     ["FTSP","#B88A63"]
   ];
-  return map.find(([k])=>n.includes(k))?.[1]||"#2F7D5A";
+  return map.find(([k])=>n.includes(k))?.[1]||"";
 }
 function card(x,index=0){
   const p=normalizeProductColors(x.product), images=state.assets.productImages?.[p.id]||[], im=images[0]||"", a=article(p);
   const priority=index<6,load=priority?"eager":"lazy",fetchPriority=priority?' fetchpriority="high"':"";
   const isGarant=x.section?.id==="2.1.3";
   const garantColor=isGarant?garantCardColor(p.name):"";
-  const garantStyle=isGarant?' style="--garant-card-color:'+garantColor+'"':"";
-  const garantClass=isGarant?" garant-card":"";
+  const garantStyle=isGarant&&garantColor?' style="--garant-card-color:'+garantColor+'"':"";
+  const garantClass=isGarant&&garantColor?" garant-card":"";
   return '<article class="product-card'+garantClass+'"'+garantStyle+'><div class="product-image '+(im?"":"placeholder")+'" '+(im?'data-open-product="'+esc(p.id)+'"':"")+'>'+(im?'<img src="'+esc(imageSrc(im))+'" loading="'+load+'" decoding="async"'+fetchPriority+' alt="'+esc(p.name)+'" style="'+esc(imageViewStyle(p,im,"card"))+'">':"")+(images.length?'<span class="photo-count" title="Фотографий: '+images.length+'" aria-label="Фотографий: '+images.length+'"><span aria-hidden="true">◫</span><b>'+images.length+'</b></span>':"")+'</div><div class="product-body"><div class="product-meta">'+(a?'<span class="badge article">Арт. '+esc(a)+'</span>':"")+(isGarant?'<span class="garant-color-dot" aria-hidden="true"></span>':"")+(p.type?'<span class="badge">'+esc(p.type)+'</span>':"")+(p.color?'<span class="badge">Цвет: '+esc(p.color)+'</span>':"")+'</div><h3>'+esc(p.name)+'</h3>'+(p.purpose?'<p>'+esc(p.purpose)+'</p>':"")+'<div class="product-actions"><button class="btn primary" data-open-product="'+esc(p.id)+'">Подробнее</button><button class="btn icon '+(favorites.has(p.id)?"active":"")+'" data-fav="'+esc(p.id)+'" aria-label="Избранное">★</button></div></div></article>';
 }
 function grouped(items){
