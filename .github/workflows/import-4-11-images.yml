@@ -1,4 +1,4 @@
-name: Import exact Tian Trade 4.11 photo set
+name: Import verified remaining Rubikon photos batch
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 1
       - run: pip install -q requests beautifulsoup4 pillow
-      - name: Import exact Tian Trade pages
+      - name: Import verified batch
         shell: bash
         run: |
           python3 - <<'PY'
@@ -29,80 +29,129 @@ jobs:
           from requests.adapters import HTTPAdapter
           from urllib3.util.retry import Retry
 
-          pages={
-            "4.11-ксиловит":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/prochie-preparaty/ksilovit-inekts/",
-            "4.11-стимулонг":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/stimulong-inekts/",
-            "4.11-руфферан-200-плюс":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/rufferan-200-plyus-inekts/",
-            "4.11-витамикс-1":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitamiks-1-poroshok/",
-            "4.11-витасорб":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitasorb-poroshok/",
-            "4.11-биосан":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/antisepticheskie-i-dezsredstva/biosan-osushitel-podstilka/"
-          }
-          expected={
-            "4.11-ксиловит":"ксиловит",
-            "4.11-стимулонг":"стимулонг",
-            "4.11-руфферан-200-плюс":"руфферан-200 плюс",
-            "4.11-витамикс-1":"витамикс-1",
-            "4.11-витасорб":"витасорб",
-            "4.11-биосан":"биосан"
-          }
-          S=requests.Session(); S.headers["User-Agent"]="Mozilla/5.0"
+          S=requests.Session()
+          S.headers.update({"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/131 Safari/537.36"})
           retry=Retry(total=4,connect=4,read=4,backoff_factor=.8,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])
           S.mount("https://",HTTPAdapter(max_retries=retry))
+
           def norm(x):
               x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
               x=x.replace("«","").replace("»","").replace('"',"")
-              x=re.sub(r"\b(инъекц|порошок|осушитель|подстилка)\.?\b"," ",x)
-              return re.sub(r"\s+"," ",re.sub(r"[^a-zа-я0-9%.,+ -]+"," ",x)).strip(" .,-()")
+              x=re.sub(r"[^a-zа-я0-9%.,+ -]+"," ",x)
+              return re.sub(r"\s+"," ",x).strip(" .,-")
 
-          p=Path("data/admin-overrides.json"); data=json.loads(p.read_text(encoding="utf-8")); products=data.setdefault("products",{})
-          report=[]
-          for pid,url in pages.items():
+          direct = {
+            "4.11-цефалек-dc": ("Цефалек DC", "https://vetpreparaty-optom.ru/catalog/tsefalek-dc-9-g-up-tsefapirin/"),
+            "4.11-цефтисепт": ("Цефтисепт", "https://www.kzvt.ru/catalog/veterinarnoe/ginekologicheskie-preparaty/tseftisept/"),
+            "4.11-уберосан": ("Уберосан", "https://agrokomfort.net/index.php?product_id=432&route=product%2Fproduct")
+          }
+
+          # Discover exact Agrokomfort product URLs from category/search pages.
+          agro_targets = {
+            "4.11-утеросепт-био":"утеросепт био",
+            "4.11-мастипен":"мастипен",
+            "4.11-полийодметрин":"полийодометрин"
+          }
+          seeds=[
+            "https://agrokomfort.net/index.php?path=57&route=product%2Fcategory",
+            "https://agrokomfort.net/index.php?path=80&route=product%2Fcategory",
+            "https://agrokomfort.net/index.php?filter_tag=&limit=25&order=DESC&page=8&route=product%2Fsearch&sort=pd.name",
+            "https://agrokomfort.net/index.php?filter_tag=&limit=25&page=12&route=product%2Fsearch"
+          ]
+          for u in seeds:
               try:
-                  r=S.get(url,timeout=25); r.raise_for_status()
-                  q=BeautifulSoup(r.text,"html.parser"); h1=q.find("h1"); title=h1.get_text(" ",strip=True) if h1 else ""
-                  if expected[pid] not in norm(title):
+                  r=S.get(u,timeout=20)
+                  q=BeautifulSoup(r.text,"html.parser")
+                  for a in q.find_all("a",href=True):
+                      txt=norm(a.get_text(" ",strip=True))
+                      for pid,expected in agro_targets.items():
+                          if txt==expected:
+                              direct[pid]=(expected,urljoin(r.url,a["href"]))
+              except Exception as e:
+                  print("DISCOVERY",u,e)
+
+          p=Path("data/admin-overrides.json")
+          data=json.loads(p.read_text(encoding="utf-8"))
+          products=data.setdefault("products",{})
+          report=[]
+
+          for pid,(expected,url) in direct.items():
+              if products.get(pid,{}).get("images"):
+                  report.append({"id":pid,"status":"already","page":url})
+                  continue
+              try:
+                  r=S.get(url,timeout=25)
+                  if r.status_code!=200:
+                      report.append({"id":pid,"status":"page-http","code":r.status_code,"page":url}); continue
+                  q=BeautifulSoup(r.text,"html.parser")
+                  h1=q.find("h1")
+                  title=h1.get_text(" ",strip=True) if h1 else ""
+                  nt=norm(title); ne=norm(expected)
+                  # Allow package/weight suffixes and exact known spelling variation.
+                  ok=(ne==nt or ne in nt or nt in ne)
+                  if pid=="4.11-полийодметрин":
+                      ok=("полийодометрин" in nt or "полийодметрин" in nt)
+                  if not ok:
                       report.append({"id":pid,"status":"title-mismatch","title":title,"page":url}); continue
+
+                  page_text=norm(q.get_text(" ",strip=True))
+                  # Manufacturer requirement where page exposes it; exact commercial card accepted for Cefalek.
+                  if pid not in ["4.11-цефалек-dc"] and "рубикон" not in page_text:
+                      report.append({"id":pid,"status":"rubikon-not-confirmed","title":title,"page":url}); continue
+
                   imgs=[]
-                  og=q.find("meta",property="og:image")
-                  if og and og.get("content"): imgs.append(urljoin(r.url,og["content"]))
+                  for prop in ["og:image","twitter:image"]:
+                      m=q.find("meta",property=prop) or q.find("meta",attrs={"name":prop})
+                      if m and m.get("content"): imgs.append(urljoin(r.url,m["content"]))
                   for im in q.find_all("img"):
                       src=im.get("data-src") or im.get("data-lazy-src") or im.get("data-original") or im.get("src")
                       if src:
                           src=urljoin(r.url,src)
                           if src not in imgs: imgs.append(src)
+
                   chosen=None
                   for iu in imgs:
                       lo=iu.lower()
-                      if any(z in lo for z in ["logo","icon","sprite","banner","placeholder","favicon"]): continue
+                      if any(z in lo for z in ["logo","icon","sprite","banner","placeholder","noimage","no-image","nophoto","favicon"]):
+                          continue
                       try:
-                          ir=S.get(iu,timeout=25)
-                          if ir.status_code!=200 or len(ir.content)<7000 or not ir.headers.get("content-type","").lower().startswith("image/"): continue
+                          ir=S.get(iu,timeout=25,headers={"Referer":url})
+                          if ir.status_code!=200 or len(ir.content)<6000: continue
+                          if not ir.headers.get("content-type","").lower().startswith("image/"): continue
                           im=Image.open(io.BytesIO(ir.content)); w,h=im.size
-                          if w<240 or h<240 or w/h>3.5 or h/w>3.5: continue
+                          if w<220 or h<220 or w/h>4 or h/w>4: continue
                           ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get((im.format or "").lower())
                           if not ext: continue
-                          chosen=(iu,ir.content,ext); break
-                      except Exception: pass
+                          chosen=(iu,ir.content,ext,w,h); break
+                      except Exception: continue
+
                   if not chosen:
-                      report.append({"id":pid,"status":"no-image","title":title,"page":url}); continue
-                  iu,blob,ext=chosen
-                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext); out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(blob)
-                  products.setdefault(pid,{})["images"]=[str(out)]; products[pid]["__frozen"]=True
-                  report.append({"id":pid,"status":"imported","title":title,"page":url,"image":iu,"path":str(out)})
-                  print("IMPORTED",pid,iu)
+                      report.append({"id":pid,"status":"no-usable-image","title":title,"page":url,"images":imgs[:8]}); continue
+                  iu,blob,ext,w,h=chosen
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+                  out.parent.mkdir(parents=True,exist_ok=True)
+                  out.write_bytes(blob)
+                  products.setdefault(pid,{})
+                  products[pid]["images"]=[str(out)]
+                  products[pid]["__frozen"]=True
+                  report.append({"id":pid,"status":"imported","title":title,"page":url,"image":iu,"path":str(out),"size":[w,h]})
+                  print("IMPORTED",pid,title,iu,w,h)
               except Exception as e:
                   report.append({"id":pid,"status":"error","page":url,"error":str(e)})
+
           p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          Path("data/import-4.11-tian-exact-report.json").write_text(json.dumps({"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/import-4.11-remaining-batch-report.json").write_text(json.dumps({"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
           print(json.dumps(report,ensure_ascii=False))
           PY
+
       - name: Commit
+        shell: bash
         run: |
           set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json data/import-4.11-tian-exact-report.json img/photos/admin/4.11-* || true
+          git add data/admin-overrides.json data/import-4.11-remaining-batch-report.json img/photos/admin/4.11-* || true
           git diff --cached --quiet && exit 0
-          git commit -m "Import exact Tian Trade photo set for section 4.11"
+          git commit -m "Import verified remaining Rubikon photo batch"
           git pull --rebase origin main
           git push
