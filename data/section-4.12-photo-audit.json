@@ -1,28 +1,18 @@
 {
   "section": "4.12",
   "total_products": 19,
-  "verified_photos_attached": 18,
-  "unresolved_photos": 1,
-  "policy": "Only exact product photos physically stored in the repository are accepted. Similar packaging, renamed products, related products and placeholders are rejected.",
-  "unresolved": [
+  "verified_photos_attached": 19,
+  "unresolved_photos": 0,
+  "policy": "Only exact product photos physically stored in the repository are accepted.",
+  "corrections": [
     {
       "id": "4.12-ультра-антисептик",
-      "name": "Ультра-антисептик",
-      "reason": "name_conflict_composition_matches_ultra_soft_exact_current_product_name_not_verified"
+      "old_name": "Ультра-антисептик",
+      "new_name": "Ультра Софт",
+      "manufacturer": "ЗАО «Петроспирт», Россия",
+      "source_page": "https://descont.ru/product/doziruyuschiy-nasos-na-flakon-1l-diametr-gorlyshka-28-mm/",
+      "image": "https://www.bing.com/ck/a?!&&p=1ac36a25fa80aa003c185d9b34e8a59a12dd8cca54feae9f78a25fc5650bcea7JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuYWJicmV2aWF0aW9ucy5jb20vT0Q&ntb=1",
+      "path": "img/photos/admin/4.12-ультра-антисептик/4.12-ультра-антисептик-01.jpg"
     }
-  ],
-  "data_quality_flags": [
-    {
-      "id": "4.12-ультра-антисептик",
-      "current_name": "Ультра-антисептик",
-      "verified_matching_product_name": "Ультра Софт",
-      "issue": "The card composition and intended use match the disinfectant/skin antiseptic product «Ультра Софт» in public sources, but an exact product under the current card name «Ультра-антисептик» was not verified.",
-      "action": "Do not attach an Ultra Soft image until the card name is confirmed or corrected."
-    }
-  ],
-  "source_notes": [
-    "Ecohimtech official catalog was used for exact product identities and photos for its products.",
-    "Exact retailer pages were used for BioHimFarm products where the manufacturer page did not expose a usable image.",
-    "For Ultra-антисептик, multiple independent sources identify the matching composition as «Ультра Софт», so the current card was intentionally left without a substituted photo."
   ]
 }

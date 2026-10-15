@@ -1,0 +1,209 @@
+{
+  "id": "9.1-электрический-распылитель-gartena-od-mg06-для-опрыскивателя",
+  "name": "Электрический распылитель Gartena OD-MG06 для опрыскивателя",
+  "raw_card_matches": [
+    {
+      "path": "$.chapters[8].sections[0].tables[67]",
+      "object": {
+        "title": "Электрический распылитель Gartena OD-MG06 для опрыскивателя",
+        "headers": [
+          "Параметр",
+          "Значение"
+        ],
+        "rows": [
+          [
+            "Наименование",
+            "Электрический распылитель Gartena OD-MG06 для опрыскивателя"
+          ],
+          [
+            "Тип",
+            "Электрический распылитель (насос)"
+          ],
+          [
+            "Артикул из каталога",
+            "Без артикула"
+          ],
+          [
+            "Назначение",
+            "Замена насоса для опрыскивателя Gartena"
+          ],
+          [
+            "Аккумулятор",
+            "Li-ion 2,6 Ач, 12 В"
+          ],
+          [
+            "Время непрерывной работы",
+            "120 минут"
+          ],
+          [
+            "Время зарядки",
+            "240 минут"
+          ],
+          [
+            "Рабочее давление",
+            "0,2–0,3 МПа"
+          ],
+          [
+            "Совместимость",
+            "Для опрыскивателей Gartena"
+          ],
+          [
+            "Длительная работа",
+            "До 120 минут на одной зарядке"
+          ],
+          [
+            "Быстрая зарядка",
+            "240 минут"
+          ],
+          [
+            "Надежность",
+            "Li-ion аккумулятор"
+          ],
+          [
+            "Удобство",
+            "Сменный аккумулятор"
+          ]
+        ]
+      }
+    },
+    {
+      "path": "$.chapters[8].sections[0].pairs[1161]",
+      "object": {
+        "label": "Наименование",
+        "value": "Электрический распылитель Gartena OD-MG06 для опрыскивателя",
+        "sourceRow": 1162
+      }
+    }
+  ],
+  "queries": [
+    "\"Gartena OD-MG06\"",
+    "\"OD-MG06\" Gartena",
+    "\"OD MG06\" Gartena распылитель",
+    "\"Электрический распылитель Gartena\""
+  ],
+  "pages_checked": 20,
+  "evidence": [
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=89649754d16538a20a21c6afce94f5ed9179dabd95d9075b85c98d96270dba12JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmFuc2xhdGUuZ29vZ2xlLmNvbS8_aGw9cnU&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=5434d5d1d6e963be677b85a9a8e0c93a88e901a37011b82b9a697f753361e7dfJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuZGVlcGwuY29tL3J1L3RyYW5zbGF0b3I&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=03ab1d4ed4beef43753738dab7f4145d4524e5a034f9034ffe5b4341746b70dcJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmFuc2xhdGUueWFuZGV4LnJ1Lw&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=f5d783b8b18bd4b06b948f17bad0e50d07c7187575b8514a6f00c6753584765aJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmFuc2xhdGUuZ29vZ2xlLnJ1Lw&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=01456ee00ede781f22a3e4778d267ee4e7fcdca1820b84f825c06b346b81edc1JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmFuc2xhdGUueWFuZGV4LnJ1L3RyYW5zbGF0b3IvJUQwJUEwJUQxJTgzJUQxJTgxJUQxJTgxJUQwJUJBJUQwJUI4JUQwJUI5LSVEMCU5MCVEMCVCRCVEMCVCMyVEMCVCQiVEMCVCOCVEMCVCOSVEMSU4MSVEMCVCQSVEMCVCOCVEMCVCOQ&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=548f8696912482d9ab391a778a416fb5015da3b9c520e6defb9d6c076fab54d3JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuZGVlcGwuY29tL2VuL3RyYW5zbGF0b3I&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=b5ce6f98c700d7fcf34dcf8f3474013eb4362dd6d92afa2243f96f42608bdd0fJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cucmV2ZXJzby5uZXQvJUQwJUJGJUQwJUI1JUQxJTgwJUQwJUI1JUQwJUIyJUQwJUJFJUQwJUI0LSVEMSU4MiVEMCVCNSVEMCVCQSVEMSU4MSVEMSU4MiVEMCVCMA&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=b425f300ab7a6eeba1237f8008595641bc60c84443351a3eb9cf1402d1250537JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmFuc2xhdGUueWFuZGV4LmNvbS8&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=ba2df09cc6e3e16144c5eca2b5cd8ef21a120011a38cf9cfaeb674698e19e185JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cudHJhbnNsYXRlLnJ1LyVEMCVCRiVEMCVCNSVEMSU4MCVEMCVCNSVEMCVCMiVEMCVCRSVEMCVCNA&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=21c1bdd884c4b88fcbe2d47b9390341b6f868145def8a7082a94a1b0c125a9cbJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmFuc2xhdGUuZ29vZ2xlLmNvbS51YS8&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=9828182b8ad36bb5173f3167f754b86c99529632504a9424e1828d83dd50c396JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuYWxsYWJvdXR2aXNpb24uY29tL2V5ZS1jYXJlL2V5ZS1kb2N0b3JzL29kLXZzLW9zLw&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=f25d116f94d8b4b801f8e2e52b4b62ce5c110c430d87ad36366c182b046e6c0cJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cubWVycmlhbS13ZWJzdGVyLmNvbS9kaWN0aW9uYXJ5L29k&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=898d4c5f7feb6e78d6e01b00e59bd3350dfdfc36631836b520aa6c240fffe5faJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly9lbi5tLndpa2lwZWRpYS5vcmcvd2lraS9PRA&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=bddb43fabc99d06309d8617d070bbe4c2858d67d2c20fcbf04568dd00eaf1d1eJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly90cmF2ZXJzZWNpdHlleWUuY29tL3doYXRzLXRoZS1kaWZmZXJlbmNlLWJldHdlZW4tbWQtZG8tYW5kLW9kLw&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=f17ada13696ac97018865a43b1768c12e68dce01d01ba994e7c80327cf9271afJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuYWJicmV2aWF0aW9uZmluZGVyLm9yZy9hY3Jvbnltcy9vZC5odG1s&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=7061441f4c1899364ba8ae61f4c2f8b8c2f773f24b7c71c0cf5021a9b9363923JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly9lbi5tLndpa2lwZWRpYS5vcmcvd2lraS9PRF8odmlkZW9fZ2FtZSk&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=f08491e0fce45bc415b8b047031a17114f2c57e3a1408a53eb1114b204cb5fafJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cubW5leWUuY29tL21kLXZzLW9kLXZzLW9wdGljaWFuLXdoYXRzLWRpZmZlcmVuY2Uv&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=d4144de54a1a5730cfad4ff5e292d97ba749f627499a90fdce5f097026f2a2ebJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly9kaWN0aW9uYXJ5LmNhbWJyaWRnZS5vcmcvZGljdGlvbmFyeS9lbmdsaXNoL29k&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=49f3c1cff8d3e2af9e1e37f45f6e9fa23b78cd359c8b24827420f7741d2a5aeaJmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuYWNyb255bWZpbmRlci5jb20vT0QuaHRtbA&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    },
+    {
+      "page": "https://www.bing.com/ck/a?!&&p=1ac36a25fa80aa003c185d9b34e8a59a12dd8cca54feae9f78a25fc5650bcea7JmltdHM9MTc5MjAyMjQwMA&ptn=3&ver=2&hsh=4&fclid=132922f3-5429-65be-36dd-350055d164b0&u=a1aHR0cHM6Ly93d3cuYWJicmV2aWF0aW9ucy5jb20vT0Q&ntb=1",
+      "brand": false,
+      "model": false,
+      "title": ""
+    }
+  ],
+  "status": "unresolved_exact_model_not_found",
+  "note": "Current public Gartena catalogs show many OD-series sprayers (OD-05A, OD-08A/F/G, OD-10F, OD-14A, OD-16A, OD-18WD, OD-45RD), but no verifiable OD-MG06 product page or image was found. Do not substitute a different OD-series model."
+}
