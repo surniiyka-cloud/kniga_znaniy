@@ -1,0 +1,68 @@
+name: Finish Biozol photo for section 4.12
+
+on:
+  push:
+    paths:
+      - ".github/workflows/finish-4-12-biozol.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Verify exact Biozol product and import image
+        run: |
+          python3 - <<'PY'
+          import json,io
+          from pathlib import Path
+          import requests
+          from PIL import Image
+
+          pid="4.12-биозоль-спрей"
+          page="https://www.sibagrotrade.com/catalogzoo/preparaty_dlya_s_kh_zhivotnykh/naruzhnye_sredstva_skhzh/186627/"
+          image="https://www.sibagrotrade.com/upload/iblock/2a1/2a1d152104f7b8d2c3d8e8da924d866b.jpg"
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"
+          rep={}
+          pr=s.get(page,timeout=60); pr.raise_for_status()
+          txt=pr.text.lower().replace("ё","е")
+          if "биозоль" not in txt or "биохимфарм" not in txt:
+              raise SystemExit("Exact Biozol/BioHimFarm identity not confirmed on source page")
+          ir=s.get(image,timeout=60); ir.raise_for_status()
+          ct=(ir.headers.get("content-type") or "").split(";")[0].lower()
+          if not ct.startswith("image/"):
+              raise SystemExit("Source did not return an image: "+ct)
+          im=Image.open(io.BytesIO(ir.content)); im.verify()
+          im=Image.open(io.BytesIO(ir.content))
+          w,h=im.size
+          if w<100 or h<100:
+              raise SystemExit(f"Image too small: {w}x{h}")
+          ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+          out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_bytes(ir.content)
+
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          obj=ov.setdefault("products",{}).setdefault(pid,{})
+          obj["images"]=[str(out)]
+          obj["__frozen"]=True
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          rep={"id":pid,"status":"matched","page":page,"image":image,"path":str(out),"width":w,"height":h,"content_type":ct,"bytes":len(ir.content)}
+          Path("data/finish-4.12-biozol-report.json").write_text(json.dumps(rep,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps(rep,ensure_ascii=False))
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/finish-4.12-biozol-report.json img/photos/admin/4.12-биозоль-спрей
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Add verified Biozol photo to section 4.12"
+          git pull --rebase origin main
+          git push
