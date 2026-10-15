@@ -23,6 +23,8 @@ jobs:
           from pathlib import Path
           from urllib.parse import urljoin
           import requests
+          import urllib3
+          urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
           from bs4 import BeautifulSoup
           from PIL import Image
 
@@ -55,7 +57,7 @@ jobs:
           def load(u):
               if any(z in u.lower() for z in ("logo","favicon","icon","sprite","social","avatar","counter","captcha")): return None
               try:
-                  r=s.get(u,timeout=60)
+                  r=s.get(u,timeout=60,verify=False)
                   ct=(r.headers.get("content-type") or "").split(";")[0].lower()
                   if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<3500: return None
                   im=Image.open(io.BytesIO(r.content)); w,h=im.size
@@ -67,7 +69,7 @@ jobs:
           products=ov.setdefault("products",{}); rep=[]; matched=0
           for x in items:
               try:
-                  pr=s.get(x["page"],timeout=60); pr.raise_for_status()
+                  pr=s.get(x["page"],timeout=60,verify=False); pr.raise_for_status()
                   sp=BeautifulSoup(pr.text,"html.parser")
                   h=sp.find("h1"); title=h.get_text(" ",strip=True) if h else ""
                   body=norm((sp.find("body") or sp).get_text(" ",strip=True))
