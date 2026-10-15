@@ -53,8 +53,12 @@ jobs:
 
           report=[]
           for pid,url in mapping.items():
-              r=s.get(url,timeout=40)
-              r.raise_for_status()
+              try:
+                  r=s.get(url,timeout=20)
+                  r.raise_for_status()
+              except Exception as e:
+                  report.append({"id":pid,"page":url,"status":"page-error","error":str(e)})
+                  continue
               soup=BeautifulSoup(r.text,"html.parser")
               text=soup.get_text(" ",strip=True).lower().replace("ё","е")
               if "производитель: рубикон" not in text and "производитель рубикон" not in text:
@@ -76,7 +80,7 @@ jobs:
                   if any(z in low for z in ["logo","icon","sprite","banner","placeholder","nophoto","no-photo","loader"]):
                       continue
                   try:
-                      ir=s.get(iu,timeout=40)
+                      ir=s.get(iu,timeout=20)
                       if ir.status_code!=200 or len(ir.content)<7000:
                           continue
                       if not ir.headers.get("content-type","").lower().startswith("image/"):
