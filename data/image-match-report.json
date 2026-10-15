@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-15T06:06:16.961Z",
-  "imagesTotal": 981,
-  "imagesMatched": 916,
+  "generatedAt": "2026-10-15T06:26:14.639Z",
+  "imagesTotal": 999,
+  "imagesMatched": 934,
   "imagesUnmatched": [
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-m-ultra-pro.png",
     "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-spectra.png",
@@ -1099,7 +1099,7 @@
     }
   ],
   "productsTotal": 818,
-  "productsWithImages": 648,
+  "productsWithImages": 666,
   "productsWithoutImages": [
     {
       "id": "3.2-этап-применения",
@@ -1630,117 +1630,9 @@
       "article": "—"
     },
     {
-      "id": "4.12-antistress-horse-hhl-horse-health-line",
-      "section": "4.12",
-      "name": "Antistress Horse (HHL – Horse Health Line)",
-      "article": "—"
-    },
-    {
-      "id": "4.12-sport-horse-hhl-horse-health-line",
-      "section": "4.12",
-      "name": "Sport Horse (HHL – Horse Health Line)",
-      "article": "—"
-    },
-    {
-      "id": "4.12-нуклеостим-водорастворимый",
-      "section": "4.12",
-      "name": "Нуклеостим водорастворимый",
-      "article": "—"
-    },
-    {
-      "id": "4.12-витаспорин",
-      "section": "4.12",
-      "name": "Витаспорин",
-      "article": "—"
-    },
-    {
-      "id": "4.12-нуклеопептид",
-      "section": "4.12",
-      "name": "Нуклеопептид",
-      "article": "—"
-    },
-    {
-      "id": "4.12-спороветин-для-всех-видов-животных",
-      "section": "4.12",
-      "name": "Спороветин для всех видов животных",
-      "article": "—"
-    },
-    {
-      "id": "4.12-спороветин-для-всех-видов-животных-2",
-      "section": "4.12",
-      "name": "Спороветин для всех видов животных",
-      "article": "—"
-    },
-    {
-      "id": "4.12-костоправ",
-      "section": "4.12",
-      "name": "Костоправ",
-      "article": "—"
-    },
-    {
-      "id": "4.12-септопол",
-      "section": "4.12",
-      "name": "Септопол",
-      "article": "—"
-    },
-    {
-      "id": "4.12-сангра",
-      "section": "4.12",
-      "name": "Сангра",
-      "article": "—"
-    },
-    {
-      "id": "4.12-тринорм",
-      "section": "4.12",
-      "name": "Тринорм",
-      "article": "—"
-    },
-    {
-      "id": "4.12-лизин",
-      "section": "4.12",
-      "name": "Лизин",
-      "article": "—"
-    },
-    {
-      "id": "4.12-микровитам",
-      "section": "4.12",
-      "name": "Микровитам",
-      "article": "—"
-    },
-    {
-      "id": "4.12-азинокс-ветеринарный",
-      "section": "4.12",
-      "name": "Азинокс® ветеринарный",
-      "article": "—"
-    },
-    {
-      "id": "4.12-хондро-про",
-      "section": "4.12",
-      "name": "Хондро-Про",
-      "article": "—"
-    },
-    {
       "id": "4.12-ультра-антисептик",
       "section": "4.12",
       "name": "Ультра-антисептик",
-      "article": "—"
-    },
-    {
-      "id": "4.12-биозоль-спрей",
-      "section": "4.12",
-      "name": "Биозоль Спрей",
-      "article": "—"
-    },
-    {
-      "id": "4.12-раносепт-спрей",
-      "section": "4.12",
-      "name": "Раносепт спрей",
-      "article": "—"
-    },
-    {
-      "id": "4.12-алюмиспрей",
-      "section": "4.12",
-      "name": "Алюмиспрей",
       "article": "—"
     },
     {
