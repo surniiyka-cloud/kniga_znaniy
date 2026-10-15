@@ -1,0 +1,193 @@
+{
+  "matched": 1,
+  "items": [
+    {
+      "id": "4.11-флавовит",
+      "status": "matched",
+      "page": "https://vettorg.ru/catalog/item-913.html",
+      "image": "https://vettorg.ru/files/image/DogandCat.jpg",
+      "path": "img/photos/admin/4.11-флавовит/4.11-флавовит-01.jpg",
+      "size": [
+        237,
+        213
+      ]
+    },
+    {
+      "id": "4.11-мексикам",
+      "status": "no-usable-image",
+      "page": "https://www.tandem-industry.ru/catalog/?id=4033",
+      "candidates": [
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_1.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_2.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_3.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_8.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_5.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_9.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_7.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_6.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/loupe.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/price.jpg"
+        },
+        {
+          "score": 2,
+          "url": "https://mc.yandex.ru/watch/13129360"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/css/ie.css"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/tandem_katalog.jpg"
+        }
+      ]
+    },
+    {
+      "id": "4.11-ксиловит",
+      "status": "no-usable-image",
+      "page": "https://www.tandem-industry.ru/catalog/?id=5124",
+      "candidates": [
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_1.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_2.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_3.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_8.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_5.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_9.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_7.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_6.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/loupe.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/price.jpg"
+        },
+        {
+          "score": 2,
+          "url": "https://mc.yandex.ru/watch/13129360"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/css/ie.css"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/tandem_katalog.jpg"
+        }
+      ]
+    },
+    {
+      "id": "4.11-гель-декорнум",
+      "status": "no-usable-image",
+      "page": "https://www.tandem-industry.ru/catalog/?folder_id=11",
+      "candidates": [
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_1.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_2.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_3.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_8.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_5.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_9.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_7.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/object_6.gif"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/loupe.png"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/price.jpg"
+        },
+        {
+          "score": 2,
+          "url": "https://mc.yandex.ru/watch/13129360"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/css/ie.css"
+        },
+        {
+          "score": 2,
+          "url": "https://www.tandem-industry.ru/img/tandem_katalog.jpg"
+        }
+      ]
+    }
+  ]
+}
