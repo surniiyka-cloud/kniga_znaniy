@@ -1,0 +1,23 @@
+{
+  "matched": 0,
+  "items": [
+    {
+      "id": "4.11-мексикам",
+      "status": "error",
+      "page": "https://www.tandem-industry.ru/catalog/?id=4033",
+      "error": "HTTPSConnectionPool(host='www.tandem-industry.ru', port=443): Max retries exceeded with url: /catalog/?id=4033 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1000)')))"
+    },
+    {
+      "id": "4.11-ксиловит",
+      "status": "error",
+      "page": "https://www.tandem-industry.ru/catalog/?id=5124",
+      "error": "HTTPSConnectionPool(host='www.tandem-industry.ru', port=443): Max retries exceeded with url: /catalog/?id=5124 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1000)')))"
+    },
+    {
+      "id": "4.11-рецеф-100",
+      "status": "error",
+      "page": "https://www.tandem-industry.ru/catalog/?id=8365",
+      "error": "HTTPSConnectionPool(host='www.tandem-industry.ru', port=443): Max retries exceeded with url: /catalog/?id=8365 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1000)')))"
+    }
+  ]
+}
