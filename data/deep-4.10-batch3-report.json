@@ -1,0 +1,59 @@
+{
+  "matched": 4,
+  "items": [
+    {
+      "id": "4.10-лактофреш-оранж",
+      "status": "error",
+      "page": "https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/kormovye-dobavki/laktofresh-oranzh/",
+      "error": "404 Client Error: Not Found for url: https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/kormovye-dobavki/laktofresh-oranzh/"
+    },
+    {
+      "id": "4.10-фелуцен-к-2-4-для-молодняка-крс-ментоловый",
+      "status": "matched",
+      "page": "https://www.agrovit87.ru/katalog/korma/zalivnye-lizuncy-brikety/uvmkk-felucen-k-2-4-dlya-molodnyaka-krs-mentolovyj-briket-15-kg",
+      "title": "УВМКК «ФЕЛУЦЕН» К 2-4 для молодняка КРС ментоловый брикет 15 кг",
+      "image": "https://www.agrovit87.ru/assets/images/products/323/webpm/ukk-dlya-sh-i-dikih-zhivotnyh-serii-felucen-uk-2-2-marmeladnyj-briket-briket-5kg.webp",
+      "path": "img/photos/admin/4.10-фелуцен-к-2-4-для-молодняка-крс-ментоловый/4.10-фелуцен-к-2-4-для-молодняка-крс-ментоловый-01.webp",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "id": "4.10-фелуцен-к2-4-для-молодняка-крс-энергетический",
+      "status": "matched",
+      "page": "https://pettown.ru/catalog/korma/korma-dlya-korov/uglevodnyy-briket_1/zalivnoy-briket-energeticheskiy-dlya-molodnyaka-krs-litera-k2-4-vedro-15kg/",
+      "title": "Заливной брикет энергетический для молодняка КРС (литера К2-4, ведро, 15кг)",
+      "image": "https://pettown.ru:443/upload/iblock/8e1/b5wn4n0kivj9f510s7r72m2n2l780cn6.jpg",
+      "path": "img/photos/admin/4.10-фелуцен-к2-4-для-молодняка-крс-энергетический/4.10-фелуцен-к2-4-для-молодняка-крс-энергетический-01.jpg",
+      "size": [
+        700,
+        700
+      ]
+    },
+    {
+      "id": "4.10-борглюконат-кальция-20-бионит",
+      "status": "matched",
+      "page": "https://biogrand-samara.ru/catalog/rastvory-i-zhelezosoderzhashchie-preparaty/rastvory/24014",
+      "title": "Борглюконат кальция 20% 100 мл, Bionit.",
+      "image": "https://biogrand-samara.ru/assets/images/resources/24014/tovar/b88a3c64-d101-11e7-8d98-001999ec7bf4-81113118-ea49-11e8-80ae-001999ec7bf4.jpg",
+      "path": "img/photos/admin/4.10-борглюконат-кальция-20-бионит/4.10-борглюконат-кальция-20-бионит-01.jpg",
+      "size": [
+        546,
+        410
+      ]
+    },
+    {
+      "id": "4.10-боваклокс-дс-24-norbrook-ирландия",
+      "status": "matched",
+      "page": "https://www.norbrook.com/au/products/bovaclox-dc-la-dry-cow-intramammary-suspension",
+      "title": "Bovaclox DC LA Dry Cow Intramammary Suspension",
+      "image": "https://www.norbrook.com/media/ajrj1kaz/bovaclox-dc-la.jpg?mode=crop&width=1200&height=740&quality=100",
+      "path": "img/photos/admin/4.10-боваклокс-дс-24-norbrook-ирландия/4.10-боваклокс-дс-24-norbrook-ирландия-01.jpg",
+      "size": [
+        1200,
+        740
+      ]
+    }
+  ]
+}
