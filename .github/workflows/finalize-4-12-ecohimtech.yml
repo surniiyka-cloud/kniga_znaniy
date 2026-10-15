@@ -1,0 +1,83 @@
+name: Finalize remaining Ecohimtech photos 4.12
+
+on:
+  push:
+    paths:
+      - ".github/workflows/finalize-4-12-ecohimtech.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4
+      - name: Import exact Ecohimtech images
+        run: |
+          python3 - <<'PY'
+          import json,re
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+
+          PAGES={
+            "4.12-antistress-horse-hhl-horse-health-line":"https://ecohimtech-ufa.ru/catalog/biologics/antistess-horse-horse-health-line/",
+            "4.12-тринорм":"https://ecohimtech-ufa.ru/catalog/goodies/trinorm/",
+            "4.12-лизин":"https://ecohimtech-ufa.ru/catalog/goodies/lizin/",
+            "4.12-азинокс-ветеринарный":"https://ecohimtech-ufa.ru/catalog/dogs/azinoks/",
+            "4.12-хондро-про":"https://ecohimtech-ufa.ru/catalog/goodies/khondro-pro/",
+            "4.12-сангра":"https://ecohimtech-ufa.ru/catalog/biologics/sangra/",
+          }
+          EXPECT={
+            "4.12-antistress-horse-hhl-horse-health-line":["antistess horse","antistress horse"],
+            "4.12-тринорм":["тринорм"],"4.12-лизин":["лизин"],"4.12-азинокс-ветеринарный":["азинокс"],
+            "4.12-хондро-про":["хондро-про","хондро про"],"4.12-сангра":["сангра"],
+          }
+          s=requests.Session();s.headers["User-Agent"]="Mozilla/5.0"
+          def norm(x):
+            return re.sub(r"\s+"," ",(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")).strip()
+          ovp=Path("data/admin-overrides.json");ov=json.loads(ovp.read_text(encoding="utf-8"));products=ov.setdefault("products",{})
+          report=[];matched=0
+          for pid,url in PAGES.items():
+            try:
+              r=s.get(url,timeout=45);r.raise_for_status();sp=BeautifulSoup(r.text,"html.parser")
+              title=(sp.find("h1").get_text(" ",strip=True) if sp.find("h1") else "")
+              if not any(k in norm(title) for k in EXPECT[pid]):
+                report.append({"id":pid,"status":"title-mismatch","title":title,"page":url});continue
+              cand=[]
+              og=sp.find("meta",attrs={"property":"og:image"})
+              if og and og.get("content"): cand.append(urljoin(url,og["content"]))
+              for im in sp.find_all("img"):
+                src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
+                alt=norm(im.get("alt",""))
+                if src and alt and any(k in alt or alt in k for k in EXPECT[pid]): cand.insert(0,urljoin(url,src))
+              iu=next((u for u in cand if not any(z in u.lower() for z in ("logo","favicon","social"))),None)
+              if not iu:
+                report.append({"id":pid,"status":"no-image","page":url});continue
+              ir=s.get(iu,timeout=45);ct=(ir.headers.get("content-type") or "").split(";")[0].lower()
+              if ir.status_code!=200 or not ct.startswith("image/") or not ir.content:
+                report.append({"id":pid,"status":"image-failed","page":url,"image":iu});continue
+              ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+              out=Path("img/photos/admin")/pid/(pid+"-01"+ext);out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(ir.content)
+              products.setdefault(pid,{})["images"]=[str(out)];products[pid]["__frozen"]=True
+              report.append({"id":pid,"status":"matched","page":url,"image":iu,"path":str(out)});matched+=1
+            except Exception as e:
+              report.append({"id":pid,"status":"error","page":url,"error":str(e)})
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/finalize-4.12-ecohimtech-report.json").write_text(json.dumps({"matched":matched,"items":report},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/finalize-4.12-ecohimtech-report.json img/photos/admin/4.12-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Finalize remaining Ecohimtech photos for section 4.12"
+          git pull --rebase origin main
+          git push
