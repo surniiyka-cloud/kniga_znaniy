@@ -1,0 +1,111 @@
+name: Deep photo pass section 4.10 batch 3
+
+on:
+  push:
+    paths:
+      - ".github/workflows/deep-4-10-batch3.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Import exact photos from verified pages
+        run: |
+          python3 - <<'PY'
+          import json,re,io
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests
+          from bs4 import BeautifulSoup
+          from PIL import Image
+
+          s=requests.Session(); s.headers["User-Agent"]="Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"
+          items=[
+            {"id":"4.10-лактофреш-оранж","expect":["лактофреш оранж"],"page":"https://tian-trade.ru/catalog/veterinariya/veterinarnye-preparaty/kormovye-dobavki/laktofresh-oranzh/"},
+            {"id":"4.10-фелуцен-к-2-4-для-молодняка-крс-ментоловый","expect":["фелуцен","к 2-4","ментолов"],"page":"https://www.agrovit87.ru/katalog/korma/zalivnye-lizuncy-brikety/uvmkk-felucen-k-2-4-dlya-molodnyaka-krs-mentolovyj-briket-15-kg"},
+            {"id":"4.10-фелуцен-к2-4-для-молодняка-крс-энергетический","expect":["фелуцен","к2-4","энергет"],"page":"https://pettown.ru/catalog/korma/korma-dlya-korov/uglevodnyy-briket_1/zalivnoy-briket-energeticheskiy-dlya-molodnyaka-krs-litera-k2-4-vedro-15kg/"},
+            {"id":"4.10-борглюконат-кальция-20-бионит","expect":["борглюконат кальция 20%","bionit"],"page":"https://biogrand-samara.ru/catalog/rastvory-i-zhelezosoderzhashchie-preparaty/rastvory/24014"},
+            {"id":"4.10-боваклокс-дс-24-norbrook-ирландия","expect":["bovaclox dc","norbrook"],"page":"https://www.norbrook.com/au/products/bovaclox-dc-la-dry-cow-intramammary-suspension"},
+          ]
+          def norm(x):
+              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              x=re.sub(r'[«»"®™]',"",x); x=re.sub(r"\s+"," ",x)
+              return x.strip()
+          def page_text(sp):
+              return norm((sp.find("body") or sp).get_text(" ",strip=True))
+          def image_urls(sp,page,expects):
+              out=[]
+              for attrs in [
+                  {"property":"og:image"},{"name":"twitter:image"},{"itemprop":"image"}
+              ]:
+                  m=sp.find("meta",attrs=attrs)
+                  if m and m.get("content"): out.append(urljoin(page,m["content"]))
+              for img in sp.find_all("img"):
+                  src=img.get("data-src") or img.get("data-lazy-src") or img.get("data-original") or img.get("src")
+                  if not src: continue
+                  alt=norm(img.get("alt","")); title=norm(img.get("title",""))
+                  u=urljoin(page,src)
+                  if any(norm(e) in alt or norm(e) in title for e in expects): out.insert(0,u)
+                  else: out.append(u)
+              seen=[]
+              for u in out:
+                  if u not in seen: seen.append(u)
+              return seen
+          def fetch_img(u):
+              if any(z in u.lower() for z in ("logo","favicon","icon","sprite","social","avatar","counter","captcha")): return None
+              try:
+                  r=s.get(u,timeout=60)
+                  ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+                  if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<3500: return None
+                  im=Image.open(io.BytesIO(r.content)); w,h=im.size
+                  if w<180 or h<180: return None
+                  return r.content,ct,w,h
+              except Exception:
+                  return None
+
+          ovp=Path("data/admin-overrides.json"); ov=json.loads(ovp.read_text(encoding="utf-8"))
+          products=ov.setdefault("products",{}); rep=[]; matched=0
+          for x in items:
+              try:
+                  pr=s.get(x["page"],timeout=60); pr.raise_for_status()
+                  sp=BeautifulSoup(pr.text,"html.parser")
+                  h=sp.find("h1"); title=h.get_text(" ",strip=True) if h else ""
+                  body=page_text(sp)
+                  if not all(norm(e) in body for e in x["expect"]):
+                      rep.append({"id":x["id"],"status":"identity-not-confirmed","page":x["page"],"title":title}); continue
+                  chosen=None
+                  for iu in image_urls(sp,x["page"],x["expect"]):
+                      z=fetch_img(iu)
+                      if z:
+                          chosen=(iu,*z); break
+                  if not chosen:
+                      rep.append({"id":x["id"],"status":"no-usable-image","page":x["page"],"title":title}); continue
+                  iu,data,ct,w,h=chosen
+                  ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+                  out=Path("img/photos/admin")/x["id"]/(x["id"]+"-01"+ext)
+                  out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(data)
+                  obj=products.setdefault(x["id"],{}); obj["images"]=[str(out)]; obj["__frozen"]=True
+                  rep.append({"id":x["id"],"status":"matched","page":x["page"],"title":title,"image":iu,"path":str(out),"size":[w,h]})
+                  matched+=1
+              except Exception as e:
+                  rep.append({"id":x["id"],"status":"error","page":x["page"],"error":str(e)})
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/deep-4.10-batch3-report.json").write_text(json.dumps({"matched":matched,"items":rep},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/admin-overrides.json data/deep-4.10-batch3-report.json img/photos/admin/4.10-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Deep photo pass for section 4.10 batch 3"
+          git pull --rebase origin main
+          git push
