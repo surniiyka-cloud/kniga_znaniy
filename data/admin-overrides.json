@@ -23117,7 +23117,10 @@
       "__frozen": true
     },
     "4.11-цефалек-dc": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-цефалек-dc/4.11-цефалек-dc-01.png"
+      ]
     },
     "4.11-цефапирин-рн": {
       "__frozen": true,
