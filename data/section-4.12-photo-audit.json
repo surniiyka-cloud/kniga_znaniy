@@ -1,0 +1,28 @@
+{
+  "section": "4.12",
+  "total_products": 19,
+  "verified_photos_attached": 18,
+  "unresolved_photos": 1,
+  "policy": "Only exact product photos physically stored in the repository are accepted. Similar packaging, renamed products, related products and placeholders are rejected.",
+  "unresolved": [
+    {
+      "id": "4.12-ультра-антисептик",
+      "name": "Ультра-антисептик",
+      "reason": "name_conflict_composition_matches_ultra_soft_exact_current_product_name_not_verified"
+    }
+  ],
+  "data_quality_flags": [
+    {
+      "id": "4.12-ультра-антисептик",
+      "current_name": "Ультра-антисептик",
+      "verified_matching_product_name": "Ультра Софт",
+      "issue": "The card composition and intended use match the disinfectant/skin antiseptic product «Ультра Софт» in public sources, but an exact product under the current card name «Ультра-антисептик» was not verified.",
+      "action": "Do not attach an Ultra Soft image until the card name is confirmed or corrected."
+    }
+  ],
+  "source_notes": [
+    "Ecohimtech official catalog was used for exact product identities and photos for its products.",
+    "Exact retailer pages were used for BioHimFarm products where the manufacturer page did not expose a usable image.",
+    "For Ultra-антисептик, multiple independent sources identify the matching composition as «Ультра Софт», so the current card was intentionally left without a substituted photo."
+  ]
+}
