@@ -23096,7 +23096,10 @@
       "__frozen": true
     },
     "4.11-ацидокс": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-ацидокс/4.11-ацидокс-01.png"
+      ]
     },
     "4.11-азитрикон": {
       "__frozen": true,
@@ -23120,19 +23123,31 @@
       "__frozen": true
     },
     "4.11-дац": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-дац/4.11-дац-01.png"
+      ]
     },
     "4.11-дистреп-400-la": {
       "__frozen": true
     },
     "4.11-дорамек": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-дорамек/4.11-дорамек-01.jpg"
+      ]
     },
     "4.11-дуоциллин-la": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-дуоциллин-la/4.11-дуоциллин-la-01.png"
+      ]
     },
     "4.11-энрамицин-8": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-энрамицин-8/4.11-энрамицин-8-01.png"
+      ]
     },
     "4.11-эприкон-20": {
       "__frozen": true
@@ -23147,7 +23162,10 @@
       "__frozen": true
     },
     "4.11-квиностим": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-квиностим/4.11-квиностим-01.jpg"
+      ]
     },
     "4.11-марбофлокс-2": {
       "__frozen": true,
@@ -23174,7 +23192,10 @@
       "__frozen": true
     },
     "4.11-рамоксил-la": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-рамоксил-la/4.11-рамоксил-la-01.png"
+      ]
     },
     "4.11-рецеф-100": {
       "__frozen": true
@@ -23189,10 +23210,16 @@
       "__frozen": true
     },
     "4.11-рэнрокол": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-рэнрокол/4.11-рэнрокол-01.png"
+      ]
     },
     "4.11-рэнрокол-2": {
-      "__frozen": true
+      "__frozen": true,
+      "images": [
+        "img/photos/admin/4.11-рэнрокол-2/4.11-рэнрокол-2-01.png"
+      ]
     },
     "4.11-рэнросепт": {
       "__frozen": true
@@ -23272,6 +23299,132 @@
     "4.11-микофарм": {
       "images": [
         "img/photos/admin/4.11-микофарм/4.11-микофарм-01.jpg"
+      ],
+      "__frozen": true
+    },
+    "4.11-айвлазин": {
+      "images": [
+        "img/photos/admin/4.11-айвлазин/4.11-айвлазин-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-окситетрациклина-гидрохлорид-0-25": {
+      "images": [
+        "img/photos/admin/4.11-окситетрациклина-гидрохлорид-0-25/4.11-окситетрациклина-гидрохлорид-0-25-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-рэнровет-10": {
+      "images": [
+        "img/photos/admin/4.11-рэнровет-10/4.11-рэнровет-10-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-рэнровет-10-2": {
+      "images": [
+        "img/photos/admin/4.11-рэнровет-10-2/4.11-рэнровет-10-2-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тиамутокс": {
+      "images": [
+        "img/photos/admin/4.11-тиамутокс/4.11-тиамутокс-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тилар": {
+      "images": [
+        "img/photos/admin/4.11-тилар/4.11-тилар-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тилар-2": {
+      "images": [
+        "img/photos/admin/4.11-тилар-2/4.11-тилар-2-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-триметокс-т": {
+      "images": [
+        "img/photos/admin/4.11-триметокс-т/4.11-триметокс-т-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-триметокс": {
+      "images": [
+        "img/photos/admin/4.11-триметокс/4.11-триметокс-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-альбазен-10": {
+      "images": [
+        "img/photos/admin/4.11-альбазен-10/4.11-альбазен-10-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-альбазен-2-5": {
+      "images": [
+        "img/photos/admin/4.11-альбазен-2-5/4.11-альбазен-2-5-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-альбазен-20": {
+      "images": [
+        "img/photos/admin/4.11-альбазен-20/4.11-альбазен-20-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-альбазен-0-36": {
+      "images": [
+        "img/photos/admin/4.11-альбазен-0-36/4.11-альбазен-0-36-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-ривертин-1": {
+      "images": [
+        "img/photos/admin/4.11-ривертин-1/4.11-ривертин-1-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тетрамизол-20": {
+      "images": [
+        "img/photos/admin/4.11-тетрамизол-20/4.11-тетрамизол-20-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тетрамизол-10": {
+      "images": [
+        "img/photos/admin/4.11-тетрамизол-10/4.11-тетрамизол-10-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тетрамизол-20-2": {
+      "images": [
+        "img/photos/admin/4.11-тетрамизол-20-2/4.11-тетрамизол-20-2-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-тетрамизол-10-2": {
+      "images": [
+        "img/photos/admin/4.11-тетрамизол-10-2/4.11-тетрамизол-10-2-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-торукокс-2-5": {
+      "images": [
+        "img/photos/admin/4.11-торукокс-2-5/4.11-торукокс-2-5-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-торукокс-5": {
+      "images": [
+        "img/photos/admin/4.11-торукокс-5/4.11-торукокс-5-01.png"
+      ],
+      "__frozen": true
+    },
+    "4.11-фенбазен-22-2": {
+      "images": [
+        "img/photos/admin/4.11-фенбазен-22-2/4.11-фенбазен-22-2-01.png"
       ],
       "__frozen": true
     }
