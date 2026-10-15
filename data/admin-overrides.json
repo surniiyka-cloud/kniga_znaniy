@@ -23979,6 +23979,33 @@
         "img/photos/admin/4.12-ультра-антисептик/4.12-ультра-антисептик-01.jpg"
       ],
       "__frozen": true
+    },
+    "3.4-0301-024-tian-foam": {
+      "__frozen": true,
+      "appendDetailFields": [
+        [
+          "pH",
+          "5–7"
+        ]
+      ]
+    },
+    "3.4-0301-037-tian-pre-foam": {
+      "__frozen": true,
+      "appendDetailFields": [
+        [
+          "pH",
+          "5–7"
+        ]
+      ]
+    },
+    "3.4-0301-025-tian-oxy": {
+      "__frozen": true,
+      "appendDetailFields": [
+        [
+          "pH",
+          "5–7"
+        ]
+      ]
     }
   },
   "sections": {
