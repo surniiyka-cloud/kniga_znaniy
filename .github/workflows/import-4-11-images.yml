@@ -1,4 +1,4 @@
-name: Import exact Tian-Trade photos for remaining 4.11 cards
+name: Add verified Stimulong photo to section 4.11
 on:
   push:
     paths:
@@ -12,183 +12,39 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - run: pip install -q requests beautifulsoup4 pillow
-      - name: Crawl Tian-Trade veterinary products and import exact images
+      - run: pip install -q requests pillow
+      - name: Import verified Stimulong image
         run: |
           python3 - <<'PY'
-          import io,json,re,time
+          import io,json
           from pathlib import Path
-          from urllib.parse import urljoin,urlparse
           import requests
-          from bs4 import BeautifulSoup
           from PIL import Image
-
-          BASE="https://tian-trade.ru"
-          ROOT=BASE+"/catalog/veterinariya/veterinarnye-preparaty/"
-          S=requests.Session()
-          S.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBook/4.11 Tian importer)"})
-
-          def norm(s):
-              s=(s or "").lower().replace("ё","е").replace("–","-").replace("—","-").replace("−","-")
-              s=s.replace("«","").replace("»","").replace('"',"").replace("'","").replace(",",".")
-              s=re.sub(r"\s+"," ",s).strip()
-              return s
-
-          def core(s):
-              s=norm(s)
-              # product page UI suffixes
-              s=re.sub(r"\s*\([^)]*\)\s*$","",s)
-              s=re.sub(r",?\s*(инъекц\.?|порошок|раствор|гель|концентрат|таблетки)\s*$","",s)
-              return re.sub(r"\s+"," ",s).strip(" .,-")
-
-          idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
-          arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
-          targets=[x for x in arr if str(x.get("section"))=="4.11"]
-          op=Path("data/admin-overrides.json")
-          overrides=json.loads(op.read_text(encoding="utf-8"))
-          products=overrides.setdefault("products",{})
-          remaining=[x for x in targets if not products.get(x["id"],{}).get("images")]
-          bycore={core(x["name"]):x for x in remaining}
-
-          # curated aliases for spelling used by supplier pages
-          aliases={
-            "флорниксин":"4.11-флониксин",
-            "руферран-200 плюс":"4.11-руфферан-200-плюс",
-            "руферран":"4.11-руфферан",
-          }
-          byid={x["id"]:x for x in remaining}
-
-          # Discover product links by breadth-first crawl under veterinary-preparations prefix.
-          q=[ROOT]; seen=set(); product_pages=set()
-          while q and len(seen)<900:
-              url=q.pop(0)
-              if url in seen: continue
-              seen.add(url)
-              try:
-                  r=S.get(url,timeout=35)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  for a in soup.find_all("a",href=True):
-                      u=urljoin(r.url,a["href"]).split("#")[0]
-                      p=urlparse(u)
-                      if p.netloc not in ("tian-trade.ru","www.tian-trade.ru"): continue
-                      if not p.path.startswith("/catalog/veterinariya/veterinarnye-preparaty/"): continue
-                      if p.path=="/catalog/veterinariya/veterinarnye-preparaty/":
-                          continue
-                      # keep category and product links; product pages generally end with slash and have deeper path
-                      depth=len([z for z in p.path.split("/") if z])
-                      if depth>=5: product_pages.add(u)
-                      if depth<=6 and u not in seen and len(q)<1200: q.append(u)
-              except Exception as e:
-                  print("crawl err",url,e)
-              time.sleep(.02)
-
-          # Ensure already identified pages are included.
-          product_pages.update([
-            BASE+"/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/stimulong-inekts/",
-            BASE+"/catalog/veterinariya/veterinarnye-preparaty/prochie-preparaty/ksilovit-inekts/",
-            BASE+"/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitamiks-1-poroshok/",
-            BASE+"/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/vitasorb-poroshok/",
-            BASE+"/catalog/veterinariya/veterinarnye-preparaty/antisepticheskie-i-dezsredstva/biosan-osushitel-podstilka/",
-            BASE+"/catalog/veterinariya/veterinarnye-preparaty/narushenie-obmena-veshchestv/rufferan-200-plyus-inekts/"
-          ])
-
-          report={"remaining_before":len(remaining),"pages_scanned":0,"matches":[],"imported":[]}
-          used=set()
-
-          def image_candidates(soup,page):
-              out=[]
-              for attrs in [
-                  {"property":"og:image"},
-                  {"name":"twitter:image"},
-                  {"itemprop":"image"}
-              ]:
-                  m=soup.find("meta",attrs=attrs)
-                  if m and m.get("content"): out.append(urljoin(page,m["content"]))
-              for im in soup.find_all("img"):
-                  cls=" ".join(im.get("class",[])).lower()
-                  src=im.get("data-zoom-image") or im.get("data-src") or im.get("src")
-                  if not src: continue
-                  u=urljoin(page,src)
-                  low=u.lower()
-                  if any(z in low for z in ["logo","icon","sprite","banner","captcha","counter","loading","placeholder"]): continue
-                  # Bitrix product photos generally live in upload/iblock
-                  if "/upload/iblock/" in low or any(k in cls for k in ["detail","product","picture","image"]):
-                      out.append(u)
-              uniq=[]
-              for u in out:
-                  if u.startswith("http") and u not in uniq: uniq.append(u)
-              return uniq
-
-          def get_img(u,page):
-              try:
-                  r=S.get(u,timeout=35,headers={"Referer":page})
-                  if r.status_code!=200 or len(r.content)<5000: return None
-                  if not r.headers.get("content-type","").lower().startswith("image/"): return None
-                  im=Image.open(io.BytesIO(r.content))
-                  if im.width<220 or im.height<220: return None
-                  if im.width/im.height>3.5 or im.height/im.width>4.5: return None
-                  fmt=(im.format or "").lower()
-                  ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get(fmt)
-                  if not ext: return None
-                  return r.content,ext,(im.width,im.height)
-              except Exception:
-                  return None
-
-          for page in sorted(product_pages):
-              try:
-                  r=S.get(page,timeout=35)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  h=soup.find("h1")
-                  title=h.get_text(" ",strip=True) if h else ""
-                  if not title: continue
-                  report["pages_scanned"]+=1
-                  c=core(title)
-                  target=bycore.get(c)
-                  if not target:
-                      for alias,pid in aliases.items():
-                          if c==alias or c.startswith(alias+" "):
-                              target=byid.get(pid); break
-                  if not target:
-                      # exact target prefix followed only by packaging / descriptive suffix
-                      for tc,t in bycore.items():
-                          if c==tc or c.startswith(tc+" "):
-                              target=t; break
-                  if not target or target["id"] in used: continue
-
-                  imgs=image_candidates(soup,page)
-                  report["matches"].append({"id":target["id"],"name":target["name"],"title":title,"page":page,"images":imgs})
-                  for u in imgs:
-                      got=get_img(u,page)
-                      if not got: continue
-                      data,ext,wh=got
-                      pid=target["id"]
-                      out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
-                      out.parent.mkdir(parents=True,exist_ok=True)
-                      out.write_bytes(data)
-                      products.setdefault(pid,{})
-                      products[pid]["images"]=[str(out)]
-                      products[pid]["__frozen"]=True
-                      used.add(pid)
-                      report["imported"].append({"id":pid,"name":target["name"],"page":page,"image":u,"path":str(out),"size":wh})
-                      print("IMPORTED",target["name"],u,wh)
-                      break
-              except Exception as e:
-                  print("page err",page,e)
-
-          op.write_text(json.dumps(overrides,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          report["with_images_after"]=sum(1 for x in targets if products.get(x["id"],{}).get("images"))
-          report["without_after"]=[{"id":x["id"],"name":x["name"]} for x in targets if not products.get(x["id"],{}).get("images")]
-          Path("data/import-4.11-tian-final.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print("RESULT",report["with_images_after"],"of",len(targets),"remaining",len(report["without_after"]))
+          pid="4.11-стимулонг"
+          url="https://tian-trade.ru/upload/iblock/8b5/vgn46ja29ctgrlgwcq7updytyego8qhp/Stimulong_-inekts..png"
+          r=requests.get(url,timeout=45,headers={"User-Agent":"Mozilla/5.0","Referer":"https://tian-trade.ru/"})
+          r.raise_for_status()
+          if not r.headers.get("content-type","").lower().startswith("image/"):
+              raise RuntimeError(r.headers.get("content-type"))
+          im=Image.open(io.BytesIO(r.content))
+          if im.width<200 or im.height<200: raise RuntimeError("too small")
+          out=Path("img/photos/admin")/pid/(pid+"-01.png")
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_bytes(r.content)
+          p=Path("data/admin-overrides.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          d.setdefault("products",{}).setdefault(pid,{})
+          d["products"][pid]["images"]=[str(out)]
+          d["products"][pid]["__frozen"]=True
+          p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("saved",im.size,len(r.content))
           PY
-      - name: Commit imported photos
+      - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/admin-overrides.json data/import-4.11-tian-final.json img/photos/admin
+          git add data/admin-overrides.json img/photos/admin/4.11-стимулонг
           git diff --cached --quiet && exit 0
-          git commit -m "Import exact Tian-Trade photos for remaining section 4.11 cards"
+          git commit -m "Add verified Stimulong photo to section 4.11"
           git pull --rebase origin main
           git push
