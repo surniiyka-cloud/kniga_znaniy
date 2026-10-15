@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T06:39:16.449Z",
+  "updatedAt": "2026-10-15T06:43:32.796Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -23746,6 +23746,11 @@
         "assortment",
         "consumables",
         "testKits"
+      ]
+    },
+    "4.10-гентафарм-10": {
+      "images": [
+        "img/photos/admin/4.10-гентафарм-10/4.10-гентафарм-10-01.webp"
       ]
     }
   },
