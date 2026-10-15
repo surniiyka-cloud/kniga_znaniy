@@ -25735,6 +25735,13 @@
         ]
       ],
       "__frozen": true
+    },
+    "catalog-2-7-tias-somcell": {
+      "images": [
+        "img/photos/09-analizatory-somatiki/09-tias-somcell.png",
+        "img/photos/admin/catalog-2-7-tias-somcell/tias-somcell-4-chamber-cassette-real.webp"
+      ],
+      "__frozen": true
     }
   },
   "sections": {
