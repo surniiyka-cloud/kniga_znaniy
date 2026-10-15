@@ -1,0 +1,167 @@
+name: Deep photo pass section 4.11 batch 6
+
+on:
+  push:
+    paths:
+      - ".github/workflows/deep-4-11-batch6.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Clean bad Flavovit image and crawl Tandem exact products
+        run: |
+          python3 - <<'PY'
+          import json,re,io,os
+          from pathlib import Path
+          from urllib.parse import urljoin
+          import requests, urllib3
+          from bs4 import BeautifulSoup
+          from PIL import Image
+          urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+          # Remove previously attached generic Dog/Cat image for Flavovit.
+          bad=Path("img/photos/admin/4.11-флавовит/4.11-флавовит-01.jpg")
+          if bad.exists(): bad.unlink()
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          if "4.11-флавовит" in ov.get("products",{}):
+              ov["products"]["4.11-флавовит"].pop("images",None)
+
+          S=requests.Session()
+          S.headers.update({"User-Agent":"Mozilla/5.0 (compatible; KnowledgeBookImageImporter/1.0)"})
+
+          targets=[
+            {"id":"4.11-гель-повиаргола-1","name":"гель повиаргола 1%","page":"https://www.tandem-industry.ru/catalog/?id=967"},
+            {"id":"4.11-мастидез-концентрат","name":"мастидез-концентрат","folder":"https://www.tandem-industry.ru/catalog/?folder_id=28"},
+            {"id":"4.11-гель-декорнум","name":"декорнум","folder":"https://www.tandem-industry.ru/catalog/?folder_id=11"},
+          ]
+
+          def decode(raw):
+              best=None
+              for enc in ("utf-8","cp1251","windows-1251"):
+                  try:
+                      t=raw.decode(enc)
+                      score=len(re.findall(r'[А-Яа-яЁё]',t))
+                      if best is None or score>best[0]: best=(score,t)
+                  except: pass
+              return best[1] if best else raw.decode("utf-8","ignore")
+
+          def norm(x):
+              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
+              x=re.sub(r'[«»"®™]',"",x)
+              return re.sub(r"\s+"," ",x).strip()
+
+          def get_page(url):
+              r=S.get(url,timeout=60,verify=False)
+              r.raise_for_status()
+              html=decode(r.content)
+              return html,BeautifulSoup(html,"html.parser")
+
+          def resolve_target_page(t):
+              if "page" in t: return t["page"]
+              html,sp=get_page(t["folder"])
+              needle=norm(t["name"])
+              for a in sp.find_all("a",href=True):
+                  txt=norm(a.get_text(" ",strip=True))
+                  if needle in txt or txt in needle:
+                      return urljoin(t["folder"],a["href"])
+              # Fallback regex around exact visible text.
+              for m in re.finditer(r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>',html,re.I|re.S):
+                  txt=norm(BeautifulSoup(m.group(2),"html.parser").get_text(" ",strip=True))
+                  if needle in txt or txt in needle:
+                      return urljoin(t["folder"],m.group(1))
+              return None
+
+          def image_candidates(html,sp,page,name):
+              out=[]
+              needle=norm(name).replace(" ","")
+              def add(u,score):
+                  if not u or u.startswith("data:"): return
+                  out.append((score,urljoin(page,u)))
+              for attrs in ({"property":"og:image"},{"name":"twitter:image"}):
+                  m=sp.find("meta",attrs=attrs)
+                  if m and m.get("content"): add(m["content"],8)
+              for im in sp.find_all("img"):
+                  src=im.get("data-src") or im.get("data-original") or im.get("src")
+                  if not src: continue
+                  alt=norm(im.get("alt","")); title=norm(im.get("title",""))
+                  score=3
+                  if norm(name) in alt or norm(name) in title: score+=8
+                  if needle and needle in norm(src).replace(" ",""): score+=5
+                  add(src,score)
+              for m in re.finditer(r'["\']([^"\']+\.(?:jpg|jpeg|png|webp))(?:\?[^"\']*)?["\']',html,re.I):
+                  u=m.group(1); score=2
+                  if needle and needle in norm(u).replace(" ",""): score+=5
+                  add(u,score)
+              seen=set(); ranked=[]
+              for score,u in sorted(out,key=lambda z:z[0],reverse=True):
+                  if u not in seen:
+                      seen.add(u); ranked.append((score,u))
+              return ranked
+
+          def load_image(u,referer):
+              low=u.lower()
+              if any(z in low for z in ("logo","favicon","icon","sprite","social","avatar","counter","captcha","banner","dogandcat")):
+                  return None
+              try:
+                  r=S.get(u,timeout=45,verify=False,headers={"User-Agent":"Mozilla/5.0","Referer":referer})
+                  ct=(r.headers.get("content-type") or "").split(";")[0].lower()
+                  if r.status_code!=200 or not ct.startswith("image/") or len(r.content)<3000: return None
+                  im=Image.open(io.BytesIO(r.content)); w,h=im.size
+                  if w<160 or h<160: return None
+                  return r.content,ct,w,h
+              except: return None
+
+          report=[]; matched=0
+          products=ov.setdefault("products",{})
+
+          for t in targets:
+              try:
+                  page=resolve_target_page(t)
+                  if not page:
+                      report.append({"id":t["id"],"status":"detail-link-not-found","folder":t.get("folder")}); continue
+                  html,sp=get_page(page)
+                  body=norm((sp.find("body") or sp).get_text(" ",strip=True))
+                  if norm(t["name"]).replace("-"," ") not in body.replace("-"," "):
+                      report.append({"id":t["id"],"status":"identity-not-confirmed","page":page,"body_sample":body[:500]}); continue
+                  chosen=None; inspected=[]
+                  for score,u in image_candidates(html,sp,page,t["name"]):
+                      inspected.append({"score":score,"url":u})
+                      if score<3: continue
+                      z=load_image(u,page)
+                      if z:
+                          chosen=(u,*z); break
+                  if not chosen:
+                      report.append({"id":t["id"],"status":"no-usable-image","page":page,"candidates":inspected[:20]}); continue
+                  u,data,ct,w,h=chosen
+                  ext={"image/png":".png","image/webp":".webp"}.get(ct,".jpg")
+                  out=Path("img/photos/admin")/t["id"]/(t["id"]+"-01"+ext)
+                  out.parent.mkdir(parents=True,exist_ok=True); out.write_bytes(data)
+                  obj=products.setdefault(t["id"],{})
+                  obj["images"]=[str(out)]; obj["__frozen"]=True
+                  report.append({"id":t["id"],"status":"matched","page":page,"image":u,"path":str(out),"size":[w,h]})
+                  matched+=1
+              except Exception as e:
+                  report.append({"id":t["id"],"status":"error","error":str(e),"source":t.get("page") or t.get("folder")})
+
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("data/deep-4.11-batch6-report.json").write_text(json.dumps({"matched":matched,"items":report,"cleanup":"removed_generic_flavovit_image"},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print("matched",matched)
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/admin-overrides.json data/deep-4.11-batch6-report.json img/photos/admin/4.11-* 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Deep photo pass for section 4.11 batch 6"
+          git pull --rebase origin main
+          git push
