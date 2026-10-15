@@ -1,4 +1,4 @@
-name: Analyze remaining section 4.11 on Tandem
+name: Import remaining 4.11 photos from Tian Trade
 
 on:
   push:
@@ -9,115 +9,173 @@ permissions:
   contents: write
 
 jobs:
-  analyze:
+  import:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - run: pip install -q requests beautifulsoup4
-      - name: Analyze exact Tandem candidates
+      - run: pip install -q requests beautifulsoup4 pillow
+      - name: Import exact catalog cards
         shell: bash
         run: |
           python3 - <<'PY'
-          import json,re
+          import io,json,re,xml.etree.ElementTree as ET
           from pathlib import Path
-          from urllib.parse import urljoin,urlparse,parse_qs
+          from urllib.parse import urljoin,urlparse
+          from concurrent.futures import ThreadPoolExecutor,as_completed
           import requests
           from bs4 import BeautifulSoup
+          from PIL import Image
           from requests.adapters import HTTPAdapter
           from urllib3.util.retry import Retry
 
-          BASE="https://www.tandem-industry.ru"
+          BASE="https://tian-trade.ru"
           S=requests.Session()
-          S.headers["User-Agent"]="Mozilla/5.0 (KnowledgeBook candidate analyzer)"
+          S.headers["User-Agent"]="Mozilla/5.0 (KnowledgeBook image sync)"
           retry=Retry(total=3,connect=3,read=3,backoff_factor=.8,status_forcelist=[429,500,502,503,504],allowed_methods=["GET"])
           S.mount("https://",HTTPAdapter(max_retries=retry))
 
           def norm(x):
-              x=(x or "").lower().replace("ё","е").replace("рэн","рен").replace("–","-").replace("—","-")
+              x=(x or "").lower().replace("ё","е").replace("–","-").replace("—","-")
               x=x.replace("«","").replace("»","").replace('"',"")
+              x=re.sub(r"\b(инъекц|инъекционный|инъекционная|порошок|раствор|суспензия|таблетки|гранулят)\.?\b"," ",x)
               x=re.sub(r"[^a-zа-я0-9%.,+ -]+"," ",x)
               return re.sub(r"\s+"," ",x).strip(" .,-")
 
           idx=json.loads(Path("data/search-index.json").read_text(encoding="utf-8"))
           arr=idx if isinstance(idx,list) else idx.get("items",idx.get("entries",[]))
-          ov=json.loads(Path("data/admin-overrides.json").read_text(encoding="utf-8"))
-          products=ov.get("products",{})
+          ovp=Path("data/admin-overrides.json")
+          ov=json.loads(ovp.read_text(encoding="utf-8"))
+          products=ov.setdefault("products",{})
           targets=[x for x in arr if str(x.get("section"))=="4.11" and not products.get(x["id"],{}).get("images")]
-          target_by_norm={}
-          for t in targets:
-              target_by_norm.setdefault(norm(t["name"]),[]).append(t)
+          target_norm={t["id"]:norm(t["name"]) for t in targets}
 
-          # Root catalog includes a broad product index. Also discover folder links and crawl them.
-          seeds=[BASE+"/catalog/"]
-          seen_pages=set()
-          product_links={}
-          for round_no in range(2):
-              current=list(seeds)
-              for u in current:
-                  if u in seen_pages: continue
-                  seen_pages.add(u)
+          # Discover sitemaps from robots plus common paths.
+          sitemap_urls=set()
+          try:
+              rr=S.get(BASE+"/robots.txt",timeout=15)
+              for line in rr.text.splitlines():
+                  if line.lower().startswith("sitemap:"):
+                      sitemap_urls.add(line.split(":",1)[1].strip())
+          except Exception: pass
+          sitemap_urls.update([BASE+"/sitemap.xml",BASE+"/sitemap_index.xml",BASE+"/sitemap-index.xml"])
+
+          seen_maps=set(); urls=set()
+          def parse_map(u):
+              if u in seen_maps: return
+              seen_maps.add(u)
+              try:
+                  r=S.get(u,timeout=20)
+                  if r.status_code!=200 or not r.text.strip(): return
+                  root=ET.fromstring(r.content)
+                  locs=[el.text.strip() for el in root.iter() if el.tag.lower().endswith("loc") and el.text]
+                  for loc in locs:
+                      if loc.lower().endswith(".xml") or "sitemap" in urlparse(loc).path.lower():
+                          if loc not in seen_maps: parse_map(loc)
+                      elif "/catalog/" in loc:
+                          urls.add(loc)
+              except Exception as e:
+                  print("MAPERR",u,e)
+
+          for sm in list(sitemap_urls):
+              parse_map(sm)
+
+          # Fallback: search product links from category entry pages.
+          if not urls:
+              seeds=[BASE+"/catalog/",BASE+"/catalog/veterinariya/",BASE+"/catalog/veterinariya/veterinarnye-preparaty/"]
+              for u in seeds:
                   try:
                       r=S.get(u,timeout=20)
-                      if r.status_code!=200: continue
-                      soup=BeautifulSoup(r.text,"html.parser")
-                      for a in soup.find_all("a",href=True):
-                          href=urljoin(r.url,a["href"]).split("#")[0]
-                          txt=a.get_text(" ",strip=True)
-                          if "/catalog/" not in href: continue
-                          qs=parse_qs(urlparse(href).query)
-                          if "id" in qs:
-                              product_links[href]=txt
-                          elif "folder_id" in qs and href not in seeds:
-                              seeds.append(href)
-                  except Exception as e:
-                      print("INDEXERR",u,e)
+                      q=BeautifulSoup(r.text,"html.parser")
+                      for a in q.find_all("a",href=True):
+                          h=urljoin(r.url,a["href"]).split("#")[0]
+                          if "/catalog/" in h: urls.add(h)
+                  except Exception: pass
 
-          print("index pages",len(seen_pages),"products",len(product_links))
-          result=[]
-          for url,anchor in product_links.items():
-              na=norm(anchor)
-              possible=[]
-              for nt,ts in target_by_norm.items():
-                  if nt==na or nt in na or na in nt:
-                      possible.extend(ts)
-              if not possible:
-                  continue
+          print("catalog urls",len(urls),"remaining targets",len(targets))
+
+          def inspect(url):
               try:
-                  r=S.get(url,timeout=20)
-                  if r.status_code!=200: continue
-                  soup=BeautifulSoup(r.text,"html.parser")
-                  h1=soup.find("h1")
-                  title=h1.get_text(" ",strip=True) if h1 else anchor
-                  page_text=soup.get_text(" ",strip=True)
+                  r=S.get(url,timeout=15)
+                  if r.status_code!=200: return None
+                  q=BeautifulSoup(r.text,"html.parser")
+                  h1=q.find("h1")
+                  title=h1.get_text(" ",strip=True) if h1 else ""
+                  if not title: return None
+                  nt=norm(title)
+                  matched=[t for t in targets if target_norm[t["id"]]==nt]
+                  if not matched: return None
+                  text=q.get_text(" ",strip=True)
                   imgs=[]
-                  og=soup.find("meta",property="og:image")
+                  og=q.find("meta",property="og:image")
                   if og and og.get("content"): imgs.append(urljoin(r.url,og["content"]))
-                  for im in soup.find_all("img"):
-                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("src")
+                  for im in q.find_all("img"):
+                      src=im.get("data-src") or im.get("data-lazy-src") or im.get("data-original") or im.get("src")
                       if src:
                           src=urljoin(r.url,src)
                           if src not in imgs: imgs.append(src)
-                  for t in possible:
-                      result.append({
-                          "id":t["id"],"name":t["name"],"url":url,"anchor":anchor,"title":title,
-                          "rubikon":"рубикон" in page_text.lower().replace("ё","е"),
-                          "images":[x for x in imgs if not any(z in x.lower() for z in ["logo","icon","sprite","banner"])][:12]
-                      })
-              except Exception as e:
-                  print("DETAILERR",url,e)
+                  return (url,title,text,imgs,matched)
+              except Exception:
+                  return None
 
-          out={"targets":len(targets),"indexed_products":len(product_links),"candidates":result}
-          Path("data/import-4.11-tandem-candidates.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-          print(json.dumps({"targets":len(targets),"indexed_products":len(product_links),"candidates":len(result)},ensure_ascii=False))
+          pages=[]
+          with ThreadPoolExecutor(max_workers=12) as ex:
+              futs=[ex.submit(inspect,u) for u in urls]
+              for f in as_completed(futs):
+                  v=f.result()
+                  if v: pages.append(v)
+
+          report=[]; added=0
+          # Some cards intentionally duplicate the same product; exact names may match more than one target.
+          for url,title,text,imgs,matched in pages:
+              for t in matched:
+                  pid=t["id"]
+                  if products.get(pid,{}).get("images"): continue
+                  chosen=None
+                  for iu in imgs:
+                      lo=iu.lower()
+                      if any(z in lo for z in ["logo","icon","sprite","banner","placeholder","no-photo","nophoto","favicon"]): continue
+                      try:
+                          ir=S.get(iu,timeout=15)
+                          if ir.status_code!=200 or len(ir.content)<7000: continue
+                          if not ir.headers.get("content-type","").lower().startswith("image/"): continue
+                          im=Image.open(io.BytesIO(ir.content)); w,h=im.size
+                          if w<240 or h<240 or w/h>3.5 or h/w>3.5: continue
+                          ext={"jpeg":".jpg","jpg":".jpg","png":".png","webp":".webp"}.get((im.format or "").lower())
+                          if not ext: continue
+                          chosen=(iu,ir.content,ext); break
+                      except Exception: continue
+                  if not chosen:
+                      report.append({"id":pid,"name":t["name"],"page":url,"title":title,"status":"exact-page-no-image"})
+                      continue
+                  iu,blob,ext=chosen
+                  out=Path("img/photos/admin")/pid/(pid+"-01"+ext)
+                  out.parent.mkdir(parents=True,exist_ok=True)
+                  out.write_bytes(blob)
+                  products.setdefault(pid,{})
+                  products[pid]["images"]=[str(out)]
+                  products[pid]["__frozen"]=True
+                  report.append({"id":pid,"name":t["name"],"page":url,"title":title,"image":iu,"path":str(out),"status":"imported"})
+                  added+=1
+                  print("IMPORTED",t["name"],url,iu)
+
+          ovp.write_text(json.dumps(ov,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          remaining=[t for t in targets if not products.get(t["id"],{}).get("images")]
+          out={"source":"tian-trade.ru","catalog_urls":len(urls),"exact_pages":len(pages),"added":added,
+               "items":report,"remaining":[{"id":t["id"],"name":t["name"]} for t in remaining]}
+          Path("data/import-4.11-tian-report.json").write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(json.dumps({"catalog_urls":len(urls),"exact_pages":len(pages),"added":added,"remaining":len(remaining)},ensure_ascii=False))
           PY
-      - name: Commit report
+
+      - name: Commit
+        shell: bash
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/import-4.11-tandem-candidates.json
+          git add data/admin-overrides.json data/import-4.11-tian-report.json img/photos/admin/4.11-* || true
           git diff --cached --quiet && exit 0
-          git commit -m "Analyze Tandem candidates for remaining section 4.11 photos"
+          git commit -m "Import exact Tian Trade photos for section 4.11"
           git pull --rebase origin main
           git push
