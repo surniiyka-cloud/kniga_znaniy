@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T06:39:05.759Z",
+  "updatedAt": "2026-10-15T06:39:16.449Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -23684,6 +23684,68 @@
     "4.10-цефт-50": {
       "images": [
         "img/photos/admin/4.10-цефт-50/4.10-цефт-50-01.webp"
+      ],
+      "name": "ЦЕФТ 50",
+      "type": "Акушерско-гинекологический ветеринарный препарат",
+      "article": "-",
+      "purpose": "Для применения в ветеринарной акушерско-гинекологической практике",
+      "features": "Флакон 100 мл; в старой книге указан статус РУ",
+      "group": "Акушерско-гинекологические препараты",
+      "sourceRow": 4,
+      "candidateId": "цефт-50",
+      "detailFields": [
+        [
+          "Тип",
+          "Акушерско-гинекологический ветеринарный препарат"
+        ],
+        [
+          "Назначение",
+          "Для применения в ветеринарной акушерско-гинекологической практике"
+        ]
+      ],
+      "advantages": [
+        [
+          "Особенность 1",
+          "Флакон 100 мл"
+        ],
+        [
+          "Особенность 2",
+          "В старой книге указан статус РУ"
+        ]
+      ],
+      "color": "",
+      "__frozen": true,
+      "pairHeaders": {
+        "detailFields": [
+          "Характеристика",
+          "Значение"
+        ]
+      },
+      "indicators": [],
+      "options": [],
+      "variants": [],
+      "complectation": [],
+      "washCycle": [],
+      "workflow": [],
+      "calibration": [],
+      "assortment": [],
+      "consumables": [],
+      "testKits": [],
+      "tabTables": {},
+      "customTabs": [],
+      "tabOrder": [
+        "specs",
+        "indicators",
+        "options",
+        "variants",
+        "advantages",
+        "complectation",
+        "washCycle",
+        "workflow",
+        "calibration",
+        "assortment",
+        "consumables",
+        "testKits"
       ]
     }
   },
