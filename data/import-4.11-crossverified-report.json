@@ -1,0 +1,47 @@
+{
+  "items": [
+    {
+      "id": "4.11-мастипен",
+      "status": "imported",
+      "title": "Мастипен",
+      "image": "https://agrokomfort.net/image/cache/data/rubikon/-Мастипен-300x432.png",
+      "path": "img/photos/admin/4.11-мастипен/4.11-мастипен-01.png",
+      "size": [
+        300,
+        432
+      ]
+    },
+    {
+      "id": "4.11-утеросепт-био",
+      "status": "imported",
+      "title": "Утеросепт Био",
+      "image": "https://agrokomfort.net/image/cache/data/kartinki/uterosept-300x432.png",
+      "path": "img/photos/admin/4.11-утеросепт-био/4.11-утеросепт-био-01.png",
+      "size": [
+        300,
+        432
+      ]
+    },
+    {
+      "id": "4.11-полийодметрин",
+      "status": "imported",
+      "title": "Полийодометрин",
+      "image": "https://agrokomfort.net/image/cache/data/poliyodometrin____-300x432.jpg",
+      "path": "img/photos/admin/4.11-полийодметрин/4.11-полийодметрин-01.jpg",
+      "size": [
+        300,
+        432
+      ]
+    },
+    {
+      "id": "4.11-цефалек-dc",
+      "status": "no-image",
+      "title": "Цефалек DC 9 г/уп (цефапирин)",
+      "images": [
+        "https://vetpreparaty-optom.ru/upload/resize_cache/nextype.corporate/5b1/300_300_0/zlx2kf7ocoazcq3jtoeoba5b83uxzunv.jpg",
+        "https://vetpreparaty-optom.ru/upload/resize_cache/iblock/01b/600_600_0/ktkuyy62hm119ielyucx5o5n4ucwusi6.png",
+        "https://mc.yandex.ru/watch/97604946"
+      ]
+    }
+  ]
+}
