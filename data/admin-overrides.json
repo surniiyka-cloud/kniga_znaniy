@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-16T05:17:43.846Z",
+  "updatedAt": "2026-10-16T05:17:55.952Z",
   "products": {
     "5.7-электропастух-olli-950": {
       "images": [
@@ -25951,6 +25951,11 @@
         "raw-2-7-2-принцип-исследования",
         "raw-2-7-2-4-камерная-кассета",
         "raw-2-7-2-программное-обеспечение-и-интерпретация"
+      ]
+    },
+    "catalog-2-7-ekomilk-horizon": {
+      "images": [
+        "img/photos/08-analizatory-kachestva-moloka/08-ekomilk-horizon.png"
       ]
     }
   },
