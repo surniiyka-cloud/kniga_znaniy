@@ -1478,8 +1478,10 @@ function mapData(){
       const sameSection=overrideSectionMatch(oid,sectionId)||String(pov.sourceSectionId||"")===String(sectionId||"");
       if(!sameSection)continue;
       const oname=identityText(pov.name),oart=identityArticle(pov.article);
-      if(art&&oart&&art===oart)matches.push({key:oid,value:pov,rank:2});
-      else if(name&&oname&&name===oname)matches.push({key:oid,value:pov,rank:1});
+      // Exact product name is safer than article matching. Some catalog items
+      // intentionally share an article (for example two teat pins with 0303.051).
+      if(name&&oname&&name===oname)matches.push({key:oid,value:pov,rank:3});
+      else if(art&&oart&&art===oart&&!oname)matches.push({key:oid,value:pov,rank:1});
     }
     if(!matches.length)return null;
     matches.sort((a,b)=>b.rank-a.rank);
@@ -1548,6 +1550,18 @@ function mapData(){
       if(Array.isArray(x.product.tabOrder))x.product.tabOrder=x.product.tabOrder.filter(t=>!gone.has(String(t)));
     }
     if(Array.isArray(pov.images))state.assets.productImages[id]=deepCopy(pov.images);
+  }
+
+  // Restore the pearl teat pin explicitly. It shares article 0303.051 with
+  // the reinforced wool pin, so historical article-based fallback could rename it.
+  const pearlId="3.3-0303-051-штифты-для-сосков-с-жемчужиной-на-ручке";
+  const pearlCtx=state.products.get(pearlId);
+  if(pearlCtx){
+    pearlCtx.product.name="Штифты для сосков с жемчужиной на ручке";
+    pearlCtx.product.article="0303.051";
+    state.assets.productImages[pearlId]=[
+      "img/photos/14-vspomogatelnye-tovary-dlya-doeniya/14-shtifty-zhemchug.png"
+    ];
   }
 
   for(const [,x] of state.products){
