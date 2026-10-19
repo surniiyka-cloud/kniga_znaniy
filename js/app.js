@@ -1333,6 +1333,7 @@ function isColorLabel(v){
 }
 function normalizeProductColors(p){
   if(!p||typeof p!=="object")return p;
+  const originalColor=String(p.color||"").trim();
   const bag=[];
   const add=(v)=>{for(const c of productColorsInText(v))if(!bag.includes(c))bag.push(c)};
   add(p.color||"");
@@ -1379,7 +1380,9 @@ function normalizeProductColors(p){
 
   // Тексты назначений, преимуществ, инструкций и пользовательских вкладок не трогаем:
   // упоминание цвета там может быть смыслом анализа, индикации или рабочего процесса.
-  p.color=bag.join("; ");
+  // Preserve exact catalogue shades in 3.5 (e.g. dark-purple or light-to-dark orange).
+  // All these colors are already placed in the product header, not characteristics.
+  p.color=(String(p.id||"").startsWith("3.5-")&&/^(?:от\s|т[её]мно-|светло-|ч[её]рно-)|(?:;\s*ч[её]рно-)/i.test(originalColor))?originalColor:bag.join("; ");
   return p;
 }
 
