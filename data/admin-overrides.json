@@ -31802,6 +31802,18 @@
     "6.3-0206-059-клапан-запасной-для-ведра-kerbl-ankar": {
       "article": "0206.059",
       "__frozen": true
+    },
+    "catalog-2-1-4-скив": {
+      "removeDetailFieldPatterns": [
+        "^ТУ\\s*/\\s*стандарт$"
+      ],
+      "appendDetailFields": [
+        [
+          "Стандарт",
+          "ГОСТ 23454-2016"
+        ]
+      ],
+      "__frozen": true
     }
   },
   "sections": {
