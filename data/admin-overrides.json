@@ -31879,6 +31879,24 @@
         }
       },
       "__frozen": true
+    },
+    "catalog-2-4-heatsensor-duo": {
+      "appendDetailFields": [
+        [
+          "Материал корпуса",
+          "Пластик / металл"
+        ]
+      ],
+      "__frozen": true
+    },
+    "catalog-2-4-heatsensor-octo-под-заказ": {
+      "appendDetailFields": [
+        [
+          "Материал корпуса",
+          "Пластик / металл"
+        ]
+      ],
+      "__frozen": true
     }
   },
   "sections": {
