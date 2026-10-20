@@ -31896,7 +31896,10 @@
           "Пластик / металл"
         ]
       ],
-      "__frozen": true
+      "__frozen": true,
+      "removeAdvantagePatterns": [
+        "^24\\s*ячейки$"
+      ]
     },
     "catalog-2-4-heatsensor-хейтсенсор-hs-00647": {
       "name": "Heatsensor (Хитсенсор) HS 00647",
