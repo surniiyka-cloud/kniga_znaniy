@@ -31816,6 +31816,39 @@
         ]
       ],
       "__frozen": true
+    },
+    "catalog-2-1-4-скив": {
+      "removeDetailFieldPatterns": [
+        "^ТУ\\s*/\\s*стандарт$"
+      ],
+      "appendDetailFields": [],
+      "__frozen": true
+    },
+    "catalog-2-1-4-резазурина-натриевая-соль": {
+      "appendDetailFields": [
+        [
+          "Фасовка",
+          "Стеклянный флакон"
+        ],
+        [
+          "Масса препарата",
+          "1 г"
+        ]
+      ],
+      "removeDetailFieldPatterns": [
+        "^ТУ\\s*/\\s*стандарт$"
+      ],
+      "__frozen": true
+    },
+    "catalog-2-1-4-тест-культура-для-определения-ингибирующих-веществ": {
+      "appendDetailFields": [
+        [
+          "Состав",
+          "Лиофилизированный штамм тест-культуры микроорганизма Streptococcus thermophilus B19"
+        ]
+      ],
+      "removeDetailFieldPatterns": [],
+      "__frozen": true
     }
   },
   "sections": {
