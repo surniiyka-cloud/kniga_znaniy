@@ -31802,6 +31802,20 @@
     "6.3-0206-059-клапан-запасной-для-ведра-kerbl-ankar": {
       "article": "0206.059",
       "__frozen": true
+    },
+    "catalog-2-4-delvotest": {
+      "name": "Delvotest incubator",
+      "appendDetailFields": [
+        [
+          "Совместим с тестами",
+          "Delvotest SP-NT; Delvotest T"
+        ],
+        [
+          "Материал ячеек инкубатора",
+          "Графит"
+        ]
+      ],
+      "__frozen": true
     }
   },
   "sections": {
