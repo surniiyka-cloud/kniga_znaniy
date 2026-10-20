@@ -31849,6 +31849,19 @@
       ],
       "removeDetailFieldPatterns": [],
       "__frozen": true
+    },
+    "catalog-2-5-test-strip-reader-gic-q1": {
+      "appendDetailFields": [
+        [
+          "Встроенный термопринтер",
+          "Да"
+        ],
+        [
+          "Статус оборудования",
+          "Индикаторное устройство. Не является средством измерений, не подлежит аттестации и поверке."
+        ]
+      ],
+      "__frozen": true
     }
   },
   "sections": {
