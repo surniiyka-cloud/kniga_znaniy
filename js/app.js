@@ -785,28 +785,42 @@ function buildChapter2Catalog(){
     const name=rows.find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Турбидофлуориметр БиоТФ";
     registerCatalog("2.15",name,fields,state.assets.sectionImages?.["2.15"]||[],{advantages,customTabs});
   }
-  // 2.16 — Люминометр SMART, LuciPac и нормы RLU — также только из листа
+  // 2.16 — две самостоятельные карточки: прибор и расходные материалы.
   const san=sBy("2.16");if(san){
     const rows=san.rawRows||san.rows||[];
     const ix=(label,from=0)=>rows.findIndex((r,i)=>i>=from&&String(r?.[0]||"").trim()===label);
     const practical=ix("Практическое значение"),luci=ix("LuciPac A3 Water / Surface"),norms=ix("Рекомендуемые нормы производителя");
+    const name="Люминометр SMART";
     const fields=sourcePairs(rows.slice(1,practical<0?rows.length:practical));
     const advantages=sourcePairs(rows.slice(practical+1,luci<0?rows.length:luci));
-    const luciRows=luci>=0?sourcePairs(rows.slice(luci+1,norms<0?rows.length:norms),{keepSingles:true}):[];
+    const instrumentFields=withFallbackFields(fields,[
+      ["Артикул","0706.36.001"],["Время измерения","10–20 с"],
+      ["Единицы измерения","RLU — Relative Light Units"],
+      ["Рабочий диапазон","0–999999 RLU"],["Калибровка","Автоматическая"],
+      ["Чувствительность","1015 моль"],["Температурная компенсация","От +10 до +40 °C"],
+      ["Память","2000 измерений"],["Температура эксплуатации","От +5 до +40 °C"],
+      ["Допустимая влажность","20–85 % без конденсации"],
+      ["Габариты","65 × 176 × 40 мм"],["Масса без батарей","235 г"],["Питание","2 батареи AA, 3 В"]
+    ]);
+    const complectation=[["Комплектация","Люминометр; 2 батареи AA; щёточка для очистки; USB-кабель; ремешок; инструкция"]];
+    registerCatalog("2.16",name,instrumentFields,state.assets.sectionImages?.["2.16"]||[],{advantages,complectation});
+    const cartridgeFields=[
+      ["Артикул","0706.36.007"],["Тип","Картриджи для санитарно-гигиенического контроля"],
+      ["Совместимость","Люминометры Smart, PD-30 и PD-20"],
+      ["Назначение","LuciPac A3 Water — анализ воды; LuciPac A3 Surface — анализ поверхностей"],
+      ["Хранение","От +2 до +8 °C, не замораживать"],
+      ["Срок хранения при +25 °C","14 дней в закрытой упаковке"],
+      ["Срок хранения при +30 °C","5 дней в закрытой упаковке"],
+      ["Срок годности","15 месяцев с даты изготовления"]
+    ];
     const normRows=[];
-    if(norms>=0){
-      for(const r of rows.slice(norms+1)){
-        const obj=String(r?.[0]||"").trim(),result=String(r?.[1]||"").trim(),interpretation=String(r?.[2]||"").trim();
-        if(!/^(Поверхность|Вода)$/i.test(obj)||!/RLU/i.test(result)||!interpretation)continue;
-        normRows.push([obj,result,interpretation]);
-        if(normRows.length>=5)break;
-      }
+    if(norms>=0)for(const r of rows.slice(norms+1)){
+      const obj=String(r?.[0]||"").trim(),result=String(r?.[1]||"").trim(),interpretation=String(r?.[2]||"").trim();
+      if(/^(Поверхность|Вода)$/i.test(obj)&&/RLU/i.test(result)&&interpretation)normRows.push([obj,result,interpretation]);
+      if(normRows.length>=5)break;
     }
-    const customTabs=[];
-    if(luciRows.length)customTabs.push({id:"luci",label:"LuciPac A3",kind:"pairs",rows:luciRows});
-    if(normRows.length)customTabs.push({id:"rlu",label:"Интерпретация RLU",kind:"rlu",rows:normRows});
-    const name=rows.find(r=>String(r?.[0]||"").trim()==="Наименование")?.[1]||"Люминометр SMART";
-    registerCatalog("2.16",name,fields,state.assets.sectionImages?.["2.16"]||[],{advantages,customTabs});
+    const tabs=normRows.length?[{id:"rlu",label:"Интерпретация RLU",kind:"rlu",rows:normRows}]:[];
+    registerCatalog("2.16","Картриджи LuciPac A3",cartridgeFields,[],{customTabs:tabs});
   }
   // 2.10 — индикаторные полоски. Читаем не только распознанные tables, но и сырые строки:
   // часть каталога приходит как richTable/rawRows и раньше выпадала из карточек.
