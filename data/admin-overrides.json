@@ -31897,6 +31897,19 @@
         ]
       ],
       "__frozen": true
+    },
+    "catalog-2-4-heatsensor-хейтсенсор-hs-00647": {
+      "name": "Heatsensor (Хитсенсор) HS 00647",
+      "removeDetailFieldPatterns": [
+        "^Количество программ$"
+      ],
+      "appendDetailFields": [
+        [
+          "Совместим с тестами",
+          "Unisensor; GARANT"
+        ]
+      ],
+      "__frozen": true
     }
   },
   "sections": {
