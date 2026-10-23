@@ -357,10 +357,31 @@ function buildGarantCards(s){
     for(const x of parsed.substances){const k=[x.group,x.substance,x.ppb].join("\u0000");if(!seen.has(k)){seen.add(k);old.substances.push(x)}}
     merged.set(key,old);
   });
+  // Перечень GARANT по новому каталогу, печатные стр. 16–23 (октябрь 2026).
+  // Не возвращать архивные карточки из старых листов при повторной синхронизации.
+  const currentGarant=new Set([
+    "GARANT BTSC PLUS","GARANT BTSC CEFTIOFUR","GARANT LQMES",
+    "GARANT BACSF","GARANT AMINOSPEC","GARANT NOVOBIOCIN",
+    "GARANT MONENSIN","GARANT MACROLIDES TULATHROMYCIN",
+    "GARANT 4 ULTRA MILK","GARANT METRONIDAZOLE",
+    "GARANT QMLE","GARANT SULFA","GARANT FTMCS",
+    "GARANT AMINO ULTRA","GARANT AMINO","GARANT NATAMYCIN",
+    "GARANT DIO","GARANT AVERMECTINS","GARANT ALBENDAZOLE",
+    "GARANT FTSP","GARANT KFMD"
+  ]);
   const img=state.assets.sectionImages?.[s.id]?.[0]||"";
-  for(const parsed of merged.values())registerCatalog(s.id,parsed.name,parsed.fields,img?[img]:[],{
+  for(const [rawKey,parsed] of merged){
+    const catalogName=/^GARANT ULTRA$/i.test(rawKey)?"GARANT 4 ULTRA MILK":rawKey.toUpperCase();
+    if(!currentGarant.has(catalogName))continue;
+    if(catalogName==="GARANT 4 ULTRA MILK"){
+      parsed.name="Экспресс-тест GARANT 4 ULTRA MILK";
+      const row=parsed.fields.find(r=>/^Наименование$/i.test(r[0]||""));
+      if(row)row[1]=parsed.name;
+    }
+    registerCatalog(s.id,parsed.name,parsed.fields,img?[img]:[],{
     advantages:parsed.advantages,complectation:parsed.complectation,substances:parsed.substances,customTabs:parsed.customTabs
-  });
+    });
+  }
 
   // Ручные карточки GARANT из override-слоя добавляем напрямую.
   // Раздел 2.1.3 рендерится из sectionCatalog, поэтому полагаться только
